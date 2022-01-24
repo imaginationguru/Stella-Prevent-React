@@ -1,0 +1,90 @@
+{
+  "name": "StellaliteWeb",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "web": "react-scripts start",
+    "lint": "eslint .",
+    "web-build": "react-scripts build",
+    "web-local-build": "serve -s build"
+  },
+  "dependencies": {
+    "@babel/preset-react": "^7.12.13",
+    "@react-native-async-storage/async-storage": "^1.15.14",
+    "@react-native-community/google-signin": "^5.0.0",
+    "animate.css": "^4.1.1",
+    "apisauce": "^2.0.1",
+    "baseui": "^10.1.0",
+    "chart.js": "^3.3.2",
+    "html2plaintext": "^2.1.4",
+    "i18next": "^19.8.4",
+    "jwt-decode": "^3.1.2",
+    "modal-react-native-web": "^0.2.0",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.33",
+    "node-sass": "^4.14.1",
+    "react": "16.13.1",
+    "react-animated-css": "^1.2.1",
+    "react-apple-login": "^1.1.3",
+    "react-beautiful-dnd": "^13.0.0",
+    "react-calendar": "^3.4.0",
+    "react-chartjs-2": "^3.0.3",
+    "react-dom": "^17.0.1",
+    "react-facebook-login": "^4.1.1",
+    "react-google-login": "^5.2.2",
+    "react-html-parser": "^2.0.2",
+    "react-i18next": "^11.8.5",
+    "react-native": "0.63.4",
+    "react-native-web": "^0.14.11",
+    "react-player": "^2.8.2",
+    "react-rating": "^2.0.5",
+    "react-redux": "^7.2.2",
+    "react-router-dom": "^5.2.0",
+    "react-slider": "^1.3.1",
+    "react-square-web-payments-sdk": "^2.2.3",
+    "react-tooltip": "^4.2.21",
+    "react-web-vector-icons": "^1.0.2",
+    "reactstrap": "^8.9.0",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.3.0",
+    "serve": "^13.0.2",
+    "sweetalert2": "^11.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/runtime": "^7.12.5",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "eslint": "^7.19.0",
+    "gulp-sass": "^5.0.0",
+    "metro-react-native-babel-preset": "^0.65.0",
+    "react-scripts": "^4.0.1",
+    "react-test-renderer": "16.13.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "description": "# for checking build locally - serve -s build",
+  "main": ".eslintrc.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

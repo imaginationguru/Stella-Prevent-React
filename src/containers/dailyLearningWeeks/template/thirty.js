@@ -1,0 +1,1050 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable prettier/prettier */
+import React, {useState, useEffect} from 'react';
+import GLOBALS from '../../../constants';
+import ReactHtmlParser from 'react-html-parser';
+import {TextInput, View, Text} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import * as AppActions from '../../../actions';
+import {getItem} from '../../../utils/AsyncUtils';
+import ExerciseBox from '../../../components/ExerciseBox';
+import {translate as ts} from '../../../i18n/translate';
+import Calendar from 'react-calendar';
+import {
+  CardQuote,
+  CardTitle,
+  CardTime,
+  CardDescription,
+  CardContent,
+  CustomImage,
+} from '../../../components/Cards';
+import commonStyles from '../commonStyles';
+import moment from 'moment';
+const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
+const {YELLOW, WHITE, CIRCLE_GRAY, LIGHT_GRAY, GRAY, RED, GREEN_TEXT} = COLORS;
+let userId = getItem('userId');
+
+const dataMapperAss = (arr = []) => {
+  let temp = [];
+  if (arr.length) {
+    temp = arr.map((item) => {
+      return {
+        assessment_header_id: item._id,
+        content: [{content: item.value, order: item.order}],
+      };
+    });
+  }
+  return temp;
+};
+
+const InputBoxWithContent = (props) => {
+  const {title, placeholder, value, onChange, style, name} = props;
+  return (
+    <div style={styles.inputBoxWrapper}>
+      <div style={style}>
+        <p style={styles.header}>{title}</p>
+      </div>
+      <div style={styles.inputBox}>
+        <form noValidate>
+          <textarea
+            type="description"
+            // className="f-field"
+            value={value}
+            name={name}
+            onChange={onChange}
+            required
+            placeholder={placeholder}
+            style={styles.inputStyle}
+            rows={3}
+          />
+        </form>
+      </div>
+    </div>
+  );
+};
+const Thirty = (props) => {
+  const [inputs, setInputs] = useState([]);
+  const [firstHeaderId, setFirstHeaderId] = useState([]);
+  const [firstHeaderContent, setFirstHeaderContent] = useState([]);
+  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedValueSecond, setSelectedValueSecond] = useState('');
+  const [assessmentSecond, setAssessmentSecond] = useState([]);
+  const [userInputs, setUserInputs] = useState([]);
+  const [newUserInputs, setNewUserInputs] = useState([]);
+  const [userDate, setUserDate] = useState([]);
+  const [isInputVisible, setInputVisible] = useState(false);
+  const [secondAssemssmentArray, setSecondAssessmentArray] = useState([]);
+  const [textValue, setTextValue] = useState('');
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [selectedDate, setSelectedDate] = useState('');
+  const [value, onChange] = useState(new Date());
+  const [allCards, setAllCards] = useState([]);
+  const [getCardsData, setGetCardsData] = useState([]);
+  const [getCardsInputs, setGetCardsInputs] = useState([]);
+  const {
+    card_title,
+    descriptions,
+    card_time,
+    images,
+    quotes,
+    content,
+    assessment_id,
+    assessment_id2,
+    onSubmitMessage,
+    showExercises,
+    week,
+  } = props.card;
+  const dispatch = useDispatch();
+  const {
+    assessmentData = {},
+    assessmentData2 = {},
+    userAssessmentData = [],
+  } = useSelector((state) => state.moduleOne);
+  console.log('user assessmnet?????????', userAssessmentData);
+  useEffect(() => {
+    dispatch(AppActions.getAssessmentDataSecond(assessment_id2));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [assessment_id2]);
+
+  useEffect(() => {
+    let headers =
+      assessmentData.headers && assessmentData.headers.length
+        ? assessmentData.headers
+        : [];
+    let headerId =
+      assessmentData.headers && assessmentData.headers.length
+        ? assessmentData.headers[0]._id
+        : [];
+    setFirstHeaderId(headerId);
+    headers &&
+      headers.length &&
+      setInputs(
+        headers.map((item) => {
+          return {
+            name: item.header,
+            placeholder: item.description,
+            order: item.order,
+            value: '',
+            _id: item._id,
+          };
+        }),
+      );
+    // dispatch(AppActions.getUserAssessment(props._id, assessment_id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [assessmentData, assessment_id]);
+  useEffect(() => {
+    let cardsInputs = [];
+    getCardsData &&
+      getCardsData.length &&
+      getCardsData.forEach((item) =>
+        cardsInputs.push(
+          item.data.map((val) => {
+            console.log('val??????', val);
+            return {
+              name: val.assessment_header && val.assessment_header[0].header,
+              placeholder: val.description ? val.description : '',
+              order: val.order,
+              value: val.content,
+              _id: val._id,
+            };
+          }),
+        ),
+      );
+    setGetCardsInputs(cardsInputs);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getCardsData]);
+  console.log('getcards data inputs?????', getCardsInputs);
+  useEffect(() => {
+    let uniqueTime = [];
+    let temp = [];
+    if (allCards.length) {
+      uniqueTime = new Set(allCards.map((val) => val.updatedAt));
+      uniqueTime.forEach((val) =>
+        temp.push({
+          updatedAt: val,
+          data: allCards
+            .sort((a, b) => (a.createdAt < b.createdAt && 1) || -1)
+            .filter((item) => val === item.updatedAt),
+        }),
+      );
+      setGetCardsData(temp);
+    }
+  }, [allCards]);
+  console.log('get cards data', getCardsData, allCards);
+  useEffect(() => {
+    let cardData = [];
+    let cardsData = [];
+    const assessmentCards = [];
+    const assessmentCardsCopy = [];
+
+    if (userAssessmentData.length) {
+      userAssessmentData
+        .filter((item) => item._id.assessment_header_id === firstHeaderId)
+        .forEach((val) => cardData.push(...val.cards));
+      setFirstHeaderContent(cardData);
+      userAssessmentData.forEach((val) => cardsData.push(...val.cards));
+      setAllCards(cardsData);
+
+      //second assessment logic
+      let secondAssmentData = userAssessmentData.map((item) => {
+        return item.cards.filter((fil) => fil.assessment_id === assessment_id2);
+      });
+
+      var assessmentTwoArray = secondAssmentData.filter(
+        (value) => Object.keys(value).length !== 0,
+      );
+
+      assessmentTwoArray.forEach((item) => {
+        assessmentCards.push(...item);
+        assessmentCardsCopy.push(...item);
+      });
+      setSecondAssessmentArray(assessmentCards);
+
+      let sortedArray = assessmentCards.map((element) => {
+        let selectedFormat = [];
+        let header_id, assessmentId, orderValue;
+
+        assessmentCardsCopy.forEach((item) => {
+          if (
+            element.assessment_header_id === item.assessment_header_id &&
+            element.order === item.order
+          ) {
+            orderValue = item.order;
+            header_id = item.assessment_header_id;
+            assessmentId = item.assessment_header.length
+              ? item.assessment_header.map((val) => {
+                  return val.assessment_id;
+                })
+              : null;
+
+            selectedFormat.push({
+              content: item.content,
+              order: item.order,
+              type: item.type,
+              assessment_content_id: item.assessment_header_id,
+              content_id: item._id,
+            });
+          }
+        });
+
+        let finalValue = {
+          content: selectedFormat,
+          assessment_header_id: header_id,
+          assessment_id: assessmentId,
+          order: orderValue,
+        };
+        return finalValue;
+      });
+
+      let jsonObject = sortedArray.map(JSON.stringify);
+      let uniqueSet = new Set(jsonObject);
+      let uniqueArray = Array.from(uniqueSet).map(JSON.parse);
+
+      setUserInputs(uniqueArray);
+    }
+  }, [userAssessmentData]);
+  /******************First assessment data save************** */
+  const onSaveMyths = (e) => {
+    e.preventDefault();
+    let params = {
+      user_id: userId,
+      user_card_id: props._id,
+      assessment_id: assessment_id,
+      assessment: dataMapperAss(inputs),
+    };
+    let isValid = false;
+    if (inputs && inputs.length) {
+      let temp = [];
+      inputs.forEach((item) => {
+        temp.push(item.value);
+      });
+      console.log('temp??????', temp);
+      if (temp.length) {
+        isValid = temp.filter((item) => item === '').length === 0;
+        // isValid = temp.some((item) => item !== '') ? true : false;
+      }
+    }
+
+    if (isValid) {
+      console.log('is valid', isValid);
+      dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+    } else {
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: 'Please fill all fields',
+      });
+    }
+    // if (userAssessmentData && userAssessmentData.length) {
+    //   //  dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+    // } else {
+    //   let isValid = false;
+    //   if (inputs && inputs.length) {
+    //     let temp = [];
+    //     inputs.forEach((item) => {
+    //       temp.push(item.value);
+    //     });
+    //     console.log('temp??????', temp);
+    //     if (temp.length) {
+    //       isValid = temp.find((item) => item !== 0) ? true : false;
+    //     }
+    //   }
+    //   if (isValid) {
+    //     //dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+    //   } else {
+    //     dispatch({
+    //       type: ACTION_TYPE.ERROR,
+    //       payload: 'Please perform your exercise',
+    //     });
+    //   }
+    // }
+  };
+  /******************Second assessment data save************** */
+  const onSaveSecondAssessment = (e) => {
+    e.preventDefault();
+    let contentArray = [];
+
+    let modifyUserInput = userInputs.map((item) => {
+      let dummyArray = item.content.map((ele) => {
+        return {
+          content: ele.content,
+          order: ele.order,
+          assessment_header_id: ele.assessment_content_id,
+          assessment_content_id: ele.content_id,
+        };
+      });
+      return {
+        assessment_header_id: item.assessment_header_id,
+        content: dummyArray[0],
+      };
+    });
+
+    assessmentSecond.forEach((element) => {
+      let filterValue = modifyUserInput
+        .filter((ele) => ele.assessment_header_id === element._id)
+        .filter((ele) => ele.content !== '');
+      contentArray.push(filterValue);
+    });
+    console.log('content array ', contentArray.length, userInputs);
+
+    if (userInputs.length) {
+      let modifyArray = contentArray.map((element, index) => {
+        let dummyArray = element.map((ele) => {
+          return ele.content;
+        });
+        return {
+          assessment_header_id: element[0].assessment_header_id,
+          content: dummyArray,
+        };
+      });
+      let firstParams = {
+        user_id: userId,
+        user_card_id: props._id,
+        assessment_id: assessment_id2,
+        assessment: modifyArray,
+      };
+      dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
+      // if (userInputs.length) {
+      //   if (
+      //     userAssessmentData &&
+      //     userAssessmentData.length &&
+      //     secondAssemssmentArray.length
+      //   ) {
+      //     console.log('params ???????', firstParams);
+      //     // dispatch(AppActions.rearrangeAssessments(firstParams, onSubmitMessage));
+      //     dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
+      //   } else {
+      //     dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
+      //   }
+      // }
+      //  else {
+      //   dispatch({
+      //     type: ACTION_TYPE.ERROR,
+      //     payload: 'Please perform your exercise',
+      //   });
+      // }
+    } else {
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: 'Please perform your exercise',
+      });
+    }
+  };
+
+  const setInputValue = (val) => {
+    if (val !== undefined) {
+      let input = val.map((e) => {
+        return e.content;
+      });
+      return input;
+    }
+  };
+
+  const onHandleChange = (e, item) => {
+    const updateInputs = inputs.length
+      ? inputs.map((val) => {
+          return {
+            ...val,
+            value: val.name === e.target.name ? e.target.value : val.value,
+          };
+        })
+      : [];
+    setInputs(updateInputs);
+  };
+  /****************Second assessment data fetch*********** */
+  useEffect(() => {
+    if (assessmentData2.headers && assessmentData2.headers.length) {
+      const x = assessmentData2.headers.map((item) => {
+        return {
+          header: item.header,
+          _id: item._id,
+          order: item.order,
+          content: item.content.length
+            ? item.content.map((ele) => {
+                return {
+                  content: ele.content,
+                  order: ele.order,
+                  assessment_header_id: ele.assessment_header_id,
+                  _id: ele._id,
+                };
+              })
+            : [],
+        };
+      });
+      setAssessmentSecond(x);
+    }
+  }, [assessmentData2]);
+  /**********************Drop down***************** */
+  const onChangeDropDown = (e, id, item) => {
+    let lastOrderObj = userInputs[userInputs.length - 1];
+    let lastOrder;
+    if (lastOrderObj !== undefined && lastOrderObj.order !== undefined) {
+      lastOrder = lastOrderObj.order;
+    } else {
+      lastOrder = 0;
+    }
+    if (item.order === 0) {
+      setSelectedValue(e.target.value);
+    }
+    if (item.order === 1) {
+      setSelectedValueSecond(e.target.value);
+    }
+
+    let selectedValueArray = [];
+    item.content.map((element) => {
+      if (element._id === e.target.value) {
+        selectedValueArray.push(element);
+      }
+    });
+    if (newUserInputs.length) {
+      let filterInput = newUserInputs.filter(
+        (element) => element.assessment_header_id === id,
+      );
+      if (filterInput && filterInput.length) {
+        filterInput[0].content[0].content = selectedValueArray[0].content;
+        filterInput[0].content[0].content_id = selectedValueArray[0]._id;
+      } else {
+        let newArray = selectedValueArray.map((element) => {
+          return {
+            content: [
+              {
+                assessment_content_id: element.assessment_header_id,
+                content: element.content,
+                content_id: element._id,
+                order: lastOrder + 1,
+              },
+            ],
+            new_user_input: true,
+            order: lastOrder + 1,
+            assessment_header_id: element.assessment_header_id,
+            assessment_id: assessment_id2,
+          };
+        });
+        let concatArray = newUserInputs;
+        Array.prototype.push.apply(concatArray, newArray);
+        setNewUserInputs(concatArray);
+      }
+    } else {
+      let newArray = selectedValueArray.map((element) => {
+        return {
+          content: [
+            {
+              assessment_content_id: element.assessment_header_id,
+              content: element.content,
+              content_id: element._id,
+              order: lastOrder + 1,
+            },
+          ],
+          new_user_input: true,
+          order: lastOrder + 1,
+          assessment_header_id: element.assessment_header_id,
+          assessment_id: assessment_id2,
+        };
+      });
+      let concatArray = newUserInputs;
+      Array.prototype.push.apply(concatArray, newArray);
+      setNewUserInputs(concatArray);
+    }
+  };
+
+  const onDayChange = (date, item) => {
+    let lastOrderObj = userInputs[userInputs.length - 1];
+    let lastOrder;
+    if (lastOrderObj !== undefined && lastOrderObj.order !== undefined) {
+      lastOrder = lastOrderObj.order;
+    } else {
+      lastOrder = 0;
+    }
+
+    setInputVisible(false);
+    let newArray = [];
+    let obj = {
+      content: [
+        {
+          assessment_content_id: item._id,
+          content: moment(date).format('YYYY-MM-DD'),
+          content_id: item.content.length ? item.content.content_id : null,
+          order: lastOrder + 1,
+        },
+      ],
+      new_user_input: true,
+      order: lastOrder + 1,
+      assessment_header_id: item._id,
+      assessment_id: assessment_id2,
+    };
+    newArray.push(obj);
+    setUserDate(newArray);
+    setSelectedDate(date);
+    setShowCalendar(false);
+  };
+
+  const headingOne =
+    assessmentData.heading &&
+    assessmentData.heading.length &&
+    assessmentData.heading[0]
+      ? assessmentData.heading[0].heading
+      : null;
+  const headingSecond =
+    assessmentData.heading &&
+    assessmentData.heading.length &&
+    assessmentData.heading[1]
+      ? assessmentData.heading[1].heading
+      : null;
+
+  const onCrossBtnClick = (val) => {
+    let contentIdArray = userInputs.filter(
+      (element) => element.order === val.order,
+    );
+    let contentIDS = contentIdArray.map((item) => {
+      if (item.content.length) {
+        return item.content[0].content_id;
+      } else {
+        return null;
+      }
+    });
+
+    if (contentIdArray[0].new_user_input === true) {
+      let filterData = userInputs.filter((ele) => ele.order !== val.order);
+      setUserInputs(filterData);
+    } else if (contentIDS.length && contentIDS[0] !== null) {
+      setUserInputs(userInputs.filter((ele) => ele.content !== contentIDS[0]));
+      setUserInputs(userInputs.filter((ele) => ele.content !== contentIDS[1]));
+      setUserInputs(userInputs.filter((ele) => ele.content !== contentIDS[2]));
+      dispatch(
+        AppActions.deleteUserAssessmentDataNew(
+          contentIDS[0],
+          props._id,
+          assessment_id,
+          contentIDS[1],
+          contentIDS[2],
+        ),
+      );
+    }
+  };
+  const onPlusBtnClick = (item) => {
+    if (userDate.length && newUserInputs.length) {
+      Array.prototype.push.apply(newUserInputs, userDate);
+      let concatArray = userInputs;
+      Array.prototype.push.apply(concatArray, newUserInputs);
+      setUserInputs(concatArray);
+
+      setUserDate([]);
+      setNewUserInputs([]);
+      setInputVisible(true);
+      setSelectedValue('');
+      setSelectedValueSecond('');
+      setSelectedDate('');
+    } else {
+      // alert('Please select value.');
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: 'Please select value.',
+      });
+    }
+  };
+
+  const headerColor = (order) => {
+    if (order === 0) {
+      return CIRCLE_GRAY;
+    } else {
+      return GREEN_TEXT;
+    }
+  };
+  //console.log('user Input ???????', userInputs, 'inputs?????????', inputs);
+  return (
+    <div>
+      {/**********************quotes************** */}
+      {quotes && quotes.length
+        ? quotes
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardQuote
+                  key={index}
+                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                />
+              );
+            })
+        : []}
+      <CardTitle title={ReactHtmlParser(card_title)} />
+      <CardTime
+        time={
+          card_time === '1' ? `${card_time} Minute` : `${card_time} Minutes`
+        }
+      />
+
+      {/**********************description************** */}
+      {descriptions && descriptions.length
+        ? descriptions
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardDescription
+                  key={index}
+                  description={ReactHtmlParser(item.desc)}
+                />
+              );
+            })
+        : []}
+      {/*******************************ASSESSMENT DESCRIPTION*********************** */}
+      <div style={commonStyles.assessmentWrapper}>
+        {images && images.length
+          ? images
+              .sort((a, b) => (a.order > b.order && 1) || -1)
+              .map((item, i) => {
+                return (
+                  <CustomImage
+                    key={i}
+                    src={
+                      item.image !== ''
+                        ? `${IMAGE_BASE_URL}${item.image}`
+                        : null
+                    }
+                    style={{
+                      ...commonStyles.assessImage,
+                      display: item.image !== '' ? 'flex' : 'none',
+                    }}
+                  />
+                );
+              })
+          : []}
+
+        {props.assessments && props.assessments.length
+          ? props.assessments.map((item, index) => {
+              return (
+                <CardDescription
+                  key={index}
+                  style={commonStyles.assessDesc}
+                  description={ReactHtmlParser(item.description)}
+                />
+              );
+            })
+          : []}
+      </div>
+
+      {inputs.length
+        ? inputs
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, idx) => {
+              return (
+                <InputBoxWithContent
+                  key={idx}
+                  title={ReactHtmlParser(item.name)}
+                  name={item.name}
+                  placeholder={item.placeholder}
+                  value={item.value}
+                  onChange={(e) => onHandleChange(e, item)}
+                  style={{
+                    backgroundColor: headerColor(item.order),
+                    width: '20%',
+                  }}
+                />
+              );
+            })
+        : null}
+      {inputs.length ? (
+        <div style={commonStyles.buttonWrapper}>
+          <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
+            {ts('SAVE')}
+          </button>
+        </div>
+      ) : null}
+
+      {headingOne && headingOne.length ? (
+        <CardContent
+          content={ReactHtmlParser(headingOne)}
+          style={{
+            ...styles.contentHeading,
+            backgroundColor: CIRCLE_GRAY,
+            paddingBottom: '3px',
+          }}
+        />
+      ) : null}
+
+      <div style={styles.secondAssessment}>
+        {assessmentSecond.length
+          ? assessmentSecond.map((item, i) => {
+              return (
+                <div
+                  style={{
+                    width: '33%',
+                  }}>
+                  <CardContent
+                    key={i}
+                    content={ReactHtmlParser(item.header)}
+                    style={{
+                      ...styles.contentHeading,
+                    }}
+                  />
+                  {item.content && item.content.length ? (
+                    <View style={{}}>
+                      {userInputs && userInputs.length
+                        ? userInputs
+                            .sort((a, b) => (a.order > b.order && 1) || -1)
+                            .filter((ele) => {
+                              return ele.assessment_header_id === item._id;
+                            })
+                            .map((val, index) => {
+                              return (
+                                <div style={styles.crossIconWrapper}>
+                                  <View style={{margin: 0, width: '100%'}}>
+                                    <TextInput
+                                      style={[
+                                        styles.selectedText,
+                                        {
+                                          height: '50px',
+                                          paddingLeft: 10,
+                                          paddingTop: 10,
+                                        },
+                                      ]}
+                                      underlineColorAndroid="transparent"
+                                      multiline={true}
+                                      disable={true}
+                                      value={
+                                        val.content && val.content.length
+                                          ? setInputValue(val.content)
+                                          : null
+                                      }
+                                    />
+                                  </View>
+                                </div>
+                              );
+                            })
+                        : null}
+                      <select
+                        style={{
+                          width: '100%',
+                          paddingTop: '12px',
+                          paddingBottom: '12px',
+                          paddingLeft: '10px',
+                          backgroundColor: '#F1F3FA',
+                          borderRadius: '5px',
+                          border: `1px solid ${LIGHT_GRAY}`,
+                        }}
+                        value={
+                          item.order === 0
+                            ? selectedValue
+                            : item.order === 1
+                            ? selectedValueSecond
+                            : ''
+                        }
+                        onChange={(e) => onChangeDropDown(e, item._id, item)}
+                        onSelect={(e) => onChangeDropDown(e, item._id, item)}>
+                        {/* {selectedValue ? '' : <option>select</option>} */}
+                        <option>select</option>
+                        {item.content &&
+                          item.content.length &&
+                          item.content.map((option, idx) => {
+                            return (
+                              <option value={option._id}>
+                                {`${option.content}`}
+                              </option>
+                            );
+                          })}
+                      </select>
+                    </View>
+                  ) : (
+                    <View style={{marginTop: 40}}>
+                      {userInputs && userInputs.length
+                        ? userInputs
+                            .sort((a, b) => (a.order > b.order && 1) || -1)
+                            .filter((ele) => {
+                              return ele.assessment_header_id === item._id;
+                            })
+                            .map((val, index) => {
+                              return (
+                                <div style={styles.crossIconWrapper}>
+                                  <View style={{margin: 0, width: '100%'}}>
+                                    <TextInput
+                                      style={[
+                                        styles.selectedText,
+                                        {
+                                          height: '50px',
+                                          paddingLeft: 10,
+                                          paddingTop: 10,
+                                        },
+                                      ]}
+                                      underlineColorAndroid="transparent"
+                                      multiline={true}
+                                      disable={true}
+                                      value={
+                                        val.content && val.content.length
+                                          ? setInputValue(val.content)
+                                          : null
+                                      }
+                                    />
+                                  </View>
+                                  <div
+                                    style={styles.circleCrossDiv}
+                                    onClick={() => onCrossBtnClick(val)}>
+                                    <span
+                                      style={{
+                                        ...styles.plusIcon,
+                                        fontSize: '15px',
+                                      }}>
+                                      x
+                                    </span>
+                                  </div>
+                                </div>
+                              );
+                            })
+                        : null}
+
+                      {item.order === 2 ? (
+                        <div
+                          style={{
+                            marginBottom: '2%',
+                            position: 'relative',
+                          }}>
+                          <TextInput
+                            style={{
+                              backgroundColor: '#F1F3FA',
+                              width: '100%',
+                              height: 50,
+                              paddingLeft: 5,
+                            }}
+                            placeholder={'yyyy-mm-dd'}
+                            underlineColorAndroid="transparent"
+                            value={
+                              selectedDate !== ''
+                                ? moment(selectedDate).format('YYYY-MM-DD')
+                                : 'YYYY-MM-DD'
+                            }
+                            type="number"
+                            editable={false}
+                            onClick={() => {
+                              setShowCalendar(true);
+                            }}
+                          />
+                          {showCalendar ? (
+                            <Calendar
+                              onChange={onChange}
+                              value={value}
+                              maxDate={new Date()}
+                              onClickDay={(date) => {
+                                onDayChange(date, item);
+                              }}
+                            />
+                          ) : null}
+                          <div
+                            onClick={() => onPlusBtnClick(item)}
+                            style={{
+                              ...styles.circleDiv,
+                              // backgroundColor: !userInputs.length
+                              //   ? GREEN_TEXT
+                              //   : GRAY,
+                            }}>
+                            <span style={styles.plusIcon}>+</span>
+                          </div>
+                        </div>
+                      ) : null}
+                    </View>
+                  )}
+                </div>
+              );
+            })
+          : []}
+      </div>
+      <div style={commonStyles.buttonWrapper}>
+        <button
+          className="btn-orange"
+          onClick={(e) => onSaveSecondAssessment(e)}>
+          {ts('SAVE')}
+        </button>
+      </div>
+
+      {headingSecond && headingSecond.length ? (
+        <CardContent
+          content={ReactHtmlParser(headingSecond)}
+          style={{
+            ...styles.contentHeading,
+            backgroundColor: YELLOW,
+            paddingBottom: '3px',
+          }}
+        />
+      ) : null}
+      {firstHeaderContent && firstHeaderContent.length
+        ? firstHeaderContent
+            .sort((a, b) => (a.i > b.i && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardContent
+                  key={index}
+                  content={ReactHtmlParser(item.content)}
+                  style={{
+                    padding: '10px',
+                    backgroundColor: LIGHT_GRAY,
+                  }}
+                />
+              );
+            })
+        : []}
+      {content && content.length
+        ? content
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardContent
+                  key={index}
+                  style={{marginTop: '20px'}}
+                  content={ReactHtmlParser(item.content)}
+                />
+              );
+            })
+        : []}
+      {/* {getCardsInputs.length
+        ? getCardsInputs.map((item, idx) => {
+            // console.log('item get cards', item);
+            item.map((val) => {
+              console.log('item get val cards', val.name);
+              return (
+                <InputBoxWithContent
+                  key={idx}
+                  title={ReactHtmlParser(val.name)}
+                  name={val.name}
+                  placeholder={val.placeholder}
+                  value={val.value}
+                  onChange={(e) => onHandleChange(e, val)}
+                  style={{
+                    backgroundColor: YELLOW,
+                    width: '20%',
+                  }}
+                />
+              );
+            });
+          })
+        : null} */}
+      {/* <div style={commonStyles.buttonWrapper}>
+        <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
+          {ts('SAVE')}
+        </button>
+      </div> */}
+      {showExercises && <ExerciseBox week={week} />}
+    </div>
+  );
+};
+export default Thirty;
+const styles = {
+  inputBoxWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: '30px',
+    justifyContent: 'space-between',
+    alignSelf: 'center',
+  },
+  secondAssessment: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: '50px',
+  },
+  header: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    textAlign: 'center',
+    color: WHITE,
+    paddingTop: '30px',
+  },
+  inputBox: {width: '78%'},
+  inputStyle: {
+    backgroundColor: LIGHT_GRAY,
+    fontStyle: 'italic',
+    resize: 'none',
+    width: '100%',
+    paddingTop: '5px',
+    paddingLeft: '5px',
+  },
+  contentHeading: {
+    backgroundColor: YELLOW,
+    color: WHITE,
+    textAlign: 'center',
+    padding: '10px',
+    // paddingTop: '10px',
+    // paddingBottom: '10px',
+    borderRadius: '5px',
+    // marginTop: '10px',
+  },
+
+  circleDiv: {
+    backgroundColor: GRAY,
+    width: '35px',
+    height: '35px',
+    position: 'absolute',
+    borderRadius: '100%',
+    right: '-20px',
+    top: '8px',
+  },
+  plusIconWrapper: {
+    display: 'flex',
+    marginBottom: '2%',
+    position: 'relative',
+  },
+  plusIcon: {
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    color: 'WHITE',
+    fontSize: '25px',
+  },
+  circleCrossDiv: {
+    backgroundColor: RED,
+    width: '25px',
+    height: '25px',
+    position: 'absolute',
+    borderRadius: '100%',
+    right: '-12px',
+    top: '0px',
+  },
+  crossIconWrapper: {
+    //  border: '1px solid red',
+    display: 'flex',
+    marginBottom: '15px',
+    position: 'relative',
+  },
+  selectedText: {
+    backgroundColor: '#F1F3FA',
+    width: '100%',
+    // marginBottom: '3%',
+  },
+};
