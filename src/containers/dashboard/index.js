@@ -245,7 +245,7 @@ const Dashboard = () => {
             <div
               style={styles.dailylearnWrap}
               onClick={() => {
-                debugger
+             //   debugger
                 {selectedCardId == '' ? 
                 dispatch({
                   type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,

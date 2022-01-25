@@ -516,7 +516,7 @@ useEffect(()=>{
                              if(!userQuestion[0]?.saved ){
                                debugger
                             customAlert(
-                              "Please enter good experience",
+                              "Please perform your exercise",
                               'error',
                             );
                             return
@@ -541,7 +541,7 @@ useEffect(()=>{
                            ){
                           if(userAssessmentData.length ==0){
                           customAlert(
-                            "Please enter good experience",
+                            "Please perform your exercise",
                             'error',
                           );
                           return
