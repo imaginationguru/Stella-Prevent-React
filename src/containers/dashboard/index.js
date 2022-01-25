@@ -162,7 +162,7 @@ const Dashboard = () => {
             }, 1000);
         
           } else {
-            customAlert(!checkIfWeekCanAccess(item, loginData?.planInfo) ? " You'll have to upgrade to a paid plan " : 'Content not unlocked', 'error');
+            customAlert(!checkIfWeekCanAccess(item, loginData?.planInfo) ? "Please upgrade your plan to Premium to access content" : 'Content not unlocked', 'error');
           }
         }),
       );
@@ -408,14 +408,19 @@ const Dashboard = () => {
                 border: `2px solid ${DARK_GREEN}`,
               }}
               onClick={() => {
+                customAlert(
+                  'Please upgrade your plan to Premium to access content',
+                  'error',
+                  {showCloseButton: true,}
+                )
                 // alert('Content not unlocked');
-                Swal.fire({
-                  text: !checkIfWeekCanAccess(7, loginData?.planInfo) ? " You'll have to upgrade to a paid plan " : 'Content not unlocked',
-                  allowOutsideClick: false,
-                  allowEscapeKey: false,
-                  confirmButtonColor: DARK_GREEN,
-                  width: DEVICE_WIDTH > 1000 ? '25vw' : '60vw',
-                });
+                // Swal.fire({
+                //   text: !checkIfWeekCanAccess(7, loginData?.planInfo) ? "Please upgrade your plan to Premium to access content" : 'Content not unlocked',
+                //   allowOutsideClick: false,
+                //   allowEscapeKey: false,
+                //   confirmButtonColor: DARK_GREEN,
+                //   width: DEVICE_WIDTH > 1000 ? '25vw' : '60vw',
+                // });
                 // dispatch(AppActions.dashboardModalAction(false));
                 // navigatorPush({screenName: 'Exercises'});
               }}>
