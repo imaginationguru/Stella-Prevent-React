@@ -203,7 +203,8 @@ export function toggleNotification(param) {
           //   type: ACTION_TYPE.SUCCESS_MESSAGE,
           //   payload: json.message,
           // })
-          customAlert(json.data,"success")
+          
+          customAlert(json.message,"success")
         } else {
           if (json.code === 400) {
             // dispatch({

@@ -122,17 +122,17 @@ function ProfileDetails(props) {
     switch (type) {
       case 'profile':
         console.log(phone,"lllll")
-        if (validateIsEmpty(phone.trim()))
+        if (validateIsEmpty(phone?.trim()))
           setPhoneError('Please enter phone number');
           else if (!validatePhoneWithSpecialSymbol(phone))
           setPhoneError('Please enter a valid phone number');
         // else if (!validateContact(phone))
         //   setPhoneError('Please enter a valid phone number');
-        else if (validateIsEmpty(city.trim()))
+        else if (validateIsEmpty(city?.trim()))
         setCityError('Please enter a city');
-        else if (!validateName(city.trim()))
+        else if (!validateName(city?.trim()))
         setCityError('Please enter valid city');
-        else if (validateIsEmpty(zipcode.trim()))
+        else if (validateIsEmpty(zipcode?.trim()))
           setZipcodeError('Please enter zipcode');
         else if (!validateANZipcode(zipcode))
           setZipcodeError('Please enter a valid zipcode');
