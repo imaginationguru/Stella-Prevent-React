@@ -502,50 +502,51 @@ useEffect(()=>{
                         onClick={() => {
                           console.log(nextData, 'selectedDay.....');   
                          // debugger     
-                          if(currentData.card?.template_data[0]?.template_number ==9 ){
-                            if(userAssessmentData.length ==0){
-                              customAlert(
-                                "Please enter good experience",
-                                'error',
-                              );
-                              return
-                            }
-                          }
+                          // if(currentData.card?.template_data[0]?.template_number ==9 ){
+                          //   if(userAssessmentData.length ==0){
+                          //     customAlert(
+                          //       "Please enter good experience",
+                          //       'error',
+                          //     );
+                          //     return
+                          //   }
+                          // }
                           
-                        // if(currentData.card?.template_data[0]?.template_number ==27){
-                        //      if(!userQuestion[0]?.saved ){
-                        //        debugger
-                        //     customAlert(
-                        //       "Please enter good experience",
-                        //       'error',
-                        //     );
-                        //     return
-                        //   } 
-                        //   dispatch({
-                        //     type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                        //     payload: nextData._id,
-                        //   });
-                        //   completeCardAPI(true);
-                        //   setScrollerLoad(true)
-                        //   cardDataHandler(nextData);
-                        // }
+                        if(currentData.card?.template_data[0]?.template_number ==27){
+                             if(!userQuestion[0]?.saved ){
+                               debugger
+                            customAlert(
+                              "Please enter good experience",
+                              'error',
+                            );
+                            return
+                          } 
+                          dispatch({
+                            type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+                            payload: nextData._id,
+                          });
+                          completeCardAPI(true);
+                          setScrollerLoad(true)
+                          cardDataHandler(nextData);
+                        }
                         
-                      //   else if(currentData.card?.template_data[0]?.template_number ==5 || 
-                      //     currentData.card?.template_data[0]?.template_number ==6 || 
-                      //     currentData.card?.template_data[0]?.template_number ==9 || 
-                      //     currentData.card?.template_data[0]?.template_number ==11 || 
-                      //     currentData.card?.template_data[0]?.template_number ==13 || 
-                      //     currentData.card?.template_data[0]?.template_number ==15 
+                        else if(currentData.card?.template_data[0]?.template_number ==5 || 
+                          currentData.card?.template_data[0]?.template_number ==9 ||
+                          currentData.card?.template_data[0]?.template_number ==6 || 
+                          currentData.card?.template_data[0]?.template_number ==9 || 
+                          currentData.card?.template_data[0]?.template_number ==11 || 
+                          currentData.card?.template_data[0]?.template_number ==13 || 
+                          currentData.card?.template_data[0]?.template_number ==15 
                           
-                      //      ){
-                      //     if(userAssessmentData.length ==0){
-                      //     customAlert(
-                      //       "Please enter good experience",
-                      //       'error',
-                      //     );
-                      //     return
-                      //   }
-                      // }
+                           ){
+                          if(userAssessmentData.length ==0){
+                          customAlert(
+                            "Please enter good experience",
+                            'error',
+                          );
+                          return
+                        }
+                      }
                           dispatch({
                             type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                             payload: nextData._id,
