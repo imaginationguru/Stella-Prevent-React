@@ -170,8 +170,9 @@ const Dashboard = () => {
       customAlert(
         'Please upgrade your plan to Premium to access content',
         'error',
+        {showCloseButton: true,}
       );
-    }
+    }                                        
     /* 
      if (canWeekAccess) {
       if (loginData.epds_assesment === false) {
@@ -244,10 +245,11 @@ const Dashboard = () => {
             <div
               style={styles.dailylearnWrap}
               onClick={() => {
+                debugger
                 {selectedCardId == '' ? 
                 dispatch({
                   type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                  payload: currentActiveCard.card_id,
+                  payload: currentActiveCard._id,
                 })
                 : 
               null};

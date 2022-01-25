@@ -177,7 +177,7 @@ export const Header = ({
 
 export const SubHeader = ({
   data = [],
-  cardNumber = 1,
+  cardNumber,
   onCardChange,
   style,
   isDisabled,

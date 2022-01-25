@@ -262,7 +262,7 @@ export function markCompleteCard(params, week, nextDay) {
           type: ACTION_TYPE.CARD_MARK_COMPLETE_SUCCESS,
           payload: json.data,
         });
-        // dispatch(getTemplateData(week));
+        dispatch(getTemplateData(week));
         if (!nextDay) {
           dispatch(getCurrentActiveCard());
         }

@@ -288,7 +288,7 @@ useEffect(()=>{
       customAlert(
         "You've reached your free content limit please update your plans",
         'error',
-        {},
+        {showCloseButton: true,},
         'Upgrade',
         _onPressUpgrade
     
@@ -402,12 +402,14 @@ useEffect(()=>{
                           type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                           payload: id,
                         });
-                      } else if(currentData.is_disabled ==false && currentData.is_read == true && currentData.is_completed ==true){
-                        dispatch({
-                          type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                          payload: id,
-                        });
-                      }else {
+                      } 
+                      // else if(currentData.is_disabled ==false && currentData.is_read == true && currentData.is_completed ==true){
+                      //   dispatch({
+                      //     type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+                      //     payload: id,
+                      //   });
+                      // }
+                      else {
                         customAlert(
                        'Please complete the previous card',
                           'error',

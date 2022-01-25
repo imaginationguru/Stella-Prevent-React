@@ -12,8 +12,12 @@ export const customAlert=(text, type="success", custom={},confirmButtonTitle,onP
         width:  '60vw',
         heightAuto : true,
         confirmButtonText : confirmButtonTitle ? confirmButtonTitle : "OK",
-        didClose : onPress,
+        
         ...custom
        // timer: 2000
-      })
+      }).then((result) => {
+        if (result.isConfirmed) {
+            onPress()
+        }})
+      
 }
