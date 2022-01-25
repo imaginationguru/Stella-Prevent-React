@@ -304,9 +304,13 @@ useEffect(()=>{
         console.log(res, 'res check active card');
         console.log('selected day', selectedDay);
 
-        if(res.is_disabled == true && res.is_read == false && res.is_completed == false ){
+        // if(res.is_disabled == true && res.is_read == false && res.is_completed == false ){
+        //   customAlert('Content will unlock tomorrow', 'error');
+        // }
+        if(selectedDay + 1 > res.current_day ){
           customAlert('Content will unlock tomorrow', 'error');
-        }else if(selectedDay + 1 <= res.current_day  ){
+        }
+        else if(selectedDay + 1 <= res.current_day  ){
           dispatch({
             type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
             payload: selectedDay + 1,
@@ -497,7 +501,7 @@ useEffect(()=>{
                         className="f-nav-link"
                         onClick={() => {
                           console.log(nextData, 'selectedDay.....');   
-                          debugger     
+                         // debugger     
                           if(currentData.card?.template_data[0]?.template_number ==9 ){
                             if(userAssessmentData.length ==0){
                               customAlert(

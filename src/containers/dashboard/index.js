@@ -426,9 +426,9 @@ const Dashboard = () => {
                   margin: 0,
                 }}>
                 Exercises,
-                <br /> Readings <br /> & Resourcessdf
+                <br /> Readings <br /> & Resources
               </p>
-              {!checkIfWeekCanAccess(5, loginData?.planInfo) ? 
+              {/* {!checkIfWeekCanAccess(5, loginData?.planInfo) ? 
                        <img src= {`${lock}`}
                      style={{
                       justifyContent: 'center',
@@ -436,7 +436,7 @@ const Dashboard = () => {
                       position: 'absolute',
                   
                    }}/>
-                  : null}
+                  : null} */}
             </div>
           </div>
         </div>
