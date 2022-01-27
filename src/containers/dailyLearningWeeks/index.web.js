@@ -124,7 +124,7 @@ useEffect(()=>{
     .map((item) => item._id);
 
   const cardDataHandler = (data) => {
-    console.log(data, 'dataaaa');
+    console.log(data, 'dataaaa cardDataHandler');
     if(isScrollerLoad){
       window.scrollTo(0, 200)
       setScrollerLoad(false)
@@ -311,6 +311,7 @@ useEffect(()=>{
           customAlert('Content will unlock tomorrow', 'error');
         }
         else if(selectedDay + 1 <= res.current_day  ){
+          console.log(mData,"mData......")
           dispatch({
             type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
             payload: selectedDay + 1,
@@ -319,6 +320,16 @@ useEffect(()=>{
             type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
             payload: mData[current_Index + 1]._id,
           });
+
+          // dispatch({
+          //   type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+          //   payload: nextData._id,
+          // });
+          console.log(mData[current_Index + 1],"mData[current_Index + 1....");
+          completeCardAPI(true);
+          setScrollerLoad(true)
+          cardDataHandler(mData[current_Index + 1]);
+         // cardDataHandler(nextData);
         } else {
           
         }
