@@ -375,7 +375,6 @@ useEffect(()=>{
                           })
                         : false;
                       if (isClickable) {
-                      
                         dispatch({
                           type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
                           payload: val,
@@ -401,18 +400,19 @@ useEffect(()=>{
                     onCardChange={(id) => {
                       const isClickable = id ? applicableCards(id) : false;
                       console.log(applicableCards(id), id, 'test...');
+                      debugger
                       if (isClickable) {
                         dispatch({
                           type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                           payload: id,
                         });
                       } 
-                      // else if(currentData.is_disabled ==false && currentData.is_read == true && currentData.is_completed ==true){
-                      //   dispatch({
-                      //     type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                      //     payload: id,
-                      //   });
-                      // }
+                      else if(currentData.is_disabled ==false && currentData.is_read == true && currentData.is_completed ==true){
+                        dispatch({
+                          type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+                          payload: id,
+                        });
+                      }
                       else {
                         customAlert(
                        'Please complete the previous card',
@@ -544,6 +544,7 @@ useEffect(()=>{
                             "Please perform your exercise",
                             'error',
                           );
+                          
                           return
                         }
                       }

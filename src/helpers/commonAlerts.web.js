@@ -17,7 +17,7 @@ export const customAlert=(text, type="success", custom={},confirmButtonTitle,onP
        // timer: 2000
       }).then((result) => {
         if (result.isConfirmed) {
-            onPress()
+            onPress ? onPress(): null
         }})
       
 }
