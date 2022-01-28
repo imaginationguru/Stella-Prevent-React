@@ -1,4 +1,4 @@
-const isLive = false;
+const isLive = true;
 
 export default {
   BASE_URL: isLive ? 'https://stella-prevent-careportal.curio-dtx.com/api/' : 'http://52.170.117.197/api/', //1.5 stella

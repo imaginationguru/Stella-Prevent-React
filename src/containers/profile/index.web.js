@@ -374,7 +374,7 @@ function ProfileDetails(props) {
             inputStyle={{padding: 10, height: 40}}
             setCode={(text) => setAge(text)}
             value={age}
-            label="Age at Registeration as on Signup Screen"
+            label="Age at Registration as on Signup Screen"
             placeholder=""></Input1>
           <Input1
             type=""

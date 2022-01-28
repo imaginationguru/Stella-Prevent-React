@@ -251,7 +251,7 @@ useEffect(()=>{
 
   const completeCardAPI = (nextday = '') => {
      console.log('complete current data', nextday,currentData);
-    if (currentData._id && currentData.is_read && !currentData.is_completed) {
+    if (currentData._id) {
       let completeParams = {
         id: currentData._id,
         user_id: currentData.user_id,
@@ -410,8 +410,8 @@ useEffect(()=>{
                     // onCardChange={(id) => setCurrentCardId(id)}
                     onCardChange={(id) => {
                       const isClickable = id ? applicableCards(id) : false;
-                      console.log(applicableCards(id), id, 'test...');
-                      debugger
+                      console.log(id,'test...',currentData._id);
+                  //    debugger
                       if (isClickable) {
                         dispatch({
                           type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
@@ -425,10 +425,12 @@ useEffect(()=>{
                         });
                       }
                       else {
-                        customAlert(
-                       'Please complete the previous card',
-                          'error',
-                        );
+                        if(currentData._id != id){
+                          customAlert(
+                            'Please complete the previous card',
+                               'error',
+                             );
+                        }     
                       }
                     }}
                     cardNumber={currentData.card_number || ''}
@@ -525,7 +527,7 @@ useEffect(()=>{
                           
                         if(currentData.card?.template_data[0]?.template_number ==27){
                              if(!userQuestion[0]?.saved ){
-                               debugger
+                             //  debugger
                             customAlert(
                               "Please perform your exercise",
                               'error',
