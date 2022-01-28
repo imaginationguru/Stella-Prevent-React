@@ -1,8 +1,12 @@
-const isLive = true;
+const isLive = false;
 
 export default {
-  BASE_URL: isLive ? 'https://stella-prevent-careportal.curio-dtx.com/api/' : 'http://52.170.117.197/api/', //1.5 stella
-  IMAGE_BASE_URL: isLive ? 'https://stella-prevent-careportal.curio-dtx.com/' : 'http://52.170.117.197/',
+  BASE_URL: isLive
+    ? 'https://stella-prevent-careportal.curio-dtx.com/api/'
+    : 'http://52.170.117.197/api/', //1.5 stella
+  IMAGE_BASE_URL: isLive
+    ? 'https://stella-prevent-careportal.curio-dtx.com/'
+    : 'http://52.170.117.197/',
   /********************************** * URL ***********************************/
 
   URL: {
@@ -49,8 +53,8 @@ export default {
     UPDATE_PASSWORD: 'update-password',
     UPDATE_PROFILE: 'uploadProfileImg',
     UPDATE_USER_DATA: 'update-user-details',
-    ACCEPT_WELCOME:"accept-welcomescreen",
-    RESEND_REGISTRATION_CODE_API:"resend-regestration-code"
+    ACCEPT_WELCOME: 'accept-welcomescreen',
+    RESEND_REGISTRATION_CODE_API: 'resend-regestration-code',
   },
 
   /*************************FONTS************************** */
@@ -66,7 +70,7 @@ export default {
     CIRCULAR_BOLD: 'CircularStd-Bold',
     SF_DISPLAY_REGULAR: 'SFUIDisplay-Regular',
     NEW_REGULAR: 'HKGrotesk-Regular',
-   // NEW_REGULAR: 'HKGrotesk-Medium',
+    // NEW_REGULAR: 'HKGrotesk-Medium',
   },
 
   /******************************STRINGS************************* */
@@ -221,10 +225,9 @@ export default {
     GET_USER_SUCCESS: 'GET_USER_SUCCESS',
     GET_USER_FAIL: 'GET_USER_FAIL',
     SET_PROFILE_IMAGE: 'SET_PROFILE_IMAGE',
-    
-    GET_NOTIFICATION_SUCCESS:'GET_NOTIFICATION_SUCCESS',
-    GET_LANGUGAE_SUCCESS:'GET_LANGUGAE_SUCCESS'
 
+    GET_NOTIFICATION_SUCCESS: 'GET_NOTIFICATION_SUCCESS',
+    GET_LANGUGAE_SUCCESS: 'GET_LANGUGAE_SUCCESS',
   },
 
   /***************************COLORS*************************** */
@@ -253,7 +256,7 @@ export default {
     PRIMARY: '#1B82D4',
     BLACK: '#000000',
     HEADING_BLACK: '#0f243d',
-    SOFT_GRAY:'#313132',
+    SOFT_GRAY: '#313132',
     LOGIN_BG: '#e6f2ff',
     BORDER_COLOR: 'rgba(147, 147, 147, 0.2)',
     SHADOW_COLOR: 'rgba(60, 134, 221,0.2)',
@@ -261,8 +264,8 @@ export default {
     DARK_GREEN: '#006f59',
     BLUR: 'rgba(0, 0, 0,0.6)',
     facebook: '#1877F2',
-    LIGHT_BLACK:"#35353F",
-    PLAN_GRAY:"#A9A9AA",
-    text_Gray:"#697386"
+    LIGHT_BLACK: '#35353F',
+    PLAN_GRAY: '#A9A9AA',
+    text_Gray: '#697386',
   },
 };

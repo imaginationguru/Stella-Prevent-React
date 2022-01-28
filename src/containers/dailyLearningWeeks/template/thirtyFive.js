@@ -290,7 +290,7 @@ const ThirtyFive = (props) => {
                   <div
                     key={index}
                     style={{
-                      ...styles.droppableDiv,
+                      ...styles.droppableDivDrag,
                     }}
                     className="wip"
                     onDragOver={(e) => onDragOver(e, item._id)}
