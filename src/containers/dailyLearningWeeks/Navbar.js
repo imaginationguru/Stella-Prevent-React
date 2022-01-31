@@ -239,7 +239,7 @@ export const SubHeader = ({
                   backgroundColor:
                     val.card_number === cardNumber
                       ? '#006f59'
-                      : val.isCompleted
+                      : val.isCompleted || val.card_number < cardNumber
                       ? WHITE
                       : BORDER_GRAY,
                   marginRight: '3%',

@@ -12,28 +12,37 @@ const {COLORS} = GLOBALS;
 
 import {getSelectedWeekDayCards} from '../../helpers/common.web';
 import {customAlert} from '../../helpers/commonAlerts.web';
-import { navigatorPush } from '../../config/navigationOptions.web';
-
+import {navigatorPush} from '../../config/navigationOptions.web';
 
 const DailyLearningWeeks = (props) => {
-  let isFromDashboard = props.location?.state?.isFromDashboard
+  let isFromDashboard = props.location?.state?.isFromDashboard;
 
   const dispatch = useDispatch();
   const {userAssessmentData = []} = useSelector((state) => state.moduleOne);
-  const {asessmentData = {},assessmentData = {},userQuestion = []} = useSelector((state) => state.moduleOne);
+  const {
+    asessmentData = {},
+    assessmentData = {},
+    userQuestion = [],
+  } = useSelector((state) => state.moduleOne);
   console.log(
     'userAssessmentData in daily learning',
     userAssessmentData,
     'get assesment data',
-    asessmentData
+    asessmentData,
   );
   const {
     templateData = [],
     currentActiveCard = [],
     selectedCardId = '',
   } = useSelector((state) => state.moduleOne);
-  let {selectedDay,selectedWeek} = useSelector((state) => state.moduleOne)
-  let [weeksCount,setWeeksCount] = useState(props.location?.state?.isFromDashboard ? currentActiveCard.current_week:  props.location?.state?.weeksCount ? props.location?.state?.weeksCount : 1)
+  let {selectedDay, selectedWeek} = useSelector((state) => state.moduleOne);
+  let [weeksCount, setWeeksCount] = useState(
+    props.location?.state?.isFromDashboard
+      ? currentActiveCard.current_week
+      : props.location?.state?.weeksCount
+      ? props.location?.state?.weeksCount
+      : 1,
+  );
   const {loginData = []} = useSelector((state) => state.authReducer);
 
   const {_id, week, day, is_disabled} = currentActiveCard.length
@@ -47,12 +56,12 @@ const DailyLearningWeeks = (props) => {
   //   let nextCardIsActive = mData.find((item) => item._id === currentData._id);
   //   // console.log('index value', nextCardIsActive);
   // }, [currentData]);
-// Api calling part
-useEffect(()=>{
-  if(isFromDashboard){
-    applicableCards(selectedCardId)
-  }
-},[isFromDashboard])
+  // Api calling part
+  useEffect(() => {
+    if (isFromDashboard) {
+      applicableCards(selectedCardId);
+    }
+  }, [isFromDashboard]);
   useEffect(() => {
     console.log(currentData, 'currentData........');
     if (currentData._id) {
@@ -63,7 +72,7 @@ useEffect(()=>{
       }
     }
   }, [currentData, currentData._id, dispatch]);
-// api response handling
+  // api response handling
   useEffect(() => {
     console.log(templateData, 'currentData........1111');
     if (templateData.length) {
@@ -78,7 +87,7 @@ useEffect(()=>{
         });
         // console.log('data >???????', data);
         if (data && data._id) {
-          setScrollerLoad(false)
+          setScrollerLoad(false);
           cardDataHandler(data);
         }
       }
@@ -87,8 +96,8 @@ useEffect(()=>{
 
   useEffect(() => {
     // dispatch(AppActions.getTemplateData(currentWeek)); No Need
-    if(templateData.length ==0){
-    dispatch(AppActions.getCurrentActiveCard());
+    if (templateData.length == 0) {
+      dispatch(AppActions.getCurrentActiveCard());
     }
   }, [dispatch]);
   console.log('current actice cards', currentActiveCard);
@@ -125,12 +134,12 @@ useEffect(()=>{
 
   const cardDataHandler = (data) => {
     console.log(data, 'dataaaa cardDataHandler');
-    if(isScrollerLoad){
-      window.scrollTo(0, 200)
-      setScrollerLoad(false)
+    if (isScrollerLoad) {
+      window.scrollTo(0, 200);
+      setScrollerLoad(false);
     }
     setCurrentData(data);
-    console.log("set current data",currentData)
+    console.log('set current data', currentData);
     if (cIds.length) {
       const currentIndex = cIds.findIndex((item) => item === data._id);
       let nextId = '';
@@ -216,7 +225,7 @@ useEffect(()=>{
     var selectedObject = temp.filter((el) => {
       return el.card === id;
     });
-    console.log("selectedObject",selectedObject)
+    console.log('selectedObject', selectedObject);
     return selectedObject.length > 0 ? selectedObject[0].isCompleted : false;
 
     // console.log("selectedObject",selectedObject)
@@ -250,7 +259,7 @@ useEffect(()=>{
   // console.log('next Data>>>>>>>>>>>.', nextData);
 
   const completeCardAPI = (nextday = '') => {
-     console.log('complete current data', nextday,currentData);
+    console.log('complete current data', nextday, currentData);
     if (currentData._id) {
       let completeParams = {
         id: currentData._id,
@@ -261,23 +270,26 @@ useEffect(()=>{
         day: currentData.day,
       };
       console.log('complete params>>>>>>>', completeParams);
-      // console.log('complete API call');
+
       dispatch(
         AppActions.markCompleteCard(completeParams, selectedWeek, nextday),
       );
     }
   };
 
-  const _onPressUpgrade = ()=>{
+  const _onPressUpgrade = () => {
     navigatorPush({
       screenName: 'Subscription',
-      passProps: {currentPlan: loginData?.planInfo,fromScreenDailyLearing: true},
-    })
-  }
-
+      passProps: {
+        currentPlan: loginData?.planInfo,
+        fromScreenDailyLearing: true,
+      },
+    });
+  };
 
   const onNextDayClick = () => {
     completeCardAPI(true);
+    // alert('3');
     console.log(currentData, selectedDay, selectedCardId);
 
     if (
@@ -288,10 +300,9 @@ useEffect(()=>{
       customAlert(
         "You've reached your free content limit please update your plans",
         'error',
-        {showCloseButton: true,},
+        {showCloseButton: true},
         'Upgrade',
-        _onPressUpgrade
-    
+        _onPressUpgrade,
       );
       return;
     }
@@ -307,11 +318,10 @@ useEffect(()=>{
         // if(res.is_disabled == true && res.is_read == false && res.is_completed == false ){
         //   customAlert('Content will unlock tomorrow', 'error');
         // }
-        if(selectedDay + 1 > res.current_day ){
+        if (selectedDay + 1 > res.current_day) {
           customAlert('Content will unlock tomorrow', 'error');
-        }
-        else if(selectedDay + 1 <= res.current_day  ){
-          console.log(mData,"mData......")
+        } else if (selectedDay + 1 <= res.current_day) {
+          console.log(mData, 'mData......');
           dispatch({
             type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
             payload: selectedDay + 1,
@@ -321,17 +331,11 @@ useEffect(()=>{
             payload: mData[current_Index + 1]._id,
           });
 
-          // dispatch({
-          //   type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-          //   payload: nextData._id,
-          // });
-          console.log(mData[current_Index + 1],"mData[current_Index + 1....");
+          console.log(mData[current_Index + 1], 'mData[current_Index + 1....');
           completeCardAPI(true);
-          setScrollerLoad(true)
+          setScrollerLoad(true);
           cardDataHandler(mData[current_Index + 1]);
-         // cardDataHandler(nextData);
         } else {
-          
         }
         /* 
         if (res.is_disabled == true) {
@@ -351,8 +355,6 @@ useEffect(()=>{
       }),
     );
   };
-  
- 
 
   return (
     <>
@@ -379,7 +381,7 @@ useEffect(()=>{
                     currentDay={selectedDay}
                     // onDayChange={(val) => setCurrentDay(val)}
                     isDisabled={applicableDay()}
-                    onDayChange={(val) => {  
+                    onDayChange={(val) => {
                       const isClickable = applicableDay().length
                         ? applicableDay().some((e) => {
                             return e.day === val && e.isDisabled === false;
@@ -408,29 +410,46 @@ useEffect(()=>{
                     isDisabled={cardsColorDisable()}
                     // isDisabled={applicableCards(currentData._id)}
                     // onCardChange={(id) => setCurrentCardId(id)}
-                    onCardChange={(id) => {
+                    onCardChange={(id, i) => {
                       const isClickable = id ? applicableCards(id) : false;
-                      console.log(id,'test...',currentData._id);
-                  //    debugger
+                      console.log(id, 'test...', currentData._id);
+                      console.log(
+                        '?????????????disable',
+                        currentData.is_disabled,
+                        'is read',
+                        currentData.is_read,
+                        'is comple',
+                        currentData.is_completed,
+                        currentData._id,
+                        id,
+                        i,
+                      );
                       if (isClickable) {
                         dispatch({
                           type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                           payload: id,
                         });
-                      } 
-                      else if(currentData.is_disabled ==false && currentData.is_read == true && currentData.is_completed ==true){
+                      } else if (
+                        currentData.is_disabled == false &&
+                        currentData.is_read == true &&
+                        currentData.is_completed == false &&
+                        currentData._id != id
+                      ) {
+                        customAlert(
+                          'Please complete the previous card',
+                          'error',
+                        );
+                      } else {
                         dispatch({
                           type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                           payload: id,
                         });
-                      }
-                      else {
-                        if(currentData._id != id){
-                          customAlert(
-                            'Please complete the previous card',
-                               'error',
-                             );
-                        }     
+                        // if (currentData._id != id) {
+                        //   customAlert(
+                        //     'Please complete the previous card',
+                        //     'error',
+                        //   );
+                        // }
                       }
                     }}
                     cardNumber={currentData.card_number || ''}
@@ -443,12 +462,12 @@ useEffect(()=>{
               {/* ******** ************************** Cards Render UI Start********************** */}
               {currentData._id && (
                 <GenerateUI
-                  status={currentData.card?.template_data[0]?.template_number}     
+                  status={currentData.card?.template_data[0]?.template_number}
                   data={{
                     ...currentData,
                     is_last_day: !nextData._id,
                     is_last_week: isLastDay,
-                    status :currentData.card?.template_data[0]?.template_number
+                    status: currentData.card?.template_data[0]?.template_number,
                   }}
                 />
               )}
@@ -467,7 +486,7 @@ useEffect(()=>{
                         <div
                           onClick={() => {
                             cardDataHandler(prevData);
-                            setScrollerLoad(true)
+                            setScrollerLoad(true);
                             dispatch({
                               type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                               payload: prevData._id,
@@ -513,74 +532,63 @@ useEffect(()=>{
                       <div
                         className="f-nav-link"
                         onClick={() => {
-                          console.log(nextData, 'selectedDay.....');   
-                         // debugger     
-                          // if(currentData.card?.template_data[0]?.template_number ==9 ){
-                          //   if(userAssessmentData.length ==0){
-                          //     customAlert(
-                          //       "Please enter good experience",
-                          //       'error',
-                          //     );
-                          //     return
-                          //   }
-                          // }
-                          
-                        if(currentData.card?.template_data[0]?.template_number ==27){
-                             if(!userQuestion[0]?.saved ){
-                             //  debugger
-                            customAlert(
-                              "Please perform your exercise",
-                              'error',
-                            );
-                            return
-                          } 
+                          if (
+                            currentData.card?.template_data[0]
+                              ?.template_number == 27
+                          ) {
+                            //  alert('first one');
+                            console.log('right one??????');
+                            if (!userQuestion[0]?.saved) {
+                              //debugger;
+                              customAlert(
+                                'Please perform your exercise',
+                                'error',
+                              );
+                              return;
+                            }
+                            dispatch({
+                              type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+                              payload: nextData._id,
+                            });
+                            completeCardAPI(true);
+                            setScrollerLoad(true);
+                            cardDataHandler(nextData);
+                          } else if (
+                            currentData.card?.template_data[0]
+                              ?.template_number == 5 ||
+                            currentData.card?.template_data[0]
+                              ?.template_number == 9 ||
+                            currentData.card?.template_data[0]
+                              ?.template_number == 6 ||
+                            currentData.card?.template_data[0]
+                              ?.template_number == 9 ||
+                            currentData.card?.template_data[0]
+                              ?.template_number == 11 ||
+                            currentData.card?.template_data[0]
+                              ?.template_number == 13 ||
+                            currentData.card?.template_data[0]
+                              ?.template_number == 15
+                          ) {
+                            // alert('11');
+                            if (userAssessmentData.length == 0) {
+                              // debugger;
+                              // alert('two');
+                              console.log('right one??????1');
+                              customAlert(
+                                'Please perform your exercise',
+                                'error',
+                              );
+
+                              return;
+                            }
+                          }
                           dispatch({
                             type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                             payload: nextData._id,
                           });
                           completeCardAPI(true);
-                          setScrollerLoad(true)
+                          setScrollerLoad(true);
                           cardDataHandler(nextData);
-                        }
-                        
-                        else if(currentData.card?.template_data[0]?.template_number ==5 || 
-                          currentData.card?.template_data[0]?.template_number ==9 ||
-                          currentData.card?.template_data[0]?.template_number ==6 || 
-                          currentData.card?.template_data[0]?.template_number ==9 || 
-                          currentData.card?.template_data[0]?.template_number ==11 || 
-                          currentData.card?.template_data[0]?.template_number ==13 || 
-                          currentData.card?.template_data[0]?.template_number ==15 
-                          
-                           ){
-                          if(userAssessmentData.length ==0){
-                          customAlert(
-                            "Please perform your exercise",
-                            'error',
-                          );
-                          
-                          return
-                        }
-                      }
-                          dispatch({
-                            type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                            payload: nextData._id,
-                          });
-                          completeCardAPI(true);
-                          setScrollerLoad(true)
-                          cardDataHandler(nextData);
-                          //     getSelectedWeekDayCards(selectedDay,);
-                          // return;
-
-                          //completeCardAPI();
-
-                          // dispatch({
-                          //   type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
-                          //   payload: val,
-                          // });
-                          // dispatch({
-                          //   type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                          //   payload: '',
-                          // });
                         }}>
                         <div>
                           <h3>{nextData.card.card_title}</h3>
@@ -599,8 +607,12 @@ useEffect(()=>{
                     <div className="footer-nav-right">
                       <div
                         onClick={() => {
-                          console.log(nextData,'nextData onclick nextday');
-                          console.log(currentData, 'currentData onclick nextday');
+                          //  debugger;
+                          console.log(nextData, 'nextData onclick nextday');
+                          console.log(
+                            currentData,
+                            'currentData onclick nextday',
+                          );
                           onNextDayClick();
                           return;
                           dispatch(
@@ -668,6 +680,7 @@ useEffect(()=>{
                     <div className="footer-nav-right">
                       <div
                         onClick={() => {
+                          // debugger;
                           console.log('next week >>>>>>', selectedWeek);
                           if (selectedWeek <= 4) {
                             console.log('selected week', selectedWeek + 1);
@@ -678,7 +691,7 @@ useEffect(()=>{
                               type: GLOBALS.ACTION_TYPE.SELECTED_WEEK,
                               payload: weeksCount + 1,
                             });
-                            setWeeksCount(weeksCount+1)
+                            setWeeksCount(weeksCount + 1);
                             dispatch(AppActions.getWeek(selectedWeek + 1));
                             dispatch({
                               type: 'GET_SELECTED_WEEK',
