@@ -465,8 +465,15 @@ export function saveUserAssessment(params, onSubmitMessage) {
       if (json.code === 200) {
         console.log('JSON data SAVE USER ASSESSMENT >>>>>>>>>', json);
         const submitMsg = h2p(onSubmitMessage);
-        customAlert(submitMsg,"success")
-
+         if (
+          submitMsg !== undefined &&
+          submitMsg !== null &&
+          submitMsg !== ''
+        ) {   
+          customAlert(submitMsg,"success");
+        }else{
+          customAlert(json.message,"success")
+        }
         // dispatch({
         //   type: ACTION_TYPE.SAVE_USER_ASSESSMENT_SUCCESS,
         //   payload: json.data,
@@ -738,7 +745,15 @@ export function rearrangeAssessments(params, onSubmitMessage) {
       if (json.code === 200) {
         console.log('JSON dataREARRANGE USER ASSESSMENT >>>>>>>>>', json);
         const submitMsg = h2p(onSubmitMessage);
-        customAlert(submitMsg,"success",)
+        if (
+          submitMsg !== undefined &&
+          submitMsg !== null &&
+          submitMsg !== ''
+        ) {   
+          customAlert(submitMsg,"success");
+        }else{
+          customAlert(json.message,"success")
+        }
         // dispatch({
         //   type: ACTION_TYPE.REARRANGE_ASSESSMENT_SUCCESS,
         //   payload: json.data,

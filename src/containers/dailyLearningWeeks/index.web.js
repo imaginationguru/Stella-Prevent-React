@@ -398,7 +398,7 @@ useEffect(()=>{
                         loginData?.planInfo?.numericPrice == 0
                       ) {
                         customAlert(
-                          "You've reached your free content limit please update your plans",
+                          "You've reached your free content limit. Please upgrade your plan.",
                           'error',
                           {showCloseButton: true,},
                           'Upgrade',
@@ -410,7 +410,7 @@ useEffect(()=>{
 
                       else {
                         customAlert(
-                          `You completed ${selectedDay} day's card, day ${val} card enable by tomorrow`,
+                          `Content not unlocked`,
                              'error',
                            );
                         // alert(
@@ -466,7 +466,8 @@ useEffect(()=>{
                     ...currentData,
                     is_last_day: !nextData._id,
                     is_last_week: isLastDay,
-                    status :currentData.card?.template_data[0]?.template_number
+                    status :currentData.card?.template_data[0]?.template_number,
+                    weeksCount:weeksCount
                   }}
                 />
               )}

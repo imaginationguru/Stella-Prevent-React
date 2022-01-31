@@ -64,9 +64,10 @@ const TemplateNine = (props) => {
   useEffect(() => {
     inputCardData.length &&
       inputCardData.map((item) => {
-        setInputBoxId(item._id)
-        return setExperience(item.input_content);
+        setInputBoxId(inputCardData[0]._id)
+        return setExperience(inputCardData[0].input_content);
       });
+      
     inputCardData.length &&
       inputCardData.map((item) => {
         return setUpdateId(item._id);
