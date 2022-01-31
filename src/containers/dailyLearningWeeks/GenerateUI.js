@@ -48,6 +48,7 @@ import {useDispatch} from 'react-redux';
 import * as AppActions from '../../actions';
 const GenerateUI = ({status, data = {}}) => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     let readParams = {
       id: data._id,
@@ -57,12 +58,12 @@ const GenerateUI = ({status, data = {}}) => {
       week: data.week,
       day: data.day,
     };
-    console.log('read params>>>1>>>', readParams, data._id);
     if (data._id) {
-      // console.log('read params>>>>read API call>>>', readParams, data._id);
-      console.log('read API call');
-      //API call for read
-      dispatch(AppActions.markRead(readParams, data.week));
+      if (data.is_read) {
+        console.log('card already read', data.is_read);
+      } else {
+        dispatch(AppActions.markRead(readParams, data.week));
+      }
     }
   }, [data._id]);
   switch (status) {
