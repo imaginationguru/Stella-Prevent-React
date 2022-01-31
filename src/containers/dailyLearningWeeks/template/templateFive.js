@@ -287,7 +287,7 @@ const TemplateFive = (props) => {
                   <div
                     key={index}
                     style={{
-                      ...commonStyles.droppableDiv,
+                      ...commonStyles.droppableDivDrag,
                     }}
                     className="wip"
                     onDragOver={(e) => onDragOver(e, item._id)}

@@ -286,12 +286,11 @@ useEffect(()=>{
       lastDay
     ) {
       customAlert(
-        "You've reached your free content limit please update your plans",
+        "You've reached your free content limit. Please upgrade your plan.",
         'error',
         {showCloseButton: true,},
         'Upgrade',
         _onPressUpgrade
-    
       );
       return;
     }

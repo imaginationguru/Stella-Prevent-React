@@ -26,6 +26,11 @@ const commonStyles = {
     paddingBottom: DEVICE_WIDTH > 767 ? '60px' : '30px',
     display: 'flex',
   },
+  droppableDivDrag: {
+    width: DEVICE_WIDTH > 767 ? '23%' : '48%',
+    paddingBottom: DEVICE_WIDTH > 767 ? '60px' : '30px',
+  //  display: 'flex',
+  },
   dropTitle: {
     color: '#ffff',
     textAlign: 'center',
