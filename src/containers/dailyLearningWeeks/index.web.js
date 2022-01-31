@@ -393,7 +393,26 @@ useEffect(()=>{
                           type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                           payload: '',
                         });
-                      } else {
+                      } 
+                     else if (
+                        loginData?.planInfo?.numericPrice == 0
+                      ) {
+                        customAlert(
+                          "You've reached your free content limit please update your plans",
+                          'error',
+                          {showCloseButton: true,},
+                          'Upgrade',
+                          _onPressUpgrade
+                      
+                        );
+                        return;
+                      }
+
+                      else {
+                        customAlert(
+                          `You completed ${selectedDay} day's card, day ${val} card enable by tomorrow`,
+                             'error',
+                           );
                         // alert(
                         //   `You completed ${selectedDay} day's card, day ${val} card enable by tomorrow`,
                         // );
