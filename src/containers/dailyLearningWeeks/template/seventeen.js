@@ -253,7 +253,7 @@ const Seventeen = (props) => {
     assessmentData.heading[1]
       ? assessmentData.heading[1].heading
       : null;
-
+  console.log('headingSecond??????', headingSecond);
   return (
     <div>
       {/**********************quotes************** */}
@@ -361,7 +361,8 @@ const Seventeen = (props) => {
               style={{
                 ...styles.heading,
                 width: '20%',
-                backgroundColor: headingOne !== '' ? YELLOW : WHITE,
+                backgroundColor:
+                  headingOne !== '' && headingOne !== null ? YELLOW : WHITE,
               }}>
               {ReactHtmlParser(headingOne)}
             </p>
@@ -371,7 +372,10 @@ const Seventeen = (props) => {
               style={{
                 ...styles.heading,
                 width: '78%',
-                backgroundColor: headingOne !== '' ? YELLOW : WHITE,
+                backgroundColor:
+                  headingSecond !== '' && headingSecond !== null
+                    ? YELLOW
+                    : WHITE,
               }}>
               {ReactHtmlParser(headingSecond)}
             </p>
