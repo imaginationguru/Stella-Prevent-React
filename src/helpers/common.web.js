@@ -5,7 +5,6 @@ const isInternet = () => window.navigator.onLine;
 let accessToken = () => store.getState().authReducer.loginToken;
 
 const checkIfWeekCanAccess = (week = 1, planInfo = {}) => {
-  console.log(planInfo, 'llolll');
   if (planInfo.numericPrice === 0 && week < 2) return true;
   else if (planInfo.numericPrice > 0) return true;
   else return false;

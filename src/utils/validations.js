@@ -74,6 +74,7 @@ export function validatePhoneWithSpecialSymbol(text) {
 }
 export function validateANZipcode(text) {
  // var re = /^((\d{5}-\d{4})|(\d{5})|([A-Z]\d[A-Z]\s\d[A-Z]\d))$/;
-  var re = /^[a-zA-Z0-9][a-zA-Z0-9\- ]{0,10}[a-zA-Z0-9]$/;
+   var re = /^[a-zA-Z0-9][a-zA-Z0-9\- ]{0,10}[a-zA-Z0-9]$/;
+  //var re = /^[0-9]{0,5}\*$/;
   return re.test(text);
 }

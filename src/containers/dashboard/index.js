@@ -30,7 +30,6 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 import { checkIfWeekCanAccess } from '../../helpers/common.web';
 import { customAlert } from '../../helpers/commonAlerts.web';
 const Dashboard = () => {
-  const [showModal, setModalVisibility] = useState(false);
   const [click_week, setClickWeek] = useState(1);
 
   let firstName = getItem('firstName');
@@ -43,7 +42,6 @@ const Dashboard = () => {
     (state) => state.moduleOne,
   );
   const { isEPDSModalShow = true } = useSelector((state) => state.common);
-  //setModalVisibility(isEPDSModalShow);
   const { programData = [] } = useSelector((state) => state.authReducer);
   const { isLoading } = useSelector((state) => state.common);
   const { loginData = [] } = useSelector((state) => state.authReducer);
@@ -65,12 +63,7 @@ const Dashboard = () => {
     if(currentActiveCard.length ==0){
       dispatch(AppActions.getCurrentActiveCard());
     }
-    dispatch(
-      AppActions.getUserQuestionInfo({
-        stellaPrevent: true,
-        user_id: getItem('userId'),
-      }),
-    );
+   
   }, []);
   const TrackersUI = ({ title, src, onClick }) => {
     return (
@@ -92,47 +85,12 @@ const Dashboard = () => {
       </div>
     );
   };
-  const saveEPDSAssememt = (all_question) => {
-    setModalVisibility(false);
-    console.log('savinggg');
-    dispatch(
-      AppActions.savePatientAssessment(
-        all_question,
-        'Thank you for submitting...',
-        all_question[0].assessment_id,
-        true,
-        (res) => {
-          navigatorPush({
-            screenName: 'DailyLearningWeeks',
-            passProps: 1,
-          });
-          /* 
-          if (click_week == 1) {
-            navigatorPush({
-              screenName: 'DailyLearningWeeks',
-              passProps: 1,
-            });
-          } else {
-            customAlert('Content not unlocked.', 'error');
-          }
-          */
-        },
-      ),
-    );
-  };
-
-  const checkFirstEPDSFilled = () => {
-    if (loginData?.epds_assesment == true) return true;
-    else {
-      setModalVisibility(true);
-      return false;
-    }
-  };
+ 
+ 
 
   const handleWeekClick = (item) => {
     let canWeekAccess = checkIfWeekCanAccess(item, loginData.planInfo);
     if (canWeekAccess) {
-      setModalVisibility(false);
       dispatch({
         type: ACTION_TYPE.GET_TEMPLATE_DATA_SUCCESS,
         payload: [],
@@ -173,61 +131,6 @@ const Dashboard = () => {
         {showCloseButton: true,}
       );
     }                                        
-    /* 
-     if (canWeekAccess) {
-      if (loginData.epds_assesment === false) {
-        setModalVisibility(true);
-        dispatch(AppActions.getWeek(item));
-        dispatch({type: 'GET_SELECTED_WEEK', payload: item});
-        dispatch({
-          type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
-          payload: item === week ? day : 1,
-        });
-        dispatch({
-          type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-          payload: '',
-        });
-        dispatch(AppActions.dashboardModalAction(false));
-        dispatch(AppActions.getTemplateData(item));
-      } else {
-        setModalVisibility(false);
-        dispatch(
-          AppActions.getCurrentActiveCard((res) => {
-            console.log(item, res.current_week, 'compar,', res);
-            console.log(item <= res.current_week, 'Comparis');
-            if (item <= res.current_week) {
-              dispatch(AppActions.getWeek(item));
-              dispatch({
-                type: 'GET_SELECTED_WEEK',
-                payload: item,
-              });
-              dispatch({
-                type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
-                payload: item === week ? day : 1,
-              });
-              dispatch({
-                type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                payload: '',
-              });
-              dispatch(AppActions.dashboardModalAction(false));
-              dispatch(AppActions.getTemplateData(item));
-              navigatorPush({
-                screenName: 'DailyLearningWeeks',
-                passProps: item,
-              });
-            } else {
-              customAlert('Content not unlocked.', 'error');
-            }
-          }),
-        );
-      }
-    } else {
-      customAlert(
-        'Please upgrade your plan to Premium to access content',
-        'error',
-      );
-    }
-     */
   };
   return (
     <div>
@@ -246,13 +149,16 @@ const Dashboard = () => {
               style={styles.dailylearnWrap}
               onClick={() => {
              //   debugger
-                {selectedCardId == '' ? 
+              //  {selectedCardId == '' ? 
+              dispatch(
+                AppActions.getTemplateData(currentActiveCard.current_week),
+              );
                 dispatch({
                   type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                   payload: currentActiveCard._id,
                 })
-                : 
-              null};
+              //   : 
+              // null};
                 dispatch({
                   type: GLOBALS.ACTION_TYPE.GET_SELECTED_WEEK,
                   payload: currentActiveCard.current_week,
@@ -269,10 +175,6 @@ const Dashboard = () => {
                   screenName: 'DailyLearningWeeks',
                   passProps: { isFromDashboard: true },
                 });
-                // navigatorPush({ screenName: 'DailyLearningWeeks',passProps:{isFromDashboard:true}})
-                // if (checkFirstEPDSFilled()) {
-
-                // }
               }}
               className="display-board">
               <div
@@ -303,10 +205,6 @@ const Dashboard = () => {
               title=" How did you sleep last night?"
               src={sleep}
               onClick={() => {
-                // navigatorPush({screenName: 'SleepTracker'});
-                // if (checkFirstEPDSFilled()) {
-
-                // }
                 dispatch(AppActions.dashboardModalAction(false));
                 navigatorPush({ screenName: 'SleepTracker' });
               }}
@@ -316,22 +214,12 @@ const Dashboard = () => {
               src={activity}
               onClick={() => {
                 navigatorPush({ screenName: 'ActivityTracker' });
-                // if (checkFirstEPDSFilled()) {
-                //   dispatch(AppActions.dashboardModalAction(false));
-                //   navigatorPush({screenName: 'ActivityTracker'});
-                // }
               }}
             />
             <TrackersUI
               title=" What is your mood today?"
               src={face}
               onClick={() => {
-                console.log(checkIfWeekCanAccess(2, loginData.planInfo));
-                //  return;
-                // navigatorPush({screenName: 'MoodTracker'});
-                // if (checkFirstEPDSFilled()) {
-
-                // }
                 dispatch(AppActions.dashboardModalAction(false));
                 navigatorPush({ screenName: 'MoodTracker' });
               }}
@@ -340,7 +228,6 @@ const Dashboard = () => {
         </div>
         <div className="week-list">
           {lengthToArray(duration).map((item, index) => {
-            console.log('week item??????', item, selectedWeek);
             return (
               <div className="week-item">
 
@@ -448,28 +335,6 @@ const Dashboard = () => {
       </div>
 
       <Footer />
-
-      <Modal
-        animationType="slide"
-        transparent={true}
-        //visible={isEPDSModalShow}
-        visible={showModal}
-        onDismiss={() => {
-          //  setModalVisibility(false)
-          console.log('Modal has been closed.');
-        }}>
-        <EpdsScreener
-          onClose={() => {
-            setModalVisibility(false);
-          }}
-          saveEPDSAssememt={(data) => saveEPDSAssememt(data)}
-          currentIndex={-1}
-        // showModal={setModalVisibility}
-        // onItemSelection={(type, data) => { navigator(type, data) }}
-        //  data={list}
-        // title={popUpTitle}
-        />
-      </Modal>
     </div>
   );
 };

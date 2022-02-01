@@ -99,8 +99,8 @@ const DailyLearningWeeks = (props) => {
 
   useEffect(() => {
     // dispatch(AppActions.getTemplateData(currentWeek)); No Need
-    if (templateData.length == 0) {
-      dispatch(AppActions.getCurrentActiveCard());
+   if(templateData.length ==0){
+    dispatch(AppActions.getCurrentActiveCard());
     }
   }, [dispatch]);
   console.log('current actice cards', currentActiveCard);
@@ -405,7 +405,8 @@ const DailyLearningWeeks = (props) => {
                     currentDay={selectedDay}
                     // onDayChange={(val) => setCurrentDay(val)}
                     isDisabled={applicableDay()}
-                    onDayChange={(val) => {
+                    onDayChange={(val) => {  
+                      console.log(val,"val....")
                       const isClickable = applicableDay().length
                         ? applicableDay().some((e) => {
                             return e.day === val && e.isDisabled === false;
@@ -420,7 +421,10 @@ const DailyLearningWeeks = (props) => {
                           type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                           payload: '',
                         });
-                      } else if (loginData?.planInfo?.numericPrice == 0) {
+                      } 
+                     else if (
+                        loginData?.planInfo?.numericPrice == 0  && val >2
+                      ) {
                         customAlert(
                           "You've reached your free content limit. Please upgrade your plan.",
                           'error',

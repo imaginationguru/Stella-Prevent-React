@@ -45,13 +45,12 @@ export function getCurrentActiveCard(cb) {
           getTemplateData(selectedWeeks),
           
         );
-        dispatch({
-          type: 'GET_SELECTED_DAY',
-          payload:
-            json.data.data && json.data.data.length ? json.data.day : 1,
-         //   payload:
-          //  json.data.data && json.data.data.length ? json.data.data[0].day : 1,
-        });
+        console.log(selectedWeeks, json.data,"Setting data")
+        // dispatch({
+        //   type: 'GET_SELECTED_DAY',
+        //   payload:
+        //     json.data ? json.data.day : 1,
+        // });
         dispatch({
           type: 'GET_SELECTED_CARD_ID',
           payload:

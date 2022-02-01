@@ -124,7 +124,7 @@ function ProfileDetails(props) {
         console.log(phone,"lllll")
         if (validateIsEmpty(phone?.trim()))
           setPhoneError('Please enter phone number');
-          else if (!validatePhoneWithSpecialSymbol(phone))
+          else if (!validatePhoneWithSpecialSymbol(phone) || phone.length<10)
           setPhoneError('Please enter a valid phone number');
         // else if (!validateContact(phone))
         //   setPhoneError('Please enter a valid phone number');
