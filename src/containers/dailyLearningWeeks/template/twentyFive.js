@@ -158,28 +158,42 @@ const TwentyFive = (props) => {
     e.preventDefault();
     if (userAssessmentData && userAssessmentData.length) {
       console.log('update params');
-      const params = {
-        data: [
-          {
-            id: firstUpdateId,
-            input_content: firstInput,
-          },
-          {
-            id: secondUpdateId,
-            input_content: secondInput,
-          },
-          {
-            id: thirdUpdateId,
-            input_content: thirdInput,
-          },
-          {
-            id: fourthUpdateId,
-            input_content: fourthInput,
-          },
-        ],
-      };
-      console.log('update params>>>>>>>', params);
-      dispatch(AppActions.updateUserAssessment(params));
+      if (firstInput.length === 0) {
+        setFirstInputError('Please enter your thinking');
+      }
+      else if (secondInput.length === 0) {
+        setSecondInputError('Please enter situation');
+      }
+      else if (thirdInput.length === 0) {
+        setThirdInputError('Please enter how you behaved?');
+      }
+     else  if (fourthInput.length === 0) {
+        setFourthInputError('Please enter how you felt?');
+      }else{
+        const params = {
+          data: [
+            {
+              id: firstUpdateId,
+              input_content: firstInput,
+            },
+            {
+              id: secondUpdateId,
+              input_content: secondInput,
+            },
+            {
+              id: thirdUpdateId,
+              input_content: thirdInput,
+            },
+            {
+              id: fourthUpdateId,
+              input_content: fourthInput,
+            },
+          ],
+        };
+        console.log('update params>>>>>>>', params);
+        dispatch(AppActions.updateUserAssessment(params));
+      }
+    
     } else {
       const params = {
         user_id: getItem('userId'),
@@ -203,7 +217,7 @@ const TwentyFive = (props) => {
           },
         ],
       };
-      console.log('params>>>>>>>>>>.twenty five>>>>>>', params);
+      console.log('params>>>>>>>>>>.twenty five>>>>>>', params,firstInput);
       if (firstInput.length === 0) {
         setFirstInputError('Please enter your thinking');
       }

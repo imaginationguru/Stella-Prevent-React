@@ -10,7 +10,10 @@ import BackBtn from '../../components/common/backbtn';
 import BackToDashboard from '../../components/common/backToDashboard';
 const {COLORS} = GLOBALS;
 
-import {getSelectedWeekDayCards} from '../../helpers/common.web';
+import {
+  getSelectedWeekDayCards,
+  canProceedNextDay,
+} from '../../helpers/common.web';
 import {customAlert} from '../../helpers/commonAlerts.web';
 import {navigatorPush} from '../../config/navigationOptions.web';
 
@@ -298,7 +301,7 @@ const DailyLearningWeeks = (props) => {
       lastDay
     ) {
       customAlert(
-        "You've reached your free content limit please update your plans",
+        "You've reached your free content limit. Please upgrade your plan.",
         'error',
         {showCloseButton: true},
         'Upgrade',
@@ -314,13 +317,14 @@ const DailyLearningWeeks = (props) => {
       AppActions.checkActiveCard((res) => {
         console.log(res, 'res check active card');
         console.log('selected day', selectedDay);
-
-        // if(res.is_disabled == true && res.is_read == false && res.is_completed == false ){
-        //   customAlert('Content will unlock tomorrow', 'error');
-        // }
-        if (selectedDay + 1 > res.current_day) {
-          customAlert('Content will unlock tomorrow', 'error');
-        } else if (selectedDay + 1 <= res.current_day) {
+        let canProceed = canProceedNextDay(
+          selectedWeek,
+          selectedDay + 1,
+          res.current_week,
+          res.current_day,
+        );
+        console.log(canProceed, 'canProceed');
+        if (canProceed) {
           console.log(mData, 'mData......');
           dispatch({
             type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
@@ -330,13 +334,33 @@ const DailyLearningWeeks = (props) => {
             type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
             payload: mData[current_Index + 1]._id,
           });
-
           console.log(mData[current_Index + 1], 'mData[current_Index + 1....');
           completeCardAPI(true);
           setScrollerLoad(true);
           cardDataHandler(mData[current_Index + 1]);
         } else {
+          customAlert('Content will unlock tomorrow', 'error');
         }
+        // if(selectedDay + 1 > res.current_day ){
+        //   customAlert('Content will unlock tomorrow', 'error');
+        // }
+        // else if(selectedDay + 1 <= res.current_day  ){
+        //   console.log(mData,"mData......")
+        //   dispatch({
+        //     type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
+        //     payload: selectedDay + 1,
+        //   });
+        //   dispatch({
+        //     type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+        //     payload: mData[current_Index + 1]._id,
+        //   });
+        //   console.log(mData[current_Index + 1],"mData[current_Index + 1....");
+        //   completeCardAPI(true);
+        //   setScrollerLoad(true)
+        //   cardDataHandler(mData[current_Index + 1]);
+        // } else {
+
+        // }
         /* 
         if (res.is_disabled == true) {
           customAlert('Content will unlock tomorrow', 'error');
@@ -396,7 +420,17 @@ const DailyLearningWeeks = (props) => {
                           type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                           payload: '',
                         });
+                      } else if (loginData?.planInfo?.numericPrice == 0) {
+                        customAlert(
+                          "You've reached your free content limit. Please upgrade your plan.",
+                          'error',
+                          {showCloseButton: true},
+                          'Upgrade',
+                          _onPressUpgrade,
+                        );
+                        return;
                       } else {
+                        customAlert(`Content not unlocked`, 'error');
                         // alert(
                         //   `You completed ${selectedDay} day's card, day ${val} card enable by tomorrow`,
                         // );
@@ -468,6 +502,7 @@ const DailyLearningWeeks = (props) => {
                     is_last_day: !nextData._id,
                     is_last_week: isLastDay,
                     status: currentData.card?.template_data[0]?.template_number,
+                    weeksCount: weeksCount,
                   }}
                 />
               )}

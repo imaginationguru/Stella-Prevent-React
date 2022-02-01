@@ -46,6 +46,8 @@ const TwentyTwo = (props) => {
     week,
     showExercises,
   } = props.card;
+  const {weeksCount} = props;
+  console.log(props,"props.......")
   const dispatch = useDispatch();
   const {userRatingData = []} = useSelector((state) => state.moduleOne);
   const {isDashboardModal} = useSelector((state) => state.common);
@@ -64,6 +66,7 @@ const TwentyTwo = (props) => {
   }, []);
 
   const getDataSet = (data, type) => {
+    console.log(data,"data....... comnt", type)
     if (type === 'LIKE') {
       setLike(data);
     }
@@ -76,11 +79,24 @@ const TwentyTwo = (props) => {
   };
   useEffect(() => {
     if (userRatingData.length) {
-      const {comments, star, isLiked, _id} = userRatingData[0];
-      getDataSet(isLiked, 'LIKE');
-      getDataSet(star, 'STAR');
-      getDataSet(comments, 'COMMENT');
-      setUpdateId(_id);
+      console.log(week,"weeekkkk",weeksCount )
+    //const {comments, star, isLiked, _id} = userRatingData[0];
+
+      let week_rating =userRatingData.filter(data => data.week ==weeksCount);
+      console.log(week_rating,"filetrr");
+      if(week_rating.length >0){
+        const {comments, star, isLiked, _id} =  week_rating[0]
+        getDataSet(isLiked, 'LIKE');
+        getDataSet(star, 'STAR');
+        getDataSet(comments, 'COMMENT');
+        setUpdateId(_id);
+      }else{
+        getDataSet(false, 'LIKE');
+        getDataSet(null, 'STAR');
+        getDataSet([], 'COMMENT');
+        //setUpdateId(_id);
+      }
+   
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -99,7 +115,8 @@ const TwentyTwo = (props) => {
     let params = {
       user_id: getItem('userId'),
       program_id: getItem('programId'),
-      week: week,
+     // week: week,
+      week:weeksCount
     };
     if (mode === 'LIKE') {
       setLike(!value);
@@ -115,7 +132,8 @@ const TwentyTwo = (props) => {
     }
 
     if (isAPI) {
-      if (userRatingData && userRatingData.length) {
+      if(userRatingData && userRatingData.filter(data => data.week ==weeksCount).length>0){
+      //if (userRatingData && userRatingData.length) {
         let updateParams = {
           id: updateId,
         };

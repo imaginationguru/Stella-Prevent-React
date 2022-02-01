@@ -1,20 +1,28 @@
 import store from '../store/setup';
 
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 const isInternet = () => window.navigator.onLine;
 let accessToken = () => store.getState().authReducer.loginToken;
 
 const checkIfWeekCanAccess = (week = 1, planInfo = {}) => {
-  console.log(planInfo, "llolll")
-  if (planInfo.numericPrice === 0 && week < 2)
-    return true
-  else if (planInfo.numericPrice>0)
-    return true
-  else
-    return false
-}
-const getSelectedWeekDayCards = (curr_week, curr_day, data) => {
- 
+  console.log(planInfo, 'llolll');
+  if (planInfo.numericPrice === 0 && week < 2) return true;
+  else if (planInfo.numericPrice > 0) return true;
+  else return false;
+};
+const getSelectedWeekDayCards = (curr_week, curr_day, data) => {};
+
+const canProceedNextDay = (curr_week, curr_day, total_week, total_day) => {
+  console.log(curr_week, curr_day, total_week, total_day,"curr_week, curr_day, total_week, total_day")
+  if (curr_week < total_week) {
+    return true;
+  } else if (curr_week == total_week) {
+    if (curr_day <= total_day) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 };
 
 const checkNextDayUnlocked = (curr_week, curr_day, total_week, total_day) => {
@@ -49,4 +57,4 @@ const checkNextDayUnlocked = (curr_week, curr_day, total_week, total_day) => {
   }
 };
 
-export { isInternet, accessToken, checkIfWeekCanAccess ,getSelectedWeekDayCards};
+export {isInternet, accessToken, checkIfWeekCanAccess, getSelectedWeekDayCards,canProceedNextDay};
