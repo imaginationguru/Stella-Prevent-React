@@ -10,7 +10,6 @@ const styles = {
     height: '200px',
     margin: '0 auto',
     flexDirection: 'column',
-    //border: '1px solid red',
   },
   imageTag: {maxHeight: '100%', margin: '0 auto'},
   content: {marginTop: '10px', marginBottom: '20px'},
