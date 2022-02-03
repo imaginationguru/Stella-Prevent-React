@@ -64,8 +64,12 @@ const ComparisonTemplate = (props) => {
     (state) => state.moduleOne,
   );
   const {headers = [], content = []} = assessmentData;
-  const headerIdDuringPregnancy = headers.length ? headers[0]._id : null;
-  const headerIdAfterPregnancy = headers.length ? headers[1]._id : null;
+  const headerIdDuringPregnancy = headers.length
+    ? headers[0] && headers[0]._id
+    : null;
+  const headerIdAfterPregnancy = headers.length
+    ? headers[1] && headers[1]._id
+    : null;
   const {
     card_title,
     card_time,
@@ -192,7 +196,7 @@ const ComparisonTemplate = (props) => {
       });
     }
   };
-
+  console.log('active state????', activeState);
   return (
     <>
       <CardTitle title={ReactHtmlParser(card_title)} />
