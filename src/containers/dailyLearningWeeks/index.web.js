@@ -27,12 +27,12 @@ const DailyLearningWeeks = (props) => {
     assessmentData = {},
     userQuestion = [],
   } = useSelector((state) => state.moduleOne);
-  console.log(
-    'userAssessmentData in daily learning',
-    userAssessmentData,
-    'get assesment data',
-    asessmentData,
-  );
+  // console.log(
+  //   'userAssessmentData in daily learning',
+  //   userAssessmentData,
+  //   'get assesment data',
+  //   asessmentData,
+  // );
   const {
     templateData = [],
     currentActiveCard = [],
@@ -62,11 +62,12 @@ const DailyLearningWeeks = (props) => {
   // Api calling part
   useEffect(() => {
     if (isFromDashboard) {
+      console.log('selected card ID', selectedCardId);
       applicableCards(selectedCardId);
     }
   }, [isFromDashboard]);
   useEffect(() => {
-    console.log(currentData, 'currentData........');
+    // console.log(currentData, 'currentData........');
     if (currentData._id) {
       const {card: {assessment_id} = {}} = currentData;
       if (assessment_id !== null) {
@@ -77,7 +78,7 @@ const DailyLearningWeeks = (props) => {
   }, [currentData, currentData._id, dispatch]);
   // api response handling
   useEffect(() => {
-    console.log(templateData, 'currentData........1111');
+    // console.log(templateData, 'currentData........1111');
     if (templateData.length) {
       if (mData.length) {
         let data = {};
@@ -99,11 +100,12 @@ const DailyLearningWeeks = (props) => {
 
   useEffect(() => {
     // dispatch(AppActions.getTemplateData(currentWeek)); No Need
-   if(templateData.length ==0){
-    dispatch(AppActions.getCurrentActiveCard());
+    if (templateData.length == 0) {
+      dispatch(AppActions.getCurrentActiveCard());
     }
+    //dispatch(AppActions.getCurrentActiveCard());
   }, [dispatch]);
-  console.log('current actice cards', currentActiveCard);
+
   const templateDataMapper = (data = []) => {
     let temp = [];
     if (data.length) {
@@ -118,7 +120,7 @@ const DailyLearningWeeks = (props) => {
         }
       });
     }
-    console.log(temp, 'temp....');
+    //console.log(temp, 'temp....');
     return temp;
   };
   const mData = templateData.length ? templateDataMapper(templateData) : [];
@@ -136,13 +138,13 @@ const DailyLearningWeeks = (props) => {
     .map((item) => item._id);
 
   const cardDataHandler = (data) => {
-    console.log(data, 'dataaaa cardDataHandler');
+    //  console.log(data, 'dataaaa cardDataHandler');
     if (isScrollerLoad) {
       window.scrollTo(0, 200);
       setScrollerLoad(false);
     }
     setCurrentData(data);
-    console.log('set current data', currentData);
+    // console.log('set current data', currentData);
     if (cIds.length) {
       const currentIndex = cIds.findIndex((item) => item === data._id);
       let nextId = '';
@@ -174,7 +176,7 @@ const DailyLearningWeeks = (props) => {
   };
   const applicableDay = () => {
     let temp = [];
-    console.log('mdtaa', mData);
+    //  console.log('mdtaa', mData);
     if (mData.length) {
       const daysArr = [...new Set(mData.map((item) => item.day))];
       daysArr.forEach((item) => {
@@ -186,7 +188,7 @@ const DailyLearningWeeks = (props) => {
         });
       });
     }
-    console.log('temp', temp);
+    // console.log('temp', temp);
     return temp;
   };
   const cardsColorDisable = () => {
@@ -224,11 +226,11 @@ const DailyLearningWeeks = (props) => {
 
   const applicableCards = (id = '') => {
     let temp = cardsColorDisable();
-    console.log(temp, 'Data......', id);
+    // console.log(temp, 'Data......', id);
     var selectedObject = temp.filter((el) => {
       return el.card === id;
     });
-    console.log('selectedObject', selectedObject);
+    //  console.log('selectedObject', selectedObject);
     return selectedObject.length > 0 ? selectedObject[0].isCompleted : false;
 
     // console.log("selectedObject",selectedObject)
@@ -258,11 +260,11 @@ const DailyLearningWeeks = (props) => {
   };
   // console.log('mData>>>>>>>', mData);
   // console.log('prev data>>>>>>>>>>...', prevData);
-  // console.log('current data>>>>>>>>', currentData);
+  console.log('current data>>>>>>>>', currentData);
   // console.log('next Data>>>>>>>>>>>.', nextData);
-
+  console.log('current active cards', currentActiveCard);
   const completeCardAPI = (nextday = '') => {
-    console.log('complete current data', nextday, currentData);
+    //  console.log('complete current data', nextday, currentData);
     if (currentData._id) {
       let completeParams = {
         id: currentData._id,
@@ -272,7 +274,7 @@ const DailyLearningWeeks = (props) => {
         week: currentData.week,
         day: currentData.day,
       };
-      console.log('complete params>>>>>>>', completeParams);
+      /// console.log('complete params>>>>>>>', completeParams);
 
       dispatch(
         AppActions.markCompleteCard(completeParams, selectedWeek, nextday),
@@ -310,20 +312,20 @@ const DailyLearningWeeks = (props) => {
       return;
     }
     let current_Index = mData.findIndex((val) => val._id === currentData._id);
-    console.log(current_Index, 'current_Index...');
+    // console.log(current_Index, 'current_Index...');
 
     /**Check if next day is unlocked */
     dispatch(
       AppActions.checkActiveCard((res) => {
-        console.log(res, 'res check active card');
-        console.log('selected day', selectedDay);
+        // console.log(res, 'res check active card');
+        // console.log('selected day', selectedDay);
         let canProceed = canProceedNextDay(
           selectedWeek,
           selectedDay + 1,
           res.current_week,
           res.current_day,
         );
-        console.log(canProceed, 'canProceed');
+        //console.log(canProceed, 'canProceed');
         if (canProceed) {
           console.log(mData, 'mData......');
           dispatch({
@@ -334,7 +336,7 @@ const DailyLearningWeeks = (props) => {
             type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
             payload: mData[current_Index + 1]._id,
           });
-          console.log(mData[current_Index + 1], 'mData[current_Index + 1....');
+          // console.log(mData[current_Index + 1], 'mData[current_Index + 1....');
           completeCardAPI(true);
           setScrollerLoad(true);
           cardDataHandler(mData[current_Index + 1]);
@@ -405,8 +407,8 @@ const DailyLearningWeeks = (props) => {
                     currentDay={selectedDay}
                     // onDayChange={(val) => setCurrentDay(val)}
                     isDisabled={applicableDay()}
-                    onDayChange={(val) => {  
-                      console.log(val,"val....")
+                    onDayChange={(val) => {
+                      console.log(val, 'val....');
                       const isClickable = applicableDay().length
                         ? applicableDay().some((e) => {
                             return e.day === val && e.isDisabled === false;
@@ -421,9 +423,9 @@ const DailyLearningWeeks = (props) => {
                           type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                           payload: '',
                         });
-                      } 
-                     else if (
-                        loginData?.planInfo?.numericPrice == 0  && val >2
+                      } else if (
+                        loginData?.planInfo?.numericPrice == 0 &&
+                        val > 2
                       ) {
                         customAlert(
                           "You've reached your free content limit. Please upgrade your plan.",
