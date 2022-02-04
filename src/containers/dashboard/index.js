@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import dashboardHeader from '../../assets/images/dashboardHeader/dashboardHeader.png';
 import sleep from '../../assets/images/sleep/sleep.png';
 import activity from '../../assets/images/sleep/activity.png';
@@ -15,20 +15,20 @@ import ProfileHeader from '../../components/common/profileHeader';
 import Footer from '../../components/Footer';
 import profile from '../../assets/images/profile.png';
 import Loader from '../../components/Loader';
-import { getItem } from '../../utils/AsyncUtils';
-import { useDispatch, useSelector } from 'react-redux';
+import {getItem} from '../../utils/AsyncUtils';
+import {useDispatch, useSelector} from 'react-redux';
 import * as AppActions from '../../actions';
-import { navigatorPush } from '../../config/navigationOptions.web';
+import {navigatorPush} from '../../config/navigationOptions.web';
 import Modal from 'modal-react-native-web';
 import EpdsScreener from '../../components/common/epdsScreener';
-const { COLORS, ACTION_TYPE } = GLOBALS;
-const { DARK_GREEN, WHITE } = COLORS;
-import { Dimensions } from 'react-native-web';
+const {COLORS, ACTION_TYPE} = GLOBALS;
+const {DARK_GREEN, WHITE} = COLORS;
+import {Dimensions} from 'react-native-web';
 import Header from '../../components/Header';
-import { epdsModalAction } from '../../actions';
+import {epdsModalAction} from '../../actions';
 const DEVICE_WIDTH = Dimensions.get('window').width;
-import { checkIfWeekCanAccess } from '../../helpers/common.web';
-import { customAlert } from '../../helpers/commonAlerts.web';
+import {checkIfWeekCanAccess} from '../../helpers/common.web';
+import {customAlert} from '../../helpers/commonAlerts.web';
 const Dashboard = () => {
   const [click_week, setClickWeek] = useState(1);
 
@@ -37,15 +37,17 @@ const Dashboard = () => {
   let epdsAssesment = getItem('epdsAssesment');
   let duration = getItem('duration');
   const dispatch = useDispatch();
-  const { data = {} } = useSelector((state) => state);
-  const { currentActiveCard = [], selectedWeek = 1,selectedCardId = '' } = useSelector(
-    (state) => state.moduleOne,
-  );
-  const { isEPDSModalShow = true } = useSelector((state) => state.common);
-  const { programData = [] } = useSelector((state) => state.authReducer);
-  const { isLoading } = useSelector((state) => state.common);
-  const { loginData = [] } = useSelector((state) => state.authReducer);
-  const { week, day } = currentActiveCard.length ? currentActiveCard[0] : {};
+  const {data = {}} = useSelector((state) => state);
+  const {
+    currentActiveCard = [],
+    selectedWeek = 1,
+    selectedCardId = '',
+  } = useSelector((state) => state.moduleOne);
+  const {isEPDSModalShow = true} = useSelector((state) => state.common);
+  const {programData = []} = useSelector((state) => state.authReducer);
+  const {isLoading} = useSelector((state) => state.common);
+  const {loginData = []} = useSelector((state) => state.authReducer);
+  const {week, day} = currentActiveCard.length ? currentActiveCard[0] : {};
   const lengthToArray = (len = 0) => {
     let temp = [];
     if (len > 1) {
@@ -60,12 +62,12 @@ const Dashboard = () => {
     console.log('login data dashboard', loginData);
     dispatch(AppActions.getPlans());
     dispatch(AppActions.getProgramById());
-    if(currentActiveCard.length ==0){
-      dispatch(AppActions.getCurrentActiveCard());
-    }
-   
+    // if (currentActiveCard.length == 0) {
+    //   dispatch(AppActions.getCurrentActiveCard());
+    // }
+    dispatch(AppActions.getCurrentActiveCard());
   }, []);
-  const TrackersUI = ({ title, src, onClick }) => {
+  const TrackersUI = ({title, src, onClick}) => {
     return (
       <div
         style={styles.trackerWrap}
@@ -80,13 +82,11 @@ const Dashboard = () => {
           </p>
         </div>
         <div className="tracker-arrow">
-          <img src={rightArrow} style={{ width: '100%', height: '100%' }} />
+          <img src={rightArrow} style={{width: '100%', height: '100%'}} />
         </div>
       </div>
     );
   };
- 
- 
 
   const handleWeekClick = (item) => {
     let canWeekAccess = checkIfWeekCanAccess(item, loginData.planInfo);
@@ -101,7 +101,7 @@ const Dashboard = () => {
       });
       dispatch(
         AppActions.getCurrentActiveCard((res) => {
-          if (item <= res.current_week || item ==1) {
+          if (item <= res.current_week || item == 1) {
             dispatch(AppActions.getWeek(item));
             dispatch({
               type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
@@ -115,12 +115,16 @@ const Dashboard = () => {
             setTimeout(() => {
               navigatorPush({
                 screenName: 'DailyLearningWeeks',
-               passProps: { weeksCount: item },
+                passProps: {weeksCount: item},
               });
             }, 1000);
-        
           } else {
-            customAlert(!checkIfWeekCanAccess(item, loginData?.planInfo) ? "Please upgrade your plan to Premium to access content" : 'Content not unlocked', 'error');
+            customAlert(
+              !checkIfWeekCanAccess(item, loginData?.planInfo)
+                ? 'Please upgrade your plan to Premium to access content'
+                : 'Content not unlocked',
+              'error',
+            );
           }
         }),
       );
@@ -128,15 +132,15 @@ const Dashboard = () => {
       customAlert(
         'Please upgrade your plan to Premium to access content',
         'error',
-        {showCloseButton: true,}
+        {showCloseButton: true},
       );
-    }                                        
+    }
   };
   return (
     <div>
       <PopUp />
       <ProfileHeader
-        onProfileClick={() => navigatorPush({ screenName: 'Profile' })}
+        onProfileClick={() => navigatorPush({screenName: 'Profile'})}
         showProfileBtn={true}
         showEditIcon={false}
       />
@@ -148,17 +152,19 @@ const Dashboard = () => {
             <div
               style={styles.dailylearnWrap}
               onClick={() => {
-             //   debugger
-              //  {selectedCardId == '' ? 
-              dispatch(
-                AppActions.getTemplateData(currentActiveCard.current_week),
-              );
+                //   debugger
+                //  {selectedCardId == '' ?
+                // dispatch(AppActions.getCurrentActiveCard());
+                dispatch(
+                  AppActions.getTemplateData(currentActiveCard.current_week),
+                );
+
                 dispatch({
                   type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                   payload: currentActiveCard._id,
-                })
-              //   : 
-              // null};
+                });
+                //   :
+                // null};
                 dispatch({
                   type: GLOBALS.ACTION_TYPE.GET_SELECTED_WEEK,
                   payload: currentActiveCard.current_week,
@@ -173,7 +179,7 @@ const Dashboard = () => {
                 });
                 navigatorPush({
                   screenName: 'DailyLearningWeeks',
-                  passProps: { isFromDashboard: true },
+                  passProps: {isFromDashboard: true},
                 });
               }}
               className="display-board">
@@ -190,7 +196,7 @@ const Dashboard = () => {
                   paddingLeft: 30,
                   cursor: 'pointer',
                 }}>
-                <p style={{ fontWeight: 'bold', fontSize: 25 }}>
+                <p style={{fontWeight: 'bold', fontSize: 25}}>
                   Today’s Daily Learning
                 </p>
                 <p>
@@ -206,14 +212,14 @@ const Dashboard = () => {
               src={sleep}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({ screenName: 'SleepTracker' });
+                navigatorPush({screenName: 'SleepTracker'});
               }}
             />
             <TrackersUI
               title="What activities have you done?"
               src={activity}
               onClick={() => {
-                navigatorPush({ screenName: 'ActivityTracker' });
+                navigatorPush({screenName: 'ActivityTracker'});
               }}
             />
             <TrackersUI
@@ -221,7 +227,7 @@ const Dashboard = () => {
               src={face}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({ screenName: 'MoodTracker' });
+                navigatorPush({screenName: 'MoodTracker'});
               }}
             />
           </div>
@@ -230,14 +236,12 @@ const Dashboard = () => {
           {lengthToArray(duration).map((item, index) => {
             return (
               <div className="week-item">
-
                 <div
-                className="week-inside"
+                  className="week-inside"
                   onClick={() => {
                     setClickWeek(item);
                     handleWeekClick(item);
                     return;
-
                   }}
                   // className="col-sm-2 col-md-2"
                   style={{
@@ -255,20 +259,21 @@ const Dashboard = () => {
                         ? 'linear-gradient(161.44deg, #4AA695 12.57%, #006F59 63.39%)'
                         : WHITE,
                   }}>
-                    {index !=0 ? 
+                  {index != 0 ? (
                     <>
-                    {!checkIfWeekCanAccess(item, loginData?.planInfo) ? 
-                       <img src= {`${lock}`}
-                     style={{
-                      justifyContent: 'center',
-                      backgroundSize: 'center',
-                      position: 'absolute',
-                  
-                   }}/>
-                  : null}
-                   </>
-                  : null}
-                  
+                      {!checkIfWeekCanAccess(item, loginData?.planInfo) ? (
+                        <img
+                          src={`${lock}`}
+                          style={{
+                            justifyContent: 'center',
+                            backgroundSize: 'center',
+                            position: 'absolute',
+                          }}
+                        />
+                      ) : null}
+                    </>
+                  ) : null}
+
                   <span
                     style={{
                       ...styles.weekTitle,
@@ -277,15 +282,13 @@ const Dashboard = () => {
                     Week <br />
                     <span style={styles.weekNumber}>{item}</span>
                   </span>
-               
                 </div>
               </div>
             );
           })}
           <div className="week-item">
-
             <div
-             className="week-inside"
+              className="week-inside"
               // className="col-sm-2 col-md-2"
               style={{
                 borderRadius: 20,
@@ -298,8 +301,8 @@ const Dashboard = () => {
                 customAlert(
                   'Please upgrade your plan to Premium to access content',
                   'error',
-                  {showCloseButton: true,}
-                )
+                  {showCloseButton: true},
+                );
                 // alert('Content not unlocked');
                 // Swal.fire({
                 //   text: !checkIfWeekCanAccess(7, loginData?.planInfo) ? "Please upgrade your plan to Premium to access content" : 'Content not unlocked',
@@ -349,7 +352,7 @@ const styles = {
     fontWeight: '700',
     cursor: 'pointer',
   },
-  weekTitle: { paddingTop: 10, fontSize: 15, fontWeight: '700' },
+  weekTitle: {paddingTop: 10, fontSize: 15, fontWeight: '700'},
   trackerWrap: {
     display: 'flex',
     //  justifyContent: 'space-around',
@@ -394,8 +397,7 @@ const styles = {
     // marginTop: 30,
     marginBottom: 30,
     position: 'relative',
-    ///  border: '1px solid blue',
+    // border: '1px solid blue',
     boxShadow: '1px 3px 1px #D6F0EB',
   },
- 
 };
