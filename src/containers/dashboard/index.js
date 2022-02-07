@@ -298,11 +298,9 @@ const Dashboard = () => {
                 border: `2px solid ${DARK_GREEN}`,
               }}
               onClick={() => {
-                customAlert(
-                  'Please upgrade your plan to Premium to access content',
-                  'error',
-                  {showCloseButton: true},
-                );
+                customAlert('Content currently not available', 'error', {
+                  showCloseButton: true,
+                });
                 // alert('Content not unlocked');
                 // Swal.fire({
                 //   text: !checkIfWeekCanAccess(7, loginData?.planInfo) ? "Please upgrade your plan to Premium to access content" : 'Content not unlocked',
