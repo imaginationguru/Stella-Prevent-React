@@ -381,7 +381,10 @@ const DailyLearningWeeks = (props) => {
                   Home /
                   <span style={{color: COLORS.GRAY1, fontWeight: 'bold'}}>
                     {''}
-                    Week {weeksCount}
+                    Week{' '}
+                    {weeksCount === undefined
+                      ? currentActiveCard.current_week
+                      : weeksCount}
                   </span>
                 </p>
               </div>
