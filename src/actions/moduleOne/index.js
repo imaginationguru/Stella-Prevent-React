@@ -10,11 +10,11 @@ import {customAlert} from '../../helpers/commonAlerts.web';
 const {ACTION_TYPE, URL, COLORS, STRINGS} = GLOBALS;
 const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
 import Swal from 'sweetalert2';
-import  {getUser}  from '../auth';
-import { useSelector } from 'react-redux';
+import {getUser} from '../auth';
+import {useSelector} from 'react-redux';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 var h2p = require('html2plaintext');
-import {store} from '../../store/setup.web'
+import {store} from '../../store/setup.web';
 
 /********************GET CURRENT ACTIVE CARD Data************** */
 export function getCurrentActiveCard(cb) {
@@ -37,31 +37,27 @@ export function getCurrentActiveCard(cb) {
         dispatch({
           type: ACTION_TYPE.GET_CURRENT_ACTIVE_CARD_SUCCESS,
           payload: json.data,
-        //  payload: json.data.data,
+          //  payload: json.data.data,
         });
-    
-        
-        dispatch(
-          getTemplateData(selectedWeeks),
-          
-        );
-        console.log(selectedWeeks, json.data,"Setting data")
+
+        dispatch(getTemplateData(selectedWeeks));
+        // console.log(selectedWeeks, json.data, 'Setting data');
         // dispatch({
         //   type: 'GET_SELECTED_DAY',
         //   payload:
         //     json.data ? json.data.day : 1,
         // });
-        dispatch({
-          type: 'GET_SELECTED_CARD_ID',
-          payload:
-            json.data && json.data.length
-              ? json.data._id
-              : '',
-          //    payload:
-          //  json.data.data && json.data.data.length
-          //    ? json.data.data[0]._id
-          //    : '',
-        });
+        {
+          /***on reload same card id exits */
+          //   //    payload:
+          //   //  json.data.data && json.data.data.length
+          //   //    ? json.data.data[0]._id
+          //   //    : '',
+        }
+        // dispatch({
+        //   type: 'GET_SELECTED_CARD_ID',
+        //   payload: json.data && json.data.length ? json.data._id : '',
+        // });
       } else {
         if (json.code === 400) {
           dispatch({
@@ -313,7 +309,7 @@ export function getAssessmentData(assessmentId, id) {
           type: ACTION_TYPE.GET_ASSESSMENT_DATA_SUCCESS,
           payload: json.data,
         });
-        console.log("get Assesment data",json.data)
+        console.log('get Assesment data', json.data);
         if (id) {
           dispatch(getUserAssessment(id, assessmentId));
         }
@@ -464,14 +460,10 @@ export function saveUserAssessment(params, onSubmitMessage) {
       if (json.code === 200) {
         console.log('JSON data SAVE USER ASSESSMENT >>>>>>>>>', json);
         const submitMsg = h2p(onSubmitMessage);
-         if (
-          submitMsg !== undefined &&
-          submitMsg !== null &&
-          submitMsg !== ''
-        ) {   
-          customAlert(submitMsg,"success");
-        }else{
-          customAlert(json.message,"success")
+        if (submitMsg !== undefined && submitMsg !== null && submitMsg !== '') {
+          customAlert(submitMsg, 'success');
+        } else {
+          customAlert(json.message, 'success');
         }
         // dispatch({
         //   type: ACTION_TYPE.SAVE_USER_ASSESSMENT_SUCCESS,
@@ -482,7 +474,7 @@ export function saveUserAssessment(params, onSubmitMessage) {
         //   submitMsg !== null &&
         //   submitMsg !== '' &&
         //   submitMsg.length > 100
-        // ) 
+        // )
         {
           /* 
            Swal.fire({
@@ -494,14 +486,13 @@ export function saveUserAssessment(params, onSubmitMessage) {
             width: DEVICE_WIDTH > 1000 ? '25vw' : '60vw',
           });
           */
-         
-        } 
+        }
         // else if (
         //   submitMsg !== undefined &&
         //   submitMsg !== null &&
         //   submitMsg !== '' &&
         //   submitMsg.length <= 100
-        // ) 
+        // )
         // {
         //   dispatch({
         //     type: ACTION_TYPE.SUCCESS_MESSAGE,
@@ -744,14 +735,10 @@ export function rearrangeAssessments(params, onSubmitMessage) {
       if (json.code === 200) {
         console.log('JSON dataREARRANGE USER ASSESSMENT >>>>>>>>>', json);
         const submitMsg = h2p(onSubmitMessage);
-        if (
-          submitMsg !== undefined &&
-          submitMsg !== null &&
-          submitMsg !== ''
-        ) {   
-          customAlert(submitMsg,"success");
-        }else{
-          customAlert(json.message,"success")
+        if (submitMsg !== undefined && submitMsg !== null && submitMsg !== '') {
+          customAlert(submitMsg, 'success');
+        } else {
+          customAlert(json.message, 'success');
         }
         // dispatch({
         //   type: ACTION_TYPE.REARRANGE_ASSESSMENT_SUCCESS,
@@ -1091,7 +1078,7 @@ export function savePatientAssessment(
   assessmentId,
   isEPDS,
   cb,
-  _id
+  _id,
 ) {
   console.log(
     'params save patient assessment',
@@ -1103,8 +1090,7 @@ export function savePatientAssessment(
     assessment_id: assessmentId,
     user_id: getItem('userId'),
     stellaPrevent: true,
-    card_id: params[0].card_id
-
+    card_id: params[0].card_id,
   };
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.SAVE_PATIENT_ASSESSMENT_REQUEST});
@@ -1121,8 +1107,8 @@ export function savePatientAssessment(
         {
           if (message && message.length) {
             const submitMsg = h2p(message);
-            customAlert(submitMsg,"success",)
-           // customAlert(message,"success")
+            customAlert(submitMsg, 'success');
+            // customAlert(message,"success")
 
             // dispatch({
             //   type: ACTION_TYPE.SUCCESS_MESSAGE,
@@ -1141,7 +1127,7 @@ export function savePatientAssessment(
               // });
             }
           } else {
-            customAlert(json.message,"success")
+            customAlert(json.message, 'success');
             // dispatch({
             //   type: ACTION_TYPE.SUCCESS_MESSAGE,
             //   payload: json.message,
@@ -1294,14 +1280,14 @@ export function Addpayment(params, componentId) {
     try {
       let json = await RestClient.postCall(URL.SAVE_PAYMENT, params);
       if (json.code === 200) {
-        customAlert(json.message,"success")
+        customAlert(json.message, 'success');
 
         // dispatch({
         //   type: ACTION_TYPE.SUCCESS_MESSAGE,
         //   payload: json.message,
         // });
         console.log('Addpayment', json);
-        dispatch(getUser(postdata))
+        dispatch(getUser(postdata));
         navigatorPush({componentId, screenName: 'Dashboard'});
       } else {
         if (json.code === 400) {
