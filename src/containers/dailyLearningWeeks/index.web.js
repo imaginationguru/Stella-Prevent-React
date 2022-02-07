@@ -6,10 +6,7 @@ import GLOBALS from '../../constants';
 import * as AppActions from '../../actions';
 import {Header, SubHeader} from './Navbar';
 import GenerateUI from './GenerateUI';
-import BackBtn from '../../components/common/backbtn';
 import BackToDashboard from '../../components/common/backToDashboard';
-const {COLORS} = GLOBALS;
-
 import {
   getSelectedWeekDayCards,
   canProceedNextDay,
@@ -17,9 +14,9 @@ import {
 import {customAlert} from '../../helpers/commonAlerts.web';
 import {navigatorPush} from '../../config/navigationOptions.web';
 
+const {COLORS} = GLOBALS;
 const DailyLearningWeeks = (props) => {
   let isFromDashboard = props.location?.state?.isFromDashboard;
-
   const dispatch = useDispatch();
   const {userAssessmentData = []} = useSelector((state) => state.moduleOne);
   const {
@@ -27,12 +24,6 @@ const DailyLearningWeeks = (props) => {
     assessmentData = {},
     userQuestion = [],
   } = useSelector((state) => state.moduleOne);
-  // console.log(
-  //   'userAssessmentData in daily learning',
-  //   userAssessmentData,
-  //   'get assesment data',
-  //   asessmentData,
-  // );
   const {
     templateData = [],
     currentActiveCard = [],
@@ -47,25 +38,25 @@ const DailyLearningWeeks = (props) => {
       : 1,
   );
   const {loginData = []} = useSelector((state) => state.authReducer);
-
-  const {_id, week, day, is_disabled} = currentActiveCard.length
-    ? currentActiveCard[0]
-    : {};
+  const {week, day} = currentActiveCard.length ? currentActiveCard[0] : {};
   const [currentData, setCurrentData] = useState({});
   const [isScrollerLoad, setScrollerLoad] = useState(false);
   const [nextData, setNextData] = useState({});
   const [prevData, setPrevData] = useState({});
+
   // useEffect(() => {
   //   let nextCardIsActive = mData.find((item) => item._id === currentData._id);
   //   // console.log('index value', nextCardIsActive);
   // }, [currentData]);
   // Api calling part
+
   useEffect(() => {
     if (isFromDashboard) {
       console.log('selected card ID', selectedCardId);
       applicableCards(selectedCardId);
     }
   }, [isFromDashboard]);
+
   useEffect(() => {
     // console.log(currentData, 'currentData........');
     if (currentData._id) {
@@ -76,6 +67,7 @@ const DailyLearningWeeks = (props) => {
       }
     }
   }, [currentData, currentData._id, dispatch]);
+
   // api response handling
   useEffect(() => {
     // console.log(templateData, 'currentData........1111');
@@ -274,7 +266,6 @@ const DailyLearningWeeks = (props) => {
         week: currentData.week,
         day: currentData.day,
       };
-      /// console.log('complete params>>>>>>>', completeParams);
 
       dispatch(
         AppActions.markCompleteCard(completeParams, selectedWeek, nextday),
@@ -294,9 +285,6 @@ const DailyLearningWeeks = (props) => {
 
   const onNextDayClick = () => {
     completeCardAPI(true);
-    // alert('3');
-    console.log(currentData, selectedDay, selectedCardId);
-
     if (
       loginData?.planInfo?.numericPrice == 0 &&
       currentData.day === 2 &&
@@ -312,7 +300,6 @@ const DailyLearningWeeks = (props) => {
       return;
     }
     let current_Index = mData.findIndex((val) => val._id === currentData._id);
-    // console.log(current_Index, 'current_Index...');
 
     /**Check if next day is unlocked */
     dispatch(
@@ -325,9 +312,8 @@ const DailyLearningWeeks = (props) => {
           res.current_week,
           res.current_day,
         );
-        //console.log(canProceed, 'canProceed');
+
         if (canProceed) {
-          console.log(mData, 'mData......');
           dispatch({
             type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
             payload: selectedDay + 1,
@@ -452,18 +438,7 @@ const DailyLearningWeeks = (props) => {
                     // onCardChange={(id) => setCurrentCardId(id)}
                     onCardChange={(id, i) => {
                       const isClickable = id ? applicableCards(id) : false;
-                      console.log(id, 'test...', currentData._id);
-                      console.log(
-                        '?????????????disable',
-                        currentData.is_disabled,
-                        'is read',
-                        currentData.is_read,
-                        'is comple',
-                        currentData.is_completed,
-                        currentData._id,
-                        id,
-                        i,
-                      );
+
                       if (isClickable) {
                         dispatch({
                           type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
@@ -648,12 +623,6 @@ const DailyLearningWeeks = (props) => {
                     <div className="footer-nav-right">
                       <div
                         onClick={() => {
-                          //  debugger;
-                          console.log(nextData, 'nextData onclick nextday');
-                          console.log(
-                            currentData,
-                            'currentData onclick nextday',
-                          );
                           onNextDayClick();
                           return;
                           dispatch(
@@ -717,6 +686,8 @@ const DailyLearningWeeks = (props) => {
                         <h3>Next Day</h3>
                       </div>
                     </div>
+                  ) : selectedWeek === 5 && selectedDay === 5 ? (
+                    ''
                   ) : (
                     <div className="footer-nav-right">
                       <div
