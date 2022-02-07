@@ -86,7 +86,7 @@ const ThirtyOne = (props) => {
             .filter((val) => val.image_type === 'first')
             .map((item, i) => {
               return (
-                <Animated animationIn={'fadeInUp'} style={styles.contentStyle}>
+                <Animated animationIn={'fadeInUp'}>
                   <div style={styles.wrapper} key={i}>
                     <CustomImage
                       src={`${IMAGE_BASE_URL}${item.image}`}
@@ -212,17 +212,21 @@ const styles = {
   wrapper: {
     display: 'flex',
     marginTop: '10px',
+
+    width: '100%',
   },
   contentStyle: {
     width: '80%',
-    display: 'flex',
-    alignSelf: 'flex-end',
+    // alignContent: 'flex-end',
+    // justifyContent: 'end',
+
+    float: 'right',
   },
   customImageStyle: {
     width: '180px',
     height: '180px',
-    marginLeft: '0',
+    // marginLeft: '0',
     flexDirection: 'column',
   },
-  descStyle: {width: '80%', alignSelf: 'center'},
+  descStyle: {width: '100%', marginLeft: '35px', marginTop: '25px'},
 };

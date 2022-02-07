@@ -111,7 +111,6 @@ const styles = {
   wrapper: {
     display: 'flex',
     marginTop: '10px',
-    justifyContent: 'space-between',
   },
   customImageStyle: {
     width: '180px',
@@ -119,5 +118,11 @@ const styles = {
     marginLeft: '0',
     flexDirection: 'column',
   },
-  descStyle: {width: '80%', alignSelf: 'center'},
+  descStyle: {
+    // width: '80%',
+    // alignContent: 'center',
+    marginTop: '23px',
+    //  border: '1px solid red',
+    marginLeft: '50px',
+  },
 };
