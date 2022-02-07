@@ -25,7 +25,7 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const {STRINGS, ACTION_TYPE} = GLOBALS;
 const MoodTracker = ({location}) => {
-  let isFromCard = location?.state?.isFromCard
+  let isFromCard = location?.state?.isFromCard;
   const dispatch = useDispatch();
   const {moodTrackerData} = useSelector((state) => state.tracker);
   const [moodId, setMoodId] = useState();
@@ -140,7 +140,8 @@ const MoodTracker = ({location}) => {
 
   return (
     <MasterLayout>
-      <BackBtn title = {isFromCard ? 'Back to Card' : 'Back to Dashboard'} />
+      {/* <BackBtn title = {isFromCard ? 'Back to Card' : 'Back to Dashboard'} /> */}
+      {isFromCard ? <BackBtn title="Back to Card" /> : <BackToDashboard />}
       <div style={styles.wrapper}>
         <p style={styles.ques} className="res-100">
           How is your mood today?

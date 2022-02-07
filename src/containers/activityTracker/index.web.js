@@ -140,7 +140,7 @@ const ActivityView = ({
 };
 
 const ActivityTracker = ({location}) => {
-  let isFromCard = location?.state?.isFromCard
+  let isFromCard = location?.state?.isFromCard;
 
   const dispatch = useDispatch();
   const {loginData} = useSelector((state) => state.authReducer);
@@ -317,7 +317,8 @@ const ActivityTracker = ({location}) => {
   // console.log('plasentActivityArray>>>>', plasentActivityArray)
   return (
     <MasterLayout>
-      <BackBtn title = {isFromCard ? 'Back to Card' : 'Back to Dashboard'} />
+      {/* <BackBtn title = {isFromCard ? 'Back to Card' : 'Back to Dashboard'} /> */}
+      {isFromCard ? <BackBtn title="Back to Card " /> : <BackToDashboard />}
       <div style={styles.wrapper}>
         <ActivityTab
           tabList={tabsType}

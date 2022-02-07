@@ -74,7 +74,7 @@ const SliderUI = ({setScale, getScale, isEditUI}) => {
 };
 
 const SleepTracker = ({location}) => {
-  let isFromCard = location?.state?.isFromCard
+  let isFromCard = location?.state?.isFromCard;
 
   const dispatch = useDispatch();
   const {getSleepTrackerData} = useSelector((state) => state.tracker);
@@ -324,8 +324,8 @@ const SleepTracker = ({location}) => {
   return (
     <View>
       <MasterLayout>
-      <BackBtn title = {isFromCard ? 'Back to Card' : 'Back to Dashboard'} />
-
+        {/* <BackBtn title = {isFromCard ? 'Back to Card' : 'Back to Dashboard'} /> */}
+        {isFromCard ? <BackBtn title="Back to Card" /> : <BackToDashboard />}
         <View style={styles.wrapper}>
           <View
             style={{
