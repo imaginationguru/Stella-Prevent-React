@@ -254,7 +254,6 @@ const DailyLearningWeeks = (props) => {
   const generateUI = (status, data = {}) => {
     switch (status) {
       case 1:
-        /// return <FourSeven {...data} />;
         return <TemplateOne {...data} />;
       case 2:
         return <TemplateTwo {...data} />;
