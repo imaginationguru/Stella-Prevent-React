@@ -74,6 +74,7 @@ const TwentyFour = (props) => {
                     style={{
                       ...styles.bigImage,
                       display: item.image !== '' ? 'flex' : 'none',
+                      // border: '1px solid red',
                     }}
                     isVisible={true}
                     animationIn={'fadeInUp'}
@@ -81,7 +82,8 @@ const TwentyFour = (props) => {
                   <p
                     style={{
                       textAlign: 'center',
-                      marginTop: '-30px',
+                      marginBottom: '60px',
+                      //border: '1px solid red',
                     }}>
                     {item.description}
                   </p>
@@ -134,7 +136,7 @@ const styles = {
   bigImage: {
     //width: '680px',
     width: '60%',
-    height: '380px',
+    height: 'auto',
     margin: '0 auto',
     // alignSelf: 'center',
     // justifyContent: 'center',
