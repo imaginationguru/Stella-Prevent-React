@@ -15,8 +15,9 @@ import {
   CardContent,
   CustomImage,
 } from '../../../components/Cards';
+import {Dimensions} from 'react-native';
 const {IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
-
+const DEVICE_WIDTH = Dimensions.get('window').width;
 const unique = (arr, keyProps) => {
   const kvArray = arr.map((entry) => {
     const key = keyProps.map((k) => entry[k]).join('|');
@@ -290,7 +291,7 @@ const ThirtyFive = (props) => {
                   <div
                     key={index}
                     style={{
-                      ...styles.droppableDivDrag,
+                      ...styles.droppableDiv,
                     }}
                     className="wip"
                     onDragOver={(e) => onDragOver(e, item._id)}
@@ -412,7 +413,13 @@ const styles = {
     borderRadius: '5px',
     backgroundColor: '#F1F3FA',
     paddingLeft: '20px',
+    //  border: '1px solid red',
   },
   wrapper: {marginTop: '40px'},
   droppableDiv: {width: '48%', paddingBottom: '60px'},
+  droppableDivDrag: {
+    width: DEVICE_WIDTH > 767 ? '23%' : '48%',
+    paddingBottom: DEVICE_WIDTH > 767 ? '60px' : '30px',
+    //  display: 'flex',
+  },
 };
