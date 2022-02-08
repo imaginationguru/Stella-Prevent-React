@@ -68,18 +68,28 @@ const TwentyFour = (props) => {
             })
             .map((item) => {
               return (
-                <CustomImage
-                  src={`${IMAGE_BASE_URL}${item.image}`}
-                  style={{
-                    ...styles.bigImage,
-                    display: item.image !== '' ? 'flex' : 'none',
-                  }}
-                  isVisible={true}
-                  animationIn={'fadeInUp'}
-                />
+                <div>
+                  <CustomImage
+                    src={`${IMAGE_BASE_URL}${item.image}`}
+                    style={{
+                      ...styles.bigImage,
+                      display: item.image !== '' ? 'flex' : 'none',
+                    }}
+                    isVisible={true}
+                    animationIn={'fadeInUp'}
+                  />
+                  <p
+                    style={{
+                      textAlign: 'center',
+                      marginTop: '-30px',
+                    }}>
+                    {item.description}
+                  </p>
+                </div>
               );
             })
         : null}
+
       {images && images.length
         ? images
             .filter((item) => {
