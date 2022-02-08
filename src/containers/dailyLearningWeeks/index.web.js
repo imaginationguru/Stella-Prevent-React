@@ -18,7 +18,9 @@ const {COLORS} = GLOBALS;
 const DailyLearningWeeks = (props) => {
   let isFromDashboard = props.location?.state?.isFromDashboard;
   const dispatch = useDispatch();
-  const {userAssessmentData = []} = useSelector((state) => state.moduleOne);
+  const {userAssessmentData = [], userRatingData = []} = useSelector(
+    (state) => state.moduleOne,
+  );
   const {
     asessmentData = {},
     assessmentData = {},
@@ -52,7 +54,7 @@ const DailyLearningWeeks = (props) => {
 
   useEffect(() => {
     if (isFromDashboard) {
-      console.log('selected card ID', selectedCardId);
+      // console.log('selected card ID', selectedCardId);
       applicableCards(selectedCardId);
     }
   }, [isFromDashboard]);
@@ -95,7 +97,6 @@ const DailyLearningWeeks = (props) => {
     if (templateData.length == 0) {
       dispatch(AppActions.getCurrentActiveCard());
     }
-    //dispatch(AppActions.getCurrentActiveCard());
   }, [dispatch]);
 
   const templateDataMapper = (data = []) => {
@@ -112,7 +113,7 @@ const DailyLearningWeeks = (props) => {
         }
       });
     }
-    //console.log(temp, 'temp....');
+
     return temp;
   };
   const mData = templateData.length ? templateDataMapper(templateData) : [];
@@ -309,6 +310,7 @@ const DailyLearningWeeks = (props) => {
         let canProceed = canProceedNextDay(
           selectedWeek,
           selectedDay + 1,
+
           res.current_week,
           res.current_day,
         );
@@ -556,8 +558,29 @@ const DailyLearningWeeks = (props) => {
                               ?.template_number == 27
                           ) {
                             //  alert('first one');
-                            console.log('right one??????');
+
                             if (!userQuestion[0]?.saved) {
+                              //debugger;
+                              customAlert(
+                                'Please perform your exercise',
+                                'error',
+                              );
+                              return;
+                            }
+                            dispatch({
+                              type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+                              payload: nextData._id,
+                            });
+                            completeCardAPI(true);
+                            setScrollerLoad(true);
+                            cardDataHandler(nextData);
+                          } else if (
+                            currentData.card?.template_data[0]
+                              ?.template_number == 22
+                          ) {
+                            //  alert('first one');
+
+                            if (userRatingData.length === 0) {
                               //debugger;
                               customAlert(
                                 'Please perform your exercise',
@@ -586,7 +609,11 @@ const DailyLearningWeeks = (props) => {
                             currentData.card?.template_data[0]
                               ?.template_number == 13 ||
                             currentData.card?.template_data[0]
-                              ?.template_number == 15
+                              ?.template_number == 15 ||
+                            currentData.card?.template_data[0]
+                              ?.template_number == 21 ||
+                            currentData.card?.template_data[0]
+                              ?.template_number == 25
                           ) {
                             // alert('11');
                             if (userAssessmentData.length == 0) {
@@ -628,20 +655,6 @@ const DailyLearningWeeks = (props) => {
                         onClick={() => {
                           onNextDayClick();
                           return;
-                          dispatch(
-                            AppActions.checkActiveCard((res) => {
-                              console.log(res);
-                              if (selectedDay + 1 <= res.current_day) {
-                                completeCardAPI(true);
-                              } else {
-                                completeCardAPI(true);
-                                customAlert(
-                                  " Next day's card enable by tomorrow",
-                                  'error',
-                                );
-                              }
-                            }),
-                          );
 
                           //   console.log(nextData,"selectedDay.....");
                           //     const isClickable = applicableDay().length
