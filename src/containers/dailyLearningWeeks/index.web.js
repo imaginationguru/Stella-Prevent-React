@@ -310,9 +310,10 @@ const DailyLearningWeeks = (props) => {
         let canProceed = canProceedNextDay(
           selectedWeek,
           selectedDay + 1,
-
-          res.current_week,
-          res.current_day,
+          res.unlocked_week,
+          res.unlocked_day,
+          // res.current_week,
+          // res.current_day,
         );
 
         if (canProceed) {
