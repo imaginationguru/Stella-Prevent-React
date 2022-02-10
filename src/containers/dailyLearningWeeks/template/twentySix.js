@@ -147,7 +147,22 @@ const TwentySix = (props) => {
           let sum = [a[0].length + c[0].length, ...differenceMessage];
           dispatch(AppActions.rearrangeAssessments(params, sum));
         } else if (slugData === 'never,sometimes,oftentimes') {
-          dispatch(AppActions.rearrangeAssessments(params, differenceMessage));
+          console.log('content message ?????', contentMessage);
+          if (contentMessage.length) {
+            let positiveRes = contentMessage.filter(
+              (item) => item === 'Sometimes' || item === 'Oftentimes',
+            );
+            if (positiveRes.length === 0) {
+              dispatch(
+                AppActions.rearrangeAssessments(params, negativeMessage),
+              );
+            } else {
+              dispatch(
+                AppActions.rearrangeAssessments(params, positiveMessage),
+              );
+            }
+          }
+          // dispatch(AppActions.rearrangeAssessments(params, differenceMessage));
         } else {
           if (contentMessage.length) {
             let agreeMessage = contentMessage.filter(
@@ -193,7 +208,22 @@ const TwentySix = (props) => {
             let sum = [a[0].length + c[0].length, ...differenceMessage];
             dispatch(AppActions.saveUserAssessment(params, sum));
           } else if (slugData === 'never,sometimes,oftentimes') {
-            dispatch(AppActions.saveUserAssessment(params, differenceMessage));
+            console.log('content message ?????', contentMessage);
+            if (contentMessage.length) {
+              let positiveRes = contentMessage.filter(
+                (item) => item === 'Sometimes' || item === 'Oftentimes',
+              );
+              if (positiveRes.length === 0) {
+                dispatch(
+                  AppActions.saveUserAssessment(params, negativeMessage),
+                );
+              } else {
+                dispatch(
+                  AppActions.saveUserAssessment(params, positiveMessage),
+                );
+              }
+            }
+            //  dispatch(AppActions.saveUserAssessment(params, differenceMessage));
           } else {
             if (contentMessage.length) {
               let agreeMessage = contentMessage.filter(
