@@ -853,7 +853,7 @@ export function updateUserAssessment(params) {
 }
 
 /********************ADD USER RATING COMMENT ASSESSMENT ************** */
-export function addUserRating(params) {
+export function addUserRating(params, week) {
   let userId = params.user_id;
   let programId = params.program_id;
   return async (dispatch) => {
@@ -872,7 +872,7 @@ export function addUserRating(params) {
         //   type: ACTION_TYPE.SUCCESS_MESSAGE,
         //   payload: json.message,
         // });
-        dispatch(getUserRating(userId, programId));
+        dispatch(getUserRating(userId, programId, week));
 
         dispatch(loadingAction(false));
       } else {
@@ -914,13 +914,13 @@ export function addUserRating(params) {
 }
 
 /********************GET USER ASSESSMENT ************** */
-export function getUserRating(userId, programId) {
+export function getUserRating(userId, programId, week) {
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.GET_USER_RATING_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.getCall(
-        `${URL.GET_USER_RATING}/${userId}/${programId}`,
+        `${URL.GET_USER_RATING}/${userId}/${programId}/${week}`,
       );
       if (json.code === 200) {
         console.log('JSON data gUSER ASSESSMENT>>>>>>>>>', json);
