@@ -616,7 +616,21 @@ const DailyLearningWeeks = (props) => {
                             currentData.card?.template_data[0]
                               ?.template_number == 21 ||
                             currentData.card?.template_data[0]
-                              ?.template_number == 25
+                              ?.template_number == 25 ||
+                            currentData.card?.template_data[0]
+                              ?.template_number == 26 ||
+                            currentData.card?.template_data[0]
+                              ?.template_number == 33 ||
+                            currentData.card?.template_data[0]
+                              ?.template_number == 35 ||
+                            currentData.card?.template_data[0]
+                              ?.template_number == 41 ||
+                            currentData.card?.template_data[0]
+                              ?.template_number == 44 ||
+                            currentData.card?.template_data[0]
+                              ?.template_number == 45 ||
+                            currentData.card?.template_data[0]
+                              ?.template_number == 46
                           ) {
                             // alert('11');
                             if (userAssessmentData.length == 0) {
