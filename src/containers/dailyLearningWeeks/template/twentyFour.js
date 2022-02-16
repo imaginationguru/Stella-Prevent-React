@@ -68,7 +68,12 @@ const TwentyFour = (props) => {
             })
             .map((item) => {
               return (
-                <div>
+                <div
+                  style={{
+                    height: '400px',
+                    // border: '1px solid red',
+                    marginBottom: '60px',
+                  }}>
                   <CustomImage
                     src={`${IMAGE_BASE_URL}${item.image}`}
                     style={{
@@ -112,20 +117,22 @@ const TwentyFour = (props) => {
         : null}
 
       {/**********************content************** */}
-      {content && content.length
-        ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardContent
-                  key={index}
-                  content={ReactHtmlParser(item.content)}
-                  isVisible={true}
-                  animationIn={'fadeInUp'}
-                />
-              );
-            })
-        : []}
+      <div style={{marginTop: '20px'}}>
+        {content && content.length
+          ? content
+              .sort((a, b) => (a.order > b.order && 1) || -1)
+              .map((item, index) => {
+                return (
+                  <CardContent
+                    key={index}
+                    content={ReactHtmlParser(item.content)}
+                    isVisible={true}
+                    animationIn={'fadeInUp'}
+                  />
+                );
+              })
+          : []}
+      </div>
       {showExercises && <ExerciseBox week={week} />}
     </>
   );
@@ -136,12 +143,14 @@ const styles = {
   bigImage: {
     //width: '680px',
     width: '60%',
-    height: 'auto',
+    height: '400px',
+    // height: 'auto',
     margin: '0 auto',
+    // width: 'auto',
     // alignSelf: 'center',
     // justifyContent: 'center',
     // display: 'flex',
     marginBottom: '40px',
-    // border: '1px solid red',
+    //border: '1px solid red',
   },
 };
