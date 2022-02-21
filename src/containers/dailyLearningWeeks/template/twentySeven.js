@@ -15,6 +15,7 @@ import {
   CardContent,
 } from '../../../components/Cards';
 import {Dimensions} from 'react-native';
+
 const {COLORS, ACTION_TYPE} = GLOBALS;
 const {LIGHT_GRAY, GREEN_TEXT, BUTTON_ORANGE, YELLOW, CIRCLE_GRAY} = COLORS;
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -35,6 +36,7 @@ const extractSelectQ = (x = []) => {
     const selectedQues = selectedQuesArr.length
       ? selectedQuesArr.filter((val) => val === true).length
       : 0;
+
     return selectedQues;
   }
 };
@@ -48,7 +50,7 @@ const TwentySeven = (props) => {
     showExercises,
     week,
     choosenAssessment,
-    _id
+    _id,
   } = props.card;
   const {submit_messages} = props;
   const [assessmentQues, setAssessmentQues] = useState([]);
@@ -58,75 +60,91 @@ const TwentySeven = (props) => {
   const {userQuestion = []} = useSelector((state) => state.moduleOne);
   const [totalQ, setTotalQ] = useState(0);
   const [selectQ, setSelectQ] = useState(0);
+  const [textValue, setTextValue] = useState('');
   //const isNotUpdate = totalQ === selectQ && selectQ === 10; //TODO true==save will not call
+  const alternateColor = [
+    [GREEN_TEXT],
+    [BUTTON_ORANGE],
+    [YELLOW],
+    [CIRCLE_GRAY],
+  ];
   const isNotUpdate = totalQ === selectQ;
   useEffect(() => {
     let params = {
       assessment_id: choosenAssessment,
       user_id: getItem('userId'),
       stellaPrevent: true,
-      card_id: _id
+      card_id: _id,
     };
     dispatch(AppActions.getUserQuestionInfo(params));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  
-
+  }, [_id]);
+  // console.log('Assessment ques>>>>>', assessmentQues);
   useEffect(() => {
     if (userQuestion.length) {
-      let x = userQuestion.map((item,index) => {
-        if(index==0 && item.totalPointEarned){
-          let firstCondition = '0-9';
-          let secondCondition = '10-16';
-          let thirdCondition = '17-21';
-          let fourthCondition = '>21';
-          if (item.totalPointEarned >= 0 && item.totalPointEarned <= 9) {
-            let conditionOne =
-              submit_messages && submit_messages.length
-                ? submit_messages.filter(
-                    (ele) => ele.condition === firstCondition,
-                  )
-                : [];
-            let messageOne = conditionOne.length && conditionOne[0].message;
-            setResultText(messageOne)
-
-          } else if (item.totalPointEarned >= 10 && item.totalPointEarned <= 16) {
-            let conditionSecond =
-              submit_messages && submit_messages.length
-                ? submit_messages.filter(
-                    (ele) => ele.condition === secondCondition,
-                  )
-                : [];
-            let messageSecond =
-              conditionSecond.length && conditionSecond[0].message;
-              setResultText(messageSecond)
-
-          } else if (item.totalPointEarned >= 17 && item.totalPointEarned <= 21) {
-            let conditionThird =
-              submit_messages && submit_messages.length
-                ? submit_messages.filter(
-                    (ele) => ele.condition === thirdCondition,
-                  )
-                : [];
-            let messageThird = conditionThird.length && conditionThird[0].message;
-            setResultText(messageThird)
-
-          } else if (item.totalPointEarned >= 21) {
-            let conditionFour =
-              submit_messages && submit_messages.length
-                ? submit_messages.filter(
-                    (ele) => ele.condition === fourthCondition,
-                  )
-                : [];
-            let messageFour = conditionFour.length && conditionFour[0].message;
-          setResultText(messageFour)
+      let x = userQuestion.map((item, index) => {
+        if (item.assessmentType === 'radio') {
+          if (index == 0 && item.totalPointEarned) {
+            let firstCondition = '0-9';
+            let secondCondition = '10-16';
+            let thirdCondition = '17-21';
+            let fourthCondition = '>21';
+            if (item.totalPointEarned >= 0 && item.totalPointEarned <= 9) {
+              let conditionOne =
+                submit_messages && submit_messages.length
+                  ? submit_messages.filter(
+                      (ele) => ele.condition === firstCondition,
+                    )
+                  : [];
+              let messageOne = conditionOne.length && conditionOne[0].message;
+              setResultText(messageOne);
+            } else if (
+              item.totalPointEarned >= 10 &&
+              item.totalPointEarned <= 16
+            ) {
+              let conditionSecond =
+                submit_messages && submit_messages.length
+                  ? submit_messages.filter(
+                      (ele) => ele.condition === secondCondition,
+                    )
+                  : [];
+              let messageSecond =
+                conditionSecond.length && conditionSecond[0].message;
+              setResultText(messageSecond);
+            } else if (
+              item.totalPointEarned >= 17 &&
+              item.totalPointEarned <= 21
+            ) {
+              let conditionThird =
+                submit_messages && submit_messages.length
+                  ? submit_messages.filter(
+                      (ele) => ele.condition === thirdCondition,
+                    )
+                  : [];
+              let messageThird =
+                conditionThird.length && conditionThird[0].message;
+              setResultText(messageThird);
+            } else if (item.totalPointEarned >= 21) {
+              let conditionFour =
+                submit_messages && submit_messages.length
+                  ? submit_messages.filter(
+                      (ele) => ele.condition === fourthCondition,
+                    )
+                  : [];
+              let messageFour =
+                conditionFour.length && conditionFour[0].message;
+              setResultText(messageFour);
+            }
+          }
         }
-      }
+
         return {
           user_id: getItem('userId'),
+          assessmentType: item.assessmentType,
           assessment_id: item.assessment_id,
           question: item.question,
           question_id: item._id,
+          textAns: item.textAns,
           options: item.options.length
             ? item.options.map((val) => {
                 let obj2 = {...val};
@@ -140,26 +158,28 @@ const TwentySeven = (props) => {
             : [],
         };
       });
+      //  console.log('x??????assessment type', x.length);
       setTotalQ(x.length);
       setAssessmentQues(x);
       setSelectQ(extractSelectQ(x));
     }
   }, [userQuestion]);
 
-  const generateDynamicColor = (order) => {
-    if (order === 0) {
-      return GREEN_TEXT;
-    }
-    if (order === 1) {
-      return BUTTON_ORANGE;
-    }
-    if (order === 2) {
-      return YELLOW;
-    }
-    if (order === 3) {
-      return CIRCLE_GRAY;
-    }
-  };
+  // const generateDynamicColor = (order) => {
+  //   if (order === 0) {
+  //     return GREEN_TEXT;
+  //   }
+  //   if (order === 1) {
+  //     return BUTTON_ORANGE;
+  //   }
+  //   if (order === 2) {
+  //     return YELLOW;
+  //   }
+  //   if (order === 3) {
+  //     return CIRCLE_GRAY;
+  //   }
+  // };
+
   const onSaveHandler = (quesId, optionId) => {
     if (assessmentQues.length) {
       let y = assessmentQues.map((item) => {
@@ -185,6 +205,61 @@ const TwentySeven = (props) => {
     }
   };
 
+  const onCheckHandler = (quesId, optionId) => {
+    if (assessmentQues.length) {
+      let y = assessmentQues.map((item) => {
+        if (item.question_id === quesId) {
+          if (item.options.length) {
+            return {
+              ...item,
+              options: item.options.map((val) => {
+                if (val._id === optionId) {
+                  if (val.selected && val.status) {
+                    return {...val, status: false, selected: false};
+                  } else {
+                    return {...val, status: true, selected: true};
+                  }
+                } else {
+                  return {...val};
+                }
+              }),
+            };
+          } else {
+            return item;
+          }
+        } else {
+          return item;
+        }
+      });
+      setAssessmentQues(y);
+    }
+  };
+  const onHandleChange = (quesId, optionId, e) => {
+    // setTextValue(e.target.value);
+    console.log('e,target alue', e.target.value);
+    if (assessmentQues.length) {
+      let y = assessmentQues.map((item) => {
+        if (item.question_id === quesId) {
+          if (item.options.length) {
+            return {
+              ...item,
+              textAns: e.target.value,
+              options: item.options.map((val) => {
+                if (val._id === optionId) {
+                  return {...val, status: true, selected: true};
+                }
+                return {...val, status: false, selected: false};
+              }),
+            };
+          }
+        } else {
+          return item;
+        }
+      });
+
+      setAssessmentQues(y);
+    }
+  };
   const onSave = (e) => {
     e.preventDefault();
     let answer = extractSelectQ(assessmentQues);
@@ -224,7 +299,7 @@ const TwentySeven = (props) => {
     }
 
     if (modifyData && modifyData.length) {
-      console.log('modify dtaa on submit>>>>>', modifyData);
+      console.log('modify dtaa on submit>>>>>', modifyData, totalQ, answer);
 
       //const isAPICall = totalQ === answer && answer === 10;
       const isAPICall = totalQ === answer;
@@ -254,7 +329,7 @@ const TwentySeven = (props) => {
               : [];
           let messageSecond =
             conditionSecond.length && conditionSecond[0].message;
-            setResultText(messageSecond)
+          setResultText(messageSecond);
           dispatch(
             AppActions.savePatientAssessment(
               modifyData,
@@ -270,7 +345,7 @@ const TwentySeven = (props) => {
                 )
               : [];
           let messageThird = conditionThird.length && conditionThird[0].message;
-          setResultText(messageThird)
+          setResultText(messageThird);
           dispatch(
             AppActions.savePatientAssessment(
               modifyData,
@@ -286,13 +361,18 @@ const TwentySeven = (props) => {
                 )
               : [];
           let messageFour = conditionFour.length && conditionFour[0].message;
-          setResultText(messageFour)
+          setResultText(messageFour);
           dispatch(
             AppActions.savePatientAssessment(
               modifyData,
               messageFour,
               choosenAssessment,
             ),
+          );
+        } else {
+          console.log('feedback survey???????', modifyData);
+          dispatch(
+            AppActions.savePatientAssessment(modifyData, '', choosenAssessment),
           );
         }
       } else {
@@ -348,32 +428,96 @@ const TwentySeven = (props) => {
             return (
               <div key={index} style={{marginBottom: '20px'}}>
                 <p style={styles.ques}>{item.question}</p>
-                <div style={styles.quesOption}>
-                  {item.options.length
-                    ? item.options.map((val, index) => {
-                        const isSelected = val.status === true;
-                        return (
-                          <p
-                            //onClick={() => onSelectOption(item, val)}
-                            onClick={() => {
-                              onSaveHandler(item.question_id, val._id);
-                            }}
-                            key={index}
-                            style={{
-                              ...styles.optionStyle,
-                              backgroundColor: isSelected
-                                ? generateDynamicColor(index)
-                                : '#fff',
-                              border: `1px solid ${generateDynamicColor(
-                                index,
-                              )}`,
-                            }}>
-                            {val.optionValue}
-                          </p>
-                        );
-                      })
-                    : null}
-                </div>
+                {item.assessmentType === 'radio' ? (
+                  <div style={styles.quesOption}>
+                    {item.options.length
+                      ? item.options.map((val, index) => {
+                          const isSelected = val.status === true;
+                          return (
+                            <p
+                              //onClick={() => onSelectOption(item, val)}
+                              onClick={() => {
+                                onSaveHandler(item.question_id, val._id);
+                              }}
+                              key={index}
+                              style={{
+                                ...styles.optionStyle,
+                                backgroundColor: isSelected
+                                  ? alternateColor[index % 4]
+                                  : '#fff',
+                                border: `1px solid ${
+                                  alternateColor[index % 4]
+                                }`,
+                              }}>
+                              {val.optionValue}
+                            </p>
+                          );
+                        })
+                      : null}
+                  </div>
+                ) : item.assessmentType === 'text' ? (
+                  <div>
+                    {item.options.length
+                      ? item.options.map((val, index) => {
+                          console.log('val text', val, item);
+                          return (
+                            <form noValidate style={{marginTop: '50px'}}>
+                              <div className="formRow">
+                                <div className="w100">
+                                  <div className="formField has-icon">
+                                    <textarea
+                                      type="textarea"
+                                      className="f-field"
+                                      //value={textValue}
+                                      value={item.textAns}
+                                      name="text"
+                                      onChange={(e) =>
+                                        onHandleChange(
+                                          item.question_id,
+                                          val._id,
+                                          e,
+                                        )
+                                      }
+                                      required
+                                      placeholder={val.optionValue}
+                                      style={commonStyles.inputFieldStyle}
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
+                          );
+                        })
+                      : null}
+                  </div>
+                ) : (
+                  <div style={styles.quesOption}>
+                    {item.options.length
+                      ? item.options.map((val, index) => {
+                          const isSelected = val.status === true;
+                          return (
+                            <p
+                              //onClick={() => onSelectOption(item, val)}
+                              onClick={() => {
+                                onCheckHandler(item.question_id, val._id);
+                              }}
+                              key={index}
+                              style={{
+                                ...styles.optionStyle,
+                                backgroundColor: isSelected
+                                  ? alternateColor[index % 4]
+                                  : '#fff',
+                                border: `1px solid ${
+                                  alternateColor[index % 4]
+                                }`,
+                              }}>
+                              {val.optionValue}
+                            </p>
+                          );
+                        })
+                      : null}
+                  </div>
+                )}
               </div>
             );
           })
@@ -388,15 +532,9 @@ const TwentySeven = (props) => {
 
       {/**********************content************** */}
       <div style={commonStyles.contentLeftBorder}>
-        {resultText && resultText != ''
-          ?               
-                  <CardContent
-                    key={''}
-                    content={ReactHtmlParser(resultText)}
-                  />
-    
-             
-          : null}
+        {resultText && resultText != '' ? (
+          <CardContent key={''} content={ReactHtmlParser(resultText)} />
+        ) : null}
       </div>
 
       {showExercises && <ExerciseBox week={week} />}
@@ -428,7 +566,8 @@ const styles = {
   button: {width: '20%', marginBottom: '50px'},
   optionStyle: {
     textAlign: 'center',
-    width: DEVICE_WIDTH > 767 ? '20%' : '48%',
+    //  width: DEVICE_WIDTH > 767 ? '20%' : '48%',
+    width: '19%',
     paddingTop: '7px',
     paddingBottom: '7px',
     marginTop: '12px ',
