@@ -247,7 +247,7 @@ export const SubHeader = ({
                 onClick={() => {
                   onCardChange(val._id);
                 }}>
-                {`${val.card_number}`}
+                {`${index + 1}`}
               </button>
             );
           })
