@@ -10,6 +10,8 @@ import {
   CardContent,
   CustomImage,
 } from '../../../components/Cards';
+import {Dimensions} from 'react-native';
+const DEVICE_WIDTH = Dimensions.get('window').width;
 const {IMAGE_BASE_URL} = GLOBALS;
 const ThirtyNine = (props) => {
   const {
@@ -61,7 +63,7 @@ const ThirtyNine = (props) => {
         : []}
 
       <div className="row">
-        <div className="col-md-3 col-sm-6 col-6">
+        <div className="col-md-3 col-sm-6 col-12">
           {images && images.length
             ? images.map((item, i) => {
                 return (
@@ -69,7 +71,7 @@ const ThirtyNine = (props) => {
                     src={`${IMAGE_BASE_URL}${item.image}`}
                     style={{
                       display: item.image !== '' ? 'flex' : 'none',
-                      height: '400px',
+                      height: DEVICE_WIDTH > 767 ? '400px' : 'auto',
                     }}
                     isVisible={true}
                     animationIn={'fadeInLeft'}
@@ -78,7 +80,7 @@ const ThirtyNine = (props) => {
               })
             : []}
         </div>
-        <div className="col-md-9 col-sm-6 col-6">
+        <div className="col-md-9 col-sm-6 col-12  ">
           {content && content.length
             ? content
                 .filter((item) => {

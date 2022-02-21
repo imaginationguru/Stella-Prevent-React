@@ -2,6 +2,11 @@ import React, {useState} from 'react';
 import bookmark from '../../assets/images/bookmark.svg';
 import GLOBALS from '../../constants';
 
+import {Dimensions} from 'react-native';
+
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const DEVICE_HEIGHT = Dimensions.get('window').height;
+
 const {COLORS} = GLOBALS;
 const data = [
   {
@@ -37,7 +42,7 @@ const InputBoxWithContent = (props) => {
           {title}
         </p>
       </div>
-      <div style={{width: '78%'}}>
+      <div style={{width: DEVICE_WIDTH > 767 ? '78%' : '68%'}}>
         <form noValidate>
           <textarea
             type="description"
@@ -102,7 +107,7 @@ const TwentyOne = (props) => {
             <p
               className="dash-text"
               style={{
-                paddingLeft: '40px',
+                paddingLeft: DEVICE_WIDTH > 767 ? '40px' : '0',
                 fontSize: 14,
                 alignSelf: 'center',
                 justifyContent: 'center',
@@ -117,7 +122,10 @@ const TwentyOne = (props) => {
             onChange={(date) => {
               setDate(date.target.value);
             }}
-            style={{backgroundColor: COLORS.YELLOW, width: '20%'}}
+            style={{
+              backgroundColor: COLORS.YELLOW,
+              width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+            }}
           />
           <InputBoxWithContent
             title={'Situations'}
@@ -126,7 +134,10 @@ const TwentyOne = (props) => {
             onChange={(situation) => {
               setSituation(situation.target.value);
             }}
-            style={{backgroundColor: COLORS.YELLOW, width: '20%'}}
+            style={{
+              backgroundColor: COLORS.YELLOW,
+              width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+            }}
           />
           <InputBoxWithContent
             title={'Emotions'}
@@ -135,7 +146,10 @@ const TwentyOne = (props) => {
             onChange={(emotions) => {
               setEmotions(emotions.target.value);
             }}
-            style={{backgroundColor: COLORS.YELLOW, width: '20%'}}
+            style={{
+              backgroundColor: COLORS.YELLOW,
+              width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+            }}
           />
           <InputBoxWithContent
             title={'Thoughts'}
@@ -144,7 +158,10 @@ const TwentyOne = (props) => {
             onChange={(thoughts) => {
               setThoughts(thoughts.target.value);
             }}
-            style={{backgroundColor: COLORS.GREEN_TEXT, width: '20%'}}
+            style={{
+              backgroundColor: COLORS.GREEN_TEXT,
+              width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+            }}
           />
           <InputBoxWithContent
             title={'Behaviour'}
@@ -153,7 +170,10 @@ const TwentyOne = (props) => {
             onChange={(behaviour) => {
               setBehaviour(behaviour.target.value);
             }}
-            style={{backgroundColor: COLORS.CIRCLE_GRAY, width: '20%'}}
+            style={{
+              backgroundColor: COLORS.CIRCLE_GRAY,
+              width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+            }}
           />
           <InputBoxWithContent
             title={'Alternative Thoughts'}
@@ -162,7 +182,10 @@ const TwentyOne = (props) => {
             onChange={(alternateThoughts) => {
               setAlternateThoughts(alternateThoughts.target.value);
             }}
-            style={{backgroundColor: COLORS.GREEN_TEXT, width: '20%'}}
+            style={{
+              backgroundColor: COLORS.GREEN_TEXT,
+              width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+            }}
           />
           <InputBoxWithContent
             title={'Alternative Behaviors'}
@@ -171,7 +194,10 @@ const TwentyOne = (props) => {
             onChange={(alternateBehaviour) => {
               setAlternateBehaviour(alternateBehaviour.target.value);
             }}
-            style={{backgroundColor: COLORS.CIRCLE_GRAY, width: '20%'}}
+            style={{
+              backgroundColor: COLORS.CIRCLE_GRAY,
+              width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+            }}
           />
 
           <div style={{width: '20%', marginTop: '30px'}}>

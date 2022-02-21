@@ -30,6 +30,11 @@ import {
   CardContent,
   CustomImage,
 } from '../../../components/Cards';
+
+import {Dimensions} from 'react-native';
+
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const DEVICE_HEIGHT = Dimensions.get('window').height;
 const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 const TemplateSix = (props) => {
   const [initial, setDefault] = useState(1);
@@ -483,7 +488,7 @@ const styles = {
   },
   image: {width: '100%', height: '100%'},
   assessmentDescription: {
-    paddingLeft: '40px',
+    paddingLeft: DEVICE_WIDTH > 767 ? '40px' : '0',
     fontSize: 14,
   },
   addedContentWrapper: {

@@ -16,6 +16,10 @@ import {
   CardContent,
   CustomImage,
 } from '../../../components/Cards';
+import {Dimensions} from 'react-native';
+
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const DEVICE_HEIGHT = Dimensions.get('window').height;
 const {IMAGE_BASE_URL, COLORS, ACTION_TYPE} = GLOBALS;
 const {BUTTON_ORANGE} = COLORS;
 const userId = getItem('userId');
@@ -283,7 +287,7 @@ const TwentyOne = (props) => {
 export default TwentyOne;
 const styles = {
   assessmentDescription: {
-    paddingLeft: '40px',
+    paddingLeft: DEVICE_WIDTH > 767 ? '40px' : '0',
   },
   assessmentDiv: {
     border: `2px solid ${BUTTON_ORANGE}`,

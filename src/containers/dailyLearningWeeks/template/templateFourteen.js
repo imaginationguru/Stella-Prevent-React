@@ -88,7 +88,7 @@ const TemplateFourteen = (props) => {
                 .sort((a, b) => (a.order > b.order && 1) || -1)
                 .map((imgItem) => {
                   return (
-                    <div className="col-md-6">
+                    <div className="col-md-6 col-12 res-wrap">
                       <CustomImage
                         src={`${IMAGE_BASE_URL}${imgItem.image}`}
                         style={{
@@ -135,7 +135,7 @@ const TemplateFourteen = (props) => {
                 .sort((a, b) => (a.order > b.order && 1) || -1)
                 .map((imgItem) => {
                   return (
-                    <div className="col-md-6">
+                    <div className="col-md-6 col-12 res-wrap">
                       <CustomImage
                         src={`${IMAGE_BASE_URL}${imgItem.image}`}
                         style={{

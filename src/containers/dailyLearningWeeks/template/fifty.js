@@ -17,6 +17,12 @@ import {
   CustomImage,
 } from '../../../components/Cards';
 import commonStyles from '../commonStyles';
+
+import {Dimensions} from 'react-native';
+
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const DEVICE_HEIGHT = Dimensions.get('window').height;
+
 const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 const {
   YELLOW,
@@ -451,7 +457,7 @@ const Fifty = (props) => {
             <p
               style={{
                 ...styles.heading,
-                width: '20%',
+                width: DEVICE_WIDTH > 767 ? '20%' : '30%',
                 backgroundColor: headingOne !== '' ? YELLOW : WHITE,
               }}>
               {ReactHtmlParser(headingOne)}
@@ -461,7 +467,7 @@ const Fifty = (props) => {
             <p
               style={{
                 ...styles.heading,
-                width: '78%',
+                width: DEVICE_WIDTH > 767 ? '78%' : '68%',
                 backgroundColor: headingOne !== '' ? YELLOW : WHITE,
               }}>
               {ReactHtmlParser(headingSecond)}

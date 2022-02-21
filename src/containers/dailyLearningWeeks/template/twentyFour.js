@@ -10,6 +10,12 @@ import {
   CardContent,
   CustomImage,
 } from '../../../components/Cards';
+
+import {Dimensions} from 'react-native';
+
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const DEVICE_HEIGHT = Dimensions.get('window').height;
+
 const {IMAGE_BASE_URL} = GLOBALS;
 const TwentyFour = (props) => {
   const {
@@ -70,7 +76,7 @@ const TwentyFour = (props) => {
               return (
                 <div
                   style={{
-                    height: '400px',
+                    height: DEVICE_WIDTH > 767 ? '400px' : '230px',
                     // border: '1px solid red',
                     marginBottom: '60px',
                   }}>
@@ -142,8 +148,8 @@ export default TwentyFour;
 const styles = {
   bigImage: {
     //width: '680px',
-    width: '60%',
-    height: '400px',
+    width: DEVICE_WIDTH > 767 ? '60%' : '100%',
+    height: DEVICE_WIDTH > 767 ? '400px' : '230px',
     // height: 'auto',
     margin: '0 auto',
     // width: 'auto',

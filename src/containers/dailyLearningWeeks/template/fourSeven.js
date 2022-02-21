@@ -11,6 +11,12 @@ import {
   CustomImage,
 } from '../../../components/Cards';
 import {Animated} from 'react-animated-css';
+
+import {Dimensions} from 'react-native';
+
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const DEVICE_HEIGHT = Dimensions.get('window').height;
+
 const {COLORS, IMAGE_BASE_URL} = GLOBALS;
 const FourSeven = (props) => {
   const {
@@ -152,7 +158,7 @@ const styles = {
     paddingLeft: '15px',
   },
   descView: {
-    width: '70%',
+    width: DEVICE_WIDTH > 767 ? '70%' : '100%',
     border: '2px solid #F08B22',
     padding: '20px',
     borderRadius: '5px',
