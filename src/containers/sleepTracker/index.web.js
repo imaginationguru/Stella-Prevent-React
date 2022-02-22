@@ -545,21 +545,21 @@ const SleepTracker = ({location}) => {
                   <LineGraphUI
                     xAxis={sleepHoursXaxis}
                     yAxis={sleepHoursYaxis}
-                    lable={'Sleep Hours'}
+                    lable={'Daily Sleep Tracker: Hours/Day'}
                   />
                 </View>
                 <View style={styles.lineGraphWrapper}>
                   <LineGraphUI
                     xAxis={sleepHoursXaxis}
                     yAxis={sleeQualityYaxis}
-                    lable={'Sleep Quality'}
+                    lable={'Weekly Sleep Quality Report'}
                   />
                 </View>
                 <View style={styles.lineGraphWrapper}>
                   <LineGraphUI
                     xAxis={sleepHoursXaxis}
                     yAxis={sleepEnergyYaxis}
-                    lable={'Energy'}
+                    lable={'Weekly Energy Report'}
                   />
                 </View>
               </View>

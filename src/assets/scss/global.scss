@@ -33,19 +33,18 @@ img {
   }
 
   .login-left {
-  //  background-image: url('../images/bgImg.jpeg');
+    //  background-image: url('../images/bgImg.jpeg');
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
   .signup-left {
-    background-color: #E6F2FF;
+    background-color: #e6f2ff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -59,9 +58,9 @@ img {
     //@extend: 'HKGrotesk-Medium';
     font-family: 'BerkshireSwash Regular';
     font-style: normal;
-  //  font-weight: 400;
-    font-size: 2.50vw;
-    line-height:40px;
+    //  font-weight: 400;
+    font-size: 2.5vw;
+    line-height: 40px;
     text-align: center;
   }
   .login-content {
@@ -78,11 +77,10 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
-   // flex-wrap: wrap;
+    // flex-wrap: wrap;
     padding-top: 30px;
     padding-bottom: 1vw;
     padding-left: 50px;
-
   }
 }
 
@@ -128,7 +126,7 @@ img {
   font-weight: bold;
   font-size: 6.25vw;
   text-align: center;
-  color: #2F6D5A;
+  color: #2f6d5a;
 }
 
 .logo-view {
@@ -141,7 +139,7 @@ img {
 }
 
 .heading {
-  font-family:'HKGrotesk SemiBold';
+  font-family: 'HKGrotesk SemiBold';
   font-style: normal;
   font-weight: 500;
   font-size: 2.5vw;
@@ -171,7 +169,7 @@ img {
   padding-bottom: 5px;
   display: block;
 }
-.logo-img{
+.logo-img {
   max-height: 3.5vw;
 }
 .btn-solid {
@@ -191,28 +189,28 @@ img {
   border: 0;
   //height: 50px;
   width: 100%;
-  background:#1877F2 url('../images/fbIcon.png') no-repeat top 13px left 30px;
+  background: #1877f2 url('../images/fbIcon.png') no-repeat top 13px left 30px;
   color: #ffffff;
   padding: 10px 0 10px 0;
   text-align: center;
-  cursor:pointer;
+  cursor: pointer;
 }
-.btn-fb-title{
+.btn-fb-title {
   font-size: 1.3vw;
 }
 .btn-google {
   border-radius: 10px;
   border: 0;
- // height: 50px;
+  // height: 50px;
   width: 100%;
-  background:white url('../images/GoogleLogo.png') no-repeat top 13px left 30px;
+  background: white url('../images/GoogleLogo.png') no-repeat top 13px left 30px;
   color: black;
-  box-shadow: 1px 1px 1px 1px #DCDCDC;
+  box-shadow: 1px 1px 1px 1px #dcdcdc;
   padding: 10px 0 10px 0;
   text-align: center;
-  cursor:pointer;
+  cursor: pointer;
 }
-.btn-google-title{
+.btn-google-title {
   font-size: 1.3vw;
 }
 .btn-apple {
@@ -221,13 +219,14 @@ img {
   border: 0;
   //height: 50px;
   width: 100%;
-  background:#000000 url('../images/appleIcon.png') no-repeat top 13px left 30px;
+  background: #000000 url('../images/appleIcon.png') no-repeat top 13px left
+    30px;
   color: #ffffff;
   padding: 10px 0 10px 0;
   text-align: center;
-  cursor:pointer;
+  cursor: pointer;
 }
-.btn-apple-title{
+.btn-apple-title {
   font-size: 1.3vw;
 }
 .btn-orange {
@@ -253,35 +252,33 @@ img {
 }
 .btn-gray {
   background: #979797;
- // box-shadow: 0px 15px 20px rgba(197, 167, 110, 0.39);
+  // box-shadow: 0px 15px 20px rgba(197, 167, 110, 0.39);
   border-radius: 5px;
   border: 0;
   height: 22px;
- // padding: 0 20px;
+  // padding: 0 20px;
   width: 100%;
   color: #ffffff;
   font-size: 12px;
   margin-top: 10%;
-
 }
 .username {
   font-size: 3vw;
   font-family: 'HKGrotesk Regular';
   font-style: normal;
   font-weight: bold;
-  color:#006F59;
+  color: #006f59;
   margin-bottom: 0;
 }
 .btn-light-gray {
-  background : #C4C4C4;
+  background: #c4c4c4;
   border-radius: 5px;
   border: 0;
   height: 30px;
   width: 75%;
-  color: #006F59;
+  color: #006f59;
   font-size: 15px;
   font-family: 'HKGrotesk SemiBold';
-  
 }
 .formRow {
   margin: 0 -10px;
@@ -341,25 +338,25 @@ img {
   font-family: 'HKGrotesk Medium';
   font-style: normal;
   font-weight: 500;
-  color: #5BB7A4;
+  color: #5bb7a4;
 }
 .terms-condition {
   font-size: 1.25vw;
   font-family: 'HKGrotesk Medium';
   font-style: normal;
   font-weight: 500;
-  color: #5BB7A4;
+  color: #5bb7a4;
   text-align: center;
   cursor: pointer;
 }
 .power-image {
-text-align: end;
-position: absolute;
-bottom: 1vw;
-right: 2vw;
-cursor: pointer;
+  text-align: end;
+  position: absolute;
+  bottom: 1vw;
+  right: 2vw;
+  cursor: pointer;
 }
-.footer-logo{
+.footer-logo {
   max-width: 10vw;
 }
 
@@ -387,7 +384,7 @@ cursor: pointer;
 .b1-name {
   width: 100%;
   height: auto;
-} 
+}
 
 .link {
   font-family: 'HKGrotesk Regular';
@@ -564,9 +561,9 @@ button {
   font-size: 16px;
   line-height: 21px;
   margin-bottom: 15px;
-//  word-break: break-all;
+  //  word-break: break-all;
   word-break: break-word;
-    word-wrap: break-word;
+  word-wrap: break-word;
 }
 .dash-text-color {
   color: #f08b22;
@@ -827,8 +824,8 @@ footer {
 
 .tracker-option {
   position: relative;
-	padding-left: 30px;
-	padding-right: 130px;
+  padding-left: 30px;
+  padding-right: 130px;
   .tracker-arrow {
     width: 20px;
     height: 30px;
@@ -847,7 +844,7 @@ footer {
       flex: 1 1 auto;
       padding-left: 30px;
     }
-}
+  }
 }
 
 .v-row {
@@ -875,68 +872,67 @@ footer {
 }
 @media only screen and (max-width: 991px) {
   .login {
-    .quote-text{
+    .quote-text {
       font-size: 20px;
       line-height: 30px;
     }
     .quote-view {
       padding: 20px 7vw;
-  }
-  .terms-condition,  .terms-text  {
-    font-size: 2.25vw;
-    text-align: center;
-    margin: 0px;
-  }
-  .signup-text {
-    font-size: 2.25vw;
-  }
-  .link{
-    font-size: 3vw;
-  }
- 
+    }
+    .terms-condition,
+    .terms-text {
+      font-size: 2.25vw;
+      text-align: center;
+      margin: 0px;
+    }
+    .signup-text {
+      font-size: 2.25vw;
+    }
+    .link {
+      font-size: 3vw;
+    }
 
-  .btn-fb {
-    padding: 10px 0 10px 0;
-    text-align: left;
-    height:"auto";
-    padding-left:15vw;
-  }
-  .btn-fb-title{
-    font-size: 3vw;
-  }
-  .btn-google {
-    padding: 10px 0 10px 0;
-    text-align: left;
-    height:"auto";
-    padding-left:15vw;
-  }
-  .btn-google-title{
-    font-size: 3vw;
-  }
-  .btn-apple {
-    padding: 10px 0 10px 0;
-    text-align: left;
-    height:"auto";
-    padding-left:15vw;
-  }
-  .btn-apple-title{
-    font-size: 3vw;
-  }
-  .heading{
-    font-size: 6.12vw;
-  }
-  .logo-img{
-    max-height: 10vw;
-  }
- 
+    .btn-fb {
+      padding: 10px 0 10px 0;
+      text-align: left;
+      height: 'auto';
+      padding-left: 15vw;
+    }
+    .btn-fb-title {
+      font-size: 3vw;
+    }
+    .btn-google {
+      padding: 10px 0 10px 0;
+      text-align: left;
+      height: 'auto';
+      padding-left: 15vw;
+    }
+    .btn-google-title {
+      font-size: 3vw;
+    }
+    .btn-apple {
+      padding: 10px 0 10px 0;
+      text-align: left;
+      height: 'auto';
+      padding-left: 15vw;
+    }
+    .btn-apple-title {
+      font-size: 3vw;
+    }
+    .heading {
+      font-size: 6.12vw;
+    }
+    .logo-img {
+      max-height: 10vw;
+    }
+
     .login-left,
     .login-right {
       flex: 0 0 100%;
       padding: 15px;
     }
-  
   }
- 
+
   button {
     &.navbutton {
       width: 35px;
@@ -971,7 +967,7 @@ footer {
     padding-right: 20px;
   }
   .formLabel {
-    font-size: 2.17vw;
+    font-size: 4.17vw;
     line-height: 1px;
     display: block;
   }
@@ -990,12 +986,12 @@ footer {
       flex: 0 0 33.33%;
     }
   }
-  
+
   .tracker-option {
     padding-right: 45px;
     padding-left: 15px;
     .tracker-arrow {
-       right: 15px;
+      right: 15px;
     }
     .tracker-desc {
       .tracker-text {
@@ -1013,14 +1009,14 @@ footer {
 }
 }
 @media only screen and (max-width: 767px) {
-
   .login {
-    .btn-fb,.btn-google, .btn-apple {
-      padding-left:20vw;
+    .btn-fb,
+    .btn-google,
+    .btn-apple {
+      padding-left: 20vw;
     }
   }
-  
-  
+
   .formRow {
     .w100,
     .w50,
@@ -1062,13 +1058,15 @@ footer {
     padding-left: 15px;
     padding-right: 15px;
   }
-  .g-like,.g-comment,.g-star {
+  .g-like,
+  .g-comment,
+  .g-star {
     flex: 0 0 100%;
   }
 
   .g-box {
-      flex-wrap: wrap;
-      padding: 15px;
+    flex-wrap: wrap;
+    padding: 15px;
   }
   .res-100 {
     width: 100% !important;
@@ -1157,13 +1155,13 @@ body {
   margin-bottom: 1rem;
   padding: 0.75rem 1rem;
 }
-.week-inside{
+.week-inside {
   overflow: hidden;
   width: 100px;
   height: 91px;
   background-color: white;
   position: relative;
-  img{
+  img {
     width: 100%;
   }
 }
@@ -1175,8 +1173,8 @@ body {
 .holder--tint-3 .holder__title {
   background-image: linear-gradient(90deg, #fe8080 33%, #fea380 100%);
 }
-
 .res-wrap p {
   word-wrap: break-word;
   word-break: break-all;
 }
+

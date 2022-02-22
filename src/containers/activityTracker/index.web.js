@@ -122,7 +122,7 @@ const ActivityView = ({
           style={{
             ...styles.activityImage,
             border: item.isChecked
-              ? `2px solid ${GREEN_TEXT}`
+              ? `3px solid ${GREEN_TEXT}`
               : '1px solid #000000',
           }}
         />
