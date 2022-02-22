@@ -200,8 +200,7 @@ const Dashboard = () => {
                   Today’s Daily Learning
                 </p>
                 <p>
-                  Learn something new today and take it with <br />
-                  you wherever you go
+                  Learn something new today and take it with you wherever you go
                 </p>
               </div>
             </div>
