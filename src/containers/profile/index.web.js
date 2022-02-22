@@ -39,8 +39,10 @@ import {
   validateContact,
   validateZipcode,
   validateANZipcode,
-  validatePhoneWithSpecialSymbol,validateName
+  validatePhoneWithSpecialSymbol,
+  validateName,
 } from '../../utils/validations';
+import {normalize} from '../../utils/Helper';
 
 const {IMAGE_BASE_URL} = GLOBALS;
 
@@ -55,7 +57,7 @@ function ProfileDetails(props) {
   const [age, setAge] = useState('');
   const [phone, setPhone] = useState('');
   const [city, setCity] = useState('');
-  
+
   const [country, setCountry] = useState('');
   const [zipcode, setZipcode] = useState('');
 
@@ -84,7 +86,7 @@ function ProfileDetails(props) {
   ]);
 
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     if (loginData) {
       console.log('usererrtsadfds login data', loginData);
@@ -95,8 +97,8 @@ function ProfileDetails(props) {
       setPhone(loginData.user.phoneNumber);
       setCountry(loginData.user.countryName);
       setZipcode(loginData.user.zipcode);
-      setCity(loginData.user.city?loginData.user.city:"");
-      setAge(loginData.user.age)
+      setCity(loginData.user.city ? loginData.user.city : '');
+      setAge(loginData.user.age);
       let temp_language = language.map((el) =>
         el.value === loginData.user.language
           ? {...el, isSelected: true}
@@ -121,17 +123,17 @@ function ProfileDetails(props) {
   const navigator = (type, item) => {
     switch (type) {
       case 'profile':
-        console.log(phone,"lllll")
+        console.log(phone, 'lllll');
         if (validateIsEmpty(phone?.trim()))
           setPhoneError('Please enter phone number');
-          else if (!validatePhoneWithSpecialSymbol(phone) || phone.length<10)
+        else if (!validatePhoneWithSpecialSymbol(phone) || phone.length < 10)
           setPhoneError('Please enter a valid phone number');
         // else if (!validateContact(phone))
         //   setPhoneError('Please enter a valid phone number');
         else if (validateIsEmpty(city?.trim()))
-        setCityError('Please enter a city');
+          setCityError('Please enter a city');
         else if (!validateName(city?.trim()))
-        setCityError('Please enter valid city');
+          setCityError('Please enter valid city');
         else if (validateIsEmpty(zipcode?.trim()))
           setZipcodeError('Please enter zipcode');
         else if (!validateANZipcode(zipcode))
@@ -141,7 +143,7 @@ function ProfileDetails(props) {
             phoneNumber: phone,
             zipcode: zipcode,
             user_id: getItem('userId'),
-            city:city
+            city: city,
           };
           dispatch(AppActions.updateUserDetails(param));
           console.log(param, 'params');
@@ -212,11 +214,11 @@ function ProfileDetails(props) {
   const selectImage = (file) => {
     console.log(file);
     console.log(file.name, 'lll');
-    if(!file) return;
-    
-    if(file.type.includes("image")){
-      if(file.size>10240000){
-        customAlert("The file is too large, max size:10mb", 'error');
+    if (!file) return;
+
+    if (file.type.includes('image')) {
+      if (file.size > 10240000) {
+        customAlert('The file is too large, max size:10mb', 'error');
         return;
       }
       let formdata = new FormData();
@@ -229,8 +231,8 @@ function ProfileDetails(props) {
       // });
       console.log(formdata, 'fo');
       dispatch(AppActions.uploadProfile(formdata));
-    }else{
-      customAlert("Please select only images", 'error');
+    } else {
+      customAlert('Please select only images', 'error');
     }
   };
   return (
@@ -245,10 +247,7 @@ function ProfileDetails(props) {
       {isLoading && <Loader />}
       {/* */}
       <BackBtn></BackBtn>
-      <View style={styles.backBtn}>
-       
-     
-      </View>
+      <View style={styles.backBtn}></View>
       <View
         style={{
           flex: 1,
@@ -269,7 +268,7 @@ function ProfileDetails(props) {
               <Text
                 style={{
                   fontFamily: 'Inter',
-                  fontSize: '1.4vw',
+                  fontSize: normalize(3.5),
                   color: '#0B0914',
                   marginLeft: '1vw',
                   fontFamily: FONTS.SEMI_BOLD,
@@ -289,7 +288,10 @@ function ProfileDetails(props) {
                   passProps: {currentPlan: loginData?.planInfo},
                 })
               }
-              textStyle={{fontSize: '1vw'}}
+              textStyle={{
+                // fontSize: '1vw',
+                fontSize: normalize(3),
+              }}
               title={
                 loginData?.planInfo?.numericPrice == 0
                   ? 'Upgrade'
@@ -383,7 +385,7 @@ function ProfileDetails(props) {
               setPhone(text);
               setPhoneError('');
             }}
-            maxLength={"15"}
+            maxLength={'15'}
             value={phone}
             error={phoneError}
             label="Phone"
@@ -391,10 +393,13 @@ function ProfileDetails(props) {
           <Input1
             editable={true}
             inputStyle={{padding: 10, height: 40}}
-            setCode={(text) => {setCity(text); setCityError("")}}
+            setCode={(text) => {
+              setCity(text);
+              setCityError('');
+            }}
             value={city}
             error={cityError}
-            maxLength={"25"}
+            maxLength={'25'}
             label="City"
             placeholder=""></Input1>
           <Input1
@@ -496,7 +501,8 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   heading: {
-    fontSize: '1.2vw',
+    // fontSize: '1.2vw',
+    fontSize: normalize(3.5),
     fontWeight: '700',
     fontStyle: 'normal',
     color: '#313132',
