@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
   Image,
   Switch,
+  Platform,
+  useWindowDimensions,
 } from 'react-native';
 import moment from 'moment';
 import {getItem} from '../../utils/AsyncUtils';
@@ -47,6 +49,8 @@ import {normalize} from '../../utils/Helper';
 const {IMAGE_BASE_URL} = GLOBALS;
 
 function ProfileDetails(props) {
+  const layout = useWindowDimensions();
+  console.log(layout, 'layout,,,,');
   const {loginData = {}} = useSelector((state) => state.authReducer);
   const {isLoading} = useSelector((state) => state.common);
 
@@ -253,13 +257,18 @@ function ProfileDetails(props) {
           flex: 1,
           flexDirection: 'row',
           justifyContent: 'space-between',
-          marginHorizontal: '10vw',
+          marginHorizontal: '5vw',
         }}>
         {/* 1st colum */}
         <View style={{flex: 0.3}}>
           <View>
-            <Text style={styles.heading}>Plan</Text>
-            <View style={{flexDirection: 'row', marginTop: '1vw'}}>
+            <Text style={styles.heading}>Plan </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: '1vw',
+                alignItems: 'center',
+              }}>
               <Image
                 resizeMode={'contain'}
                 source={`${IMAGE_BASE_URL}${loginData?.planInfo?.image}`}
@@ -268,9 +277,11 @@ function ProfileDetails(props) {
               <Text
                 style={{
                   fontFamily: 'Inter',
-                  fontSize: normalize(3.5),
+                  // fontSize: normalize(3.5),
+                  fontSize: 12,
                   color: '#0B0914',
                   marginLeft: '1vw',
+                  textAlignVertical: 'center',
                   fontFamily: FONTS.SEMI_BOLD,
                 }}>
                 {loginData?.planInfo?.title}
@@ -288,10 +299,11 @@ function ProfileDetails(props) {
                   passProps: {currentPlan: loginData?.planInfo},
                 })
               }
-              textStyle={{
-                // fontSize: '1vw',
-                fontSize: normalize(3),
-              }}
+              // textStyle={{
+              //   // fontSize: '1vw',
+              //   fontSize: normalize(3),
+              // }}
+              textStyle={{fontSize: 12}}
               title={
                 loginData?.planInfo?.numericPrice == 0
                   ? 'Upgrade'
@@ -335,12 +347,13 @@ function ProfileDetails(props) {
               label="Confirm New Password"></Input1>
             <Button
               onVerifyPress={() => validateField()}
-              textStyle={{fontSize: '1vw'}}
+              // textStyle={{fontSize: '1vw'}}
               btnStyle={{
                 height: 40,
                 width: '100%',
                 marginTop: '1.1vw',
               }}
+              textStyle={{fontSize: 12}}
               title="Change Password"
               bgColor={DARK_GREEN}
               textColor={WHITE}></Button>
@@ -365,7 +378,14 @@ function ProfileDetails(props) {
             placeholder=""></Input1>
           <Input1
             editable={false}
-            inputStyle={{padding: 10, height: 40}}
+            inputStyle={{
+              padding: 10,
+              height: 40,
+              paddingHorizontal: 5,
+              flexWrap: 'wrap',
+              overflow: 'hidden',
+              backgroundColor: 'red',
+            }}
             setCode={(text) => setName(text)}
             value={email}
             label="Email"
@@ -429,7 +449,8 @@ function ProfileDetails(props) {
               marginVertical: '1.1vw',
             }}
             onVerifyPress={() => navigator('profile')}
-            textStyle={{fontSize: '1vw'}}
+            // textStyle={{fontSize: '1vw'}}
+            textStyle={{fontSize: 12}}
             title="Update Profile"
             bgColor={DARK_GREEN}
             textColor={WHITE}></Button>
@@ -456,13 +477,14 @@ function ProfileDetails(props) {
           })}
           <Button
             onVerifyPress={() => navigator('change_language')}
-            textStyle={{fontSize: '1vw'}}
+            // textStyle={{fontSize: '1vw'}}
             btnStyle={{
               height: 30,
               width: '100%',
               marginTop: '1.1vw',
             }}
             title="Change"
+            textStyle={{fontSize: 12}}
             bgColor={DARK_GREEN}
             textColor={WHITE}></Button>
 
@@ -502,11 +524,12 @@ const styles = StyleSheet.create({
   },
   heading: {
     // fontSize: '1.2vw',
-    fontSize: normalize(3.5),
+    // fontSize: normalize(3.5),
     fontWeight: '700',
     fontStyle: 'normal',
     color: '#313132',
     marginBottom: '0.5vw',
+    fontSize: 13,
   },
   backBtn: {
     alignItems: 'flex-start',

@@ -1,4 +1,4 @@
-const isLive = false;
+const isLive = true;
 
 export default {
   BASE_URL: isLive
@@ -8,13 +8,10 @@ export default {
     ? 'https://stella-prevent-careportal.curio-dtx.com/' //UAT
     : 'http://52.170.117.197/', //dev
 
-  // BASE_URL: 'https://104.43.172.201/api/',
-  // IMAGE_BASE_URL: 'https://104.43.172.201/',
-
   // BASE_URL: 'http://104.43.172.201:4001/api/',
-  // IMAGE_BASE_URL: 'http://104.43.172.201:4001/', //current
+  // IMAGE_BASE_URL: 'http://104.43.172.201:4001/', //QA
   /********************************** * URL ***********************************/
-  // https://104.43.172.201/  ///QA
+
   URL: {
     LOGIN: 'login',
     REGISTER: 'register',
