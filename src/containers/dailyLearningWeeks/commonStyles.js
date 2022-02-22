@@ -29,15 +29,14 @@ const commonStyles = {
   droppableDivDrag: {
     width: DEVICE_WIDTH > 767 ? '23%' : '48%',
     paddingBottom: DEVICE_WIDTH > 767 ? '60px' : '30px',
-    //  display: 'flex',
+    display: 'flex',
   },
   dropTitle: {
     color: '#ffff',
     textAlign: 'center',
     height: DEVICE_WIDTH > 767 ? '80px' : 'auto',
     flex: '1 1 auto',
-    paddingTop: '15px',
-    paddingBottom: '15px',
+    padding: '8px 15px',
     borderRadius: '5px',
     display: 'flex',
     alignItems: 'center',
@@ -97,7 +96,7 @@ const commonStyles = {
     textAlign: 'center',
   },
   col4: {
-    width: '23%',
+    width: DEVICE_WIDTH > 767 ? '23%' : '48%',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#57576D',

@@ -20,6 +20,12 @@ import {
 } from '../../../components/Cards';
 import commonStyles from '../commonStyles';
 import moment from 'moment';
+
+import {Dimensions} from 'react-native';
+
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const DEVICE_HEIGHT = Dimensions.get('window').height;
+
 const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 const {YELLOW, WHITE, CIRCLE_GRAY, LIGHT_GRAY, GRAY, RED, GREEN_TEXT} = COLORS;
 let userId = getItem('userId');
@@ -675,7 +681,7 @@ const Thirty = (props) => {
                   onChange={(e) => onHandleChange(e, item)}
                   style={{
                     backgroundColor: headerColor(item.order),
-                    width: '20%',
+                    width: DEVICE_WIDTH > 767 ? '20%' : '30%',
                   }}
                 />
               );
@@ -985,7 +991,7 @@ const styles = {
     color: WHITE,
     paddingTop: '30px',
   },
-  inputBox: {width: '78%'},
+  inputBox: {width: DEVICE_WIDTH > 767 ? '78%' : '68%'},
   inputStyle: {
     backgroundColor: LIGHT_GRAY,
     fontStyle: 'italic',

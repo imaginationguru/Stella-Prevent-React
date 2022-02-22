@@ -16,6 +16,12 @@ import {
   CustomImage,
 } from '../../../components/Cards';
 import moment from 'moment';
+
+import {Dimensions} from 'react-native';
+
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const DEVICE_HEIGHT = Dimensions.get('window').height;
+
 const {IMAGE_BASE_URL, COLORS} = GLOBALS;
 const {YELLOW} = COLORS;
 const TemplateNine = (props) => {
@@ -38,7 +44,7 @@ const TemplateNine = (props) => {
   } = props.card;
   const {userAssessmentData = []} = useSelector((state) => state.moduleOne);
   const {inputs, assessments} = props;
-  console.log("props template nine",props.card)
+  console.log('props template nine', props.card);
   const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -64,10 +70,10 @@ const TemplateNine = (props) => {
   useEffect(() => {
     inputCardData.length &&
       inputCardData.map((item) => {
-        setInputBoxId(inputCardData[0]._id)
+        setInputBoxId(inputCardData[0]._id);
         return setExperience(inputCardData[0].input_content);
       });
-      
+
     inputCardData.length &&
       inputCardData.map((item) => {
         return setUpdateId(item._id);
@@ -140,8 +146,6 @@ const TemplateNine = (props) => {
        }
      }
     */
-   
-
   };
   const dateJSX = inputCardData.length
     ? inputCardData
@@ -301,12 +305,12 @@ const TemplateNine = (props) => {
       {/***********Exercise Part************* */}
       {false ? (
         <div style={styles.boxWrapper}>
-          <div style={{width: '20%'}}>
+          <div style={{width: DEVICE_WIDTH > 767 ? '20%' : '30%'}}>
             <p style={styles.leftDate}>Date</p>
             {dateJSX}
           </div>
 
-          <div style={{width: '78%'}}>
+          <div style={{width: DEVICE_WIDTH > 767 ? '78%' : '68%'}}>
             <p
               style={{
                 ...styles.rightText,

@@ -16,6 +16,12 @@ import {
   CustomImage,
 } from '../../../components/Cards';
 import commonStyles from '../commonStyles';
+
+import {Dimensions} from 'react-native';
+
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const DEVICE_HEIGHT = Dimensions.get('window').height;
+
 const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 const {YELLOW, WHITE, CIRCLE_GRAY, LIGHT_GRAY, GREEN_TEXT} = COLORS;
 let userId = getItem('userId');
@@ -360,7 +366,7 @@ const Seventeen = (props) => {
             <p
               style={{
                 ...styles.heading,
-                width: '20%',
+                width: DEVICE_WIDTH > 767 ? '20%' : '30%',
                 backgroundColor:
                   headingOne !== '' && headingOne !== null ? YELLOW : WHITE,
               }}>
@@ -371,7 +377,7 @@ const Seventeen = (props) => {
             <p
               style={{
                 ...styles.heading,
-                width: '78%',
+                width: DEVICE_WIDTH > 767 ? '78%' : '68%',
                 backgroundColor:
                   headingSecond !== '' && headingSecond !== null
                     ? YELLOW
@@ -400,7 +406,7 @@ const Seventeen = (props) => {
                       assessmentData.heading && assessmentData.heading.length
                         ? headerColor(item.order)
                         : YELLOW,
-                    width: '20%',
+                    width: DEVICE_WIDTH > 767 ? '20%' : '30%',
                   }}
                 />
               );
@@ -537,7 +543,7 @@ const styles = {
     color: COLORS.WHITE,
     paddingTop: '30px',
   },
-  inputBox: {width: '78%'},
+  inputBox: {width: DEVICE_WIDTH > 767 ? '78%' : '68%'},
   inputStyle: {
     backgroundColor: COLORS.LIGHT_GRAY,
     fontStyle: 'italic',

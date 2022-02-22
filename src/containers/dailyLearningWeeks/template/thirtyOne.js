@@ -228,5 +228,5 @@ const styles = {
     // marginLeft: '0',
     flexDirection: 'column',
   },
-  descStyle: {width: '100%', marginLeft: '35px', marginTop: '25px'},
+  descStyle: {width: '100%', paddingLeft: '35px', marginTop: '25px'},
 };

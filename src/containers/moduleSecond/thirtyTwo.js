@@ -82,7 +82,7 @@ const ThirtyTwo = (props) => {
             <p
               className="dash-text"
               style={{
-                paddingLeft: '40px',
+                paddingLeft: DEVICE_WIDTH > 767 ? '40px' : '0',
                 fontSize: 14,
                 alignSelf: 'center',
               }}>

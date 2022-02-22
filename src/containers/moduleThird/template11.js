@@ -2,6 +2,12 @@ import React, {useState} from 'react';
 import GLOBALS from '../../constants';
 import styles from './styles';
 import compass1 from '../../assets/images/compass1.svg';
+
+import {Dimensions} from 'react-native';
+
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const DEVICE_HEIGHT = Dimensions.get('window').height;
+
 const {COLORS} = GLOBALS;
 
 const InputBoxWithContent = (props) => {
@@ -62,7 +68,7 @@ const TemplateEleven = (props) => {
             <p
               className="dash-text"
               style={{
-                paddingLeft: '40px',
+                paddingLeft: DEVICE_WIDTH > 767 ? '40px' : '0',
                 fontSize: 14,
                 alignSelf: 'center',
                 justifyContent: 'center',
@@ -73,7 +79,7 @@ const TemplateEleven = (props) => {
           <div style={styles.inputBoxStyle}>
             <div
               style={{
-                width: '20%',
+                width: DEVICE_WIDTH > 767 ? '20%' : '30%',
                 backgroundColor: COLORS.YELLOW,
 
                 borderRadius: '5px',
@@ -89,7 +95,7 @@ const TemplateEleven = (props) => {
             </div>
             <div
               style={{
-                width: '78%',
+                width: DEVICE_WIDTH > 767 ? '78%' : '68%',
                 backgroundColor: COLORS.YELLOW,
                 borderRadius: '5px',
               }}>

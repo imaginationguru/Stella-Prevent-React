@@ -15,6 +15,10 @@ import {
   CustomImage,
 } from '../../../components/Cards';
 import commonStyles from '../commonStyles';
+import {Dimensions} from 'react-native';
+
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const DEVICE_HEIGHT = Dimensions.get('window').height;
 const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 const {YELLOW, WHITE, CIRCLE_GRAY} = COLORS;
 let userId = getItem('userId');
@@ -643,7 +647,7 @@ const styles = {
     width: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: '60px',
+    marginTop: DEVICE_WIDTH > 767 ? '60px' : '15px',
     justifyContent: 'space-between',
   },
   draggableContent: {
@@ -657,5 +661,5 @@ const styles = {
     paddingLeft: '20px',
   },
   wrapper: {marginTop: '40px'},
-  droppableDiv: {width: '48%', paddingBottom: '60px'},
+  droppableDiv: {width: '48%', paddingBottom: '15px'},
 };

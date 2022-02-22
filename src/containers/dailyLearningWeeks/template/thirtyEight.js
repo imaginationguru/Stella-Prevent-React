@@ -196,6 +196,7 @@ const styles = {
   },
   descStyle: {
     width: '85%',
+    margin: '0 10px',
     textAlign: 'justify',
     border: `1px solid ${BUTTON_ORANGE}`,
     padding: '10px',

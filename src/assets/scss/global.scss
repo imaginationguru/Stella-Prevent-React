@@ -1163,3 +1163,8 @@ body {
 .holder--tint-3 .holder__title {
   background-image: linear-gradient(90deg, #fe8080 33%, #fea380 100%);
 }
+.res-wrap p {
+  word-wrap: break-word;
+  word-break: break-all;
+}
+

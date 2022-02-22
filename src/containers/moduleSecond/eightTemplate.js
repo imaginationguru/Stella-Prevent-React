@@ -5,6 +5,12 @@ import circleWithPen from '../../assets/images/circleWithPen.svg';
 import right from '../../assets/images/right.svg';
 import cross from '../../assets/images/cross.svg';
 import styles from './styles';
+
+import {Dimensions} from 'react-native';
+
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const DEVICE_HEIGHT = Dimensions.get('window').height;
+
 const {COLORS} = GLOBALS;
 const data = [
   {
@@ -40,7 +46,7 @@ const InputBoxWithContent = (props) => {
           {title}
         </p>
       </div>
-      <div style={{width: '78%'}}>
+      <div style={{width: DEVICE_WIDTH > 767 ? '78%' : '68%'}}>
         <form noValidate>
           <textarea
             type="description"
@@ -137,7 +143,10 @@ const EightTemplate = (props) => {
             onChange={(situation) => {
               setSituation(situation.target.value);
             }}
-            style={{backgroundColor: COLORS.CIRCLE_GRAY, width: '20%'}}
+            style={{
+              backgroundColor: COLORS.CIRCLE_GRAY,
+              width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+            }}
           />
           <InputBoxWithContent
             title={'Emotions'}
@@ -146,7 +155,10 @@ const EightTemplate = (props) => {
             onChange={(emotions) => {
               setEmotions(emotions.target.value);
             }}
-            style={{backgroundColor: COLORS.GREEN_TEXT, width: '20%'}}
+            style={{
+              backgroundColor: COLORS.GREEN_TEXT,
+              width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+            }}
           />
           <InputBoxWithContent
             title={'Thoughts'}
@@ -155,7 +167,10 @@ const EightTemplate = (props) => {
             onChange={(thoughts) => {
               setThoughts(thoughts.target.value);
             }}
-            style={{backgroundColor: COLORS.YELLOW, width: '20%'}}
+            style={{
+              backgroundColor: COLORS.YELLOW,
+              width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+            }}
           />
           <InputBoxWithContent
             title={'Behaviour'}
@@ -164,7 +179,10 @@ const EightTemplate = (props) => {
             onChange={(behaviour) => {
               setBehaviour(behaviour.target.value);
             }}
-            style={{backgroundColor: COLORS.BUTTON_ORANGE, width: '20%'}}
+            style={{
+              backgroundColor: COLORS.BUTTON_ORANGE,
+              width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+            }}
           />
           <div
             style={{
@@ -177,7 +195,7 @@ const EightTemplate = (props) => {
             <p
               className="dash-text"
               style={{
-                paddingLeft: '40px',
+                paddingLeft: DEVICE_WIDTH > 767 ? '40px' : '0',
                 fontSize: 14,
                 alignSelf: 'center',
                 justifyContent: 'center',

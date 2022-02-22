@@ -401,7 +401,7 @@ const styles = {
     width: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: '60px',
+    marginTop: DEVICE_WIDTH > 767 ? '60px' : '15px',
     justifyContent: 'space-between',
   },
   draggableContent: {
@@ -416,7 +416,10 @@ const styles = {
     //  border: '1px solid red',
   },
   wrapper: {marginTop: '40px'},
-  droppableDiv: {width: '48%', paddingBottom: '60px'},
+  droppableDiv: {
+    width: '48%',
+    paddingBottom: '15px',
+  },
   droppableDivDrag: {
     width: DEVICE_WIDTH > 767 ? '23%' : '48%',
     paddingBottom: DEVICE_WIDTH > 767 ? '60px' : '30px',
