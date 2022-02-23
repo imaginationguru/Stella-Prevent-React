@@ -197,7 +197,7 @@ export const SubHeader = ({
       : [];
 
   return (
-    <div style={styles.cardDiv}>
+    <div style={styles.cardDiv} className="btn-nav-wrapper">
       {/* {data.length
         ? data.map((item) => {
             return item.cards

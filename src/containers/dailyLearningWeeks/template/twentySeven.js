@@ -448,7 +448,8 @@ const TwentySeven = (props) => {
                                 border: `1px solid ${
                                   alternateColor[index % 4]
                                 }`,
-                              }}>
+                              }}
+                              className="v-option-item">
                               {val.optionValue}
                             </p>
                           );

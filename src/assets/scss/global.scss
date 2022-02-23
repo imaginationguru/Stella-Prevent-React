@@ -862,6 +862,19 @@ footer {
   }
 }
 
+.v-option-item {
+   padding: 10px;
+   align-items: center;
+   justify-content: center;
+   display: flex; 
+}
+button.navbutton {
+  flex: 0 0 auto;
+}
+.btn-nav-wrapper {
+  overflow: auto;
+  max-width: 1110px;
+}
 @media only screen and (max-width: 1200px) {
   .week-list {
     flex-wrap: wrap;
@@ -869,6 +882,11 @@ footer {
       flex: 0 0 25%;
     }
   }
+  .btn-nav-wrapper {
+    overflow: auto;
+    max-width: calc(100vw - 30px);
+  }
+  
 }
 @media only screen and (max-width: 991px) {
   .login {
@@ -1111,7 +1129,9 @@ footer {
     margin-right: auto !important;
   }
   
-
+  .v-option-item {
+    width: 45% !important;
+  }
 
 
 }
