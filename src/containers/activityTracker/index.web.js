@@ -116,14 +116,17 @@ const ActivityView = ({
           // border: '1px solid blue',
           width: '80px',
           height: '80px',
-        }}>
+          borderRadius: '50%',
+          padding: '10px',
+          border: item.isChecked
+            ? `3px solid ${GREEN_TEXT}`
+            : '1px solid #000000',
+        }}
+        className="activity-icon">
         <img
           src={GLOBALS.IMAGE_BASE_URL + item.image}
           style={{
             ...styles.activityImage,
-            border: item.isChecked
-              ? `3px solid ${GREEN_TEXT}`
-              : '1px solid #000000',
           }}
         />
       </div>
@@ -405,10 +408,7 @@ const styles = {
     fontSize: '16px',
   },
   activityImage: {
-    borderWidth: '2%',
-    padding: '10px',
-    borderRadius: '50%',
-    // width: '35%',
+    maxWidth: '90%',
   },
   activityBox: {
     padding: '2%',
