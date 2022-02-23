@@ -15,6 +15,8 @@ import {
   CardDescription,
   CardContent,
 } from '../../../components/Cards';
+import {Dimensions} from 'react-native-web';
+const DEVICE_WIDTH = Dimensions.get('window').width;
 const {COLORS} = GLOBALS;
 const {WHITE} = COLORS;
 const TwentyFive = (props) => {
@@ -160,16 +162,13 @@ const TwentyFive = (props) => {
       console.log('update params');
       if (firstInput.length === 0) {
         setFirstInputError('Please enter your thinking');
-      }
-      else if (secondInput.length === 0) {
+      } else if (secondInput.length === 0) {
         setSecondInputError('Please enter situation');
-      }
-      else if (thirdInput.length === 0) {
+      } else if (thirdInput.length === 0) {
         setThirdInputError('Please enter how you behaved?');
-      }
-     else  if (fourthInput.length === 0) {
+      } else if (fourthInput.length === 0) {
         setFourthInputError('Please enter how you felt?');
-      }else{
+      } else {
         const params = {
           data: [
             {
@@ -193,7 +192,6 @@ const TwentyFive = (props) => {
         console.log('update params>>>>>>>', params);
         dispatch(AppActions.updateUserAssessment(params));
       }
-    
     } else {
       const params = {
         user_id: getItem('userId'),
@@ -217,7 +215,7 @@ const TwentyFive = (props) => {
           },
         ],
       };
-      console.log('params>>>>>>>>>>.twenty five>>>>>>', params,firstInput);
+      console.log('params>>>>>>>>>>.twenty five>>>>>>', params, firstInput);
       if (firstInput.length === 0) {
         setFirstInputError('Please enter your thinking');
       }
@@ -281,20 +279,22 @@ const TwentyFive = (props) => {
         className="v-scroll"
         style={{
           width: '100%',
-          height: '700px',
+          height: DEVICE_WIDTH > 767 ? '700px' : 'auto',
           overflow: 'auto',
         }}>
         <div
           style={{
             //  border: '1px solid blue',
-            width: '888px',
-            height: '700px',
+            width: DEVICE_WIDTH > 767 ? '888px' : '100%',
+            height: DEVICE_WIDTH > 767 ? '700px' : 'auto',
             marginLeft: 'auto',
             marginRight: 'auto',
             position: 'relative',
           }}>
           <img src={slide} style={{width: '100%', height: '100%'}} />
-          <div style={{position: 'absolute', right: '80px', top: '20px'}}>
+          <div
+            style={{position: 'absolute', right: '80px', top: '20px'}}
+            className="t-area1">
             {inputs.length
               ? inputs
                   .filter((item) => item.order === 0)
@@ -305,7 +305,7 @@ const TwentyFive = (props) => {
                           <div className="formField has-icon">
                             <textarea
                               type="textarea"
-                              className="f-field"
+                              className="f-field t-area"
                               value={firstInput}
                               name="firstInput"
                               onChange={(e) => onHandleChange(e, item)}
@@ -328,7 +328,8 @@ const TwentyFive = (props) => {
               position: 'absolute',
               top: '460px',
               left: '340px',
-            }}>
+            }}
+            className="t-area2">
             {inputs.length
               ? inputs
                   .filter((item) => item.order === 1)
@@ -339,7 +340,7 @@ const TwentyFive = (props) => {
                           <div className="formField has-icon">
                             <textarea
                               type="textarea"
-                              className="f-field"
+                              className="f-field t-area"
                               value={secondInput}
                               name="secondInput"
                               onChange={(e) => onHandleChange(e, item)}
@@ -357,7 +358,9 @@ const TwentyFive = (props) => {
                   })
               : null}
           </div>
-          <div style={{position: 'absolute', left: '40px', bottom: '10px'}}>
+          <div
+            style={{position: 'absolute', left: '40px', bottom: '10px'}}
+            className="t-area3">
             {inputs.length
               ? inputs
                   .filter((item) => item.order === 2)
@@ -368,7 +371,7 @@ const TwentyFive = (props) => {
                           <div className="formField has-icon">
                             <textarea
                               type="textarea"
-                              className="f-field"
+                              className="f-field t-area"
                               value={thirdInput}
                               name="thirdInput"
                               onChange={(e) => onHandleChange(e, item)}
@@ -386,7 +389,9 @@ const TwentyFive = (props) => {
                   })
               : null}
           </div>
-          <div style={{position: 'absolute', right: '10px', bottom: '10px'}}>
+          <div
+            style={{position: 'absolute', right: '10px', bottom: '10px'}}
+            className="t-area4">
             {inputs.length
               ? inputs
                   .filter((item) => item.order === 3)
@@ -397,7 +402,7 @@ const TwentyFive = (props) => {
                           <div className="formField has-icon">
                             <textarea
                               type="textarea"
-                              className="f-field"
+                              className="f-field t-area"
                               value={fourthInput}
                               name="fourthInput"
                               onChange={(e) => onHandleChange(e, item)}
