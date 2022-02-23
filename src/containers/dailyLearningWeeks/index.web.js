@@ -446,31 +446,45 @@ const DailyLearningWeeks = (props) => {
                       const isClickable = id ? applicableCards(id) : false;
 
                       if (isClickable) {
+                        console.log('is clickable??????');
                         dispatch({
                           type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                           payload: id,
                         });
-                      } else if (
+                      }
+                      // if (
+                      //   currentData.is_disabled == false &&
+                      //   currentData.is_read == true &&
+                      //   currentData.is_completed == true
+                      // ) {
+                      //   dispatch({
+                      //     type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+                      //     payload: id,
+                      //   });
+                      // } else {
+                      //   customAlert(
+                      //     'Please complete the previous card',
+                      //     'error',
+                      //   );
+                      // }
+                      else if (
                         currentData.is_disabled == false &&
                         currentData.is_read == true &&
                         currentData.is_completed == false &&
                         currentData._id != id
                       ) {
+                        console.log('else please complete previous caed');
                         customAlert(
                           'Please complete the previous card',
                           'error',
                         );
                       } else {
-                        dispatch({
-                          type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                          payload: id,
-                        });
-                        // if (currentData._id != id) {
-                        //   customAlert(
-                        //     'Please complete the previous card',
-                        //     'error',
-                        //   );
-                        // }
+                        console.log('else??????');
+                        customAlert('Please read previous card', 'error');
+                        // dispatch({
+                        //   type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+                        //   payload: id,
+                        // });
                       }
                     }}
                     cardNumber={currentData.card_number || ''}
