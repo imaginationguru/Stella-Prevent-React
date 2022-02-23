@@ -1007,6 +1007,40 @@ footer {
 .login .login-content {
   max-width: 100%;
 }
+.t-area1 {
+  top: 2% !important;
+  right: 2% !important;
+  left: auto !important;
+  height: 59px !important;
+}
+
+.t-area2 {
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%);
+  margin-top: 50px;
+  height: 59px !important;
+}
+
+.t-area3 {
+  bottom: 2% !important;
+  left: 2% !important;
+  right: auto !important;
+  height: 59px !important;
+}
+
+.t-area4 {
+  bottom: 2% !important;
+  right: 2% !important;
+  left: auto !important;
+  height: 59px !important;
+}
+
+.t-area {
+  max-width: 120px !important;
+  height: 59px !important;
+  font-size: 12px;
+}
 }
 @media only screen and (max-width: 767px) {
   .login {
@@ -1076,6 +1110,8 @@ footer {
     margin-left: auto !important;
     margin-right: auto !important;
   }
+  
+
 
 
 }
