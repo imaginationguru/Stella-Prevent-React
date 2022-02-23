@@ -396,5 +396,6 @@ const styles = {
     position: 'relative',
     // border: '1px solid blue',
     boxShadow: '1px 3px 1px #D6F0EB',
+    cursor: 'pointer',
   },
 };
