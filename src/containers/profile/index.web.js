@@ -459,7 +459,7 @@ function ProfileDetails(props) {
         {/* 3rd column */}
 
         <View style={{flex: 0.3}}>
-          <Text style={styles.heading}>Language</Text>
+          {/* <Text style={styles.heading}>Language</Text>
           {language.map((item, index) => {
             return (
               <RadioButton1
@@ -477,8 +477,7 @@ function ProfileDetails(props) {
           })}
           <Button
             onVerifyPress={() => navigator('change_language')}
-            // textStyle={{fontSize: '1vw'}}
-            btnStyle={{
+           btnStyle={{
               height: 30,
               width: '100%',
               marginTop: '1.1vw',
@@ -486,9 +485,9 @@ function ProfileDetails(props) {
             title="Change"
             textStyle={{fontSize: 12}}
             bgColor={DARK_GREEN}
-            textColor={WHITE}></Button>
+            textColor={WHITE}></Button> */}
 
-          <View style={styles.hrLine} />
+          {/* <View style={styles.hrLine} /> */}
           <Text style={styles.heading}>Notifications</Text>
           {notification.map((item) => {
             return (

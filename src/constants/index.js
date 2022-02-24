@@ -1,4 +1,4 @@
-const isLive = false;
+const isLive = true;
 
 export default {
   BASE_URL: isLive
