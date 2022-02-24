@@ -39,7 +39,7 @@ const dataMapperAss = (arr = []) => {
 };
 
 const InputBoxWithContent = (props) => {
-  const {title, placeholder, value, onChange, style, name} = props;
+  const {title, placeholder, value, onChange, style, name, disable} = props;
   return (
     <div style={styles.inputBoxWrapper}>
       <div style={style}>
@@ -57,6 +57,7 @@ const InputBoxWithContent = (props) => {
             placeholder={placeholder}
             style={styles.inputStyle}
             rows={3}
+            disabled={disable}
           />
         </form>
       </div>
@@ -102,6 +103,7 @@ const Seventeen = (props) => {
             order: item.order,
             value: '',
             _id: item._id,
+            isDisabled: item.isDisabled,
           };
         }),
       );
@@ -197,20 +199,25 @@ const Seventeen = (props) => {
     };
 
     if (userAssessmentData && userAssessmentData.length) {
+      console.log('if block');
       //dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
       dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
     } else {
       let isValid = false;
       if (inputs && inputs.length) {
         let temp = [];
-        inputs.forEach((item) => {
+        let disabledInputs = inputs.filter((item) => item.isDisabled === false);
+        console.log('disabled inputs', disabledInputs);
+        disabledInputs.forEach((item) => {
           temp.push(item.value);
         });
+        console.log('temp >>>>>>', temp);
         if (temp.length) {
-          isValid = temp.filter((item) => item === '').length === 0;
-          // isValid = temp.find((item) => item !== 0) ? true : false;
+          isValid = temp.filter((item) => item === '').length === 0; //fill all inputs
+          //isValid = temp.some((item) => item !== 0) ? true : false;
         }
       }
+      console.log('is valid ', isValid);
       if (isValid) {
         console.log('gjhfjhf');
         dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
@@ -259,7 +266,7 @@ const Seventeen = (props) => {
     assessmentData.heading[1]
       ? assessmentData.heading[1].heading
       : null;
-  console.log('headingSecond??????', headingSecond);
+
   return (
     <div>
       {/**********************quotes************** */}
@@ -408,6 +415,7 @@ const Seventeen = (props) => {
                         : YELLOW,
                     width: DEVICE_WIDTH > 767 ? '20%' : '30%',
                   }}
+                  disable={item.isDisabled === true ? true : false}
                 />
               );
             })
