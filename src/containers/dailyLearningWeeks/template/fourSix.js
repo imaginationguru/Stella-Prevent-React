@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
-import {TextInput, View, Text, FlatList} from 'react-native';
+import {TextInput, View, Text, FlatList, Dimensions} from 'react-native';
 import commonStyles from '../commonStyles';
 import GLOBALS from '../../../constants';
 import ReactHtmlParser from 'react-html-parser';
@@ -18,6 +18,9 @@ import {
   CardContent,
   CustomImage,
 } from '../../../components/Cards';
+import {wrap} from 'lodash';
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const DEVICE_HEIGHT = Dimensions.get('window').height;
 const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 const {BOX_GRAY, GREEN_TEXT, CIRCLE_GRAY, WHITE, GRAY, RED} = COLORS;
 
@@ -339,10 +342,16 @@ const FourSix = (props) => {
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item.id}
           renderItem={({item, index}) => (
-            <View style={{flex: 1, flexDirection: 'row', marginBottom: 10}}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                marginBottom: 10,
+                flexWrap: 'wrap',
+              }}>
               <View
                 style={{
-                  flex: 0.2,
+                  flex: DEVICE_WIDTH > 767 ? '0.2' : '0 0 100%',
                   backgroundColor: index % 2 === 0 ? CIRCLE_GRAY : GREEN_TEXT,
                   height: '150px',
                   justifyContent: 'center',
@@ -511,8 +520,8 @@ const styles = {
     fontSize: '25px',
   },
   crossIconWrapper: {
-    flex: 0.8,
-    marginLeft: 10,
+    flex: DEVICE_WIDTH > 767 ? '0.8' : '0 0 100%',
+    marginLeft: DEVICE_WIDTH > 767 ? '10px' : '0',
     display: 'flex',
     marginBottom: '15px',
     position: 'relative',

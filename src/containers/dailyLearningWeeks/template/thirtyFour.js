@@ -94,10 +94,8 @@ const emptyTextInputMapper = (hId, cId, order = 0) => {
 };
 
 const ThirtyFour = (props) => {
-  const {
-    assessmentData: {heading = []} = {},
-    userAssessmentData = [],
-  } = useSelector((state) => state.moduleOne);
+  const {assessmentData: {heading = []} = {}, userAssessmentData = []} =
+    useSelector((state) => state.moduleOne);
   const [inputs, setInputs] = useState([]);
   const dispatch = useDispatch();
   const {

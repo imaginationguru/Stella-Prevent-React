@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Image,
   Switch,
+  Dimensions,
 } from 'react-native';
 import moment from 'moment';
 import {getItem} from '../../utils/AsyncUtils';
@@ -24,6 +25,7 @@ import PopUp from '../../components/common/popUp';
 import BackBtn from '../../components/common/backbtn';
 import Loader from '../../components/Loader';
 import ProfileHeader from '../../components/common/profileHeader';
+const DEVICE_WIDTH = Dimensions.get('window').width;
 const {COLORS, FONTS} = GLOBALS;
 const {LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN} = COLORS;
 import Header from '../../components/Header';
@@ -254,12 +256,13 @@ function ProfileDetails(props) {
           flexDirection: 'row',
           justifyContent: 'space-between',
           marginHorizontal: '10vw',
+          flexWrap: 'wrap',
         }}>
         {/* 1st colum */}
-        <View style={{flex: 0.3}}>
+        <View style={{flex: DEVICE_WIDTH > 767 ? '0.3' : '100%'}}>
           <View>
             <Text style={styles.heading}>Plan</Text>
-            <View style={{flexDirection: 'row', marginTop: '1vw'}}>
+            <View style={{flexDirection: 'row', marginTop: '16px'}}>
               <Image
                 resizeMode={'contain'}
                 source={`${IMAGE_BASE_URL}${loginData?.planInfo?.image}`}
@@ -268,9 +271,9 @@ function ProfileDetails(props) {
               <Text
                 style={{
                   fontFamily: 'Inter',
-                  fontSize: normalize(3.5),
+                  fontSize: '24px',
                   color: '#0B0914',
-                  marginLeft: '1vw',
+                  marginLeft: '16px',
                   fontFamily: FONTS.SEMI_BOLD,
                 }}>
                 {loginData?.planInfo?.title}
@@ -289,8 +292,8 @@ function ProfileDetails(props) {
                 })
               }
               textStyle={{
-                // fontSize: '1vw',
-                fontSize: normalize(3),
+                // fontSize: '16px',
+                fontSize: '16px',
               }}
               title={
                 loginData?.planInfo?.numericPrice == 0
@@ -335,7 +338,7 @@ function ProfileDetails(props) {
               label="Confirm New Password"></Input1>
             <Button
               onVerifyPress={() => validateField()}
-              textStyle={{fontSize: '1vw'}}
+              textStyle={{fontSize: '16px'}}
               btnStyle={{
                 height: 40,
                 width: '100%',
@@ -347,7 +350,7 @@ function ProfileDetails(props) {
           </View>
         </View>
         {/* 2nd column */}
-        <View style={{flex: 0.3}}>
+        <View style={{flex: DEVICE_WIDTH > 767 ? '0.3' : '100%'}}>
           <Text style={styles.heading}>Account Info</Text>
           <Input1
             editable={false}
@@ -429,7 +432,7 @@ function ProfileDetails(props) {
               marginVertical: '1.1vw',
             }}
             onVerifyPress={() => navigator('profile')}
-            textStyle={{fontSize: '1vw'}}
+            textStyle={{fontSize: '16px'}}
             title="Update Profile"
             bgColor={DARK_GREEN}
             textColor={WHITE}></Button>
@@ -437,7 +440,7 @@ function ProfileDetails(props) {
 
         {/* 3rd column */}
 
-        <View style={{flex: 0.3}}>
+        <View style={{flex: DEVICE_WIDTH > 767 ? '0.3' : '100%'}}>
           <Text style={styles.heading}>Language</Text>
           {language.map((item, index) => {
             return (
@@ -456,7 +459,7 @@ function ProfileDetails(props) {
           })}
           <Button
             onVerifyPress={() => navigator('change_language')}
-            textStyle={{fontSize: '1vw'}}
+            textStyle={{fontSize: '16px'}}
             btnStyle={{
               height: 30,
               width: '100%',
@@ -502,7 +505,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     // fontSize: '1.2vw',
-    fontSize: normalize(3.5),
+    fontSize: '24px',
     fontWeight: '700',
     fontStyle: 'normal',
     color: '#313132',
@@ -511,7 +514,7 @@ const styles = StyleSheet.create({
   backBtn: {
     alignItems: 'flex-start',
     padding: '2vw',
-    paddingBottom: '1vw',
+    paddingBottom: '16px',
   },
   hrLine: {
     height: 1,

@@ -281,7 +281,9 @@ const TemplateThermometer = (props) => {
               .map((item) => {
                 return (
                   <div style={commonStyles.col4}>
-                    <p style={commonStyles.thermoTitle}>
+                    <p
+                      style={commonStyles.thermoTitle}
+                      className="therma-title">
                       {ReactHtmlParser(item.header)}
                     </p>
                   </div>
