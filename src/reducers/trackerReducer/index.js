@@ -12,15 +12,16 @@ const INITIAL_STATE = {
 
   getSleepTrackerLoader: false,
   getSleepTrackerData: false,
+  getWeeklySummaryReportData: {},
 };
 
-const { ACTION_TYPE } = GLOBALS;
+const {ACTION_TYPE} = GLOBALS;
 function trackerReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case ACTION_TYPE.GET_MOOD_FAIL:
-      return { ...state, moodLoader: false };
+      return {...state, moodLoader: false};
     case ACTION_TYPE.GET_MOOD_REQUEST:
-      return { ...state, moodLoader: true };
+      return {...state, moodLoader: true};
     case ACTION_TYPE.GET_MOOD_SUCCESS:
       return {
         ...state,
@@ -29,9 +30,9 @@ function trackerReducer(state = INITIAL_STATE, action) {
       };
 
     case ACTION_TYPE.GET_ACTIVITY_TRACKER_FAIL:
-      return { ...state, getActivityLoader: false };
+      return {...state, getActivityLoader: false};
     case ACTION_TYPE.GET_ACTIVITY_TRACKER_REQUEST:
-      return { ...state, getActivityLoader: true };
+      return {...state, getActivityLoader: true};
     case ACTION_TYPE.GET_ACTIVITY_TRACKER_SUCCESS:
       return {
         ...state,
@@ -40,9 +41,9 @@ function trackerReducer(state = INITIAL_STATE, action) {
       };
 
     case ACTION_TYPE.GET_SELECTED_ACTIVITY_TRACKER_FAIL:
-      return { ...state, getSelectedActivityLoader: false };
+      return {...state, getSelectedActivityLoader: false};
     case ACTION_TYPE.GET_SELECTED_ACTIVITY_TRACKER_REQUEST:
-      return { ...state, getSelectedActivityLoader: true };
+      return {...state, getSelectedActivityLoader: true};
     case ACTION_TYPE.GET_SELECTED_ACTIVITY_TRACKER_SUCCESS:
       return {
         ...state,
@@ -51,9 +52,9 @@ function trackerReducer(state = INITIAL_STATE, action) {
       };
 
     case ACTION_TYPE.SAVE_OTHER_ACTIVITY_FAIL:
-      return { ...state, saveActivityLoader: false };
+      return {...state, saveActivityLoader: false};
     case ACTION_TYPE.SAVE_OTHER_ACTIVITY_REQUEST:
-      return { ...state, saveActivityLoader: true };
+      return {...state, saveActivityLoader: true};
     case ACTION_TYPE.SAVE_OTHER_ACTIVITY_SUCCESS:
       return {
         ...state,
@@ -62,14 +63,22 @@ function trackerReducer(state = INITIAL_STATE, action) {
       };
 
     case ACTION_TYPE.GET_SLEEP_TRACKER_FAIL:
-      return { ...state, getSleepTrackerLoader: false };
+      return {...state, getSleepTrackerLoader: false};
     case ACTION_TYPE.GET_SLEEP_TRACKER_REQUEST:
-      return { ...state, getSleepTrackerLoader: true };
+      return {...state, getSleepTrackerLoader: true};
     case ACTION_TYPE.GET_SLEEP_TRACKER_SUCCESS:
       return {
         ...state,
         getSleepTrackerLoader: false,
         getSleepTrackerData: action.payload,
+      };
+    case ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_REQUEST:
+      return {...state, getWeeklyLoader: true};
+    case ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_SUCCESS:
+      return {
+        ...state,
+        //  getSleepTrackerLoader: false,
+        getWeeklySummaryReportData: action.payload,
       };
 
     default:

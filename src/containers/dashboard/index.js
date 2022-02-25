@@ -229,6 +229,14 @@ const Dashboard = () => {
                 navigatorPush({screenName: 'MoodTracker'});
               }}
             />
+            <TrackersUI
+              title=" Reports"
+              src={face}
+              onClick={() => {
+                dispatch(AppActions.dashboardModalAction(false));
+                navigatorPush({screenName: 'Report'});
+              }}
+            />
           </div>
         </div>
         <div className="week-list">
@@ -356,8 +364,8 @@ const styles = {
     borderRadius: 10,
     //height: 50,
     border: `2px solid ${DARK_GREEN}`,
-    paddingTop: 33,
-    paddingBottom: 33,
+    paddingTop: 30,
+    paddingBottom: 30,
     marginBottom: 18,
     cursor: 'pointer',
     //boxShadow: '1px 3px 1px #D6F0EB',
