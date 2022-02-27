@@ -5,6 +5,7 @@ import activity from '../../assets/images/sleep/activity.png';
 import face from '../../assets/images/sleep/face.png';
 import rightArrow from '../../assets/images/sleep/rightArrow.png';
 import stellaGirl from '../../assets/images/stellaGirl/stellaGirl.png';
+import past_module from '../../assets/images/dashboardHeader/past_module.png';
 import lock from '../../assets/images/lock.png';
 
 import GLOBALS from '../../constants';
@@ -199,9 +200,7 @@ const Dashboard = () => {
                 <p style={{fontWeight: 'bold', fontSize: 25}}>
                   Today’s Daily Learning
                 </p>
-                <p>
-                  Learn something new today and take it with you wherever you go
-                </p>
+                <p>Click here to complete today’s learnings</p>
               </div>
             </div>
           </div>
@@ -229,6 +228,14 @@ const Dashboard = () => {
                 navigatorPush({screenName: 'MoodTracker'});
               }}
             />
+            <TrackersUI
+              title="Past Modules"
+              src={past_module}
+              onClick={() => {
+                dispatch(AppActions.dashboardModalAction(false));
+                navigatorPush({screenName: 'SelectWeek'});
+              }}
+            />
           </div>
         </div>
         <div className="week-list">
@@ -242,7 +249,6 @@ const Dashboard = () => {
                     handleWeekClick(item);
                     return;
                   }}
-                  // className="col-sm-2 col-md-2"
                   style={{
                     cursor: 'pointer',
                     border:
@@ -356,8 +362,8 @@ const styles = {
     borderRadius: 10,
     //height: 50,
     border: `2px solid ${DARK_GREEN}`,
-    paddingTop: 33,
-    paddingBottom: 33,
+    paddingTop: 18,
+    paddingBottom: 18,
     marginBottom: 18,
     cursor: 'pointer',
     //boxShadow: '1px 3px 1px #D6F0EB',

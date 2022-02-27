@@ -270,5 +270,7 @@ export default {
     LIGHT_BLACK: '#35353F',
     PLAN_GRAY: '#A9A9AA',
     text_Gray: '#697386',
+    LIGHT_SHADOW_GREEN: '#C9E2DE',
+    GREY: '#676767' /* Font Regular */,
   },
 };
