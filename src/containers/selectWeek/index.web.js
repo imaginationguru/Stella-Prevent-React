@@ -15,7 +15,7 @@ import {
   Dimensions,
 } from 'react-native';
 import moment from 'moment';
-import DropDownPicker from '../../updatedNodeModules/react-native-dropdown-picker';
+//import DropDownPicker from 'react-native-dropdown-picker';
 import ScheduleTab from '../../components/common/tabs';
 import {getItem} from '../../utils/AsyncUtils';
 import * as AppActions from '../../actions';
@@ -186,7 +186,7 @@ function SelectWeek(props) {
             style={styles.logoStyle}
           />
         </View>
-        <DropDownPicker
+        {/* <DropDownPicker
           placeholder={'Select Week'}
           theme="LIGHT"
           style={styles.dropDownStyleNew}
@@ -225,7 +225,7 @@ function SelectWeek(props) {
             //   open: false,
             // });
           }}
-        />
+        /> */}
         <View style={styles.dayView}>
           {dayData.map((element) => {
             return (

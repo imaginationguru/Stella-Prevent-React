@@ -421,3 +421,60 @@ export function getSleepData(params) {
     }
   };
 }
+
+//getWeeklySummaryReport
+
+export function getWeeklySummaryReport(params) {
+  // let userId = getItem('userId');
+  // let postData = {
+  //   ...params,
+  //   user_id: userId,
+  // };
+  return async (dispatch) => {
+    dispatch({type: ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_REQUEST});
+    try {
+      dispatch(loadingAction(true));
+      let json = await RestClient.postCall(URL.GET_WEEKLY_SUMMARY_API, params);
+      console.log('json sleep in actions', json);
+      if (json.code === 200) {
+        dispatch({
+          type: ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_SUCCESS,
+          payload: json.data,
+        });
+        dispatch(loadingAction(false));
+      } else {
+        if (json.code === 400) {
+          dispatch({
+            type: ACTION_TYPE.ERROR,
+            payload: json.message,
+          });
+        }
+        if (json.code === 417) {
+          console.log('Session expierd>>>>>>>get assessment data');
+          dispatch({
+            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+            payload: json.message,
+          });
+          dispatch(loadingAction(false));
+        } else {
+          dispatch({
+            type: ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_FAIL,
+          });
+        }
+      }
+    } catch (error) {
+      console.log(
+        'erroe>>get template cards data>>>>>>>>>>get assessment data>>>>',
+        error,
+      );
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+      });
+      dispatch({
+        type: ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_FAIL,
+        payload: error,
+      });
+    }
+  };
+}

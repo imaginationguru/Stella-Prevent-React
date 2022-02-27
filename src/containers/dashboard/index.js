@@ -228,14 +228,23 @@ const Dashboard = () => {
                 navigatorPush({screenName: 'MoodTracker'});
               }}
             />
+
             <TrackersUI
+              title=" Reports"
+              src={face}
+              onClick={() => {
+                dispatch(AppActions.dashboardModalAction(false));
+                navigatorPush({screenName: 'Report'});
+              }}
+            />
+            {/* <TrackersUI
               title="Past Modules"
               src={past_module}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
                 navigatorPush({screenName: 'SelectWeek'});
               }}
-            />
+            /> */}
           </div>
         </div>
         <div className="week-list">
