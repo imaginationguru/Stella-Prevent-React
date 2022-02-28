@@ -291,6 +291,7 @@ function ProfileDetails(props) {
                                 height: 35,
                                 width: '100%',
                                 marginTop: '1.1vw',
+                                marginBottom: '2.1vw',
                             }}
                             onVerifyPress={() =>
                                 navigatorPush({
@@ -351,8 +352,9 @@ function ProfileDetails(props) {
                                 height: 40,
                                 width: '100%',
                                 marginTop: '1.1vw',
+                                marginBottom: '2.1vw',
                             }}
-                            textStyle={{ fontSize: 12 }}
+                            textStyle={{ fontSize: 16 }}
                             title="Change Password"
                             bgColor={DARK_GREEN}
                             textColor={WHITE}></Button>
@@ -445,7 +447,7 @@ function ProfileDetails(props) {
                         btnStyle={{
                             height: 35,
                             width: '100%',
-                            marginVertical: '1.1vw',
+                            marginVertical: '2.1vw',
                         }}
                         onVerifyPress={() => navigator('profile')}
                         textStyle={{ fontSize: '16px' }}
@@ -456,8 +458,8 @@ function ProfileDetails(props) {
 
                 {/* 3rd column */}
 
-    <View style={{ flex: DEVICE_WIDTH > 767 ? '0.3' : '100%' }}>
-        <Text style={styles.heading}>Language</Text>
+                <View style={{ flex: DEVICE_WIDTH > 767 ? '0.3' : '100%' }}>
+                    {/* <Text style={styles.heading}>Language</Text>
 
 
         {language.map((item, index) => {
@@ -487,25 +489,25 @@ function ProfileDetails(props) {
             title="Change"
             textStyle={{ fontSize: 12 }}
             bgColor={DARK_GREEN}
-            textColor={WHITE}></Button> 
+            textColor={WHITE}></Button>  */}
 
-        {/* <View style={styles.hrLine} /> */}
-        <Text style={styles.heading}>Notifications</Text>
-        {notification.map((item) => {
-            return (
-                <Toggle
-                    onPress={(selected_value) => navigator('toggle_notify', item)}
-                    item={item}
-                    title={item.name}
-                    enabled={item.isSelected}
-                />
-            );
-        })}
-    </View>
-      </View >
-        <Footer />
-    </View >
-  );
+                    {/* <View style={styles.hrLine} /> */}
+                    <Text style={styles.heading}>Notifications</Text>
+                    {notification.map((item) => {
+                        return (
+                            <Toggle
+                                onPress={(selected_value) => navigator('toggle_notify', item)}
+                                item={item}
+                                title={item.name}
+                                enabled={item.isSelected}
+                            />
+                        );
+                    })}
+                </View>
+            </View >
+            <Footer />
+        </View >
+    );
 }
 export default ProfileDetails = React.memo(ProfileDetails);
 //export default ProfileDetails;
