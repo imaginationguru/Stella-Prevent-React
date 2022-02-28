@@ -27,7 +27,7 @@
     "modal-react-native-web": "^0.2.0",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",
-    "node-sass": "^4.14.1",
+    "node-sass": "^6.0.1",
     "react": "16.13.1",
     "react-animated-css": "^1.2.1",
     "react-apple-login": "^1.1.3",
