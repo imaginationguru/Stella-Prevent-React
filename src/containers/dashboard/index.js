@@ -305,10 +305,9 @@ const Dashboard = () => {
               </div>
             );
           })}
-          <div className="week-item">
+          {/* <div className="week-item">
             <div
               className="week-inside"
-              // className="col-sm-2 col-md-2"
               style={{
                 borderRadius: 20,
                 justifyContent: 'center',
@@ -320,16 +319,6 @@ const Dashboard = () => {
                 customAlert('Content currently not available', 'error', {
                   showCloseButton: true,
                 });
-                // alert('Content not unlocked');
-                // Swal.fire({
-                //   text: !checkIfWeekCanAccess(7, loginData?.planInfo) ? "Please upgrade your plan to Premium to access content" : 'Content not unlocked',
-                //   allowOutsideClick: false,
-                //   allowEscapeKey: false,
-                //   confirmButtonColor: DARK_GREEN,
-                //   width: DEVICE_WIDTH > 1000 ? '25vw' : '60vw',
-                // });
-                // dispatch(AppActions.dashboardModalAction(false));
-                // navigatorPush({screenName: 'Exercises'});
               }}>
               <p
                 style={{
@@ -340,17 +329,8 @@ const Dashboard = () => {
                 Exercises,
                 <br /> Readings <br /> & Resources
               </p>
-              {/* {!checkIfWeekCanAccess(5, loginData?.planInfo) ? 
-                       <img src= {`${lock}`}
-                     style={{
-                      justifyContent: 'center',
-                      backgroundSize: 'center',
-                      position: 'absolute',
-                  
-                   }}/>
-                  : null} */}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
