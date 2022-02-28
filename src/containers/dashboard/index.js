@@ -6,6 +6,7 @@ import face from '../../assets/images/sleep/face.png';
 import rightArrow from '../../assets/images/sleep/rightArrow.png';
 import stellaGirl from '../../assets/images/stellaGirl/stellaGirl.png';
 import past_module from '../../assets/images/dashboardHeader/past_module.png';
+import report from '../../assets/images/dashboardHeader/report.png';
 import lock from '../../assets/images/lock.png';
 
 import GLOBALS from '../../constants';
@@ -235,10 +236,10 @@ const Dashboard = () => {
 
             <TrackersUI
               title=" Reports"
-              src={face}
+              src={report}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({screenName: 'Report'});
+                navigatorPush({ screenName: 'Report' });
               }}
             />
             {/* <TrackersUI
