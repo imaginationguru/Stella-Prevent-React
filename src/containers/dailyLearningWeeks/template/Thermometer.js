@@ -3,6 +3,9 @@ import GLOBALS from '../../../constants';
 import emptyMeter from '../../../assets/images/emptyMeter.png';
 import greenbottm from '../../../assets/images/greenbottom.png';
 import {TouchableOpacity} from 'react-native';
+
+import {Dimensions} from 'react-native';
+const DEVICE_WIDTH = Dimensions.get('window').width;
 const {COLORS} = GLOBALS;
 const styles = {
   mainWrapper: {
@@ -23,7 +26,7 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     padding: '10px',
-    marginLeft: '10px',
+    marginLeft: DEVICE_WIDTH > 767 ? '10px' : '0',
   },
   plus: {
     fontWeight: 'bold',

@@ -16,6 +16,8 @@ import {
   CardContent,
   CustomImage,
 } from '../../../components/Cards';
+import {Dimensions} from 'react-native';
+const DEVICE_WIDTH = Dimensions.get('window').width;
 const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 const {GREEN_TEXT, YELLOW, CIRCLE_GRAY, BUTTON_ORANGE} = COLORS;
 const generateDynamicColor = (order) => {
@@ -369,28 +371,37 @@ const TwentySix = (props) => {
             })
           : []}
       </div>
-
-      <div className="row container" style={styles.wrapperOption}>
-        <div className="col-md-7 sm-7 col-7"></div>
-        {optionsData.length
-          ? optionsData
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, index) => {
-                //  console.log('item>>>>>>>>', item);
-                return (
-                  <div
-                    className="col-md-1 sm-1 col-1"
-                    style={{
-                      ...styles.optionContent,
-                      backgroundColor: generateDynamicColor(item.order),
-                    }}>
-                    <p style={styles.content}>
-                      {ReactHtmlParser(item.content)}
-                    </p>
-                  </div>
-                );
-              })
-          : null}
+      <div className="container">
+        <div className="row" style={styles.wrapperOption}>
+          <div className="col-md-7 sm-7 col-12"></div>
+          <div className="col-md-5 sm-5 col-12">
+            <div className="row">
+              {optionsData.length
+                ? optionsData
+                    .sort((a, b) => (a.order > b.order && 1) || -1)
+                    .map((item, index) => {
+                      //  console.log('item>>>>>>>>', item);
+                      return (
+                        <div
+                          className="col-md-3 sm-3 col-6"
+                          style={{marginBottom: '15px', display: 'flex'}}>
+                          <div
+                            style={{
+                              ...styles.optionContent,
+                              backgroundColor: generateDynamicColor(item.order),
+                              flex: '1 1 100%',
+                            }}>
+                            <p style={styles.content}>
+                              {ReactHtmlParser(item.content)}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })
+                : null}
+            </div>
+          </div>
+        </div>
       </div>
 
       {headersData.length
@@ -398,49 +409,80 @@ const TwentySix = (props) => {
             .sort((a, b) => (a.order > b.order && 1) || -1)
             .map((item) => {
               return (
-                <div className="row container" style={styles.wrapper}>
-                  <div className="col-md-7 sm-7 col-7" style={styles.header}>
-                    {ReactHtmlParser(item.header)}
+                <div className="container">
+                  <div className="row" style={styles.wrapper}>
+                    <div className="col-md-7 sm-7 col-12" style={styles.header}>
+                      {ReactHtmlParser(item.header)}
+                    </div>
+                    <div
+                      className="col-md-5 sm-5 col-12"
+                      style={{display: 'flex', marginBottom: '20px'}}>
+                      <div className="row" style={{flex: '1 1 100%'}}>
+                        {optionsData.length
+                          ? optionsData
+                              .sort((a, b) => (a.order > b.order && 1) || -1)
+                              .map((val) => {
+                                let prevContent = '';
+                                let currentContent = val.content;
+
+                                if (assessment.length) {
+                                  const headerId = assessment.find((ele) => {
+                                    return (
+                                      ele.assessment_header_id === item._id
+                                    );
+                                  });
+                                  if (
+                                    headerId &&
+                                    headerId.assessment_header_id
+                                  ) {
+                                    prevContent = headerId.content[0].content;
+                                  }
+                                }
+
+                                const isSelected =
+                                  prevContent === currentContent;
+                                return (
+                                  <div
+                                    className="col-md-3 sm-3 col-3"
+                                    style={{
+                                      flex: '1 1 100%',
+                                      display: 'flex',
+                                    }}>
+                                    <div
+                                      style={{
+                                        ...styles.selectedDiv,
+                                        borderColor: generateDynamicColor(
+                                          val.order,
+                                        ),
+                                        backgroundColor: isSelected
+                                          ? generateDynamicColor(val.order)
+                                          : '#0000',
+                                        flex: '1 1 100%',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        height:
+                                          DEVICE_WIDTH > 767 ? '80px' : '45px',
+                                      }}
+                                      onClick={() => onSelect(val, item)}>
+                                      <p style={styles.selectedWrapper}>
+                                        {isSelected ? (
+                                          <img
+                                            src={right}
+                                            style={styles.selectedBox}
+                                          />
+                                        ) : (
+                                          ''
+                                        )}
+                                      </p>
+                                    </div>
+                                  </div>
+                                );
+                              })
+                          : null}
+                      </div>
+                    </div>
                   </div>
-                  {optionsData.length
-                    ? optionsData
-                        .sort((a, b) => (a.order > b.order && 1) || -1)
-                        .map((val) => {
-                          let prevContent = '';
-                          let currentContent = val.content;
-
-                          if (assessment.length) {
-                            const headerId = assessment.find((ele) => {
-                              return ele.assessment_header_id === item._id;
-                            });
-                            if (headerId && headerId.assessment_header_id) {
-                              prevContent = headerId.content[0].content;
-                            }
-                          }
-
-                          const isSelected = prevContent === currentContent;
-                          return (
-                            <div
-                              className="col-md-1 sm-1 col-1"
-                              style={{
-                                ...styles.selectedDiv,
-                                borderColor: generateDynamicColor(val.order),
-                                backgroundColor: isSelected
-                                  ? generateDynamicColor(val.order)
-                                  : '#0000',
-                              }}
-                              onClick={() => onSelect(val, item)}>
-                              <p style={styles.selectedWrapper}>
-                                {isSelected ? (
-                                  <img src={right} style={styles.selectedBox} />
-                                ) : (
-                                  ''
-                                )}
-                              </p>
-                            </div>
-                          );
-                        })
-                    : null}
                 </div>
               );
             })
@@ -489,6 +531,7 @@ const styles = {
     borderRadius: '3px',
     paddingTop: '20px',
     paddingBottom: '20px',
+    marginBottom: '20px',
   },
   content: {
     color: COLORS.WHITE,
@@ -499,8 +542,6 @@ const styles = {
   wrapper: {
     justifyContent: 'space-between',
     display: 'flex',
-    marginTop: '20px',
-    marginBottom: '20px',
   },
   optionContent: {
     borderRadius: '3px',
