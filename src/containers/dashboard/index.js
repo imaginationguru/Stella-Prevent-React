@@ -60,13 +60,17 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    console.log('login data dashboard', loginData);
-    dispatch(AppActions.getPlans());
-    dispatch(AppActions.getProgramById());
+    /**Once program is bind then get program details content */
+    dispatch(AppActions.bindProgram(cb => {
+      dispatch(AppActions.getProgramById());
+      dispatch(AppActions.getCurrentActiveCard());
+    }));
+    // dispatch(AppActions.getPlans());
+
     // if (currentActiveCard.length == 0) {
     //   dispatch(AppActions.getCurrentActiveCard());
     // }
-    dispatch(AppActions.getCurrentActiveCard());
+
   }, []);
   const TrackersUI = ({ title, src, onClick }) => {
     return (
