@@ -83,7 +83,11 @@ const TrackerTemplate = (props, componentId) => {
             <p
               style={styles.trackerList}
               onClick={() =>
-                navigatorPush({componentId, screenName: 'MoodTracker',passProps:{isFromCard:true}})
+                navigatorPush({
+                  componentId,
+                  screenName: 'MoodTracker',
+                  passProps: {isFromCard: true},
+                })
               }>
               {ts('CLICK_MOOD_TRACKER')}
             </p>
@@ -94,7 +98,11 @@ const TrackerTemplate = (props, componentId) => {
             <p
               style={styles.trackerList}
               onClick={() =>
-                navigatorPush({componentId, screenName: 'ActivityTracker',passProps:{isFromCard:true}})
+                navigatorPush({
+                  componentId,
+                  screenName: 'ActivityTracker',
+                  passProps: {isFromCard: true},
+                })
               }>
               {ts('CLICK_ACTIVITY_TRACKER')}
             </p>
@@ -104,7 +112,11 @@ const TrackerTemplate = (props, componentId) => {
           {showSleepTracker === true ? (
             <p
               onClick={() =>
-                navigatorPush({componentId, screenName: 'SleepTracker',passProps:{isFromCard:true}})
+                navigatorPush({
+                  componentId,
+                  screenName: 'SleepTracker',
+                  passProps: {isFromCard: true},
+                })
               }
               style={styles.trackerList}>
               {ts('CLICK_SLEEP_TRACKER')}
@@ -137,5 +149,10 @@ const styles = {
   trackerWrapper: {
     marginTop: '40px',
   },
-  trackerList: {color: BUTTON_ORANGE, fontWeight: 'bold', textAlign: 'center'},
+  trackerList: {
+    color: BUTTON_ORANGE,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    cursor: 'pointer',
+  },
 };

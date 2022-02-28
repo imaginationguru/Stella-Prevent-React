@@ -34,6 +34,8 @@ const TemplateEleven = (props) => {
     week,
   } = props.card;
   const [selected, setSelected] = useState([]);
+  const [positiveMessage, setPositiveMessage] = useState([]);
+  const [negativeMessage, setNegativeMessage] = useState([]);
   const {assessmentData = {}, userAssessmentData = []} = useSelector(
     (state) => state.moduleOne,
   );
@@ -90,15 +92,50 @@ const TemplateEleven = (props) => {
       setSelected([data]);
     }
   };
-
+  useEffect(() => {
+    if (props.submit_messages.length) {
+      let positive = props.submit_messages
+        .filter((item) => item.condition === 'Atleast 1  is Yes')
+        .map((ele) => ele.message);
+      setPositiveMessage(positive);
+      let negative = props.submit_messages
+        .filter((item) => item.condition === 'All are No')
+        .map((ele) => ele.message);
+      setNegativeMessage(negative);
+    }
+  }, [props.submit_messages]);
+  // console.log(
+  //   'positive message',
+  //   positiveMessage,
+  //   negativeMessage,
+  //   props.submit_messages,
+  // );
   const onSaveMyths = (e) => {
+    e.preventDefault();
     let userAssessment = selected.map((item) => {
       return {
         assessment_header_id: item._id,
         content: [{content: item.content}],
       };
     });
-    e.preventDefault();
+    let temp = [];
+    let isValid = '';
+    if (userAssessment.length) {
+      userAssessment.forEach((item) => {
+        temp.push(item.content[0] && item.content[0].content);
+      });
+    }
+
+    if (temp.length) {
+      isValid = temp.some((item) => item === 'YES');
+    }
+    console.log(
+      'user submit message',
+
+      temp,
+      'isValid',
+      isValid,
+    );
     let params = {
       user_id: userId,
       user_card_id: props._id,
@@ -108,9 +145,19 @@ const TemplateEleven = (props) => {
 
     if (userAssessment.length) {
       if (userAssessmentData && userAssessmentData.length) {
-        dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
+        // dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
+        if (isValid) {
+          dispatch(AppActions.rearrangeAssessments(params, positiveMessage));
+        } else {
+          dispatch(AppActions.rearrangeAssessments(params, negativeMessage));
+        }
       } else {
-        dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+        // dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+        if (isValid) {
+          dispatch(AppActions.saveUserAssessment(params, positiveMessage));
+        } else {
+          dispatch(AppActions.saveUserAssessment(params, negativeMessage));
+        }
       }
     } else {
       dispatch({

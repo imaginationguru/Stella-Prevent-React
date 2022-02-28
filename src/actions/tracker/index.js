@@ -4,6 +4,7 @@ import {loadingAction} from '../common';
 import {getItem} from '../../utils/AsyncUtils';
 import {navigatorPush} from '../../config/navigationOptions';
 import moment from 'moment';
+import {customAlert} from '../../helpers/commonAlerts.web';
 const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
 const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
 
@@ -20,9 +21,9 @@ export function getMoodData(date) {
         date: date,
         timeZone: moment.tz.guess(),
         patientDate: date,
-      }
-      console.log("get mood data paramsss",params)
-      let json = await RestClient.postCall(URL.GET_MOOD_API,params);
+      };
+      console.log('get mood data paramsss', params);
+      let json = await RestClient.postCall(URL.GET_MOOD_API, params);
       console.log('json MOOD in actions', json);
       if (json.code === 200) {
         dispatch({
@@ -81,14 +82,15 @@ export function saveUserMood(params) {
       let json = await RestClient.postCall(URL.SAVE_MOOD_API, postData);
       if (json.code === 200) {
         console.log('JSON data SAVE USER ASSESSMENT >>>>>>>>>', json);
+        customAlert(json.message, 'success');
         dispatch({
           type: ACTION_TYPE.SAVE_MOOD_SUCCESS,
           payload: json.message,
         });
-        dispatch({
-          type: ACTION_TYPE.SUCCESS_MESSAGE,
-          payload: json.message,
-        });
+        // dispatch({
+        //   type: ACTION_TYPE.SUCCESS_MESSAGE,
+        //   payload: json.message,
+        // });
         dispatch(loadingAction(false));
       } else {
         if (json.code === 400) {
@@ -131,7 +133,7 @@ export function saveUserMood(params) {
 /********************GET ACTIVITY DATA************** */
 export function getActivityTracker(params) {
   let userId = getItem('userId');
-  console.log("get activity tracker params",params)
+  console.log('get activity tracker params', params);
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.GET_ACTIVITY_TRACKER_REQUEST});
     try {
@@ -186,7 +188,7 @@ export function getActivityTracker(params) {
 
 /********************GET SELECTED ACTIVITY DATA************** */
 export function getSelectedActivityTracker(params) {
-  console.log("get selected activity tracker params",params)
+  console.log('get selected activity tracker params', params);
   let userId = getItem('userId');
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.GET_SELECTED_ACTIVITY_TRACKER_REQUEST});
@@ -247,9 +249,9 @@ export function saveActivityTracker(params) {
     hospital_id: params.hospital_id,
     patient_id: params.patient_id,
     timeZone: moment.tz.guess(),
-    patientDate:moment().format(STRINGS.DATE_FORMATE),
+    patientDate: moment().format(STRINGS.DATE_FORMATE),
   };
-  console.log(" save post data get selected activity tracker",postData)
+  console.log(' save post data get selected activity tracker', postData);
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.SAVE_OTHER_ACTIVITY_REQUEST});
     try {
@@ -260,10 +262,11 @@ export function saveActivityTracker(params) {
           type: ACTION_TYPE.SAVE_OTHER_ACTIVITY_SUCCESS,
           payload: json.data,
         });
-        dispatch({
-          type: ACTION_TYPE.SUCCESS_MESSAGE,
-          payload: json.message,
-        });
+        customAlert(json.message, 'success');
+        // dispatch({
+        //   type: ACTION_TYPE.SUCCESS_MESSAGE,
+        //   payload: json.message,
+        // });
         // dispatch(getActivityTracker(postData));
         // dispatch(getSelectedActivityTracker(postData));
         // navigatorPush({screenName: 'ActivityTracker'});
@@ -318,10 +321,11 @@ export function saveSleepTracker(params, postDataGetAPI) {
           type: ACTION_TYPE.SAVE_SLEEP_TRACKER_SUCCESS,
           payload: json.message,
         });
-        dispatch({
-          type: ACTION_TYPE.SUCCESS_MESSAGE,
-          payload: json.message,
-        });
+        // dispatch({
+        //   type: ACTION_TYPE.SUCCESS_MESSAGE,
+        //   payload: json.message,
+        // });
+        customAlert(json.message, 'success');
         dispatch(getSleepData(postDataGetAPI));
         dispatch(loadingAction(false));
       } else {
@@ -412,6 +416,63 @@ export function getSleepData(params) {
       });
       dispatch({
         type: ACTION_TYPE.GET_SLEEP_TRACKER_FAIL,
+        payload: error,
+      });
+    }
+  };
+}
+
+//getWeeklySummaryReport
+
+export function getWeeklySummaryReport(params) {
+  // let userId = getItem('userId');
+  // let postData = {
+  //   ...params,
+  //   user_id: userId,
+  // };
+  return async (dispatch) => {
+    dispatch({type: ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_REQUEST});
+    try {
+      dispatch(loadingAction(true));
+      let json = await RestClient.postCall(URL.GET_WEEKLY_SUMMARY_API, params);
+      console.log('json sleep in actions', json);
+      if (json.code === 200) {
+        dispatch({
+          type: ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_SUCCESS,
+          payload: json.data,
+        });
+        dispatch(loadingAction(false));
+      } else {
+        if (json.code === 400) {
+          dispatch({
+            type: ACTION_TYPE.ERROR,
+            payload: json.message,
+          });
+        }
+        if (json.code === 417) {
+          console.log('Session expierd>>>>>>>get assessment data');
+          dispatch({
+            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+            payload: json.message,
+          });
+          dispatch(loadingAction(false));
+        } else {
+          dispatch({
+            type: ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_FAIL,
+          });
+        }
+      }
+    } catch (error) {
+      console.log(
+        'erroe>>get template cards data>>>>>>>>>>get assessment data>>>>',
+        error,
+      );
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+      });
+      dispatch({
+        type: ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_FAIL,
         payload: error,
       });
     }

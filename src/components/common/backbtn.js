@@ -34,15 +34,19 @@ const BackBtn = (props) => {
           resizeMode={'contain'}
           source={back}
           style={{
-            width: DEVICE_WIDTH > 767 ? '1.3vw' : '15px',
-            height: DEVICE_WIDTH > 767 ? '1.3vw' : '15px',
+            // width: DEVICE_WIDTH > 767 ? '1.3vw' : '15px',
+            // height: DEVICE_WIDTH > 767 ? '1.3vw' : '15px',
+            width: 14,
+            height: 14,
           }}
         />
         <Text
           style={{
-            marginLeft: '1vw',
+            // marginLeft: '1vw',
+            marginLeft: 5,
             fontFamily: FONTS.SEMI_BOLD,
-            fontSize: DEVICE_WIDTH > 767 ? '1.3vw' : '16px',
+            // fontSize: DEVICE_WIDTH > 767 ? '1.3vw' : '16px',
+            fontSize: 14,
             fontStyle: 'normal',
             fontWeight: '800',
             color: COLORS.LIGHT_BLACK,

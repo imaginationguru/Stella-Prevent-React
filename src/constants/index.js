@@ -1,5 +1,15 @@
+import * as Images from '../assets/images/index.js';
+import VeryHappy from '../assets/images/veryHappy/veryHappy.png';
+import VeryHappyActive from '../assets/images/veryHappyActive/veryHappyActive.png';
+import Happy from '../assets/images/happy/happy.png';
+import HappyActive from '../assets/images/happyActive/happyActive.png';
+import Confused from '../assets/images/confused/confused.png';
+import ConfusedActive from '../assets/images/confusedActive/confusedActive.png';
+import Sad from '../assets/images/sad/sad.png';
+import SadActive from '../assets/images/sadActive/sadActive.png';
+import Angry from '../assets/images/angry/angry.png';
+import AngryActive from '../assets/images/angryActive/angryActive.png';
 const isLive = false;
-
 export default {
   BASE_URL: isLive
     ? 'https://stella-prevent-careportal.curio-dtx.com/api/'
@@ -8,13 +18,10 @@ export default {
     ? 'https://stella-prevent-careportal.curio-dtx.com/' //UAT
     : 'http://52.170.117.197/', //dev
 
-  // BASE_URL: 'https://104.43.172.201/api/',
-  // IMAGE_BASE_URL: 'https://104.43.172.201/',
-
   // BASE_URL: 'http://104.43.172.201:4001/api/',
-  // IMAGE_BASE_URL: 'http://104.43.172.201:4001/', //current
+  // IMAGE_BASE_URL: 'http://104.43.172.201:4001/', //QA
   /********************************** * URL ***********************************/
-  // https://104.43.172.201/  ///QA
+
   URL: {
     LOGIN: 'login',
     REGISTER: 'register',
@@ -61,6 +68,7 @@ export default {
     UPDATE_USER_DATA: 'update-user-details',
     ACCEPT_WELCOME: 'accept-welcomescreen',
     RESEND_REGISTRATION_CODE_API: 'resend-regestration-code',
+    GET_WEEKLY_SUMMARY_API: 'get-alltrackerdata',
   },
 
   /*************************FONTS************************** */
@@ -90,6 +98,54 @@ export default {
     ACTIVITY: 'Pleasant Activities',
     DAILY_ACTIVITY: 'Daily Activities',
   },
+
+  MOODS_ARRAY: [
+    {
+      id: 5,
+      // image: VeryHappy,
+      // activeImage: Images.VeryHappyActive,
+      image: VeryHappy,
+      activeImage: VeryHappyActive,
+      isClickTrue: false,
+      moodValue: 2,
+    },
+    {
+      id: 4,
+      image: Happy,
+      activeImage: HappyActive,
+      // image: '../assets/images/happy/happy.png',
+      // activeImage: '../assets/images/happyActive/happyActive.png',
+      isClickTrue: false,
+      moodValue: 1,
+    },
+    {
+      id: 3,
+      image: Confused,
+      activeImage: ConfusedActive,
+      // image: '../assets/images/confused/confused.png',
+      // activeImage: '../assets/images/confusedActive/confusedActive.png',
+      isClickTrue: false,
+      moodValue: 2,
+    },
+    {
+      id: 2,
+      image: Sad,
+      activeImage: SadActive,
+      // image: '../assets/images/sad/sad.png',
+      // activeImage: '../assets/images/sadActive/sadActive.png',
+      isClickTrue: false,
+      moodValue: 1,
+    },
+    {
+      id: 1,
+      image: Angry,
+      activeImage: AngryActive,
+      // image: '../assets/images/angry/angry.png',
+      // activeImage: '../assets/images/angryActive/angryActive.png',
+      isClickTrue: false,
+      moodValue: 1,
+    },
+  ],
 
   /****************************** ACTION TYPE********************* */
   ACTION_TYPE: {
@@ -234,6 +290,9 @@ export default {
 
     GET_NOTIFICATION_SUCCESS: 'GET_NOTIFICATION_SUCCESS',
     GET_LANGUGAE_SUCCESS: 'GET_LANGUGAE_SUCCESS',
+    GET_WEEKLY_SUMMARY_REPORT_REQUEST: 'GET_WEEKLY_SUMMARY_REPORT_REQUEST',
+    GET_WEEKLY_SUMMARY_REPORT_SUCCESS: 'GET_WEEKLY_SUMMARY_REPORT_SUCCESS',
+    GET_WEEKLY_SUMMARY_REPORT_FAIL: 'GET_WEEKLY_SUMMARY_REPORT_FAIL',
   },
 
   /***************************COLORS*************************** */
@@ -273,5 +332,7 @@ export default {
     LIGHT_BLACK: '#35353F',
     PLAN_GRAY: '#A9A9AA',
     text_Gray: '#697386',
+    LIGHT_SHADOW_GREEN: '#C9E2DE',
+    GREY: '#676767' /* Font Regular */,
   },
 };
