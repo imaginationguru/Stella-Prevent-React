@@ -469,7 +469,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: FONTS.SEMI_BOLD,
     fontWeight: '700',
-    paddingBottom: 5,
+    paddingVertical: 5,
   },
   labelText: {
     fontFamily: FONTS.SEMI_BOLD,
