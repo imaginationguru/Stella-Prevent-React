@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Switch } from 'react-router-dom';
+import {Router, Switch} from 'react-router-dom';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 import history from '../../helpers/history';
@@ -20,6 +20,8 @@ import VerifyUserOTP from '../../containers/verifyUserOTP';
 import Subscription from '../../containers/payment/subscription';
 import Payment from '../../containers/payment/paymentScreen';
 import Profile from '../../containers/profile';
+import SelectWeek from '../../containers/selectWeek';
+import Report from '../../containers/report';
 const WebRouter = () => {
   return (
     <Router history={history}>
@@ -68,7 +70,8 @@ const WebRouter = () => {
         <PrivateRoute component={Profile} path="/Profile" />
         <PrivateRoute component={Subscription} path="/Subscription" />
         <PrivateRoute component={Payment} path="/Payment" />
-
+        <PrivateRoute component={SelectWeek} path="/SelectWeek" />
+        <PrivateRoute component={Report} path="/Report" />
       </Switch>
     </Router>
   );
