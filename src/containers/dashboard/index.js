@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import dashboardHeader from '../../assets/images/dashboardHeader/dashboardHeader.png';
 import sleep from '../../assets/images/sleep/sleep.png';
 import activity from '../../assets/images/sleep/activity.png';
@@ -16,20 +16,20 @@ import ProfileHeader from '../../components/common/profileHeader';
 import Footer from '../../components/Footer';
 import profile from '../../assets/images/profile.png';
 import Loader from '../../components/Loader';
-import {getItem} from '../../utils/AsyncUtils';
-import {useDispatch, useSelector} from 'react-redux';
+import { getItem } from '../../utils/AsyncUtils';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '../../actions';
-import {navigatorPush} from '../../config/navigationOptions.web';
+import { navigatorPush } from '../../config/navigationOptions.web';
 import Modal from 'modal-react-native-web';
 import EpdsScreener from '../../components/common/epdsScreener';
-const {COLORS, ACTION_TYPE} = GLOBALS;
-const {DARK_GREEN, WHITE} = COLORS;
-import {Dimensions} from 'react-native-web';
+const { COLORS, ACTION_TYPE } = GLOBALS;
+const { DARK_GREEN, WHITE } = COLORS;
+import { Dimensions } from 'react-native-web';
 import Header from '../../components/Header';
-import {epdsModalAction} from '../../actions';
+import { epdsModalAction } from '../../actions';
 const DEVICE_WIDTH = Dimensions.get('window').width;
-import {checkIfWeekCanAccess} from '../../helpers/common.web';
-import {customAlert} from '../../helpers/commonAlerts.web';
+import { checkIfWeekCanAccess } from '../../helpers/common.web';
+import { customAlert } from '../../helpers/commonAlerts.web';
 const Dashboard = () => {
   const [click_week, setClickWeek] = useState(1);
 
@@ -38,17 +38,17 @@ const Dashboard = () => {
   let epdsAssesment = getItem('epdsAssesment');
   let duration = getItem('duration');
   const dispatch = useDispatch();
-  const {data = {}} = useSelector((state) => state);
+  const { data = {} } = useSelector((state) => state);
   const {
     currentActiveCard = [],
     selectedWeek = 1,
     selectedCardId = '',
   } = useSelector((state) => state.moduleOne);
-  const {isEPDSModalShow = true} = useSelector((state) => state.common);
-  const {programData = []} = useSelector((state) => state.authReducer);
-  const {isLoading} = useSelector((state) => state.common);
-  const {loginData = []} = useSelector((state) => state.authReducer);
-  const {week, day} = currentActiveCard.length ? currentActiveCard[0] : {};
+  const { isEPDSModalShow = true } = useSelector((state) => state.common);
+  const { programData = [] } = useSelector((state) => state.authReducer);
+  const { isLoading } = useSelector((state) => state.common);
+  const { loginData = [] } = useSelector((state) => state.authReducer);
+  const { week, day } = currentActiveCard.length ? currentActiveCard[0] : {};
   const lengthToArray = (len = 0) => {
     let temp = [];
     if (len > 1) {
@@ -60,15 +60,19 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    console.log('login data dashboard', loginData);
-    dispatch(AppActions.getPlans());
-    dispatch(AppActions.getProgramById());
+    /**Once program is bind then get program details content */
+    dispatch(AppActions.bindProgram(cb => {
+      dispatch(AppActions.getProgramById());
+      dispatch(AppActions.getCurrentActiveCard());
+    }));
+    // dispatch(AppActions.getPlans());
+
     // if (currentActiveCard.length == 0) {
     //   dispatch(AppActions.getCurrentActiveCard());
     // }
-    dispatch(AppActions.getCurrentActiveCard());
+
   }, []);
-  const TrackersUI = ({title, src, onClick}) => {
+  const TrackersUI = ({ title, src, onClick }) => {
     return (
       <div
         style={styles.trackerWrap}
@@ -83,7 +87,7 @@ const Dashboard = () => {
           </p>
         </div>
         <div className="tracker-arrow">
-          <img src={rightArrow} style={{width: '100%', height: '100%'}} />
+          <img src={rightArrow} style={{ width: '100%', height: '100%' }} />
         </div>
       </div>
     );
@@ -116,7 +120,7 @@ const Dashboard = () => {
             setTimeout(() => {
               navigatorPush({
                 screenName: 'DailyLearningWeeks',
-                passProps: {weeksCount: item},
+                passProps: { weeksCount: item },
               });
             }, 1000);
           } else {
@@ -133,7 +137,7 @@ const Dashboard = () => {
       customAlert(
         'Please upgrade your plan to Premium to access content',
         'error',
-        {showCloseButton: true},
+        { showCloseButton: true },
       );
     }
   };
@@ -141,7 +145,7 @@ const Dashboard = () => {
     <div>
       <PopUp />
       <ProfileHeader
-        onProfileClick={() => navigatorPush({screenName: 'Profile'})}
+        onProfileClick={() => navigatorPush({ screenName: 'Profile' })}
         showProfileBtn={true}
         showEditIcon={false}
       />
@@ -180,7 +184,7 @@ const Dashboard = () => {
                 });
                 navigatorPush({
                   screenName: 'DailyLearningWeeks',
-                  passProps: {isFromDashboard: true},
+                  passProps: { isFromDashboard: true },
                 });
               }}
               className="display-board">
@@ -197,7 +201,7 @@ const Dashboard = () => {
                   paddingLeft: 30,
                   cursor: 'pointer',
                 }}>
-                <p style={{fontWeight: 'bold', fontSize: 25}}>
+                <p style={{ fontWeight: 'bold', fontSize: 25 }}>
                   Today’s Daily Learning
                 </p>
                 <p>Click here to complete today’s learnings</p>
@@ -210,14 +214,14 @@ const Dashboard = () => {
               src={sleep}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({screenName: 'SleepTracker'});
+                navigatorPush({ screenName: 'SleepTracker' });
               }}
             />
             <TrackersUI
               title="What activities have you done?"
               src={activity}
               onClick={() => {
-                navigatorPush({screenName: 'ActivityTracker'});
+                navigatorPush({ screenName: 'ActivityTracker' });
               }}
             />
             <TrackersUI
@@ -225,7 +229,7 @@ const Dashboard = () => {
               src={face}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({screenName: 'MoodTracker'});
+                navigatorPush({ screenName: 'MoodTracker' });
               }}
             />
 
@@ -364,7 +368,7 @@ const styles = {
     fontWeight: '700',
     cursor: 'pointer',
   },
-  weekTitle: {paddingTop: 10, fontSize: 15, fontWeight: '700'},
+  weekTitle: { paddingTop: 10, fontSize: 15, fontWeight: '700' },
   trackerWrap: {
     display: 'flex',
     //  justifyContent: 'space-around',
