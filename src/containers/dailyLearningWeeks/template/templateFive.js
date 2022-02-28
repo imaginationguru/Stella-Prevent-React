@@ -47,6 +47,7 @@ const onlySingleId = (arr = []) => {
   }
 };
 const TemplateFive = (props) => {
+  console.log(props, 'Template 5.....');
   const [optionDataContent, setOptionDataContent] = useState([]);
   const [headerParams, setHeaderParams] = useState([]);
   const {assessmentData = {}, userAssessmentData = []} = useSelector(
@@ -173,7 +174,8 @@ const TemplateFive = (props) => {
       assessment_id: assessment_id,
       assessment: headerParams,
     };
-
+    console.log(params, 'on save', assessmentData);
+    return;
     if (headerParams.length) {
       if (userAssessmentData && userAssessmentData.length) {
         dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
