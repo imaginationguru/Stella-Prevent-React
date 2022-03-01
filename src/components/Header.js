@@ -15,7 +15,7 @@ const Header = () => {
   let lastName = getItem('lastName');
   const dispatch = useDispatch();
   return (
-      <div style={{width: '100%', height: '17.5vw'}}>
+      <div style={{width: '100%', height: '15vw'}}>
         <img src={dashboardHeader} style={{width: '100%', height: '100%'}} />
         <div style={styles.profileWrapper}>
           <div className="row">

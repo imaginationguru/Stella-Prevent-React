@@ -354,7 +354,7 @@ const ThirtyTwo = (props) => {
                         );
                       })
                   : null}
-                <div style={styles.plusIconWrapper}>
+                <div style={styles.plusIconWrapper} className="v-p-field">
                   <input
                     type="text"
                     className="f-field"

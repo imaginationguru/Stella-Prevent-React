@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import commonStyles from '../commonStyles';
 import ReactHtmlParser from 'react-html-parser';
@@ -300,52 +301,53 @@ Every pregnancy and every baby are different and unique!​`
         <div style={styles.fourBoxContainer}>
           {headers && headers.length
             ? headers.map((item, index) => {
-              const header_id = item._id;
-              const order = item.order;
-              return (
-                <div
-                  key={index}
-                  style={{
-                    ...commonStyles.droppableDivDrag,
-                  }}
-                  className="wip"
-                  onDragOver={(e) => onDragOver(e, item._id)}
-                  onDrop={(e) => {
-                    onDrop(e, item._id, item.order);
-                  }}>
-                  <p
-                    className="task-header"
+                const header_id = item._id;
+                const order = item.order;
+                return (
+                  <div
+                    key={index}
                     style={{
-                      ...commonStyles.dropTitle,
-                      backgroundColor: boxBackgroundColor(item.order),
+                      ...commonStyles.droppableDivDrag,
+                      flexWrap: 'wrap'
+                    }}
+                    className="wip"
+                    onDragOver={(e) => onDragOver(e, item._id)}
+                    onDrop={(e) => {
+                      onDrop(e, item._id, item.order);
                     }}>
-                    {ReactHtmlParser(item.header)}
-                  </p>
-                  {optionDataContent && optionDataContent.length
-                    ? optionDataContent
-                      .filter((item) => {
-                        return item.assessment_header_id === header_id;
-                      })
-                      .map((item) => {
-                        return (
-                          <p
-                            style={{
-                              ...commonStyles.dragItem,
-                              borderColor: boxBackgroundColor(order),
-                            }}
-                            onDragStart={(e) =>
-                              onDragStart(e, item.content)
-                            }
-                            draggable
-                            className="draggable">
-                            {item.content}
-                          </p>
-                        );
-                      })
-                    : []}
-                </div>
-              );
-            })
+                    <p
+                      className="task-header"
+                      style={{
+                        ...commonStyles.dropTitle,
+                        backgroundColor: boxBackgroundColor(item.order),
+                      }}>
+                      {ReactHtmlParser(item.header)}
+                    </p>
+                    {optionDataContent && optionDataContent.length
+                      ? optionDataContent
+                          .filter((item) => {
+                            return item.assessment_header_id === header_id;
+                          })
+                          .map((item) => {
+                            return (
+                              <p
+                                style={{
+                                  ...commonStyles.dragItem,
+                                  borderColor: boxBackgroundColor(order),
+                                }}
+                                onDragStart={(e) =>
+                                  onDragStart(e, item.content)
+                                }
+                                draggable
+                                className="draggable p-draggable">
+                                {item.content}
+                              </p>
+                            );
+                          })
+                      : []}
+                  </div>
+                );
+              })
             : []}
         </div>
         {/****************************OPTIONS CONTAINER with gray box******************** */}
@@ -416,7 +418,7 @@ const styles = {
     width: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: '60px',
+    marginTop: '0px',
     justifyContent: 'space-between',
   },
   draggableContent: {

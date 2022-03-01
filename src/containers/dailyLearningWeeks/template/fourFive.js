@@ -513,7 +513,7 @@ const FourFive = (props) => {
                         );
                       })
                   : null}
-                <div style={styles.plusIconWrapper}>
+                <div style={styles.plusIconWrapper} className="v-p-field">
                   <View style={{width: '49%'}}>
                     <TextInput
                       style={[
