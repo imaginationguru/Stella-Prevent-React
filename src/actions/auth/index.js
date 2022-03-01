@@ -17,6 +17,19 @@ import { customAlert } from '../../helpers/commonAlerts.web';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
+export function updateTrackerStatus(user) {
+  return async dispatch => {
+    dispatch({
+      type: ACTION_TYPE.SET_TRACKER_STATUS,
+      payload: {
+        sleepChecked: user.sleepChecked,
+        moodChecked: user.moodChecked,
+        activityChecked: user.activityChecked
+      },
+    });
+  };
+}
+
 export function login(email, password, componentId) {
   return async (dispatch) => {
     dispatch({ type: ACTION_TYPE.LOGIN_RESET });
@@ -188,6 +201,7 @@ export function getProgramById() {
         `${URL.GET_PROGRAM_BY_ID}/${programId}/${userId}`,
       );
       if (json.code === 200) {
+        dispatch(updateTrackerStatus(json.data.user))
         dispatch({
           type: ACTION_TYPE.GET_PROGRAM_SUCCESS,
           payload: json.data.cards,

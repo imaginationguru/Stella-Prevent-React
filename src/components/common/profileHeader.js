@@ -69,6 +69,7 @@ const ProfileHeader = (props) => {
               }}
             />
             {showEditIcon && (
+
               <Dropzone
                 onDrop={(acceptedFiles) => {
                   onEditClick(acceptedFiles[0]);
@@ -154,6 +155,7 @@ const styles = StyleSheet.create({
   },
   profileConatiner: {
     flex: DEVICE_WIDTH > 767 ? '0.15' : '0 0 100%',
+    backgroundColor: 'red'
   },
   edit: {
     position: 'absolute',

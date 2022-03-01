@@ -5,6 +5,7 @@ import activity from '../../assets/images/sleep/activity.png';
 import face from '../../assets/images/sleep/face.png';
 import rightArrow from '../../assets/images/sleep/rightArrow.png';
 import stellaGirl from '../../assets/images/stellaGirl/stellaGirl.png';
+import successTick from '../../assets/images/successTick.svg';
 import past_module from '../../assets/images/dashboardHeader/past_module.png';
 import report from '../../assets/images/dashboardHeader/report.png';
 import lock from '../../assets/images/lock.png';
@@ -49,6 +50,7 @@ const Dashboard = () => {
   const { programData = [] } = useSelector((state) => state.authReducer);
   const { isLoading } = useSelector((state) => state.common);
   const { loginData = [] } = useSelector((state) => state.authReducer);
+  const { trackerStatus = {} } = useSelector((state) => state.moduleOne);
   const { week, day } = currentActiveCard.length ? currentActiveCard[0] : {};
   const lengthToArray = (len = 0) => {
     let temp = [];
@@ -66,14 +68,12 @@ const Dashboard = () => {
       dispatch(AppActions.getProgramById());
       dispatch(AppActions.getCurrentActiveCard());
     }));
-    // dispatch(AppActions.getPlans());
-
-    // if (currentActiveCard.length == 0) {
-    //   dispatch(AppActions.getCurrentActiveCard());
-    // }
-
   }, []);
-  const TrackersUI = ({ title, src, onClick }) => {
+  useEffect(() => {
+    console.log(trackerStatus, "trackerStatus....");
+  }, [trackerStatus]);
+  const TrackersUI = ({ title, src, onClick, isComplete }) => {
+    console.log(isComplete, "isComplete....")
     return (
       <div
         style={styles.trackerWrap}
@@ -87,8 +87,11 @@ const Dashboard = () => {
             {title}
           </p>
         </div>
-        <div className="tracker-arrow">
-          <img src={rightArrow} style={{ width: '100%', height: '100%' }} />
+
+        <div className="tracker-arrow" style={isComplete ? { width: '35px', height: '35px' } : {}}>
+          {
+            isComplete ? <img style={{ width: '100%', height: '100%' }} src={successTick} /> : <img src={rightArrow} style={{ width: '100%', height: '100%' }} />
+          }
         </div>
       </div>
     );
@@ -217,6 +220,7 @@ const Dashboard = () => {
                 dispatch(AppActions.dashboardModalAction(false));
                 navigatorPush({ screenName: 'SleepTracker' });
               }}
+              isComplete={trackerStatus.sleepChecked}
             />
             <TrackersUI
               title="What activities have you done?"
@@ -224,6 +228,7 @@ const Dashboard = () => {
               onClick={() => {
                 navigatorPush({ screenName: 'ActivityTracker' });
               }}
+              isComplete={trackerStatus.activityChecked}
             />
             <TrackersUI
               title=" What is your mood today?"
@@ -232,6 +237,7 @@ const Dashboard = () => {
                 dispatch(AppActions.dashboardModalAction(false));
                 navigatorPush({ screenName: 'MoodTracker' });
               }}
+              isComplete={trackerStatus.moodChecked}
             />
 
             <TrackersUI
