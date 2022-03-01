@@ -15,7 +15,9 @@ import {
   Dimensions,
 } from 'react-native';
 import moment from 'moment';
-//import DropDownPicker from 'react-native-dropdown-picker';
+// import DropDownPicker from 'react-native-dropdown-picker';
+import Select from 'react-select';
+
 import ScheduleTab from '../../components/common/tabs';
 import {getItem} from '../../utils/AsyncUtils';
 import * as AppActions from '../../actions';
@@ -59,8 +61,26 @@ let dayData = [
   {index: '3'},
   {index: '4'},
   {index: '5'},
+  {index: '6'},
+  {index: '7'},
 ];
-const tabsLearingType = [{title: 'By Date', id: 1}];
+const tabsLearingType = [
+  {title: 'By Date', id: 1},
+  {title: 'Suggested', id: 1},
+  {title: 'Liked', id: 1},
+];
+
+const options = [
+  {value: 'Week 1', label: 'Week 1'},
+  {value: 'Week 2', label: 'Week 2'},
+  {value: 'Week 3', label: 'Week 3'},
+  {value: 'Week 4', label: 'Week 4'},
+  {value: 'Week 5', label: 'Week 5'},
+  {value: 'Week 6', label: 'Week 6'},
+  {value: 'Week 7', label: 'Week 7'},
+  {value: 'Week 8', label: 'Week 8'},
+];
+
 const DayView = ({
   item,
   onClick,
@@ -81,7 +101,7 @@ const DayView = ({
           styles.dayTouchable,
           {backgroundColor: COLORS.LIGHT_SHADOW_GREEN},
         ]}>
-        <Text style={[styles.dayText1, {color: COLORS.WHITE}]}>Day</Text>
+        <Text style={[styles.dayText1, {color: COLORS.DARK_GREEN}]}>Day</Text>
         <View
           style={[
             styles.dayViewStyle,
@@ -128,7 +148,7 @@ const DayView = ({
             styles.dayViewStyle,
             {
               backgroundColor:
-                selectedDay == item ? COLORS.WHITE : COLORS.DARK_GREEN,
+                selectedDay == item ? COLORS.WHITE : COLORS.LIGHT_SHADOW_GREEN,
             },
             // {
             //   backgroundColor:
@@ -145,11 +165,35 @@ const DayView = ({
     );
   }
 };
+
+const customStyles = {
+  menu: (provided, state) => ({
+    ...provided,
+    // width: DEVICE_WIDTH,
+    // width: DEVICE_WIDTH,
+    // borderBottom: '1px dotted pink',
+    // color: state.selectProps.menuColor,
+    // padding: 20,
+  }),
+
+  control: (_, {selectProps: {width}}) => ({
+    // width: DEVICE_WIDTH,
+  }),
+
+  singleValue: (provided, state) => {
+    // const opacity = state.isDisabled ? 0.5 : 1;
+    // const transition = 'opacity 300ms';
+
+    return {...provided, opacity, transition};
+  },
+};
+
 function SelectWeek(props) {
   const dispatch = useDispatch();
   const [selectedDay, setSelectedDay] = useState(1);
   const [selectedWeek, setSelectedWeek] = useState(1);
   const [weekDataDynamic, setweekDataDynamic] = useState(['Week1', 'Week 2']);
+  const [selectedtab, setSelectedtab] = useState('By Date');
   useEffect(() => {}, []);
 
   return (
@@ -168,8 +212,10 @@ function SelectWeek(props) {
             marginTop: 10,
           }}
           tabList={tabsLearingType}
-          activeTab={'By Date'}
-          //setActiveTab={this._setActiveLearningTab}
+          activeTab={selectedtab}
+          setActiveTab={(item) => {
+            setSelectedtab(item);
+          }}
           tabTitleStyle={{fontSize: 16}}
         />
       </View>
@@ -186,6 +232,7 @@ function SelectWeek(props) {
             style={styles.logoStyle}
           />
         </View>
+
         {/* <DropDownPicker
           placeholder={'Select Week'}
           theme="LIGHT"
@@ -226,6 +273,14 @@ function SelectWeek(props) {
             // });
           }}
         /> */}
+        <View style={styles.dropDownStyle}>
+          <Select
+            // styles={customStyles}
+            value={selectedWeek}
+            onChange={() => {}}
+            options={options}
+          />
+        </View>
         <View style={styles.dayView}>
           {dayData.map((element) => {
             return (
@@ -266,7 +321,7 @@ export default SelectWeek = React.memo(SelectWeek);
 //export default ProfileDetails;
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     flexDirection: 'column',
     // backgroundColor: 'red',
 
@@ -293,34 +348,41 @@ const styles = StyleSheet.create({
   },
   /**Day UI */
   dayTouchable: {
-    paddingVertical: 10,
-    paddingHorizontal: 6,
+    // paddingVertical: normalize(1),
+    // paddingHorizontal: normalize(1),
     borderRadius: 40,
-    borderColor: COLORS.PRIMARY,
+    borderColor: COLORS.DARK_GREEN,
     borderWidth: 1,
     marginBottom: 8,
     margin: 2,
+    width: normalize(8),
+    alignItems: 'center',
+    height: normalize(14),
+    justifyContent: 'flex-end',
   },
   dayText1: {
-    fontSize: 15,
+    fontSize: normalize(3),
     fontFamily: FONTS.CIRCULAR_MEDIUM,
   },
   dayViewStyle: {
-    marginTop: 4,
-    borderRadius: 12,
-    width: 24,
+    marginTop: normalize(1),
+    marginBottom: normalize(1),
+    borderRadius: normalize(3),
+    width: normalize(6),
+    height: normalize(6),
     justifyContent: 'center',
     alignSelf: 'center',
   },
   dayText: {
-    color: COLORS.PRIMARY,
+    color: COLORS.DARK_GREEN,
     fontSize: 14,
     textAlign: 'center',
   },
   buttonView: {
-    paddingHorizontal: 20,
-    width: '40%',
+    // paddingHorizontal: normalize(5),
+    width: normalize(63),
     justifyContent: 'center',
+    marginBottom: normalize(20),
     // bottom: 30,
   },
   dropDownStyleNew: {
@@ -343,4 +405,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '30%',
   },
+  dropDownStyle: {width: normalize(65), zIndex: 100},
 });
