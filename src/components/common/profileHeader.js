@@ -12,6 +12,7 @@ import {
 import GLOBALS from '../../constants';
 import dashboardHeader from '../../assets/images/dashboardHeader/dashboardHeader.png';
 import profile from '../../assets/images/profile.png';
+import cancel from '../../assets/images/cancel.png';
 import edit from '../../assets/images/edit.png';
 const { COLORS, FONTS, IMAGE_BASE_URL } = GLOBALS;
 const { DARK_GREEN, WHITE } = COLORS;
@@ -36,10 +37,14 @@ const ProfileHeader = (props) => {
   let { showProfileBtn, showEditIcon, onEditClick, onProfileClick } = props;
 
   useEffect(() => {
-    console.log('use effect..2', profileImg);
-    if (profileImg != null) {
+    console.log('use effect..profileImg', profileImg);
+    console.log('use effect..profile', profile);
+    console.log(profileImage == '' ? profile : profileImage, "llll")
+    if (profileImg != null && profileImg != "") {
+      console.log("if")
       setProfilePhoto(`${IMAGE_BASE_URL}${profileImg}`);
     } else {
+      console.log("else")
       setProfilePhoto(profile);
     }
   }, [profileImg]);
@@ -64,26 +69,37 @@ const ProfileHeader = (props) => {
               }}
             />
             {showEditIcon && (
-              <Dropzone
-                onDrop={(acceptedFiles) => {
-                  onEditClick(acceptedFiles[0]);
-                }}>
-                {({ getRootProps, getInputProps }) => (
-                  <section>
-                    <div
-                      style={{ position: 'absolute', bottom: 0, right: '0vw' }}
-                      {...getRootProps()}>
-                      <input
-                        {...getInputProps()}
-                        multiple={false}
-                        accept="image/*"
-                      />
-                      {/* <p>hi</p> */}
-                      <img src={edit} style={{ width: '4vw', height: '4vw' }} />
-                    </div>
-                  </section>
-                )}
-              </Dropzone>
+              <>
+                <section>
+                  <div
+                    onClick={onClick}
+                    style={{ position: 'absolute', bottom: 0, right: '30%', cursor: 'pointer', }}>
+                    <img src={cancel} style={{ width: '4vw', height: '4vw' }} />
+                  </div>
+                </section>
+
+                <Dropzone
+                  onDrop={(acceptedFiles) => {
+                    onEditClick(acceptedFiles[0]);
+                  }}>
+                  {({ getRootProps, getInputProps }) => (
+                    <section>
+                      <div
+                        style={{ position: 'absolute', bottom: 0, right: '0vw' }}
+                        {...getRootProps()}>
+                        <input
+                          {...getInputProps()}
+                          multiple={false}
+                          accept="image/*"
+                        />
+                        {/* <p>hi</p> */}
+                        <img src={edit} style={{ width: '4vw', height: '4vw' }} />
+                      </div>
+                    </section>
+                  )}
+                </Dropzone>
+              </>
+
             )}
           </View>
           <View style={styles.textConatiner}>
@@ -137,6 +153,7 @@ const styles = StyleSheet.create({
   },
   profileConatiner: {
     flex: DEVICE_WIDTH > 767 ? '0.15' : '0 0 100%',
+    backgroundColor: 'red'
   },
   edit: {
     position: 'absolute',
