@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useReducer} from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import {
   View,
   Text,
@@ -13,10 +13,10 @@ import GLOBALS from '../../constants';
 import dashboardHeader from '../../assets/images/dashboardHeader/dashboardHeader.png';
 import profile from '../../assets/images/profile.png';
 import edit from '../../assets/images/edit.png';
-const {COLORS, FONTS, IMAGE_BASE_URL} = GLOBALS;
-const {DARK_GREEN, WHITE} = COLORS;
-import {getItem} from '../../utils/AsyncUtils';
-import {useDispatch, useSelector} from 'react-redux';
+const { COLORS, FONTS, IMAGE_BASE_URL } = GLOBALS;
+const { DARK_GREEN, WHITE } = COLORS;
+import { getItem } from '../../utils/AsyncUtils';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '../../actions';
 import Dropzone from 'react-dropzone';
 
@@ -24,7 +24,7 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 const ProfileHeader = (props) => {
-  const {loginData = {}, profileImg = ''} = useSelector(
+  const { loginData = {}, profileImg = '' } = useSelector(
     (state) => state.authReducer,
   );
   console.log('profile image user', profileImg);
@@ -33,10 +33,10 @@ const ProfileHeader = (props) => {
   let lastName = getItem('lastName');
   const dispatch = useDispatch();
 
-  let {showProfileBtn, showEditIcon, onEditClick, onProfileClick} = props;
+  let { showProfileBtn, showEditIcon, onEditClick, onProfileClick } = props;
 
   useEffect(() => {
-    console.log('use effect..2');
+    console.log('use effect..2', profileImg);
     if (profileImg != null) {
       setProfilePhoto(`${IMAGE_BASE_URL}${profileImg}`);
     } else {
@@ -68,10 +68,10 @@ const ProfileHeader = (props) => {
                 onDrop={(acceptedFiles) => {
                   onEditClick(acceptedFiles[0]);
                 }}>
-                {({getRootProps, getInputProps}) => (
+                {({ getRootProps, getInputProps }) => (
                   <section>
                     <div
-                      style={{position: 'absolute', bottom: 0, right: '0vw'}}
+                      style={{ position: 'absolute', bottom: 0, right: '0vw' }}
                       {...getRootProps()}>
                       <input
                         {...getInputProps()}
@@ -79,7 +79,7 @@ const ProfileHeader = (props) => {
                         accept="image/*"
                       />
                       {/* <p>hi</p> */}
-                      <img src={edit} style={{width: '4vw', height: '4vw'}} />
+                      <img src={edit} style={{ width: '4vw', height: '4vw' }} />
                     </div>
                   </section>
                 )}
