@@ -95,6 +95,7 @@ function ProfileDetails(props) {
     const dispatch = useDispatch();
 
     useEffect(() => {
+
         if (loginData) {
             console.log('usererrtsadfds login data', loginData);
             console.log(loginData.user.image_path, 'lplplplp');
@@ -242,6 +243,7 @@ function ProfileDetails(props) {
             customAlert('Please select only images', 'error');
         }
     };
+
     return (
         <View style={styles.container}>
             <ProfileHeader
@@ -249,6 +251,13 @@ function ProfileDetails(props) {
                 showProfileBtn={false}
                 showEditIcon={true}
                 onEditClick={(file) => selectImage(file)}
+                onDeleteClick={() => {
+                    let param = {
+                        image_path: "",
+                        user_id: getItem('userId'),
+                    };
+                    dispatch(AppActions.updateUserDetails(param));
+                }}
             />
             <PopUp />
             {isLoading && <Loader />}

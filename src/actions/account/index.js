@@ -205,6 +205,10 @@ export function toggleNotification(param) {
           // })
           
           customAlert(json.message,"success")
+          dispatch({
+            type: ACTION_TYPE.SET_PROFILE_IMAGE,
+            payload: json.data.user.image_path,
+          })
         } else {
           if (json.code === 400) {
             // dispatch({
