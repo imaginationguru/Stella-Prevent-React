@@ -21,34 +21,34 @@ const INITIAL_STATE = {
   selectedCardId: '',
   programFiles: '',
   quotes: {
-    quoteText: "",
-    quoteImg: ""
+    quoteText: '',
+    quoteImg: '',
   },
   plansData: [],
   trackerStatus: {
     sleepChecked: false,
     moodChecked: false,
-    activityChecked: false
-  }
+    activityChecked: false,
+  },
 };
 
-const { ACTION_TYPE } = GLOBALS;
+const {ACTION_TYPE} = GLOBALS;
 function moduleOne(state = INITIAL_STATE, action) {
   switch (action.type) {
     case ACTION_TYPE.GET_TEMPLATE_DATA_REQUEST:
-      return { ...state, templateLoader: true };
+      return {...state, templateLoader: true};
     case ACTION_TYPE.GET_TEMPLATE_DATA_SUCCESS:
-      return { ...state, templateLoader: false, templateData: action.payload };
+      return {...state, templateLoader: false, templateData: action.payload};
     case ACTION_TYPE.GET_TEMPLATE_DATA_FAIL:
-      return { ...state, templateLoader: false };
+      return {...state, templateLoader: false};
     case ACTION_TYPE.CARD_MARK_READ_REQUEST:
-      return { ...state, templateLoader: true };
+      return {...state, templateLoader: true};
     case ACTION_TYPE.CARD_MARK_READ_SUCCESS:
-      return { ...state, templateLoader: false, cardReadData: action.payload };
+      return {...state, templateLoader: false, cardReadData: action.payload};
     case ACTION_TYPE.CARD_MARK_READ_FAIL:
-      return { ...state, templateLoader: false };
+      return {...state, templateLoader: false};
     case ACTION_TYPE.CARD_MARK_COMPLETE_REQUEST:
-      return { ...state, templateLoader: true };
+      return {...state, templateLoader: true};
     case ACTION_TYPE.CARD_MARK_COMPLETE_SUCCESS:
       return {
         ...state,
@@ -56,21 +56,21 @@ function moduleOne(state = INITIAL_STATE, action) {
         cardCompleteData: action.payload,
       };
     case ACTION_TYPE.CARD_MARK_COMPLETE_FAIL:
-      return { ...state, templateLoader: false };
+      return {...state, templateLoader: false};
     case ACTION_TYPE.GET_ASSESSMENT_DATA_REQUEST:
-      return { ...state, templateLoader: true };
+      return {...state, templateLoader: true};
     case ACTION_TYPE.GET_ASSESSMENT_DATA_SUCCESS:
-      return { ...state, templateLoader: false, assessmentData: action.payload };
+      return {...state, templateLoader: false, assessmentData: action.payload};
     case ACTION_TYPE.GET_ASSESSMENT_DATA_FAIL:
-      return { ...state, templateLoader: false };
+      return {...state, templateLoader: false};
     case ACTION_TYPE.GET_ASSESSMENT_DATA2_REQUEST:
-      return { ...state, templateLoader: true };
+      return {...state, templateLoader: true};
     case ACTION_TYPE.GET_ASSESSMENT_DATA2_SUCCESS:
-      return { ...state, templateLoader: false, assessmentData2: action.payload };
+      return {...state, templateLoader: false, assessmentData2: action.payload};
     case ACTION_TYPE.GET_ASSESSMENT_DATA2_FAIL:
-      return { ...state, templateLoader: false };
+      return {...state, templateLoader: false};
     case ACTION_TYPE.GET_ASSESSMENT_CONTENT_REQUEST:
-      return { ...state, templateLoader: true };
+      return {...state, templateLoader: true};
     case ACTION_TYPE.GET_ASSESSMENT_CONTENT_SUCCESS:
       return {
         ...state,
@@ -78,9 +78,9 @@ function moduleOne(state = INITIAL_STATE, action) {
         assessmentContentData: action.payload,
       };
     case ACTION_TYPE.GET_ASSESSMENT_CONTENT_FAIL:
-      return { ...state, templateLoader: false };
+      return {...state, templateLoader: false};
     case ACTION_TYPE.SAVE_USER_ASSESSMENT_REQUEST:
-      return { ...state, templateLoader: true };
+      return {...state, templateLoader: true};
     case ACTION_TYPE.SAVE_USER_ASSESSMENT_SUCCESS:
       return {
         ...state,
@@ -88,9 +88,9 @@ function moduleOne(state = INITIAL_STATE, action) {
         saveAssessmentData: action.payload,
       };
     case ACTION_TYPE.SAVE_USER_ASSESSMENT_FAIL:
-      return { ...state, templateLoader: false };
+      return {...state, templateLoader: false};
     case ACTION_TYPE.GET_USER_ASSESSMENT_REQUEST:
-      return { ...state, templateLoader: true };
+      return {...state, templateLoader: true};
     case ACTION_TYPE.GET_USER_ASSESSMENT_SUCCESS:
       return {
         ...state,
@@ -98,9 +98,9 @@ function moduleOne(state = INITIAL_STATE, action) {
         userAssessmentData: action.payload,
       };
     case ACTION_TYPE.GET_USER_ASSESSMENT_FAIL:
-      return { ...state, templateLoader: false };
+      return {...state, templateLoader: false};
     case ACTION_TYPE.GET_CURRENT_ACTIVE_CARD_REQUEST:
-      return { ...state, templateLoader: true };
+      return {...state, templateLoader: true};
     case ACTION_TYPE.GET_CURRENT_ACTIVE_CARD_SUCCESS:
       return {
         ...state,
@@ -108,15 +108,15 @@ function moduleOne(state = INITIAL_STATE, action) {
         currentActiveCard: action.payload,
       };
     case ACTION_TYPE.GET_CURRENT_ACTIVE_CARD_FAIL:
-      return { ...state, templateLoader: false };
+      return {...state, templateLoader: false};
     case ACTION_TYPE.GET_USER_RATING_REQUEST:
-      return { ...state, templateLoader: true };
+      return {...state, templateLoader: true};
     case ACTION_TYPE.GET_USER_RATING_SUCCESS:
-      return { ...state, templateLoader: false, userRatingData: action.payload };
+      return {...state, templateLoader: false, userRatingData: action.payload};
     case ACTION_TYPE.GET_USER_RATING_FAIL:
-      return { ...state, templateLoader: false };
+      return {...state, templateLoader: false};
     case ACTION_TYPE.GET_USER_QUESTION_INFO_REQUEST:
-      return { ...state, templateLoader: true };
+      return {...state, templateLoader: true};
     case ACTION_TYPE.GET_USER_QUESTION_INFO_SUCCESS:
       return {
         ...state,
@@ -124,27 +124,39 @@ function moduleOne(state = INITIAL_STATE, action) {
         userQuestion: action.payload,
       };
     case ACTION_TYPE.GET_USER_QUESTION_INFO_FAIL:
-      return { ...state, templateLoader: false };
+      return {...state, templateLoader: false};
     case ACTION_TYPE.SELECTED_WEEK:
-      return { ...state, selectedWeeks: action.payload };
+      return {...state, selectedWeeks: action.payload};
     case ACTION_TYPE.GET_SELECTED_WEEK:
-      return { ...state, selectedWeek: action.payload };
+      return {...state, selectedWeek: action.payload};
     case ACTION_TYPE.GET_SELECTED_DAY:
-      return { ...state, selectedDay: action.payload };
+      return {...state, selectedDay: action.payload};
     case ACTION_TYPE.GET_SELECTED_CARD_ID:
-      return { ...state, selectedCardId: action.payload };
+      return {...state, selectedCardId: action.payload};
     case ACTION_TYPE.GET_PROGRAM_FILES_REQUEST:
-      return { ...state, templateLoader: true };
+      return {...state, templateLoader: true};
     case ACTION_TYPE.GET_PROGRAM_FILES_SUCCESS:
-      return { ...state, templateLoader: false, programFiles: action.payload };
+      return {...state, templateLoader: false, programFiles: action.payload};
     case ACTION_TYPE.GET_PROGRAM_FILES_FAIL:
-      return { ...state, templateLoader: false };
+      return {...state, templateLoader: false};
     case ACTION_TYPE.SET_QUOTES_DATA:
-      return { ...state, quotes: { ...action.payload } };
+      return {...state, quotes: {...action.payload}};
     case ACTION_TYPE.GET_PLANS:
-      return { ...state, plansData: action.payload };
+      return {...state, plansData: action.payload};
     case ACTION_TYPE.SET_TRACKER_STATUS:
-      return { ...state, trackerStatus: action.payload };
+      return {...state, trackerStatus: action.payload};
+    case ACTION_TYPE.CLEAR_MODULE_ONE:
+      return {
+        ...state,
+        trackerStatus: action.payload,
+        currentActiveCard: [],
+        templateData: [],
+        trackerStatus: {
+          sleepChecked: false,
+          moodChecked: false,
+          activityChecked: false,
+        },
+      };
     default:
       return state;
   }

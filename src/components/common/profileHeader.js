@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import GLOBALS from '../../constants';
+import {navigatortoStart} from '../../config/navigationOptions.web';
 import dashboardHeader from '../../assets/images/dashboardHeader/dashboardHeader.png';
 import profile from '../../assets/images/profile.png';
 import cancel from '../../assets/images/cancel.png';
@@ -40,6 +41,7 @@ const ProfileHeader = (props) => {
     onEditClick,
     onProfileClick,
     onDeleteClick,
+    onLogout,
   } = props;
 
   useEffect(() => {
@@ -93,7 +95,11 @@ const ProfileHeader = (props) => {
                         {/* <p>hi</p> */}
                         <img
                           src={edit}
-                          style={{width: DEVICE_WIDTH > 767 ? '4vw' : '62px', height: DEVICE_WIDTH > 767 ? '4vw' : '62px', cursor: "pointer"}}
+                          style={{
+                            width: DEVICE_WIDTH > 767 ? '4vw' : '62px',
+                            height: DEVICE_WIDTH > 767 ? '4vw' : '62px',
+                            cursor: 'pointer',
+                          }}
                         />
                       </div>
                     </section>
@@ -119,8 +125,11 @@ const ProfileHeader = (props) => {
               <TouchableOpacity
                 style={styles.btn}
                 onPress={() => {
+                  // setTimeout(() => {
+                  //   navigatortoStart();
+                  // }, localStorage.clear());
                   dispatch(AppActions.logout());
-                  dispatch(AppActions.dashboardModalAction(false));
+                  // dispatch(AppActions.dashboardModalAction(false));
                 }}>
                 <Text style={[styles.btnTxtLogout]}>Logout</Text>
               </TouchableOpacity>

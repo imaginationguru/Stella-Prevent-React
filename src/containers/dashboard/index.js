@@ -48,12 +48,12 @@ const Dashboard = () => {
     selectedCardId = '',
   } = useSelector((state) => state.moduleOne);
 
-  const { isEPDSModalShow = true } = useSelector((state) => state.common);
-  const { programData = [] } = useSelector((state) => state.authReducer);
-  const { isLoading } = useSelector((state) => state.common);
-  const { loginData = [] } = useSelector((state) => state.authReducer);
-  const { trackerStatus = {} } = useSelector((state) => state.moduleOne);
-  const { week, day } = currentActiveCard.length ? currentActiveCard[0] : {};
+  const {isEPDSModalShow = true} = useSelector((state) => state.common);
+  const {programData = []} = useSelector((state) => state.authReducer);
+  const {isLoading} = useSelector((state) => state.common);
+  const {loginData = []} = useSelector((state) => state.authReducer);
+  const {trackerStatus = {}} = useSelector((state) => state.moduleOne);
+  const {week, day} = currentActiveCard.length ? currentActiveCard[0] : {};
 
   const lengthToArray = (len = 0) => {
     let temp = [];
@@ -66,17 +66,22 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    console.log('calling dashboard..');
     /**Once program is bind then get program details content */
-    dispatch(AppActions.bindProgram(cb => {
-      dispatch(AppActions.getProgramById());
-      dispatch(AppActions.getCurrentActiveCard());
-    }));
+    dispatch(
+      AppActions.bindProgram((cb) => {
+        if (getItem('userId') != null) {
+          dispatch(AppActions.getProgramById());
+          dispatch(AppActions.getCurrentActiveCard());
+        }
+      }),
+    );
   }, []);
   useEffect(() => {
-    console.log(trackerStatus, "trackerStatus....");
+    console.log(trackerStatus, 'trackerStatus....');
   }, [trackerStatus]);
-  const TrackersUI = ({ title, src, onClick, isComplete }) => {
-    console.log(isComplete, "isComplete....")
+  const TrackersUI = ({title, src, onClick, isComplete}) => {
+    console.log(isComplete, 'isComplete....');
 
     return (
       <div
@@ -91,11 +96,14 @@ const Dashboard = () => {
             {title}
           </p>
         </div>
-        <div className="tracker-arrow" style={isComplete ? { width: '35px', height: '35px' } : {}}>
-          {
-            isComplete ? <img style={{ width: '100%', height: '100%' }} src={successTick} /> : <img src={rightArrow} style={{ width: '100%', height: '100%' }} />
-          }
-
+        <div
+          className="tracker-arrow"
+          style={isComplete ? {width: '35px', height: '35px'} : {}}>
+          {isComplete ? (
+            <img style={{width: '100%', height: '100%'}} src={successTick} />
+          ) : (
+            <img src={rightArrow} style={{width: '100%', height: '100%'}} />
+          )}
         </div>
       </div>
     );
@@ -152,7 +160,7 @@ const Dashboard = () => {
   return (
     <div className="main-dashboard">
       <PopUp />
-      <div className='site-logo'>
+      <div className="site-logo">
         <img src={logoWhite} alt="" />
       </div>
       <ProfileHeader
@@ -342,16 +350,6 @@ const Dashboard = () => {
                 Exercises,
                 <br /> Readings <br /> & Resources
               </p>
-              {/* {!checkIfWeekCanAccess(5, loginData?.planInfo) ?
-                       <img src= {`${lock}`}
-                     style={{
-                      justifyContent: 'center',
-                      backgroundSize: 'center',
-                      position: 'absolute',
-
-                   }}/>
-                  : null} */}
-
             </div>
           </div> */}
         </div>
