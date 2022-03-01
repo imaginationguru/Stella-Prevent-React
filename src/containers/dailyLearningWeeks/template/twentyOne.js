@@ -240,7 +240,13 @@ const TwentyOne = (props) => {
                       {data ? (
                         <img
                           src={tickBox}
-                          style={{width: '16px', height: '16px'}}
+                          style={{
+                            width: '18px',
+                            height: '18px',
+                            position: 'relative',
+                            top: '3px',
+                            left: '-2px',
+                          }}
                         />
                       ) : (
                         <div
@@ -300,11 +306,14 @@ const styles = {
   checkWithQues: {
     display: 'flex',
     justifyContent: 'row',
-    alignItems: 'baseline',
+    alignItems: 'flex-start',
   },
   checkBox: {
     border: '2px solid black',
-    height: '13px',
-    width: '13px',
+    height: '14px',
+    width: '14px',
+    flex: '0 0 auto',
+    marginRight: '4px',
+    marginTop: '5px',
   },
 };

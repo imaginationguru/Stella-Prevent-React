@@ -40,12 +40,12 @@ const ProfileHeader = (props) => {
     console.log('use effect..profileImg', profileImg);
     console.log('use effect..profile', profile);
     console.log(profileImage == '' ? profile : profileImage, "llll")
-    if (profileImg != null && profileImg != "") {
+    if (profileImg == null || profileImg == '') {
       console.log("if")
-      setProfilePhoto(`${IMAGE_BASE_URL}${profileImg}`);
+      setProfilePhoto(profile);
     } else {
       console.log("else")
-      setProfilePhoto(profile);
+      setProfilePhoto(`${IMAGE_BASE_URL}${profileImg}`);
     }
   }, [profileImg]);
 
@@ -69,37 +69,27 @@ const ProfileHeader = (props) => {
               }}
             />
             {showEditIcon && (
-              <>
-                <section>
-                  <div
-                    onClick={onDeleteClick}
-                    style={{ position: 'absolute', bottom: 0, right: '30%', cursor: 'pointer', }}>
-                    <img src={cancel} style={{ width: '4vw', height: '4vw' }} />
-                  </div>
-                </section>
 
-                <Dropzone
-                  onDrop={(acceptedFiles) => {
-                    onEditClick(acceptedFiles[0]);
-                  }}>
-                  {({ getRootProps, getInputProps }) => (
-                    <section>
-                      <div
-                        style={{ position: 'absolute', bottom: 0, right: '0vw' }}
-                        {...getRootProps()}>
-                        <input
-                          {...getInputProps()}
-                          multiple={false}
-                          accept="image/*"
-                        />
-                        {/* <p>hi</p> */}
-                        <img src={edit} style={{ width: '4vw', height: '4vw' }} />
-                      </div>
-                    </section>
-                  )}
-                </Dropzone>
-              </>
-
+              <Dropzone
+                onDrop={(acceptedFiles) => {
+                  onEditClick(acceptedFiles[0]);
+                }}>
+                {({ getRootProps, getInputProps }) => (
+                  <section>
+                    <div
+                      style={{ position: 'absolute', bottom: 0, right: '0vw' }}
+                      {...getRootProps()}>
+                      <input
+                        {...getInputProps()}
+                        multiple={false}
+                        accept="image/*"
+                      />
+                      {/* <p>hi</p> */}
+                      <img src={edit} style={{ width: '4vw', height: '4vw' }} />
+                    </div>
+                  </section>
+                )}
+              </Dropzone>
             )}
           </View>
           <View style={styles.textConatiner}>
@@ -115,15 +105,27 @@ const ProfileHeader = (props) => {
                 <Text style={styles.btnTxt}>Profile</Text>
               </TouchableOpacity>
             )}
+            <View style={{ flexDirection: "column" }}>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => {
+                  dispatch(AppActions.logout());
+                  dispatch(AppActions.dashboardModalAction(false));
+                }}>
+                <Text style={[styles.btnTxtLogout]}>Logout</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={() => {
-                dispatch(AppActions.logout());
-                dispatch(AppActions.dashboardModalAction(false));
-              }}>
-              <Text style={[styles.btnTxtLogout]}>Logout</Text>
-            </TouchableOpacity>
+              {(showEditIcon && profileImg != null && profileImg != '') && (
+                <TouchableOpacity
+                  style={[styles.btn, { backgroundColor: 'rgba(255, 0, 0, 0.78)', height: "auto", paddingHorizontal: 5 }]}
+                  onPress={() => {
+                    onDeleteClick()
+                  }}>
+                  <Text style={[styles.btnTxtLogout]}>Delete Image</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+
           </View>
         </View>
       </ImageBackground>
@@ -199,6 +201,7 @@ const styles = StyleSheet.create({
     color: COLORS.HEADING_BLACK,
     fontFamily: FONTS.SEMI_BOLD,
     fontSize: DEVICE_WIDTH > 767 ? '1.3vw' : '16px',
+    textAlign: "center"
   },
   textConatiner: {
     flex: DEVICE_WIDTH > 767 ? '0.75' : '0 0 100%',
