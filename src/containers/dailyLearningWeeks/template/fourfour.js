@@ -429,7 +429,7 @@ const Template44 = (props) => {
                           const showPlus = i === 2 && idx === arr.length - 1;
                           const isDelete = i === 2 && idx < arr.length - 1;
                           return (
-                            <div style={styles.plusIconWrapper}>
+                            <div style={styles.plusIconWrapper} className="v-p-field">
                               <div
                                 style={{
                                   flexDirection: 'column',

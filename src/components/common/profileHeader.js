@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, {useState, useEffect, useReducer} from 'react';
 import {
   View,
   Text,
@@ -14,10 +14,10 @@ import dashboardHeader from '../../assets/images/dashboardHeader/dashboardHeader
 import profile from '../../assets/images/profile.png';
 import cancel from '../../assets/images/cancel.png';
 import edit from '../../assets/images/edit.png';
-const { COLORS, FONTS, IMAGE_BASE_URL } = GLOBALS;
-const { DARK_GREEN, WHITE } = COLORS;
-import { getItem } from '../../utils/AsyncUtils';
-import { useDispatch, useSelector } from 'react-redux';
+const {COLORS, FONTS, IMAGE_BASE_URL} = GLOBALS;
+const {DARK_GREEN, WHITE} = COLORS;
+import {getItem} from '../../utils/AsyncUtils';
+import {useDispatch, useSelector} from 'react-redux';
 import * as AppActions from '../../actions';
 import Dropzone from 'react-dropzone';
 
@@ -25,7 +25,7 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 const ProfileHeader = (props) => {
-  const { loginData = {}, profileImg = '' } = useSelector(
+  const {loginData = {}, profileImg = ''} = useSelector(
     (state) => state.authReducer,
   );
   console.log('profile image user', profileImg);
@@ -34,17 +34,23 @@ const ProfileHeader = (props) => {
   let lastName = getItem('lastName');
   const dispatch = useDispatch();
 
-  let { showProfileBtn, showEditIcon, onEditClick, onProfileClick, onDeleteClick } = props;
+  let {
+    showProfileBtn,
+    showEditIcon,
+    onEditClick,
+    onProfileClick,
+    onDeleteClick,
+  } = props;
 
   useEffect(() => {
     console.log('use effect..profileImg', profileImg);
     console.log('use effect..profile', profile);
-    console.log(profileImage == '' ? profile : profileImage, "llll")
+    console.log(profileImage == '' ? profile : profileImage, 'llll');
     if (profileImg == null || profileImg == '') {
-      console.log("if")
+      console.log('if');
       setProfilePhoto(profile);
     } else {
-      console.log("else")
+      console.log('else');
       setProfilePhoto(`${IMAGE_BASE_URL}${profileImg}`);
     }
   }, [profileImg]);
@@ -53,43 +59,48 @@ const ProfileHeader = (props) => {
     <View style={styles.outerContainer}>
       <ImageBackground
         resizeMode="cover"
-        source={dashboardHeader}
+        // source={dashboardHeader}
         style={styles.bgImage}>
         <View style={styles.profileWrapper}>
           <View style={styles.profileConatiner}>
-            <Image
-              resizeMode={'cover'}
-              source={profileImage == '' ? profile : profileImage}
-              style={{
-                width: DEVICE_WIDTH > 767 ? '10vw' : '150px',
-                height: DEVICE_WIDTH > 767 ? '10vw' : '150px',
-                borderRadius: '50%',
-                backgroundColor: COLORS.GRAY,
-                margin: DEVICE_WIDTH > 767 ? '' : 'auto',
-              }}
-            />
-            {showEditIcon && (
-              <Dropzone
-                onDrop={(acceptedFiles) => {
-                  onEditClick(acceptedFiles[0]);
-                }}>
-                {({ getRootProps, getInputProps }) => (
-                  <section>
-                    <div
-                      style={{ position: 'absolute', bottom: 0, right: '0vw' }}
-                      {...getRootProps()}>
-                      <input
-                        {...getInputProps()}
-                        multiple={false}
-                        accept="image/*"
-                      />
-                      {/* <p>hi</p> */}
-                      <img src={edit} style={{ width: '4vw', height: '4vw' }} />
-                    </div>
-                  </section>
-                )}
-              </Dropzone>
-            )}
+            <View style={styles.profileWrap}>
+              <Image
+                resizeMode={'cover'}
+                source={profileImage == '' ? profile : profileImage}
+                style={{
+                  width: DEVICE_WIDTH > 767 ? '10vw' : '150px',
+                  height: DEVICE_WIDTH > 767 ? '10vw' : '150px',
+                  borderRadius: '50%',
+                  backgroundColor: COLORS.GRAY,
+                  margin: DEVICE_WIDTH > 767 ? '' : 'auto',
+                }}
+              />
+              {showEditIcon && (
+                <Dropzone
+                  onDrop={(acceptedFiles) => {
+                    onEditClick(acceptedFiles[0]);
+                  }}>
+                  {({getRootProps, getInputProps}) => (
+                    <section>
+                      <div
+                        style={{position: 'absolute', bottom: 0, right: '0vw'}}
+                        {...getRootProps()}>
+                        <input
+                          {...getInputProps()}
+                          multiple={false}
+                          accept="image/*"
+                        />
+                        {/* <p>hi</p> */}
+                        <img
+                          src={edit}
+                          style={{width: DEVICE_WIDTH > 767 ? '4vw' : '62px', height: DEVICE_WIDTH > 767 ? '4vw' : '62px', cursor: "pointer"}}
+                        />
+                      </div>
+                    </section>
+                  )}
+                </Dropzone>
+              )}
+            </View>
           </View>
           <View style={styles.textConatiner}>
             <View>
@@ -104,7 +115,7 @@ const ProfileHeader = (props) => {
                 <Text style={styles.btnTxt}>Profile</Text>
               </TouchableOpacity>
             )}
-            <View style={{ flexDirection: "column" }}>
+            <View style={{flexDirection: 'column'}}>
               <TouchableOpacity
                 style={styles.btn}
                 onPress={() => {
@@ -114,17 +125,23 @@ const ProfileHeader = (props) => {
                 <Text style={[styles.btnTxtLogout]}>Logout</Text>
               </TouchableOpacity>
 
-              {(showEditIcon && profileImg != null && profileImg != '') && (
+              {showEditIcon && profileImg != null && profileImg != '' && (
                 <TouchableOpacity
-                  style={[styles.btn, { backgroundColor: 'rgba(255, 0, 0, 0.78)', height: "auto", paddingHorizontal: 5 }]}
+                  style={[
+                    styles.btn,
+                    {
+                      backgroundColor: 'rgba(255, 0, 0, 0.78)',
+                      height: 'auto',
+                      paddingHorizontal: 5,
+                    },
+                  ]}
                   onPress={() => {
-                    onDeleteClick()
+                    onDeleteClick();
                   }}>
                   <Text style={[styles.btnTxtLogout]}>Delete Image</Text>
                 </TouchableOpacity>
               )}
             </View>
-
           </View>
         </View>
       </ImageBackground>
@@ -136,7 +153,7 @@ export default ProfileHeader;
 const styles = StyleSheet.create({
   outerContainer: {
     width: '100%',
-    height: DEVICE_WIDTH > 767 ? '17.5vw' : '320px',
+    height: DEVICE_WIDTH > 767 ? '15vw' : '320px',
   },
   profileWrapper: {
     border: `2px solid ${DARK_GREEN}`,
@@ -154,6 +171,10 @@ const styles = StyleSheet.create({
   },
   profileConatiner: {
     flex: DEVICE_WIDTH > 767 ? '0.15' : '0 0 100%',
+    alignItems: 'center',
+  },
+  profileWrap: {
+    width: DEVICE_WIDTH > 767 ? '11vw' : '175px',
   },
   edit: {
     position: 'absolute',
@@ -199,7 +220,7 @@ const styles = StyleSheet.create({
     color: COLORS.HEADING_BLACK,
     fontFamily: FONTS.SEMI_BOLD,
     fontSize: DEVICE_WIDTH > 767 ? '1.3vw' : '16px',
-    textAlign: "center"
+    textAlign: 'center',
   },
   textConatiner: {
     flex: DEVICE_WIDTH > 767 ? '0.75' : '0 0 100%',

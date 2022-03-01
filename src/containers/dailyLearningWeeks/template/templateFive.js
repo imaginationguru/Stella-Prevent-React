@@ -288,6 +288,7 @@ const TemplateFive = (props) => {
                     key={index}
                     style={{
                       ...commonStyles.droppableDivDrag,
+                      flexWrap: 'wrap'
                     }}
                     className="wip"
                     onDragOver={(e) => onDragOver(e, item._id)}
@@ -318,7 +319,7 @@ const TemplateFive = (props) => {
                                   onDragStart(e, item.content)
                                 }
                                 draggable
-                                className="draggable">
+                                className="draggable p-draggable">
                                 {item.content}
                               </p>
                             );
@@ -397,7 +398,7 @@ const styles = {
     width: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: '60px',
+    marginTop: '0px',
     justifyContent: 'space-between',
   },
   draggableContent: {
