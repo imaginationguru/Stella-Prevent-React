@@ -14,7 +14,7 @@ import {
 
 const isiOS = Platform.OS == 'ios';
 const {FONTS, COLORS, STRINGS} = GLOBALS;
-const {GREY, PRIMARY} = COLORS;
+const {GREY, PRIMARY, DARK_GREEN} = COLORS;
 const {LIGHT, REGULAR} = FONTS;
 function ScheduleTab(props) {
   let {
@@ -60,7 +60,7 @@ function ScheduleTab(props) {
                   styles.horizontalRule,
                   {
                     borderBottomColor:
-                      activeTab == item.title ? PRIMARY : 'transparent',
+                      activeTab == item.title ? DARK_GREEN : 'transparent',
                     borderBottomWidth: activeTab == item.title ? 4 : 1,
                   },
                 ]}
