@@ -9,7 +9,7 @@ import Sad from '../assets/images/sad/sad.png';
 import SadActive from '../assets/images/sadActive/sadActive.png';
 import Angry from '../assets/images/angry/angry.png';
 import AngryActive from '../assets/images/angryActive/angryActive.png';
-const isLive = false;
+const isLive = true;
 export default {
   BASE_URL: isLive
     ? 'https://stella-prevent-careportal.curio-dtx.com/api/'
@@ -21,7 +21,6 @@ export default {
   // BASE_URL: 'http://104.43.172.201:4001/api/',
   // IMAGE_BASE_URL: 'http://104.43.172.201:4001/', //QA
   /********************************** * URL ***********************************/
-
   URL: {
     LOGIN: 'login',
     REGISTER: 'register',
@@ -293,6 +292,8 @@ export default {
     GET_WEEKLY_SUMMARY_REPORT_REQUEST: 'GET_WEEKLY_SUMMARY_REPORT_REQUEST',
     GET_WEEKLY_SUMMARY_REPORT_SUCCESS: 'GET_WEEKLY_SUMMARY_REPORT_SUCCESS',
     GET_WEEKLY_SUMMARY_REPORT_FAIL: 'GET_WEEKLY_SUMMARY_REPORT_FAIL',
+
+    SET_TRACKER_STATUS: 'SET_TRACKER_STATUS',
   },
 
   /***************************COLORS*************************** */

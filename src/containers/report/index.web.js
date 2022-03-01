@@ -417,6 +417,7 @@ const Report = ({ location }) => {
             ListEmptyComponent={<Text>No record for this Week</Text>}
             numColumns={4}
             renderItem={({ item, index }) => {
+              console.log(item.image, "item.image......")
               return (
                 <View
                   style={{
@@ -469,7 +470,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: FONTS.SEMI_BOLD,
     fontWeight: '700',
-    paddingBottom: 5,
+    paddingVertical: 5,
   },
   labelText: {
     fontFamily: FONTS.SEMI_BOLD,
