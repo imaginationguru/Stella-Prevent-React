@@ -34,7 +34,7 @@ const ProfileHeader = (props) => {
   let lastName = getItem('lastName');
   const dispatch = useDispatch();
 
-  let { showProfileBtn, showEditIcon, onEditClick, onProfileClick } = props;
+  let { showProfileBtn, showEditIcon, onEditClick, onProfileClick, onDeleteClick } = props;
 
   useEffect(() => {
     console.log('use effect..profileImg', profileImg);
@@ -72,7 +72,7 @@ const ProfileHeader = (props) => {
               <>
                 <section>
                   <div
-                    onClick={onClick}
+                    onClick={onDeleteClick}
                     style={{ position: 'absolute', bottom: 0, right: '30%', cursor: 'pointer', }}>
                     <img src={cancel} style={{ width: '4vw', height: '4vw' }} />
                   </div>
