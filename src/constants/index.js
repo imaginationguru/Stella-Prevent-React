@@ -18,8 +18,8 @@ export default {
     ? 'https://stella-prevent-careportal.curio-dtx.com/' //UAT
     : 'http://52.170.117.197/', //dev
 
-  BASE_URL: 'http://104.43.172.201:4001/api/',
-  IMAGE_BASE_URL: 'http://104.43.172.201:4001/', //QA
+  // BASE_URL: 'http://104.43.172.201:4001/api/',
+  // IMAGE_BASE_URL: 'http://104.43.172.201:4001/', //QA
   /********************************** * URL ***********************************/
   URL: {
     LOGIN: 'login',
