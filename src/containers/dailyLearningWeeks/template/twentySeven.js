@@ -572,11 +572,12 @@ const styles = {
     paddingTop: '7px',
     paddingBottom: '7px',
     marginTop: '12px ',
+    marginRight: DEVICE_WIDTH > 767 ? '2%' : '0',
   },
   quesOption: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: DEVICE_WIDTH > 767 ? 'flex-start' : 'space-between',
     flexWrap: 'wrap',
   },
   ques: {
