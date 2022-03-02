@@ -295,13 +295,16 @@ export function markCompleteCard(params, week, nextDay) {
 }
 
 /********************GET ASSESSMENT DATA************** */
-export function getAssessmentData(assessmentId, id) {
+export function getAssessmentData(assessmentId, id, card_id = "null") {
+  let userId = getItem('userId');
+  console.log("getAssessmentData......")
   return async (dispatch) => {
     dispatch({ type: ACTION_TYPE.GET_ASSESSMENT_DATA_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.getCall(
-        `${URL.GET_ASSESSMENT_DATA}/${assessmentId}`,
+        // `${URL.GET_ASSESSMENT_DATA}/${assessmentId}/${userId}/`,
+        `${URL.GET_ASSESSMENT_DATA}/${assessmentId}/${userId}/${card_id}`,
       );
 
       if (json.code === 200) {
