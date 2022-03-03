@@ -159,9 +159,9 @@ const ProfileHeader = (props) => {
                 </View>
               </View>
             </View>
-            <View style={styles.profileWrapRight}>
+            {/* <View style={styles.profileWrapRight}>
               <h4>Add Range Slider Here</h4>
-            </View>
+            </View> */}
           </View>
         </View>
       </ImageBackground>

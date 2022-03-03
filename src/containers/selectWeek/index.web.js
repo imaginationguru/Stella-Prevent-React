@@ -39,6 +39,7 @@ import back from '../../assets/images/subscription/back.png';
 import Input1 from '../../components/TextInput';
 import RadioButton1 from '../../components/RadioButton1';
 import {customAlert} from '../../helpers/commonAlerts.web';
+import MasterLayout from '../../components/MasterLayout';
 import {
   validateIsEmpty,
   validatePassword,
@@ -59,8 +60,6 @@ let dayData = [
   {index: '3'},
   {index: '4'},
   {index: '5'},
-  {index: '6'},
-  {index: '7'},
 ];
 const tabsLearingType = [{title: 'By Date', id: 1}];
 const DayView = ({
@@ -155,43 +154,38 @@ function SelectWeek(props) {
   useEffect(() => {}, []);
 
   return (
-    <div className="main-dashboard">
-      <View style={[styles.container, {}]}>
-        <ProfileHeader
-          {...props}
-          showProfileBtn={false}
-          showEditIcon={true}
-          onEditClick={(file) => selectImage(file)}
-        />
-        <div className="v-container m-tb-30">
-          <div className="blob-container">
-            <BackBtn />
-            <View style={styles.backBtn} />
-            <View style={{marginTop: 5}}>
-              <ScheduleTab
-                customStyle={{
-                  marginTop: 10,
-                }}
-                tabList={tabsLearingType}
-                activeTab={'By Date'}
-                //setActiveTab={this._setActiveLearningTab}
-                tabTitleStyle={{fontSize: 16}}
-              />
-            </View>
-            <View
-              style={{
-                alignItems: 'center',
-                // flex: 1,
-                // justifyContent: 'center',
-              }}>
-              <View style={styles.logoView}>
-                <Image
-                  source={stellaWave}
-                  resizeMode="contain"
-                  style={styles.logoStyle}
+    <MasterLayout>
+      <div className="main-dashboard">
+        <View style={[styles.container, {}]}>
+          <div className="v-container m-tb-30">
+            <div className="blob-container">
+              <BackBtn />
+              <View style={styles.backBtn} />
+              <View style={{marginTop: 5}}>
+                <ScheduleTab
+                  customStyle={{
+                    marginTop: 10,
+                  }}
+                  tabList={tabsLearingType}
+                  activeTab={'By Date'}
+                  //setActiveTab={this._setActiveLearningTab}
+                  tabTitleStyle={{fontSize: 16}}
                 />
               </View>
-              {/* <DropDownPicker
+              <View
+                style={{
+                  alignItems: 'center',
+                  // flex: 1,
+                  // justifyContent: 'center',
+                }}>
+                <View style={styles.logoView}>
+                  <Image
+                    source={stellaWave}
+                    resizeMode="contain"
+                    style={styles.logoStyle}
+                  />
+                </View>
+                {/* <DropDownPicker
               placeholder={'Select Week'}
               theme="LIGHT"
               style={styles.dropDownStyleNew}
@@ -231,67 +225,68 @@ function SelectWeek(props) {
                 // });
               }}
             /> */}
-              <div
-                className="c-dropdown"
-                style={{
-                  width: '100%',
-                  maxWidth: DEVICE_WIDTH > 1000 ? '40%' : '100%',
-                  margin: '0 auto',
-                  borderRadius: '12px',
-                  boxShadow: '0px 30.2415px 60.4831px rgba(0, 111, 89, 0.38)',
-                }}>
-                <select
+                <div
+                  className="c-dropdown"
                   style={{
                     width: '100%',
-                    paddingTop: '12px',
-                    paddingBottom: '12px',
-                    paddingLeft: '10px',
-                    backgroundColor: '#ffffff',
+                    maxWidth: DEVICE_WIDTH > 1000 ? '40%' : '100%',
+                    margin: '0 auto',
                     borderRadius: '12px',
-                    border: '1px solid rgba(0, 111, 89, 0.38)',
+                    boxShadow: '0px 30.2415px 60.4831px rgba(0, 111, 89, 0.38)',
                   }}>
-                  <option>select</option>
-                  <option>a</option>
-                </select>
-              </div>
-              <View style={styles.dayView}>
-                {dayData.map((element) => {
-                  return (
-                    <DayView
-                      item={element.index}
-                      onClick={() => {}}
-                      selectedDay={selectedDay}
-                      selectedWeek={selectedWeek}
-                      currentWeekDay={{week: 1, day: 7}}
-                    />
-                  );
-                })}
-              </View>
+                  <select
+                    style={{
+                      width: '100%',
+                      paddingTop: '12px',
+                      paddingBottom: '12px',
+                      paddingLeft: '10px',
+                      backgroundColor: '#ffffff',
+                      borderRadius: '12px',
+                      border: '1px solid rgba(0, 111, 89, 0.38)',
+                    }}>
+                    <option>select</option>
+                    <option>a</option>
+                  </select>
+                </div>
+                <View style={styles.dayView}>
+                  {dayData.map((element) => {
+                    return (
+                      <DayView
+                        item={element.index}
+                        onClick={() => {}}
+                        selectedDay={selectedDay}
+                        selectedWeek={selectedWeek}
+                        currentWeekDay={{week: 1, day: 7}}
+                      />
+                    );
+                  })}
+                </View>
 
-              <View style={styles.buttonView}>
-                <Button
-                  btnStyle={{
-                    height: 40,
-                    width: '100%',
-                    marginTop: '1.1vw',
-                  }}
-                  onVerifyPress={() =>
-                    navigatorPush({
-                      screenName: 'Subscription',
-                    })
-                  }
-                  textStyle={{fontSize: 12}}
-                  title={'Proceed'}
-                  bgColor={DARK_GREEN}
-                  textColor={WHITE}
-                />
+                <View style={styles.buttonView}>
+                  <Button
+                    btnStyle={{
+                      height: 40,
+                      width: '100%',
+                      marginTop: '1.1vw',
+                    }}
+                    onVerifyPress={() =>
+                      navigatorPush({
+                        screenName: 'Subscription',
+                      })
+                    }
+                    textStyle={{fontSize: 12}}
+                    title={'Proceed'}
+                    bgColor={DARK_GREEN}
+                    textColor={WHITE}
+                  />
+                </View>
               </View>
-            </View>
+            </div>
           </div>
-        </div>
-        <Footer />
-      </View>
-    </div>
+          <Footer />
+        </View>
+      </div>
+    </MasterLayout>
   );
 }
 export default SelectWeek = React.memo(SelectWeek);
@@ -349,7 +344,7 @@ const styles = StyleSheet.create({
     color: COLORS.PRIMARY,
     fontSize: 14,
     textAlign: 'center',
-    fontWeight: "700"
+    fontWeight: '700',
   },
   buttonView: {
     paddingHorizontal: 20,
