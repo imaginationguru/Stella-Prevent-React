@@ -62,7 +62,7 @@ export function login(email, password, componentId) {
         });
         //   if (json.data.user.isProgramBind !== true) {
         //  console.log('bind PAI hit');
-        // dispatch(bindProgram());
+        dispatch(bindProgram());
         //    }
 
         dispatch(getProgramById());
@@ -190,14 +190,16 @@ export function bindProgram(cb) {
 
 //*********************************GET PROGRAM WITH ID********************* */
 
-export function getProgramById() {
+export function getProgramById(isLoading = true, cb) {
   let programId = getItem('programId');
   let userId = getItem('userId');
 
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.GET_PROGRAM_REQUEST});
     try {
-      dispatch(loadingAction(true));
+      if (isLoading) {
+        dispatch(loadingAction(true));
+      }
       let json = await RestClient.getCall(
         `${URL.GET_PROGRAM_BY_ID}/${programId}/${userId}`,
       );
@@ -209,6 +211,9 @@ export function getProgramById() {
         });
         storeItem('duration', json.data.program.duration);
         dispatch(loadingAction(false));
+        if (cb) {
+          cb();
+        }
       } else {
         if (json.code === 400) {
           dispatch({
@@ -460,9 +465,9 @@ export function verifySocialUser(params, componentId, cb) {
           storeItem('hospitalId', json.data.user.hospital_id);
           // if (json.data.user.isProgramBind !== true) {
           //   console.log('bind PAI hit');
-          // dispatch(bindProgram());
+          dispatch(bindProgram());
           // }
-          dispatch(getProgramById());
+          // dispatch(getProgramById());
           if (json.data.user.isInterest === true) {
             console.log('heloooo1111');
             // navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
@@ -536,7 +541,7 @@ export function getUser(params, componentId, isRedirect = true) {
         storeItem('hospitalId', json.data.user.hospital_id);
         // if (json.data.user.isProgramBind !== true) {
         //   console.log('bind PAI hit');
-        //   dispatch(bindProgram());
+        dispatch(bindProgram());
         // }
         dispatch({
           type: ACTION_TYPE.SET_PROFILE_IMAGE,

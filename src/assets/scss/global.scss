@@ -929,7 +929,8 @@ footer {
 .tracker-option {
   position: relative;
   padding-left: 30px;
-  padding-right: 130px;
+  // padding-right: 130px;
+  padding-right: 30px;
   background-color: #ffffff;
 
   .tracker-arrow {
@@ -937,7 +938,8 @@ footer {
     height: 30px;
     position: absolute;
     top: 50%;
-    right: 100px;
+    // right: 100px;
+    right: 50px;
     transform: translateY(-50%);
   }
 
