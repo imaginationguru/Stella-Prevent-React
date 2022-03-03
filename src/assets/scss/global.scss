@@ -238,7 +238,8 @@ img {
   border: 0;
   //height: 50px;
   width: 100%;
-  background: #000000 url('../images/appleIcon.png') no-repeat top 13px left 30px;
+  background: #000000 url('../images/appleIcon.png') no-repeat top 13px left
+    30px;
   color: #ffffff;
   padding: 10px 0 10px 0;
   text-align: center;
@@ -322,7 +323,6 @@ img {
   }
 
   .formField {
-
     //margin-bottom: 21px;
     &.has-icon {
       position: relative;
@@ -512,7 +512,7 @@ img {
   display: flex;
   flex: 1 1 auto;
 
-  &>.container {
+  & > .container {
     display: flex;
   }
 }
@@ -568,6 +568,11 @@ button {
   padding: 0 15px;
   margin: 0 auto;
   max-width: 1200px;
+}
+.footer-container {
+  padding: 0 30px;
+  margin: 0 auto;
+  max-width: '100%';
 }
 
 .dashboard-heading {
@@ -694,7 +699,7 @@ button {
     a {
       font-style: normal;
       font-weight: normal;
-      font-size: 15px;
+      font-size: 14px;
       line-height: 18px;
       text-align: center;
       color: #ffffff;
@@ -708,6 +713,17 @@ footer {
     background: #9faba9;
     padding: 10px 0;
     flex: 0 0 auto;
+  }
+  .footer-text {
+    //font-style: normal;
+    //font-weight: normal;
+    font-family: 'HKGrotesk-Regular';
+    font-size: 14px;
+    //  line-height: 18px;
+    // text-align: center;
+    color: #ffffff;
+    margin-bottom: 0px;
+    // text-decoration: none;
   }
 }
 
@@ -764,7 +780,6 @@ footer {
 
   .f-nav-link {
     &:hover {
-
       h3,
       h6 {
         color: #006f59;
@@ -897,7 +912,7 @@ footer {
     padding: 5px 12px;
     min-height: 95px;
 
-    &>div {
+    & > div {
       flex: 0 0 100%;
       align-items: center;
       justify-content: center;
@@ -1051,9 +1066,8 @@ button.navbutton {
   }
 }
 
-
 .blob-container {
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 25px;
   padding: 30px;
 }
@@ -1087,10 +1101,9 @@ button.navbutton {
   }
 }
 
-.bk-btn-wrap>div {
+.bk-btn-wrap > div {
   padding: 15px 0;
 }
-
 
 .cell-row {
   display: flex;
@@ -1109,15 +1122,15 @@ button.navbutton {
 
 .cell-field input {
   width: 100%;
-  border: 1px solid #006F59;
-  box-shadow: 0px 5.44186px 16.3256px rgba(60, 134, 221, 0.20);
+  border: 1px solid #006f59;
+  box-shadow: 0px 5.44186px 16.3256px rgba(60, 134, 221, 0.2);
   border-radius: 4px;
   height: 40px;
   padding: 0 15px;
 }
 
 button.btn-green {
-  background: linear-gradient(161.44deg, #4AA695 12.57%, #006F59 63.39%);
+  background: linear-gradient(161.44deg, #4aa695 12.57%, #006f59 63.39%);
   width: auto;
   min-width: 180px;
 }
@@ -1132,7 +1145,7 @@ button.btn-green {
   font-weight: bold;
   font-size: 21px;
   line-height: 27px;
-  color: #3E3E3F;
+  color: #3e3e3f;
   margin-bottom: 15px;
 }
 
@@ -1149,13 +1162,12 @@ button.btn-green {
 .cell-field textarea {
   resize: none;
   width: 100%;
-  border: 1px solid #006F59;
-  box-shadow: 0px 5.44186px 16.3256px rgba(60, 134, 221, 0.20);
+  border: 1px solid #006f59;
+  box-shadow: 0px 5.44186px 16.3256px rgba(60, 134, 221, 0.2);
   border-radius: 4px;
   height: 230px;
   padding: 15px;
 }
-
 
 @media only screen and (max-width: 1200px) {
   .week-list {
@@ -1179,7 +1191,8 @@ button.btn-green {
   .poweredby {
     max-width: 180px;
     margin: 0 auto;
-    padding: 15px 0;
+    align-items: center;
+    // padding: 15px 0;
   }
 }
 
@@ -1382,7 +1395,6 @@ button.btn-green {
 
 @media only screen and (max-width: 767px) {
   .login {
-
     .btn-fb,
     .btn-google,
     .btn-apple {
@@ -1391,7 +1403,6 @@ button.btn-green {
   }
 
   .formRow {
-
     .w100,
     .w50,
     .w25,
@@ -1515,7 +1526,8 @@ body {
   position: relative;
 }
 
-.list__item {}
+.list__item {
+}
 
 .card {
   background-color: hsl(215, 14%, 37.5%);
@@ -1526,7 +1538,7 @@ body {
   // position: relative;
 }
 
-.list__item+.list__item {
+.list__item + .list__item {
   margin-top: 0.5rem;
 }
 
