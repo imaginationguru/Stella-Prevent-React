@@ -74,7 +74,6 @@ const DayView = ({
     currentDay = currentWeekDay.day;
     currentWeek = currentWeekDay.week;
   }
-  //currentDay
   if (selectedWeek >= currentWeek && item > currentDay) {
     return (
       <View
@@ -150,9 +149,21 @@ function SelectWeek(props) {
   const dispatch = useDispatch();
   const [selectedDay, setSelectedDay] = useState(1);
   const [selectedWeek, setSelectedWeek] = useState(1);
-  const [weekDataDynamic, setweekDataDynamic] = useState(['Week1', 'Week 2']);
-  useEffect(() => {}, []);
+  const [weekDataDynamic, setweekDataDynamic] = useState([{id: 1}]);
+  useEffect(() => {
+    _setDynamicWeeks();
+  }, []);
 
+  const _setDynamicWeeks = () => {
+    for (var i = 1; i <= 5; i++) {
+      weekDataDynamic.push({
+        value: 'Week' + ' ' + i,
+        label: 'Week' + ' ' + i,
+      });
+      setweekDataDynamic(weekDataDynamic);
+    }
+    console.log(weekDataDynamic, 'weekDataDynamic...');
+  };
   return (
     <MasterLayout>
       <div className="main-dashboard">
@@ -244,8 +255,9 @@ function SelectWeek(props) {
                       borderRadius: '12px',
                       border: '1px solid rgba(0, 111, 89, 0.38)',
                     }}>
-                    <option>select</option>
-                    <option>a</option>
+                    {weekDataDynamic.map((item) => {
+                      return <option>select</option>;
+                    })}
                   </select>
                 </div>
                 <View style={styles.dayView}>

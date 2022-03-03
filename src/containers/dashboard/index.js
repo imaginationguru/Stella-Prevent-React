@@ -263,14 +263,14 @@ const Dashboard = () => {
                 navigatorPush({screenName: 'Report'});
               }}
             />
-            {/* <TrackersUI
+            <TrackersUI
               title="Past Modules"
               src={past_module}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({ screenName: 'SelectWeek' });
+                navigatorPush({screenName: 'SelectWeek'});
               }}
-            /> */}
+            />
           </div>
         </div>
         <div className="week-list">
