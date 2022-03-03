@@ -173,14 +173,16 @@ export default ProfileHeader;
 const styles = StyleSheet.create({
   outerContainer: {
     width: '100%',
-    height: DEVICE_WIDTH > 767 ? '15vw' : '320px',
+    // height: DEVICE_WIDTH > 767 ? '15vw' : '320px',
+    paddingTop: '30px',
+    paddingBottom: '30px',
   },
   profileWrapper: {
     border: `2px solid ${DARK_GREEN}`,
     width: '80%',
-    position: 'absolute',
-    top: 30,
-    left: '10%',
+    position: 'static',
+    // top: 30,
+    // left: '10%',
     backgroundColor: '#ffffff',
     opacity: 0.8,
     borderRadius: 20,
@@ -188,6 +190,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: '1vw',
     flexWrap: 'wrap',
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   profileConatiner: {
     flex: DEVICE_WIDTH > 767 ? '0 0 auto' : '0 0 100%',

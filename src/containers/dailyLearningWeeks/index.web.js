@@ -1,24 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import MasterLayout from '../../components/MasterLayout';
 import Footer from '../../components/Footer';
 import GLOBALS from '../../constants';
 import * as AppActions from '../../actions';
-import { Header, SubHeader } from './Navbar';
+import {Header, SubHeader} from './Navbar';
 import GenerateUI from './GenerateUI';
 import BackToDashboard from '../../components/common/backToDashboard';
 import {
   getSelectedWeekDayCards,
   canProceedNextDay,
 } from '../../helpers/common.web';
-import { customAlert } from '../../helpers/commonAlerts.web';
-import { navigatorPush } from '../../config/navigationOptions.web';
-
-const { COLORS } = GLOBALS;
+import {customAlert} from '../../helpers/commonAlerts.web';
+import {navigatorPush} from '../../config/navigationOptions.web';
+import BackBtn from '../../components/common/backbtn';
+const {COLORS} = GLOBALS;
 const DailyLearningWeeks = (props) => {
   let isFromDashboard = props.location?.state?.isFromDashboard;
+  let backTitle = props.location?.state?.backTitle;
   const dispatch = useDispatch();
-  const { userAssessmentData = [], userRatingData = [] } = useSelector(
+  const {userAssessmentData = [], userRatingData = []} = useSelector(
     (state) => state.moduleOne,
   );
   const {
@@ -31,16 +32,16 @@ const DailyLearningWeeks = (props) => {
     currentActiveCard = [],
     selectedCardId = '',
   } = useSelector((state) => state.moduleOne);
-  let { selectedDay, selectedWeek } = useSelector((state) => state.moduleOne);
+  let {selectedDay, selectedWeek} = useSelector((state) => state.moduleOne);
   let [weeksCount, setWeeksCount] = useState(
     props.location?.state?.isFromDashboard
       ? currentActiveCard.current_week
       : props.location?.state?.weeksCount
-        ? props.location?.state?.weeksCount
-        : 1,
+      ? props.location?.state?.weeksCount
+      : 1,
   );
-  const { loginData = [] } = useSelector((state) => state.authReducer);
-  const { week, day } = currentActiveCard.length ? currentActiveCard[0] : {};
+  const {loginData = []} = useSelector((state) => state.authReducer);
+  const {week, day} = currentActiveCard.length ? currentActiveCard[0] : {};
   const [currentData, setCurrentData] = useState({});
   const [isScrollerLoad, setScrollerLoad] = useState(false);
   const [nextData, setNextData] = useState({});
@@ -62,9 +63,15 @@ const DailyLearningWeeks = (props) => {
   useEffect(() => {
     console.log(currentData, 'currentData........');
     if (currentData._id) {
-      const { card: { assessment_id } = {} } = currentData;
+      const {card: {assessment_id} = {}} = currentData;
       if (assessment_id !== null) {
-        dispatch(AppActions.getAssessmentData(assessment_id, currentData._id, currentData._id));
+        dispatch(
+          AppActions.getAssessmentData(
+            assessment_id,
+            currentData._id,
+            currentData._id,
+          ),
+        );
         // dispatch(AppActions.getUserAssessment(currentData._id, assessment_id));
       }
     }
@@ -103,7 +110,7 @@ const DailyLearningWeeks = (props) => {
     let temp = [];
     if (data.length) {
       data.forEach((item) => {
-        const { cards = [] } = item;
+        const {cards = []} = item;
         if (cards.length) {
           temp.push(
             ...cards.sort(
@@ -294,7 +301,7 @@ const DailyLearningWeeks = (props) => {
       customAlert(
         "You've reached your free content limit. Please upgrade your plan.",
         'error',
-        { showCloseButton: true },
+        {showCloseButton: true},
         'Upgrade',
         _onPressUpgrade,
       );
@@ -374,30 +381,31 @@ const DailyLearningWeeks = (props) => {
   return (
     <>
       <MasterLayout>
-        <BackToDashboard></BackToDashboard>
+        <BackBtn title={backTitle ? backTitle : 'Back to Dashboard'} />
+
         <div className="dashboard-body">
           <div className="container">
             <div className="dashboard-body-inner">
               {/* ***********************************Navbar Start********************** */}
               <div>
-                <p style={{ color: COLORS.GREEN_TEXT, fontWeight: 'bold' }}>
+                <p style={{color: COLORS.GREEN_TEXT, fontWeight: 'bold'}}>
                   Home /
-                  <span style={{ color: COLORS.GRAY1, fontWeight: 'bold' }}>
+                  <span style={{color: COLORS.GRAY1, fontWeight: 'bold'}}>
                     {''}
                     Week{' '}
                     {weeksCount === undefined
                       ? currentActiveCard.current_week
-                      : weeksCount}
+                      : weeksCount}{' '}
+                    Day {selectedDay}
                   </span>
                 </p>
               </div>
 
               {templateData.length ? (
                 <>
-                  <Header
+                  {/* <Header
                     data={templateData}
                     currentDay={selectedDay}
-                    // onDayChange={(val) => setCurrentDay(val)}
                     isDisabled={applicableDay()}
                     onDayChange={(val) => {
                       console.log(val, 'val....');
@@ -429,12 +437,10 @@ const DailyLearningWeeks = (props) => {
                         return;
                       } else {
                         customAlert(`Content not unlocked`, 'error');
-                        // alert(
-                        //   `You completed ${selectedDay} day's card, day ${val} card enable by tomorrow`,
-                        // );
+                      
                       }
                     }}
-                  />
+                  /> */}
                   <SubHeader
                     data={templateData.filter(
                       (item) => item.day === selectedDay,
@@ -516,7 +522,7 @@ const DailyLearningWeeks = (props) => {
                 <div className="footer-nav-inner">
                   {/*****************************************BOTTOM PREVIOUS BUTTON************* */}
 
-                  <div style={{ alignItems: 'flex-end' }}>
+                  <div style={{alignItems: 'flex-end'}}>
                     {prevData._id ? (
                       <div className="footer-nav-left">
                         <div
@@ -544,7 +550,7 @@ const DailyLearningWeeks = (props) => {
                     ) : !isFirstDay ? (
                       <div
                         className="footer-nav-left"
-                        style={{ alignItems: 'flex-end' }}>
+                        style={{alignItems: 'flex-end'}}>
                         <div
                           onClick={() => {
                             dispatch({

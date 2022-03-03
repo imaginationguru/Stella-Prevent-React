@@ -25,7 +25,7 @@ import * as AppActions from '../../actions';
 import {navigatorPush} from '../../config/navigationOptions.web';
 import Modal from 'modal-react-native-web';
 import EpdsScreener from '../../components/common/epdsScreener';
-const {COLORS, ACTION_TYPE} = GLOBALS;
+const {COLORS, ACTION_TYPE, FONTS} = GLOBALS;
 const {DARK_GREEN, WHITE} = COLORS;
 import {Dimensions} from 'react-native-web';
 import Header from '../../components/Header';
@@ -66,16 +66,16 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    console.log('calling dashboard..');
+    //console.log('calling dashboard..');
     /**Once program is bind then get program details content */
-    dispatch(
-      AppActions.bindProgram((cb) => {
-        if (getItem('userId') != null) {
-          dispatch(AppActions.getProgramById());
-          dispatch(AppActions.getCurrentActiveCard());
-        }
-      }),
-    );
+    // dispatch(
+    //   AppActions.bindProgram((cb) => {
+    if (getItem('userId') != null) {
+      dispatch(AppActions.getProgramById(false));
+      dispatch(AppActions.getCurrentActiveCard(false));
+    }
+    // }),
+    // );
   }, []);
   useEffect(() => {
     console.log(trackerStatus, 'trackerStatus....');
@@ -121,7 +121,7 @@ const Dashboard = () => {
         payload: item,
       });
       dispatch(
-        AppActions.getCurrentActiveCard((res) => {
+        AppActions.getCurrentActiveCard(true, (res) => {
           if (item <= res.current_week || item == 1) {
             dispatch(AppActions.getWeek(item));
             dispatch({
@@ -157,6 +157,33 @@ const Dashboard = () => {
       );
     }
   };
+
+  const onDailyLearningClick = () => {
+    dispatch(AppActions.getTemplateData(currentActiveCard.current_week));
+
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+      payload: currentActiveCard._id,
+    });
+    //   :
+    // null};
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.GET_SELECTED_WEEK,
+      payload: currentActiveCard.current_week,
+    });
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
+      payload: currentActiveCard.current_day,
+    });
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.SELECTED_WEEK,
+      payload: currentActiveCard.current_week,
+    });
+    navigatorPush({
+      screenName: 'DailyLearningWeeks',
+      passProps: {isFromDashboard: true},
+    });
+  };
   return (
     <div className="main-dashboard">
       <PopUp />
@@ -176,35 +203,10 @@ const Dashboard = () => {
             <div
               style={styles.dailylearnWrap}
               onClick={() => {
+                onDailyLearningClick();
                 //   debugger
                 //  {selectedCardId == '' ?
                 // dispatch(AppActions.getCurrentActiveCard());
-                dispatch(
-                  AppActions.getTemplateData(currentActiveCard.current_week),
-                );
-
-                dispatch({
-                  type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                  payload: currentActiveCard._id,
-                });
-                //   :
-                // null};
-                dispatch({
-                  type: GLOBALS.ACTION_TYPE.GET_SELECTED_WEEK,
-                  payload: currentActiveCard.current_week,
-                });
-                dispatch({
-                  type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
-                  payload: currentActiveCard.current_day,
-                });
-                dispatch({
-                  type: GLOBALS.ACTION_TYPE.SELECTED_WEEK,
-                  payload: currentActiveCard.current_week,
-                });
-                navigatorPush({
-                  screenName: 'DailyLearningWeeks',
-                  passProps: {isFromDashboard: true},
-                });
               }}
               className="display-board">
               <div
@@ -263,17 +265,17 @@ const Dashboard = () => {
                 navigatorPush({screenName: 'Report'});
               }}
             />
-            {/* <TrackersUI
+            <TrackersUI
               title="Past Modules"
               src={past_module}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({screenName: 'SelectWeek'});
+                navigatorPush({screenName: 'PastModule'});
               }}
-            /> */}
+            />
           </div>
         </div>
-        <div className="week-list">
+        {/* <div className="week-list">
           {lengthToArray(duration).map((item, index) => {
             return (
               <div className="week-item">
@@ -326,7 +328,7 @@ const Dashboard = () => {
               </div>
             );
           })}
-          {/* <div className="week-item">
+          <div className="week-item">
             <div
               className="week-inside"
               style={{
@@ -351,8 +353,8 @@ const Dashboard = () => {
                 <br /> Readings <br /> & Resources
               </p>
             </div>
-          </div> */}
-        </div>
+          </div>
+        </div> */}
       </div>
 
       <Footer />
@@ -377,9 +379,9 @@ const styles = {
     borderRadius: 10,
     //height: 50,
     border: `2px solid ${DARK_GREEN}`,
-    paddingTop: 18,
-    paddingBottom: 18,
-    marginBottom: 18,
+    paddingTop: 15,
+    paddingBottom: 15,
+    marginBottom: 15,
     cursor: 'pointer',
     //boxShadow: '1px 3px 1px #D6F0EB',
     boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
@@ -389,6 +391,7 @@ const styles = {
     display: 'flex',
     alignSelf: 'center',
     marginBottom: 0,
+    fontFamily: FONTS.SEMI_BOLD,
   },
   profileWrapper: {
     //height: '30%',

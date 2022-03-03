@@ -22,6 +22,7 @@ import Payment from '../../containers/payment/paymentScreen';
 import Profile from '../../containers/profile';
 import SelectWeek from '../../containers/selectWeek';
 import Report from '../../containers/report';
+import Contact from '../../containers/contact';
 const WebRouter = () => {
   return (
     <Router history={history}>
@@ -70,8 +71,9 @@ const WebRouter = () => {
         <PrivateRoute component={Profile} path="/Profile" />
         <PrivateRoute component={Subscription} path="/Subscription" />
         <PrivateRoute component={Payment} path="/Payment" />
-        <PrivateRoute component={SelectWeek} path="/SelectWeek" />
+        <PrivateRoute component={SelectWeek} path="/PastModule" />
         <PrivateRoute component={Report} path="/Report" />
+        <PrivateRoute component={Contact} path="/Contact" />
       </Switch>
     </Router>
   );
