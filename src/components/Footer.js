@@ -1,13 +1,14 @@
 import React from 'react';
 import {translate as ts} from '../i18n/translate';
 import {Link} from 'react-router-dom';
+import {navigatorPush} from '../config/navigationOptions.web';
 const Footer = () => {
   return (
     <footer className="dashboard-footer">
       <div className="container">
         <div className="footer-links">
           <div className="footer-link-item">
-            <Link to="#">{ts('PRESENTATION')}</Link>
+            <Link to="/Contact">{ts('PRESENTATION')}</Link>
           </div>
           <div className="footer-link-item">
             <Link to="#">{ts('TERMS')}</Link>
