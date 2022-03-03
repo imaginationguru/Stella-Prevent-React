@@ -39,6 +39,7 @@ import back from '../../assets/images/subscription/back.png';
 import Input1 from '../../components/TextInput';
 import RadioButton1 from '../../components/RadioButton1';
 import {customAlert} from '../../helpers/commonAlerts.web';
+import MasterLayout from '../../components/MasterLayout';
 import {
   validateIsEmpty,
   validatePassword,
@@ -73,7 +74,6 @@ const DayView = ({
     currentDay = currentWeekDay.day;
     currentWeek = currentWeekDay.week;
   }
-  //currentDay
   if (selectedWeek >= currentWeek && item > currentDay) {
     return (
       <View
@@ -128,7 +128,7 @@ const DayView = ({
             styles.dayViewStyle,
             {
               backgroundColor:
-                selectedDay == item ? COLORS.WHITE : COLORS.DARK_GREEN,
+                selectedDay == item ? COLORS.WHITE : 'rgba(28, 129, 212, 0.3)',
             },
             // {
             //   backgroundColor:
@@ -149,117 +149,156 @@ function SelectWeek(props) {
   const dispatch = useDispatch();
   const [selectedDay, setSelectedDay] = useState(1);
   const [selectedWeek, setSelectedWeek] = useState(1);
-  const [weekDataDynamic, setweekDataDynamic] = useState(['Week1', 'Week 2']);
-  useEffect(() => {}, []);
+  const [weekDataDynamic, setweekDataDynamic] = useState([{id: 1}]);
+  useEffect(() => {
+    _setDynamicWeeks();
+  }, []);
 
+  const _setDynamicWeeks = () => {
+    for (var i = 1; i <= 5; i++) {
+      weekDataDynamic.push({
+        value: 'Week' + ' ' + i,
+        label: 'Week' + ' ' + i,
+      });
+      setweekDataDynamic(weekDataDynamic);
+    }
+    console.log(weekDataDynamic, 'weekDataDynamic...');
+  };
   return (
-    <View style={[styles.container, {}]}>
-      <ProfileHeader
-        {...props}
-        showProfileBtn={false}
-        showEditIcon={true}
-        onEditClick={(file) => selectImage(file)}
-      />
-      <BackBtn></BackBtn>
-      <View style={styles.backBtn}></View>
-      <View style={{marginTop: 5}}>
-        <ScheduleTab
-          customStyle={{
-            marginTop: 10,
-          }}
-          tabList={tabsLearingType}
-          activeTab={'By Date'}
-          //setActiveTab={this._setActiveLearningTab}
-          tabTitleStyle={{fontSize: 16}}
-        />
-      </View>
-      <View
-        style={{
-          alignItems: 'center',
-          flex: 1,
-          // justifyContent: 'center',
-        }}>
-        <View style={styles.logoView}>
-          <Image
-            source={stellaWave}
-            resizeMode="contain"
-            style={styles.logoStyle}
-          />
-        </View>
-        {/* <DropDownPicker
-          placeholder={'Select Week'}
-          theme="LIGHT"
-          style={styles.dropDownStyleNew}
-          containerStyle={[
-            {
-              width: '100%',
-              alignSelf: 'center',
-            },
-          ]}
-          textStyle={{
-            fontSize: 15,
-            color: COLORS.DARK_GREEN,
-            textAlign: 'center',
-            // height: 50,
-            //  fontFamily: FONTS.MEDIUM,
-          }}
-          labelStyle={{
-            // fontFamily: FONTS.MEDIUM,
-            color: COLORS.BLACK,
-          }}
-          dropDownDirection="TOP"
-          //  open={this.state.open}
-          value={'Week 1'}
-          items={weekDataDynamic}
-          // setOpen={() => this.setState({ open: true })}
-          onPress={(open) => {
-            // if (!open) {
-            //   setTimeout(() => {
-            //     this.hideDropDown();
-            //   }, 500);
-            // }
-          }}
-          //  setValue={this.setValue}
-          onChangeValue={(value) => {
-            // this.setState({
-            //   open: false,
-            // });
-          }}
-        /> */}
-        <View style={styles.dayView}>
-          {dayData.map((element) => {
-            return (
-              <DayView
-                item={element.index}
-                onClick={() => {}}
-                selectedDay={selectedDay}
-                selectedWeek={selectedWeek}
-                currentWeekDay={{week: 1, day: 5}}
-              />
-            );
-          })}
-        </View>
+    <MasterLayout>
+      <div className="main-dashboard">
+        <View style={[styles.container, {}]}>
+          <div className="v-container m-tb-30">
+            <div className="blob-container">
+              <BackBtn />
+              <View style={styles.backBtn} />
+              <View style={{marginTop: 5}}>
+                <ScheduleTab
+                  customStyle={{
+                    marginTop: 10,
+                  }}
+                  tabList={tabsLearingType}
+                  activeTab={'By Date'}
+                  //setActiveTab={this._setActiveLearningTab}
+                  tabTitleStyle={{fontSize: 16}}
+                />
+              </View>
+              <View
+                style={{
+                  alignItems: 'center',
+                  // flex: 1,
+                  // justifyContent: 'center',
+                }}>
+                <View style={styles.logoView}>
+                  <Image
+                    source={stellaWave}
+                    resizeMode="contain"
+                    style={styles.logoStyle}
+                  />
+                </View>
+                {/* <DropDownPicker
+              placeholder={'Select Week'}
+              theme="LIGHT"
+              style={styles.dropDownStyleNew}
+              containerStyle={[
+                {
+                  width: '100%',
+                  alignSelf: 'center',
+                },
+              ]}
+              textStyle={{
+                fontSize: 15,
+                color: COLORS.DARK_GREEN,
+                textAlign: 'center',
+                // height: 50,
+                //  fontFamily: FONTS.MEDIUM,
+              }}
+              labelStyle={{
+                // fontFamily: FONTS.MEDIUM,
+                color: COLORS.BLACK,
+              }}
+              dropDownDirection="TOP"
+              //  open={this.state.open}
+              value={'Week 1'}
+              items={weekDataDynamic}
+              // setOpen={() => this.setState({ open: true })}
+              onPress={(open) => {
+                // if (!open) {
+                //   setTimeout(() => {
+                //     this.hideDropDown();
+                //   }, 500);
+                // }
+              }}
+              //  setValue={this.setValue}
+              onChangeValue={(value) => {
+                // this.setState({
+                //   open: false,
+                // });
+              }}
+            /> */}
+                <div
+                  className="c-dropdown"
+                  style={{
+                    width: '100%',
+                    maxWidth: DEVICE_WIDTH > 1000 ? '40%' : '100%',
+                    margin: '0 auto',
+                    borderRadius: '12px',
+                    boxShadow: '0px 30.2415px 60.4831px rgba(0, 111, 89, 0.38)',
+                  }}>
+                  <select
+                    style={{
+                      width: '100%',
+                      paddingTop: '12px',
+                      paddingBottom: '12px',
+                      paddingLeft: '10px',
+                      backgroundColor: '#ffffff',
+                      borderRadius: '12px',
+                      border: '1px solid rgba(0, 111, 89, 0.38)',
+                    }}>
+                    {weekDataDynamic.map((item) => {
+                      return <option>select</option>;
+                    })}
+                  </select>
+                </div>
+                <View style={styles.dayView}>
+                  {dayData.map((element) => {
+                    return (
+                      <DayView
+                        item={element.index}
+                        onClick={() => {}}
+                        selectedDay={selectedDay}
+                        selectedWeek={selectedWeek}
+                        currentWeekDay={{week: 1, day: 7}}
+                      />
+                    );
+                  })}
+                </View>
 
-        <View style={styles.buttonView}>
-          <Button
-            btnStyle={{
-              height: 35,
-              width: '100%',
-              marginTop: '1.1vw',
-            }}
-            onVerifyPress={() =>
-              navigatorPush({
-                screenName: 'Subscription',
-              })
-            }
-            textStyle={{fontSize: 12}}
-            title={'Proceed'}
-            bgColor={DARK_GREEN}
-            textColor={WHITE}></Button>
+                <View style={styles.buttonView}>
+                  <Button
+                    btnStyle={{
+                      height: 40,
+                      width: '100%',
+                      marginTop: '1.1vw',
+                    }}
+                    onVerifyPress={() =>
+                      navigatorPush({
+                        screenName: 'Subscription',
+                      })
+                    }
+                    textStyle={{fontSize: 12}}
+                    title={'Proceed'}
+                    bgColor={DARK_GREEN}
+                    textColor={WHITE}
+                  />
+                </View>
+              </View>
+            </div>
+          </div>
+          <Footer />
         </View>
-      </View>
-      <Footer></Footer>
-    </View>
+      </div>
+    </MasterLayout>
   );
 }
 export default SelectWeek = React.memo(SelectWeek);
@@ -272,7 +311,7 @@ const styles = StyleSheet.create({
 
     //  flex: 1,
     //  padding: 20,
-    height: DEVICE_HEIGHT - 0,
+    // height: DEVICE_HEIGHT - 0,
     justifyContent: 'center',
   },
   logoView: {
@@ -307,8 +346,9 @@ const styles = StyleSheet.create({
   },
   dayViewStyle: {
     marginTop: 4,
-    borderRadius: 12,
+    borderRadius: '50%',
     width: 24,
+    height: 24,
     justifyContent: 'center',
     alignSelf: 'center',
   },
@@ -316,10 +356,11 @@ const styles = StyleSheet.create({
     color: COLORS.PRIMARY,
     fontSize: 14,
     textAlign: 'center',
+    fontWeight: '700',
   },
   buttonView: {
     paddingHorizontal: 20,
-    width: '40%',
+    width: DEVICE_WIDTH > 1000 ? '40%' : '100%',
     justifyContent: 'center',
     // bottom: 30,
   },

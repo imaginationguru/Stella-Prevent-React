@@ -82,9 +82,11 @@ const TwentySeven = (props) => {
   // console.log('Assessment ques>>>>>', assessmentQues);
   useEffect(() => {
     if (userQuestion.length) {
+      console.log(userQuestion, 'userQuestion....');
       let x = userQuestion.map((item, index) => {
         if (item.assessmentType === 'radio') {
           if (index == 0 && item.totalPointEarned) {
+            console.log('enter');
             let firstCondition = '0-9';
             let secondCondition = '10-16';
             let thirdCondition = '17-21';
@@ -282,6 +284,11 @@ const TwentySeven = (props) => {
         })
       : [];
 
+    let last_answer = assessmentQues[assessmentQues.length - 1].options.filter(
+      (val) => val.status === true,
+    )[0];
+
+    console.log(last_answer, 'last_answer..');
     let onlyOptionPoint =
       modifyData &&
       modifyData.length &&
@@ -300,12 +307,22 @@ const TwentySeven = (props) => {
 
     if (modifyData && modifyData.length) {
       console.log('modify dtaa on submit>>>>>', modifyData, totalQ, answer);
-
       //const isAPICall = totalQ === answer && answer === 10;
       const isAPICall = totalQ === answer;
       if (isAPICall) {
         setGlobalAPICall(false);
-        if (sum >= 0 && sum <= 9) {
+        if (last_answer && last_answer.optionPoint > 1) {
+          let message =
+            'Based on your response to Question 10, it is critical that you discuss your situation or feelings with a healthcare professional such as your doctor or mental health provider as soon as possible. They can help you get the care you need. If you are in crisis and need immediate help, you can call your doctor, 911 for emergency services, go to the nearest hospital emergency room, or call the toll-free hotline of the National Suicide Prevention Hotline at 1-800-273-TALK. Find a family member or a friend to stay with you until you get help. ';
+          dispatch(
+            AppActions.savePatientAssessment(
+              modifyData,
+              message,
+              choosenAssessment,
+            ),
+          );
+          setResultText(message);
+        } else if (sum >= 0 && sum <= 9) {
           let conditionOne =
             submit_messages && submit_messages.length
               ? submit_messages.filter(
@@ -320,6 +337,7 @@ const TwentySeven = (props) => {
               choosenAssessment,
             ),
           );
+          setResultText(messageOne);
         } else if (sum >= 10 && sum <= 16) {
           let conditionSecond =
             submit_messages && submit_messages.length
@@ -572,11 +590,12 @@ const styles = {
     paddingTop: '7px',
     paddingBottom: '7px',
     marginTop: '12px ',
+    marginRight: DEVICE_WIDTH > 767 ? '2%' : '0',
   },
   quesOption: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: DEVICE_WIDTH > 767 ? 'flex-start' : 'space-between',
     flexWrap: 'wrap',
   },
   ques: {
