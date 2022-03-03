@@ -26,7 +26,7 @@ const BackBtn = (props) => {
     isDisabled = false,
   } = props;
   return (
-    <View style={styles.backBtn}>
+    <View style={[styles.backBtn, btnStyle]}>
       <TouchableOpacity
         style={{flexDirection: 'row', alignItems: 'center'}}
         onPress={() => navigatorPop()}>

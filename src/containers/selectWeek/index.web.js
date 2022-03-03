@@ -81,7 +81,7 @@ const DayView = ({
           styles.dayTouchable,
           {backgroundColor: COLORS.LIGHT_SHADOW_GREEN},
         ]}>
-        <Text style={[styles.dayText1, {color: COLORS.WHITE}]}>Day</Text>
+        <Text style={[styles.dayText, {color: COLORS.DARK_GREEN}]}>Day</Text>
         <View
           style={[
             styles.dayViewStyle,
@@ -98,7 +98,7 @@ const DayView = ({
           styles.dayTouchable,
           {backgroundColor: COLORS.LIGHT_SHADOW_GREEN},
         ]}>
-        <Text style={[styles.dayText1, {color: COLORS.WHITE}]}>Day</Text>
+        <Text style={[styles.dayText, {color: COLORS.DARK_GREEN}]}>Day</Text>
         <View
           style={[
             styles.dayViewStyle,
@@ -118,7 +118,7 @@ const DayView = ({
         onPress={() => onClick(item)}>
         <Text
           style={[
-            styles.dayText1,
+            styles.dayText,
             {color: selectedDay == item ? 'white' : COLORS.DARK_GREEN},
           ]}>
           Day
@@ -127,8 +127,9 @@ const DayView = ({
           style={[
             styles.dayViewStyle,
             {
+              borderColor: 'red',
               backgroundColor:
-                selectedDay == item ? COLORS.WHITE : 'rgba(28, 129, 212, 0.3)',
+                selectedDay == item ? COLORS.WHITE : COLORS.WHITE,
             },
             // {
             //   backgroundColor:
@@ -139,7 +140,7 @@ const DayView = ({
             //       : COLOR.PRIMARY,
             // },
           ]}>
-          <Text style={[styles.dayText]}>{item}</Text>
+          <Text style={[styles.dayText, {}]}>{item}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -147,15 +148,32 @@ const DayView = ({
 };
 function SelectWeek(props) {
   const dispatch = useDispatch();
+  const {currentActiveCard = {}} = useSelector((state) => state.moduleOne);
+
   const [selectedDay, setSelectedDay] = useState(1);
   const [selectedWeek, setSelectedWeek] = useState(1);
   const [weekDataDynamic, setweekDataDynamic] = useState([]);
-  const [value, setValue] = useState('Week 5');
+  const [value, setValue] = useState('Week 1');
+
   useEffect(() => {
+    setweekDataDynamic([]);
+    setSelectedWeek(currentActiveCard.current_week);
+    dispatch(AppActions.getWeek(currentActiveCard.current_week));
+    setSelectedDay(currentActiveCard.current_day);
+    setValue(`Week ${currentActiveCard.currentActiveCard}`);
     _setDynamicWeeks();
+  }, [currentActiveCard]);
+
+  useEffect(() => {
+    dispatch(AppActions.getProgramById(false));
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
+      payload: selectedDay,
+    });
   }, []);
 
   const _setDynamicWeeks = () => {
+    let weekDataDynamic = [];
     for (var i = 1; i <= 5; i++) {
       weekDataDynamic.push({
         value: 'Week' + ' ' + i,
@@ -163,152 +181,135 @@ function SelectWeek(props) {
       });
       setweekDataDynamic([...weekDataDynamic]);
     }
-    console.log(weekDataDynamic, 'weekDataDynamic...');
+  };
+  const _onProceedClick = () => {
+    dispatch(
+      AppActions.getCurrentActiveCard(true, (res) => {
+        navigatorPush({
+          screenName: 'DailyLearningWeeks',
+          passProps: {
+            weeksCount: selectedWeek,
+            backTitle: 'Back to Past Modules',
+          },
+        });
+      }),
+    );
+  };
+  const onWeekChange = (event) => {
+    setValue(event.target.value);
+    dispatch(AppActions.getWeek(event.target.value.replace('Week' + ' ', '')));
+    setSelectedWeek(event.target.value.replace('Week' + ' ', ''));
+  };
+  const daySelected = (day) => {
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
+      payload: parseInt(day),
+    });
+    setSelectedDay(day);
   };
 
-  const myFunction = (e) => {
-    console.log(e, 'jjjj');
-  };
   return (
-    <MasterLayout>
-      <div className="main-dashboard">
-        <View style={[styles.container, {}]}>
-          <div className="v-container m-tb-30">
-            <div className="blob-container">
-              <BackBtn />
-              <View style={styles.backBtn} />
-              <View style={{marginTop: 5}}>
-                <ScheduleTab
-                  customStyle={{
-                    marginTop: 10,
-                  }}
-                  tabList={tabsLearingType}
-                  activeTab={'By Date'}
-                  //setActiveTab={this._setActiveLearningTab}
-                  tabTitleStyle={{fontSize: 16}}
+    // <MasterLayout>
+    <div className="main-dashboard">
+      <ProfileHeader></ProfileHeader>
+
+      <View style={[styles.container, {}]}>
+        <div className="v-container m-tb-30">
+          <div className="blob-container">
+            <BackBtn btnStyle={{padding: 0}} />
+            <View style={styles.backBtn} />
+            <View style={{marginTop: 10}}>
+              <ScheduleTab
+                customStyle={{
+                  marginTop: 10,
+                }}
+                tabList={tabsLearingType}
+                activeTab={'By Date'}
+                tabTitleStyle={{fontSize: 16}}
+              />
+            </View>
+            <View
+              style={{
+                alignItems: 'center',
+              }}>
+              <View style={styles.logoView}>
+                <Image
+                  source={stellaWave}
+                  resizeMode="contain"
+                  style={styles.logoStyle}
                 />
               </View>
-              <View
+              <div
+                className="c-dropdown"
                 style={{
-                  alignItems: 'center',
-                  // flex: 1,
-                  // justifyContent: 'center',
-                }}>
-                <View style={styles.logoView}>
-                  <Image
-                    source={stellaWave}
-                    resizeMode="contain"
-                    style={styles.logoStyle}
-                  />
-                </View>
-                {/* <DropDownPicker
-              placeholder={'Select Week'}
-              theme="LIGHT"
-              style={styles.dropDownStyleNew}
-              containerStyle={[
-                {
                   width: '100%',
-                  alignSelf: 'center',
-                },
-              ]}
-              textStyle={{
-                fontSize: 15,
-                color: COLORS.DARK_GREEN,
-                textAlign: 'center',
-                // height: 50,
-                //  fontFamily: FONTS.MEDIUM,
-              }}
-              labelStyle={{
-                // fontFamily: FONTS.MEDIUM,
-                color: COLORS.BLACK,
-              }}
-              dropDownDirection="TOP"
-              //  open={this.state.open}
-              value={'Week 1'}
-              items={weekDataDynamic}
-              // setOpen={() => this.setState({ open: true })}
-              onPress={(open) => {
-                // if (!open) {
-                //   setTimeout(() => {
-                //     this.hideDropDown();
-                //   }, 500);
-                // }
-              }}
-              //  setValue={this.setValue}
-              onChangeValue={(value) => {
-                // this.setState({
-                //   open: false,
-                // });
-              }}
-            /> */}
-                <div
-                  className="c-dropdown"
+                  maxWidth: DEVICE_WIDTH > 1000 ? '40%' : '100%',
+                  margin: '0 auto',
+                  borderRadius: '12px',
+                  padding: '5px',
+                  paddingLeft: '5px',
+                  paddingRight: '5px',
+                  boxShadow: '0px 30.2415px 60.4831px rgba(0, 111, 89, 0.38)',
+                  border: '1px solid rgba(0, 111, 89, 0.38)',
+                }}>
+                <select
+                  value={value}
+                  onChange={onWeekChange}
                   style={{
                     width: '100%',
-                    maxWidth: DEVICE_WIDTH > 1000 ? '40%' : '100%',
-                    margin: '0 auto',
-                    borderRadius: '12px',
-                    paddingLeft: '5px',
-                    paddingRight: '5px',
-                    boxShadow: '0px 30.2415px 60.4831px rgba(0, 111, 89, 0.38)',
-                    border: '1px solid rgba(0, 111, 89, 0.38)',
+                    paddingTop: '5px',
+                    paddingBottom: '5px',
+                    backgroundColor: '#ffffff',
+                    border: '0px solid rgba(0, 111, 89, 0.38)',
                   }}>
-                  <select
-                    value={value}
-                    onchange={myFunction}
-                    style={{
-                      width: '100%',
-                      paddingTop: '12px',
-                      paddingBottom: '12px',
-                      paddingLeft: '10px',
-                      backgroundColor: '#ffffff',
-                      // borderRadius: '12px',
-                      border: '0px solid rgba(0, 111, 89, 0.38)',
-                    }}>
-                    {weekDataDynamic.map((item) => {
-                      return <option value={item.value}>{item.label}</option>;
-                    })}
-                  </select>
-                </div>
-                <View style={styles.dayView}>
-                  {dayData.map((element) => {
-                    return (
-                      <DayView
-                        item={element.index}
-                        onClick={() => {}}
-                        selectedDay={selectedDay}
-                        selectedWeek={selectedWeek}
-                        currentWeekDay={{week: 1, day: 7}}
-                      />
-                    );
+                  {weekDataDynamic.map((item) => {
+                    return <option value={item.value}>{item.label}</option>;
                   })}
-                </View>
-
-                <View style={styles.buttonView}>
-                  <Button
-                    btnStyle={{
-                      height: 40,
-                      width: '100%',
-                      marginTop: '1.1vw',
-                    }}
-                    onVerifyPress={() =>
-                      navigatorPush({
-                        screenName: 'Subscription',
-                      })
-                    }
-                    textStyle={{fontSize: 12}}
-                    title={'Proceed'}
-                    bgColor={DARK_GREEN}
-                    textColor={WHITE}
-                  />
-                </View>
+                </select>
+              </div>
+              <View style={styles.dayView}>
+                {dayData.map((element) => {
+                  return (
+                    <DayView
+                      item={element.index}
+                      onClick={daySelected}
+                      // selectedDay={1}
+                      // selectedWeek={1}
+                      // currentWeekDay={{
+                      //   week: 1,
+                      //   day: 5,
+                      // }}
+                      selectedDay={selectedDay}
+                      selectedWeek={selectedWeek}
+                      currentWeekDay={{
+                        week: currentActiveCard.current_week,
+                        day: currentActiveCard.current_day,
+                      }}
+                    />
+                  );
+                })}
               </View>
-            </div>
+              <View style={styles.buttonView}>
+                <Button
+                  btnStyle={{
+                    height: 40,
+                    width: '100%',
+                    marginTop: '1.1vw',
+                  }}
+                  onVerifyPress={_onProceedClick}
+                  textStyle={{fontSize: 12}}
+                  title={'Proceed'}
+                  bgColor={DARK_GREEN}
+                  textColor={WHITE}
+                />
+              </View>
+            </View>
           </div>
-          <Footer />
-        </View>
-      </div>
-    </MasterLayout>
+        </div>
+        <Footer />
+      </View>
+    </div>
+    // </MasterLayout>
   );
 }
 export default SelectWeek = React.memo(SelectWeek);
@@ -345,7 +346,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 6,
     borderRadius: 40,
-    borderColor: COLORS.PRIMARY,
+    borderColor: COLORS.DARK_GREEN,
     borderWidth: 1,
     marginBottom: 8,
     margin: 2,
@@ -363,10 +364,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   dayText: {
-    color: COLORS.PRIMARY,
-    fontSize: 14,
+    color: COLORS.DARK_GREEN,
+    fontSize: 15,
     textAlign: 'center',
     fontWeight: '700',
+    fontFamily: FONTS.SEMI_BOLD,
   },
   buttonView: {
     paddingHorizontal: 20,
