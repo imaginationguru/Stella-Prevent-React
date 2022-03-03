@@ -66,7 +66,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    console.log('calling dashboard..');
+    //console.log('calling dashboard..');
     /**Once program is bind then get program details content */
     dispatch(
       AppActions.bindProgram((cb) => {
