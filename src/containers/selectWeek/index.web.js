@@ -217,6 +217,7 @@ function SelectWeek(props) {
         <div className="v-container m-tb-30">
           <div className="blob-container">
             <BackBtn btnStyle={{padding: 0}} />
+
             <View style={styles.backBtn} />
             <View style={{marginTop: 10}}>
               <ScheduleTab
