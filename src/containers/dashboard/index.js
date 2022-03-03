@@ -66,7 +66,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    console.log('calling dashboard..');
+    //console.log('calling dashboard..');
     /**Once program is bind then get program details content */
     dispatch(
       AppActions.bindProgram((cb) => {
@@ -263,14 +263,14 @@ const Dashboard = () => {
                 navigatorPush({screenName: 'Report'});
               }}
             />
-            {/* <TrackersUI
+            <TrackersUI
               title="Past Modules"
               src={past_module}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
                 navigatorPush({screenName: 'SelectWeek'});
               }}
-            /> */}
+            />
           </div>
         </div>
         <div className="week-list">

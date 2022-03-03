@@ -149,7 +149,8 @@ function SelectWeek(props) {
   const dispatch = useDispatch();
   const [selectedDay, setSelectedDay] = useState(1);
   const [selectedWeek, setSelectedWeek] = useState(1);
-  const [weekDataDynamic, setweekDataDynamic] = useState([{id: 1}]);
+  const [weekDataDynamic, setweekDataDynamic] = useState([]);
+  const [value, setValue] = useState('Week 5');
   useEffect(() => {
     _setDynamicWeeks();
   }, []);
@@ -160,9 +161,13 @@ function SelectWeek(props) {
         value: 'Week' + ' ' + i,
         label: 'Week' + ' ' + i,
       });
-      setweekDataDynamic(weekDataDynamic);
+      setweekDataDynamic([...weekDataDynamic]);
     }
     console.log(weekDataDynamic, 'weekDataDynamic...');
+  };
+
+  const myFunction = (e) => {
+    console.log(e, 'jjjj');
   };
   return (
     <MasterLayout>
@@ -243,20 +248,25 @@ function SelectWeek(props) {
                     maxWidth: DEVICE_WIDTH > 1000 ? '40%' : '100%',
                     margin: '0 auto',
                     borderRadius: '12px',
+                    paddingLeft: '5px',
+                    paddingRight: '5px',
                     boxShadow: '0px 30.2415px 60.4831px rgba(0, 111, 89, 0.38)',
+                    border: '1px solid rgba(0, 111, 89, 0.38)',
                   }}>
                   <select
+                    value={value}
+                    onchange={myFunction}
                     style={{
                       width: '100%',
                       paddingTop: '12px',
                       paddingBottom: '12px',
                       paddingLeft: '10px',
                       backgroundColor: '#ffffff',
-                      borderRadius: '12px',
-                      border: '1px solid rgba(0, 111, 89, 0.38)',
+                      // borderRadius: '12px',
+                      border: '0px solid rgba(0, 111, 89, 0.38)',
                     }}>
                     {weekDataDynamic.map((item) => {
-                      return <option>select</option>;
+                      return <option value={item.value}>{item.label}</option>;
                     })}
                   </select>
                 </div>
