@@ -308,7 +308,7 @@ Every pregnancy and every baby are different and unique!​`
                     key={index}
                     style={{
                       ...commonStyles.droppableDivDrag,
-                      flexWrap: 'wrap'
+                      display: 'block'
                     }}
                     className="wip"
                     onDragOver={(e) => onDragOver(e, item._id)}
