@@ -186,12 +186,13 @@ const ProfileHeader = (props) => {
               </View>
             </View>
             <View style={styles.profileWrapRight}>
-              <View>
-                <Text style={styles.username}>
+              <View style={styles.sliderheader}>
+                <Text style={styles.weektitle}>
                   Week {moduleOne?.currentActiveCard?.current_week}
                 </Text>
+                <Text style={styles.alltitle}>SEE ALL</Text>
               </View>
-              {/* <h4>Add Range Slider Here</h4> */}
+
               <div class="mdc-slider mdc-slider--discrete mdc-slider--tick-marks ">
                 <div class="mdc-slider__track">
                   <div class="mdc-  slider__track--inactive"></div>
@@ -326,5 +327,25 @@ const styles = StyleSheet.create({
   profileWrapRight: {
     flex: DEVICE_WIDTH > 767 ? '0 0 50%' : '0 0 100%',
     padding: 15,
+  },
+
+  sliderheader: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: '24px',
+    paddingRight: '24px',
+  },
+  weektitle: {
+    fontSize: DEVICE_WIDTH > 767 ? '2.2vw' : '22px',
+    fontFamily: FONTS.SEMI_BOLD,
+    color: DARK_GREEN,
+  },
+  alltitle: {
+    fontSize: DEVICE_WIDTH > 767 ? '1.5vw' : '16px',
+    fontFamily: FONTS.SEMI_BOLD,
+    color: DARK_GREEN,
   },
 });

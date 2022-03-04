@@ -9,7 +9,9 @@ const Footer = () => {
     <footer className="dashboard-footer">
       <div className="footer-container">
         <div className="f-col-row">
-          <div className="f-col f-col-fixed"></div>
+          <div className="f-col f-col-fixed">
+            <p class="footer-text">© 2022 Curio. All rights reserved.</p>
+          </div>
           <div className="f-col f-col-auto">
             <div className="footer-links">
               <div className="footer-link-item">
@@ -48,59 +50,21 @@ const Footer = () => {
                 <Link to="#">{ts('HELP')}</Link>
               </div> */}
             </div>
+            <p class="footer-text text-center">
+              If you are in a crisis or any other person may be in danger -
+              please call the National Suicide
+              <br />
+              Prevention Lifeline at 1-800-273-TALK (8255).
+            </p>
           </div>
 
-          {/* <div className="f-col f-col-auto">
-            <div className="footer-links">
-              <div className="footer-link-item">
-                <Link to="/Contact">© 2022 Curio. All rights reserved.</Link>
-              </div>
-              <div className="footer-link-item">
-                <Link to="/Contact">
-                  If you are in a crisis or any other person may be in danger -
-                  please call the National Suicide Prevention Lifeline
-                  at 1-800-273-TALK (8255).
-                </Link>
-              </div>
-              <div className="footer-link-item">
-                <div className="poweredby">
-                  <h4>Powered by</h4>
-                  <span>
-                    <img src={footerlogo} alt="" />
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div> */}
-
-          <div
-            class="flex-container"
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              fontSize: '30px',
-              textAlign: 'center',
-            }}>
-            <div className="footer-link-item">
-              <p class="footer-text">© 2022 Curio. All rights reserved.</p>
-            </div>
-            <div
-              // className="footer-link-item"
-              style={{paddingLeft: '50px', paddingRight: '50px'}}>
-              <p class="footer-text">
-                If you are in a crisis or any other person may be in danger -
-                please call the National Suicide Prevention Lifeline
-                at 1-800-273-TALK (8255).
-              </p>
-            </div>
-            <div className="poweredby">
+          <div className="f-col f-col-fixed">
+            <a className="poweredby" href="https://www.curiodigitaltx.com/">
               <h4>Powered by</h4>
-              <a target="_blank" href="https://www.curiodigitaltx.com/">
-                <span>
-                  <img src={footerlogo} alt="" />
-                </span>
-              </a>
-            </div>
+              <span>
+                <img src={footerlogo} alt="" />
+              </span>
+            </a>
           </div>
         </div>
       </div>
