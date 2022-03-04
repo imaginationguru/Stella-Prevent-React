@@ -21,14 +21,24 @@ import {getItem} from '../../utils/AsyncUtils';
 import {useDispatch, useSelector} from 'react-redux';
 import * as AppActions from '../../actions';
 import Dropzone from 'react-dropzone';
+import {normalize} from '../../utils/Helper';
+
+import {MDCSlider} from '@material/slider';
+
+// const slider = new MDCSlider(document.querySelector('.mdc-slider'));
+
+// @use "@material/slider/styles";
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 const ProfileHeader = (props) => {
+  // const slider = new MDCSlider(document.querySelector('.mdc-slider'));
+
   const {loginData = {}, profileImg = ''} = useSelector(
     (state) => state.authReducer,
   );
+  const moduleOne = useSelector((state) => state.moduleOne);
   console.log('profile image user', profileImg);
   const [profileImage, setProfilePhoto] = useState('');
   let firstName = getItem('firstName');
@@ -56,6 +66,22 @@ const ProfileHeader = (props) => {
       setProfilePhoto(`${IMAGE_BASE_URL}${profileImg}`);
     }
   }, [profileImg]);
+
+  // funtion for move slider thumb
+  const setRange = () => {
+    switch (moduleOne?.currentActiveCard?.current_week) {
+      case 1:
+        return -4;
+      case 2:
+        return 20;
+      case 3:
+        return 45;
+      case 4:
+        return 70;
+      case 5:
+        return 90;
+    }
+  };
 
   return (
     <View style={styles.outerContainer}>
@@ -159,9 +185,35 @@ const ProfileHeader = (props) => {
                 </View>
               </View>
             </View>
-            {/* <View style={styles.profileWrapRight}>
-              <h4>Add Range Slider Here</h4>
-            </View> */}
+            <View style={styles.profileWrapRight}>
+              <View>
+                <Text style={styles.username}>
+                  Week {moduleOne?.currentActiveCard?.current_week}
+                </Text>
+              </View>
+              {/* <h4>Add Range Slider Here</h4> */}
+              <div class="mdc-slider mdc-slider--discrete mdc-slider--tick-marks ">
+                <div class="mdc-slider__track">
+                  <div class="mdc-  slider__track--inactive"></div>
+                  <div class="mdc-slider__track--active">
+                    <div class="mdc-slider__track--active_fill mdc-slider_thumbColor"></div>
+                  </div>
+                  <div class="mdc-slider__tick-marks">
+                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
+                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
+                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
+                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
+                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
+                  </div>
+                </div>
+                <div
+                  class="mdc-slider__thumb"
+                  style={{left: normalize(setRange())}}>
+                  <div class="mdc-slider__thumb-knob mdc-slider_thumbColor"></div>
+                </div>
+              </div>
+              <slider />
+            </View>
           </View>
         </View>
       </ImageBackground>
