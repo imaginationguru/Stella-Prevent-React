@@ -26,13 +26,13 @@
 @use 'sass:math';
 @use 'sass:color';
 @use 'sass:map';
-@use '@material/animation/functions' as functions2;
-@use '@material/animation/variables' as variables2;
-@use '@material/base/mixins' as base-mixins;
-@use '@material/theme/custom-properties';
-@use '@material/feature-targeting/feature-targeting';
-@use '@material/rtl/rtl';
-@use '@material/theme/theme';
+@use '../animation/functions' as functions2;
+@use '../animation/variables' as variables2;
+@use '../base/mixins' as base-mixins;
+@use '../theme/custom-properties';
+@use '../feature-targeting/feature-targeting';
+@use '../rtl/rtl';
+@use '../theme/theme';
 @use './ripple-theme';
 
 @mixin core-styles($query: feature-targeting.all()) {

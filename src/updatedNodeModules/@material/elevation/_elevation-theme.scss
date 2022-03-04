@@ -26,14 +26,14 @@
 @use 'sass:map';
 @use 'sass:math';
 @use 'sass:meta';
-@use '@material/animation/variables' as animation-variables;
-@use '@material/theme/custom-properties';
-@use '@material/base/mixins' as base-mixins;
-@use '@material/feature-targeting/feature-targeting';
-@use '@material/rtl/rtl';
-@use '@material/theme/css';
-@use '@material/theme/theme';
-@use '@material/theme/theme-color';
+@use '../animation/variables' as animation-variables;
+@use '../theme/custom-properties';
+@use '../base/mixins' as base-mixins;
+@use '../feature-targeting/feature-targeting';
+@use '../rtl/rtl';
+@use '../theme/css';
+@use '../theme/theme';
+@use '../theme/theme-color';
 
 $baseline-color: black !default;
 $umbra-opacity: 0.2 !default;

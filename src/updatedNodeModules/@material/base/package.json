@@ -1,5 +1,5 @@
 {
-  "name": "@material/base",
+  "name": "../base",
   "description": "The set of base classes for Material Components for the web",
   "version": "13.0.0",
   "license": "MIT",

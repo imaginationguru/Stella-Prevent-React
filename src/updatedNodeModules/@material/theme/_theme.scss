@@ -26,7 +26,7 @@
 @use 'sass:list';
 @use 'sass:map';
 @use 'sass:meta';
-@use '@material/feature-targeting/feature-targeting';
+@use '../feature-targeting/feature-targeting';
 @use './css';
 @use './custom-properties';
 @use './gss';

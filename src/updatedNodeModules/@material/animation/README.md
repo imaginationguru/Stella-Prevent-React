@@ -22,7 +22,7 @@ Material in motion is responsive and natural. Use these easing curves and durati
 ## Installation
 
 ```
-npm install @material/animation
+npm install ../animation
 ```
 
 ## Usage
@@ -32,27 +32,31 @@ npm install @material/animation
 We provide timing functions which you can use with the `animation` or `transition` CSS properties
 
 ```scss
-@use "@material/animation";
+@use '../animation';
 
 .my-element--animating {
   animation: foo-keyframe 175ms animation.$standard-curve-timing-function;
 }
 ```
 
-Variable | Description
---- | ---
-`$deceleration-curve-timing-function` | Timing function to decelerate
-`$standard-curve-timing-function` | Timing function to quickly accelerate and slowly decelerate
-`$acceleration-curve-timing-function` | Timing function to accelerate
-`$sharp-curve-timing-function` | Timing function to quickly accelerate and decelerate
+| Variable                              | Description                                                 |
+| ------------------------------------- | ----------------------------------------------------------- |
+| `$deceleration-curve-timing-function` | Timing function to decelerate                               |
+| `$standard-curve-timing-function`     | Timing function to quickly accelerate and slowly decelerate |
+| `$acceleration-curve-timing-function` | Timing function to accelerate                               |
+| `$sharp-curve-timing-function`        | Timing function to quickly accelerate and decelerate        |
 
 The following functions create transitions given `$name` and the `$duration`. You can also specify `$delay`, but the default is 0ms. `$name` can either refer to the keyframe, or to CSS property used in `transition`.
 
 ```scss
-@use "@material/animation";
+@use '../animation';
 
 .my-element {
-  transition: animation.exit-permanent(/* $name: */ opacity, /* $duration: */ 175ms, /* $delay: */ 150ms);
+  transition: animation.exit-permanent(
+    /* $name: */ opacity,
+    /* $duration: */ 175ms,
+    /* $delay: */ 150ms
+  );
   opacity: 0;
   will-change: opacity;
 
@@ -63,9 +67,8 @@ The following functions create transitions given `$name` and the `$duration`. Yo
 }
 ```
 
-
 ```scss
-@use "@material/animation";
+@use '../animation';
 
 @keyframes fade-in {
   from {
@@ -84,23 +87,23 @@ The following functions create transitions given `$name` and the `$duration`. Yo
 }
 ```
 
-Function | Description
---- | ---
-`enter($name, $duration, $delay)` | Defines transition for entering the frame
-`exit-permanent($name, $duration, $delay)` | Defines transition for exiting the frame permanently
-`exit-temporary($name, $duration, $delay)` | Defines transition for exiting the frame temporarily
+| Function                                   | Description                                          |
+| ------------------------------------------ | ---------------------------------------------------- |
+| `enter($name, $duration, $delay)`          | Defines transition for entering the frame            |
+| `exit-permanent($name, $duration, $delay)` | Defines transition for exiting the frame permanently |
+| `exit-temporary($name, $duration, $delay)` | Defines transition for exiting the frame temporarily |
 
 ### JavaScript
 
 These functions handle prefixing across various browsers
 
 ```js
-import {getCorrectEventName} from '@material/animation';
+import {getCorrectEventName} from '../animation';
 
 const eventToListenFor = getCorrectEventName(window, 'animationstart');
 ```
 
-Method Signature | Description
---- | ---
-`getCorrectEventName(windowObj: Window, eventType: StandardJsEventType) => StandardJsEventType \| PrefixedJsEventType` | Returns a JavaScript event name, prefixed if necessary. See [`types.ts`](types.ts) for supported values.
-`getCorrectPropertyName(windowObj: Window, cssProperty: StandardCssPropertyName) => StandardCssPropertyName \| PrefixedCssPropertyName` | Returns a CSS property name, prefixed if necessary. See [`types.ts`](types.ts) for supported values.
+| Method Signature                                                                                                                        | Description                                                                                              |
+| --------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `getCorrectEventName(windowObj: Window, eventType: StandardJsEventType) => StandardJsEventType \| PrefixedJsEventType`                  | Returns a JavaScript event name, prefixed if necessary. See [`types.ts`](types.ts) for supported values. |
+| `getCorrectPropertyName(windowObj: Window, cssProperty: StandardCssPropertyName) => StandardCssPropertyName \| PrefixedCssPropertyName` | Returns a CSS property name, prefixed if necessary. See [`types.ts`](types.ts) for supported values.     |

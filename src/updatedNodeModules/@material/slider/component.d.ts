@@ -20,7 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import { MDCComponent } from '@material/base/component';
+import { MDCComponent } from '../base/component';
 import { MDCSliderFoundation } from './foundation';
 /** Vanilla JS implementation of slider component. */
 export declare class MDCSlider extends MDCComponent<MDCSliderFoundation> {

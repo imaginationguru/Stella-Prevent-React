@@ -24,15 +24,15 @@
 // stylelint-disable selector-class-pattern
 
 @use 'sass:math';
-@use '@material/animation/animation';
-@use '@material/dom/mixins' as dom-mixins;
-@use '@material/elevation/mixins' as elevation-mixins;
-@use '@material/feature-targeting/feature-targeting';
-@use '@material/ripple/ripple';
-@use '@material/ripple/ripple-theme';
-@use '@material/rtl/rtl';
-@use '@material/theme/theme-color';
-@use '@material/typography/typography';
+@use '../animation/animation';
+@use '..//dom/mixins' as dom-mixins;
+@use '..//elevation/mixins' as elevation-mixins;
+@use '..//feature-targeting/feature-targeting';
+@use '..//ripple/ripple';
+@use '..//ripple/ripple-theme';
+@use '..//rtl/rtl';
+@use '..//theme/theme-color';
+@use '..//typography/typography';
 @use './slider-theme';
 
 // Thumb variables.

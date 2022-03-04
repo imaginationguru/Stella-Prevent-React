@@ -71,15 +71,15 @@ function Contact(props) {
     };
 
     if (firstName.length === 0) {
-      setFirstNameError('please fill first name');
+      setFirstNameError('Please fill first name');
     } else if (lastName.length === 0) {
-      setLastNameError('please fill last name');
+      setLastNameError('Please fill last name');
     } else if (email.length === 0) {
-      setEmailError('please fill email');
+      setEmailError('Please fill email');
     } else if (email.length && !emailRegex.test(email)) {
-      setEmailError('please fill  valid email');
+      setEmailError('Please fill  valid email');
     } else if (message.length === 0) {
-      setMesageError('please fill message');
+      setMesageError('Please fill message');
     }
     console.log('data>>>>>>', params);
   };

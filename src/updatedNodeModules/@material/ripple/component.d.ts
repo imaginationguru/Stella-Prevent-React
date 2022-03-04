@@ -20,7 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import { MDCComponent } from '@material/base/component';
+import { MDCComponent } from '../base/component';
 import { MDCRippleAdapter } from './adapter';
 import { MDCRippleFoundation } from './foundation';
 import { MDCRippleAttachOpts, MDCRippleCapableSurface } from './types';

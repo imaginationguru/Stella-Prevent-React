@@ -1,5 +1,5 @@
 {
-  "name": "@material/feature-targeting",
+  "name": "../feature-targeting",
   "description": "Material Components for the web Feature Targeting Scss helpers",
   "version": "13.0.0",
   "license": "MIT",
