@@ -1,4 +1,6 @@
 @import '../fonts/fonts.css';
+@import '../../updatedNodeModules/@material/slider/styles';
+// @import '@material/slider/styles';
 
 html,
 body * {
@@ -8,6 +10,15 @@ body * {
 
 img {
   max-width: 100%;
+}
+.mdc-slider_thumbColor {
+  border-color: #6fcf97 !important;
+}
+.mdc-slider_thumbColorInactive {
+  background-color: #6fcf97 !important;
+}
+.mdc-slider_thumbColorActive {
+  background-color: #fff !important;
 }
 
 .wrapper {
