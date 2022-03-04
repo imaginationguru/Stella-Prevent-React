@@ -47,7 +47,6 @@ const Dashboard = () => {
     selectedWeek = 1,
     selectedCardId = '',
   } = useSelector((state) => state.moduleOne);
-
   const {isEPDSModalShow = true} = useSelector((state) => state.common);
   const {programData = []} = useSelector((state) => state.authReducer);
   const {isLoading} = useSelector((state) => state.common);
