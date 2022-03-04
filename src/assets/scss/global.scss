@@ -238,8 +238,7 @@ img {
   border: 0;
   //height: 50px;
   width: 100%;
-  background: #000000 url('../images/appleIcon.png') no-repeat top 13px left
-    30px;
+  background: #000000 url('../images/appleIcon.png') no-repeat top 13px left 30px;
   color: #ffffff;
   padding: 10px 0 10px 0;
   text-align: center;
@@ -323,6 +322,7 @@ img {
   }
 
   .formField {
+
     //margin-bottom: 21px;
     &.has-icon {
       position: relative;
@@ -512,7 +512,7 @@ img {
   display: flex;
   flex: 1 1 auto;
 
-  & > .container {
+  &>.container {
     display: flex;
   }
 }
@@ -569,6 +569,7 @@ button {
   margin: 0 auto;
   max-width: 1200px;
 }
+
 .footer-container {
   padding: 0 30px;
   margin: 0 auto;
@@ -714,6 +715,7 @@ footer {
     padding: 10px 0;
     flex: 0 0 auto;
   }
+
   .footer-text {
     //font-style: normal;
     //font-weight: normal;
@@ -780,6 +782,7 @@ footer {
 
   .f-nav-link {
     &:hover {
+
       h3,
       h6 {
         color: #006f59;
@@ -912,7 +915,7 @@ footer {
     padding: 5px 12px;
     min-height: 95px;
 
-    & > div {
+    &>div {
       flex: 0 0 100%;
       align-items: center;
       justify-content: center;
@@ -1080,19 +1083,29 @@ button.navbutton {
   flex-wrap: wrap;
 }
 
+.f-col {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
 .f-col.f-col-fixed {
   flex: 0 0 20%;
   padding: 0 15px;
+
 }
 
 .f-col.f-col-auto {
   padding: 0 15px;
-  flex: 1 1 auto;
+  flex: 0 0 60%;
+  justify-content: center;
+  align-items: center;
 }
 
 .poweredby {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 
   h4 {
     margin: 0;
@@ -1100,10 +1113,16 @@ button.navbutton {
     white-space: nowrap;
     color: #ffffff;
     padding-right: 10px;
+    padding-top: 10px;
+  }
+
+  span {
+    width: 140px;
+    flex: 0 0 140px;
   }
 }
 
-.bk-btn-wrap > div {
+.bk-btn-wrap>div {
   padding: 15px 0;
 }
 
@@ -1185,16 +1204,26 @@ button.btn-green {
     max-width: calc(100vw - 30px);
   }
 
-  .f-col.f-col-fixed,
-  .f-col.f-col-auto {
-    flex: 0 0 100%;
-  }
+
 
   .poweredby {
     max-width: 180px;
     margin: 0 auto;
     align-items: center;
     // padding: 15px 0;
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  .f-col.f-col-auto {
+    padding: 30px 0;
+  }
+
+  .f-col.f-col-fixed,
+  .f-col.f-col-auto {
+    flex: 0 0 100%;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -1397,6 +1426,7 @@ button.btn-green {
 
 @media only screen and (max-width: 767px) {
   .login {
+
     .btn-fb,
     .btn-google,
     .btn-apple {
@@ -1405,6 +1435,7 @@ button.btn-green {
   }
 
   .formRow {
+
     .w100,
     .w50,
     .w25,
@@ -1528,8 +1559,7 @@ body {
   position: relative;
 }
 
-.list__item {
-}
+.list__item {}
 
 .card {
   background-color: hsl(215, 14%, 37.5%);
@@ -1540,7 +1570,7 @@ body {
   // position: relative;
 }
 
-.list__item + .list__item {
+.list__item+.list__item {
   margin-top: 0.5rem;
 }
 
