@@ -92,7 +92,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontFamily: LIGHT,
     fontSize: 15,
-    paddingLeft: 15,
+    //  paddingLeft: 15,
+    fontFamily: FONTS.MEDIUM,
   },
   horizontalRule: {
     borderBottomColor: 'transparent',

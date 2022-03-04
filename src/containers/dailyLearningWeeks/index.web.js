@@ -13,10 +13,11 @@ import {
 } from '../../helpers/common.web';
 import {customAlert} from '../../helpers/commonAlerts.web';
 import {navigatorPush} from '../../config/navigationOptions.web';
-
+import BackBtn from '../../components/common/backbtn';
 const {COLORS} = GLOBALS;
 const DailyLearningWeeks = (props) => {
   let isFromDashboard = props.location?.state?.isFromDashboard;
+  let backTitle = props.location?.state?.backTitle;
   const dispatch = useDispatch();
   const {userAssessmentData = [], userRatingData = []} = useSelector(
     (state) => state.moduleOne,
@@ -60,11 +61,17 @@ const DailyLearningWeeks = (props) => {
   }, [isFromDashboard]);
 
   useEffect(() => {
-    // console.log(currentData, 'currentData........');
+    console.log(currentData, 'currentData........');
     if (currentData._id) {
       const {card: {assessment_id} = {}} = currentData;
       if (assessment_id !== null) {
-        dispatch(AppActions.getAssessmentData(assessment_id, currentData._id));
+        dispatch(
+          AppActions.getAssessmentData(
+            assessment_id,
+            currentData._id,
+            currentData._id,
+          ),
+        );
         // dispatch(AppActions.getUserAssessment(currentData._id, assessment_id));
       }
     }
@@ -374,7 +381,8 @@ const DailyLearningWeeks = (props) => {
   return (
     <>
       <MasterLayout>
-        <BackToDashboard></BackToDashboard>
+        <BackBtn title={backTitle ? backTitle : 'Back to Dashboard'} />
+
         <div className="dashboard-body">
           <div className="container">
             <div className="dashboard-body-inner">
@@ -387,24 +395,24 @@ const DailyLearningWeeks = (props) => {
                     Week{' '}
                     {weeksCount === undefined
                       ? currentActiveCard.current_week
-                      : weeksCount}
+                      : weeksCount}{' '}
+                    Day {selectedDay}
                   </span>
                 </p>
               </div>
 
               {templateData.length ? (
                 <>
-                  <Header
+                  {/* <Header
                     data={templateData}
                     currentDay={selectedDay}
-                    // onDayChange={(val) => setCurrentDay(val)}
                     isDisabled={applicableDay()}
                     onDayChange={(val) => {
                       console.log(val, 'val....');
                       const isClickable = applicableDay().length
                         ? applicableDay().some((e) => {
-                            return e.day === val && e.isDisabled === false;
-                          })
+                          return e.day === val && e.isDisabled === false;
+                        })
                         : false;
                       if (isClickable) {
                         dispatch({
@@ -422,19 +430,17 @@ const DailyLearningWeeks = (props) => {
                         customAlert(
                           "You've reached your free content limit. Please upgrade your plan.",
                           'error',
-                          {showCloseButton: true},
+                          { showCloseButton: true },
                           'Upgrade',
                           _onPressUpgrade,
                         );
                         return;
                       } else {
                         customAlert(`Content not unlocked`, 'error');
-                        // alert(
-                        //   `You completed ${selectedDay} day's card, day ${val} card enable by tomorrow`,
-                        // );
+                      
                       }
                     }}
-                  />
+                  /> */}
                   <SubHeader
                     data={templateData.filter(
                       (item) => item.day === selectedDay,

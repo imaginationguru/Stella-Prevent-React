@@ -1,26 +1,39 @@
 import GLOBALS from '../../constants';
 import RestClient from '../../helpers/RestClient';
-import { navigatorPush, navigatortoStart } from '../../config/navigationOptions';
-import { storeItem, getItem } from '../../utils/AsyncUtils';
-import { loadingAction } from '../common';
-const { ACTION_TYPE, URL, STRINGS } = GLOBALS;
-const { TRY_AGAIN, CHECK_NETWORK } = STRINGS;
-import { Linking, Platform } from 'react-native';
-import { getWeek } from '../moduleOne';
+import {navigatorPush, navigatortoStart} from '../../config/navigationOptions';
+import {storeItem, getItem} from '../../utils/AsyncUtils';
+import {loadingAction} from '../common';
+const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
+const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
+import {Linking, Platform} from 'react-native';
+import {getWeek} from '../moduleOne';
 import Swal from 'sweetalert2';
-import { Dimensions } from 'react-native-web';
-const { COLORS, FONTS } = GLOBALS;
+import {Dimensions} from 'react-native-web';
+const {COLORS, FONTS} = GLOBALS;
 
-import { customAlert } from '../../helpers/commonAlerts.web';
+import {customAlert} from '../../helpers/commonAlerts.web';
 
 //******************************Login******************* */
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
+export function updateTrackerStatus(user) {
+  return async (dispatch) => {
+    dispatch({
+      type: ACTION_TYPE.SET_TRACKER_STATUS,
+      payload: {
+        sleepChecked: user.sleepChecked,
+        moodChecked: user.moodChecked,
+        activityChecked: user.activityChecked,
+      },
+    });
+  };
+}
+
 export function login(email, password, componentId) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.LOGIN_RESET });
-    dispatch({ type: ACTION_TYPE.LOGIN_REQUEST });
+    dispatch({type: ACTION_TYPE.LOGIN_RESET});
+    dispatch({type: ACTION_TYPE.LOGIN_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.LOGIN, {
@@ -46,20 +59,20 @@ export function login(email, password, componentId) {
         dispatch({
           type: ACTION_TYPE.SET_PROFILE_IMAGE,
           payload: json.data.user.image_path,
-        })
+        });
         //   if (json.data.user.isProgramBind !== true) {
         //  console.log('bind PAI hit');
-        // dispatch(bindProgram());
+        dispatch(bindProgram());
         //    }
 
         dispatch(getProgramById());
 
         if (json.data.user.isInterest === true) {
           // navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
-          navigatorPush({ componentId, screenName: 'Dashboard' });
+          navigatorPush({componentId, screenName: 'Dashboard'});
         } else {
           // navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
-          navigatorPush({ componentId, screenName: 'VerifyUserOTP' });
+          navigatorPush({componentId, screenName: 'VerifyUserOTP'});
         }
       } else {
         if (json.code === 400) {
@@ -95,7 +108,7 @@ export function login(email, password, componentId) {
 
 export function register(params, componentId) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.SIGNUP_REQUEST });
+    dispatch({type: ACTION_TYPE.SIGNUP_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.REGISTER, params);
@@ -106,7 +119,7 @@ export function register(params, componentId) {
         });
         if (json.data.user.isInterest) {
         } else {
-          navigatorPush({ componentId, screenName: 'DailyLearningWeeks' });
+          navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
         }
       } else {
         if (json.code === 400) {
@@ -134,9 +147,9 @@ export function bindProgram(cb) {
   let programId = getItem('programId');
   let userId = getItem('userId');
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.BIND_PROGRAM_USER_REQUEST });
+    dispatch({type: ACTION_TYPE.BIND_PROGRAM_USER_REQUEST});
     try {
-      console.log("bind program....")
+      console.log('bind program....');
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.BIND_PROGRAM_USER, {
         program_id: programId,
@@ -159,6 +172,7 @@ export function bindProgram(cb) {
           type: ACTION_TYPE.BIND_PROGRAM_USER_FAIL,
         });
       }
+      dispatch(loadingAction(false));
       cb();
     } catch (error) {
       cb();
@@ -176,24 +190,30 @@ export function bindProgram(cb) {
 
 //*********************************GET PROGRAM WITH ID********************* */
 
-export function getProgramById() {
+export function getProgramById(isLoading = true, cb) {
   let programId = getItem('programId');
   let userId = getItem('userId');
 
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_PROGRAM_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_PROGRAM_REQUEST});
     try {
-      dispatch(loadingAction(true));
+      if (isLoading) {
+        dispatch(loadingAction(true));
+      }
       let json = await RestClient.getCall(
         `${URL.GET_PROGRAM_BY_ID}/${programId}/${userId}`,
       );
       if (json.code === 200) {
+        dispatch(updateTrackerStatus(json.data.user));
         dispatch({
           type: ACTION_TYPE.GET_PROGRAM_SUCCESS,
           payload: json.data.cards,
         });
         storeItem('duration', json.data.program.duration);
         dispatch(loadingAction(false));
+        if (cb) {
+          cb();
+        }
       } else {
         if (json.code === 400) {
           dispatch({
@@ -224,10 +244,10 @@ export function getProgramById() {
 
 export function emailExists(email) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.USER_EMAIL_EXISTS_REQUEST });
+    dispatch({type: ACTION_TYPE.USER_EMAIL_EXISTS_REQUEST});
     try {
       dispatch(loadingAction(true));
-      let json = await RestClient.postCall(URL.USER_EMAIL_EXISTS, { email });
+      let json = await RestClient.postCall(URL.USER_EMAIL_EXISTS, {email});
       if (json.code === 200) {
         dispatch({
           type: ACTION_TYPE.USER_EMAIL_EXISTS_SUCCESS,
@@ -270,7 +290,7 @@ export function emailExists(email) {
 
 export function changePassword(_id, password, forgot_password_token) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.CHANGE_PASSWORD_REQUEST });
+    dispatch({type: ACTION_TYPE.CHANGE_PASSWORD_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.CHANGE_PASSWORD, {
@@ -314,32 +334,33 @@ export function changePassword(_id, password, forgot_password_token) {
 export function logout() {
   let userId = getItem('userId');
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.LOGOUT_USER_REQUEST });
+    dispatch({type: ACTION_TYPE.LOGOUT_USER_REQUEST});
     try {
-      dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.LOGOUT, {
         user_id: userId,
       });
       console.log(json, userId, 'on logout');
+      setTimeout(() => {
+        navigatortoStart();
+      }, localStorage.clear());
       if (json.code === 200) {
         dispatch({
           type: ACTION_TYPE.LOGOUT_USER_SUCCESS,
           payload: json.data,
         });
-        setTimeout(() => {
-          //  navigatorPush({screenName: 'DailyLearningWeeks'});
-          navigatortoStart()
-        }, localStorage.clear());
-
-        //  navigatorPush({screenName: 'DailyLearningWeeks'});
-
-        dispatch(loadingAction(false));
+        dispatch({
+          type: ACTION_TYPE.CLEAR_MODULE_ONE,
+          payload: json.data,
+        });
       } else {
         dispatch({
           type: ACTION_TYPE.LOGOUT_USER_FAIL,
         });
       }
     } catch (error) {
+      setTimeout(() => {
+        navigatortoStart();
+      }, localStorage.clear());
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error,
@@ -444,16 +465,16 @@ export function verifySocialUser(params, componentId, cb) {
           storeItem('hospitalId', json.data.user.hospital_id);
           // if (json.data.user.isProgramBind !== true) {
           //   console.log('bind PAI hit');
-          // dispatch(bindProgram());
+          dispatch(bindProgram());
           // }
-          dispatch(getProgramById());
+          // dispatch(getProgramById());
           if (json.data.user.isInterest === true) {
             console.log('heloooo1111');
             // navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
-            navigatorPush({ componentId, screenName: 'Dashboard' });
+            navigatorPush({componentId, screenName: 'Dashboard'});
           } else {
             console.log('heloooo11111222222');
-            navigatorPush({ componentId, screenName: 'VerifyUserOTP' });
+            navigatorPush({componentId, screenName: 'VerifyUserOTP'});
             // navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
             //navigatorPush({componentId, screenName: 'Dashboard'});
           }
@@ -495,7 +516,7 @@ export function verifySocialUser(params, componentId, cb) {
 
 export function getUser(params, componentId, isRedirect = true) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_USER_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_USER_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.GET_USER, params);
@@ -520,7 +541,7 @@ export function getUser(params, componentId, isRedirect = true) {
         storeItem('hospitalId', json.data.user.hospital_id);
         // if (json.data.user.isProgramBind !== true) {
         //   console.log('bind PAI hit');
-        //   dispatch(bindProgram());
+        dispatch(bindProgram());
         // }
         dispatch({
           type: ACTION_TYPE.SET_PROFILE_IMAGE,
@@ -529,9 +550,9 @@ export function getUser(params, componentId, isRedirect = true) {
         dispatch(getProgramById());
         if (isRedirect) {
           if (json.data.user.isInterest === true) {
-            navigatorPush({ componentId, screenName: 'Dashboard' });
+            navigatorPush({componentId, screenName: 'Dashboard'});
           } else {
-            navigatorPush({ componentId, screenName: 'Dashboard' });
+            navigatorPush({componentId, screenName: 'Dashboard'});
           }
         }
       } else {
@@ -559,7 +580,7 @@ export function getUser(params, componentId, isRedirect = true) {
 
 export function updateUserData(params) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_USER_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_USER_REQUEST});
     try {
       let json = await RestClient.postCall(URL.GET_USER, params);
       console.log('get user???????', json);
@@ -612,8 +633,7 @@ export function acceptWelcomeScreen(params, componentId, cb) {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(`${URL.ACCEPT_WELCOME}`, params);
       if (json.code === 200) {
-
-        navigatorPush({ componentId, screenName: 'Dashboard' });
+        navigatorPush({componentId, screenName: 'Dashboard'});
       } else {
         customAlert(json.message, 'error');
       }
@@ -630,14 +650,17 @@ export function acceptWelcomeScreen(params, componentId, cb) {
 
 export function resendRegistrationCode(params, cb) {
   return async (dispatch) => {
-    console.log("resend otp", params)
+    console.log('resend otp', params);
     try {
       dispatch(loadingAction(true));
-      let json = await RestClient.postCall(`${URL.RESEND_REGISTRATION_CODE_API}`, params);
+      let json = await RestClient.postCall(
+        `${URL.RESEND_REGISTRATION_CODE_API}`,
+        params,
+      );
       if (json.code === 200) {
         console.log('jsoonnnn verify social usser api', json);
         customAlert(json.message);
-        cb(json.data)
+        cb(json.data);
       } else {
         customAlert(json.message, 'error');
         // navigatorPush({screenName: 'Dashboard'});

@@ -17,14 +17,19 @@ const INITIAL_STATE = {
   userQuestion: [],
   selectedWeek: 1,
   selectedDay: 1,
-  selectedWeeks:1,
+  selectedWeeks: 1,
   selectedCardId: '',
   programFiles: '',
-  quotes:{
-    quoteText:"",
-    quoteImg:""
+  quotes: {
+    quoteText: '',
+    quoteImg: '',
   },
-  plansData:[]
+  plansData: [],
+  trackerStatus: {
+    sleepChecked: false,
+    moodChecked: false,
+    activityChecked: false,
+  },
 };
 
 const {ACTION_TYPE} = GLOBALS;
@@ -122,7 +127,7 @@ function moduleOne(state = INITIAL_STATE, action) {
       return {...state, templateLoader: false};
     case ACTION_TYPE.SELECTED_WEEK:
       return {...state, selectedWeeks: action.payload};
-      case ACTION_TYPE.GET_SELECTED_WEEK:
+    case ACTION_TYPE.GET_SELECTED_WEEK:
       return {...state, selectedWeek: action.payload};
     case ACTION_TYPE.GET_SELECTED_DAY:
       return {...state, selectedDay: action.payload};
@@ -134,10 +139,24 @@ function moduleOne(state = INITIAL_STATE, action) {
       return {...state, templateLoader: false, programFiles: action.payload};
     case ACTION_TYPE.GET_PROGRAM_FILES_FAIL:
       return {...state, templateLoader: false};
-      case ACTION_TYPE.SET_QUOTES_DATA:
-        return {...state, quotes: {...action.payload}};
-        case ACTION_TYPE.GET_PLANS:
-        return {...state, plansData: action.payload};
+    case ACTION_TYPE.SET_QUOTES_DATA:
+      return {...state, quotes: {...action.payload}};
+    case ACTION_TYPE.GET_PLANS:
+      return {...state, plansData: action.payload};
+    case ACTION_TYPE.SET_TRACKER_STATUS:
+      return {...state, trackerStatus: action.payload};
+    case ACTION_TYPE.CLEAR_MODULE_ONE:
+      return {
+        ...state,
+        trackerStatus: action.payload,
+        currentActiveCard: [],
+        templateData: [],
+        trackerStatus: {
+          sleepChecked: false,
+          moodChecked: false,
+          activityChecked: false,
+        },
+      };
     default:
       return state;
   }

@@ -11,7 +11,7 @@ const INITIAL_STATE = {
   resetData: {},
   quoteData: [],
   verifySocailUserData: [],
-  profileImg: "",
+  profileImg: '',
 };
 
 const {ACTION_TYPE} = GLOBALS;
@@ -50,6 +50,8 @@ function authReducer(state = INITIAL_STATE, action) {
         loginData: null,
         isLoading: false,
         loginToken: null,
+        programData: [],
+        profileImg: null,
       };
     case ACTION_TYPE.GET_PROGRAM_REQUEST:
       return {...state, isLoading: true};
@@ -110,7 +112,7 @@ function authReducer(state = INITIAL_STATE, action) {
         ...state,
         isLoading: false,
         isLoggedIn: false,
-        verifySocailUserData: action.payload,  
+        verifySocailUserData: action.payload,
       };
     case ACTION_TYPE.VERIFY_USER_DATA_FAIL:
       return {
