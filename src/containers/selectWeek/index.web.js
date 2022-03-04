@@ -15,7 +15,9 @@ import {
   Dimensions,
 } from 'react-native';
 import moment from 'moment';
-//import DropDownPicker from 'react-native-dropdown-picker';
+// import DropDownPicker from 'react-native-dropdown-picker';
+// import Select from 'react-select';
+
 import ScheduleTab from '../../components/common/tabs';
 import {getItem} from '../../utils/AsyncUtils';
 import * as AppActions from '../../actions';
@@ -61,7 +63,12 @@ let dayData = [
   {index: '4'},
   {index: '5'},
 ];
-const tabsLearingType = [{title: 'By Date', id: 1}];
+const tabsLearingType = [
+  {title: 'By Date', id: 1},
+  // {title: 'Suggested', id: 1},
+  // {title: 'Liked', id: 1},
+];
+
 const DayView = ({
   item,
   onClick,
@@ -146,6 +153,7 @@ const DayView = ({
     );
   }
 };
+
 function SelectWeek(props) {
   const dispatch = useDispatch();
   const {currentActiveCard = {}} = useSelector((state) => state.moduleOne);
@@ -157,10 +165,10 @@ function SelectWeek(props) {
 
   useEffect(() => {
     setweekDataDynamic([]);
-    setSelectedWeek(currentActiveCard.current_week);
+    setSelectedWeek(parseInt(currentActiveCard.current_week));
     dispatch(AppActions.getWeek(currentActiveCard.current_week));
     setSelectedDay(currentActiveCard.current_day);
-    setValue(`Week ${currentActiveCard.currentActiveCard}`);
+    setValue(`Week ${currentActiveCard.current_week}`);
     _setDynamicWeeks();
   }, [currentActiveCard]);
 
@@ -183,6 +191,10 @@ function SelectWeek(props) {
     }
   };
   const _onProceedClick = () => {
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+      payload: '',
+    });
     dispatch(
       AppActions.getCurrentActiveCard(true, (res) => {
         navigatorPush({
