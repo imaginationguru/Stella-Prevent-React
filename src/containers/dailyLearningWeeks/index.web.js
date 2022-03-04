@@ -69,7 +69,9 @@ const DailyLearningWeeks = (props) => {
           AppActions.getAssessmentData(
             assessment_id,
             currentData._id,
-            currentData._id,
+            currentData.card.template_data[0].template_number == 6
+              ? currentData._id
+              : null,
           ),
         );
         // dispatch(AppActions.getUserAssessment(currentData._id, assessment_id));
@@ -79,7 +81,12 @@ const DailyLearningWeeks = (props) => {
 
   // api response handling
   useEffect(() => {
-    // console.log(templateData, 'currentData........1111');
+    console.log(
+      templateData,
+      'currentData........1111',
+      selectedCardId,
+      'selectedCardId',
+    );
     if (templateData.length) {
       if (mData.length) {
         let data = {};
@@ -317,10 +324,10 @@ const DailyLearningWeeks = (props) => {
         let canProceed = canProceedNextDay(
           selectedWeek,
           selectedDay + 1,
-          res.unlocked_week,
-          res.unlocked_day,
-          // res.current_week,
-          // res.current_day,
+          // res.unlocked_week,
+          // res.unlocked_day,
+          res.current_week,
+          res.current_day,
         );
 
         if (canProceed) {

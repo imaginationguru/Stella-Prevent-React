@@ -191,6 +191,10 @@ function SelectWeek(props) {
     }
   };
   const _onProceedClick = () => {
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+      payload: '',
+    });
     dispatch(
       AppActions.getCurrentActiveCard(true, (res) => {
         navigatorPush({
