@@ -185,13 +185,13 @@ const ProfileHeader = (props) => {
                 </View>
               </View>
             </View>
-            {/* <View style={styles.profileWrapRight}>
+            <View style={styles.profileWrapRight}>
               <View>
                 <Text style={styles.username}>
                   Week {moduleOne?.currentActiveCard?.current_week}
                 </Text>
               </View>
-            
+
               <div class="mdc-slider mdc-slider--discrete mdc-slider--tick-marks ">
                 <div class="mdc-slider__track">
                   <div class="mdc-  slider__track--inactive"></div>
@@ -213,7 +213,7 @@ const ProfileHeader = (props) => {
                 </div>
               </div>
               <slider />
-            </View> */}
+            </View>
           </View>
         </View>
       </ImageBackground>
