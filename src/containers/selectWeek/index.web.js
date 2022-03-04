@@ -167,17 +167,22 @@ function SelectWeek(props) {
     setweekDataDynamic([]);
     setSelectedWeek(parseInt(currentActiveCard.current_week));
     dispatch(AppActions.getWeek(currentActiveCard.current_week));
+
     setSelectedDay(currentActiveCard.current_day);
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
+      payload: parseInt(currentActiveCard.current_day),
+    });
     setValue(`Week ${currentActiveCard.current_week}`);
     _setDynamicWeeks();
   }, [currentActiveCard]);
 
   useEffect(() => {
     dispatch(AppActions.getProgramById(false));
-    dispatch({
-      type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
-      payload: selectedDay,
-    });
+    // dispatch({
+    //   type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
+    //   payload: parseInt(currentActiveCard.current_day),
+    // });
   }, []);
 
   const _setDynamicWeeks = () => {
@@ -208,9 +213,16 @@ function SelectWeek(props) {
     );
   };
   const onWeekChange = (event) => {
+    console.log('on week change');
     setValue(event.target.value);
     dispatch(AppActions.getWeek(event.target.value.replace('Week' + ' ', '')));
     setSelectedWeek(event.target.value.replace('Week' + ' ', ''));
+
+    setSelectedDay(1);
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
+      payload: parseInt(1),
+    });
   };
   const daySelected = (day) => {
     dispatch({
@@ -314,6 +326,10 @@ function SelectWeek(props) {
                   title={'Proceed'}
                   bgColor={DARK_GREEN}
                   textColor={WHITE}
+                  isDisabled={
+                    selectedWeek > currentActiveCard.current_week ? true : false
+                  }
+                  //  isDisabled={true}
                 />
               </View>
             </View>
