@@ -381,7 +381,7 @@ const DailyLearningWeeks = (props) => {
   return (
     <>
       <MasterLayout>
-        <BackBtn title={backTitle ? backTitle : 'Back to Dashboard'} />
+        {backTitle ? <BackBtn title={backTitle} /> : <BackToDashboard />}
 
         <div className="dashboard-body">
           <div className="container">

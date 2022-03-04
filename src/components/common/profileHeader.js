@@ -23,7 +23,7 @@ import * as AppActions from '../../actions';
 import Dropzone from 'react-dropzone';
 import {normalize} from '../../utils/Helper';
 
-import {MDCSlider} from '@material/slider';
+//import {MDCSlider} from '@material/slider';
 
 // const slider = new MDCSlider(document.querySelector('.mdc-slider'));
 
