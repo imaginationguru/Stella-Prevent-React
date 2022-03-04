@@ -62,24 +62,11 @@ let dayData = [
   {index: '3'},
   {index: '4'},
   {index: '5'},
-  {index: '6'},
-  {index: '7'},
 ];
 const tabsLearingType = [
   {title: 'By Date', id: 1},
-  {title: 'Suggested', id: 1},
-  {title: 'Liked', id: 1},
-];
-
-const options = [
-  {value: 'Week 1', label: 'Week 1'},
-  {value: 'Week 2', label: 'Week 2'},
-  {value: 'Week 3', label: 'Week 3'},
-  {value: 'Week 4', label: 'Week 4'},
-  {value: 'Week 5', label: 'Week 5'},
-  {value: 'Week 6', label: 'Week 6'},
-  {value: 'Week 7', label: 'Week 7'},
-  {value: 'Week 8', label: 'Week 8'},
+  // {title: 'Suggested', id: 1},
+  // {title: 'Liked', id: 1},
 ];
 
 const DayView = ({
@@ -167,28 +154,6 @@ const DayView = ({
   }
 };
 
-const customStyles = {
-  menu: (provided, state) => ({
-    ...provided,
-    // width: DEVICE_WIDTH,
-    // width: DEVICE_WIDTH,
-    // borderBottom: '1px dotted pink',
-    // color: state.selectProps.menuColor,
-    // padding: 20,
-  }),
-
-  control: (_, {selectProps: {width}}) => ({
-    // width: DEVICE_WIDTH,
-  }),
-
-  singleValue: (provided, state) => {
-    // const opacity = state.isDisabled ? 0.5 : 1;
-    // const transition = 'opacity 300ms';
-
-    return {...provided, opacity, transition};
-  },
-};
-
 function SelectWeek(props) {
   const dispatch = useDispatch();
   const {currentActiveCard = {}} = useSelector((state) => state.moduleOne);
@@ -200,10 +165,10 @@ function SelectWeek(props) {
 
   useEffect(() => {
     setweekDataDynamic([]);
-    setSelectedWeek(currentActiveCard.current_week);
+    setSelectedWeek(parseInt(currentActiveCard.current_week));
     dispatch(AppActions.getWeek(currentActiveCard.current_week));
     setSelectedDay(currentActiveCard.current_day);
-    setValue(`Week ${currentActiveCard.currentActiveCard}`);
+    setValue(`Week ${currentActiveCard.current_week}`);
     _setDynamicWeeks();
   }, [currentActiveCard]);
 
@@ -226,6 +191,10 @@ function SelectWeek(props) {
     }
   };
   const _onProceedClick = () => {
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+      payload: '',
+    });
     dispatch(
       AppActions.getCurrentActiveCard(true, (res) => {
         navigatorPush({
@@ -360,7 +329,7 @@ export default SelectWeek = React.memo(SelectWeek);
 //export default ProfileDetails;
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'column',
     // backgroundColor: 'red',
 
@@ -387,20 +356,16 @@ const styles = StyleSheet.create({
   },
   /**Day UI */
   dayTouchable: {
-    // paddingVertical: normalize(1),
-    // paddingHorizontal: normalize(1),
+    paddingVertical: 10,
+    paddingHorizontal: 6,
     borderRadius: 40,
     borderColor: COLORS.DARK_GREEN,
     borderWidth: 1,
     marginBottom: 8,
     margin: 2,
-    width: normalize(8),
-    alignItems: 'center',
-    height: normalize(14),
-    justifyContent: 'flex-end',
   },
   dayText1: {
-    fontSize: normalize(3),
+    fontSize: 15,
     fontFamily: FONTS.CIRCULAR_MEDIUM,
   },
   dayViewStyle: {
@@ -422,7 +387,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     width: DEVICE_WIDTH > 1000 ? '40%' : '100%',
     justifyContent: 'center',
-    marginBottom: normalize(20),
     // bottom: 30,
   },
   dropDownStyleNew: {
@@ -445,5 +409,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '30%',
   },
-  dropDownStyle: {width: normalize(65), zIndex: 100},
 });
