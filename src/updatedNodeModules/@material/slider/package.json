@@ -1,5 +1,5 @@
 {
-  "name": "@material/slider",
+  "name": "../slider",
   "version": "13.0.0",
   "description": "The Material Components for the web slider component",
   "main": "dist/mdc.slider.js",
@@ -20,15 +20,15 @@
     "access": "public"
   },
   "dependencies": {
-    "@material/animation": "^13.0.0",
-    "@material/base": "^13.0.0",
-    "@material/dom": "^13.0.0",
-    "@material/elevation": "^13.0.0",
-    "@material/feature-targeting": "^13.0.0",
-    "@material/ripple": "^13.0.0",
-    "@material/rtl": "^13.0.0",
-    "@material/theme": "^13.0.0",
-    "@material/typography": "^13.0.0",
+    "../animation": "^13.0.0",
+    "../base": "^13.0.0",
+    "../dom": "^13.0.0",
+    "../elevation": "^13.0.0",
+    "../feature-targeting": "^13.0.0",
+    "../ripple": "^13.0.0",
+    "../rtl": "^13.0.0",
+    "../theme": "^13.0.0",
+    "../typography": "^13.0.0",
     "tslib": "^2.1.0"
   },
   "gitHead": "198431fcd8ff3028934d2cf3a5b292f8482a4570"

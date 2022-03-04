@@ -27,10 +27,10 @@
 @use 'sass:list';
 @use 'sass:map';
 @use 'sass:string';
-@use '@material/feature-targeting/feature-targeting';
-@use '@material/theme/custom-properties';
-@use '@material/theme/keys';
-@use '@material/theme/theme';
+@use '../feature-targeting/feature-targeting';
+@use '../theme/custom-properties';
+@use '../theme/keys';
+@use '../theme/theme';
 
 /// @deprecated Avoid calling this function directly. Instead, configure the
 /// `$styles-<style>` variable Maps.

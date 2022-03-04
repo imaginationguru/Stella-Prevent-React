@@ -1,5 +1,5 @@
 {
-  "name": "@material/animation",
+  "name": "../animation",
   "description": "Animation Variables and Mixins used by Material Components for the web",
   "version": "13.0.0",
   "license": "MIT",

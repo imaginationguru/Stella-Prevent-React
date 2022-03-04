@@ -165,10 +165,10 @@ function SelectWeek(props) {
 
   useEffect(() => {
     setweekDataDynamic([]);
-    setSelectedWeek(currentActiveCard.current_week);
+    setSelectedWeek(parseInt(currentActiveCard.current_week));
     dispatch(AppActions.getWeek(currentActiveCard.current_week));
     setSelectedDay(currentActiveCard.current_day);
-    setValue(`Week ${currentActiveCard.currentActiveCard}`);
+    setValue(`Week ${currentActiveCard.current_week}`);
     _setDynamicWeeks();
   }, [currentActiveCard]);
 

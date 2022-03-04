@@ -15,7 +15,7 @@ Most of the time, you shouldn't need to depend on `mdc-feature-targeting` direct
 ## Installation
 
 ```
-npm install @material/feature-targeting
+npm install ../feature-targeting
 ```
 
 ## Basic Usage
@@ -25,7 +25,7 @@ npm install @material/feature-targeting
 Authoring component styles:
 
 ```scss
-@use "@material/feature-targeting";
+@use '../feature-targeting';
 
 @mixin my-component-core-styles($query: feature-targeting.all()) {
   $feat-structure: feature-targeting.create-target($query, structure);
@@ -39,8 +39,8 @@ Authoring component styles:
 Consuming component styles:
 
 ```scss
-@use "@material/feature-targeting";
-@use "my-component-mixins";
+@use '../feature-targeting';
+@use 'my-component-mixins';
 
 // To include all styles (using the default of mdc-feature-all() defined above):
 @include my-component-core-styles;
@@ -54,16 +54,16 @@ Consuming component styles:
 
 ## Sass Mixins and Functions
 
-Mixin | Description
---- | ---
-`targets($feature-targets...)` | Conditionalizes content to only be emitted if the given feature target(s) is/are queried.
+| Mixin                          | Description                                                                               |
+| ------------------------------ | ----------------------------------------------------------------------------------------- |
+| `targets($feature-targets...)` | Conditionalizes content to only be emitted if the given feature target(s) is/are queried. |
 
-Function | Description
---- | ---
-`create-target($feature-query, $targeted-feature)` | Returns a variable to be passed to `targets` in order to filter emitted styles.
-`all($feature-queries...)` | Returns a query object which will result in emitting `targets` blocks that match _all_ of the specified features. Passing no arguments results in all blocks being emitted, which is the most common use case.
-`any($feature-queries...)` | Returns a query object which will result in emitting `targets` blocks that match _any_ of the specified features. Passing no arguments results in no blocks being emitted.
-`without($feature-query)` | Returns a query object which will result in emitting `targets` blocks that do _not_ match the specified feature.
+| Function                                           | Description                                                                                                                                                                                                    |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `create-target($feature-query, $targeted-feature)` | Returns a variable to be passed to `targets` in order to filter emitted styles.                                                                                                                                |
+| `all($feature-queries...)`                         | Returns a query object which will result in emitting `targets` blocks that match _all_ of the specified features. Passing no arguments results in all blocks being emitted, which is the most common use case. |
+| `any($feature-queries...)`                         | Returns a query object which will result in emitting `targets` blocks that match _any_ of the specified features. Passing no arguments results in no blocks being emitted.                                     |
+| `without($feature-query)`                          | Returns a query object which will result in emitting `targets` blocks that do _not_ match the specified feature.                                                                                               |
 
 `$feature-query` and `$feature-queries` refer to one or more of the values listed below under Supported Features.
 
@@ -71,7 +71,7 @@ Function | Description
 
 MDC Web's styles are currently split according to the following features:
 
-* `structure` - All baseline styles that don't fit into any other category
-* `animation` - Styles responsible for causing animations and transitions to occur
-* `color` - Color-specific styles which rely on `mdc-theme` variables
-* `typography` - Typography-specific styles which rely on `mdc-typography`
+- `structure` - All baseline styles that don't fit into any other category
+- `animation` - Styles responsible for causing animations and transitions to occur
+- `color` - Color-specific styles which rely on `mdc-theme` variables
+- `typography` - Typography-specific styles which rely on `mdc-typography`

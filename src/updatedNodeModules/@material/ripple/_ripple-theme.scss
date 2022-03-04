@@ -25,16 +25,16 @@
 
 @use 'sass:color';
 @use 'sass:map';
-@use '@material/animation/functions' as functions2;
-@use '@material/animation/variables' as variables2;
-@use '@material/base/mixins' as base-mixins;
-@use '@material/feature-targeting/feature-targeting';
-@use '@material/theme/css';
-@use '@material/theme/custom-properties';
-@use '@material/theme/theme';
-@use '@material/theme/keys';
-@use '@material/theme/shadow-dom';
-@use '@material/theme/theme-color';
+@use '../animation/functions' as functions2;
+@use '../animation/variables' as variables2;
+@use '../base/mixins' as base-mixins;
+@use '../feature-targeting/feature-targeting';
+@use '../theme/css';
+@use '../theme/custom-properties';
+@use '../theme/theme';
+@use '../theme/keys';
+@use '../theme/shadow-dom';
+@use '../theme/theme-color';
 
 $custom-property-prefix: 'ripple';
 

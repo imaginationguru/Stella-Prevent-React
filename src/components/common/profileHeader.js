@@ -23,11 +23,11 @@ import * as AppActions from '../../actions';
 import Dropzone from 'react-dropzone';
 import {normalize} from '../../utils/Helper';
 
-//import {MDCSlider} from '@material/slider';
+//import {MDCSlider} from '../slider';
 
 // const slider = new MDCSlider(document.querySelector('.mdc-slider'));
 
-// @use "@material/slider/styles";
+// @use "../slider/styles";
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
