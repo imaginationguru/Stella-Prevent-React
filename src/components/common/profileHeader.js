@@ -35,14 +35,14 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 const ProfileHeader = (props) => {
-  // const slider = new MDCSlider(document.querySelector('.mdc-slider'));
-
   const {loginData = {}, profileImg = ''} = useSelector(
     (state) => state.authReducer,
   );
   const moduleOne = useSelector((state) => state.moduleOne);
+  const {currentActiveCard = {}} = useSelector((state) => state.moduleOne);
   console.log('profile image user', profileImg);
   const [profileImage, setProfilePhoto] = useState('');
+  const [selectedWeek, setSelectedWeek] = useState(1);
   let firstName = getItem('firstName');
   let lastName = getItem('lastName');
   const dispatch = useDispatch();
@@ -161,11 +161,7 @@ const ProfileHeader = (props) => {
                   <TouchableOpacity
                     style={styles.btn}
                     onPress={() => {
-                      // setTimeout(() => {
-                      //   navigatortoStart();
-                      // }, localStorage.clear());
                       dispatch(AppActions.logout());
-                      // dispatch(AppActions.dashboardModalAction(false));
                     }}>
                     <Text style={[styles.btnTxtLogout]}>Logout</Text>
                   </TouchableOpacity>
@@ -367,5 +363,25 @@ const styles = StyleSheet.create({
   profileWrapRight: {
     flex: DEVICE_WIDTH > 767 ? '0 0 50%' : '0 0 100%',
     padding: 15,
+  },
+
+  sliderheader: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: '24px',
+    paddingRight: '24px',
+  },
+  weektitle: {
+    fontSize: DEVICE_WIDTH > 767 ? '2.2vw' : '22px',
+    fontFamily: FONTS.SEMI_BOLD,
+    color: DARK_GREEN,
+  },
+  alltitle: {
+    fontSize: DEVICE_WIDTH > 767 ? '1.5vw' : '16px',
+    fontFamily: FONTS.SEMI_BOLD,
+    color: DARK_GREEN,
   },
 });

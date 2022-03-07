@@ -2,56 +2,24 @@ import React, {useState, useRef, useEffect} from 'react';
 import {
   View,
   Text,
-  Animated,
-  Pressable,
   StyleSheet,
-  FlatList,
-  ScrollView,
   TouchableOpacity,
   Image,
-  Switch,
-  Platform,
-  useWindowDimensions,
   Dimensions,
 } from 'react-native';
-import moment from 'moment';
-// import DropDownPicker from 'react-native-dropdown-picker';
-// import Select from 'react-select';
 
 import ScheduleTab from '../../components/common/tabs';
-import {getItem} from '../../utils/AsyncUtils';
 import * as AppActions from '../../actions';
 import GLOBALS from '../../constants';
-import Strings from '../../constants/Strings';
 import {navigatorPush, navigatorPop} from '../../config/navigationOptions.web';
 import Footer from '../../components/Footer';
 import Button from '../../components/common/button';
-import Toggle from '../../components/common/toggle';
-import PopUp from '../../components/common/popUp';
 import BackBtn from '../../components/common/backbtn';
-import Loader from '../../components/Loader';
 import ProfileHeader from '../../components/common/profileHeader';
 const {COLORS, FONTS} = GLOBALS;
 const {LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN} = COLORS;
-import Header from '../../components/Header';
 import {useSelector, useDispatch} from 'react-redux';
-import journal from '../../assets/images/subscription/journal.png';
 import stellaWave from '../../assets/images/stellaNurse/stellaWave.png';
-import back from '../../assets/images/subscription/back.png';
-import Input1 from '../../components/TextInput';
-import RadioButton1 from '../../components/RadioButton1';
-import {customAlert} from '../../helpers/commonAlerts.web';
-import MasterLayout from '../../components/MasterLayout';
-import {
-  validateIsEmpty,
-  validatePassword,
-  validateContact,
-  validateZipcode,
-  validateANZipcode,
-  validatePhoneWithSpecialSymbol,
-  validateName,
-} from '../../utils/validations';
-import {normalize} from '../../utils/Helper';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
@@ -63,11 +31,7 @@ let dayData = [
   {index: '4'},
   {index: '5'},
 ];
-const tabsLearingType = [
-  {title: 'By Date', id: 1},
-  // {title: 'Suggested', id: 1},
-  // {title: 'Liked', id: 1},
-];
+const tabsLearingType = [{title: 'By Date', id: 1}];
 
 const DayView = ({
   item,
@@ -160,26 +124,25 @@ function SelectWeek(props) {
 
   const [selectedDay, setSelectedDay] = useState(1);
   const [selectedWeek, setSelectedWeek] = useState(1);
+
   const [weekDataDynamic, setweekDataDynamic] = useState([]);
   const [value, setValue] = useState('Week 1');
 
   useEffect(() => {
     setweekDataDynamic([]);
+
     setSelectedWeek(parseInt(currentActiveCard.current_week));
-    dispatch(AppActions.getWeek(currentActiveCard.current_week));
     setSelectedDay(currentActiveCard.current_day);
+
     setValue(`Week ${currentActiveCard.current_week}`);
     _setDynamicWeeks();
   }, [currentActiveCard]);
 
   useEffect(() => {
     dispatch(AppActions.getProgramById(false));
-    dispatch({
-      type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
-      payload: selectedDay,
-    });
   }, []);
 
+  /**Create week array for select box */
   const _setDynamicWeeks = () => {
     let weekDataDynamic = [];
     for (var i = 1; i <= 5; i++) {
@@ -190,34 +153,52 @@ function SelectWeek(props) {
       setweekDataDynamic([...weekDataDynamic]);
     }
   };
+
+  /**When user click on proceed set reducer to selected wek day manage reducer value */
   const _onProceedClick = () => {
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.GET_TEMPLATE_DATA_SUCCESS,
+      payload: [],
+    });
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.SELECTED_WEEK,
+      payload: parseInt(selectedWeek),
+    });
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
+      payload: parseInt(selectedDay),
+    });
+    dispatch(AppActions.getWeek(parseInt(selectedWeek)));
+
     dispatch(
       AppActions.getCurrentActiveCard(true, (res) => {
+        dispatch(AppActions.getWeek(parseInt(selectedWeek)));
+        dispatch({
+          type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+          payload: '',
+        });
         navigatorPush({
           screenName: 'DailyLearningWeeks',
           passProps: {
-            weeksCount: selectedWeek,
+            weeksCount: parseInt(selectedWeek),
             backTitle: 'Back to Past Modules',
           },
         });
       }),
     );
   };
+
   const onWeekChange = (event) => {
     setValue(event.target.value);
-    dispatch(AppActions.getWeek(event.target.value.replace('Week' + ' ', '')));
     setSelectedWeek(event.target.value.replace('Week' + ' ', ''));
+    setSelectedDay(1);
   };
+
   const daySelected = (day) => {
-    dispatch({
-      type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
-      payload: parseInt(day),
-    });
     setSelectedDay(day);
   };
 
   return (
-    // <MasterLayout>
     <div className="main-dashboard">
       <ProfileHeader></ProfileHeader>
 
@@ -310,6 +291,9 @@ function SelectWeek(props) {
                   title={'Proceed'}
                   bgColor={DARK_GREEN}
                   textColor={WHITE}
+                  isDisabled={
+                    selectedWeek > currentActiveCard.current_week ? true : false
+                  }
                 />
               </View>
             </View>
@@ -318,20 +302,12 @@ function SelectWeek(props) {
         <Footer />
       </View>
     </div>
-    // </MasterLayout>
   );
 }
 export default SelectWeek = React.memo(SelectWeek);
-//export default ProfileDetails;
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     flexDirection: 'column',
-    // backgroundColor: 'red',
-
-    //  flex: 1,
-    //  padding: 20,
-    // height: DEVICE_HEIGHT - 0,
     justifyContent: 'center',
   },
   logoView: {
@@ -383,7 +359,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     width: DEVICE_WIDTH > 1000 ? '40%' : '100%',
     justifyContent: 'center',
-    // bottom: 30,
   },
   dropDownStyleNew: {
     backgroundColor: COLORS.WHITE,
@@ -392,13 +367,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 5,
     padding: 5,
-    // elevation: 10,
     paddingTop: 20,
     borderRadius: 5,
     borderColor: COLORS.DARK_GREEN,
     borderWidth: 0.5,
     height: 40,
-    //  marginHorizontal: 16,
     borderBottomColor: COLORS.DARK_GREEN,
     alignSelf: 'center',
     textAlignVertical: 'center',

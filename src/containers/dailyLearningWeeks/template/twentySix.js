@@ -115,6 +115,7 @@ const TwentySix = (props) => {
       setDifferenceMessage(difference);
     }
   }, [props.submit_messages]);
+
   const onSubmit = (e) => {
     e.preventDefault();
     let params = {
@@ -123,6 +124,50 @@ const TwentySix = (props) => {
       assessment_id: assessment_id,
       assessment: assessment,
     };
+    let customMsg = '';
+    if (slugData == 'different,similar,i_do_not_know') {
+      let selectedIntemsofHeader = [];
+      assessmentData.content.map((head, index) => {
+        if (head.data == 'Different') {
+          selectedIntemsofHeader[0] = assessment.filter((element) =>
+            element.content.some(
+              (subElement) => subElement.assessment_content_id === head._id,
+            ),
+          );
+        }
+        if (head.data == 'Similar') {
+          selectedIntemsofHeader[1] = assessment.filter((element) =>
+            element.content.some(
+              (subElement) => subElement.assessment_content_id === head._id,
+            ),
+          );
+        }
+        if (head.data == 'I do not know') {
+          selectedIntemsofHeader[2] = assessment.filter((element) =>
+            element.content.some(
+              (subElement) => subElement.assessment_content_id === head._id,
+            ),
+          );
+        }
+      });
+      const key = 'assessment_header_id';
+      let X1 =
+        [
+          ...new Map(
+            selectedIntemsofHeader[0].map((item) => [item[key], item]),
+          ).values(),
+        ].length +
+        [
+          ...new Map(
+            selectedIntemsofHeader[2].map((item) => [item[key], item]),
+          ).values(),
+        ].length;
+
+      customMsg = `You identified ${X1} topics where your experiences and your partner's experiences may have been different or, at least, where you do not know if your experiences were similar or not.
+
+      It is possible that both your different experiences influence your idea of what it is like to "be a good mother" and "to be a good father". This means that in addition to creating an idea of you as a mother (the mother you want to be) you have also created an idea of your partner as a father/mother you want them to be, and your partner did the same. These ideas seem “natural” and “the absolute truth” because that is the reality you have always known - but your partner has lived another reality and, therefore, their ideas may be different​`;
+    }
+    // return;
     let a = [];
     let b = [];
     let c = [];
@@ -156,11 +201,19 @@ const TwentySix = (props) => {
             );
             if (positiveRes.length === 0) {
               dispatch(
-                AppActions.rearrangeAssessments(params, negativeMessage),
+                AppActions.rearrangeAssessments(
+                  params,
+                  negativeMessage,
+                  customMsg,
+                ),
               );
             } else {
               dispatch(
-                AppActions.rearrangeAssessments(params, positiveMessage),
+                AppActions.rearrangeAssessments(
+                  params,
+                  positiveMessage,
+                  customMsg,
+                ),
               );
             }
           }
@@ -172,11 +225,19 @@ const TwentySix = (props) => {
             );
             if (agreeMessage.length === 0) {
               dispatch(
-                AppActions.rearrangeAssessments(params, negativeMessage),
+                AppActions.rearrangeAssessments(
+                  params,
+                  negativeMessage,
+                  customMsg,
+                ),
               );
             } else {
               dispatch(
-                AppActions.rearrangeAssessments(params, positiveMessage),
+                AppActions.rearrangeAssessments(
+                  params,
+                  positiveMessage,
+                  customMsg,
+                ),
               );
             }
           }
@@ -208,7 +269,7 @@ const TwentySix = (props) => {
               c.push(notKnow);
             }
             let sum = [a[0].length + c[0].length, ...differenceMessage];
-            dispatch(AppActions.saveUserAssessment(params, sum));
+            dispatch(AppActions.saveUserAssessment(params, sum, customMsg));
           } else if (slugData === 'never,sometimes,oftentimes') {
             console.log('content message ?????', contentMessage);
             if (contentMessage.length) {
@@ -217,11 +278,19 @@ const TwentySix = (props) => {
               );
               if (positiveRes.length === 0) {
                 dispatch(
-                  AppActions.saveUserAssessment(params, negativeMessage),
+                  AppActions.saveUserAssessment(
+                    params,
+                    negativeMessage,
+                    customMsg,
+                  ),
                 );
               } else {
                 dispatch(
-                  AppActions.saveUserAssessment(params, positiveMessage),
+                  AppActions.saveUserAssessment(
+                    params,
+                    positiveMessage,
+                    customMsg,
+                  ),
                 );
               }
             }
@@ -233,11 +302,19 @@ const TwentySix = (props) => {
               );
               if (agreeMessage.length === 0) {
                 dispatch(
-                  AppActions.saveUserAssessment(params, negativeMessage),
+                  AppActions.saveUserAssessment(
+                    params,
+                    negativeMessage,
+                    customMsg,
+                  ),
                 );
               } else {
                 dispatch(
-                  AppActions.saveUserAssessment(params, positiveMessage),
+                  AppActions.saveUserAssessment(
+                    params,
+                    positiveMessage,
+                    customMsg,
+                  ),
                 );
               }
             }

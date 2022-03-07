@@ -5,6 +5,7 @@ import activity from '../../assets/images/sleep/activity.png';
 import face from '../../assets/images/sleep/face.png';
 import rightArrow from '../../assets/images/sleep/rightArrow.png';
 import stellaGirl from '../../assets/images/stellaGirl/stellaGirl.png';
+import stellaGirlGif from '../../assets/images/stellaGirlGif.gif';
 import successTick from '../../assets/images/successTick.svg';
 import past_module from '../../assets/images/dashboardHeader/past_module.png';
 import report from '../../assets/images/dashboardHeader/report.png';
@@ -97,7 +98,7 @@ const Dashboard = () => {
         </div>
         <div
           className="tracker-arrow"
-          style={isComplete ? {width: '35px', height: '35px'} : {}}>
+          style={isComplete ? {width: '30px', height: '30px'} : {}}>
           {isComplete ? (
             <img style={{width: '100%', height: '100%'}} src={successTick} />
           ) : (
@@ -408,7 +409,7 @@ const styles = {
   dailylearnWrap: {
     background:
       'linear-gradient(180deg, rgba(214, 240, 235, 0) 0%, #FFFFFF 73.96%) top right',
-    backgroundImage: `url(${stellaGirl})`,
+    backgroundImage: `url(${stellaGirlGif})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     width: '100%',
@@ -420,5 +421,7 @@ const styles = {
     // border: '1px solid blue',
     boxShadow: '1px 3px 1px #D6F0EB',
     cursor: 'pointer',
+    backgroundPosition: '50%',
+    // backgroundPosition: 'center left',
   },
 };

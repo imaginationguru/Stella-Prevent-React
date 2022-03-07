@@ -10,12 +10,15 @@ body * {
 img {
   max-width: 100%;
 }
+
 .mdc-slider_thumbColor {
   border-color: #6fcf97 !important;
 }
+
 .mdc-slider_thumbColorInactive {
   background-color: #6fcf97 !important;
 }
+
 .mdc-slider_thumbColorActive {
   background-color: #fff !important;
 }
@@ -579,6 +582,7 @@ button {
   margin: 0 auto;
   max-width: 1200px;
 }
+
 .footer-container {
   padding: 0 30px;
   margin: 0 auto;
@@ -724,6 +728,7 @@ footer {
     padding: 10px 0;
     flex: 0 0 auto;
   }
+
   .footer-text {
     //font-style: normal;
     //font-weight: normal;
@@ -947,9 +952,9 @@ footer {
     width: 20px;
     height: 30px;
     position: absolute;
-    top: 50%;
+    top: 55%;
     // right: 100px;
-    right: 50px;
+    right: 40px;
     transform: translateY(-50%);
   }
 
@@ -959,6 +964,7 @@ footer {
 
     .tracker-icon {
       flex: 0 0 auto;
+      width: 25px;
     }
 
     .tracker-text {
@@ -1013,68 +1019,55 @@ button.navbutton {
 }
 
 .main-dashboard {
-  // background: linear-gradient(57deg, #27eac2, #11715f);
-  background: linear-gradient(57deg, #5bb7a4 30%, #006f59);
+  // background: linear-gradient(136deg, #63eed2, #033a2f);
+  // background-size: 400% 400%;
+  background: linear-gradient(130deg, #033a2f, #63eed2);
   background-size: 400% 400%;
-  -webkit-animation: gradientAnim 5 ease infinite;
-  -moz-animation: gradientAnim 5 ease infinite;
-  -o-animation: gradientAnim 5 ease infinite;
-  animation: gradientAnim 5 ease infinite;
+
+  -webkit-animation: gradientAnim 30s ease infinite;
+  -moz-animation: gradientAnim 30s ease infinite;
+  animation: gradientAnim 8s ease infinite;
 }
 
 @-webkit-keyframes gradientAnim {
   0% {
-    background-position: 52% 0%;
+    background-position: 99% 0%;
   }
 
   50% {
-    background-position: 49% 100%;
+    background-position: 2% 100%;
   }
 
   100% {
-    background-position: 52% 0%;
+    background-position: 99% 0%;
   }
 }
 
 @-moz-keyframes gradientAnim {
   0% {
-    background-position: 52% 0%;
+    background-position: 99% 0%;
   }
 
   50% {
-    background-position: 49% 100%;
+    background-position: 2% 100%;
   }
 
   100% {
-    background-position: 52% 0%;
-  }
-}
-
-@-o-keyframes gradientAnim {
-  0% {
-    background-position: 52% 0%;
-  }
-
-  50% {
-    background-position: 49% 100%;
-  }
-
-  100% {
-    background-position: 52% 0%;
+    background-position: 99% 0%;
   }
 }
 
 @keyframes gradientAnim {
   0% {
-    background-position: 52% 0%;
+    background-position: 99% 0%;
   }
 
   50% {
-    background-position: 49% 100%;
+    background-position: 2% 100%;
   }
 
   100% {
-    background-position: 52% 0%;
+    background-position: 99% 0%;
   }
 }
 
@@ -1090,6 +1083,13 @@ button.navbutton {
   flex-wrap: wrap;
 }
 
+.f-col {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
 .f-col.f-col-fixed {
   flex: 0 0 20%;
   padding: 0 15px;
@@ -1097,12 +1097,14 @@ button.navbutton {
 
 .f-col.f-col-auto {
   padding: 0 15px;
-  flex: 1 1 auto;
+  flex: 0 0 60%;
+  justify-content: center;
+  align-items: center;
 }
 
 .poweredby {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 
   h4 {
     margin: 0;
@@ -1110,6 +1112,12 @@ button.navbutton {
     white-space: nowrap;
     color: #ffffff;
     padding-right: 10px;
+    padding-top: 10px;
+  }
+
+  span {
+    width: 140px;
+    flex: 0 0 140px;
   }
 }
 
@@ -1181,6 +1189,31 @@ button.btn-green {
   padding: 15px;
 }
 
+// slider css
+.mdc-slider .mdc-slider__track,
+.mdc-slider .mdc-slider__track--active {
+  height: 8px;
+  border-radius: 12px;
+}
+
+.mdc-slider .mdc-slider__track--active_fill {
+  border-top: 12px solid;
+}
+
+.mdc-slider .mdc-slider__thumb-knob {
+  height: 30px;
+  width: 30px;
+  background: #6fcf97 !important;
+}
+
+.mdc-slider .mdc-slider__tick-mark--active,
+.mdc-slider .mdc-slider__tick-mark--inactive {
+  height: 6px;
+  width: 6px;
+  margin-top: -2px;
+}
+
+// slider css
 @media only screen and (max-width: 1200px) {
   .week-list {
     flex-wrap: wrap;
@@ -1195,16 +1228,24 @@ button.btn-green {
     max-width: calc(100vw - 30px);
   }
 
-  .f-col.f-col-fixed,
-  .f-col.f-col-auto {
-    flex: 0 0 100%;
-  }
-
   .poweredby {
     max-width: 180px;
     margin: 0 auto;
     align-items: center;
     // padding: 15px 0;
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  .f-col.f-col-auto {
+    padding: 30px 0;
+  }
+
+  .f-col.f-col-fixed,
+  .f-col.f-col-auto {
+    flex: 0 0 100%;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -1352,6 +1393,7 @@ button.btn-green {
     .tracker-desc {
       .tracker-text {
         padding-left: 15px;
+        padding-right: 10px;
       }
     }
   }
