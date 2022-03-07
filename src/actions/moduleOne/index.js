@@ -17,13 +17,16 @@ var h2p = require('html2plaintext');
 import {store} from '../../store/setup.web';
 
 /********************GET CURRENT ACTIVE CARD Data************** */
-export function getCurrentActiveCard(cb) {
+export function getCurrentActiveCard(isLoading = true, cb) {
   let userId = getItem('userId');
-  const selectedWeeks = store.getState().moduleOne.selectedWeeks;
+  const selectedWeeks = store.getState().moduleOne.selectedWeek;
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.GET_CURRENT_ACTIVE_CARD_REQUEST});
     try {
-      dispatch(loadingAction(true));
+      if (isLoading) {
+        dispatch(loadingAction(true));
+      }
+
       let json = await RestClient.getCall(
         `${URL.GET_CURRENT_ACTIVE_CARD}/${userId}`,
       );
@@ -40,7 +43,7 @@ export function getCurrentActiveCard(cb) {
           //  payload: json.data.data,
         });
 
-        dispatch(getTemplateData(selectedWeeks));
+        dispatch(getTemplateData(selectedWeeks, isLoading));
         // console.log(selectedWeeks, json.data, 'Setting data');
         // dispatch({
         //   type: 'GET_SELECTED_DAY',
@@ -143,12 +146,15 @@ export function checkActiveCard(cb) {
   };
 }
 /********************Template  Data************** */
-export function getTemplateData(week) {
+export function getTemplateData(week, isLoading = true) {
   let userId = getItem('userId');
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.GET_TEMPLATE_DATA_REQUEST});
     try {
-      dispatch(loadingAction(true));
+      if (isLoading) {
+        dispatch(loadingAction(true));
+      }
+
       let json = await RestClient.getCall(
         `${URL.GET_USER_CARDS_BY_WEEK}/${week}/${userId}`,
       );
@@ -295,13 +301,16 @@ export function markCompleteCard(params, week, nextDay) {
 }
 
 /********************GET ASSESSMENT DATA************** */
-export function getAssessmentData(assessmentId, id) {
+export function getAssessmentData(assessmentId, id, card_id = 'null') {
+  let userId = getItem('userId');
+  console.log('getAssessmentData......');
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.GET_ASSESSMENT_DATA_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.getCall(
-        `${URL.GET_ASSESSMENT_DATA}/${assessmentId}`,
+        // `${URL.GET_ASSESSMENT_DATA}/${assessmentId}/${userId}/`,
+        `${URL.GET_ASSESSMENT_DATA}/${assessmentId}/${userId}/${card_id}`,
       );
 
       if (json.code === 200) {
@@ -447,7 +456,7 @@ export function getAssessmentContent(assessmentId) {
 }
 
 /********************SAVE ASSESSMENT ************** */
-export function saveUserAssessment(params, onSubmitMessage) {
+export function saveUserAssessment(params, onSubmitMessage, customMsg = '') {
   let userCardId = params.user_card_id;
   let assessmentId = params.assessment_id;
   console.log('parms>>>>>>>>>>>>>>params', params, userCardId, assessmentId);
@@ -459,7 +468,7 @@ export function saveUserAssessment(params, onSubmitMessage) {
       console.log('json in save assessment read', json);
       if (json.code === 200) {
         console.log('JSON data SAVE USER ASSESSMENT >>>>>>>>>', json);
-        const submitMsg = h2p(onSubmitMessage);
+        const submitMsg = customMsg == '' ? h2p(onSubmitMessage) : customMsg;
         if (submitMsg !== undefined && submitMsg !== null && submitMsg !== '') {
           customAlert(submitMsg, 'success');
         } else {
@@ -723,7 +732,7 @@ export function deleteUserAssessmentData(
 }
 
 /********************REARRANGE ASSESSMENT ************** */
-export function rearrangeAssessments(params, onSubmitMessage) {
+export function rearrangeAssessments(params, onSubmitMessage, customMsg = '') {
   let userCardId = params.user_card_id;
   let assessmentId = params.assessment_id;
   console.log('parms>>>>>>>>>REAARNAGE>>>>>params', params);
@@ -734,7 +743,7 @@ export function rearrangeAssessments(params, onSubmitMessage) {
       let json = await RestClient.postCall(URL.REARRANGE_ASSESSMENT, params);
       if (json.code === 200) {
         console.log('JSON dataREARRANGE USER ASSESSMENT >>>>>>>>>', json);
-        const submitMsg = h2p(onSubmitMessage);
+        const submitMsg = customMsg == '' ? h2p(onSubmitMessage) : customMsg;
         if (submitMsg !== undefined && submitMsg !== null && submitMsg !== '') {
           customAlert(submitMsg, 'success');
         } else {

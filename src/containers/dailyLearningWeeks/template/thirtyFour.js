@@ -94,10 +94,8 @@ const emptyTextInputMapper = (hId, cId, order = 0) => {
 };
 
 const ThirtyFour = (props) => {
-  const {
-    assessmentData: {heading = []} = {},
-    userAssessmentData = [],
-  } = useSelector((state) => state.moduleOne);
+  const {assessmentData: {heading = []} = {}, userAssessmentData = []} =
+    useSelector((state) => state.moduleOne);
   const [inputs, setInputs] = useState([]);
   const dispatch = useDispatch();
   const {
@@ -453,7 +451,7 @@ const ThirtyFour = (props) => {
                                       const isDelete =
                                         idx === 1 && i < arr.length - 1;
                                       return (
-                                        <div style={styles.plusIconWrapper}>
+                                        <div style={styles.plusIconWrapper} className="v-p-field">
                                           <input
                                             type="text"
                                             className="f-field"

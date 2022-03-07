@@ -1,1 +1,1 @@
-//export const StellaName = require("./Stella/Stella.png");
+//export const StellaName = require('./Stella/Stella.png');

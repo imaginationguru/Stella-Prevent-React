@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Image,
   Switch,
+  Dimensions,
   Platform,
   useWindowDimensions,
 } from 'react-native';
@@ -26,9 +27,11 @@ import PopUp from '../../components/common/popUp';
 import BackBtn from '../../components/common/backbtn';
 import Loader from '../../components/Loader';
 import ProfileHeader from '../../components/common/profileHeader';
+const DEVICE_WIDTH = Dimensions.get('window').width;
 const {COLORS, FONTS} = GLOBALS;
 const {LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN} = COLORS;
 import Header from '../../components/Header';
+
 import {useSelector, useDispatch} from 'react-redux';
 import journal from '../../assets/images/subscription/journal.png';
 import back from '../../assets/images/subscription/back.png';
@@ -239,6 +242,7 @@ function ProfileDetails(props) {
       customAlert('Please select only images', 'error');
     }
   };
+
   return (
     <View style={styles.container}>
       <ProfileHeader
@@ -246,6 +250,13 @@ function ProfileDetails(props) {
         showProfileBtn={false}
         showEditIcon={true}
         onEditClick={(file) => selectImage(file)}
+        onDeleteClick={() => {
+          let param = {
+            image_path: '',
+            user_id: getItem('userId'),
+          };
+          dispatch(AppActions.updateUserDetails(param));
+        }}
       />
       <PopUp />
       {isLoading && <Loader />}
@@ -257,18 +268,14 @@ function ProfileDetails(props) {
           flex: 1,
           flexDirection: 'row',
           justifyContent: 'space-between',
-          marginHorizontal: '5vw',
+          marginHorizontal: '10vw',
+          flexWrap: 'wrap',
         }}>
         {/* 1st colum */}
-        <View style={{flex: 0.3}}>
+        <View style={{flex: DEVICE_WIDTH > 767 ? '0.3' : '100%'}}>
           <View>
-            <Text style={styles.heading}>Plan </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                marginTop: '1vw',
-                alignItems: 'center',
-              }}>
+            <Text style={styles.heading}>Plan</Text>
+            <View style={{flexDirection: 'row', marginTop: '16px'}}>
               <Image
                 resizeMode={'contain'}
                 source={`${IMAGE_BASE_URL}${loginData?.planInfo?.image}`}
@@ -277,11 +284,10 @@ function ProfileDetails(props) {
               <Text
                 style={{
                   fontFamily: 'Inter',
-                  // fontSize: normalize(3.5),
-                  fontSize: 12,
+                  fontSize: '24px',
                   color: '#0B0914',
-                  marginLeft: '1vw',
-                  textAlignVertical: 'center',
+                  marginLeft: '16px',
+
                   fontFamily: FONTS.SEMI_BOLD,
                 }}>
                 {loginData?.planInfo?.title}
@@ -292,6 +298,7 @@ function ProfileDetails(props) {
                 height: 35,
                 width: '100%',
                 marginTop: '1.1vw',
+                marginBottom: '2.1vw',
               }}
               onVerifyPress={() =>
                 navigatorPush({
@@ -299,11 +306,10 @@ function ProfileDetails(props) {
                   passProps: {currentPlan: loginData?.planInfo},
                 })
               }
-              // textStyle={{
-              //   // fontSize: '1vw',
-              //   fontSize: normalize(3),
-              // }}
-              textStyle={{fontSize: 12}}
+              textStyle={{
+                // fontSize: '16px',
+                fontSize: '16px',
+              }}
               title={
                 loginData?.planInfo?.numericPrice == 0
                   ? 'Upgrade'
@@ -347,20 +353,21 @@ function ProfileDetails(props) {
               label="Confirm New Password"></Input1>
             <Button
               onVerifyPress={() => validateField()}
-              // textStyle={{fontSize: '1vw'}}
+              textStyle={{fontSize: '16px'}}
               btnStyle={{
                 height: 40,
                 width: '100%',
                 marginTop: '1.1vw',
+                marginBottom: '2.1vw',
               }}
-              textStyle={{fontSize: 12}}
+              textStyle={{fontSize: 16}}
               title="Change Password"
               bgColor={DARK_GREEN}
               textColor={WHITE}></Button>
           </View>
         </View>
         {/* 2nd column */}
-        <View style={{flex: 0.3}}>
+        <View style={{flex: DEVICE_WIDTH > 767 ? '0.3' : '100%'}}>
           <Text style={styles.heading}>Account Info</Text>
           <Input1
             editable={false}
@@ -446,11 +453,10 @@ function ProfileDetails(props) {
             btnStyle={{
               height: 35,
               width: '100%',
-              marginVertical: '1.1vw',
+              marginVertical: '2.1vw',
             }}
             onVerifyPress={() => navigator('profile')}
-            // textStyle={{fontSize: '1vw'}}
-            textStyle={{fontSize: 12}}
+            textStyle={{fontSize: '16px'}}
             title="Update Profile"
             bgColor={DARK_GREEN}
             textColor={WHITE}></Button>
@@ -458,34 +464,38 @@ function ProfileDetails(props) {
 
         {/* 3rd column */}
 
-        <View style={{flex: 0.3}}>
+        <View style={{flex: DEVICE_WIDTH > 767 ? '0.3' : '100%'}}>
           {/* <Text style={styles.heading}>Language</Text>
-          {language.map((item, index) => {
+
+
+        {language.map((item, index) => {
             return (
-              <RadioButton1
-                item={item}
-                selectedOption={item.isSelected}
-                outerStyle={[styles.outerCheckbox, {marginVertical: '0.5vw'}]}
-                innerStyle={[
-                  styles.outerCheckbox,
-                  {borderWidth: 17, borderRadius: '4vw'},
-                ]}
-                label={item.name}
-                onPress={(item) => itemClick(item)}
-              />
+                <RadioButton1
+                    item={item}
+                    selectedOption={item.isSelected}
+                    outerStyle={[styles.outerCheckbox, { marginVertical: '0.5vw' }]}
+                    innerStyle={[
+                        styles.outerCheckbox,
+                        { borderWidth: 17, borderRadius: '4vw' },
+                    ]}
+                    label={item.name}
+                    onPress={(item) => itemClick(item)}
+                />
             );
-          })}
-          <Button
+        })}
+        <Button
             onVerifyPress={() => navigator('change_language')}
-           btnStyle={{
-              height: 30,
-              width: '100%',
-              marginTop: '1.1vw',
+            textStyle={{ fontSize: '16px' }}
+            btnStyle={{
+
+                height: 30,
+                width: '100%',
+                marginTop: '1.1vw',
             }}
             title="Change"
-            textStyle={{fontSize: 12}}
+            textStyle={{ fontSize: 12 }}
             bgColor={DARK_GREEN}
-            textColor={WHITE}></Button> */}
+            textColor={WHITE}></Button>  */}
 
           {/* <View style={styles.hrLine} /> */}
           <Text style={styles.heading}>Notifications</Text>
@@ -523,7 +533,8 @@ const styles = StyleSheet.create({
   },
   heading: {
     // fontSize: '1.2vw',
-    // fontSize: normalize(3.5),
+    fontSize: '24px',
+
     fontWeight: '700',
     fontStyle: 'normal',
     color: '#313132',
@@ -533,7 +544,7 @@ const styles = StyleSheet.create({
   backBtn: {
     alignItems: 'flex-start',
     padding: '2vw',
-    paddingBottom: '1vw',
+    paddingBottom: '16px',
   },
   hrLine: {
     height: 1,

@@ -16,6 +16,8 @@ import {
   CardContent,
   CustomImage,
 } from '../../../components/Cards';
+import {Dimensions} from 'react-native';
+const DEVICE_WIDTH = Dimensions.get('window').width;
 const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 const {GREEN_TEXT, YELLOW, CIRCLE_GRAY, BUTTON_ORANGE} = COLORS;
 const generateDynamicColor = (order) => {
@@ -113,6 +115,7 @@ const TwentySix = (props) => {
       setDifferenceMessage(difference);
     }
   }, [props.submit_messages]);
+
   const onSubmit = (e) => {
     e.preventDefault();
     let params = {
@@ -121,6 +124,50 @@ const TwentySix = (props) => {
       assessment_id: assessment_id,
       assessment: assessment,
     };
+    let customMsg = '';
+    if (slugData == 'different,similar,i_do_not_know') {
+      let selectedIntemsofHeader = [];
+      assessmentData.content.map((head, index) => {
+        if (head.data == 'Different') {
+          selectedIntemsofHeader[0] = assessment.filter((element) =>
+            element.content.some(
+              (subElement) => subElement.assessment_content_id === head._id,
+            ),
+          );
+        }
+        if (head.data == 'Similar') {
+          selectedIntemsofHeader[1] = assessment.filter((element) =>
+            element.content.some(
+              (subElement) => subElement.assessment_content_id === head._id,
+            ),
+          );
+        }
+        if (head.data == 'I do not know') {
+          selectedIntemsofHeader[2] = assessment.filter((element) =>
+            element.content.some(
+              (subElement) => subElement.assessment_content_id === head._id,
+            ),
+          );
+        }
+      });
+      const key = 'assessment_header_id';
+      let X1 =
+        [
+          ...new Map(
+            selectedIntemsofHeader[0].map((item) => [item[key], item]),
+          ).values(),
+        ].length +
+        [
+          ...new Map(
+            selectedIntemsofHeader[2].map((item) => [item[key], item]),
+          ).values(),
+        ].length;
+
+      customMsg = `You identified ${X1} topics where your experiences and your partner's experiences may have been different or, at least, where you do not know if your experiences were similar or not.
+
+      It is possible that both your different experiences influence your idea of what it is like to "be a good mother" and "to be a good father". This means that in addition to creating an idea of you as a mother (the mother you want to be) you have also created an idea of your partner as a father/mother you want them to be, and your partner did the same. These ideas seem “natural” and “the absolute truth” because that is the reality you have always known - but your partner has lived another reality and, therefore, their ideas may be different​`;
+    }
+    // return;
     let a = [];
     let b = [];
     let c = [];
@@ -154,11 +201,19 @@ const TwentySix = (props) => {
             );
             if (positiveRes.length === 0) {
               dispatch(
-                AppActions.rearrangeAssessments(params, negativeMessage),
+                AppActions.rearrangeAssessments(
+                  params,
+                  negativeMessage,
+                  customMsg,
+                ),
               );
             } else {
               dispatch(
-                AppActions.rearrangeAssessments(params, positiveMessage),
+                AppActions.rearrangeAssessments(
+                  params,
+                  positiveMessage,
+                  customMsg,
+                ),
               );
             }
           }
@@ -170,11 +225,19 @@ const TwentySix = (props) => {
             );
             if (agreeMessage.length === 0) {
               dispatch(
-                AppActions.rearrangeAssessments(params, negativeMessage),
+                AppActions.rearrangeAssessments(
+                  params,
+                  negativeMessage,
+                  customMsg,
+                ),
               );
             } else {
               dispatch(
-                AppActions.rearrangeAssessments(params, positiveMessage),
+                AppActions.rearrangeAssessments(
+                  params,
+                  positiveMessage,
+                  customMsg,
+                ),
               );
             }
           }
@@ -206,7 +269,7 @@ const TwentySix = (props) => {
               c.push(notKnow);
             }
             let sum = [a[0].length + c[0].length, ...differenceMessage];
-            dispatch(AppActions.saveUserAssessment(params, sum));
+            dispatch(AppActions.saveUserAssessment(params, sum, customMsg));
           } else if (slugData === 'never,sometimes,oftentimes') {
             console.log('content message ?????', contentMessage);
             if (contentMessage.length) {
@@ -215,11 +278,19 @@ const TwentySix = (props) => {
               );
               if (positiveRes.length === 0) {
                 dispatch(
-                  AppActions.saveUserAssessment(params, negativeMessage),
+                  AppActions.saveUserAssessment(
+                    params,
+                    negativeMessage,
+                    customMsg,
+                  ),
                 );
               } else {
                 dispatch(
-                  AppActions.saveUserAssessment(params, positiveMessage),
+                  AppActions.saveUserAssessment(
+                    params,
+                    positiveMessage,
+                    customMsg,
+                  ),
                 );
               }
             }
@@ -231,11 +302,19 @@ const TwentySix = (props) => {
               );
               if (agreeMessage.length === 0) {
                 dispatch(
-                  AppActions.saveUserAssessment(params, negativeMessage),
+                  AppActions.saveUserAssessment(
+                    params,
+                    negativeMessage,
+                    customMsg,
+                  ),
                 );
               } else {
                 dispatch(
-                  AppActions.saveUserAssessment(params, positiveMessage),
+                  AppActions.saveUserAssessment(
+                    params,
+                    positiveMessage,
+                    customMsg,
+                  ),
                 );
               }
             }
@@ -369,28 +448,37 @@ const TwentySix = (props) => {
             })
           : []}
       </div>
-
-      <div className="row container" style={styles.wrapperOption}>
-        <div className="col-md-7 sm-7 col-7"></div>
-        {optionsData.length
-          ? optionsData
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, index) => {
-                //  console.log('item>>>>>>>>', item);
-                return (
-                  <div
-                    className="col-md-1 sm-1 col-1"
-                    style={{
-                      ...styles.optionContent,
-                      backgroundColor: generateDynamicColor(item.order),
-                    }}>
-                    <p style={styles.content}>
-                      {ReactHtmlParser(item.content)}
-                    </p>
-                  </div>
-                );
-              })
-          : null}
+      <div className="container">
+        <div className="row" style={styles.wrapperOption}>
+          <div className="col-md-7 sm-7 col-12"></div>
+          <div className="col-md-5 sm-5 col-12">
+            <div className="row">
+              {optionsData.length
+                ? optionsData
+                    .sort((a, b) => (a.order > b.order && 1) || -1)
+                    .map((item, index) => {
+                      //  console.log('item>>>>>>>>', item);
+                      return (
+                        <div
+                          className="col-md-3 sm-3 col-6"
+                          style={{marginBottom: '15px', display: 'flex'}}>
+                          <div
+                            style={{
+                              ...styles.optionContent,
+                              backgroundColor: generateDynamicColor(item.order),
+                              flex: '1 1 100%',
+                            }}>
+                            <p style={styles.content}>
+                              {ReactHtmlParser(item.content)}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })
+                : null}
+            </div>
+          </div>
+        </div>
       </div>
 
       {headersData.length
@@ -398,49 +486,80 @@ const TwentySix = (props) => {
             .sort((a, b) => (a.order > b.order && 1) || -1)
             .map((item) => {
               return (
-                <div className="row container" style={styles.wrapper}>
-                  <div className="col-md-7 sm-7 col-7" style={styles.header}>
-                    {ReactHtmlParser(item.header)}
+                <div className="container">
+                  <div className="row" style={styles.wrapper}>
+                    <div className="col-md-7 sm-7 col-12" style={styles.header}>
+                      {ReactHtmlParser(item.header)}
+                    </div>
+                    <div
+                      className="col-md-5 sm-5 col-12"
+                      style={{display: 'flex', marginBottom: '20px'}}>
+                      <div className="row" style={{flex: '1 1 100%'}}>
+                        {optionsData.length
+                          ? optionsData
+                              .sort((a, b) => (a.order > b.order && 1) || -1)
+                              .map((val) => {
+                                let prevContent = '';
+                                let currentContent = val.content;
+
+                                if (assessment.length) {
+                                  const headerId = assessment.find((ele) => {
+                                    return (
+                                      ele.assessment_header_id === item._id
+                                    );
+                                  });
+                                  if (
+                                    headerId &&
+                                    headerId.assessment_header_id
+                                  ) {
+                                    prevContent = headerId.content[0].content;
+                                  }
+                                }
+
+                                const isSelected =
+                                  prevContent === currentContent;
+                                return (
+                                  <div
+                                    className="col-md-3 sm-3 col-3"
+                                    style={{
+                                      flex: '1 1 100%',
+                                      display: 'flex',
+                                    }}>
+                                    <div
+                                      style={{
+                                        ...styles.selectedDiv,
+                                        borderColor: generateDynamicColor(
+                                          val.order,
+                                        ),
+                                        backgroundColor: isSelected
+                                          ? generateDynamicColor(val.order)
+                                          : '#0000',
+                                        flex: '1 1 100%',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        height:
+                                          DEVICE_WIDTH > 767 ? '80px' : '45px',
+                                      }}
+                                      onClick={() => onSelect(val, item)}>
+                                      <p style={styles.selectedWrapper}>
+                                        {isSelected ? (
+                                          <img
+                                            src={right}
+                                            style={styles.selectedBox}
+                                          />
+                                        ) : (
+                                          ''
+                                        )}
+                                      </p>
+                                    </div>
+                                  </div>
+                                );
+                              })
+                          : null}
+                      </div>
+                    </div>
                   </div>
-                  {optionsData.length
-                    ? optionsData
-                        .sort((a, b) => (a.order > b.order && 1) || -1)
-                        .map((val) => {
-                          let prevContent = '';
-                          let currentContent = val.content;
-
-                          if (assessment.length) {
-                            const headerId = assessment.find((ele) => {
-                              return ele.assessment_header_id === item._id;
-                            });
-                            if (headerId && headerId.assessment_header_id) {
-                              prevContent = headerId.content[0].content;
-                            }
-                          }
-
-                          const isSelected = prevContent === currentContent;
-                          return (
-                            <div
-                              className="col-md-1 sm-1 col-1"
-                              style={{
-                                ...styles.selectedDiv,
-                                borderColor: generateDynamicColor(val.order),
-                                backgroundColor: isSelected
-                                  ? generateDynamicColor(val.order)
-                                  : '#0000',
-                              }}
-                              onClick={() => onSelect(val, item)}>
-                              <p style={styles.selectedWrapper}>
-                                {isSelected ? (
-                                  <img src={right} style={styles.selectedBox} />
-                                ) : (
-                                  ''
-                                )}
-                              </p>
-                            </div>
-                          );
-                        })
-                    : null}
                 </div>
               );
             })
@@ -489,6 +608,7 @@ const styles = {
     borderRadius: '3px',
     paddingTop: '20px',
     paddingBottom: '20px',
+    marginBottom: '20px',
   },
   content: {
     color: COLORS.WHITE,
@@ -499,8 +619,6 @@ const styles = {
   wrapper: {
     justifyContent: 'space-between',
     display: 'flex',
-    marginTop: '20px',
-    marginBottom: '20px',
   },
   optionContent: {
     borderRadius: '3px',

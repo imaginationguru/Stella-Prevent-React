@@ -10,7 +10,6 @@ import SadActive from '../assets/images/sadActive/sadActive.png';
 import Angry from '../assets/images/angry/angry.png';
 import AngryActive from '../assets/images/angryActive/angryActive.png';
 const isLive = false;
-
 export default {
   BASE_URL: isLive
     ? 'https://stella-prevent-careportal.curio-dtx.com/api/'
@@ -22,7 +21,6 @@ export default {
   // BASE_URL: 'http://104.43.172.201:4001/api/',
   // IMAGE_BASE_URL: 'http://104.43.172.201:4001/', //QA
   /********************************** * URL ***********************************/
-
   URL: {
     LOGIN: 'login',
     REGISTER: 'register',
@@ -294,6 +292,9 @@ export default {
     GET_WEEKLY_SUMMARY_REPORT_REQUEST: 'GET_WEEKLY_SUMMARY_REPORT_REQUEST',
     GET_WEEKLY_SUMMARY_REPORT_SUCCESS: 'GET_WEEKLY_SUMMARY_REPORT_SUCCESS',
     GET_WEEKLY_SUMMARY_REPORT_FAIL: 'GET_WEEKLY_SUMMARY_REPORT_FAIL',
+
+    SET_TRACKER_STATUS: 'SET_TRACKER_STATUS',
+    CLEAR_MODULE_ONE: 'CLEAR_MODULE_ONE',
   },
 
   /***************************COLORS*************************** */
@@ -333,5 +334,8 @@ export default {
     LIGHT_BLACK: '#35353F',
     PLAN_GRAY: '#A9A9AA',
     text_Gray: '#697386',
+    LIGHT_SHADOW_GREEN: '#C9E2DE',
+    GREY: '#676767' /* Font Regular */,
+    GreenForSlider: '#6FCF97',
   },
 };

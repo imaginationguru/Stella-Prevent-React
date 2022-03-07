@@ -138,7 +138,7 @@ const commonStyles = {
     flexWrap: 'wrap',
     //border: '1px solid black',
   },
-  imageSize: {width: '160px', height: '160px', margin: '7px'},
+  imageSize: {width: '150px', height: '150px', margin: '7px'},
   //********template Four styles end  */
   descFive: {
     marginLeft: DEVICE_WIDTH > 767 ? '200px' : '0',

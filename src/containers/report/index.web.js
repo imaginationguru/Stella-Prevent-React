@@ -2,34 +2,49 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
-import {TouchableOpacity, View, Text, FlatList, Dimensions} from 'react-native';
+import React, { useState, useEffect } from 'react';
+//import StyleSheet from 'react-native-media-query';
+import {
+  TouchableOpacity,
+  View,
+  Text,
+  FlatList,
+  Dimensions, Image,
+  StyleSheet,
+} from 'react-native';
 import MasterLayout from '../../components/MasterLayout';
 import BackBtn from '../../components/common/backbtn';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import GLOBALS from '../../constants';
+
 import * as AppActions from '../../actions';
 
 import momentZone from 'moment-timezone';
 import BackToDashboard from '../../components/common/backToDashboard';
-import {Line} from 'react-chartjs-2';
-const {STRINGS, COLORS, MOODS_ARRAY, IMAGE_BASE_URL} = GLOBALS;
-import {getItem} from '../../utils/AsyncUtils';
+import { Line } from 'react-chartjs-2';
+const { STRINGS, FONTS, COLORS, MOODS_ARRAY, IMAGE_BASE_URL } = GLOBALS;
+
+const { LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN } = COLORS;
+
+import { getItem } from '../../utils/AsyncUtils';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 let currentTimeZone = momentZone.tz.guess();
 
-const LineGraphUI = ({xAxis, yAxis, lable}) => {
+const LineGraphUI = ({ xAxis, yAxis, lable }) => {
   const graphOptions = {
     scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
+      x: {
+        ticks: {
+          color: COLORS.WHITE,
         },
-      ],
+      },
+      y: {
+        ticks: {
+          color: COLORS.WHITE,
+        },
+      },
     },
   };
 
@@ -40,26 +55,40 @@ const LineGraphUI = ({xAxis, yAxis, lable}) => {
         datasets: [
           {
             label: lable,
+            lineTension: 0.2,
+            radius: 5,
             data: yAxis,
+
             // backgroundColor: 'rgba(0, 128, 0, 0.5)',
-            // backgroundColor: 'linear-gradient(to right, #20f08b, #07dfb1)',
-            hoverBackgroundColor: COLORS.DARK_GREEN,
-            borderColor: COLORS.GREEN_TEXT,
+            //  backgroundColor: 'linear-gradient(to right, #20f08b, #07dfb1)',
+            hoverBackgroundColor: COLORS.WHITE,
+            // backgroundColor: 'red',
+            borderColor: COLORS.WHITE,
             fill: 'start',
           },
         ],
       }}
+      //  bezier
       // pointHoverBorderColor="red"
-      // bezier,
-
+      //  bezier,
+      // type={'doughnut'}
       options={graphOptions}
-      style={{marginBottom: 60, marginTop: 40}}
+      style={{
+        marginBottom: "2vw",
+        marginTop: 0,
+        borderRadius: 5,
+        background:
+          'linear-gradient(40deg, rgba(69,136,198,0.9) 30%, #49A694 70%)',
+        backgroundColor: '#49A694',
+      }}
+    // height={'150vw'}
+    // width={"1vw"}
     />
   );
 };
-const Report = ({location}) => {
+const Report = ({ location }) => {
   let isFromCard = location?.state?.isFromCard;
-  const {getWeeklySummaryReportData} = useSelector((state) => state.tracker);
+  const { getWeeklySummaryReportData } = useSelector((state) => state.tracker);
   const dispatch = useDispatch();
   console.log('get weekly summary report data', getWeeklySummaryReportData);
   useEffect(() => {
@@ -183,26 +212,26 @@ const Report = ({location}) => {
   //sleep
   let sleepData =
     getWeeklySummaryReportData !== undefined &&
-    getWeeklySummaryReportData?.newSleepTrackerData &&
-    getWeeklySummaryReportData?.newSleepTrackerData?.length
+      getWeeklySummaryReportData?.newSleepTrackerData &&
+      getWeeklySummaryReportData?.newSleepTrackerData?.length
       ? daysCheckWithSleep(getWeeklySummaryReportData?.newSleepTrackerData)
       : [];
 
   let sleepHoursArray = sleepData?.length
     ? sleepData?.map((item) => {
-        //  if(item.total_hours){
-        return item.total_hours + item.total_minutes / 60;
-        // }
-        // else{
-        //   return 0;
-        // }
-      })
+      //  if(item.total_hours){
+      return item.total_hours + item.total_minutes / 60;
+      // }
+      // else{
+      //   return 0;
+      // }
+    })
     : [];
 
   let sleepXAxis = sleepData?.length
     ? sleepData?.map((item) => {
-        return moment(item.date).format('MM/DD');
-      })
+      return moment(item.date).format('MM/DD');
+    })
     : [];
 
   if (getWeeklySummaryReportData !== undefined) {
@@ -218,7 +247,7 @@ const Report = ({location}) => {
     //mood graph
     let res =
       getWeeklySummaryReportData?.newMooddataavg &&
-      getWeeklySummaryReportData?.newMooddataavg.length
+        getWeeklySummaryReportData?.newMooddataavg.length
         ? daysCheckWithMood(getWeeklySummaryReportData?.newMooddataavg)
         : [];
 
@@ -230,10 +259,10 @@ const Report = ({location}) => {
     //activity
     let activityData =
       getWeeklySummaryReportData?.newactivitytackercount &&
-      getWeeklySummaryReportData?.newactivitytackercount.length
+        getWeeklySummaryReportData?.newactivitytackercount.length
         ? daysCheckWithActivity(
-            getWeeklySummaryReportData?.newactivitytackercount,
-          )
+          getWeeklySummaryReportData?.newactivitytackercount,
+        )
         : [];
 
     activityData.forEach((element) => {
@@ -245,7 +274,7 @@ const Report = ({location}) => {
 
     let pointsData =
       getWeeklySummaryReportData?.newPointsdata &&
-      getWeeklySummaryReportData?.newPointsdata.length
+        getWeeklySummaryReportData?.newPointsdata.length
         ? daysCheckWithPoints(getWeeklySummaryReportData.newPointsdata)
         : [];
     pointsData.forEach((element) => {
@@ -255,17 +284,17 @@ const Report = ({location}) => {
   }
   let activityData =
     getWeeklySummaryReportData !== undefined &&
-    getWeeklySummaryReportData.newGetactvityresponselistdata &&
-    getWeeklySummaryReportData.newGetactvityresponselistdata.length
+      getWeeklySummaryReportData.newGetactvityresponselistdata &&
+      getWeeklySummaryReportData.newGetactvityresponselistdata.length
       ? getWeeklySummaryReportData.newGetactvityresponselistdata
-          .filter((item) => item.activityName && item.image && item.totalcount)
-          .map((item) => {
-            return {
-              activityName: item.activityName || '',
-              image: item.image,
-              totalcount: item.totalcount,
-            };
-          })
+        .filter((item) => item.activityName && item.image && item.totalcount)
+        .map((item) => {
+          return {
+            activityName: item.activityName || '',
+            image: item.image,
+            totalcount: item.totalcount,
+          };
+        })
       : null;
 
   return (
@@ -275,15 +304,19 @@ const Report = ({location}) => {
         {isFromCard ? <BackBtn title="Back to Card" /> : <BackToDashboard />}
         <View
           style={{
-            width: '50%',
+            width: '60%',
             marginLeft: 'auto',
             marginRight: 'auto',
             height: '40%',
           }}>
+          <Text style={styles.headerStyle}>
+            Report Date: {moment().format('MM/DD/YYYY')}
+          </Text>
+          <Text style={styles.labelText}>Daily Sleep Tracker: hours/day</Text>
           {sleepXAxis &&
-          sleepXAxis.length &&
-          sleepHoursArray &&
-          sleepHoursArray.length ? (
+            sleepXAxis.length &&
+            sleepHoursArray &&
+            sleepHoursArray.length ? (
             <LineGraphUI
               xAxis={sleepXAxis.reverse()}
               yAxis={sleepHoursArray.reverse()}
@@ -293,50 +326,54 @@ const Report = ({location}) => {
             <LineGraphUI lable={'Daily Sleep Tracker: hours/day'} />
           )}
 
+          <Text style={styles.labelText}>Average Daily Mood Report</Text>
           {moodXAxis && moodXAxis.length && moodYAxis && moodYAxis.length ? (
             <LineGraphUI
               xAxis={moodXAxis.reverse()}
               yAxis={moodYAxis.reverse()}
-              lable={'Average Daily Mood  Report'}
+              lable={'Average Daily Mood Report'}
             />
           ) : (
             <LineGraphUI lable={'Average Daily Mood  Report'} />
           )}
-          <Text>Weekly Mood Report</Text>
+          <Text style={styles.labelText}>Weekly Mood Report</Text>
           {getWeeklySummaryReportData !== undefined &&
-          getWeeklySummaryReportData.newMooddataavg &&
-          getWeeklySummaryReportData.newMooddataavg.length ? (
+            getWeeklySummaryReportData.newMooddataavg &&
+            getWeeklySummaryReportData.newMooddataavg.length ? (
             <FlatList
               contentContainerStyle={{
-                marginTop: 20,
+                alignItems: 'flex-start',
                 flexDirection: 'row',
                 justifyContent: 'space-around',
+                marginBottom: 10,
               }}
               horizontal={true}
               data={moodData}
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
               keyExtractor={(item) => `${item._id}`}
-              renderItem={({item, index}) => {
+              renderItem={({ item, index }) => {
                 console.log('item??????', item.activeImage);
                 return (
                   <View
                     key={index}
                     style={{
-                      padding: 10,
+                      paddingBottom: 10,
                     }}>
                     {item.moodCountValue ? (
-                      <div style={{display: 'flex'}}>
+                      <div style={{ display: 'flex', marginVertical: 10 }}>
                         <img
                           style={{
                             height: 40,
                             width: 40,
-                            // marginLeft: 10,
-                            // marginRight: 10,
                           }}
                           src={item.activeImage}
                         />
-                        <Text>{item.moodCountValue}</Text>
+                        <View style={styles.badgeConatiner}>
+                          <Text style={styles.badgeText}>
+                            {item.moodCountValue}
+                          </Text>
+                        </View>
                       </div>
                     ) : null}
                   </View>
@@ -346,11 +383,14 @@ const Report = ({location}) => {
           ) : (
             <Text>'No Record Found'</Text>
           )}
+          <Text style={styles.labelText}>
+            Average Activity Report: Number of Activities
+          </Text>
 
           {activityXAxis &&
-          activityXAxis.length &&
-          activityYAxis &&
-          activityYAxis.length ? (
+            activityXAxis.length &&
+            activityYAxis &&
+            activityYAxis.length ? (
             <LineGraphUI
               xAxis={activityXAxis.reverse()}
               yAxis={activityYAxis.reverse()}
@@ -359,46 +399,56 @@ const Report = ({location}) => {
           ) : (
             <LineGraphUI lable={'Weekly Activity Quality Report'} />
           )}
-          <Text>Weekly Activity Report</Text>
+          <Text style={styles.labelText}>Weekly Activity Report</Text>
           <FlatList
             contentContainerStyle={{
               flexGrow: 1,
-              marginTop: 10,
+              marginBottom: 10,
+              flexWrap: "wrap",
+              width: "100%",
+              justifyContent: 'space-between',
+              padding: 5,
+              overflow: "hidden"
             }}
             data={activityData}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item) => `${item._id}`}
             ListEmptyComponent={<Text>No record for this Week</Text>}
-            numColumns={8}
-            renderItem={({item, index}) => (
-              <View
-                style={{
-                  alignItems: 'center',
-                  margin: 15,
-                  marginTop: 15,
-                  width: '8%',
-                  // border: '1px solid red',
-                }}
-                key={index}>
-                <img src={IMAGE_BASE_URL + `${item.image}`} />
-                <Text
-                  style={[
-                    {
-                      fontSize: 12,
-                      marginTop: 10,
-                      // fontWeight: '600',
-                    },
-                  ]}>
-                  {item.activityName}
-                </Text>
-              </View>
-            )}
+            numColumns={4}
+            renderItem={({ item, index }) => {
+              console.log(item.image, "item.image......")
+              return (
+                <View
+                  style={{
+                    paddingHorizontal: 5
+                    // width: '100%',
+                    // margin: 15,
+                    // marginTop: 5,
+                    // justifyContent: 'space-between'
+                  }}
+                  key={index}>
+
+                  <div style={{ display: 'flex' }}>
+                    <Image
+                      style={[styles.imageContainer,]}
+                      source={`${item.image}`}
+                    />
+                    <View style={styles.badgeConatiner}>
+                      <Text style={styles.badgeText}>{item.totalcount}</Text>
+                    </View>
+                  </div>
+                  <Text numberOfLines={3} style={styles.activity_name}>{item.activityName}</Text>
+                </View>
+              );
+            }
+            }
           />
+          <Text style={styles.labelText}>Your total Points for the week</Text>
           {pointsXAxis &&
-          pointsXAxis.length &&
-          pointsYAxis &&
-          pointsYAxis.length ? (
+            pointsXAxis.length &&
+            pointsYAxis &&
+            pointsYAxis.length ? (
             <LineGraphUI
               xAxis={pointsXAxis.reverse()}
               yAxis={pointsYAxis.reverse()}
@@ -413,3 +463,57 @@ const Report = ({location}) => {
   );
 };
 export default Report;
+const styles = StyleSheet.create({
+  headerStyle: {
+    fontWeight: 'bold',
+    color: DARK_GREEN,
+    fontSize: 18,
+    fontFamily: FONTS.SEMI_BOLD,
+    fontWeight: '700',
+    paddingVertical: 5,
+  },
+  labelText: {
+    fontFamily: FONTS.SEMI_BOLD,
+    fontWeight: '700',
+    fontSize: 14,
+    color: COLORS.SOFT_GRAY,
+    paddingVertical: 10,
+  },
+  badgeText: {
+    fontFamily: FONTS.REGULAR,
+    fontWeight: '200',
+    fontSize: 12,
+    color: COLORS.WHITE,
+    paddingVertical: 10,
+  },
+  activity_name: {
+    fontFamily: FONTS.REGULAR,
+    fontWeight: '200',
+    fontSize: 12,
+    color: COLORS.SOFT_GRAY,
+    paddingVertical: 5,
+    width: 50
+  },
+  badgeConatiner: {
+    width: 20,
+    height: 20,
+    backgroundColor: COLORS.DARK_GREEN,
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    left: -10,
+    bottom: 0,
+    position: 'relative',
+    zIndex: 12,
+  },
+  imageContainer: {
+    height: 30,
+    width: 30,
+
+    // '@media (max-width: 800px)': {
+    //   backgroundColor: 'red',
+    //   width: 140,
+    // },
+  }
+
+});

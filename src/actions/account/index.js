@@ -21,7 +21,7 @@ export function changeLanguage(param) {
         //   type: ACTION_TYPE.GET_LANGUGAE_SUCCESS,
         //   payload: json.data,
         // });
-        customAlert(json.message,"success")
+        customAlert(json.message, 'success');
         // dispatch({
         //   type: ACTION_TYPE.SUCCESS_MESSAGE,
         //   payload: json.message,
@@ -38,7 +38,7 @@ export function changeLanguage(param) {
           //   type: ACTION_TYPE.ERROR,
           //   payload: json.message,
           // });
-          customAlert( json.message,"error")
+          customAlert(json.message, 'error');
         }
       }
       dispatch(loadingAction(false));
@@ -49,7 +49,10 @@ export function changeLanguage(param) {
       //   type: ACTION_TYPE.ERROR,
       //   payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
       // });
-      customAlert( error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,"error")
+      customAlert(
+        error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        'error',
+      );
       dispatch({
         type: ACTION_TYPE.LOGIN_FAIL,
         payload: error,
@@ -59,177 +62,194 @@ export function changeLanguage(param) {
 }
 
 export function toggleNotification(param) {
-    return async (dispatch) => {
-      try {
-        dispatch(loadingAction(true));
-        let json = await RestClient.postCall(URL.UPDATE_NOTIFICATION, param);
-        console.log('codeLogin', json);
-        if (json.code === 200) {
+  return async (dispatch) => {
+    try {
+      dispatch(loadingAction(true));
+      let json = await RestClient.postCall(URL.UPDATE_NOTIFICATION, param);
+      console.log('codeLogin', json);
+      if (json.code === 200) {
+        // dispatch({
+        //   type: ACTION_TYPE.GET_NOTIFICATION_SUCCESS,
+        //   payload: json.data,
+        // });
+        // dispatch({
+        //   type: ACTION_TYPE.SUCCESS_MESSAGE,
+        //   payload: json.message,
+        // })
+        customAlert(json.message, 'success');
+      } else {
+        if (json.code === 400) {
           // dispatch({
-          //   type: ACTION_TYPE.GET_NOTIFICATION_SUCCESS,
-          //   payload: json.data,
+          //   type: ACTION_TYPE.ERROR,
+          //   payload: json.message,
           // });
-          // dispatch({
-          //   type: ACTION_TYPE.SUCCESS_MESSAGE,
-          //   payload: json.message,
-          // })
-          customAlert(json.message,"success")
-        } else {
-          if (json.code === 400) {
-            // dispatch({
-            //   type: ACTION_TYPE.ERROR,
-            //   payload: json.message,
-            // });
-            customAlert( json.message,"error")
-          }
+          customAlert(json.message, 'error');
         }
-        dispatch(loadingAction(false));
-      } catch (error) {
-        console.log('error>>>>>>>>>>>', error);
-        dispatch(loadingAction(false));
-        customAlert( error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,"error")
-        // dispatch({
-        //   type: ACTION_TYPE.ERROR,
-        //   payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
-        // });
-        dispatch({
-          type: ACTION_TYPE.LOGIN_FAIL,
-          payload: error,
-        });
       }
-    };
-  }
-  
-  export function updatePassword(param) {
-    return async (dispatch) => {
-      try {
-        dispatch(loadingAction(true));
-        let json = await RestClient.postCall(URL.UPDATE_PASSWORD, param);
-        console.log('codeLogin', json);
-        if (json.code === 200) {
-          dispatch({
-            type: ACTION_TYPE.GET_USER_SUCCESS,
-            payload: json.data,
-          });
-          // dispatch({
-          //   type: ACTION_TYPE.SUCCESS_MESSAGE,
-          //   payload: json.message,
-          // })
-          customAlert(json.message,"success")
-        } else {
-          if (json.code === 400) {
-            // dispatch({
-            //   type: ACTION_TYPE.ERROR,
-            //   payload: json.message,
-            // });
-            customAlert( json.message,"error")
-          }
-        }
-        dispatch(loadingAction(false));
-      } catch (error) {
-        dispatch(loadingAction(false));
-        console.log('error>>>>>>>>>>>', error);
-        // dispatch({
-        //   type: ACTION_TYPE.ERROR,
-        //   payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
-        // });
-        customAlert( error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,"error")
-        dispatch({
-          type: ACTION_TYPE.LOGIN_FAIL,
-          payload: error,
-        });
-      }
-    };
-  }
-  
-  export function uploadProfile(param) {
-    return async (dispatch) => {
-      try {
-        dispatch(loadingAction(true));
-        let json = await RestClient.postCall(URL.UPDATE_PROFILE, param);
-        console.log('URL.UPDATE_PROFILE', json);
-        if (json.code === 200) {
-          dispatch({
-            type: ACTION_TYPE.GET_USER_SUCCESS,
-            payload: json.data,
-          });
-          customAlert(json.message,"success")
-          // dispatch({
-          //   type: ACTION_TYPE.SUCCESS_MESSAGE,
-          //   payload: json.message,
-          // })
-          dispatch({
-            type: ACTION_TYPE.SET_PROFILE_IMAGE,
-            payload: json.data.user.image_path,
-          })
-        } else {
-          if (json.code === 400) {
-            // dispatch({
-            //   type: ACTION_TYPE.ERROR,
-            //   payload: json.message,
-            // });
-            customAlert( json.message,"error")
-          }
-        }
-        dispatch(loadingAction(false));
-      } catch (error) {
-        console.log('error>>>>>>>>>>>', error);
-        dispatch(loadingAction(false));
-        // dispatch({
-        //   type: ACTION_TYPE.ERROR,
-        //   payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
-        // });
-        customAlert(error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,"error")
-        dispatch({
-          type: ACTION_TYPE.LOGIN_FAIL,
-          payload: error,
-        });
-      }
-    };
-  }
+      dispatch(loadingAction(false));
+    } catch (error) {
+      console.log('error>>>>>>>>>>>', error);
+      dispatch(loadingAction(false));
+      customAlert(
+        error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        'error',
+      );
+      // dispatch({
+      //   type: ACTION_TYPE.ERROR,
+      //   payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+      // });
+      dispatch({
+        type: ACTION_TYPE.LOGIN_FAIL,
+        payload: error,
+      });
+    }
+  };
+}
 
-  export function updateUserDetails(param) {
-    return async (dispatch) => {
-      try {
-        dispatch(loadingAction(true));
-        let json = await RestClient.postCall(URL.UPDATE_USER_DATA, param);
-        console.log('URL.UPDATE_PROFILE', json);
-        if (json.code === 200) {
-          // dispatch({
-          //   type: ACTION_TYPE.GET_USER_SUCCESS,
-          //   payload: json.data,
-          // });
-          // dispatch({
-          //   type: ACTION_TYPE.SUCCESS_MESSAGE,
-          //   payload: json.message,
-          // })
-          
-          customAlert(json.message,"success")
-        } else {
-          if (json.code === 400) {
-            // dispatch({
-            //   type: ACTION_TYPE.ERROR,
-            //   payload: json.message,
-            // });
-            customAlert( json.message,"error")
-          }
-        }
-        dispatch(loadingAction(false));
-      } catch (error) {
-        console.log('error>>>>>>>>>>>', error);
-        dispatch(loadingAction(false));
-        // dispatch({
-        //   type: ACTION_TYPE.ERROR,
-        //   payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
-        // });
-        customAlert( error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,"error")
+export function updatePassword(param) {
+  return async (dispatch) => {
+    try {
+      dispatch(loadingAction(true));
+      let json = await RestClient.postCall(URL.UPDATE_PASSWORD, param);
+      console.log('codeLogin', json);
+      if (json.code === 200) {
         dispatch({
-          type: ACTION_TYPE.LOGIN_FAIL,
-          payload: error,
+          type: ACTION_TYPE.GET_USER_SUCCESS,
+          payload: json.data,
         });
+        // dispatch({
+        //   type: ACTION_TYPE.SUCCESS_MESSAGE,
+        //   payload: json.message,
+        // })
+        customAlert(json.message, 'success');
+      } else {
+        if (json.code === 400) {
+          // dispatch({
+          //   type: ACTION_TYPE.ERROR,
+          //   payload: json.message,
+          // });
+          customAlert(json.message, 'error');
+        }
       }
-    };
-  }
+      dispatch(loadingAction(false));
+    } catch (error) {
+      dispatch(loadingAction(false));
+      console.log('error>>>>>>>>>>>', error);
+      // dispatch({
+      //   type: ACTION_TYPE.ERROR,
+      //   payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+      // });
+      customAlert(
+        error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        'error',
+      );
+      dispatch({
+        type: ACTION_TYPE.LOGIN_FAIL,
+        payload: error,
+      });
+    }
+  };
+}
+
+export function uploadProfile(param) {
+  return async (dispatch) => {
+    try {
+      dispatch(loadingAction(true));
+      let json = await RestClient.postCall(URL.UPDATE_PROFILE, param);
+      console.log('URL.UPDATE_PROFILE', json);
+      if (json.code === 200) {
+        dispatch({
+          type: ACTION_TYPE.GET_USER_SUCCESS,
+          payload: json.data,
+        });
+        customAlert(json.message, 'success');
+        // dispatch({
+        //   type: ACTION_TYPE.SUCCESS_MESSAGE,
+        //   payload: json.message,
+        // })
+        dispatch({
+          type: ACTION_TYPE.SET_PROFILE_IMAGE,
+          payload: json.data.user.image_path,
+        });
+        dispatch(loadingAction(false));
+      } else {
+        if (json.code === 400) {
+          // dispatch({
+          //   type: ACTION_TYPE.ERROR,
+          //   payload: json.message,
+          // });
+          customAlert(json.message, 'error');
+          dispatch(loadingAction(false));
+        }
+      }
+    } catch (error) {
+      console.log('error>>>>>>>>>>>', error);
+      dispatch(loadingAction(false));
+      // dispatch({
+      //   type: ACTION_TYPE.ERROR,
+      //   payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+      // });
+      customAlert(
+        error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        'error',
+      );
+      dispatch({
+        type: ACTION_TYPE.LOGIN_FAIL,
+        payload: error,
+      });
+    }
+  };
+}
+
+export function updateUserDetails(param) {
+  return async (dispatch) => {
+    try {
+      dispatch(loadingAction(true));
+      let json = await RestClient.postCall(URL.UPDATE_USER_DATA, param);
+      console.log('URL.UPDATE_PROFILE', json);
+      if (json.code === 200) {
+        // dispatch({
+        //   type: ACTION_TYPE.GET_USER_SUCCESS,
+        //   payload: json.data,
+        // });
+        // dispatch({
+        //   type: ACTION_TYPE.SUCCESS_MESSAGE,
+        //   payload: json.message,
+        // })
+
+        customAlert(json.message, 'success');
+        dispatch({
+          type: ACTION_TYPE.SET_PROFILE_IMAGE,
+          payload: json.data.user.image_path,
+        });
+      } else {
+        if (json.code === 400) {
+          // dispatch({
+          //   type: ACTION_TYPE.ERROR,
+          //   payload: json.message,
+          // });
+          customAlert(json.message, 'error');
+        }
+      }
+      dispatch(loadingAction(false));
+    } catch (error) {
+      console.log('error>>>>>>>>>>>', error);
+      dispatch(loadingAction(false));
+      // dispatch({
+      //   type: ACTION_TYPE.ERROR,
+      //   payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+      // });
+      customAlert(
+        error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        'error',
+      );
+      dispatch({
+        type: ACTION_TYPE.LOGIN_FAIL,
+        payload: error,
+      });
+    }
+  };
+}
 // //*****************************Register*************************** */
 
 // export function register(params, componentId) {
@@ -661,7 +681,7 @@ export function toggleNotification(param) {
 //            navigatorPush({componentId, screenName: 'Dashboard'});
 //           }
 //         }
-      
+
 //       } else {
 //         if (json.code === 400) {
 //           dispatch({
@@ -705,7 +725,7 @@ export function toggleNotification(param) {
 //         storeItem('userId', json.data.user._id);
 //         storeItem('firstName', json.data.user.firstName);
 //         storeItem('lastName', json.data.user.lastName);
-//         storeItem('hospitalId', json.data.user.hospital_id);  
+//         storeItem('hospitalId', json.data.user.hospital_id);
 //       } else {
 //         if (json.code === 400) {
 //           dispatch({

@@ -612,7 +612,7 @@ const ThirtyFour = (props) => {
                                           const isDelete =
                                             idx === 1 && i < arr.length - 1;
                                           return (
-                                            <div style={styles.plusIconWrapper}>
+                                            <div style={styles.plusIconWrapper} className="v-p-field">
                                               <input
                                                 type="text"
                                                 className="f-field"

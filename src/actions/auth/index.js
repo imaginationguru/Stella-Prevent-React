@@ -1,6 +1,6 @@
 import GLOBALS from '../../constants';
 import RestClient from '../../helpers/RestClient';
-import {navigatorPush,navigatortoStart} from '../../config/navigationOptions';
+import {navigatorPush, navigatortoStart} from '../../config/navigationOptions';
 import {storeItem, getItem} from '../../utils/AsyncUtils';
 import {loadingAction} from '../common';
 const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
@@ -16,6 +16,19 @@ import {customAlert} from '../../helpers/commonAlerts.web';
 //******************************Login******************* */
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
+
+export function updateTrackerStatus(user) {
+  return async (dispatch) => {
+    dispatch({
+      type: ACTION_TYPE.SET_TRACKER_STATUS,
+      payload: {
+        sleepChecked: user.sleepChecked,
+        moodChecked: user.moodChecked,
+        activityChecked: user.activityChecked,
+      },
+    });
+  };
+}
 
 export function login(email, password, componentId) {
   return async (dispatch) => {
@@ -43,14 +56,14 @@ export function login(email, password, componentId) {
         storeItem('lastName', json.data.user.lastName);
         storeItem('hospitalId', json.data.user.hospital_id);
         storeItem('epdsAssesment', json.data.epds_assesment);
-         dispatch({
+        dispatch({
           type: ACTION_TYPE.SET_PROFILE_IMAGE,
-           payload: json.data.user.image_path,
-         })
-        if (json.data.user.isProgramBind !== true) {
-          console.log('bind PAI hit');
-          dispatch(bindProgram());
-        }
+          payload: json.data.user.image_path,
+        });
+        //   if (json.data.user.isProgramBind !== true) {
+        //  console.log('bind PAI hit');
+        dispatch(bindProgram());
+        //    }
 
         dispatch(getProgramById());
 
@@ -130,12 +143,13 @@ export function register(params, componentId) {
 
 //********************************Bind user cards************************ */
 
-export function bindProgram() {
+export function bindProgram(cb) {
   let programId = getItem('programId');
   let userId = getItem('userId');
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.BIND_PROGRAM_USER_REQUEST});
     try {
+      console.log('bind program....');
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.BIND_PROGRAM_USER, {
         program_id: programId,
@@ -158,7 +172,10 @@ export function bindProgram() {
           type: ACTION_TYPE.BIND_PROGRAM_USER_FAIL,
         });
       }
+      dispatch(loadingAction(false));
+      cb();
     } catch (error) {
+      cb();
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error,
@@ -173,24 +190,30 @@ export function bindProgram() {
 
 //*********************************GET PROGRAM WITH ID********************* */
 
-export function getProgramById() {
+export function getProgramById(isLoading = true, cb) {
   let programId = getItem('programId');
   let userId = getItem('userId');
 
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.GET_PROGRAM_REQUEST});
     try {
-      dispatch(loadingAction(true));
+      if (isLoading) {
+        dispatch(loadingAction(true));
+      }
       let json = await RestClient.getCall(
         `${URL.GET_PROGRAM_BY_ID}/${programId}/${userId}`,
       );
       if (json.code === 200) {
+        dispatch(updateTrackerStatus(json.data.user));
         dispatch({
           type: ACTION_TYPE.GET_PROGRAM_SUCCESS,
           payload: json.data.cards,
         });
         storeItem('duration', json.data.program.duration);
         dispatch(loadingAction(false));
+        if (cb) {
+          cb();
+        }
       } else {
         if (json.code === 400) {
           dispatch({
@@ -313,30 +336,31 @@ export function logout() {
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.LOGOUT_USER_REQUEST});
     try {
-      dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.LOGOUT, {
         user_id: userId,
       });
       console.log(json, userId, 'on logout');
+      setTimeout(() => {
+        navigatortoStart();
+      }, localStorage.clear());
       if (json.code === 200) {
         dispatch({
           type: ACTION_TYPE.LOGOUT_USER_SUCCESS,
           payload: json.data,
         });
-        setTimeout(() => {
-        //  navigatorPush({screenName: 'DailyLearningWeeks'});
-          navigatortoStart()
-        }, localStorage.clear());
-        
-      //  navigatorPush({screenName: 'DailyLearningWeeks'});
-
-        dispatch(loadingAction(false));
+        dispatch({
+          type: ACTION_TYPE.CLEAR_MODULE_ONE,
+          payload: json.data,
+        });
       } else {
         dispatch({
           type: ACTION_TYPE.LOGOUT_USER_FAIL,
         });
       }
     } catch (error) {
+      setTimeout(() => {
+        navigatortoStart();
+      }, localStorage.clear());
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error,
@@ -439,20 +463,20 @@ export function verifySocialUser(params, componentId, cb) {
           storeItem('firstName', json.data.user.firstName);
           storeItem('lastName', json.data.user.lastName);
           storeItem('hospitalId', json.data.user.hospital_id);
-          if (json.data.user.isProgramBind !== true) {
-            console.log('bind PAI hit');
-            dispatch(bindProgram());
-          }
-          dispatch(getProgramById());
+          // if (json.data.user.isProgramBind !== true) {
+          //   console.log('bind PAI hit');
+          dispatch(bindProgram());
+          // }
+          // dispatch(getProgramById());
           if (json.data.user.isInterest === true) {
             console.log('heloooo1111');
-           // navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
-             navigatorPush({componentId, screenName: 'Dashboard'});
+            // navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
+            navigatorPush({componentId, screenName: 'Dashboard'});
           } else {
             console.log('heloooo11111222222');
             navigatorPush({componentId, screenName: 'VerifyUserOTP'});
             // navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
-           //navigatorPush({componentId, screenName: 'Dashboard'});
+            //navigatorPush({componentId, screenName: 'Dashboard'});
           }
         }
         // cb(json.data);
@@ -515,10 +539,10 @@ export function getUser(params, componentId, isRedirect = true) {
         storeItem('firstName', json.data.user.firstName);
         storeItem('lastName', json.data.user.lastName);
         storeItem('hospitalId', json.data.user.hospital_id);
-        if (json.data.user.isProgramBind !== true) {
-          console.log('bind PAI hit');
-          dispatch(bindProgram());
-        }
+        // if (json.data.user.isProgramBind !== true) {
+        //   console.log('bind PAI hit');
+        dispatch(bindProgram());
+        // }
         dispatch({
           type: ACTION_TYPE.SET_PROFILE_IMAGE,
           payload: json.data.user.image_path,
@@ -609,7 +633,6 @@ export function acceptWelcomeScreen(params, componentId, cb) {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(`${URL.ACCEPT_WELCOME}`, params);
       if (json.code === 200) {
-        
         navigatorPush({componentId, screenName: 'Dashboard'});
       } else {
         customAlert(json.message, 'error');
@@ -627,17 +650,20 @@ export function acceptWelcomeScreen(params, componentId, cb) {
 
 export function resendRegistrationCode(params, cb) {
   return async (dispatch) => {
-    console.log("resend otp",params)
+    console.log('resend otp', params);
     try {
       dispatch(loadingAction(true));
-      let json = await RestClient.postCall(`${URL.RESEND_REGISTRATION_CODE_API}`, params);
+      let json = await RestClient.postCall(
+        `${URL.RESEND_REGISTRATION_CODE_API}`,
+        params,
+      );
       if (json.code === 200) {
         console.log('jsoonnnn verify social usser api', json);
         customAlert(json.message);
-        cb(json.data)
+        cb(json.data);
       } else {
         customAlert(json.message, 'error');
-       // navigatorPush({screenName: 'Dashboard'});
+        // navigatorPush({screenName: 'Dashboard'});
       }
       dispatch(loadingAction(false));
     } catch (error) {

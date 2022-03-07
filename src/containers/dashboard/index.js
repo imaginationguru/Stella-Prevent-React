@@ -5,7 +5,12 @@ import activity from '../../assets/images/sleep/activity.png';
 import face from '../../assets/images/sleep/face.png';
 import rightArrow from '../../assets/images/sleep/rightArrow.png';
 import stellaGirl from '../../assets/images/stellaGirl/stellaGirl.png';
+import stellaGirlGif from '../../assets/images/stellaGirlGif.gif';
+import successTick from '../../assets/images/successTick.svg';
+import past_module from '../../assets/images/dashboardHeader/past_module.png';
+import report from '../../assets/images/dashboardHeader/report.png';
 import lock from '../../assets/images/lock.png';
+import logoWhite from '../../assets/images/logoWhite.svg';
 
 import GLOBALS from '../../constants';
 import MasterLayout from '../../components/MasterLayout';
@@ -21,7 +26,7 @@ import * as AppActions from '../../actions';
 import {navigatorPush} from '../../config/navigationOptions.web';
 import Modal from 'modal-react-native-web';
 import EpdsScreener from '../../components/common/epdsScreener';
-const {COLORS, ACTION_TYPE} = GLOBALS;
+const {COLORS, ACTION_TYPE, FONTS} = GLOBALS;
 const {DARK_GREEN, WHITE} = COLORS;
 import {Dimensions} from 'react-native-web';
 import Header from '../../components/Header';
@@ -47,7 +52,9 @@ const Dashboard = () => {
   const {programData = []} = useSelector((state) => state.authReducer);
   const {isLoading} = useSelector((state) => state.common);
   const {loginData = []} = useSelector((state) => state.authReducer);
+  const {trackerStatus = {}} = useSelector((state) => state.moduleOne);
   const {week, day} = currentActiveCard.length ? currentActiveCard[0] : {};
+
   const lengthToArray = (len = 0) => {
     let temp = [];
     if (len > 1) {
@@ -59,15 +66,23 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    console.log('login data dashboard', loginData);
-    dispatch(AppActions.getPlans());
-    dispatch(AppActions.getProgramById());
-    // if (currentActiveCard.length == 0) {
-    //   dispatch(AppActions.getCurrentActiveCard());
-    // }
-    dispatch(AppActions.getCurrentActiveCard());
+    //console.log('calling dashboard..');
+    /**Once program is bind then get program details content */
+    // dispatch(
+    //   AppActions.bindProgram((cb) => {
+    if (getItem('userId') != null) {
+      dispatch(AppActions.getProgramById(false));
+      dispatch(AppActions.getCurrentActiveCard(false));
+    }
+    // }),
+    // );
   }, []);
-  const TrackersUI = ({title, src, onClick}) => {
+  useEffect(() => {
+    console.log(trackerStatus, 'trackerStatus....');
+  }, [trackerStatus]);
+  const TrackersUI = ({title, src, onClick, isComplete}) => {
+    console.log(isComplete, 'isComplete....');
+
     return (
       <div
         style={styles.trackerWrap}
@@ -81,8 +96,14 @@ const Dashboard = () => {
             {title}
           </p>
         </div>
-        <div className="tracker-arrow">
-          <img src={rightArrow} style={{width: '100%', height: '100%'}} />
+        <div
+          className="tracker-arrow"
+          style={isComplete ? {width: '30px', height: '30px'} : {}}>
+          {isComplete ? (
+            <img style={{width: '100%', height: '100%'}} src={successTick} />
+          ) : (
+            <img src={rightArrow} style={{width: '100%', height: '100%'}} />
+          )}
         </div>
       </div>
     );
@@ -100,7 +121,7 @@ const Dashboard = () => {
         payload: item,
       });
       dispatch(
-        AppActions.getCurrentActiveCard((res) => {
+        AppActions.getCurrentActiveCard(true, (res) => {
           if (item <= res.current_week || item == 1) {
             dispatch(AppActions.getWeek(item));
             dispatch({
@@ -136,9 +157,39 @@ const Dashboard = () => {
       );
     }
   };
+
+  const onDailyLearningClick = () => {
+    dispatch(AppActions.getTemplateData(currentActiveCard.current_week));
+
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+      payload: currentActiveCard._id,
+    });
+    //   :
+    // null};
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.GET_SELECTED_WEEK,
+      payload: currentActiveCard.current_week,
+    });
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
+      payload: currentActiveCard.current_day,
+    });
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.SELECTED_WEEK,
+      payload: currentActiveCard.current_week,
+    });
+    navigatorPush({
+      screenName: 'DailyLearningWeeks',
+      passProps: {isFromDashboard: true},
+    });
+  };
   return (
-    <div>
+    <div className="main-dashboard">
       <PopUp />
+      <div className="site-logo">
+        <img src={logoWhite} alt="" />
+      </div>
       <ProfileHeader
         onProfileClick={() => navigatorPush({screenName: 'Profile'})}
         showProfileBtn={true}
@@ -152,35 +203,10 @@ const Dashboard = () => {
             <div
               style={styles.dailylearnWrap}
               onClick={() => {
+                onDailyLearningClick();
                 //   debugger
                 //  {selectedCardId == '' ?
                 // dispatch(AppActions.getCurrentActiveCard());
-                dispatch(
-                  AppActions.getTemplateData(currentActiveCard.current_week),
-                );
-
-                dispatch({
-                  type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                  payload: currentActiveCard._id,
-                });
-                //   :
-                // null};
-                dispatch({
-                  type: GLOBALS.ACTION_TYPE.GET_SELECTED_WEEK,
-                  payload: currentActiveCard.current_week,
-                });
-                dispatch({
-                  type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
-                  payload: currentActiveCard.current_day,
-                });
-                dispatch({
-                  type: GLOBALS.ACTION_TYPE.SELECTED_WEEK,
-                  payload: currentActiveCard.current_week,
-                });
-                navigatorPush({
-                  screenName: 'DailyLearningWeeks',
-                  passProps: {isFromDashboard: true},
-                });
               }}
               className="display-board">
               <div
@@ -199,9 +225,7 @@ const Dashboard = () => {
                 <p style={{fontWeight: 'bold', fontSize: 25}}>
                   Today’s Daily Learning
                 </p>
-                <p>
-                  Learn something new today and take it with you wherever you go
-                </p>
+                <p>Click here to complete today’s learnings</p>
               </div>
             </div>
           </div>
@@ -213,6 +237,7 @@ const Dashboard = () => {
                 dispatch(AppActions.dashboardModalAction(false));
                 navigatorPush({screenName: 'SleepTracker'});
               }}
+              isComplete={trackerStatus.sleepChecked}
             />
             <TrackersUI
               title="What activities have you done?"
@@ -220,6 +245,7 @@ const Dashboard = () => {
               onClick={() => {
                 navigatorPush({screenName: 'ActivityTracker'});
               }}
+              isComplete={trackerStatus.activityChecked}
             />
             <TrackersUI
               title=" What is your mood today?"
@@ -228,18 +254,28 @@ const Dashboard = () => {
                 dispatch(AppActions.dashboardModalAction(false));
                 navigatorPush({screenName: 'MoodTracker'});
               }}
+              isComplete={trackerStatus.moodChecked}
             />
+
             <TrackersUI
               title=" Reports"
-              src={face}
+              src={report}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
                 navigatorPush({screenName: 'Report'});
               }}
             />
+            <TrackersUI
+              title="Past Modules"
+              src={past_module}
+              onClick={() => {
+                dispatch(AppActions.dashboardModalAction(false));
+                navigatorPush({screenName: 'PastModule'});
+              }}
+            />
           </div>
         </div>
-        <div className="week-list">
+        {/* <div className="week-list">
           {lengthToArray(duration).map((item, index) => {
             return (
               <div className="week-item">
@@ -250,7 +286,6 @@ const Dashboard = () => {
                     handleWeekClick(item);
                     return;
                   }}
-                  // className="col-sm-2 col-md-2"
                   style={{
                     cursor: 'pointer',
                     border:
@@ -296,7 +331,6 @@ const Dashboard = () => {
           <div className="week-item">
             <div
               className="week-inside"
-              // className="col-sm-2 col-md-2"
               style={{
                 borderRadius: 20,
                 justifyContent: 'center',
@@ -308,16 +342,6 @@ const Dashboard = () => {
                 customAlert('Content currently not available', 'error', {
                   showCloseButton: true,
                 });
-                // alert('Content not unlocked');
-                // Swal.fire({
-                //   text: !checkIfWeekCanAccess(7, loginData?.planInfo) ? "Please upgrade your plan to Premium to access content" : 'Content not unlocked',
-                //   allowOutsideClick: false,
-                //   allowEscapeKey: false,
-                //   confirmButtonColor: DARK_GREEN,
-                //   width: DEVICE_WIDTH > 1000 ? '25vw' : '60vw',
-                // });
-                // dispatch(AppActions.dashboardModalAction(false));
-                // navigatorPush({screenName: 'Exercises'});
               }}>
               <p
                 style={{
@@ -328,18 +352,9 @@ const Dashboard = () => {
                 Exercises,
                 <br /> Readings <br /> & Resources
               </p>
-              {/* {!checkIfWeekCanAccess(5, loginData?.planInfo) ? 
-                       <img src= {`${lock}`}
-                     style={{
-                      justifyContent: 'center',
-                      backgroundSize: 'center',
-                      position: 'absolute',
-                  
-                   }}/>
-                  : null} */}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <Footer />
@@ -364,9 +379,9 @@ const styles = {
     borderRadius: 10,
     //height: 50,
     border: `2px solid ${DARK_GREEN}`,
-    paddingTop: 30,
-    paddingBottom: 30,
-    marginBottom: 18,
+    paddingTop: 15,
+    paddingBottom: 15,
+    marginBottom: 15,
     cursor: 'pointer',
     //boxShadow: '1px 3px 1px #D6F0EB',
     boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
@@ -376,6 +391,7 @@ const styles = {
     display: 'flex',
     alignSelf: 'center',
     marginBottom: 0,
+    fontFamily: FONTS.SEMI_BOLD,
   },
   profileWrapper: {
     //height: '30%',
@@ -393,7 +409,7 @@ const styles = {
   dailylearnWrap: {
     background:
       'linear-gradient(180deg, rgba(214, 240, 235, 0) 0%, #FFFFFF 73.96%) top right',
-    backgroundImage: `url(${stellaGirl})`,
+    backgroundImage: `url(${stellaGirlGif})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     width: '100%',
@@ -405,5 +421,7 @@ const styles = {
     // border: '1px solid blue',
     boxShadow: '1px 3px 1px #D6F0EB',
     cursor: 'pointer',
+    backgroundPosition: '50%',
+    // backgroundPosition: 'center left',
   },
 };
