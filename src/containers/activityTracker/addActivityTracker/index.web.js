@@ -75,8 +75,9 @@ const AddActivityTracker = (props) => {
   // filter records by search text
   const filterData = (value) => {
     const lowercasedValue = value.toLowerCase().trim();
-    if (lowercasedValue === '') setNewSortedList(addPlasentActivity);
-    else {
+    if (lowercasedValue === '') {
+      setNewSortedList(addPlasentActivity);
+    } else {
       const filteredData = addPlasentActivity.filter((item) => {
         return Object.keys(item).some((key) =>
           excludeColumns.includes(key)
@@ -132,59 +133,59 @@ const AddActivityTracker = (props) => {
   console.log('newSortedList', newSortedList);
   return (
     <MasterLayout>
-      <BackBtn title = "Back to Activities" />
-      <div style={styles.wrapper}>
-        <p style={styles.ques}>Search Pleasant Activity</p>
-        <TextInput
-          style={styles.searchedTextInput}
-          placeholder={
-            !isSearchList ? 'Search activity by name (ex: Sport)' : null
-          }
-          placeholderTextColor={'greay'}
-          underlineColorAndroid="transparent"
-          maxLength={50}
-          onChangeText={(term) => {
-            searchUpdated(term);
-          }}
-        />
-        <div>
-          <FlatList
-            data={isSearchList ? newSortedList : []}
-            contentContainerStyle={{
-              // paddingBottom: '2%',
-              marginTop: '3%',
+      <BackBtn title="Back to Activities" />
+      <div className="container">
+        <div style={styles.wrapper}>
+          <p style={styles.ques}>Search Pleasant Activity</p>
+          <TextInput
+            style={styles.searchedTextInput}
+            placeholder={
+              !isSearchList ? 'Search activity by name (ex: Sport)' : null
+            }
+            placeholderTextColor={'greay'}
+            underlineColorAndroid="transparent"
+            maxLength={50}
+            onChangeText={(term) => {
+              searchUpdated(term);
             }}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            extraData={refresh}
-            keyExtractor={(item) => item._id}
-            renderItem={({item, index}) => (
-              <TouchableOpacity
-                style={styles.activityTitle}
-                onPress={() => _onCheckActivity(item._id)}>
-                {item.isCheck ? (
-                  <img src={checked} style={styles.activityImage} />
-                ) : null}
-
-                {!item.isCheck ? (
-                  <img src={unChecked} style={styles.activityImage} />
-                ) : null}
-
-                <p style={styles.searchTitle}>{item.title}</p>
-              </TouchableOpacity>
-            )}
           />
+          <div className="seachBlock">
+            <div>
+              <FlatList
+                data={isSearchList ? newSortedList : []}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                extraData={refresh}
+                keyExtractor={(item) => item._id}
+                renderItem={({item, index}) => (
+                  <TouchableOpacity
+                    style={styles.activityTitle}
+                    onPress={() => _onCheckActivity(item._id)}>
+                    {item.isCheck ? (
+                      <img src={checked} style={styles.activityImage} />
+                    ) : null}
 
-          {checkedArray.length > 0 ? (
-            <button
-              className="btn-solid"
-              style={styles.saveButton}
-              onClick={() => {
-                onSaveClick();
-              }}>
-              {ts('SAVE')}
-            </button>
-          ) : null}
+                    {!item.isCheck ? (
+                      <img src={unChecked} style={styles.activityImage} />
+                    ) : null}
+
+                    <p style={styles.searchTitle}>{item.title}</p>
+                  </TouchableOpacity>
+                )}
+              />
+            </div>
+
+            {checkedArray.length > 0 ? (
+              <button
+                className="btn-solid"
+                style={styles.saveButton}
+                onClick={() => {
+                  onSaveClick();
+                }}>
+                {ts('SAVE')}
+              </button>
+            ) : null}
+          </div>
         </div>
       </div>
     </MasterLayout>
@@ -193,13 +194,10 @@ const AddActivityTracker = (props) => {
 export default AddActivityTracker;
 const styles = {
   wrapper: {
-    width: '60%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
     marginTop: '4%',
   },
   ques: {fontSize: '18px', fontWeight: 'bold'},
-  saveButton: {width: '20%', marginTop: '50px', marginBottom: '50px'},
+  saveButton: {maxWidth: '150px', marginTop: '50px', marginBottom: '50px'},
   searchTitle: {
     fontSize: '16px',
     color: '#747878',
@@ -208,7 +206,8 @@ const styles = {
     paddingTop: '5px',
   },
   searchedTextInput: {
-    width: '30%',
+    maxWidth: '500px',
+    width: '100%',
     marginTop: 10,
     height: 50,
     backgroundColor: 'white',

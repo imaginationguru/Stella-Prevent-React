@@ -251,8 +251,7 @@ img {
   border: 0;
   //height: 50px;
   width: 100%;
-  background: #000000 url('../images/appleIcon.png') no-repeat top 13px left
-    30px;
+  background: #000000 url('../images/appleIcon.png') no-repeat top 13px left 30px;
   color: #ffffff;
   padding: 10px 0 10px 0;
   text-align: center;
@@ -336,6 +335,7 @@ img {
   }
 
   .formField {
+
     //margin-bottom: 21px;
     &.has-icon {
       position: relative;
@@ -525,7 +525,7 @@ img {
   display: flex;
   flex: 1 1 auto;
 
-  & > .container {
+  &>.container {
     display: flex;
   }
 }
@@ -795,6 +795,7 @@ footer {
 
   .f-nav-link {
     &:hover {
+
       h3,
       h6 {
         color: #006f59;
@@ -927,7 +928,7 @@ footer {
     padding: 5px 12px;
     min-height: 95px;
 
-    & > div {
+    &>div {
       flex: 0 0 100%;
       align-items: center;
       justify-content: center;
@@ -1121,7 +1122,7 @@ button.navbutton {
   }
 }
 
-.bk-btn-wrap > div {
+.bk-btn-wrap>div {
   padding: 15px 0;
 }
 
@@ -1212,6 +1213,37 @@ button.btn-green {
   width: 6px;
   margin-top: -2px;
 }
+
+.main-dashboard.v-main {
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 100px;
+}
+
+.v-main .dashboard-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.seachBlock {
+  display: flex;
+  flex-direction: column;
+
+  &>div {
+    flex: 1 1 auto;
+    overflow: auto;
+    max-height: 68vh;
+    margin: 30px;
+  }
+
+  button {
+    flex: 0 0 auto;
+  }
+}
+
+
 
 // slider css
 @media only screen and (max-width: 1200px) {
@@ -1449,6 +1481,7 @@ button.btn-green {
 
 @media only screen and (max-width: 767px) {
   .login {
+
     .btn-fb,
     .btn-google,
     .btn-apple {
@@ -1457,6 +1490,7 @@ button.btn-green {
   }
 
   .formRow {
+
     .w100,
     .w50,
     .w25,
@@ -1534,6 +1568,18 @@ button.btn-green {
   .cell-100 {
     flex: 0 0 100%;
   }
+
+  .seachBlock {
+    &>div {
+      max-height: 50vh;
+    }
+
+    button {
+      max-width: none !important;
+      width: 100% !important;
+    }
+  }
+
 }
 
 @media only screen and (max-width: 580px) {
@@ -1580,8 +1626,7 @@ body {
   position: relative;
 }
 
-.list__item {
-}
+.list__item {}
 
 .card {
   background-color: hsl(215, 14%, 37.5%);
@@ -1592,7 +1637,7 @@ body {
   // position: relative;
 }
 
-.list__item + .list__item {
+.list__item+.list__item {
   margin-top: 0.5rem;
 }
 
