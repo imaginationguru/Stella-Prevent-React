@@ -11,15 +11,15 @@ import Angry from '../assets/images/angry/angry.png';
 import AngryActive from '../assets/images/angryActive/angryActive.png';
 const isLive = false;
 export default {
-  // BASE_URL: isLive
-  //   ? 'https://stella-prevent-careportal.curio-dtx.com/api/'
-  //   : 'http://52.170.117.197/api/', //1.5 stella
-  // IMAGE_BASE_URL: isLive
-  //   ? 'https://stella-prevent-careportal.curio-dtx.com/' //UAT
-  //   : 'http://52.170.117.197/', //dev
+  BASE_URL: isLive
+    ? 'https://stella-prevent-careportal.curio-dtx.com/api/'
+    : 'http://52.170.117.197/api/', //1.5 stella
+  IMAGE_BASE_URL: isLive
+    ? 'https://stella-prevent-careportal.curio-dtx.com/' //UAT
+    : 'http://52.170.117.197/', //dev
 
-  BASE_URL: 'http://104.43.172.201:4001/api/',
-  IMAGE_BASE_URL: 'http://104.43.172.201:4001/', //QA
+  // BASE_URL: 'http://104.43.172.201:4001/api/',
+  // IMAGE_BASE_URL: 'http://104.43.172.201:4001/', //QA
   /********************************** * URL ***********************************/
   URL: {
     LOGIN: 'login',
