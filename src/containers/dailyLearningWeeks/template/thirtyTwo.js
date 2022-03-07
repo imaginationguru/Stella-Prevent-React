@@ -300,7 +300,7 @@ const ThirtyTwo = (props) => {
       {inputs.length
         ? inputs.map((item) => {
             return (
-              <div>
+              <div style={{marginBottom: 15}}>
                 <div
                   style={{backgroundColor: generateDynamicColor(item.order)}}>
                   <p style={{padding: '15px', color: WHITE}}>
@@ -598,7 +598,6 @@ const styles = {
     fontSize: '25px',
   },
   crossIconWrapper: {
-    //  border: '1px solid red',
     display: 'flex',
     marginBottom: '15px',
     position: 'relative',
