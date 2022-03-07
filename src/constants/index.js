@@ -336,5 +336,6 @@ export default {
     text_Gray: '#697386',
     LIGHT_SHADOW_GREEN: '#C9E2DE',
     GREY: '#676767' /* Font Regular */,
+    GreenForSlider: '#6FCF97',
   },
 };
