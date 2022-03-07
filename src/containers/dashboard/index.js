@@ -98,7 +98,7 @@ const Dashboard = () => {
         </div>
         <div
           className="tracker-arrow"
-          style={isComplete ? {width: '35px', height: '35px'} : {}}>
+          style={isComplete ? {width: '30px', height: '30px'} : {}}>
           {isComplete ? (
             <img style={{width: '100%', height: '100%'}} src={successTick} />
           ) : (
@@ -421,6 +421,7 @@ const styles = {
     // border: '1px solid blue',
     boxShadow: '1px 3px 1px #D6F0EB',
     cursor: 'pointer',
-    backgroundPosition: 'center left',
+    backgroundPosition: '50%',
+    // backgroundPosition: 'center left',
   },
 };

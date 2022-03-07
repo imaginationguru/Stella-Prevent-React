@@ -54,6 +54,7 @@ const DailyLearningWeeks = (props) => {
   // Api calling part
 
   useEffect(() => {
+    applicableCards(selectedCardId);
     if (isFromDashboard) {
       // console.log('selected card ID', selectedCardId);
       applicableCards(selectedCardId);
@@ -86,6 +87,7 @@ const DailyLearningWeeks = (props) => {
       'currentData........1111',
       selectedCardId,
       'selectedCardId',
+      mData,
     );
     if (templateData.length) {
       if (mData.length) {
@@ -97,7 +99,7 @@ const DailyLearningWeeks = (props) => {
             return item.day === selectedDay;
           }
         });
-        // console.log('data >???????', data);
+        console.log('data >???????', data);
         if (data && data._id) {
           setScrollerLoad(false);
           cardDataHandler(data);
@@ -151,7 +153,7 @@ const DailyLearningWeeks = (props) => {
       setScrollerLoad(false);
     }
     setCurrentData(data);
-    // console.log('set current data', currentData);
+    console.log('set current data', cIds);
     if (cIds.length) {
       const currentIndex = cIds.findIndex((item) => item === data._id);
       let nextId = '';
@@ -743,7 +745,7 @@ const DailyLearningWeeks = (props) => {
                           // }
                         }}
                         className="f-nav-link">
-                        <h3>Next Day</h3>
+                        <h3>Next Day </h3>
                       </div>
                     </div>
                   ) : selectedWeek === 5 && selectedDay === 5 ? (

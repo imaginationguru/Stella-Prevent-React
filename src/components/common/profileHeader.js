@@ -33,14 +33,14 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 const ProfileHeader = (props) => {
-  // const slider = new MDCSlider(document.querySelector('.mdc-slider'));
-
   const {loginData = {}, profileImg = ''} = useSelector(
     (state) => state.authReducer,
   );
   const moduleOne = useSelector((state) => state.moduleOne);
+  const {currentActiveCard = {}} = useSelector((state) => state.moduleOne);
   console.log('profile image user', profileImg);
   const [profileImage, setProfilePhoto] = useState('');
+  const [selectedWeek, setSelectedWeek] = useState(1);
   let firstName = getItem('firstName');
   let lastName = getItem('lastName');
   const dispatch = useDispatch();
@@ -67,9 +67,13 @@ const ProfileHeader = (props) => {
     }
   }, [profileImg]);
 
+  useEffect(() => {
+    setSelectedWeek(parseInt(currentActiveCard.current_week));
+  }, [currentActiveCard]);
+
   // funtion for move slider thumb
   const setRange = () => {
-    switch (moduleOne?.currentActiveCard?.current_week) {
+    switch (selectedWeek) {
       case 1:
         return -4;
       case 2:
@@ -79,7 +83,22 @@ const ProfileHeader = (props) => {
       case 4:
         return 70;
       case 5:
-        return 90;
+        return '90%';
+    }
+  };
+
+  const getCustomStyle = () => {
+    switch (selectedWeek) {
+      case 1:
+        return {left: '-10px'};
+      case 2:
+        return {left: '20%'};
+      case 3:
+        return {left: '43%'};
+      case 4:
+        return {left: '68%'};
+      case 5:
+        return {left: '92%'};
     }
   };
 
@@ -157,11 +176,7 @@ const ProfileHeader = (props) => {
                   <TouchableOpacity
                     style={styles.btn}
                     onPress={() => {
-                      // setTimeout(() => {
-                      //   navigatortoStart();
-                      // }, localStorage.clear());
                       dispatch(AppActions.logout());
-                      // dispatch(AppActions.dashboardModalAction(false));
                     }}>
                     <Text style={[styles.btnTxtLogout]}>Logout</Text>
                   </TouchableOpacity>
@@ -186,34 +201,34 @@ const ProfileHeader = (props) => {
               </View>
             </View>
             <View style={styles.profileWrapRight}>
-              <View style={styles.sliderheader}>
-                <Text style={styles.weektitle}>
-                  Week {moduleOne?.currentActiveCard?.current_week}
-                </Text>
-                <Text style={styles.alltitle}>SEE ALL</Text>
-              </View>
+              {selectedWeek ? (
+                <>
+                  <View style={styles.sliderheader}>
+                    <Text style={styles.weektitle}>Week {selectedWeek}</Text>
+                    {/* <Text style={styles.alltitle}>SEE ALL</Text> */}
+                  </View>
 
-              <div class="mdc-slider mdc-slider--discrete mdc-slider--tick-marks ">
-                <div class="mdc-slider__track">
-                  <div class="mdc-  slider__track--inactive"></div>
-                  <div class="mdc-slider__track--active">
-                    <div class="mdc-slider__track--active_fill mdc-slider_thumbColor"></div>
+                  <div class="mdc-slider mdc-slider--discrete mdc-slider--tick-marks ">
+                    <div class="mdc-slider__track">
+                      <div class="mdc-  slider__track--inactive"></div>
+                      <div class="mdc-slider__track--active">
+                        <div class="mdc-slider__track--active_fill mdc-slider_thumbColor"></div>
+                      </div>
+                      <div class="mdc-slider__tick-marks">
+                        <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
+                        <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
+                        <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
+                        <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
+                        <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
+                      </div>
+                    </div>
+                    <div class="mdc-slider__thumb" style={getCustomStyle()}>
+                      <div class="mdc-slider__thumb-knob mdc-slider_thumbColor"></div>
+                    </div>
                   </div>
-                  <div class="mdc-slider__tick-marks">
-                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
-                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
-                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
-                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
-                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
-                  </div>
-                </div>
-                <div
-                  class="mdc-slider__thumb"
-                  style={{left: normalize(setRange())}}>
-                  <div class="mdc-slider__thumb-knob mdc-slider_thumbColor"></div>
-                </div>
-              </div>
-              <slider />
+                  <slider />
+                </>
+              ) : null}
             </View>
           </View>
         </View>

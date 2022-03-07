@@ -251,7 +251,8 @@ img {
   border: 0;
   //height: 50px;
   width: 100%;
-  background: #000000 url('../images/appleIcon.png') no-repeat top 13px left 30px;
+  background: #000000 url('../images/appleIcon.png') no-repeat top 13px left
+    30px;
   color: #ffffff;
   padding: 10px 0 10px 0;
   text-align: center;
@@ -335,7 +336,6 @@ img {
   }
 
   .formField {
-
     //margin-bottom: 21px;
     &.has-icon {
       position: relative;
@@ -525,7 +525,7 @@ img {
   display: flex;
   flex: 1 1 auto;
 
-  &>.container {
+  & > .container {
     display: flex;
   }
 }
@@ -795,7 +795,6 @@ footer {
 
   .f-nav-link {
     &:hover {
-
       h3,
       h6 {
         color: #006f59;
@@ -928,7 +927,7 @@ footer {
     padding: 5px 12px;
     min-height: 95px;
 
-    &>div {
+    & > div {
       flex: 0 0 100%;
       align-items: center;
       justify-content: center;
@@ -953,9 +952,9 @@ footer {
     width: 20px;
     height: 30px;
     position: absolute;
-    top: 50%;
+    top: 55%;
     // right: 100px;
-    right: 50px;
+    right: 40px;
     transform: translateY(-50%);
   }
 
@@ -965,6 +964,7 @@ footer {
 
     .tracker-icon {
       flex: 0 0 auto;
+      width: 25px;
     }
 
     .tracker-text {
@@ -1019,53 +1019,55 @@ button.navbutton {
 }
 
 .main-dashboard {
-  background: linear-gradient(136deg, #63eed2, #033a2f);
+  // background: linear-gradient(136deg, #63eed2, #033a2f);
+  // background-size: 400% 400%;
+  background: linear-gradient(130deg, #033a2f, #63eed2);
   background-size: 400% 400%;
 
   -webkit-animation: gradientAnim 30s ease infinite;
   -moz-animation: gradientAnim 30s ease infinite;
-  animation: gradientAnim 30s ease infinite;
+  animation: gradientAnim 8s ease infinite;
 }
 
 @-webkit-keyframes gradientAnim {
   0% {
-    background-position: 99% 0%
+    background-position: 99% 0%;
   }
 
   50% {
-    background-position: 2% 100%
+    background-position: 2% 100%;
   }
 
   100% {
-    background-position: 99% 0%
+    background-position: 99% 0%;
   }
 }
 
 @-moz-keyframes gradientAnim {
   0% {
-    background-position: 99% 0%
+    background-position: 99% 0%;
   }
 
   50% {
-    background-position: 2% 100%
+    background-position: 2% 100%;
   }
 
   100% {
-    background-position: 99% 0%
+    background-position: 99% 0%;
   }
 }
 
 @keyframes gradientAnim {
   0% {
-    background-position: 99% 0%
+    background-position: 99% 0%;
   }
 
   50% {
-    background-position: 2% 100%
+    background-position: 2% 100%;
   }
 
   100% {
-    background-position: 99% 0%
+    background-position: 99% 0%;
   }
 }
 
@@ -1091,7 +1093,6 @@ button.navbutton {
 .f-col.f-col-fixed {
   flex: 0 0 20%;
   padding: 0 15px;
-
 }
 
 .f-col.f-col-auto {
@@ -1120,7 +1121,7 @@ button.navbutton {
   }
 }
 
-.bk-btn-wrap>div {
+.bk-btn-wrap > div {
   padding: 15px 0;
 }
 
@@ -1191,7 +1192,7 @@ button.btn-green {
 // slider css
 .mdc-slider .mdc-slider__track,
 .mdc-slider .mdc-slider__track--active {
-  height: 12px;
+  height: 8px;
   border-radius: 12px;
 }
 
@@ -1212,7 +1213,6 @@ button.btn-green {
   margin-top: -2px;
 }
 
-
 // slider css
 @media only screen and (max-width: 1200px) {
   .week-list {
@@ -1227,8 +1227,6 @@ button.btn-green {
     overflow: auto;
     max-width: calc(100vw - 30px);
   }
-
-
 
   .poweredby {
     max-width: 180px;
@@ -1395,6 +1393,7 @@ button.btn-green {
     .tracker-desc {
       .tracker-text {
         padding-left: 15px;
+        padding-right: 10px;
       }
     }
   }
@@ -1450,7 +1449,6 @@ button.btn-green {
 
 @media only screen and (max-width: 767px) {
   .login {
-
     .btn-fb,
     .btn-google,
     .btn-apple {
@@ -1459,7 +1457,6 @@ button.btn-green {
   }
 
   .formRow {
-
     .w100,
     .w50,
     .w25,
@@ -1583,7 +1580,8 @@ body {
   position: relative;
 }
 
-.list__item {}
+.list__item {
+}
 
 .card {
   background-color: hsl(215, 14%, 37.5%);
@@ -1594,7 +1592,7 @@ body {
   // position: relative;
 }
 
-.list__item+.list__item {
+.list__item + .list__item {
   margin-top: 0.5rem;
 }
 
