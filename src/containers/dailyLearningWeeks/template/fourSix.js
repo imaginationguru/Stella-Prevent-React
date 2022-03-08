@@ -32,7 +32,6 @@ const FourSix = (props) => {
     descriptions,
     images,
     assessment_id,
-
     content,
     onSubmitMessage,
     showExercises,
@@ -387,11 +386,19 @@ const FourSix = (props) => {
                   </View>
                 ) : (
                   <View style={{height: '150px'}}>
-                    <TextInput
+                    {/* <TextInput
                       style={styles.selectedText}
                       placeholder={item.placeholder}
                       underlineColorAndroid="transparent"
                       onChangeText={(term) => onTextChange(term, item)}
+                    /> */}
+                    <textarea
+                      style={styles.selectedText}
+                      placeholder={item.placeholder}
+                      underlineColorAndroid="transparent"
+                      onChange={(term) => {
+                        onTextChange(term.target.value, item);
+                      }}
                     />
                     {index % 2 !== 0 ? (
                       <div
