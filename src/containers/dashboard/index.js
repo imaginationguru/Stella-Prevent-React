@@ -185,7 +185,7 @@ const Dashboard = () => {
     });
   };
   return (
-    <div className="main-dashboard">
+    <div className="main-dashboard v-main">
       <PopUp />
       <div className="site-logo">
         <img src={logoWhite} alt="" />
