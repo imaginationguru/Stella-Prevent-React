@@ -73,7 +73,7 @@ const ThirtyEight = (props) => {
         : []}
 
       {/**********************first type content************ */}
-      <div style={commonStyles.contentLeftBorder}>
+      <div>
         {content && content.length
           ? content
               .filter((item) => {
