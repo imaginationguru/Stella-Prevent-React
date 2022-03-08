@@ -36,7 +36,7 @@ const dataMapperAss = (arr = []) => {
 };
 
 const InputBoxWithContent = (props) => {
-  const {title, placeholder, value, onChange, style, name} = props;
+  const {title, placeholder, value, onChange, style, name, disable} = props;
   return (
     <div style={styles.inputBoxWrapper}>
       <div style={style}>
@@ -54,6 +54,7 @@ const InputBoxWithContent = (props) => {
             placeholder={placeholder}
             style={styles.inputStyle}
             rows={3}
+            disabled={disable}
           />
         </form>
       </div>
@@ -449,6 +450,7 @@ const FourTwo = (props) => {
                         : YELLOW,
                     width: '33%',
                   }}
+                  disable={true}
                 />
               );
             })

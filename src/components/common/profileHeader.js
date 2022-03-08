@@ -16,14 +16,16 @@ import profile from '../../assets/images/profile.png';
 import cancel from '../../assets/images/cancel.png';
 import edit from '../../assets/images/edit.png';
 const {COLORS, FONTS, IMAGE_BASE_URL} = GLOBALS;
-const {DARK_GREEN, WHITE} = COLORS;
+const {DARK_GREEN, WHITE, GreenForSlider} = COLORS;
 import {getItem} from '../../utils/AsyncUtils';
 import {useDispatch, useSelector} from 'react-redux';
 import * as AppActions from '../../actions';
 import Dropzone from 'react-dropzone';
 import {normalize} from '../../utils/Helper';
+import Slider, {SliderThumb} from '@mui/material/Slider';
+import {styled} from '@mui/material/styles';
 
-//import {MDCSlider} from '../slider';
+// import {MDCSlider} from '../../updatedNodeModules/@material/slider';
 
 // const slider = new MDCSlider(document.querySelector('.mdc-slider'));
 
@@ -65,42 +67,25 @@ const ProfileHeader = (props) => {
       console.log('else');
       setProfilePhoto(`${IMAGE_BASE_URL}${profileImg}`);
     }
-  }, [profileImg]);
+  }, [profileImg, moduleOne?.currentActiveCard?.current_week]);
 
-  useEffect(() => {
-    setSelectedWeek(parseInt(currentActiveCard.current_week));
-  }, [currentActiveCard]);
-
-  // funtion for move slider thumb
-  const setRange = () => {
-    switch (selectedWeek) {
-      case 1:
-        return -4;
-      case 2:
-        return 20;
-      case 3:
-        return 45;
-      case 4:
-        return 70;
-      case 5:
-        return '90%';
-    }
-  };
-
-  const getCustomStyle = () => {
-    switch (selectedWeek) {
-      case 1:
-        return {left: '-10px'};
-      case 2:
-        return {left: '20%'};
-      case 3:
-        return {left: '43%'};
-      case 4:
-        return {left: '68%'};
-      case 5:
-        return {left: '92%'};
-    }
-  };
+  const marks = [
+    {
+      value: 20,
+    },
+    {
+      value: 40,
+    },
+    {
+      value: 60,
+    },
+    {
+      value: 80,
+    },
+    {
+      value: 100,
+    },
+  ];
 
   return (
     <View style={styles.outerContainer}>
@@ -201,34 +186,70 @@ const ProfileHeader = (props) => {
               </View>
             </View>
             <View style={styles.profileWrapRight}>
-              {selectedWeek ? (
-                <>
-                  <View style={styles.sliderheader}>
-                    <Text style={styles.weektitle}>Week {selectedWeek}</Text>
-                    {/* <Text style={styles.alltitle}>SEE ALL</Text> */}
-                  </View>
-
-                  <div class="mdc-slider mdc-slider--discrete mdc-slider--tick-marks ">
-                    <div class="mdc-slider__track">
-                      <div class="mdc-  slider__track--inactive"></div>
-                      <div class="mdc-slider__track--active">
-                        <div class="mdc-slider__track--active_fill mdc-slider_thumbColor"></div>
-                      </div>
-                      <div class="mdc-slider__tick-marks">
-                        <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
-                        <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
-                        <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
-                        <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
-                        <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
-                      </div>
-                    </div>
-                    <div class="mdc-slider__thumb" style={getCustomStyle()}>
-                      <div class="mdc-slider__thumb-knob mdc-slider_thumbColor"></div>
-                    </div>
+              <View>
+                <Text style={styles.username}>
+                  Week {moduleOne?.currentActiveCard?.current_week}
+                </Text>
+              </View>
+              {/* <h4>Add Range Slider Here</h4> */}
+              {/* <div class="mdc-slider mdc-slider--discrete mdc-slider--tick-marks ">
+                <input
+                  class="mdc-slider__input"
+                  type="range"
+                  min="0"
+                  max="100"
+                  value="50"
+                  name="volume"
+                  aria-label="Continuous slider demo"
+                />
+                <div class="mdc-slider__track">
+                  <div class="mdc-slider__track--inactive"></div>
+                  <div class="mdc-slider__track--active">
+                    <div class="mdc-slider__track--active_fill mdc-slider_thumbColor"></div>
                   </div>
-                  <slider />
-                </>
-              ) : null}
+                  <div class="mdc-slider__tick-marks">
+                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
+                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
+                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
+                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
+                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
+                  </div>
+                </div>
+                <div
+                  class="mdc-slider__thumb"
+                  // style="left:calc(30%-24px)"
+                  // style={{left: calc('24px')}}
+                  // style={{left: normalize(setRange())}}
+                >
+                  <div class="mdc-slider__thumb-knob mdc-slider_thumbColor"></div>
+                </div>
+              </div> */}
+
+              <Slider
+                track="inverted"
+                // disabled={true}
+                aria-labelledby="track-inverted-slider"
+                value={moduleOne?.currentActiveCard?.current_week * 20}
+                defaultValue={20}
+                marks={marks}
+                sx={{
+                  color: GreenForSlider,
+                  height: '10px',
+                  '& .MuiSlider-track': {
+                    backgroundColor: GreenForSlider,
+                  },
+                  '& .MuiSlider-rail': {
+                    backgroundColor: GreenForSlider,
+                  },
+                  '& .MuiSlider-thumb': {
+                    backgroundColor: GreenForSlider,
+                  },
+                  '& .MuiSlider-mark': {
+                    backgroundColor: WHITE,
+                    height: '4px',
+                  },
+                }}
+              />
             </View>
           </View>
         </View>

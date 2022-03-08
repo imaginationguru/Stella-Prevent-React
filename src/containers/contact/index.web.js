@@ -27,7 +27,7 @@ import BackBtn from '../../components/common/backbtn';
 import ProfileHeader from '../../components/common/profileHeader';
 import commonStyles from '../dailyLearningWeeks/commonStyles';
 import {emailRegex} from '../../utils/RegexUtils';
-
+import * as AppActions from '../../actions';
 function Contact(props) {
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState('');
@@ -82,6 +82,18 @@ function Contact(props) {
       setMesageError('Please fill message');
     }
     console.log('data>>>>>>', params);
+    if (
+      firstName.length !== 0 &&
+      lastName.length !== 0 &&
+      email.length !== 0 &&
+      message.length !== 0
+    ) {
+      dispatch(AppActions.contactUs(params));
+      setFirstName('');
+      setLastName('');
+      setMesage('');
+      setEmail('');
+    }
   };
 
   return (

@@ -875,9 +875,8 @@ const Thirty = (props) => {
                             onClick={() => onPlusBtnClick(item)}
                             style={{
                               ...styles.circleDiv,
-                              // backgroundColor: !userInputs.length
-                              //   ? GREEN_TEXT
-                              //   : GRAY,
+                              backgroundColor:
+                                selectedDate !== '' ? GREEN_TEXT : GRAY,
                             }}>
                             <span style={styles.plusIcon}>+</span>
                           </div>
@@ -898,7 +897,7 @@ const Thirty = (props) => {
         </button>
       </div>
 
-      {headingSecond && headingSecond.length ? (
+      {/* {headingSecond && headingSecond.length ? (
         <CardContent
           content={ReactHtmlParser(headingSecond)}
           style={{
@@ -907,8 +906,8 @@ const Thirty = (props) => {
             paddingBottom: '3px',
           }}
         />
-      ) : null}
-      {firstHeaderContent && firstHeaderContent.length
+      ) : null} */}
+      {/* {firstHeaderContent && firstHeaderContent.length
         ? firstHeaderContent
             .sort((a, b) => (a.i > b.i && 1) || -1)
             .map((item, index) => {
@@ -923,7 +922,7 @@ const Thirty = (props) => {
                 />
               );
             })
-        : []}
+        : []} */}
       {content && content.length
         ? content
             .sort((a, b) => (a.order > b.order && 1) || -1)

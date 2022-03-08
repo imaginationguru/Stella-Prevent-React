@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { TouchableOpacity, Dimensions } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {TouchableOpacity, Dimensions} from 'react-native';
 import MasterLayout from '../../components/MasterLayout';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import moment from 'moment';
 
 import momentZone from 'moment-timezone';
 import GLOBALS from '../../constants';
 import * as AppActions from '../../actions';
-import { translate as ts } from '../../i18n/translate';
+import {translate as ts} from '../../i18n/translate';
 import Happy from '../../assets/images/happy/happy@3x.png';
 import HappyActive from '../../assets/images/happyActive/happyActive@3x.png';
 import BackToDashboard from '../../components/common/backToDashboard';
@@ -26,11 +26,11 @@ import AngryActive from '../../assets/images/angryActive/angryActive@3x.png';
 let currentTimeZone = momentZone.tz.guess();
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
-const { STRINGS, ACTION_TYPE } = GLOBALS;
-const MoodTracker = ({ location }) => {
+const {STRINGS, ACTION_TYPE} = GLOBALS;
+const MoodTracker = ({location}) => {
   let isFromCard = location?.state?.isFromCard;
   const dispatch = useDispatch();
-  const { moodTrackerData } = useSelector((state) => state.tracker);
+  const {moodTrackerData} = useSelector((state) => state.tracker);
   const [moodId, setMoodId] = useState();
   const timeStamp = moment().format();
   const currentDate = moment(timeStamp).format(STRINGS.DATE_FORMATE);
@@ -38,14 +38,14 @@ const MoodTracker = ({ location }) => {
   const [getMoodTracker, setMoodTracker] = useState([]);
   const moodListArray = [
     {
-      id: 1,
+      id: 5,
       image: VeryHappy,
       activeImage: VeryHappyActive,
       isClickTrue: false,
       name: 'Awesome',
     },
     {
-      id: 2,
+      id: 4,
       image: Happy,
       activeImage: HappyActive,
       isClickTrue: false,
@@ -59,14 +59,14 @@ const MoodTracker = ({ location }) => {
       name: 'Ok',
     },
     {
-      id: 4,
+      id: 2,
       image: Sad,
       activeImage: SadActive,
       isClickTrue: false,
       name: 'Bad',
     },
     {
-      id: 5,
+      id: 1,
       image: Angry,
       activeImage: AngryActive,
       isClickTrue: false,
@@ -216,7 +216,7 @@ const styles = {
     alignItems: 'flex-end',
     display: 'flex',
   },
-  imageStyle: { width: '70px', height: '70px' },
+  imageStyle: {width: '70px', height: '70px'},
   itemWrapper: {
     display: 'flex',
     marginBottom: '30px',
