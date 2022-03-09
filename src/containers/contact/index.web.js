@@ -86,6 +86,7 @@ function Contact(props) {
       firstName.length !== 0 &&
       lastName.length !== 0 &&
       email.length !== 0 &&
+      emailRegex.test(email) &&
       message.length !== 0
     ) {
       dispatch(AppActions.contactUs(params));
