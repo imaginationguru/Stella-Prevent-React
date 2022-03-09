@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles';
-import { Animated } from 'react-animated-css';
-const CardTitle = ({ title, style }) => {
+import {Animated} from 'react-animated-css';
+const CardTitle = ({title, style}) => {
   return (
     <h2 className="dashboard-heading" style={style}>
       {title}
@@ -9,11 +9,11 @@ const CardTitle = ({ title, style }) => {
   );
 };
 
-const CardQuote = ({ quote }) => {
+const CardQuote = ({quote}) => {
   return <p className="dash-text">{quote}</p>;
 };
 
-const CardTime = ({ time }) => {
+const CardTime = ({time}) => {
   return <h6 className="dash-time m-b-30">{time}</h6>;
 };
 
@@ -52,15 +52,15 @@ const CardContent = ({
       animationOut={animationOut}
       isVisible={isVisible}
       animationInDelay={animationInDelay}>
-      <p className="dash-text" style={{ ...styles.content, ...style }}>
+      <p className="dash-text" style={{...styles.content, ...style}}>
         {content}
       </p>
     </Animated>
   );
 };
-const CardAudio = ({ src, style }) => {
+const CardAudio = ({src, style}) => {
   return (
-    <div style={{ ...styles.audioWrapper, ...style }}>
+    <div style={{...styles.audioWrapper, ...style}}>
       <audio controls="controls" preload="none" onclick="this.play()">
         <source type="audio/mp3" src={src} />
       </audio>
@@ -68,7 +68,7 @@ const CardAudio = ({ src, style }) => {
   );
 };
 
-const CardVideo = ({ src, style }) => {
+const CardVideo = ({src, style}) => {
   return (
     <div
       className="dash-icon text-center"
@@ -95,24 +95,30 @@ const CustomImage = ({
   animationIn,
   animationOut,
   animationInDelay,
-  imageSize = "small"
+  imageSize = 'small',
 }) => {
   return (
     <Animated
       animationIn={animationIn}
       animationOut={animationOut}
       animationInDelay={animationInDelay}>
-      <div className="dash-icon" style={{ ...styles.imageWrapper, ...style },
-        imageSize == "medium" ?
-          { ...styles.mediumimageWrapper } : imageSize == "large" ? { ...styles.largeimageWrapper } : { ...styles.imageWrapper }
-      }>
+      <div
+        className="dash-icon"
+        style={
+          ({...styles.imageWrapper, ...style},
+          imageSize == 'medium'
+            ? {...styles.mediumimageWrapper, ...style}
+            : imageSize == 'large'
+            ? {...styles.largeimageWrapper, ...style}
+            : {...styles.imageWrapper, ...style})
+        }>
         <img
           className="nav-hover"
           src={src}
-          style={{ ...styles.imageTag, ...imageStyle }}
+          style={{...styles.imageTag, ...imageStyle}}
         />
       </div>
-      <p style={{ textAlign: 'center' }}>{title} </p>
+      <p style={{textAlign: 'center'}}>{title} </p>
     </Animated>
   );
 };
