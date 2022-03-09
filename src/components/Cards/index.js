@@ -95,20 +95,30 @@ const CustomImage = ({
   animationIn,
   animationOut,
   animationInDelay,
+  imageSize = 'small',
 }) => {
   return (
     <Animated
       animationIn={animationIn}
       animationOut={animationOut}
       animationInDelay={animationInDelay}>
-      <div className="dash-icon" style={{...styles.imageWrapper, ...style}}>
+      <div
+        className="dash-icon"
+        style={
+          ({...styles.imageWrapper, ...style},
+          imageSize == 'medium'
+            ? {...styles.mediumimageWrapper, ...style}
+            : imageSize == 'large'
+            ? {...styles.largeimageWrapper, ...style}
+            : {...styles.imageWrapper, ...style})
+        }>
         <img
           className="nav-hover"
           src={src}
           style={{...styles.imageTag, ...imageStyle}}
         />
       </div>
-      <p style={{textAlign: 'center'}}>{title}</p>
+      <p style={{textAlign: 'center'}}>{title} </p>
     </Animated>
   );
 };

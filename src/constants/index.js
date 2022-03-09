@@ -9,7 +9,7 @@ import Sad from '../assets/images/sad/sad.png';
 import SadActive from '../assets/images/sadActive/sadActive.png';
 import Angry from '../assets/images/angry/angry.png';
 import AngryActive from '../assets/images/angryActive/angryActive.png';
-const isLive = false;
+const isLive = true;
 export default {
   BASE_URL: isLive
     ? 'https://stella-prevent-careportal.curio-dtx.com/api/'
@@ -341,5 +341,6 @@ export default {
     text_Gray: '#697386',
     LIGHT_SHADOW_GREEN: '#C9E2DE',
     GREY: '#676767' /* Font Regular */,
+    GreenForSlider: '#6FCF97',
   },
 };
