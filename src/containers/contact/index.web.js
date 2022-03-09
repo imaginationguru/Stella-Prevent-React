@@ -31,6 +31,7 @@ import commonStyles from '../dailyLearningWeeks/commonStyles';
 import {emailRegex} from '../../utils/RegexUtils';
 import * as AppActions from '../../actions';
 function Contact(props) {
+  const {loginData} = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -61,8 +62,15 @@ function Contact(props) {
   const [selecteditem, setSelectedItem] = useState(1);
   const [value, setValue] = useState(0);
 
-  const {loginData} = useSelector((state) => state.authReducer);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(loginData, 'loginData');
+    if (loginData?.user?._id) {
+      console.log('enter');
+      setFirstName(loginData.user.firstName);
+      setEmail(loginData.user.email);
+      setLastName(loginData.user.lastName);
+    }
+  }, []);
 
   const onWeekChange = (event) => {
     setValue(event.target.value);
@@ -97,6 +105,7 @@ function Contact(props) {
       firstName: firstName,
       lastName: lastName,
       message: message,
+      subject: value,
     };
 
     if (firstName.length === 0) {
@@ -109,19 +118,12 @@ function Contact(props) {
       setEmailError('Please fill  valid email');
     } else if (message.length === 0) {
       setMesageError('Please fill message');
-    }
-    console.log('data>>>>>>', params);
-    if (
-      firstName.length !== 0 &&
-      lastName.length !== 0 &&
-      email.length !== 0 &&
-      message.length !== 0
-    ) {
+    } else {
       dispatch(AppActions.contactUs(params));
-      setFirstName('');
-      setLastName('');
+      // setFirstName('');
+      // setLastName('');
       setMesage('');
-      setEmail('');
+      // setEmail('');
     }
   };
 

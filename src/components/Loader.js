@@ -5,8 +5,10 @@ import {View} from 'react-native';
 const {COLORS} = GLOBALS;
 const Loader = () => {
   return (
-    <div style={styles.loaderContainer}>
-      <Spinner animation="grow" variant="info" />
+    <div style={styles.overlay}>
+      <div style={styles.loaderContainer}>
+        <Spinner animation="grow" variant="info" />
+      </div>
     </div>
   );
 };
@@ -25,6 +27,21 @@ const styles = {
     lineHeight: '110px',
     textAlign: 'center',
     color: COLORS.WHITE,
+  },
+  loaderOuter: {
+    // position: 'absolute',
+    // width: '100%',
+    // height: '100%',
+  },
+  overlay: {
+    // opacity: 0.8,
+    //  backgroundColor: '#ccc',
+    position: 'fixed',
+    width: '100%',
+    height: '100%',
+    top: 0,
+    left: 0,
+    zIndex: 1000,
   },
 };
 export default Loader;

@@ -293,8 +293,8 @@ const SignIn = (componentId) => {
             </div>
           </div>
         </div>
+        <Footer />
       </MasterLayout>
-      <Footer />
     </>
   );
 };
