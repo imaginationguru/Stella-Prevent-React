@@ -76,7 +76,7 @@ const TwentySix = (props) => {
       }
     }
   }, [assessmentData]);
-  console.log('slugData', slugData);
+  console.log('slugData?????????', slugData);
   useEffect(() => {
     const onlyCardData = [];
     if (userAssessmentData && userAssessmentData.length) {
@@ -117,6 +117,7 @@ const TwentySix = (props) => {
   }, [props.submit_messages]);
 
   const onSubmit = (e) => {
+    console.log('on submit????');
     e.preventDefault();
     let params = {
       user_id: getItem('userId'),
@@ -171,14 +172,24 @@ const TwentySix = (props) => {
     let a = [];
     let b = [];
     let c = [];
+
     if (userAssessmentData && userAssessmentData.length) {
+      console.log('if');
       if (assessment.length) {
+        console.log('assessment if', assessment, slugData);
         let onlyContentData = [];
         assessment.forEach((item) => {
           onlyContentData.push(...item.content);
         });
         let contentMessage = onlyContentData.map((item) => item.content);
+        let customMsg1 =
+          'Your answers suggest that, in general, you can be assertive when you communicate with others. Assertive communication is essential to express your needs while showing respect and consideration for others. Keep it up! ';
+        let customMsg2 =
+          "Your answers suggest that it is not always easy for you to be assertive  when communicate with others. Sometimes, you can use strategies that are more passive (choosing not to express your opinion, even if it makes you frustrated, or not asking for help) or more aggressive (choosing to respond more harshly or impulsively) to deal with the other's opinions. These strategies are not useful and end up generating conflict and dissatisfaction in your relationship with others. Try to communicate your needs more assertively!";
+        let y = contentMessage.filter((item, i) => i === 0 || i === 3);
+        let z = y.includes('Sometimes' || 'Quite often');
         if (slugData === 'different,similiar,i_do_not_know') {
+          console.log('slud first');
           if (contentMessage.length) {
             let difference = contentMessage.filter(
               (item) => item === 'Different',
@@ -193,18 +204,17 @@ const TwentySix = (props) => {
           }
           let sum = [a[0].length + c[0].length, ...differenceMessage];
           dispatch(AppActions.rearrangeAssessments(params, sum));
-        } else if (slugData === 'never,sometimes,oftentimes') {
+          // never,sometimes,quite often never,sometimes,oftentimes
+        } else if (slugData === 'never,sometimes,quite often') {
+          console.log('slug dta ::::::::::::', slugData);
           console.log('content message ?????', contentMessage);
-          if (contentMessage.length) {
-            let positiveRes = contentMessage.filter(
-              (item) => item === 'Sometimes' || item === 'Oftentimes',
-            );
-            if (positiveRes.length === 0) {
+          if (props.card.week == 3 && props.card.day == 4) {
+            if (z) {
               dispatch(
                 AppActions.rearrangeAssessments(
                   params,
                   negativeMessage,
-                  customMsg,
+                  customMsg1,
                 ),
               );
             } else {
@@ -212,12 +222,37 @@ const TwentySix = (props) => {
                 AppActions.rearrangeAssessments(
                   params,
                   positiveMessage,
-                  customMsg,
+                  customMsg2,
                 ),
               );
             }
+          } else {
+            dispatch(
+              AppActions.rearrangeAssessments(params, differenceMessage),
+            );
           }
-          // dispatch(AppActions.rearrangeAssessments(params, differenceMessage));
+          // if (contentMessage.length) {
+          //   let positiveRes = contentMessage.filter(
+          //     (item) => item === 'Sometimes' || item === 'Oftentimes',
+          //   );
+          //   if (positiveRes.length === 0) {
+          //     dispatch(
+          //       AppActions.rearrangeAssessments(
+          //         params,
+          //         negativeMessage,
+          //         customMsg,
+          //       ),
+          //     );
+          //   } else {
+          //     dispatch(
+          //       AppActions.rearrangeAssessments(
+          //         params,
+          //         positiveMessage,
+          //         customMsg,
+          //       ),
+          //     );
+          //   }
+          // }
         } else {
           if (contentMessage.length) {
             let agreeMessage = contentMessage.filter(
@@ -244,15 +279,18 @@ const TwentySix = (props) => {
         }
       }
     } else {
+      console.log('else ');
       if (assessment && assessment.length) {
         if (assessment.length) {
           let onlyContentData = [];
           assessment.forEach((item) => {
             onlyContentData.push(...item.content);
           });
-          let contentMessage = onlyContentData.map(
-            (item) => item.assessment_content_id,
-          );
+          // let contentMessage = onlyContentData.map(
+          //   (item) => item.assessment_content_id,
+          // );
+          let contentMessage = onlyContentData.map((item) => item.content);
+
           if (slugData === 'different,similiar,i_do_not_know') {
             if (contentMessage.length) {
               let difference = contentMessage.filter(
@@ -270,18 +308,31 @@ const TwentySix = (props) => {
             }
             let sum = [a[0].length + c[0].length, ...differenceMessage];
             dispatch(AppActions.saveUserAssessment(params, sum, customMsg));
-          } else if (slugData === 'never,sometimes,oftentimes') {
+            // answer SOMETIMES or QUITE OFTEN to questions 1 and 4 and NEVER or SOMETIMES to questions 2, 3 and 5]
+          } else if (slugData === 'never,sometimes,quite often') {
+            console.log('slug dta""""""""""save user', slugData);
             console.log('content message ?????', contentMessage);
+            let customMsg1 =
+              'Your answers suggest that, in general, you can be assertive when you communicate with others. Assertive communication is essential to express your needs while showing respect and consideration for others. Keep it up! ';
+            let customMsg2 =
+              "Your answers suggest that it is not always easy for you to be assertive  when communicate with others. Sometimes, you can use strategies that are more passive (choosing not to express your opinion, even if it makes you frustrated, or not asking for help) or more aggressive (choosing to respond more harshly or impulsively) to deal with the other's opinions. These strategies are not useful and end up generating conflict and dissatisfaction in your relationship with others. Try to communicate your needs more assertively!";
+            let y = contentMessage.filter((item, i) => i === 0 || i === 3);
+            let z = y.includes('Sometimes' || 'Quite often');
+            console.log('z??????', z);
             if (contentMessage.length) {
-              let positiveRes = contentMessage.filter(
-                (item) => item === 'Sometimes' || item === 'Oftentimes',
+              console.log(
+                'content message length if',
+                props.card.week === 3,
+                props.card.day,
               );
-              if (positiveRes.length === 0) {
+
+              console.log('z????', z);
+              if (z) {
                 dispatch(
                   AppActions.saveUserAssessment(
                     params,
                     negativeMessage,
-                    customMsg,
+                    customMsg1,
                   ),
                 );
               } else {
@@ -289,10 +340,36 @@ const TwentySix = (props) => {
                   AppActions.saveUserAssessment(
                     params,
                     positiveMessage,
-                    customMsg,
+                    customMsg2,
                   ),
                 );
               }
+              // else {
+              //   dispatch(
+              //     AppActions.saveUserAssessment(params, differenceMessage),
+              //   );
+              // }
+
+              // let positiveRes = contentMessage.filter(
+              //   (item) => item === 'Sometimes' || item === 'Oftentimes',
+              // );
+              // if (positiveRes.length === 0) {
+              // dispatch(
+              //   AppActions.saveUserAssessment(
+              //     params,
+              //     negativeMessage,
+              //     customMsg,
+              //   ),
+              // );
+              // } else {
+              //   dispatch(
+              //     AppActions.saveUserAssessment(
+              //       params,
+              //       positiveMessage,
+              //       customMsg,
+              //     ),
+              //   );
+              // }
             }
             //  dispatch(AppActions.saveUserAssessment(params, differenceMessage));
           } else {

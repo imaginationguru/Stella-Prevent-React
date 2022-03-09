@@ -805,10 +805,10 @@ export function rearrangeAssessments(params, onSubmitMessage, customMsg = '') {
 }
 
 /********************UPDATE USER ASSESSMENT ** INPUT************ */
-export function updateUserAssessment(params) {
+export function updateUserAssessment(params, msg = 'true') {
   // let userCardId = params.user_card_id;
   // let assessmentId = params.assessment_id;
-  console.log('parms>>>>>>>>update>>>>params', params);
+  console.log('parms>>>>>>>>update>>>>params', params, msg);
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.UPDATE_USER_ASSESSMENT_REQUEST});
     try {
@@ -821,10 +821,13 @@ export function updateUserAssessment(params) {
           type: ACTION_TYPE.UPDATE_USER_ASSESSMENT_SUCCESS,
           payload: json.data,
         });
-        dispatch({
-          type: ACTION_TYPE.SUCCESS_MESSAGE,
-          payload: json.message,
-        });
+        if(msg){
+            dispatch({
+              type: ACTION_TYPE.SUCCESS_MESSAGE,
+              payload: json.message,
+            });
+        }
+      
         //  dispatch(getUserAssessment(userCardId, assessmentId));
         dispatch(loadingAction(false));
       } else {
