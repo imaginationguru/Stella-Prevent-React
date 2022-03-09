@@ -1,14 +1,13 @@
 import React from 'react';
 import {Spinner} from 'reactstrap';
 import GLOBALS from '../constants';
+import {View} from 'react-native';
 const {COLORS} = GLOBALS;
 const Loader = () => {
   return (
-    <>
-      <div style={styles.loaderContainer}>
-        <Spinner animation="grow" variant="info" />
-      </div>
-    </>
+    <div style={styles.loaderContainer}>
+      <Spinner animation="grow" variant="info" />
+    </div>
   );
 };
 
