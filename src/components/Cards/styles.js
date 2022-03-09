@@ -12,13 +12,13 @@ const styles = {
     flexDirection: 'column',
   },
   mediumimageWrapper: {
-    width: '380px',
+    maxWidth: '400px',
     height: 'auto',
     margin: '0 auto',
     flexDirection: 'column',
   },
   largeimageWrapper: {
-    width: '600px',
+    maxWidth: '600px',
     height: 'auto',
     margin: '0 auto',
     flexDirection: 'column',
