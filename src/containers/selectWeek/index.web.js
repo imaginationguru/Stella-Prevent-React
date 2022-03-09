@@ -118,23 +118,67 @@ const DayView = ({
   }
 };
 
+//for store currunt selected week and day value in session strage
+const useSessionStorage = (keyName, defaultValue) => {
+  const [storedValue, setStoredValue] = React.useState(() => {
+    try {
+      const value = window.sessionStorage.getItem(keyName);
+
+      if (value) {
+        return JSON.parse(value);
+      } else {
+        window.sessionStorage.setItem(keyName, JSON.stringify(defaultValue));
+        return defaultValue;
+      }
+    } catch (err) {
+      return defaultValue;
+    }
+  });
+
+  const setValue = (newValue) => {
+    try {
+      window.sessionStorage.setItem(keyName, JSON.stringify(newValue));
+    } catch (err) {}
+    setStoredValue(newValue);
+  };
+
+  return [storedValue, setValue];
+};
+
 function SelectWeek(props) {
   const dispatch = useDispatch();
   const {currentActiveCard = {}} = useSelector((state) => state.moduleOne);
-
-  const [selectedDay, setSelectedDay] = useState(1);
-  const [selectedWeek, setSelectedWeek] = useState(1);
+  const [value, setValue] = useSessionStorage(
+    'value',
+    `Week ${currentActiveCard.current_week}`,
+  );
+  const [selectedDay, setSelectedDay] = useSessionStorage(
+    'day',
+    currentActiveCard.current_day,
+  );
+  const [selectedWeek, setSelectedWeek] = useSessionStorage(
+    'week',
+    parseInt(currentActiveCard.current_week),
+  );
+  // const [selectedDay, setSelectedDay] = useState(currentActiveCard.current_day);
+  // const [selectedWeek, setSelectedWeek] = useState(
+  //   parseInt(currentActiveCard.current_week),
+  // );
 
   const [weekDataDynamic, setweekDataDynamic] = useState([]);
-  const [value, setValue] = useState('Week 1');
+  // const [value, setValue] = useState(
+  //   currentActiveCard.current_week
+  //     ? `Week ${currentActiveCard.current_week}`
+  //     : 'Week 1',
+  // );
 
   useEffect(() => {
     setweekDataDynamic([]);
 
-    setSelectedWeek(parseInt(currentActiveCard.current_week));
-    setSelectedDay(currentActiveCard.current_day);
+    // setSelectedWeek(parseInt(currentActiveCard.current_week));
+    // setSelectedDay(currentActiveCard.current_day);
 
-    setValue(`Week ${currentActiveCard.current_week}`);
+    // setValue(`Week ${currentActiveCard.current_week}`);
     _setDynamicWeeks();
   }, [currentActiveCard]);
 

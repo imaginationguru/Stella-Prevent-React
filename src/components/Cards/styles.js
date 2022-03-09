@@ -11,6 +11,18 @@ const styles = {
     margin: '0 auto',
     flexDirection: 'column',
   },
+  mediumimageWrapper: {
+    maxWidth: '400px',
+    height: 'auto',
+    margin: '0 auto',
+    flexDirection: 'column',
+  },
+  largeimageWrapper: {
+    maxWidth: '600px',
+    height: 'auto',
+    margin: '0 auto',
+    flexDirection: 'column',
+  },
   imageTag: {maxHeight: '100%', margin: '0 auto'},
   content: {marginTop: '10px', marginBottom: '20px'},
   videoDiv: {

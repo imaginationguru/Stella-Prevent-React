@@ -358,13 +358,14 @@ export function getAssessmentData(assessmentId, id, card_id = 'null') {
 }
 
 /********************GET ASSESSMENT DATA Second************** */
-export function getAssessmentDataSecond(assessmentId2, id) {
+export function getAssessmentDataSecond(assessmentId2, id, card_id = 'null') {
+  let userId = getItem('userId');
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.GET_ASSESSMENT_DATA2_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.getCall(
-        `${URL.GET_ASSESSMENT_DATA}/${assessmentId2}`,
+        `${URL.GET_ASSESSMENT_DATA}/${assessmentId2}/${userId}/${card_id}`,
       );
       if (json.code === 200) {
         dispatch({
@@ -390,7 +391,7 @@ export function getAssessmentDataSecond(assessmentId2, id) {
           dispatch(loadingAction(false));
         } else {
           dispatch({
-            type: ACTION_TYPE.GET_ASSESSMENT2_DATA_FAIL,
+            type: ACTION_TYPE.GET_ASSESSMENT_DATA_FAIL,
           });
         }
       }
@@ -1313,6 +1314,56 @@ export function Addpayment(params, componentId) {
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
       });
+    }
+  };
+}
+
+export function contactUs(params) {
+  return async (dispatch) => {
+    dispatch({type: ACTION_TYPE.SAVE_CONTACT_REQUEST});
+    try {
+      dispatch(loadingAction(true));
+      let json = await RestClient.postCall(URL.CONTACT_US, params);
+      if (json.code === 200) {
+        console.log('JSON data get-userQuestionInfo>>>>>>>>>', json.data);
+        dispatch({
+          type: ACTION_TYPE.SAVE_CONTACT_SUCCESS,
+          payload: json,
+        });
+        customAlert(json.message, 'success');
+        dispatch(loadingAction(false));
+      } else {
+        if (json.code === 400) {
+          dispatch({
+            type: ACTION_TYPE.ERROR,
+            payload: json.message,
+          });
+        }
+        if (json.code === 417) {
+          console.log('Session expierd>>>>>>>>>>get-userQuestionInfo');
+          dispatch({
+            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+            payload: json.message,
+          });
+          dispatch(loadingAction(false));
+        } else {
+          dispatch({
+            type: ACTION_TYPE.SAVE_CONTACT_FAIL,
+          });
+          dispatch(loadingAction(false));
+        }
+      }
+    } catch (error) {
+      console.log('erroe>>gGET get-userQuestionInfo>>>>>>>>>>>>>', error);
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+      });
+      dispatch({
+        type: ACTION_TYPE.SAVE_CONTACT_FAIL,
+        payload: error,
+      });
+      dispatch(loadingAction(false));
     }
   };
 }

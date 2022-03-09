@@ -25,6 +25,7 @@ const BackToDashboard = (props) => {
     btnStyle,
     textStyle,
     isDisabled = false,
+    isLoginPage = false,
   } = props;
   return (
     <View style={styles.backBtn}>
@@ -54,7 +55,7 @@ const BackToDashboard = (props) => {
             alignItems: 'center',
             textAlignVertical: 'center',
           }}>
-          {title}
+          {isLoginPage ? 'Back to Login ' : title}
         </Text>
       </TouchableOpacity>
     </View>

@@ -185,7 +185,7 @@ const Dashboard = () => {
     });
   };
   return (
-    <div className="main-dashboard v-main">
+    <div className="main-dashboard">
       <PopUp />
       <div className="site-logo">
         <img src={logoWhite} alt="" />
@@ -217,15 +217,30 @@ const Dashboard = () => {
                   width: '100%',
                   borderBottomLeftRadius: 20,
                   borderBottomRightRadius: 20,
-                  background:
-                    'linear-gradient(180deg, rgba(214, 240, 235, 0) 0%, #FFFFFF 73.96%)',
+                  // background:
+                  //   'linear-gradient(180deg, rgba(214, 240, 235, 0) 0%, #FFFFFF 18%)',
                   paddingLeft: 30,
                   cursor: 'pointer',
+                  paddingTop: 5,
+                  background: COLORS.WHITE,
                 }}>
-                <p style={{fontWeight: 'bold', fontSize: 25}}>
+                <p
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: 22,
+                    fontFamily: FONTS.SEMI_BOLD,
+                    marginBottom: 10,
+                  }}>
                   Today’s Daily Learning
                 </p>
-                <p>Click here to complete today’s learnings</p>
+                <p
+                  style={{
+                    lineHeight: 0,
+                    fontSize: 14,
+                    fontFamily: FONTS.REGULAR,
+                  }}>
+                  Click here to complete today’s learnings
+                </p>
               </div>
             </div>
           </div>
@@ -271,6 +286,9 @@ const Dashboard = () => {
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
                 navigatorPush({screenName: 'PastModule'});
+                window.sessionStorage.removeItem('value');
+                window.sessionStorage.removeItem('day');
+                window.sessionStorage.removeItem('week');
               }}
             />
           </div>
@@ -409,6 +427,7 @@ const styles = {
   dailylearnWrap: {
     background:
       'linear-gradient(180deg, rgba(214, 240, 235, 0) 0%, #FFFFFF 73.96%) top right',
+    // background: 'white',
     backgroundImage: `url(${stellaGirlGif})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
