@@ -23,6 +23,7 @@ const TemplateFourteen = (props) => {
     showExercises,
     week,
   } = props.card;
+  console.log(images, 'images....');
 
   return (
     <>
@@ -94,6 +95,7 @@ const TemplateFourteen = (props) => {
                         style={{
                           display: imgItem.image !== '' ? 'flex' : 'none',
                         }}
+                        //title={imgItem.description}
                         title={ReactHtmlParser(imgItem.description)}
                         isVisible={true}
                         animationIn={'fadeInUp'}

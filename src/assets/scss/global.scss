@@ -1,5 +1,4 @@
 @import '../fonts/fonts.css';
-@import '../../updatedNodeModules/@material/slider/styles';
 
 html,
 body * {
@@ -41,7 +40,7 @@ img {
 }
 
 .login {
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   flex-wrap: wrap;
 
@@ -940,6 +939,10 @@ footer {
   text-align: center;
   padding-top: 15px;
   height: 65px;
+
+  img {
+    max-width: 150px;
+  }
 }
 
 .tracker-option {
@@ -977,6 +980,22 @@ footer {
 
 .v-p-field {
   margin-right: 20px;
+
+  &.mr0 {
+    margin-right: 0 !important;
+  }
+
+  &.mr20 {
+    margin-right: 20px !important;
+  }
+}
+
+.mr0 {
+  margin-right: 0 !important;
+}
+
+.mr20 {
+  margin-right: 20px !important;
 }
 
 .v-row {
@@ -1020,14 +1039,14 @@ button.navbutton {
 }
 
 .main-dashboard {
-  // background: linear-gradient(136deg, #63eed2, #033a2f);
-  // background-size: 400% 400%;
-  background: linear-gradient(130deg, #033a2f, #63eed2);
-  background-size: 400% 400%;
+  // background: linear-gradient(130deg, #033a2f, #63eed2);
 
-  -webkit-animation: gradientAnim 30s ease infinite;
-  -moz-animation: gradientAnim 30s ease infinite;
-  animation: gradientAnim 8s ease infinite;
+  // background-size: 400% 400%;
+
+  // -webkit-animation: gradientAnim 30s ease infinite;
+  // -moz-animation: gradientAnim 30s ease infinite;
+  // animation: gradientAnim 8s ease infinite;
+  background: #ffffff;
 }
 
 @-webkit-keyframes gradientAnim {
@@ -1243,7 +1262,21 @@ button.btn-green {
   }
 }
 
-
+.pWrap {
+  box-shadow: 0px 18.965px 54.1858px rgba(0, 111, 89, 0.38);
+  background:
+    linear-gradient(161.44deg, #CEE6E1 55.96%, #A1CDC4 78.08%, #97BECE 95.87%);
+  border: 2px solid #5BB7A4;
+  width: 80%;
+  position: static;
+  opacity: 0.8;
+  border-radius: 20px;
+  flex-direction: row;
+  padding: 1vw;
+  flex-wrap: wrap;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 // slider css
 @media only screen and (max-width: 1200px) {
@@ -1406,6 +1439,7 @@ button.btn-green {
 
   .display-board {
     min-height: 400px;
+    box-shadow: 0px 18.965px 54.1858px rgba(0, 111, 89, 0.38),
   }
 
   .week-list {
@@ -1580,6 +1614,13 @@ button.btn-green {
     }
   }
 
+  .wrap-2line {
+    flex-wrap: wrap !important;
+  }
+
+  .wrap-2line .dash-text {
+    padding-left: 0 !important;
+  }
 }
 
 @media only screen and (max-width: 580px) {

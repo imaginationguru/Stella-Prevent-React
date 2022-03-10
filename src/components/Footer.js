@@ -59,7 +59,10 @@ const Footer = () => {
           </div>
 
           <div className="f-col f-col-fixed">
-            <a className="poweredby" href="https://www.curiodigitaltx.com/">
+            <a
+              target="_blank"
+              className="poweredby"
+              href="https://www.curiodigitaltx.com/">
               <h4>Powered by</h4>
               <span>
                 <img src={footerlogo} alt="" />

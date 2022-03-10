@@ -69,6 +69,7 @@ export default {
     RESEND_REGISTRATION_CODE_API: 'resend-regestration-code',
     GET_WEEKLY_SUMMARY_API: 'get-alltrackerdata',
     CONTACT_US: 'contact-us',
+    GET_SUBJECTS: 'list-subjects',
   },
 
   /*************************FONTS************************** */

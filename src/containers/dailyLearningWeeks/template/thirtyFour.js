@@ -18,6 +18,8 @@ import {
   CustomImage,
 } from '../../../components/Cards';
 import moment from 'moment';
+import {Dimensions} from 'react-native';
+const DEVICE_WIDTH = Dimensions.get('window').width;
 const {IMAGE_BASE_URL, ACTION_TYPE, COLORS} = GLOBALS;
 const {YELLOW, WHITE, CIRCLE_GRAY, RED, GREEN_TEXT, GRAY} = COLORS;
 const userId = getItem('userId');
@@ -420,14 +422,18 @@ const ThirtyFour = (props) => {
                       style={{
                         display: 'flex',
                         justifyContent: 'space-between',
+                        flexWrap: 'wrap',
                       }}>
                       {item.sub_heading.length
                         ? item.sub_heading.map((ele, idx) => {
                             return (
                               <div
                                 style={{
-                                  width: ele.order === 1 ? '30%' : '68%',
-                                }}>
+                                  width: ele.order === 1 ? (DEVICE_WIDTH > 767 ? '30%' : '100%') : (DEVICE_WIDTH > 767 ? '70%' : '100%'),
+                                  paddingLeft: ele.order === 1 ? (DEVICE_WIDTH > 767 ? '0' : '0') : (DEVICE_WIDTH > 767 ? '15px' : '0'),
+                                }}
+                                // className={ele.order === 1 ? 'mr0' : 'mr20'}
+                                >
                                 <div
                                   style={{
                                     backgroundColor: YELLOW,
@@ -451,7 +457,7 @@ const ThirtyFour = (props) => {
                                       const isDelete =
                                         idx === 1 && i < arr.length - 1;
                                       return (
-                                        <div style={styles.plusIconWrapper} className="v-p-field">
+                                        <div style={styles.plusIconWrapper} className={ele.order === 1 ? 'mr0' : 'mr20'}>
                                           <input
                                             type="text"
                                             className="f-field"

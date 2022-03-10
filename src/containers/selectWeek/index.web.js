@@ -15,6 +15,7 @@ import {navigatorPush, navigatorPop} from '../../config/navigationOptions.web';
 import Footer from '../../components/Footer';
 import Button from '../../components/common/button';
 import BackBtn from '../../components/common/backbtn';
+import BackToDashboard from '../../components/common/backToDashboard';
 import ProfileHeader from '../../components/common/profileHeader';
 const {COLORS, FONTS} = GLOBALS;
 const {LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN} = COLORS;
@@ -118,24 +119,68 @@ const DayView = ({
   }
 };
 
+//for store currunt selected week and day value in session strage
+const useSessionStorage = (keyName, defaultValue) => {
+  const [storedValue, setStoredValue] = React.useState(() => {
+    try {
+      const value = window.sessionStorage.getItem(keyName);
+
+      if (value) {
+        return JSON.parse(value);
+      } else {
+        window.sessionStorage.setItem(keyName, JSON.stringify(defaultValue));
+        return defaultValue;
+      }
+    } catch (err) {
+      return defaultValue;
+    }
+  });
+
+  const setValue = (newValue) => {
+    try {
+      window.sessionStorage.setItem(keyName, JSON.stringify(newValue));
+    } catch (err) {}
+    setStoredValue(newValue);
+  };
+
+  return [storedValue, setValue];
+};
+
 function SelectWeek(props) {
   const dispatch = useDispatch();
   const {currentActiveCard = {}} = useSelector((state) => state.moduleOne);
-
-  const [selectedDay, setSelectedDay] = useState(1);
-  const [selectedWeek, setSelectedWeek] = useState(1);
+  const [value, setValue] = useSessionStorage(
+    'value',
+    `Week ${currentActiveCard.current_week}`,
+  );
+  const [selectedDay, setSelectedDay] = useSessionStorage(
+    'day',
+    currentActiveCard.current_day,
+  );
+  const [selectedWeek, setSelectedWeek] = useSessionStorage(
+    'week',
+    parseInt(currentActiveCard.current_week),
+  );
+  // const [selectedDay, setSelectedDay] = useState(currentActiveCard.current_day);
+  // const [selectedWeek, setSelectedWeek] = useState(
+  //   parseInt(currentActiveCard.current_week),
+  // );
 
   const [weekDataDynamic, setweekDataDynamic] = useState([]);
-  const [value, setValue] = useState('Week 1');
+  // const [value, setValue] = useState(
+  //   currentActiveCard.current_week
+  //     ? `Week ${currentActiveCard.current_week}`
+  //     : 'Week 1',
+  // );
 
   useEffect(() => {
     setweekDataDynamic([]);
+    // setSelectedWeek(parseInt(currentActiveCard.current_week));
+    // setSelectedDay(currentActiveCard.current_day);
 
-    setSelectedWeek(parseInt(currentActiveCard.current_week));
-    setSelectedDay(currentActiveCard.current_day);
-
-    setValue(`Week ${currentActiveCard.current_week}`);
+    // setValue(`Week ${currentActiveCard.current_week}`);
     _setDynamicWeeks();
+    console.log(currentActiveCard, 'currentActiveCard........');
   }, [currentActiveCard]);
 
   useEffect(() => {
@@ -205,8 +250,8 @@ function SelectWeek(props) {
       <View style={[styles.container, {}]}>
         <div className="v-container m-tb-30">
           <div className="blob-container">
-            <BackBtn btnStyle={{padding: 0}} />
-
+            {/* <BackBtn btnStyle={{padding: 0}} /> */}
+            <BackToDashboard btnStyle={{padding: 0}} />
             <View style={styles.backBtn} />
             <View style={{marginTop: 10}}>
               <ScheduleTab
