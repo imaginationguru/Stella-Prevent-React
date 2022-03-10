@@ -212,14 +212,15 @@ const styles = {
   wrapper: {
     display: 'flex',
     marginTop: '10px',
-
+    //border: '1px solid red',
     width: '100%',
   },
   contentStyle: {
     width: '80%',
     // alignContent: 'flex-end',
     // justifyContent: 'end',
-
+    // border: '1px solid red',
+    marginBottom: '-15px',
     float: 'right',
   },
   customImageStyle: {

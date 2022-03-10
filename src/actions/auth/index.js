@@ -675,3 +675,29 @@ export function resendRegistrationCode(params, cb) {
     }
   };
 }
+
+//************************** Get Subject List************************ */
+export function getSubject(cb) {
+  return async (dispatch) => {
+    try {
+      let json = await RestClient.getCall(`${URL.GET_SUBJECTS}`);
+      if (json.code === 200) {
+        cb(json.data.subject);
+      } else {
+        if (json.code === 400) {
+          dispatch({
+            type: ACTION_TYPE.ERROR,
+            payload: json.message,
+          });
+        }
+        cb([]);
+      }
+    } catch (error) {
+      cb([]);
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+      });
+    }
+  };
+}

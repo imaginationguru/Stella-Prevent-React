@@ -15,6 +15,7 @@ import {navigatorPush, navigatorPop} from '../../config/navigationOptions.web';
 import Footer from '../../components/Footer';
 import Button from '../../components/common/button';
 import BackBtn from '../../components/common/backbtn';
+import BackToDashboard from '../../components/common/backToDashboard';
 import ProfileHeader from '../../components/common/profileHeader';
 const {COLORS, FONTS} = GLOBALS;
 const {LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN} = COLORS;
@@ -174,12 +175,12 @@ function SelectWeek(props) {
 
   useEffect(() => {
     setweekDataDynamic([]);
-
     // setSelectedWeek(parseInt(currentActiveCard.current_week));
     // setSelectedDay(currentActiveCard.current_day);
 
     // setValue(`Week ${currentActiveCard.current_week}`);
     _setDynamicWeeks();
+    console.log(currentActiveCard, 'currentActiveCard........');
   }, [currentActiveCard]);
 
   useEffect(() => {
@@ -249,8 +250,8 @@ function SelectWeek(props) {
       <View style={[styles.container, {}]}>
         <div className="v-container m-tb-30">
           <div className="blob-container">
-            <BackBtn btnStyle={{padding: 0}} />
-
+            {/* <BackBtn btnStyle={{padding: 0}} /> */}
+            <BackToDashboard btnStyle={{padding: 0}} />
             <View style={styles.backBtn} />
             <View style={{marginTop: 10}}>
               <ScheduleTab
