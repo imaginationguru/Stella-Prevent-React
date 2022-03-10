@@ -9,7 +9,11 @@ import {
   Dimensions,
 } from 'react-native';
 
-import {navigatorPush, navigatorPop} from '../../config/navigationOptions.web';
+import {
+  navigatorPush,
+  navigatorPop,
+  goToPastModule,
+} from '../../config/navigationOptions.web';
 import back from '../../assets/images/subscription/back.png';
 import GLOBALS from '../../constants';
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -24,12 +28,15 @@ const BackBtn = (props) => {
     btnStyle,
     textStyle,
     isDisabled = false,
+    goBack = true,
   } = props;
   return (
     <View style={[styles.backBtn, btnStyle]}>
       <TouchableOpacity
         style={{flexDirection: 'row', alignItems: 'center'}}
-        onPress={() => navigatorPop()}>
+        onPress={() => {
+          goBack ? navigatorPop() : goToPastModule();
+        }}>
         <Image
           resizeMode={'contain'}
           source={back}
