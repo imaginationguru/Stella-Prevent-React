@@ -111,11 +111,11 @@ const FourOne = (props) => {
   useEffect(() => {
     if (props.submit_messages.length) {
       let positive = props.submit_messages
-        .filter((item) => item.condition === 'Yes to all')
+        .filter((item) => item.condition === 'When select one positive')
         .map((ele) => ele.message);
       setPositiveMessage(positive);
       let negative = props.submit_messages
-        .filter((item) => item.condition === 'Atleast 1 is no')
+        .filter((item) => item.condition === 'When selected all crossed option')
         .map((ele) => ele.message);
       setNegativeMessage(negative);
     }
@@ -194,7 +194,7 @@ const FourOne = (props) => {
     }
     console.log('temp?????', temp);
     if (temp.length) {
-      isValid = temp.some((item) => item === 'NO');
+      isValid = temp.some((item) => item === 'YES');
     }
     console.log(
       'user submit message',
@@ -227,10 +227,10 @@ const FourOne = (props) => {
       if (userAssessmentData && userAssessmentData.length) {
         if (isValid) {
           console.log('is vlaid true');
-          dispatch(AppActions.rearrangeAssessments(params, negativeMessage));
+          dispatch(AppActions.rearrangeAssessments(params, positiveMessage));
         } else {
           console.log('is vlaid false');
-          dispatch(AppActions.rearrangeAssessments(params, positiveMessage));
+          dispatch(AppActions.rearrangeAssessments(params, negativeMessage));
         }
         // dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
         dispatch(
@@ -242,9 +242,9 @@ const FourOne = (props) => {
         ); // input update
       } else {
         if (isValid) {
-          dispatch(AppActions.saveUserAssessment(params, negativeMessage));
-        } else {
           dispatch(AppActions.saveUserAssessment(params, positiveMessage));
+        } else {
+          dispatch(AppActions.saveUserAssessment(params, negativeMessage));
         }
         // dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
       }
