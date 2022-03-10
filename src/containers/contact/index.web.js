@@ -59,22 +59,31 @@ function Contact(props) {
       label: 'Subject 4',
     },
   ]);
+
+  const [subjectList, setSubjects] = useState([]);
   const [selecteditem, setSelectedItem] = useState(1);
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState('');
 
   useEffect(() => {
-    console.log(loginData, 'loginData');
+    dispatch(
+      AppActions.getSubject((res) => {
+        setSubjects(...subjectList, res);
+        setValue(res[0]);
+      }),
+    );
+  }, []);
+
+  useEffect(() => {
     if (loginData?.user?._id) {
       console.log('enter');
       setFirstName(loginData.user.firstName);
       setEmail(loginData.user.email);
       setLastName(loginData.user.lastName);
     }
-  }, []);
+  }, [loginData]);
 
   const onWeekChange = (event) => {
     setValue(event.target.value);
-    setSelectedItem(event.target.value.replace('Week' + ' ', ''));
   };
 
   const handleChange = (e) => {
@@ -105,8 +114,9 @@ function Contact(props) {
       firstName: firstName,
       lastName: lastName,
       message: message,
-      subject: value,
+      subject: value.name,
     };
+    console.log(params);
 
     if (firstName.length === 0) {
       setFirstNameError('Please fill first name');
@@ -155,36 +165,6 @@ function Contact(props) {
               <h4 className="t-heading">Let us know how we can help!</h4>
               <div className="contactform">
                 <form noValidate onSubmit={(e) => onSend(e)}>
-                  <label className="cell-label">Subject</label>
-                  <div
-                    className="c-dropdown"
-                    style={{
-                      width: '100%',
-                      margin: '0 auto',
-                      borderRadius: '12px',
-                      padding: '5px',
-                      paddingLeft: '5px',
-                      paddingRight: '5px',
-                      boxShadow:
-                        '0px 30.2415px 60.4831px rgba(0, 111, 89, 0.38)',
-                      border: '1px solid rgba(0, 111, 89, 0.38)',
-                      marginBottom: 20,
-                    }}>
-                    <select
-                      value={value}
-                      onChange={onWeekChange}
-                      style={{
-                        width: '100%',
-                        paddingTop: '5px',
-                        paddingBottom: '5px',
-                        backgroundColor: '#ffffff',
-                        border: '0px solid rgba(0, 111, 89, 0.38)',
-                      }}>
-                      {weekDataDynamic.map((item) => {
-                        return <option value={item.value}>{item.label}</option>;
-                      })}
-                    </select>
-                  </div>
                   {loginData?.user?._id ? null : (
                     <div className="cell-row">
                       <div className="cell-33">
@@ -229,6 +209,39 @@ function Contact(props) {
                       </div>
                     </div>
                   )}
+                  <label className="cell-label">Subject</label>
+                  <div
+                    className="c-dropdown"
+                    style={{
+                      width: '100%',
+                      margin: '0 auto',
+                      borderRadius: '12px',
+                      padding: '5px',
+                      paddingLeft: '5px',
+                      paddingRight: '5px',
+                      boxShadow:
+                        '0px 30.2415px 60.4831px rgba(0, 111, 89, 0.38)',
+                      border: '1px solid rgba(0, 111, 89, 0.38)',
+                      marginBottom: 20,
+                    }}>
+                    <select
+                      value={value}
+                      onChange={onWeekChange}
+                      style={{
+                        width: '100%',
+                        paddingTop: '5px',
+                        paddingBottom: '5px',
+                        backgroundColor: '#ffffff',
+                        border: '0px solid rgba(0, 111, 89, 0.38)',
+                      }}>
+                      {subjectList.map((item) => {
+                        return <option value={item.name}>{item.name}</option>;
+                      })}
+                    </select>
+                    {/* {subjectList.map((item) => {
+                      return <p>{item.title}</p>;
+                    })} */}
+                  </div>
                   <div className="cell-row">
                     <div className="cell-100">
                       <label className="cell-label">Message</label>
