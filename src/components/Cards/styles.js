@@ -12,7 +12,7 @@ const styles = {
     flexDirection: 'column',
   },
   mediumimageWrapper: {
-    maxWidth: '400px',
+    width: '380px',
     height: 'auto',
     margin: '0 auto',
     flexDirection: 'column',
