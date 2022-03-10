@@ -215,13 +215,13 @@ const Dashboard = () => {
                   position: 'absolute',
                   bottom: 0,
                   width: '100%',
-                  borderBottomLeftRadius: 20,
-                  borderBottomRightRadius: 20,
+                  borderRadius: 8,
                   // background:
                   //   'linear-gradient(180deg, rgba(214, 240, 235, 0) 0%, #FFFFFF 18%)',
                   paddingLeft: 30,
                   cursor: 'pointer',
-                  paddingTop: 5,
+                  paddingTop: 15,
+                  paddingBottom: 15,
                   background: COLORS.WHITE,
                 }}>
                 <p
@@ -419,7 +419,9 @@ const styles = {
     position: 'absolute',
     top: 30,
     left: '10%',
-    backgroundColor: '#ffffff',
+    boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
+    background:
+      'linear-gradient(161.44deg, #CEE6E1 55.96%, #A1CDC4 78.08%, #97BECE 95.87%)',
     opacity: 0.8,
     borderRadius: 20,
     borderShadow: ' 0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
@@ -438,7 +440,7 @@ const styles = {
     marginBottom: 30,
     position: 'relative',
     // border: '1px solid blue',
-    boxShadow: '1px 3px 1px #D6F0EB',
+    boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
     cursor: 'pointer',
     backgroundPosition: '50%',
     // backgroundPosition: 'center left',
