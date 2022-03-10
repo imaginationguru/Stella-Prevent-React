@@ -107,6 +107,7 @@ function Contact(props) {
   };
 
   const onSend = (e) => {
+    console.log(value, 'value...');
     e.preventDefault();
 
     const params = {
@@ -114,7 +115,7 @@ function Contact(props) {
       firstName: firstName,
       lastName: lastName,
       message: message,
-      subject: value.name,
+      subject: value,
     };
     console.log(params);
 
