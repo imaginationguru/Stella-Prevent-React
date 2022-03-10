@@ -93,7 +93,7 @@ const ProfileHeader = (props) => {
         resizeMode="cover"
         // source={dashboardHeader}
         style={styles.bgImage}>
-        <View style={styles.profileWrapper}>
+        <div className="pWrap">
           <View style={styles.profileWrapp}>
             <View style={styles.profileWrapLeft}>
               <View style={styles.profileConatiner}>
@@ -252,7 +252,7 @@ const ProfileHeader = (props) => {
               />
             </View>
           </View>
-        </View>
+        </div>
       </ImageBackground>
     </View>
   );
@@ -267,15 +267,17 @@ const styles = StyleSheet.create({
     paddingBottom: '30px',
   },
   profileWrapper: {
+    boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
+    background:
+      'linear-gradient(161.44deg, #CEE6E1 55.96%, #A1CDC4 78.08%, #97BECE 95.87%)',
     border: `2px solid ${DARK_GREEN}`,
     width: '80%',
     position: 'static',
     // top: 30,
     // left: '10%',
-    backgroundColor: '#ffffff',
+    // backgroundColor: '#ffffff',
     opacity: 0.8,
     borderRadius: 20,
-    borderShadow: ' 0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
     flexDirection: 'row',
     padding: '1vw',
     flexWrap: 'wrap',
