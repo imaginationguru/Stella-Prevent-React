@@ -76,9 +76,10 @@ const TwentySix = (props) => {
       }
     }
   }, [assessmentData]);
-  console.log('slugData?????????', slugData);
+
   useEffect(() => {
     const onlyCardData = [];
+
     if (userAssessmentData && userAssessmentData.length) {
       userAssessmentData.forEach((item) => {
         onlyCardData.push(...item.cards);
@@ -88,6 +89,10 @@ const TwentySix = (props) => {
       onlyCardData.map((ele) => {
         return {
           assessment_header_id: ele.assessment_header_id,
+          order:
+            ele.assessment_header &&
+            ele.assessment_header.length &&
+            ele.assessment_header[0].order,
           content: [
             {
               assessment_content_id: ele.assessment_content_id,
@@ -117,7 +122,6 @@ const TwentySix = (props) => {
   }, [props.submit_messages]);
 
   const onSubmit = (e) => {
-    console.log('on submit????');
     e.preventDefault();
     let params = {
       user_id: getItem('userId'),
@@ -172,24 +176,39 @@ const TwentySix = (props) => {
     let a = [];
     let b = [];
     let c = [];
+    let customMsg1 = '';
+    let customMsg2 = '';
+    let z = '';
+    let q = '';
+    if (slugData === 'never,sometimes,quite often') {
+      customMsg1 =
+        'Your answers suggest that, in general, you can be assertive when you communicate with others. Assertive communication is essential to express your needs while showing respect and consideration for others. Keep it up! ';
+      customMsg2 =
+        "Your answers suggest that it is not always easy for you to be assertive  when communicate with others. Sometimes, you can use strategies that are more passive (choosing not to express your opinion, even if it makes you frustrated, or not asking for help) or more aggressive (choosing to respond more harshly or impulsively) to deal with the other's opinions. These strategies are not useful and end up generating conflict and dissatisfaction in your relationship with others. Try to communicate your needs more assertively!";
+      let onlyContentData = [];
 
+      assessment
+        .sort((a, b) => (a.order > b.order && 1) || -1)
+        .forEach((item) => {
+          onlyContentData.push(...item.content);
+        });
+      let contentMessage = onlyContentData.map((item) => item.content);
+
+      let y = contentMessage.filter((item, i) => i === 0 || i === 3);
+      z = !y.includes('Never');
+
+      let p = contentMessage.filter((item, i) => i === 1 || i === 2 || i === 4);
+
+      q = !p.includes('Quite often');
+    }
     if (userAssessmentData && userAssessmentData.length) {
-      console.log('if');
       if (assessment.length) {
-        console.log('assessment if', assessment, slugData);
         let onlyContentData = [];
         assessment.forEach((item) => {
           onlyContentData.push(...item.content);
         });
         let contentMessage = onlyContentData.map((item) => item.content);
-        let customMsg1 =
-          'Your answers suggest that, in general, you can be assertive when you communicate with others. Assertive communication is essential to express your needs while showing respect and consideration for others. Keep it up! ';
-        let customMsg2 =
-          "Your answers suggest that it is not always easy for you to be assertive  when communicate with others. Sometimes, you can use strategies that are more passive (choosing not to express your opinion, even if it makes you frustrated, or not asking for help) or more aggressive (choosing to respond more harshly or impulsively) to deal with the other's opinions. These strategies are not useful and end up generating conflict and dissatisfaction in your relationship with others. Try to communicate your needs more assertively!";
-        let y = contentMessage.filter((item, i) => i === 0 || i === 3);
-        let z = y.includes('Sometimes' || 'Quite often');
         if (slugData === 'different,similiar,i_do_not_know') {
-          console.log('slud first');
           if (contentMessage.length) {
             let difference = contentMessage.filter(
               (item) => item === 'Different',
@@ -204,12 +223,10 @@ const TwentySix = (props) => {
           }
           let sum = [a[0].length + c[0].length, ...differenceMessage];
           dispatch(AppActions.rearrangeAssessments(params, sum));
-          // never,sometimes,quite often never,sometimes,oftentimes
+          //  never,sometimes,oftentimes
         } else if (slugData === 'never,sometimes,quite often') {
-          console.log('slug dta ::::::::::::', slugData);
-          console.log('content message ?????', contentMessage);
           if (props.card.week == 3 && props.card.day == 4) {
-            if (z) {
+            if (z && q) {
               dispatch(
                 AppActions.rearrangeAssessments(
                   params,
@@ -279,7 +296,6 @@ const TwentySix = (props) => {
         }
       }
     } else {
-      console.log('else ');
       if (assessment && assessment.length) {
         if (assessment.length) {
           let onlyContentData = [];
@@ -310,24 +326,8 @@ const TwentySix = (props) => {
             dispatch(AppActions.saveUserAssessment(params, sum, customMsg));
             // answer SOMETIMES or QUITE OFTEN to questions 1 and 4 and NEVER or SOMETIMES to questions 2, 3 and 5]
           } else if (slugData === 'never,sometimes,quite often') {
-            console.log('slug dta""""""""""save user', slugData);
-            console.log('content message ?????', contentMessage);
-            let customMsg1 =
-              'Your answers suggest that, in general, you can be assertive when you communicate with others. Assertive communication is essential to express your needs while showing respect and consideration for others. Keep it up! ';
-            let customMsg2 =
-              "Your answers suggest that it is not always easy for you to be assertive  when communicate with others. Sometimes, you can use strategies that are more passive (choosing not to express your opinion, even if it makes you frustrated, or not asking for help) or more aggressive (choosing to respond more harshly or impulsively) to deal with the other's opinions. These strategies are not useful and end up generating conflict and dissatisfaction in your relationship with others. Try to communicate your needs more assertively!";
-            let y = contentMessage.filter((item, i) => i === 0 || i === 3);
-            let z = y.includes('Sometimes' || 'Quite often');
-            console.log('z??????', z);
             if (contentMessage.length) {
-              console.log(
-                'content message length if',
-                props.card.week === 3,
-                props.card.day,
-              );
-
-              console.log('z????', z);
-              if (z) {
+              if (z || q) {
                 dispatch(
                   AppActions.saveUserAssessment(
                     params,
@@ -415,7 +415,10 @@ const TwentySix = (props) => {
 
       if (isAlready) {
         const newData = assessment.map((ele) => {
-          let newContent = {assessment_header_id: ele.assessment_header_id};
+          let newContent = {
+            assessment_header_id: ele.assessment_header_id,
+            order: ele.order,
+          };
           if (ele.assessment_header_id === item._id) {
             newContent.content = [
               {
@@ -427,6 +430,7 @@ const TwentySix = (props) => {
           } else {
             newContent.content = ele.content;
           }
+
           return newContent;
         });
         setAssessment(newData);
@@ -435,6 +439,7 @@ const TwentySix = (props) => {
           ...assessment,
           {
             assessment_header_id: item._id,
+            order: item.order,
             content: [
               {
                 assessment_content_id: val._id,
@@ -450,6 +455,7 @@ const TwentySix = (props) => {
         ...assessment,
         {
           assessment_header_id: item._id,
+          order: item.order,
           content: [
             {
               assessment_content_id: val._id,
@@ -534,7 +540,6 @@ const TwentySix = (props) => {
                 ? optionsData
                     .sort((a, b) => (a.order > b.order && 1) || -1)
                     .map((item, index) => {
-                      //  console.log('item>>>>>>>>', item);
                       return (
                         <div
                           className="col-md-3 sm-3 col-6"
