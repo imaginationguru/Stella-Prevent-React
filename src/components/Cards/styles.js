@@ -18,7 +18,7 @@ const styles = {
     flexDirection: 'column',
   },
   largeimageWrapper: {
-    width: '600px',
+    maxWidth: '600px',
     height: 'auto',
     margin: '0 auto',
     flexDirection: 'column',

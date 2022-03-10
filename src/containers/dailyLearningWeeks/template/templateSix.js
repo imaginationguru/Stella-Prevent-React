@@ -253,7 +253,9 @@ const TemplateSix = (props) => {
             })
         : []}
       {/*******************************ASSESSMENT DESCRIPTION*********************** */}
-      <div style={commonStyles.assessmentWrapper}>
+      <div
+        style={{...commonStyles.assessmentWrapper, justifyContent: 'center'}}
+        className="wrap-2line">
         {images && images.length
           ? images.map((item, i) => {
               return (

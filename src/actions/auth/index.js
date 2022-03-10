@@ -175,15 +175,15 @@ export function bindProgram(cb) {
       dispatch(loadingAction(false));
       cb();
     } catch (error) {
-      cb();
-      dispatch({
-        type: ACTION_TYPE.ERROR,
-        payload: error,
-      });
-      dispatch({
-        type: ACTION_TYPE.BIND_PROGRAM_USER_FAIL,
-        payload: error,
-      });
+      // dispatch({
+      //   type: ACTION_TYPE.ERROR,
+      //   payload: error,
+      // });
+      // dispatch({
+      //   type: ACTION_TYPE.BIND_PROGRAM_USER_FAIL,
+      //   payload: error,
+      // });
+      // cb();
     }
   };
 }

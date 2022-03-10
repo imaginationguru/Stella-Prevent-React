@@ -1,5 +1,4 @@
 @import '../fonts/fonts.css';
-@import '../../updatedNodeModules/@material/slider/styles';
 
 html,
 body * {
@@ -41,7 +40,7 @@ img {
 }
 
 .login {
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   flex-wrap: wrap;
 
@@ -977,6 +976,22 @@ footer {
 
 .v-p-field {
   margin-right: 20px;
+
+  &.mr0 {
+    margin-right: 0 !important;
+  }
+
+  &.mr20 {
+    margin-right: 20px !important;
+  }
+}
+
+.mr0 {
+  margin-right: 0 !important;
+}
+
+.mr20 {
+  margin-right: 20px !important;
 }
 
 .v-row {
@@ -1242,8 +1257,6 @@ button.btn-green {
     flex: 0 0 auto;
   }
 }
-
-
 
 // slider css
 @media only screen and (max-width: 1200px) {
@@ -1578,6 +1591,14 @@ button.btn-green {
       max-width: none !important;
       width: 100% !important;
     }
+  }
+
+  .wrap-2line {
+    flex-wrap: wrap !important;
+  }
+
+  .wrap-2line .dash-text {
+    padding-left: 0 !important;
   }
 
 }
