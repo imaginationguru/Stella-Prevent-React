@@ -449,19 +449,20 @@ const FourTwo = (props) => {
                         ? CIRCLE_GRAY
                         : YELLOW,
                     width: '33%',
+                    marginBottom: '35px',
                   }}
                   disable={true}
                 />
               );
             })
         : null}
-      {inputs.length ? (
+      {/* {inputs.length ? (
         <div style={commonStyles.buttonWrapper}>
           <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
             {ts('SAVE')}
           </button>
         </div>
-      ) : null}
+      ) : null} */}
       {/*******************************ASSESSMENT DESCRIPTION*********************** */}
       <div style={commonStyles.assessmentWrapper}>
         {images && images.length
