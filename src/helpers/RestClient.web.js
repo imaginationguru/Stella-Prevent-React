@@ -5,6 +5,7 @@ import GLOBALS from '../constants';
 import {accessToken, isInternet} from '../helpers/common';
 import {getItem} from '../utils/AsyncUtils';
 const {BASE_URL} = GLOBALS;
+import store, {storeObj} from '../store/setup.web';
 //let Token = getItem('token');
 
 const api = create({
@@ -18,9 +19,11 @@ const api = create({
   // timeout: 10 * 3000 /* 1 second = 1000 ms */,
 });
 const setToken = () => {
-  let Token = getItem('token');
+  let Token = storeObj.store.getState().authReducer.loginToken;
+  console.log(Token, 'accessToken.......');
+  //let Token = getItem('token');
   if (Token) {
-    console.log(Token,"Token......")
+    console.log(Token, 'Token......');
     api.setHeader('Authorization', Token);
   }
 };
@@ -59,7 +62,7 @@ class RestClient {
     return new Promise(function (fulfill, reject) {
       if (isInternet()) {
         api.post(BASE_URL + url, params).then((response) => {
-          console.log('response Post API Rest Client>>>>>>>',url, response);
+          console.log('response Post API Rest Client>>>>>>>', url, response);
           if (response.status === 200) {
             fulfill(response.data);
           }
