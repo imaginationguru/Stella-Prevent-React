@@ -11,6 +11,9 @@ import {
   CustomImage,
 } from '../../../components/Cards';
 import {Animated} from 'react-animated-css';
+import {Dimensions} from 'react-native';
+
+const DEVICE_WIDTH = Dimensions.get('window').width;
 const {IMAGE_BASE_URL} = GLOBALS;
 const ThirtyOne = (props) => {
   const {
@@ -87,7 +90,7 @@ const ThirtyOne = (props) => {
             .map((item, i) => {
               return (
                 <Animated animationIn={'fadeInUp'}>
-                  <div style={styles.wrapper} key={i}>
+                  <div style={styles.wrapper} key={i} className="wrap-data">
                     <CustomImage
                       src={`${IMAGE_BASE_URL}${item.image}`}
                       style={{
@@ -128,7 +131,7 @@ const ThirtyOne = (props) => {
             .map((item, i) => {
               return (
                 <Animated isVisible={true} animationIn={'fadeInUp'}>
-                  <div style={styles.wrapper} key={i}>
+                  <div style={styles.wrapper} key={i} className="wrap-data">
                     <CustomImage
                       src={`${IMAGE_BASE_URL}${item.image}`}
                       style={{
@@ -169,7 +172,7 @@ const ThirtyOne = (props) => {
             .map((item, i) => {
               return (
                 <Animated isVisible={true} animationIn={'fadeInUp'}>
-                  <div style={styles.wrapper} key={i}>
+                  <div style={styles.wrapper} key={i} className="wrap-data">
                     <CustomImage
                       src={`${IMAGE_BASE_URL}${item.image}`}
                       style={{
@@ -216,7 +219,8 @@ const styles = {
     width: '100%',
   },
   contentStyle: {
-    width: '80%',
+    width: DEVICE_WIDTH > 767 ? '80%' : '100%',
+    // textAlign: DEVICE_WIDTH > 767 ? 'left' : 'center',
     // alignContent: 'flex-end',
     // justifyContent: 'end',
     // border: '1px solid red',
