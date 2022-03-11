@@ -14,7 +14,7 @@ import {Animated} from 'react-animated-css';
 import {Dimensions} from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const {IMAGE_BASE_URL} = GLOBALS;
+const {IMAGE_BASE_URL, FONTS} = GLOBALS;
 const ThirtyOne = (props) => {
   const {
     card_title,
@@ -224,8 +224,12 @@ const styles = {
     // alignContent: 'flex-end',
     // justifyContent: 'end',
     // border: '1px solid red',
+    fontFamily: FONTS.SEMI_BOLD,
     marginBottom: '-15px',
-    float: 'right',
+    width: 180,
+    textAlign: 'center',
+    paddingTop: 20,
+    // float: 'right',
   },
   customImageStyle: {
     width: '180px',
