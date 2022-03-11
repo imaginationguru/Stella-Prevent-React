@@ -238,12 +238,21 @@ const Report = ({location}) => {
 
   if (getWeeklySummaryReportData !== undefined) {
     //mood count
-    getWeeklySummaryReportData?.moodcount?.forEach((element) => {
-      moodData.forEach((e) => {
+    let newArrayList = [];
+    moodData.forEach((element, i) => {
+      newArrayList.push({...element});
+    });
+    getWeeklySummaryReportData?.moodcount?.forEach((element, index) => {
+      newArrayList.forEach((e, i) => {
         if (e.id === element._id) {
-          e.moodCountValue = element?.moodcount;
+          if (e?.moodCountValue) {
+            e.moodCountValue = e.moodCountValue + element?.moodcount;
+          } else {
+            e.moodCountValue = element?.moodcount;
+          }
         }
       });
+      moodData = newArrayList;
     });
 
     //mood graph
@@ -355,7 +364,7 @@ const Report = ({location}) => {
               showsHorizontalScrollIndicator={false}
               keyExtractor={(item) => `${item._id}`}
               renderItem={({item, index}) => {
-                console.log('item??????', item.activeImage);
+                console.log('item??????', moodData);
                 return (
                   <View
                     key={index}
@@ -383,7 +392,7 @@ const Report = ({location}) => {
               }}
             />
           ) : (
-            <Text>'No Record Found'</Text>
+            <Text>No Record Found</Text>
           )}
           <Text style={styles.labelText}>
             Average Activity Report: Number of Activities
