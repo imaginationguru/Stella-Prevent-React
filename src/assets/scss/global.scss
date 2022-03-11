@@ -1621,6 +1621,36 @@ button.btn-green {
   .wrap-2line .dash-text {
     padding-left: 0 !important;
   }
+
+  .wrap-data {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .wrap-data .dash-text {
+    padding-left: 0 !important;
+  }
+
+  .text-res-wrap .dash-text {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    flex: 0 0 100% !important;
+    width: 100% !important;
+  }
+
+  .text-res-wrap {
+    flex-wrap: wrap;
+  }
+
+  .text-res-wrap .das-icon {
+    flex: 0 0 100%;
+  }
+
+  .dashboard-body-inner {
+    display: block;
+    overflow: hidden;
+  }
+
 }
 
 @media only screen and (max-width: 580px) {
