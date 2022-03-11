@@ -111,11 +111,11 @@ const FourOne = (props) => {
   useEffect(() => {
     if (props.submit_messages.length) {
       let positive = props.submit_messages
-        .filter((item) => item.condition === 'When select one positive')
+        .filter((item) => item.condition === 'Atleast 1 is yes')
         .map((ele) => ele.message);
       setPositiveMessage(positive);
       let negative = props.submit_messages
-        .filter((item) => item.condition === 'When selected all crossed option')
+        .filter((item) => item.condition === 'No to all')
         .map((ele) => ele.message);
       setNegativeMessage(negative);
     }
@@ -387,7 +387,7 @@ const FourOne = (props) => {
                     </div>
                   </div>
                   {props.inputs.map((element) => {
-                    console.log('element ??????', element, i, element.order);
+                    //  console.log('element ??????', element, i, element.order);
                     if (i === element.order) {
                       return (
                         <div style={{marginBottom: '5%'}}>
