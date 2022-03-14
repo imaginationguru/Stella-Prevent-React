@@ -250,7 +250,8 @@ img {
   border: 0;
   //height: 50px;
   width: 100%;
-  background: #000000 url('../images/appleIcon.png') no-repeat top 13px left 30px;
+  background: #000000 url('../images/appleIcon.png') no-repeat top 13px left
+    30px;
   color: #ffffff;
   padding: 10px 0 10px 0;
   text-align: center;
@@ -334,7 +335,6 @@ img {
   }
 
   .formField {
-
     //margin-bottom: 21px;
     &.has-icon {
       position: relative;
@@ -524,7 +524,7 @@ img {
   display: flex;
   flex: 1 1 auto;
 
-  &>.container {
+  & > .container {
     display: flex;
   }
 }
@@ -794,7 +794,6 @@ footer {
 
   .f-nav-link {
     &:hover {
-
       h3,
       h6 {
         color: #006f59;
@@ -927,7 +926,7 @@ footer {
     padding: 5px 12px;
     min-height: 95px;
 
-    &>div {
+    & > div {
       flex: 0 0 100%;
       align-items: center;
       justify-content: center;
@@ -1141,7 +1140,7 @@ button.navbutton {
   }
 }
 
-.bk-btn-wrap>div {
+.bk-btn-wrap > div {
   padding: 15px 0;
 }
 
@@ -1250,7 +1249,7 @@ button.btn-green {
   display: flex;
   flex-direction: column;
 
-  &>div {
+  & > div {
     flex: 1 1 auto;
     overflow: auto;
     max-height: 68vh;
@@ -1264,9 +1263,13 @@ button.btn-green {
 
 .pWrap {
   box-shadow: 0px 18.965px 54.1858px rgba(0, 111, 89, 0.38);
-  background:
-    linear-gradient(161.44deg, #CEE6E1 55.96%, #A1CDC4 78.08%, #97BECE 95.87%);
-  border: 2px solid #5BB7A4;
+  background: linear-gradient(
+    161.44deg,
+    #cee6e1 55.96%,
+    #a1cdc4 78.08%,
+    #97bece 95.87%
+  );
+  border: 2px solid #5bb7a4;
   width: 80%;
   position: static;
   opacity: 0.8;
@@ -1439,7 +1442,7 @@ button.btn-green {
 
   .display-board {
     min-height: 400px;
-    box-shadow: 0px 18.965px 54.1858px rgba(0, 111, 89, 0.38),
+    box-shadow: 0px 18.965px 54.1858px rgba(0, 111, 89, 0.38);
   }
 
   .week-list {
@@ -1515,7 +1518,6 @@ button.btn-green {
 
 @media only screen and (max-width: 767px) {
   .login {
-
     .btn-fb,
     .btn-google,
     .btn-apple {
@@ -1524,7 +1526,6 @@ button.btn-green {
   }
 
   .formRow {
-
     .w100,
     .w50,
     .w25,
@@ -1604,7 +1605,7 @@ button.btn-green {
   }
 
   .seachBlock {
-    &>div {
+    & > div {
       max-height: 50vh;
     }
 
@@ -1650,7 +1651,6 @@ button.btn-green {
     display: block;
     overflow: hidden;
   }
-
 }
 
 @media only screen and (max-width: 580px) {
@@ -1697,7 +1697,8 @@ body {
   position: relative;
 }
 
-.list__item {}
+.list__item {
+}
 
 .card {
   background-color: hsl(215, 14%, 37.5%);
@@ -1708,7 +1709,7 @@ body {
   // position: relative;
 }
 
-.list__item+.list__item {
+.list__item + .list__item {
   margin-top: 0.5rem;
 }
 
@@ -1751,5 +1752,5 @@ body {
 
 .res-wrap p {
   word-wrap: break-word;
-  word-break: break-all;
+  // word-break: break-all;
 }
