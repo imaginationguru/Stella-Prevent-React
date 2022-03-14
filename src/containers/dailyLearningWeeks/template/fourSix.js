@@ -10,6 +10,7 @@ import * as AppActions from '../../../actions';
 import {getItem} from '../../../utils/AsyncUtils';
 import {translate as ts} from '../../../i18n/translate';
 import ExerciseBox from '../../../components/ExerciseBox';
+import {customAlert} from '../../../helpers/commonAlerts.web';
 import {
   CardQuote,
   CardTitle,
@@ -110,24 +111,26 @@ const FourSix = (props) => {
           )
         : [];
     setSelected(selectedFormat);
-
-    let headerInputs = [];
-    if (headers && headers.length) {
-      headerInputs = headers.map((item, index) => {
-        let indexUpdate = index + 1;
-        return {
-          assessment_header_id: item._id,
-          content: '',
-          content_id: null,
-          name: item.header,
-          order: lastOrder + indexUpdate,
-          assessment_id: null,
-          placeholder: item.description,
-          value: '',
-        };
-      });
+    if (firstAssessmentContent.length == 0) {
+      let headerInputs = [];
+      if (headers && headers.length) {
+        headerInputs = headers.map((item, index) => {
+          let indexUpdate = index + 1;
+          return {
+            assessment_header_id: item._id,
+            content: '',
+            content_id: null,
+            name: item.header,
+            order: lastOrder + indexUpdate,
+            assessment_id: null,
+            placeholder: item.description,
+            value: '',
+          };
+        });
+      }
+      Array.prototype.push.apply(firstAssessmentContent, headerInputs);
     }
-    Array.prototype.push.apply(firstAssessmentContent, headerInputs);
+
     setUserInputs(firstAssessmentContent);
     console.log(firstAssessmentContent, 'firstAssessmentContent..');
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -137,6 +140,13 @@ const FourSix = (props) => {
   const onSaveFirstAssessment = (e) => {
     e.preventDefault();
     console.log(userInputs, 'userInputs...', headers);
+    let emptyRowCount = userInputs.filter((item) => item.content == '').length;
+
+    /**If any of the row is empty */
+    if (emptyRowCount == 1) {
+      customAlert('Please perform your exercise', 'error');
+      return;
+    }
     let contentArray = [];
     headers.forEach((element) => {
       let filterValue = userInputs
@@ -229,20 +239,53 @@ const FourSix = (props) => {
     // debugger;
     let order = val.order;
     let secondContentId = [val.content_id];
-    let findValue = secondContentId.push(
-      userInputs.find((ele) => ele.order === order + 1).content_id,
-    );
+    // let findValue = secondContentId.push(
+    //   userInputs.find((ele) => ele.order === order + 1).content_id,
+    // );
     console.log(
       userInputs.filter(
         (ele) => ele.content !== val.content && ele.order !== order + 1,
       ),
     );
-
-    setUserInputs(
+    console.log(
       userInputs.filter(
         (ele) => ele.content !== val.content && ele.order !== order + 1,
       ),
+      'filelee',
     );
+
+    let updatedUserInput = userInputs.filter(
+      (ele) => ele.content !== val.content && ele.order !== order + 1,
+    );
+
+    if (updatedUserInput.length > 0) {
+      setUserInputs(
+        userInputs.filter(
+          (ele) => ele.content !== val.content && ele.order !== order + 1,
+        ),
+      );
+    } else {
+      let lastOrder = 0;
+      let headerInputs = [];
+      if (headers && headers.length) {
+        headerInputs = headers.map((item, index) => {
+          let indexUpdate = index + 1;
+          return {
+            assessment_header_id: item._id,
+            content: '',
+            content_id: null,
+            name: item.header,
+            order: lastOrder + indexUpdate,
+            assessment_id: null,
+            placeholder: item.description,
+            value: '',
+          };
+        });
+      }
+
+      console.log(headerInputs, 'headerInputs...');
+      setUserInputs(headerInputs);
+    }
 
     // if (val.content_id) {
     //   dispatch(
@@ -370,13 +413,56 @@ const FourSix = (props) => {
                 </Text>
               </View>
               <View style={styles.crossIconWrapper}>
-                {/* {item.content !== '' ? ( */}
-                {item.content_id != null ? (
+                <View style={{height: '150px'}}>
+                  {item.content !== '' ? (
+                    <input
+                      type="text"
+                      className="f-field"
+                      disabled={'true'}
+                      style={styles.selectedText}
+                      value={item.content}
+                    />
+                  ) : (
+                    <textarea
+                      //value={item.content}
+                      style={styles.selectedText}
+                      placeholder={item.placeholder}
+                      underlineColorAndroid="transparent"
+                      onChange={(term) => {
+                        onTextChange(term.target.value, item);
+                      }}
+                    />
+                  )}
+
+                  {index % 2 === 0 && item.content !== '' ? (
+                    <div
+                      style={styles.circleCrossDiv}
+                      onClick={() => {
+                        onCrossBtnClick(item);
+                      }}>
+                      <span style={{...styles.plusIcon, fontSize: '15px'}}>
+                        x
+                      </span>
+                    </div>
+                  ) : null}
+                  {index % 2 !== 0 && userInputs.length - 1 == index ? (
+                    <div
+                      style={{
+                        ...styles.circleDiv,
+                        backgroundColor: item?.value?.length
+                          ? GREEN_TEXT
+                          : GRAY,
+                      }}
+                      onClick={() => onClickPlusBtn(item)}>
+                      <span style={styles.plusIcon}>+</span>
+                    </div>
+                  ) : null}
+                </View>
+                {/* {item.content !== '' ? (
                   <View style={{height: '150px'}}>
                     <input
                       type="text"
                       className="f-field"
-                      // name={name}
                       disabled={'true'}
                       style={styles.selectedText}
                       value={item.content}
@@ -395,12 +481,6 @@ const FourSix = (props) => {
                   </View>
                 ) : (
                   <View style={{height: '150px'}}>
-                    {/* <TextInput
-                      style={styles.selectedText}
-                      placeholder={item.placeholder}
-                      underlineColorAndroid="transparent"
-                      onChangeText={(term) => onTextChange(term, item)}
-                    /> */}
                     <textarea
                       style={styles.selectedText}
                       placeholder={item.placeholder}
@@ -422,7 +502,7 @@ const FourSix = (props) => {
                       </div>
                     ) : null}
                   </View>
-                )}
+                )} */}
               </View>
             </View>
           )}
