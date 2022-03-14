@@ -88,6 +88,9 @@ const TemplateFourteen = (props) => {
                 })
                 .sort((a, b) => (a.order > b.order && 1) || -1)
                 .map((imgItem) => {
+                  let text = imgItem.description
+                    .toString()
+                    .replace(/\xA0/g, ' ');
                   return (
                     <div className="col-md-6 col-12 res-wrap">
                       <CustomImage
@@ -95,8 +98,10 @@ const TemplateFourteen = (props) => {
                         style={{
                           display: imgItem.image !== '' ? 'flex' : 'none',
                         }}
-                        //title={imgItem.description}
-                        title={ReactHtmlParser(imgItem.description)}
+                        // title={imgItem.description}
+                        title={ReactHtmlParser(text)
+                          .toString()
+                          .replace(/\xA0/g, ' ')}
                         isVisible={true}
                         animationIn={'fadeInUp'}
                       />
@@ -136,6 +141,9 @@ const TemplateFourteen = (props) => {
                 })
                 .sort((a, b) => (a.order > b.order && 1) || -1)
                 .map((imgItem) => {
+                  let text = imgItem.description
+                    .toString()
+                    .replace(/\xA0/g, ' ');
                   return (
                     <div className="col-md-6 col-12 res-wrap">
                       <CustomImage
@@ -143,7 +151,8 @@ const TemplateFourteen = (props) => {
                         style={{
                           display: imgItem.image !== '' ? 'flex' : 'none',
                         }}
-                        title={ReactHtmlParser(imgItem.description)}
+                        // title={imgItem.description}
+                        title={ReactHtmlParser(text)}
                         isVisible={true}
                         animationIn={'fadeInUp'}
                         animationInDelay={'200'}

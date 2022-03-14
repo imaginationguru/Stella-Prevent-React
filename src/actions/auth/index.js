@@ -74,7 +74,8 @@ export function login(email, password, componentId) {
             allowOutsideClick: false,
             allowEscapeKey: false,
             confirmButtonColor: COLORS.DARK_RED,
-            width: DEVICE_WIDTH > 1000 ? '25vw' : '60vw',
+            width: DEVICE_WIDTH > 1000 ? '' : '60vw',
+            // width: DEVICE_WIDTH > 1000 ? '25vw' : '60vw',
           });
           // dispatch({
           //  type: ACTION_TYPE.ERROR,
@@ -429,7 +430,8 @@ export function verifySocialUser(params, componentId, cb) {
               allowOutsideClick: false,
               allowEscapeKey: false,
               confirmButtonColor: COLORS.DARK_RED,
-              width: DEVICE_WIDTH > 1000 ? '25vw' : '60vw',
+              width: DEVICE_WIDTH > 1000 ? '' : '60vw',
+              // width: DEVICE_WIDTH > 1000 ? '25vw' : '60vw',
             });
             dispatch(loadingAction(false));
           } else {
