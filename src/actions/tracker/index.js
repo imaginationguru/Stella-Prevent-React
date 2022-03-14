@@ -1,19 +1,19 @@
 import GLOBALS from '../../constants';
 import RestClient from '../../helpers/RestClient';
-import { loadingAction } from '../common';
-import { getItem } from '../../utils/AsyncUtils';
-import { navigatorPush, navigatorPop } from '../../config/navigationOptions';
+import {loadingAction} from '../common';
+import {getItem} from '../../utils/AsyncUtils';
+import {navigatorPush, navigatorPop} from '../../config/navigationOptions';
 import moment from 'moment';
-import { customAlert } from '../../helpers/commonAlerts.web';
-const { ACTION_TYPE, URL, STRINGS } = GLOBALS;
-const { TRY_AGAIN, CHECK_NETWORK } = STRINGS;
+import {customAlert} from '../../helpers/commonAlerts.web';
+const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
+const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
 
 /********************GET MOOD DATA************** */
 export function getMoodData(date) {
   console.log('getMoodData inside actions');
   let userId = getItem('userId');
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_MOOD_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_MOOD_REQUEST});
     try {
       dispatch(loadingAction(true));
       let params = {
@@ -76,14 +76,14 @@ export function saveUserMood(params) {
       ...params,
       user_id: userId,
     };
-    dispatch({ type: ACTION_TYPE.SAVE_MOOD_REQUEST });
+    dispatch({type: ACTION_TYPE.SAVE_MOOD_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.SAVE_MOOD_API, postData);
       if (json.code === 200) {
         console.log('JSON data SAVE USER ASSESSMENT >>>>>>>>>', json);
-        customAlert(json.message, 'success', {}, null, onPress => {
-          dispatch(navigatorPop())
+        customAlert(json.message, 'success', {}, null, (onPress) => {
+          dispatch(navigatorPop());
         });
         dispatch({
           type: ACTION_TYPE.SAVE_MOOD_SUCCESS,
@@ -137,7 +137,7 @@ export function getActivityTracker(params) {
   let userId = getItem('userId');
   console.log('get activity tracker params', params);
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_ACTIVITY_TRACKER_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_ACTIVITY_TRACKER_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(
@@ -193,7 +193,7 @@ export function getSelectedActivityTracker(params) {
   console.log('get selected activity tracker params', params);
   let userId = getItem('userId');
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_SELECTED_ACTIVITY_TRACKER_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_SELECTED_ACTIVITY_TRACKER_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(
@@ -255,7 +255,7 @@ export function saveActivityTracker(params) {
   };
   console.log(' save post data get selected activity tracker', postData);
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.SAVE_OTHER_ACTIVITY_REQUEST });
+    dispatch({type: ACTION_TYPE.SAVE_OTHER_ACTIVITY_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.SAVE_ACTIVITY_API, params);
@@ -264,8 +264,8 @@ export function saveActivityTracker(params) {
           type: ACTION_TYPE.SAVE_OTHER_ACTIVITY_SUCCESS,
           payload: json.data,
         });
-        customAlert(json.message, 'success', {}, null, onPress => {
-          dispatch(navigatorPop())
+        customAlert(json.message, 'success', {}, null, (onPress) => {
+          dispatch(navigatorPop());
         });
         // dispatch({
         //   type: ACTION_TYPE.SUCCESS_MESSAGE,
@@ -315,7 +315,7 @@ export function saveSleepTracker(params, postDataGetAPI) {
       ...params,
       user_id: userId,
     };
-    dispatch({ type: ACTION_TYPE.SAVE_SLEEP_TRACKER_REQUEST });
+    dispatch({type: ACTION_TYPE.SAVE_SLEEP_TRACKER_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.SAVE_SLEEP_API, postData);
@@ -333,8 +333,8 @@ export function saveSleepTracker(params, postDataGetAPI) {
 
         dispatch(getSleepData(postDataGetAPI));
         dispatch(loadingAction(false));
-        customAlert(json.message, 'success', {}, null, onPress => {
-          dispatch(navigatorPop())
+        customAlert(json.message, 'success', {}, null, (onPress) => {
+          dispatch(navigatorPop());
         });
       } else {
         if (json.code === 400) {
@@ -359,6 +359,7 @@ export function saveSleepTracker(params, postDataGetAPI) {
             type: ACTION_TYPE.SAVE_SLEEP_TRACKER_FAIL,
           });
         }
+        dispatch(loadingAction(false));
       }
     } catch (error) {
       console.log('erroe>> csave USER ASSESSMENT>>>>>>>>>>>>>>', error);
@@ -382,7 +383,7 @@ export function getSleepData(params) {
     user_id: userId,
   };
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_SLEEP_TRACKER_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_SLEEP_TRACKER_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.GET_SLEEP_TRACKER_API, postData);
@@ -439,7 +440,7 @@ export function getWeeklySummaryReport(params) {
   //   user_id: userId,
   // };
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.GET_WEEKLY_SUMMARY_API, params);

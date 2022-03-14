@@ -198,7 +198,7 @@ const ThirtyOne = (props) => {
               return (
                 <CardContent
                   key={index}
-                  content={ReactHtmlParser(item.content)}
+                  // content={ReactHtmlParser(item.content)}
                   isVisible={true}
                   animationIn={'fadeInUp'}
                 />
