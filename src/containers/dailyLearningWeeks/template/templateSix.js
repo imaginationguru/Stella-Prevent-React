@@ -262,8 +262,10 @@ const TemplateSix = (props) => {
                 <CustomImage
                   src={`${IMAGE_BASE_URL}${item.image}`}
                   style={{
-                    ...commonStyles.assessImage,
+                    // ...commonStyles.assessImage,
                     display: item.image !== '' ? 'flex' : 'none',
+                    width: '120px',
+                    flex: '0 0 auto',
                   }}
                 />
               );
@@ -295,10 +297,10 @@ const TemplateSix = (props) => {
               .sort((a, b) => (a.order > b.order && 1) || -1)
               .map((item, i) => {
                 return (
-                  <div key={i}>
+                  <div style={{position: 'relative'}} key={i}>
                     <textarea
                       type="text"
-                      className="f-field"
+                      className="f-field height-auto"
                       name="leftInput"
                       disabled={true}
                       style={styles.selectedText}
@@ -337,10 +339,10 @@ const TemplateSix = (props) => {
               .sort((a, b) => (a.order > b.order && 1) || -1)
               .map((item, i) => {
                 return (
-                  <div key={i}>
+                  <div key={i} style={{position: 'relative'}}>
                     <textarea
                       type="text"
-                      className="f-field"
+                      className="f-field height-auto"
                       name="leftInput"
                       disabled={true}
                       style={styles.selectedText}
@@ -394,7 +396,7 @@ const TemplateSix = (props) => {
           </div>
           <textarea
             // type="text"
-            className="f-field"
+            className="f-field height-auto"
             name="leftInput"
             placeholder={headers && headers.length ? headers[0].header : ''}
             style={{
@@ -437,7 +439,7 @@ const TemplateSix = (props) => {
           </div>
           <textarea
             // type="textare"
-            className="f-field"
+            className="f-field height-auto"
             placeholder={headers && headers.length ? headers[1].header : ''}
             style={{
               backgroundColor: '#F1F3FA',
@@ -502,7 +504,8 @@ const styles = {
   },
   innerWrapper: {
     width: '48%',
-    position: 'relative',
+    paddingRight: '10px',
+    //position: 'relative',
   },
   selectedText: {
     backgroundColor: '#F1F3FA',

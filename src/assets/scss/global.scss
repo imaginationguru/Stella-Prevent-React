@@ -184,6 +184,10 @@ img {
   width: 100%;
   padding: 0 15px;
   outline: none;
+
+  &.height-auto {
+    height: auto;
+  }
 }
 
 .formLabel {
@@ -1268,10 +1272,12 @@ button.btn-green {
 .pWrap {
   box-shadow: 0px 18.965px 54.1858px rgba(0, 111, 89, 0.38);
 
-  background: linear-gradient(161.44deg,
-      #cee6e1 55.96%,
-      #a1cdc4 78.08%,
-      #97bece 95.87%);
+  background: linear-gradient(
+    161.44deg,
+    #cee6e1 55.96%,
+    #a1cdc4 78.08%,
+    #97bece 95.87%
+  );
 
   border: 2px solid #5bb7a4;
   width: 80%;
@@ -1328,7 +1334,6 @@ button.btn-green {
     }
   }
 }
-
 
 .green-bg {
   background-color: #5dbda9 !important;
@@ -1415,8 +1420,8 @@ button.btn-green {
         display: none;
       }
 
-      input[type="radio"]:checked {
-        &~span {
+      input[type='radio']:checked {
+        & ~ span {
           display: flex;
           align-items: center;
           justify-content: center;
@@ -1473,7 +1478,6 @@ button.btn-green {
     margin-bottom: 15px;
   }
 }
-
 
 // slider css
 @media only screen and (max-width: 1200px) {
@@ -1963,4 +1967,3 @@ body {
   word-wrap: break-word;
   // word-break: break-all;
 }
-

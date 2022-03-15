@@ -94,6 +94,9 @@ const TemplateFive = (props) => {
       let tempHeaderParams = [];
       userAssessmentData.forEach((item, i) => {
         temp.push(...item.cards);
+        // if(Object.keys(item).length === 0){
+
+        // }
         let zz = item.cards.map((item) => {
           return {
             assessment_header_id: item.assessment_header_id,
@@ -106,7 +109,20 @@ const TemplateFive = (props) => {
           };
         });
         tempHeaderParams.push(...zz);
-        setHeaderParams(onlySingleId(tempHeaderParams));
+        // console.log(
+        //   tempHeaderParams,
+        //   'tempHeaderParams',
+        //   tempHeaderParams.filter(
+        //     (item) => item.assessment_header_id != undefined,
+        //   ),
+        // );
+        setHeaderParams(
+          onlySingleId(
+            tempHeaderParams.filter(
+              (item) => item.assessment_header_id != undefined,
+            ),
+          ),
+        );
         return;
       });
       setDragCardData(temp);
@@ -183,36 +199,41 @@ const TemplateFive = (props) => {
     setOptionDataContent([...optionDataContent, tasks]);
   };
   let customMsg = '';
+  //useEffect(() => {
   if (props.card.week == 1 && props.card.day == 2) {
     let selectedIntemsofHeader = [];
-    assessmentData.headers.map((head, index) => {
-      selectedIntemsofHeader[index] = headerParams.filter(
-        (e) => e.assessment_header_id === head._id,
-      );
-    });
+    if (headerParams.length > 0 && assessmentData.headers.length == 4) {
+      // return;
+      assessmentData.headers.map((head, index) => {
+        selectedIntemsofHeader[index] = headerParams.filter(
+          (e) => e.assessment_header_id === head._id,
+        );
+      });
+      let greenCount =
+        selectedIntemsofHeader[0].length == 0
+          ? 0
+          : selectedIntemsofHeader[0][0].content.length;
+      let yellowCount =
+        selectedIntemsofHeader[1].length == 0
+          ? 0
+          : selectedIntemsofHeader[1][0].content.length;
+      let orangeCount =
+        selectedIntemsofHeader[2].length == 0
+          ? 0
+          : selectedIntemsofHeader[2][0].content.length;
+      let purpleCount =
+        selectedIntemsofHeader[3].length == 0
+          ? 0
+          : selectedIntemsofHeader[3][0].content.length;
+      let X1 = yellowCount + orangeCount + purpleCount;
+      let X2 = yellowCount + orangeCount;
 
-    let greenCount =
-      selectedIntemsofHeader[0].length == 0
-        ? 0
-        : selectedIntemsofHeader[0][0].content.length;
-    let yellowCount =
-      selectedIntemsofHeader[1].length == 0
-        ? 0
-        : selectedIntemsofHeader[1][0].content.length;
-    let orangeCount =
-      selectedIntemsofHeader[2].length == 0
-        ? 0
-        : selectedIntemsofHeader[2][0].content.length;
-    let purpleCount =
-      selectedIntemsofHeader[3].length == 0
-        ? 0
-        : selectedIntemsofHeader[3][0].content.length;
-    let X1 = yellowCount + orangeCount + purpleCount;
-    let X2 = yellowCount + orangeCount;
-
-    customMsg = `After the birth of your new born, you consider that changes have occurred in ${X1} areas of your life and that, in ${X2} of these areas, these changes were different from what you initially thought.​  Many mothers describe differences between what they imagined their life would be like during pregnancy, and the reality of the changes after the baby arrives! In fact, it is normal for the experience of taking care of our baby to be different from what we imagined or expected, even when it is not our first child.​
+      customMsg = `After the birth of your new born, you consider that changes have occurred in ${X1} areas of your life and that, in ${X2} of these areas, these changes were different from what you initially thought.​  Many mothers describe differences between what they imagined their life would be like during pregnancy, and the reality of the changes after the baby arrives! In fact, it is normal for the experience of taking care of our baby to be different from what we imagined or expected, even when it is not our first child.​
 Every pregnancy and every baby are different and unique!​`;
+    }
   }
+  //}, [headerParams]);
+
   const onSave = (e) => {
     e.preventDefault();
     const params = {
@@ -549,6 +570,7 @@ Every pregnancy and every baby are different and unique!​`;
               );
             })}
         </div>
+
         <div className="colored-questions">
           {optionDataContent &&
             optionDataContent.length &&
@@ -566,7 +588,6 @@ Every pregnancy and every baby are different and unique!​`;
                     onSetActiveMenu(index);
                   }}>
                   <p>{ReactHtmlParser(item.content)}</p>
-
                   <button className="btn-select">
                     <span>+</span>
                   </button>
@@ -576,11 +597,9 @@ Every pregnancy and every baby are different and unique!​`;
                         return (
                           <li
                             onClick={() => {
-                              overRideOptionContentDataHandler(
-                                val._id,
-                                item._id,
-                                val.order,
-                              );
+                              setTimeout(() => {
+                                setActiveId('');
+                              }, overRideOptionContentDataHandler(val._id, item._id, val.order));
                             }}>
                             <label
                               className={optionBackgroundColor(val.order)}

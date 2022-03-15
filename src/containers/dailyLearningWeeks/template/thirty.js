@@ -145,7 +145,7 @@ const Thirty = (props) => {
       getCardsData.forEach((item) =>
         cardsInputs.push(
           item.data.map((val) => {
-            // console.log('val??????', val);
+            console.log('val??????', val);
             return {
               name: val.assessment_header && val.assessment_header[0].header,
               placeholder: val.description ? val.description : '',
@@ -250,9 +250,8 @@ const Thirty = (props) => {
     }
   }, [userAssessmentData]);
   /******************First assessment data save************** */
-  const onSaveMyths = () => {
-    //e.preventDefault();
-    console.log('inputs??????', inputs);
+  const onSaveMyths = (e) => {
+    e.preventDefault();
     let params = {
       user_id: userId,
       user_card_id: props._id,
@@ -308,7 +307,6 @@ const Thirty = (props) => {
   /******************Second assessment data save************** */
   const onSaveSecondAssessment = (e) => {
     e.preventDefault();
-    onSaveMyths();
     let contentArray = [];
 
     let modifyUserInput = userInputs.map((item) => {
@@ -350,12 +348,7 @@ const Thirty = (props) => {
         assessment_id: assessment_id2,
         assessment: modifyArray,
       };
-      console.log('modify array?????????', modifyArray);
-      if (newUserInputs.length) {
-        dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
-      } else {
-        console.log('no save');
-      }
+      dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
       // if (userInputs.length) {
       //   if (
       //     userAssessmentData &&
@@ -368,7 +361,8 @@ const Thirty = (props) => {
       //   } else {
       //     dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
       //   }
-      // } else {
+      // }
+      //  else {
       //   dispatch({
       //     type: ACTION_TYPE.ERROR,
       //     payload: 'Please perform your exercise',
@@ -573,7 +567,6 @@ const Thirty = (props) => {
     }
   };
   const onPlusBtnClick = (item) => {
-    console.log('new user inputs?????', newUserInputs);
     if (userDate.length && newUserInputs.length) {
       Array.prototype.push.apply(newUserInputs, userDate);
       let concatArray = userInputs;
@@ -602,7 +595,7 @@ const Thirty = (props) => {
       return GREEN_TEXT;
     }
   };
-  console.log('user Input ???????', userInputs, 'inputs?????????', inputs);
+  //console.log('user Input ???????', userInputs, 'inputs?????????', inputs);
   return (
     <div>
       {/**********************quotes************** */}
@@ -694,13 +687,13 @@ const Thirty = (props) => {
               );
             })
         : null}
-      {/* {inputs.length ? (
+      {inputs.length ? (
         <div style={commonStyles.buttonWrapper}>
           <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
             {ts('SAVE')}
           </button>
         </div>
-      ) : null} */}
+      ) : null}
 
       {headingOne && headingOne.length ? (
         <CardContent
@@ -914,7 +907,7 @@ const Thirty = (props) => {
           }}
         />
       ) : null} */}
-      {firstHeaderContent && firstHeaderContent.length
+      {/* {firstHeaderContent && firstHeaderContent.length
         ? firstHeaderContent
             .sort((a, b) => (a.i > b.i && 1) || -1)
             .map((item, index) => {
@@ -929,7 +922,7 @@ const Thirty = (props) => {
                 />
               );
             })
-        : []}
+        : []} */}
       {content && content.length
         ? content
             .sort((a, b) => (a.order > b.order && 1) || -1)

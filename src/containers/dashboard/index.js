@@ -220,8 +220,8 @@ const Dashboard = () => {
                   //   'linear-gradient(180deg, rgba(214, 240, 235, 0) 0%, #FFFFFF 18%)',
                   paddingLeft: 30,
                   cursor: 'pointer',
-                  paddingTop: 15,
-                  paddingBottom: 15,
+                  paddingTop: 10,
+                  paddingBottom: 10,
                   background: COLORS.WHITE,
                 }}>
                 <p
@@ -229,15 +229,16 @@ const Dashboard = () => {
                     fontWeight: 'bold',
                     fontSize: 22,
                     fontFamily: FONTS.SEMI_BOLD,
-                    marginBottom: 10,
+                    marginBottom: 0,
                   }}>
                   Today’s Daily Learning
                 </p>
                 <p
                   style={{
-                    lineHeight: 0,
+                    lineHeight: '17px',
                     fontSize: 14,
                     fontFamily: FONTS.REGULAR,
+                    margin: 0,
                   }}>
                   Click here to complete today’s learnings
                 </p>
