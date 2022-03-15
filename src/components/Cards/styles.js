@@ -6,13 +6,13 @@ const styles = {
     display: 'flex',
   },
   imageWrapper: {
-    width: '200px',
+    maxWidth: '200px',
     height: '200px',
     margin: '0 auto',
     flexDirection: 'column',
   },
   mediumimageWrapper: {
-    width: '380px',
+    maxWidth: '380px',
     height: 'auto',
     margin: '0 auto',
     flexDirection: 'column',

@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './styles';
 import {Animated} from 'react-animated-css';
+import {Text} from 'react-native';
+
 const CardTitle = ({title, style}) => {
   return (
     <h2 className="dashboard-heading" style={style}>
@@ -118,7 +120,10 @@ const CustomImage = ({
           style={{...styles.imageTag, ...imageStyle}}
         />
       </div>
-      <p style={{textAlign: 'center'}}>{title} </p>
+      {/* <p style={{textAlign: 'center'}}>
+        {title.toString().replace(/\xA0/g, ' ')}
+      </p> */}
+      <p style={{textAlign: 'center'}}>{title}</p>
     </Animated>
   );
 };

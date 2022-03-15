@@ -9,7 +9,11 @@ import {
   Dimensions,
 } from 'react-native';
 
-import {navigatorPush, navigatorPop} from '../../config/navigationOptions.web';
+import {
+  navigatorPush,
+  navigatorPop,
+  navigatortoStart,
+} from '../../config/navigationOptions.web';
 import back from '../../assets/images/subscription/back.png';
 import GLOBALS from '../../constants';
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -22,19 +26,20 @@ const BackToDashboard = (props) => {
     bgColor,
     textColor,
     onVerifyPress,
-    btnStyle,
+    btnStyle = {},
     textStyle,
     isDisabled = false,
     isLoginPage = false,
   } = props;
   return (
-    <View style={styles.backBtn}>
+    <View style={[styles.backBtn, btnStyle]}>
       <TouchableOpacity
         style={{flexDirection: 'row', alignItems: 'center'}}
-        onPress={() =>
-          navigatorPush({
-            screenName: 'Dashboard',
-          })
+        onPress={
+          () => navigatortoStart()
+          // navigatorPush({
+          //   screenName: 'Dashboard',
+          // })
         }>
         <Image
           resizeMode={'contain'}
