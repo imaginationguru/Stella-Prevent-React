@@ -124,6 +124,9 @@ const SleepTracker = ({location}) => {
 
       setDateArray([...dateArrayList]);
     }
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 500);
   }, []);
 
   useEffect(() => {

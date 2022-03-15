@@ -7,9 +7,11 @@ const styles = {
   },
   imageWrapper: {
     maxWidth: '200px',
+    minWidth: '200px',
     height: '200px',
     margin: '0 auto',
     flexDirection: 'column',
+    width: '200px',
   },
   mediumimageWrapper: {
     maxWidth: '380px',

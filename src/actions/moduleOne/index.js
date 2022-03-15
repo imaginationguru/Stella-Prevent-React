@@ -2,6 +2,7 @@
 import GLOBALS from '../../constants';
 import RestClient from '../../helpers/RestClient';
 import {loadingAction} from '../common';
+import {sessionExpire} from '../tracker';
 import {getItem, generateUrlParams} from '../../utils/AsyncUtils';
 import {navigatorPush} from '../../config/navigationOptions.web';
 import {epdsModalAction} from '..';
@@ -70,10 +71,11 @@ export function getCurrentActiveCard(isLoading = true, cb) {
         }
         if (json.code === 417) {
           console.log('Session expierd=>>>>>>>>>>>get current active card');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -119,10 +121,11 @@ export function checkActiveCard(cb) {
         }
         if (json.code === 417) {
           console.log('Session expierd=>>>>>>>>>>>get current active card');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -174,6 +177,7 @@ export function getTemplateData(week, isLoading = true) {
           });
         }
         if (json.code === 417) {
+          dispatch(sessionExpire(json.message));
           dispatch({
             type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
             payload: json.message,
@@ -226,10 +230,11 @@ export function markRead(params, week) {
         }
         if (json.code === 417) {
           console.log('Session expierd in mark read>>>>>>>>');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -276,10 +281,11 @@ export function markCompleteCard(params, week, nextDay) {
           });
         }
         if (json.code === 417) {
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -331,10 +337,11 @@ export function getAssessmentData(assessmentId, id, card_id = 'null') {
           });
         }
         if (json.code === 417) {
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -384,10 +391,11 @@ export function getAssessmentDataSecond(assessmentId2, id, card_id = 'null') {
           });
         }
         if (json.code === 417) {
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -432,10 +440,11 @@ export function getAssessmentContent(assessmentId) {
           });
         }
         if (json.code === 417) {
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -541,10 +550,11 @@ export function saveUserAssessment(params, onSubmitMessage, customMsg = '') {
         }
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>save user assessment');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -591,10 +601,11 @@ export function getUserAssessment(userCardId, assessmentId) {
         }
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>>>>get user assessment');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -649,10 +660,11 @@ export function deleteUserAssessmentDataNew(
           });
         }
         if (json.code === 417) {
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -708,10 +720,11 @@ export function deleteUserAssessmentData(
           });
         }
         if (json.code === 417) {
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -779,10 +792,11 @@ export function rearrangeAssessments(params, onSubmitMessage, customMsg = '') {
         }
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>>>>rearrange assessment');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -821,13 +835,13 @@ export function updateUserAssessment(params, msg = 'true') {
           type: ACTION_TYPE.UPDATE_USER_ASSESSMENT_SUCCESS,
           payload: json.data,
         });
-        if(msg){
-            dispatch({
-              type: ACTION_TYPE.SUCCESS_MESSAGE,
-              payload: json.message,
-            });
+        if (msg) {
+          dispatch({
+            type: ACTION_TYPE.SUCCESS_MESSAGE,
+            payload: json.message,
+          });
         }
-      
+
         //  dispatch(getUserAssessment(userCardId, assessmentId));
         dispatch(loadingAction(false));
       } else {
@@ -840,10 +854,11 @@ export function updateUserAssessment(params, msg = 'true') {
         }
         if (json.code === 417) {
           console.log('Session expierd>>>>>>save user assessment');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -901,10 +916,11 @@ export function addUserRating(params, week) {
         }
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>save user assessment');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -951,10 +967,11 @@ export function getUserRating(userId, programId, week) {
         }
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>>>>get user assessment');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -1009,10 +1026,11 @@ export function updateUserRating(params) {
         }
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>save user assessment');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -1057,10 +1075,11 @@ export function getUserQuestionInfo(params) {
         }
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>>>>get-userQuestionInfo');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -1165,10 +1184,11 @@ export function savePatientAssessment(
         }
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>save user assessment');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -1229,10 +1249,11 @@ export function getProgramFiles() {
           });
         }
         if (json.code === 417) {
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -1344,10 +1365,11 @@ export function contactUs(params) {
         }
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>>>>get-userQuestionInfo');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
