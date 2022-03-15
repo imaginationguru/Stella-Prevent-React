@@ -115,6 +115,13 @@ const DailyLearningWeeks = (props) => {
     }
   }, [dispatch]);
 
+  useEffect(() => {
+    console.log('match');
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 1000);
+  }, []);
+
   const templateDataMapper = (data = []) => {
     let temp = [];
     if (data.length) {
@@ -147,7 +154,7 @@ const DailyLearningWeeks = (props) => {
     .map((item) => item._id);
 
   const cardDataHandler = (data) => {
-    //  console.log(data, 'dataaaa cardDataHandler');
+    console.log(data, 'dataaaa cardDataHandler');
     if (isScrollerLoad) {
       window.scrollTo(0, 200);
       setScrollerLoad(false);

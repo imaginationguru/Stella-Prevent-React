@@ -595,6 +595,7 @@ const styles = {
     borderRadius: '100%',
     right: '-15px',
     top: '90px',
+    cursor: 'pointer',
     // alignItems: 'center',
     // justifyContent: 'center',
   },
@@ -606,6 +607,7 @@ const styles = {
     borderRadius: '100%',
     right: '-12px',
     top: '-10px',
+    cursor: 'pointer',
   },
   plusIcon: {
     height: '100%',

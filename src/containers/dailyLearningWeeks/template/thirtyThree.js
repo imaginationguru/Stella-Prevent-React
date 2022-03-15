@@ -250,6 +250,7 @@ const ThirtyThree = (props) => {
                     style={{
                       color: WHITE,
                       padding: '10px',
+                      textAlign: 'center',
                     }}>
                     {ReactHtmlParser(item.name)}
                   </p>

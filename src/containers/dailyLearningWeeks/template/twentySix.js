@@ -201,6 +201,26 @@ const TwentySix = (props) => {
 
       q = !p.includes('Quite often');
     }
+    if (slugData === 'never,sometimes,oftentimes') {
+      let onlyContentData = [];
+
+      assessment
+        .sort((a, b) => (a.order > b.order && 1) || -1)
+        .forEach((item) => {
+          onlyContentData.push(...item.content);
+        });
+      let contentMessage = onlyContentData.map((item) => item.content);
+      z = contentMessage.every((val) => val == 'Never');
+      console.log(z, 'bvnb');
+      // let y = contentMessage.filter((item, i) => i === 0 || i === 3);
+      // //   console.log(contentMessage.filter((item, i) => i === 0 || i === 3))
+      // z = !y.includes('Never');
+
+      // let p = contentMessage.filter((item, i) => i === 1 || i === 2 || i === 4);
+
+      // q = !p.includes('Oftentimes');
+      // console.log(contentMessage, z, p, 'llll');
+    }
     if (userAssessmentData && userAssessmentData.length) {
       if (assessment.length) {
         let onlyContentData = [];
@@ -224,6 +244,12 @@ const TwentySix = (props) => {
           let sum = [a[0].length + c[0].length, ...differenceMessage];
           dispatch(AppActions.rearrangeAssessments(params, sum));
           //  never,sometimes,oftentimes
+        } else if (slugData === 'never,sometimes,oftentimes') {
+          if (z) {
+            dispatch(AppActions.rearrangeAssessments(params, negativeMessage));
+          } else {
+            dispatch(AppActions.rearrangeAssessments(params, positiveMessage));
+          }
         } else if (slugData === 'never,sometimes,quite often') {
           if (props.card.week == 3 && props.card.day == 4) {
             if (z && q) {

@@ -10,6 +10,7 @@ const styles = {
     height: '200px',
     margin: '0 auto',
     flexDirection: 'column',
+    width: '200px',
   },
   mediumimageWrapper: {
     maxWidth: '380px',
