@@ -576,7 +576,7 @@ const DailyLearningWeeks = (props) => {
                             });
                           }}
                           className="f-nav-link">
-                          <h3>Previous Day</h3>
+                          <h3>Previous Day </h3>
                         </div>
                       </div>
                     ) : null}
@@ -687,7 +687,12 @@ const DailyLearningWeeks = (props) => {
                           cardDataHandler(nextData);
                         }}>
                         <div>
-                          <h3>{nextData.card.card_title}</h3>
+                          <h3
+                            style={{
+                              textAlign: 'right',
+                            }}>
+                            {nextData.card.card_title}
+                          </h3>
                           <h6
                             style={{
                               textAlign: 'right',

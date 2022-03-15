@@ -41,6 +41,7 @@ const commonStyles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    minHeight: '130px',
   },
   dragItem: {
     marginTop: '20px',
