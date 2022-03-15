@@ -48,7 +48,6 @@ const onlySingleId = (arr = []) => {
   }
 };
 const TemplateFive = (props) => {
-  console.log(props, 'Template 5.....');
   const [optionDataContent, setOptionDataContent] = useState([]);
   const [headerParams, setHeaderParams] = useState([]);
   const {assessmentData = {}, userAssessmentData = []} = useSelector(
@@ -117,7 +116,6 @@ const TemplateFive = (props) => {
         ? unique(x, ['content', 'assessment_header_id' !== null])
         : [];
 
-      console.log('uniques??????', uniqueOptionDataContent);
       if (uniqueOptionDataContent.length) {
         const data = uniqueOptionDataContent.map((item, i) => {
           if (item.assessment_header_id !== null) {
@@ -144,7 +142,6 @@ const TemplateFive = (props) => {
    */
 
   const onDragStart = (ev, id) => {
-    console.log('dragstart:', id);
     ev.dataTransfer.setData('id', id);
   };
 
@@ -193,7 +190,7 @@ const TemplateFive = (props) => {
         (e) => e.assessment_header_id === head._id,
       );
     });
-    console.log(selectedIntemsofHeader, 'selectedIntemsofHeader..');
+
     let greenCount =
       selectedIntemsofHeader[0].length == 0
         ? 0
@@ -246,7 +243,6 @@ Every pregnancy and every baby are different and unique!​`;
   };
 
   const boxBackgroundColor = (order) => {
-    // console.log('order??????', order);
     if (order === 0) {
       return '#5DBDA9';
     }
@@ -262,7 +258,6 @@ Every pregnancy and every baby are different and unique!​`;
   };
 
   const optionBackgroundColor = (order) => {
-    // console.log('order??????', order);
     if (order === 0) {
       return 'green-bg';
     }
@@ -278,7 +273,6 @@ Every pregnancy and every baby are different and unique!​`;
   };
 
   const selectedBorderColor = (order) => {
-    // console.log('order??????', order);
     if (order === 0) {
       return 'selected-green';
     }
@@ -303,23 +297,19 @@ Every pregnancy and every baby are different and unique!​`;
   /************************************** */
 
   const onSetActiveMenu = (index) => {
-    console.log('index?????', index);
     setActiveId(index);
     if (activeId === index) {
       setActiveId('');
     }
   };
 
-  console.log('option dat content', optionDataContent);
   const overRideOptionContentDataHandler = (
     headerId = '',
     contentId = '',
     headerOrder = null,
   ) => {
-    console.log('cal>>>>>>>');
     if (optionDataContent.length) {
       const data = optionDataContent.map((item, i) => {
-        console.log('item._d', item._id, contentId, headerId);
         if (item._id === contentId) {
           return {...item, assessment_header_id: headerId, headerOrder};
         } else {
@@ -348,7 +338,7 @@ Every pregnancy and every baby are different and unique!​`;
           };
         });
     let y = onlySingleId(assessment);
-    console.log('assessmnet on submit', assessment, y);
+
     const params = {
       user_id: getItem('userId'),
       user_card_id: props._id,
@@ -356,20 +346,16 @@ Every pregnancy and every baby are different and unique!​`;
       assessment: y,
     };
     if (y.length) {
-      console.log('if');
       if (userAssessmentData && userAssessmentData.length) {
-        console.log('update');
         dispatch(
           AppActions.rearrangeAssessments(params, onSubmitMessage, customMsg),
         );
       } else {
-        console.log('save');
         dispatch(
           AppActions.saveUserAssessment(params, onSubmitMessage, customMsg),
         );
       }
     } else {
-      console.log('else');
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: 'Please perform your exercise',
@@ -567,8 +553,6 @@ Every pregnancy and every baby are different and unique!​`;
           {optionDataContent &&
             optionDataContent.length &&
             optionDataContent.map((item, index) => {
-              console.log('mb content item', item.assessment_header_id);
-              const headerId = item.assessment_header_id;
               return (
                 <div
                   className={`colored-question  ${
@@ -589,18 +573,6 @@ Every pregnancy and every baby are different and unique!​`;
                   <ul className="colored-options-list">
                     {headers.length &&
                       headers.map((val) => {
-                        //console.log('val.-Id', val._id, item._id);
-                        let matchId = '';
-                        if (
-                          item.assessment_header_id !== undefined &&
-                          item.assessment_header_id !== null
-                        ) {
-                          matchId =
-                            item.assessment_header_id === val._id
-                              ? true
-                              : false;
-                        }
-
                         return (
                           <li
                             onClick={() => {
