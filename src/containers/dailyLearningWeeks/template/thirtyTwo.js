@@ -18,6 +18,7 @@ import {
   CardAudio,
   CustomImage,
 } from '../../../components/Cards';
+import {inputClasses} from '@mui/material';
 const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 const {
   BOX_GRAY,
@@ -126,6 +127,7 @@ const ThirtyTwo = (props) => {
           };
         })
       : [];
+
     setInputs(updateInputs);
   };
 
@@ -362,7 +364,10 @@ const ThirtyTwo = (props) => {
                     placeholder={item.placeholder}
                     style={styles.selectedText}
                     value={item.value}
-                    onChange={(e) => onHandleChange(e, item)}
+                    onChange={(e) => {
+                      onHandleChange(e, item);
+                      console.log('--->', inputs);
+                    }}
                   />
                   <div
                     style={{
@@ -386,20 +391,20 @@ const ThirtyTwo = (props) => {
                           },
                         ]);
                       }
-                      headers &&
-                        headers.length &&
-                        setInputs(
-                          headers.map((val) => {
-                            return {
-                              content: [],
-                              name: val.header,
-                              placeholder: val.description,
-                              order: val.order,
-                              value: '',
-                              _id: val._id,
-                            };
-                          }),
-                        );
+                      // headers &&
+                      //   headers.length &&
+                      //   setInputs(
+                      //     headers.map((val) => {
+                      //       return {
+                      //         content: [],
+                      //         name: val.header,
+                      //         placeholder: val.description,
+                      //         order: val.order,
+                      //         value: '',
+                      //         _id: val._id,
+                      //       };
+                      //     }),
+                      //   );
                     }}>
                     <span style={styles.plusIcon}>+</span>
                   </div>
