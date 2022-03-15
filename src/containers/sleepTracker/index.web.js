@@ -124,10 +124,13 @@ const SleepTracker = ({location}) => {
 
       setDateArray([...dateArrayList]);
     }
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 500);
   }, []);
 
   useEffect(() => {
-    getSleepTrackerAPI(moment(new Date()).format(STRINGS.DATE_FORMATE));
+    //  getSleepTrackerAPI(moment(new Date()).format(STRINGS.DATE_FORMATE));
   }, []);
 
   useEffect(() => {
