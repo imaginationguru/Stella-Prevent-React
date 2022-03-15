@@ -15,6 +15,7 @@ const styles = {
   },
   mediumimageWrapper: {
     maxWidth: '380px',
+    //height: '380px',
     height: 'auto',
     margin: '0 auto',
     flexDirection: 'column',
