@@ -1267,12 +1267,12 @@ button.btn-green {
 
 .pWrap {
   box-shadow: 0px 18.965px 54.1858px rgba(0, 111, 89, 0.38);
-  background: linear-gradient(
-    161.44deg,
-    #cee6e1 55.96%,
-    #a1cdc4 78.08%,
-    #97bece 95.87%
-  );
+
+  background: linear-gradient(161.44deg,
+      #cee6e1 55.96%,
+      #a1cdc4 78.08%,
+      #97bece 95.87%);
+
   border: 2px solid #5bb7a4;
   width: 80%;
   position: static;
@@ -1284,6 +1284,196 @@ button.btn-green {
   margin-left: auto;
   margin-right: auto;
 }
+
+.res-vw {
+  display: none;
+}
+
+.colored-headers {
+  padding: 30px 0;
+
+  .colored-header {
+    padding: 8px 15px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    background-color: #5dbda9;
+
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+
+    &.green-bg {
+      background-color: #5dbda9;
+    }
+
+    &.yellow-bg {
+      background-color: #f2c842;
+    }
+
+    &.orange-bg {
+      background-color: #f08b22;
+    }
+
+    &.grey-bg {
+      background-color: #57576d;
+    }
+
+    h5 {
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #ffffff;
+      margin: 0;
+    }
+  }
+}
+
+
+.green-bg {
+  background-color: #5dbda9 !important;
+}
+
+.yellow-bg {
+  background-color: #f2c842 !important;
+}
+
+.orange-bg {
+  background-color: #f08b22 !important;
+}
+
+.grey-bg {
+  background-color: #57576d !important;
+}
+
+.colored-question {
+  border-radius: 5px;
+  background-color: rgb(241, 243, 250);
+  padding: 10px 45px 10px 15px;
+  position: relative;
+  min-height: 44px;
+
+  &.selected-green {
+    border: 1px solid #5dbda9;
+  }
+
+  &.selected-yellow {
+    border: 1px solid #f2c842;
+  }
+
+  &.selected-orange {
+    border: 1px solid #f08b22;
+  }
+
+  &.selected-grey {
+    border: 1px solid #57576d;
+  }
+}
+
+.colored-options-list {
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  position: absolute;
+  top: 2px;
+  right: 45px;
+  z-index: 9;
+  width: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+
+  li {
+    display: inline-block;
+    vertical-align: middle;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    list-style-type: none;
+
+    &:not(:last-child) {
+      padding-right: 15px;
+    }
+
+    label {
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      background-color: #5dbda9;
+      justify-content: center;
+      height: 30px;
+      width: 30px;
+
+      input {
+        display: none;
+      }
+
+      span {
+        height: 20px;
+        width: 20px;
+        display: none;
+      }
+
+      input[type="radio"]:checked {
+        &~span {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
+
+.btn-select {
+  width: 35px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  outline: none;
+  background: #cbccd1;
+  border-radius: 0px 5px 5px 0px;
+  font-size: 25px;
+  color: #000000;
+  font-weight: 700;
+
+  span {
+    transition: all 0.3s ease;
+  }
+}
+
+.active-menu {
+  .colored-options-list {
+    overflow: visible;
+    pointer-events: all;
+    width: 165px;
+    opacity: 1;
+  }
+
+  .btn-select span {
+    transform: rotate(45deg);
+  }
+}
+
+.colored-question {
+  p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: #000000;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 15px;
+  }
+}
+
 
 // slider css
 @media only screen and (max-width: 1200px) {
@@ -1318,6 +1508,19 @@ button.btn-green {
     flex: 0 0 100%;
     justify-content: center;
     align-items: center;
+  }
+
+  .web-vw {
+    display: none;
+  }
+
+  .res-vw {
+    display: block;
+  }
+
+  .dashboard-body-inner {
+    display: block;
+    overflow: hidden;
   }
 }
 
@@ -1445,7 +1648,9 @@ button.btn-green {
   }
 
   .display-board {
-    min-height: 400px;
+    // min-height: 400px;
+    padding-bottom: 95%;
+
     box-shadow: 0px 18.965px 54.1858px rgba(0, 111, 89, 0.38);
   }
 
@@ -1756,5 +1961,6 @@ body {
 
 .res-wrap p {
   word-wrap: break-word;
-  word-break: break-all;
+  // word-break: break-all;
 }
+

@@ -1,5 +1,6 @@
 import GLOBALS from '../../constants';
 import RestClient from '../../helpers/RestClient';
+
 import {
   loadingAction,
   clearErrorAction,
@@ -11,6 +12,7 @@ import {navigatorPush, navigatorPop} from '../../config/navigationOptions';
 import moment from 'moment';
 import {customAlert} from '../../helpers/commonAlerts.web';
 import history from '../../helpers/history';
+
 const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
 const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
 
@@ -380,6 +382,7 @@ export function saveSleepTracker(params, postDataGetAPI) {
             type: ACTION_TYPE.SAVE_SLEEP_TRACKER_FAIL,
           });
         }
+        dispatch(loadingAction(false));
       }
     } catch (error) {
       console.log('erroe>> csave USER ASSESSMENT>>>>>>>>>>>>>>', error);
