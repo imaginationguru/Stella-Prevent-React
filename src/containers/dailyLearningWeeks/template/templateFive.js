@@ -15,6 +15,7 @@ import {
   CardContent,
   CustomImage,
 } from '../../../components/Cards';
+import tickWhite from '../../../assets/images/right.svg';
 const {IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 
 const unique = (arr, keyProps) => {
@@ -47,13 +48,14 @@ const onlySingleId = (arr = []) => {
   }
 };
 const TemplateFive = (props) => {
-  console.log(props, 'Template 5.....');
   const [optionDataContent, setOptionDataContent] = useState([]);
   const [headerParams, setHeaderParams] = useState([]);
   const {assessmentData = {}, userAssessmentData = []} = useSelector(
     (state) => state.moduleOne,
   );
   const [dragCardData, setDragCardData] = useState([]);
+  const [activeId, setActiveId] = useState('');
+  const [selectedItemId, setSelectedItemId] = useState('');
   const dispatch = useDispatch();
   const {
     card_title,
@@ -110,11 +112,27 @@ const TemplateFive = (props) => {
       setDragCardData(temp);
       let x = [...optionDataContent, ...temp];
       // /************ UNIQUE FILTERATION FOR ARRAY ************* */
-
       const uniqueOptionDataContent = x.length
         ? unique(x, ['content', 'assessment_header_id' !== null])
         : [];
-      setOptionDataContent(uniqueOptionDataContent);
+
+      if (uniqueOptionDataContent.length) {
+        const data = uniqueOptionDataContent.map((item, i) => {
+          if (item.assessment_header_id !== null) {
+            return {
+              ...item,
+              headerOrder:
+                item.assessment_header &&
+                item.assessment_header.length &&
+                item.assessment_header[0].order,
+            };
+          } else {
+            return {...item};
+          }
+        });
+        setOptionDataContent(data);
+      }
+      // setOptionDataContent(uniqueOptionDataContent);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
@@ -124,7 +142,6 @@ const TemplateFive = (props) => {
    */
 
   const onDragStart = (ev, id) => {
-    console.log('dragstart:', id);
     ev.dataTransfer.setData('id', id);
   };
 
@@ -165,7 +182,37 @@ const TemplateFive = (props) => {
     });
     setOptionDataContent([...optionDataContent, tasks]);
   };
+  let customMsg = '';
+  if (props.card.week == 1 && props.card.day == 2) {
+    let selectedIntemsofHeader = [];
+    assessmentData.headers.map((head, index) => {
+      selectedIntemsofHeader[index] = headerParams.filter(
+        (e) => e.assessment_header_id === head._id,
+      );
+    });
 
+    let greenCount =
+      selectedIntemsofHeader[0].length == 0
+        ? 0
+        : selectedIntemsofHeader[0][0].content.length;
+    let yellowCount =
+      selectedIntemsofHeader[1].length == 0
+        ? 0
+        : selectedIntemsofHeader[1][0].content.length;
+    let orangeCount =
+      selectedIntemsofHeader[2].length == 0
+        ? 0
+        : selectedIntemsofHeader[2][0].content.length;
+    let purpleCount =
+      selectedIntemsofHeader[3].length == 0
+        ? 0
+        : selectedIntemsofHeader[3][0].content.length;
+    let X1 = yellowCount + orangeCount + purpleCount;
+    let X2 = yellowCount + orangeCount;
+
+    customMsg = `After the birth of your new born, you consider that changes have occurred in ${X1} areas of your life and that, in ${X2} of these areas, these changes were different from what you initially thought.​  Many mothers describe differences between what they imagined their life would be like during pregnancy, and the reality of the changes after the baby arrives! In fact, it is normal for the experience of taking care of our baby to be different from what we imagined or expected, even when it is not our first child.​
+Every pregnancy and every baby are different and unique!​`;
+  }
   const onSave = (e) => {
     e.preventDefault();
     const params = {
@@ -174,38 +221,8 @@ const TemplateFive = (props) => {
       assessment_id: assessment_id,
       assessment: headerParams,
     };
+
     /** Check if drag and drop down card is there*/
-    let customMsg = '';
-    if (props.card.week == 1 && props.card.day == 2) {
-      let selectedIntemsofHeader = [];
-      assessmentData.headers.map((head, index) => {
-        selectedIntemsofHeader[index] = headerParams.filter(
-          (e) => e.assessment_header_id === head._id,
-        );
-      });
-      console.log(selectedIntemsofHeader, 'selectedIntemsofHeader..');
-      let greenCount =
-        selectedIntemsofHeader[0].length == 0
-          ? 0
-          : selectedIntemsofHeader[0][0].content.length;
-      let yellowCount =
-        selectedIntemsofHeader[1].length == 0
-          ? 0
-          : selectedIntemsofHeader[1][0].content.length;
-      let orangeCount =
-        selectedIntemsofHeader[2].length == 0
-          ? 0
-          : selectedIntemsofHeader[2][0].content.length;
-      let purpleCount =
-        selectedIntemsofHeader[3].length == 0
-          ? 0
-          : selectedIntemsofHeader[3][0].content.length;
-      let X1 = yellowCount + orangeCount + purpleCount;
-      let X2 = yellowCount + orangeCount;
-      console.log(X1, 'x111', X2);
-      customMsg = `After the birth of your new born, you consider that changes have occurred in ${X1} areas of your life and that, in ${X2} of these areas, these changes were different from what you initially thought.​  Many mothers describe differences between what they imagined their life would be like during pregnancy, and the reality of the changes after the baby arrives! In fact, it is normal for the experience of taking care of our baby to be different from what we imagined or expected, even when it is not our first child.​
-Every pregnancy and every baby are different and unique!​`;
-    }
 
     if (headerParams.length) {
       if (userAssessmentData && userAssessmentData.length) {
@@ -240,6 +257,35 @@ Every pregnancy and every baby are different and unique!​`;
     }
   };
 
+  const optionBackgroundColor = (order) => {
+    if (order === 0) {
+      return 'green-bg';
+    }
+    if (order === 1) {
+      return 'yellow-bg';
+    }
+    if (order === 2) {
+      return 'orange-bg';
+    }
+    if (order === 3) {
+      return 'grey-bg';
+    }
+  };
+
+  const selectedBorderColor = (order) => {
+    if (order === 0) {
+      return 'selected-green';
+    }
+    if (order === 1) {
+      return 'selected-yellow';
+    }
+    if (order === 2) {
+      return 'selected-orange';
+    }
+    if (order === 3) {
+      return 'selected-grey';
+    }
+  };
   /*
     five buckets for drag and drop item
     */
@@ -249,6 +295,73 @@ Every pregnancy and every baby are different and unique!​`;
     : [];
 
   /************************************** */
+
+  const onSetActiveMenu = (index) => {
+    setActiveId(index);
+    if (activeId === index) {
+      setActiveId('');
+    }
+  };
+
+  const overRideOptionContentDataHandler = (
+    headerId = '',
+    contentId = '',
+    headerOrder = null,
+  ) => {
+    if (optionDataContent.length) {
+      const data = optionDataContent.map((item, i) => {
+        if (item._id === contentId) {
+          return {...item, assessment_header_id: headerId, headerOrder};
+        } else {
+          return {...item};
+        }
+      });
+      setOptionDataContent(data);
+    }
+  };
+
+  const onSaveMobileView = (e) => {
+    e.preventDefault();
+    let assessment =
+      optionDataContent.length &&
+      optionDataContent
+        .filter((val) => val.assessment_header_id !== null)
+        .map((item) => {
+          return {
+            assessment_header_id: item.assessment_header_id,
+            content: [
+              {
+                assessment_header_id: item.assessment_header_id,
+                content: item.content,
+              },
+            ],
+          };
+        });
+    let y = onlySingleId(assessment);
+
+    const params = {
+      user_id: getItem('userId'),
+      user_card_id: props._id,
+      assessment_id: assessment_id,
+      assessment: y,
+    };
+    if (y.length) {
+      if (userAssessmentData && userAssessmentData.length) {
+        dispatch(
+          AppActions.rearrangeAssessments(params, onSubmitMessage, customMsg),
+        );
+      } else {
+        dispatch(
+          AppActions.saveUserAssessment(params, onSubmitMessage, customMsg),
+        );
+      }
+    } else {
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: 'Please perform your exercise',
+      });
+    }
+  };
   return (
     <>
       {/**********************quotes************** */}
@@ -422,149 +535,102 @@ Every pregnancy and every baby are different and unique!​`;
       </div>
       <div className="res-vw">
         <div className="colored-headers">
-          <div className="colored-header green-bg">
-            <h5>Nothing has changed</h5>
-          </div>
-          <div className="colored-header yellow-bg">
-            <h5>The changes have been more difficult than I thought</h5>
-          </div>
-          <div className="colored-header orange-bg">
-            <h5>The changes have been easier than I thought</h5>
-          </div>
-          <div className="colored-header grey-bg">
-            <h5>It has changed exactly as I expected</h5>
-          </div>
+          {headers &&
+            headers.length &&
+            headers.map((item, index) => {
+              return (
+                <div
+                  className="colored-header"
+                  style={{
+                    backgroundColor: boxBackgroundColor(item.order),
+                  }}>
+                  <h5>{ReactHtmlParser(item.header)}</h5>
+                </div>
+              );
+            })}
         </div>
         <div className="colored-questions">
-          <div className="colored-question active-menu selected-orange">
-            <p>Relationship with my friends​</p>
-            <button className="btn-select">
-              <span>+</span>
-            </button>
-            <ul className="colored-options-list">
-              <li>
-                <label className="green-bg" htmlFor="option11">
-                  <input type="radio" name="group1" id="option11" />
-                  <span>tick</span>
-                </label>
-              </li>
-              <li>
-                <label className="yellow-bg" htmlFor="option12">
-                  <input type="radio" name="group1" id="option12" />
-                  <span>tick</span>
-                </label>
-              </li>
-              <li>
-                <label className="orange-bg" htmlFor="option13">
-                  <input type="radio" name="group1" id="option13" checked />
-                  <span>tick</span>
-                </label>
-              </li>
-              <li>
-                <label className="grey-bg" htmlFor="option14">
-                  <input type="radio" name="group1" id="option14" />
-                  <span>tick</span>
-                </label>
-              </li>
-            </ul>
-          </div>
-          <div className="colored-question selected-yellow">
-            <p>Relationship with my family​</p>
-            <button className="btn-select">
-              <span>+</span>
-            </button>
-            <ul className="colored-options-list">
-              <li>
-                <label className="green-bg" htmlFor="option21">
-                  <input type="radio" name="group2" id="option21" />
-                  <span>tick</span>
-                </label>
-              </li>
-              <li>
-                <label className="yellow-bg" htmlFor="option22">
-                  <input type="radio" name="group2" id="option22" checked />
-                  <span>tick</span>
-                </label>
-              </li>
-              <li>
-                <label className="orange-bg" htmlFor="option23">
-                  <input type="radio" name="group2" id="option23" />
-                  <span>tick</span>
-                </label>
-              </li>
-              <li>
-                <label className="grey-bg" htmlFor="option24">
-                  <input type="radio" name="group2" id="option24" />
-                  <span>tick</span>
-                </label>
-              </li>
-            </ul>
-          </div>
-          <div className="colored-question selected-green">
-            <p>Time for me​</p>
-            <button className="btn-select">
-              <span>+</span>
-            </button>
-            <ul className="colored-options-list">
-              <li>
-                <label className="green-bg" htmlFor="option31">
-                  <input type="radio" name="group3" id="option31" checked />
-                  <span>tick</span>
-                </label>
-              </li>
-              <li>
-                <label className="yellow-bg" htmlFor="option32">
-                  <input type="radio" name="group3" id="option32" />
-                  <span>tick</span>
-                </label>
-              </li>
-              <li>
-                <label className="orange-bg" htmlFor="option33">
-                  <input type="radio" name="group3" id="option33" />
-                  <span>tick</span>
-                </label>
-              </li>
-              <li>
-                <label className="grey-bg" htmlFor="option34">
-                  <input type="radio" name="group3" id="option34" />
-                  <span>tick</span>
-                </label>
-              </li>
-            </ul>
-          </div>
-          <div className="colored-question">
-            <p>My energy / my health​</p>
-            <button className="btn-select">
-              <span>+</span>
-            </button>
-            <ul className="colored-options-list">
-              <li>
-                <label className="green-bg" htmlFor="option41">
-                  <input type="radio" name="group4" id="option41" />
-                  <span>tick</span>
-                </label>
-              </li>
-              <li>
-                <label className="yellow-bg" htmlFor="option42">
-                  <input type="radio" name="group4" id="option42" />
-                  <span>tick</span>
-                </label>
-              </li>
-              <li>
-                <label className="orange-bg" htmlFor="option43">
-                  <input type="radio" name="group4" id="option43" />
-                  <span>tick</span>
-                </label>
-              </li>
-              <li>
-                <label className="grey-bg" htmlFor="option44">
-                  <input type="radio" name="group4" id="option44" />
-                  <span>tick</span>
-                </label>
-              </li>
-            </ul>
-          </div>
+          {optionDataContent &&
+            optionDataContent.length &&
+            optionDataContent.map((item, index) => {
+              return (
+                <div
+                  className={`colored-question  ${
+                    activeId === index ? 'active-menu' : ''
+                  }  ${
+                    item.headerOrder !== null && item.headerOrder !== undefined
+                      ? selectedBorderColor(item.headerOrder)
+                      : '#ffff'
+                  }`}
+                  onClick={() => {
+                    onSetActiveMenu(index);
+                  }}>
+                  <p>{ReactHtmlParser(item.content)}</p>
+
+                  <button className="btn-select">
+                    <span>+</span>
+                  </button>
+                  <ul className="colored-options-list">
+                    {headers.length &&
+                      headers.map((val) => {
+                        return (
+                          <li
+                            onClick={() => {
+                              overRideOptionContentDataHandler(
+                                val._id,
+                                item._id,
+                                val.order,
+                              );
+                            }}>
+                            <label
+                              className={optionBackgroundColor(val.order)}
+                              htmlFor={val.id}>
+                              <input
+                                type="radio"
+                                id={val._id}
+                                checked={
+                                  item.assessment_header_id === val._id
+                                    ? item.content
+                                    : ''
+                                }
+                              />
+
+                              <span>
+                                <img
+                                  src={tickWhite}
+                                  style={{width: '15px', height: '15px'}}
+                                />
+                              </span>
+                            </label>
+                          </li>
+                        );
+                      })}
+                  </ul>
+                </div>
+              );
+            })}
         </div>
+
+        <div style={commonStyles.buttonWrapper}>
+          <button className="btn-orange" onClick={(e) => onSaveMobileView(e)}>
+            {ts('SAVE')}
+          </button>
+        </div>
+        <div style={{...commonStyles.contentLeftBorder, marginBottom: '20px'}}>
+          {content && content.length
+            ? content
+                .sort((a, b) => (a.order > b.order && 1) || -1)
+                .map((item, i) => {
+                  return (
+                    <CardContent
+                      key={i}
+                      content={ReactHtmlParser(item.content)}
+                    />
+                  );
+                })
+            : []}
+        </div>
+        {showExercises && <ExerciseBox week={week} />}
       </div>
     </>
   );
