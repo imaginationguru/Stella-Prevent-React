@@ -299,7 +299,11 @@ const TwentySix = (props) => {
         } else {
           if (contentMessage.length) {
             let agreeMessage = contentMessage.filter(
-              (item) => item === 'completely agree' || item === 'agree',
+              (item) =>
+                item === 'completely agree' ||
+                item === 'agree' ||
+                item === 'Completely Agree' ||
+                item === 'Agree',
             );
             if (agreeMessage.length === 0) {
               dispatch(
@@ -401,12 +405,17 @@ const TwentySix = (props) => {
           } else {
             if (contentMessage.length) {
               let agreeMessage = contentMessage.filter(
-                (item) => item === 'completely agree' || item === 'agree',
+                (item) =>
+                  item === 'completely agree' ||
+                  item === 'agree' ||
+                  item === 'Completely Agree' ||
+                  item === 'Agree',
               );
               if (agreeMessage.length === 0) {
                 dispatch(
                   AppActions.saveUserAssessment(
                     params,
+
                     negativeMessage,
                     customMsg,
                   ),
