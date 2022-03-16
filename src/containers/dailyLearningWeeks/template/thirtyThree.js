@@ -113,11 +113,28 @@ const ThirtyThree = (props) => {
   /**********************FIRST ASSESSMENT****************** */
   const onSaveFirstAssessment = (e) => {
     e.preventDefault();
+    let indexArray = [];
+    let contexIndex;
+    inputs.map((item, i) => {
+      indexArray.push({index: i, id: item?._id});
+    });
     let modifyData = userInputs.length
       ? userInputs.map((item) => {
+          indexArray.map((data, index) => {
+            if (data.id == item.assessment_header_id) {
+              contexIndex = index;
+            }
+          });
           return {
             assessment_header_id: item.assessment_header_id,
-            content: [{content: item.content, order: item.order}],
+            content: [
+              {
+                content: item.content,
+                order: item.order,
+                contentIndex: contexIndex + 1,
+                type: 'supportNetwork',
+              },
+            ],
           };
         })
       : [];

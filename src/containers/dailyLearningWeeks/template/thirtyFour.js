@@ -143,6 +143,7 @@ const ThirtyFour = (props) => {
 
   useEffect(() => {
     const data = userAssMapper(userAssessmentData);
+    console.log('inputes===>', inputs);
     const inputData = inputs.length
       ? inputs.map((item) => {
           return {
@@ -160,7 +161,9 @@ const ThirtyFour = (props) => {
                     val._id,
                     extractOrder,
                   );
-                  const finalInput = [...inputsArr, dummyInput];
+                  const finalInput = inputsArr.length
+                    ? [...inputsArr, dummyInput]
+                    : [dummyInput, dummyInput];
                   return {
                     ...val,
                     textInput: data.length
@@ -429,11 +432,25 @@ const ThirtyFour = (props) => {
                             return (
                               <div
                                 style={{
-                                  width: ele.order === 1 ? (DEVICE_WIDTH > 767 ? '30%' : '100%') : (DEVICE_WIDTH > 767 ? '70%' : '100%'),
-                                  paddingLeft: ele.order === 1 ? (DEVICE_WIDTH > 767 ? '0' : '0') : (DEVICE_WIDTH > 767 ? '15px' : '0'),
+                                  width:
+                                    ele.order === 1
+                                      ? DEVICE_WIDTH > 767
+                                        ? '30%'
+                                        : '100%'
+                                      : DEVICE_WIDTH > 767
+                                      ? '70%'
+                                      : '100%',
+                                  paddingLeft:
+                                    ele.order === 1
+                                      ? DEVICE_WIDTH > 767
+                                        ? '0'
+                                        : '0'
+                                      : DEVICE_WIDTH > 767
+                                      ? '15px'
+                                      : '0',
                                 }}
                                 // className={ele.order === 1 ? 'mr0' : 'mr20'}
-                                >
+                              >
                                 <div
                                   style={{
                                     backgroundColor: YELLOW,
@@ -457,7 +474,11 @@ const ThirtyFour = (props) => {
                                       const isDelete =
                                         idx === 1 && i < arr.length - 1;
                                       return (
-                                        <div style={styles.plusIconWrapper} className={ele.order === 1 ? 'mr0' : 'mr20'}>
+                                        <div
+                                          style={styles.plusIconWrapper}
+                                          className={
+                                            ele.order === 1 ? 'mr0' : 'mr20'
+                                          }>
                                           <input
                                             type="text"
                                             className="f-field"
