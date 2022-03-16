@@ -147,7 +147,8 @@ const TemplateFive = (props) => {
             return {...item};
           }
         });
-        setOptionDataContent(data);
+        const data1 = data.filter((item) => item.content !== null);
+        setOptionDataContent(data1);
       }
       // setOptionDataContent(uniqueOptionDataContent);
     }
@@ -200,39 +201,6 @@ const TemplateFive = (props) => {
     setOptionDataContent([...optionDataContent, tasks]);
   };
   let customMsg = '';
-  //useEffect(() => {
-  if (props.card.week == 1 && props.card.day == 2) {
-    let selectedIntemsofHeader = [];
-    if (headerParams.length > 0 && assessmentData.headers.length == 4) {
-      // return;
-      assessmentData.headers.map((head, index) => {
-        selectedIntemsofHeader[index] = headerParams.filter(
-          (e) => e.assessment_header_id === head._id,
-        );
-      });
-      let greenCount =
-        selectedIntemsofHeader[0].length == 0
-          ? 0
-          : selectedIntemsofHeader[0][0].content.length;
-      let yellowCount =
-        selectedIntemsofHeader[1].length == 0
-          ? 0
-          : selectedIntemsofHeader[1][0].content.length;
-      let orangeCount =
-        selectedIntemsofHeader[2].length == 0
-          ? 0
-          : selectedIntemsofHeader[2][0].content.length;
-      let purpleCount =
-        selectedIntemsofHeader[3].length == 0
-          ? 0
-          : selectedIntemsofHeader[3][0].content.length;
-      let X1 = yellowCount + orangeCount + purpleCount;
-      let X2 = yellowCount + orangeCount;
-
-      customMsg = `After the birth of your new born, you consider that changes have occurred in ${X1} areas of your life and that, in ${X2} of these areas, these changes were different from what you initially thought.​  Many mothers describe differences between what they imagined their life would be like during pregnancy, and the reality of the changes after the baby arrives! In fact, it is normal for the experience of taking care of our baby to be different from what we imagined or expected, even when it is not our first child.​
-Every pregnancy and every baby are different and unique!​`;
-    }
-  }
   //}, [headerParams]);
 
   const onSave = (e) => {
@@ -277,7 +245,7 @@ Every pregnancy and every baby are different and unique!​`;
     }
     /** Check if drag and drop down card is there*/
 
-    if (headerParams.length) {
+    if (headerParams && headerParams.length) {
       if (userAssessmentData && userAssessmentData.length) {
         dispatch(
           AppActions.rearrangeAssessments(params, onSubmitMessage, customMsg),
@@ -376,6 +344,7 @@ Every pregnancy and every baby are different and unique!​`;
   const onSaveMobileView = (e) => {
     e.preventDefault();
     let assessment =
+      optionDataContent &&
       optionDataContent.length &&
       optionDataContent
         .filter((val) => val.assessment_header_id !== null)
@@ -626,6 +595,7 @@ Every pregnancy and every baby are different and unique!​`;
             headers.map((item, index) => {
               return (
                 <div
+                  key={index}
                   className="colored-header"
                   style={{
                     backgroundColor: boxBackgroundColor(item.order),
