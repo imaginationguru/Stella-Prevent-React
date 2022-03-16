@@ -26,6 +26,7 @@ const TemplateOne = (props) => {
     showExercises,
     week,
   } = props.card;
+  console.log(images, 'images...');
   return (
     <>
       {/**********************quotes************** */}
@@ -91,14 +92,11 @@ const TemplateOne = (props) => {
         ? images.map((item) => {
             return (
               <CustomImage
-
+                imageSize={item.imageSize}
                 src={`${IMAGE_BASE_URL}${item.image}`}
                 style={{
                   display: item.image !== '' ? 'flex' : 'none',
-                  height: '380px',
-                  maxWidth: '380px',
                 }}
-
                 isVisible={true}
                 animationIn={'fadeInUp'}
               />

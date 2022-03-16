@@ -16,7 +16,6 @@ import {
   CustomImage,
 } from '../../../components/Cards';
 import {Dimensions} from 'react-native';
-import GreenCheck from '../../../assets/images/greenCheck.png';
 const {IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const unique = (arr, keyProps) => {
@@ -72,150 +71,16 @@ const ThirtyFive = (props) => {
   const {headers} = assessmentData;
 
   useEffect(() => {
-    // let optionData =
-    //   assessmentData && assessmentData.content && assessmentData.content.length
-    //     ? assessmentData.content
-    //         .filter((item) => {
-    //           return item.assessment_header_id === null;
-    //         })
-    //         .map((item) => {
-    //           return {...item, content: item.data};
-    //         })
-    //     : [];
-    // console.log('option data content', JSON.stringify(optionData));
-    let optionData = [
-      {
-        _id: '61e6636a27541d0ad18e04fb',
-        correct_assessment_header_id: '61e6636a27541d0ad18e04f9',
-        assessment_header_id: null,
-        assessment_heading_id: null,
-        data: 'I need you to help me a litte more!',
-        content: 'I need you to help me a litte more!',
-        slug: null,
-        order: 0,
-        assessment_id: '61e6636a27541d0ad18e04f8',
-        createdAt: '2022-01-18T06:51:22.332Z',
-        updatedAt: '2022-03-11T06:24:04.512Z',
-        __v: 0,
-      },
-      {
-        _id: '61e6636a27541d0ad18e04fc',
-        assessment_header_id: null,
-        correct_assessment_header_id: '61e6636a27541d0ad18e04fa',
-        assessment_heading_id: null,
-        data: 'Thank you for your help today!',
-        content: 'Thank you for your help today!',
-        slug: null,
-        order: 1,
-        assessment_id: '61e6636a27541d0ad18e04f8',
-        createdAt: '2022-01-18T06:51:22.332Z',
-        updatedAt: '2022-01-18T06:51:22.332Z',
-        __v: 0,
-      },
-      {
-        _id: '61e6636a27541d0ad18e04fe',
-        assessment_header_id: null,
-        correct_assessment_header_id: '61e6636a27541d0ad18e04fa',
-        assessment_heading_id: null,
-        data: 'I would like extra help with tasks towards the end of the day.',
-        content:
-          'I would like extra help with tasks towards the end of the day.',
-        slug: null,
-        order: 3,
-        assessment_id: '61e6636a27541d0ad18e04f8',
-        createdAt: '2022-01-18T06:51:22.332Z',
-        updatedAt: '2022-01-18T06:51:22.332Z',
-        __v: 0,
-      },
-      {
-        _id: '61e6636a27541d0ad18e04fd',
-        assessment_header_id: null,
-        correct_assessment_header_id: '61e6636a27541d0ad18e04fa',
-        assessment_heading_id: null,
-        data: 'I need you to help me with the laundry and in setting the table for dinner.',
-        content:
-          'I need you to help me with the laundry and in setting the table for dinner.',
-        slug: null,
-        order: 2,
-        assessment_id: '61e6636a27541d0ad18e04f8',
-        createdAt: '2022-01-18T06:51:22.332Z',
-        updatedAt: '2022-01-18T06:51:22.332Z',
-        __v: 0,
-      },
-      {
-        _id: '61e6636a27541d0ad18e0502',
-        assessment_header_id: null,
-        correct_assessment_header_id: '61e6636a27541d0ad18e04f9',
-        assessment_heading_id: null,
-        data: 'Mom, thank you for spending your afternoon keeping me company. I have been so tired. Would it be possible to help me preparing some meals for the week the next time you come? That would be great!',
-        content:
-          'Mom, thank you for spending your afternoon keeping me company. I have been so tired. Would it be possible to help me preparing some meals for the week the next time you come? That would be great!',
-        slug: null,
-        order: 7,
-        assessment_id: '61e6636a27541d0ad18e04f8',
-        createdAt: '2022-01-18T06:51:22.332Z',
-        updatedAt: '2022-01-18T06:51:22.332Z',
-        __v: 0,
-      },
-      {
-        _id: '61e6636a27541d0ad18e0503',
-        assessment_header_id: null,
-        correct_assessment_header_id: '61e6636a27541d0ad18e04fa',
-        assessment_heading_id: null,
-        data: "You're never available when I ask for help!",
-        content: "You're never available when I ask for help!",
-        slug: null,
-        order: 8,
-        assessment_id: '61e6636a27541d0ad18e04f8',
-        createdAt: '2022-01-18T06:51:22.332Z',
-        updatedAt: '2022-01-18T06:51:22.332Z',
-        __v: 0,
-      },
-      {
-        _id: '61e6636a27541d0ad18e04ff',
-        assessment_header_id: null,
-        correct_assessment_header_id: '61e6636a27541d0ad18e04fa',
-        assessment_heading_id: null,
-        data: 'Your help would be very important to me, but I understand that you can’t today.',
-        content:
-          'Your help would be very important to me, but I understand that you can’t today.',
-        slug: null,
-        order: 4,
-        assessment_id: '61e6636a27541d0ad18e04f8',
-        createdAt: '2022-01-18T06:51:22.332Z',
-        updatedAt: '2022-01-18T06:51:22.332Z',
-        __v: 0,
-      },
-      {
-        _id: '61e6636a27541d0ad18e0500',
-        assessment_header_id: null,
-        correct_assessment_header_id: '61e6636a27541d0ad18e04f9',
-        assessment_heading_id: null,
-        data: 'Nobody helps me with anything I need.',
-        content: 'Nobody helps me with anything I need.',
-        slug: null,
-        order: 5,
-        assessment_id: '61e6636a27541d0ad18e04f8',
-        createdAt: '2022-01-18T06:51:22.332Z',
-        updatedAt: '2022-01-18T06:51:22.332Z',
-        __v: 0,
-      },
-      {
-        _id: '61e6636a27541d0ad18e0501',
-        assessment_header_id: null,
-        correct_assessment_header_id: '61e6636a27541d0ad18e04f9',
-        assessment_heading_id: null,
-        data: 'If you were to do the dishes like this, I might as well have done them myself.',
-        content:
-          'If you were to do the dishes like this, I might as well have done them myself.',
-        slug: null,
-        order: 6,
-        assessment_id: '61e6636a27541d0ad18e04f8',
-        createdAt: '2022-01-18T06:51:22.332Z',
-        updatedAt: '2022-01-18T06:51:22.332Z',
-        __v: 0,
-      },
-    ];
+    let optionData =
+      assessmentData && assessmentData.content && assessmentData.content.length
+        ? assessmentData.content
+            .filter((item) => {
+              return item.assessment_header_id === null;
+            })
+            .map((item) => {
+              return {...item, content: item.data};
+            })
+        : [];
     setOptionDataContent(optionData);
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -243,225 +108,7 @@ const ThirtyFive = (props) => {
         return;
       });
       setDragCardData(temp);
-      // let x = [...optionDataContent, ...temp];
-      let x = [
-        {
-          _id: '622b285920769c2ac68ad09e',
-          content: 'I need you to help me a litte more!',
-          correct_assessment_header_id: '61e6636a27541d0ad18e04fa',
-          default_content: false,
-          order: null,
-          input_content: null,
-          type: null,
-          user_id: '6229b166344b7f44eea68c16',
-          user_card_id: '6229b187344b7f44eea68caa',
-          assessment_id: '61e6636a27541d0ad18e04f8',
-          assessment_header_id: '61e6636a27541d0ad18e04f9',
-          createdAt: '2022-03-11T10:45:45.492Z',
-          updatedAt: '2022-03-11T10:45:45.492Z',
-          __v: 0,
-          assessment_contents: [],
-          assessment_header: [
-            {
-              _id: '61e6636a27541d0ad18e04f9',
-              header: '<p>Helpful strategies to ask for help&nbsp;</p>',
-              description: null,
-              order: 0,
-              assessment_id: '61e6636a27541d0ad18e04f8',
-              createdAt: '2022-01-18T06:51:22.332Z',
-              updatedAt: '2022-01-18T06:51:22.332Z',
-              __v: 0,
-            },
-          ],
-          assessment_heading: [],
-          input_box: [],
-        },
-        {
-          _id: '622b285920769c2ac68ad09f',
-          content: 'Thank you for your help today!',
-          correct_assessment_header_id: '61e6636a27541d0ad18e04fa',
-          default_content: false,
-          order: null,
-          input_content: null,
-          type: null,
-          user_id: '6229b166344b7f44eea68c16',
-          user_card_id: '6229b187344b7f44eea68caa',
-          assessment_id: '61e6636a27541d0ad18e04f8',
-          assessment_header_id: '61e6636a27541d0ad18e04f9',
-          createdAt: '2022-03-11T10:45:45.492Z',
-          updatedAt: '2022-03-11T10:45:45.492Z',
-          __v: 0,
-          assessment_contents: [],
-          assessment_header: [
-            {
-              _id: '61e6636a27541d0ad18e04f9',
-              header: '<p>Helpful strategies to ask for help&nbsp;</p>',
-              description: null,
-              order: 0,
-              assessment_id: '61e6636a27541d0ad18e04f8',
-              createdAt: '2022-01-18T06:51:22.332Z',
-              updatedAt: '2022-01-18T06:51:22.332Z',
-              __v: 0,
-            },
-          ],
-          assessment_heading: [],
-          input_box: [],
-        },
-        {
-          _id: '622b285920769c2ac68ad0a1',
-          content:
-            'I would like extra help with tasks towards the end of the day.',
-          default_content: false,
-          correct_assessment_header_id: '61e6636a27541d0ad18e04f9',
-          order: null,
-          input_content: null,
-          type: null,
-          user_id: '6229b166344b7f44eea68c16',
-          user_card_id: '6229b187344b7f44eea68caa',
-          assessment_id: '61e6636a27541d0ad18e04f8',
-          assessment_header_id: '61e6636a27541d0ad18e04fa',
-          createdAt: '2022-03-11T10:45:45.492Z',
-          updatedAt: '2022-03-11T10:45:45.492Z',
-          __v: 0,
-          assessment_contents: [],
-          assessment_header: [
-            {
-              _id: '61e6636a27541d0ad18e04fa',
-              header: '<p>Unhelpful strategies to ask for help&nbsp;</p>',
-              description: '',
-              order: 1,
-              assessment_id: '61e6636a27541d0ad18e04f8',
-              createdAt: '2022-01-18T06:51:22.332Z',
-              updatedAt: '2022-03-11T06:31:48.514Z',
-              __v: 0,
-            },
-          ],
-          assessment_heading: [],
-          input_box: [],
-        },
-        {
-          _id: '622b285920769c2ac68ad0a0',
-          content:
-            'I need you to help me with the laundry and in setting the table for dinner.',
-          default_content: false,
-          order: null,
-          input_content: null,
-          type: null,
-          user_id: '6229b166344b7f44eea68c16',
-          user_card_id: '6229b187344b7f44eea68caa',
-          assessment_id: '61e6636a27541d0ad18e04f8',
-          assessment_header_id: '61e6636a27541d0ad18e04f9',
-          createdAt: '2022-03-11T10:45:45.492Z',
-          updatedAt: '2022-03-11T10:45:45.492Z',
-          __v: 0,
-          assessment_contents: [],
-          correct_assessment_header_id: '61e6636a27541d0ad18e04f9',
-          assessment_header: [
-            {
-              _id: '61e6636a27541d0ad18e04f9',
-              header: '<p>Helpful strategies to ask for help&nbsp;</p>',
-              description: null,
-              order: 0,
-              assessment_id: '61e6636a27541d0ad18e04f8',
-              createdAt: '2022-01-18T06:51:22.332Z',
-              updatedAt: '2022-01-18T06:51:22.332Z',
-              __v: 0,
-            },
-          ],
-          assessment_heading: [],
-          input_box: [],
-        },
-        {
-          _id: '622b285920769c2ac68ad0a2',
-          correct_assessment_header_id: '61e6636a27541d0ad18e04f9',
-          content:
-            'Mom, thank you for spending your afternoon keeping me company. I have been so tired. Would it be possible to help me preparing some meals for the week the next time you come? That would be great!',
-          default_content: false,
-          order: null,
-          input_content: null,
-          type: null,
-          user_id: '6229b166344b7f44eea68c16',
-          user_card_id: '6229b187344b7f44eea68caa',
-          assessment_id: '61e6636a27541d0ad18e04f8',
-          assessment_header_id: '61e6636a27541d0ad18e04fa',
-          createdAt: '2022-03-11T10:45:45.492Z',
-          updatedAt: '2022-03-11T10:45:45.492Z',
-          __v: 0,
-          assessment_contents: [],
-          assessment_header: [
-            {
-              _id: '61e6636a27541d0ad18e04fa',
-              header: '<p>Unhelpful strategies to ask for help&nbsp;</p>',
-              description: '',
-              order: 1,
-              assessment_id: '61e6636a27541d0ad18e04f8',
-              createdAt: '2022-01-18T06:51:22.332Z',
-              updatedAt: '2022-03-11T06:31:48.514Z',
-              __v: 0,
-            },
-          ],
-          assessment_heading: [],
-          input_box: [],
-        },
-        {
-          _id: '61e6636a27541d0ad18e0503',
-          assessment_header_id: null,
-          correct_assessment_header_id: '61e6636a27541d0ad18e04fa',
-          assessment_heading_id: null,
-          data: "You're never available when I ask for help!",
-          content: "You're never available when I ask for help!",
-          slug: null,
-          order: 8,
-          assessment_id: '61e6636a27541d0ad18e04f8',
-          createdAt: '2022-01-18T06:51:22.332Z',
-          updatedAt: '2022-01-18T06:51:22.332Z',
-          __v: 0,
-        },
-        {
-          _id: '61e6636a27541d0ad18e04ff',
-          assessment_header_id: null,
-          correct_assessment_header_id: '61e6636a27541d0ad18e04fa',
-          assessment_heading_id: null,
-          data: 'Your help would be very important to me, but I understand that you can’t today.',
-          content:
-            'Your help would be very important to me, but I understand that you can’t today.',
-          slug: null,
-          order: 4,
-          assessment_id: '61e6636a27541d0ad18e04f8',
-          createdAt: '2022-01-18T06:51:22.332Z',
-          updatedAt: '2022-01-18T06:51:22.332Z',
-          __v: 0,
-        },
-        {
-          _id: '61e6636a27541d0ad18e0500',
-          assessment_header_id: null,
-          correct_assessment_header_id: '61e6636a27541d0ad18e04f9',
-          assessment_heading_id: null,
-          data: 'Nobody helps me with anything I need.',
-          content: 'Nobody helps me with anything I need.',
-          slug: null,
-          order: 5,
-          assessment_id: '61e6636a27541d0ad18e04f8',
-          createdAt: '2022-01-18T06:51:22.332Z',
-          updatedAt: '2022-01-18T06:51:22.332Z',
-          __v: 0,
-        },
-        {
-          _id: '61e6636a27541d0ad18e0501',
-          assessment_header_id: null,
-          correct_assessment_header_id: '61e6636a27541d0ad18e04f9',
-          assessment_heading_id: null,
-          data: 'If you were to do the dishes like this, I might as well have done them myself.',
-          content:
-            'If you were to do the dishes like this, I might as well have done them myself.',
-          slug: null,
-          order: 6,
-          assessment_id: '61e6636a27541d0ad18e04f8',
-          createdAt: '2022-01-18T06:51:22.332Z',
-          updatedAt: '2022-01-18T06:51:22.332Z',
-          __v: 0,
-        },
-      ];
+      let x = [...optionDataContent, ...temp];
       // /************ UNIQUE FILTERATION FOR ARRAY ************* */
 
       const uniqueOptionDataContent = x.length
@@ -518,10 +165,7 @@ const ThirtyFive = (props) => {
     });
     setOptionDataContent([...optionDataContent, tasks]);
   };
-  console.log(
-    'header params ??????? option content data',
-    JSON.stringify(optionDataContent),
-  );
+
   const onSave = (e) => {
     e.preventDefault();
     const params = {
@@ -604,7 +248,6 @@ const ThirtyFive = (props) => {
               );
             })
         : []}
-
       {/*****************assessment description***************** */}
       {assessments &&
       assessments.length &&
@@ -669,87 +312,19 @@ const ThirtyFive = (props) => {
                             return item.assessment_header_id === header_id;
                           })
                           .map((item) => {
-                            {
-                              /* console.log(
-                              'item.correct assessment header id',
-                              item.correct_assessment_header_id,
-                              item,
-                              header_id,
-                            ); */
-                            }
-                            const correctAns =
-                              item.correct_assessment_header_id === header_id
-                                ? true
-                                : false;
                             return (
-                              <div style={{position: 'relative'}}>
-                                <div
-                                  style={
-                                    {
-                                      // display: 'flex',
-                                      // position: 'absolute',
-                                      // right: -5,
-                                      // top: -15,
-                                      // flexDirection: 'row-reverse',
-                                      // marginLeft: '20px',
-                                      // marginBottom: '-10px',
-                                    }
-                                  }>
-                                  <div
-                                    style={{
-                                      width: '20px',
-                                      height: '20px',
-                                      border: `1px solid ${
-                                        correctAns ? 'green' : 'red'
-                                      }`,
-
-                                      borderRadius: '20px',
-                                      backgroundColor: '#fff',
-                                    }}>
-                                    {item.correct_assessment_header_id ===
-                                    header_id ? (
-                                      <img
-                                        src={GreenCheck}
-                                        style={{
-                                          width: '13px',
-                                          height: '13px',
-                                          alignItems: 'center',
-                                          justifyContent: 'center',
-                                        }}
-                                      />
-                                    ) : (
-                                      <span
-                                        style={{
-                                          color: 'red',
-                                          alignItems: 'center',
-                                          justifyContent: 'center',
-                                        }}>
-                                        x
-                                      </span>
-                                    )}
-                                  </div>
-                                </div>
-
-                                <p
-                                  style={{
-                                    // ...commonStyles.dragItem,
-                                    textAlign: 'center',
-                                    border: '1px solid',
-                                    // borderColor: boxBackgroundColor(order),
-                                    borderColor:
-                                      item.correct_assessment_header_id ===
-                                      header_id
-                                        ? 'green'
-                                        : 'red',
-                                  }}
-                                  onDragStart={(e) =>
-                                    onDragStart(e, item.content)
-                                  }
-                                  draggable
-                                  className="draggable">
-                                  {item.content}
-                                </p>
-                              </div>
+                              <p
+                                style={{
+                                  ...commonStyles.dragItem,
+                                  borderColor: boxBackgroundColor(order),
+                                }}
+                                onDragStart={(e) =>
+                                  onDragStart(e, item.content)
+                                }
+                                draggable
+                                className="draggable">
+                                {item.content}
+                              </p>
                             );
                           })
                       : []}
