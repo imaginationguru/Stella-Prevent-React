@@ -550,12 +550,11 @@ const TwentySeven = (props) => {
       ) : null}
 
       {/**********************content************** */}
-      <div style={commonStyles.contentLeftBorder}>
+      {/* <div style={commonStyles.contentLeftBorder}>
         {resultText && resultText != '' ? (
           <CardContent key={''} content={ReactHtmlParser(resultText)} />
         ) : null}
-      </div>
-
+      </div> */}
       {showExercises && <ExerciseBox week={week} />}
     </>
   );

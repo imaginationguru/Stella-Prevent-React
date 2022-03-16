@@ -7,21 +7,22 @@ const styles = {
   },
   imageWrapper: {
     maxWidth: '200px',
-    height: '200px',
     margin: '0 auto',
     flexDirection: 'column',
+    width: '100%',
   },
   mediumimageWrapper: {
-    maxWidth: '380px',
-    height: 'auto',
+    maxWidth: '400px',
+
     margin: '0 auto',
     flexDirection: 'column',
+    width: '100%',
   },
   largeimageWrapper: {
     maxWidth: '600px',
-    height: 'auto',
     margin: '0 auto',
     flexDirection: 'column',
+    width: '100%',
   },
   imageTag: {maxHeight: '100%', margin: '0 auto'},
   content: {marginTop: '10px', marginBottom: '20px'},

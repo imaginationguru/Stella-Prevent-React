@@ -1,13 +1,30 @@
 import GLOBALS from '../../constants';
 import RestClient from '../../helpers/RestClient';
-import {loadingAction} from '../common';
+
+import {
+  loadingAction,
+  clearErrorAction,
+  clearSuccessAction,
+  clearSessionExpiredAction,
+} from '../common';
 import {getItem} from '../../utils/AsyncUtils';
 import {navigatorPush, navigatorPop} from '../../config/navigationOptions';
 import moment from 'moment';
 import {customAlert} from '../../helpers/commonAlerts.web';
+import history from '../../helpers/history';
+
 const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
 const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
 
+export const sessionExpire = (message) => {
+  return async (dispatch) => {
+    customAlert(message, 'success', {}, null, (onPress) => {
+      dispatch(clearSessionExpiredAction());
+      localStorage.clear();
+      history.push('/');
+    });
+  };
+};
 /********************GET MOOD DATA************** */
 export function getMoodData(date) {
   console.log('getMoodData inside actions');
@@ -40,10 +57,11 @@ export function getMoodData(date) {
         }
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>get assessment data');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -107,10 +125,11 @@ export function saveUserMood(params) {
         }
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>save user assessment');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -160,10 +179,11 @@ export function getActivityTracker(params) {
         }
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>get assessment data');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -216,10 +236,11 @@ export function getSelectedActivityTracker(params) {
         }
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>get assessment data');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -283,10 +304,11 @@ export function saveActivityTracker(params) {
           });
         }
         if (json.code === 417) {
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -349,10 +371,11 @@ export function saveSleepTracker(params, postDataGetAPI) {
         }
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>save user assessment');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -403,12 +426,20 @@ export function getSleepData(params) {
         }
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>get assessment data');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
+          // customAlert(json.message, 'success', {}, null, (onPress) => {
+          //   dispatch(clearSessionExpiredAction());
+          //   localStorage.clear();
+          //   history.push('/');
+          //   // dispatch(navigatorPop());
+          // });
           dispatch(loadingAction(false));
         } else {
+          dispatch(loadingAction(false));
           dispatch({
             type: ACTION_TYPE.GET_SLEEP_TRACKER_FAIL,
           });
@@ -460,10 +491,11 @@ export function getWeeklySummaryReport(params) {
         }
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>get assessment data');
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({

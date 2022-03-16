@@ -256,9 +256,11 @@ const TemplateNine = (props) => {
                     key={index}
                     src={`${IMAGE_BASE_URL}${item.image}`}
                     style={{
-                      width: '120px',
-                      height: '80px',
+                      // width: '120px',
+                      // height: '80px',
                       display: item.image !== '' ? 'flex' : 'none',
+                      width: '120px',
+                      flex: '0 0 auto',
                     }}
                   />
                 );
