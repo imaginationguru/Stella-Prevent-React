@@ -36,7 +36,7 @@ const dataMapperAss = (arr = []) => {
 };
 
 const InputBoxWithContent = (props) => {
-  const {title, placeholder, value, onChange, style, name} = props;
+  const {title, placeholder, value, onChange, style, name, disable} = props;
   return (
     <div style={styles.inputBoxWrapper}>
       <div style={style}>
@@ -54,6 +54,7 @@ const InputBoxWithContent = (props) => {
             placeholder={placeholder}
             style={styles.inputStyle}
             rows={3}
+            disabled={disable}
           />
         </form>
       </div>
@@ -448,18 +449,20 @@ const FourTwo = (props) => {
                         ? CIRCLE_GRAY
                         : YELLOW,
                     width: '33%',
+                    marginBottom: '35px',
                   }}
+                  disable={true}
                 />
               );
             })
         : null}
-      {inputs.length ? (
+      {/* {inputs.length ? (
         <div style={commonStyles.buttonWrapper}>
           <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
             {ts('SAVE')}
           </button>
         </div>
-      ) : null}
+      ) : null} */}
       {/*******************************ASSESSMENT DESCRIPTION*********************** */}
       <div style={commonStyles.assessmentWrapper}>
         {images && images.length

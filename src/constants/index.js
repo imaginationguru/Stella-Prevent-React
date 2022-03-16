@@ -68,6 +68,8 @@ export default {
     ACCEPT_WELCOME: 'accept-welcomescreen',
     RESEND_REGISTRATION_CODE_API: 'resend-regestration-code',
     GET_WEEKLY_SUMMARY_API: 'get-alltrackerdata',
+    CONTACT_US: 'contact-us',
+    GET_SUBJECTS: 'list-subjects',
   },
 
   /*************************FONTS************************** */
@@ -295,6 +297,10 @@ export default {
 
     SET_TRACKER_STATUS: 'SET_TRACKER_STATUS',
     CLEAR_MODULE_ONE: 'CLEAR_MODULE_ONE',
+
+    SAVE_CONTACT_REQUEST: 'SAVE_CONTACT_REQUEST',
+    SAVE_CONTACT_SUCCESS: 'SAVE_CONTACT_SUCCESS',
+    SAVE_CONTACT_FAIL: 'SAVE_CONTACT_FAIL',
   },
 
   /***************************COLORS*************************** */

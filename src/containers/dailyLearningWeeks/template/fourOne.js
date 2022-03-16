@@ -37,7 +37,8 @@ const FourOne = (props) => {
   } = props.card;
   const [selected, setSelected] = useState([]);
   const [isInputVisible, setInputVisible] = useState(false);
-
+  const [positiveMessage, setPositiveMessage] = useState([]);
+  const [negativeMessage, setNegativeMessage] = useState([]);
   const {assessmentData = {}, userAssessmentData = []} = useSelector(
     (state) => state.moduleOne,
   );
@@ -107,9 +108,21 @@ const FourOne = (props) => {
       setSelected([data]);
     }
   };
-
+  useEffect(() => {
+    if (props.submit_messages.length) {
+      let positive = props.submit_messages
+        .filter((item) => item.condition === 'Atleast 1 is yes')
+        .map((ele) => ele.message);
+      setPositiveMessage(positive);
+      let negative = props.submit_messages
+        .filter((item) => item.condition === 'No to all')
+        .map((ele) => ele.message);
+      setNegativeMessage(negative);
+    }
+  }, [props.submit_messages]);
   const onSaveMyths = (e) => {
     let userAssessment, userInputsUpdate, userInputsSave;
+
     if (userAssessmentData && userAssessmentData.length) {
       //update
       userAssessment = selected.map((item) => {
@@ -171,6 +184,25 @@ const FourOne = (props) => {
       userAssessment !== undefined
         ? userAssessment.filter((fil) => fil.assessment_header_id)
         : [];
+    console.log('filter user ', filterUserAssessment);
+    let temp = [];
+    let isValid = '';
+    if (filterUserAssessment.length) {
+      filterUserAssessment.forEach((item) => {
+        temp.push(item.content[0] && item.content[0].content);
+      });
+    }
+    console.log('temp?????', temp);
+    if (temp.length) {
+      isValid = temp.some((item) => item === 'YES');
+    }
+    console.log(
+      'user submit message',
+
+      temp,
+      'isValid',
+      //isValid,
+    );
     e.preventDefault();
     let params = {
       user_id: userId,
@@ -190,15 +222,31 @@ const FourOne = (props) => {
 
     console.log('userInputsUpdate>>>>>', userInputsUpdate);
     console.log('paramsUpdateInput>>>>>', paramsUpdateInput);
-    console.log('params>>>>>', params);
+    console.log('params>>>>>', params, userAssessment);
     if (userAssessment.length) {
       if (userAssessmentData && userAssessmentData.length) {
-        dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
+        if (isValid) {
+          console.log('is vlaid true');
+          dispatch(AppActions.rearrangeAssessments(params, positiveMessage));
+        } else {
+          console.log('is vlaid false');
+          dispatch(AppActions.rearrangeAssessments(params, negativeMessage));
+        }
+        // dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
         dispatch(
-          AppActions.updateUserAssessment(paramsUpdateInput, onSubmitMessage),
+          AppActions.updateUserAssessment(
+            paramsUpdateInput,
+            //  onSubmitMessage,
+            false,
+          ),
         ); // input update
       } else {
-        dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+        if (isValid) {
+          dispatch(AppActions.saveUserAssessment(params, positiveMessage));
+        } else {
+          dispatch(AppActions.saveUserAssessment(params, negativeMessage));
+        }
+        // dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
       }
     } else {
       dispatch({
@@ -339,6 +387,7 @@ const FourOne = (props) => {
                     </div>
                   </div>
                   {props.inputs.map((element) => {
+                    //  console.log('element ??????', element, i, element.order);
                     if (i === element.order) {
                       return (
                         <div style={{marginBottom: '5%'}}>

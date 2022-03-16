@@ -115,6 +115,13 @@ const DailyLearningWeeks = (props) => {
     }
   }, [dispatch]);
 
+  useEffect(() => {
+    console.log('match');
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 1000);
+  }, []);
+
   const templateDataMapper = (data = []) => {
     let temp = [];
     if (data.length) {
@@ -147,7 +154,7 @@ const DailyLearningWeeks = (props) => {
     .map((item) => item._id);
 
   const cardDataHandler = (data) => {
-    //  console.log(data, 'dataaaa cardDataHandler');
+    console.log(data, 'dataaaa cardDataHandler');
     if (isScrollerLoad) {
       window.scrollTo(0, 200);
       setScrollerLoad(false);
@@ -390,7 +397,11 @@ const DailyLearningWeeks = (props) => {
   return (
     <>
       <MasterLayout>
-        {backTitle ? <BackBtn title={backTitle} /> : <BackToDashboard />}
+        {backTitle ? (
+          <BackBtn title={backTitle} goBack={false} />
+        ) : (
+          <BackToDashboard />
+        )}
 
         <div className="dashboard-body">
           <div className="container">
@@ -572,7 +583,7 @@ const DailyLearningWeeks = (props) => {
                             });
                           }}
                           className="f-nav-link">
-                          <h3>Previous Day</h3>
+                          <h3>Previous Day </h3>
                         </div>
                       </div>
                     ) : null}
@@ -683,7 +694,12 @@ const DailyLearningWeeks = (props) => {
                           cardDataHandler(nextData);
                         }}>
                         <div>
-                          <h3>{nextData.card.card_title}</h3>
+                          <h3
+                            style={{
+                              textAlign: 'right',
+                            }}>
+                            {nextData.card.card_title}
+                          </h3>
                           <h6
                             style={{
                               textAlign: 'right',

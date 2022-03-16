@@ -73,7 +73,7 @@ const WebRouter = () => {
         <PrivateRoute component={Payment} path="/Payment" />
         <PrivateRoute component={SelectWeek} path="/PastModule" />
         <PrivateRoute component={Report} path="/Report" />
-        <PrivateRoute component={Contact} path="/Contact" />
+        <PublicRoute component={Contact} path="/Contact" />
       </Switch>
     </Router>
   );

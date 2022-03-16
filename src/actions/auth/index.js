@@ -48,8 +48,6 @@ export function login(email, password, componentId) {
           payload: json.data,
         });
         dispatch(getWeek(1));
-        console.log('token>>>>>>>>>>>>>>>>>', json.data.token);
-        storeItem('token', json.data.token);
         storeItem('programId', json.data.user.programId); // '608aa90eb9a5442de2e81673';
         storeItem('userId', json.data.user._id);
         storeItem('firstName', json.data.user.firstName);
@@ -60,18 +58,13 @@ export function login(email, password, componentId) {
           type: ACTION_TYPE.SET_PROFILE_IMAGE,
           payload: json.data.user.image_path,
         });
-        //   if (json.data.user.isProgramBind !== true) {
-        //  console.log('bind PAI hit');
-        dispatch(bindProgram());
-        //    }
-
-        dispatch(getProgramById());
-
         if (json.data.user.isInterest === true) {
-          // navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
+          storeItem('token', json.data.token);
+          dispatch(bindProgram());
+          dispatch(getProgramById());
           navigatorPush({componentId, screenName: 'Dashboard'});
         } else {
-          // navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
+          dispatch(loadingAction(false));
           navigatorPush({componentId, screenName: 'VerifyUserOTP'});
         }
       } else {
@@ -81,7 +74,8 @@ export function login(email, password, componentId) {
             allowOutsideClick: false,
             allowEscapeKey: false,
             confirmButtonColor: COLORS.DARK_RED,
-            width: DEVICE_WIDTH > 1000 ? '25vw' : '60vw',
+            width: DEVICE_WIDTH > 1000 ? '' : '60vw',
+            // width: DEVICE_WIDTH > 1000 ? '25vw' : '60vw',
           });
           // dispatch({
           //  type: ACTION_TYPE.ERROR,
@@ -175,15 +169,15 @@ export function bindProgram(cb) {
       dispatch(loadingAction(false));
       cb();
     } catch (error) {
-      cb();
-      dispatch({
-        type: ACTION_TYPE.ERROR,
-        payload: error,
-      });
-      dispatch({
-        type: ACTION_TYPE.BIND_PROGRAM_USER_FAIL,
-        payload: error,
-      });
+      // dispatch({
+      //   type: ACTION_TYPE.ERROR,
+      //   payload: error,
+      // });
+      // dispatch({
+      //   type: ACTION_TYPE.BIND_PROGRAM_USER_FAIL,
+      //   payload: error,
+      // });
+      // cb();
     }
   };
 }
@@ -436,7 +430,8 @@ export function verifySocialUser(params, componentId, cb) {
               allowOutsideClick: false,
               allowEscapeKey: false,
               confirmButtonColor: COLORS.DARK_RED,
-              width: DEVICE_WIDTH > 1000 ? '25vw' : '60vw',
+              width: DEVICE_WIDTH > 1000 ? '' : '60vw',
+              // width: DEVICE_WIDTH > 1000 ? '25vw' : '60vw',
             });
             dispatch(loadingAction(false));
           } else {
@@ -628,11 +623,15 @@ export function updateUserData(params) {
 //******************** Enter correct OTP and move to dashboard ********************* */
 
 export function acceptWelcomeScreen(params, componentId, cb) {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
+      let loginToken = getState().authReducer.loginToken;
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(`${URL.ACCEPT_WELCOME}`, params);
       if (json.code === 200) {
+        storeItem('token', loginToken);
+        dispatch(bindProgram());
+        dispatch(getProgramById());
         navigatorPush({componentId, screenName: 'Dashboard'});
       } else {
         customAlert(json.message, 'error');
@@ -672,6 +671,32 @@ export function resendRegistrationCode(params, cb) {
         error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
         'error',
       );
+    }
+  };
+}
+
+//************************** Get Subject List************************ */
+export function getSubject(cb) {
+  return async (dispatch) => {
+    try {
+      let json = await RestClient.getCall(`${URL.GET_SUBJECTS}`);
+      if (json.code === 200) {
+        cb(json.data.subject);
+      } else {
+        if (json.code === 400) {
+          dispatch({
+            type: ACTION_TYPE.ERROR,
+            payload: json.message,
+          });
+        }
+        cb([]);
+      }
+    } catch (error) {
+      cb([]);
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+      });
     }
   };
 }

@@ -73,7 +73,7 @@ const ThirtyEight = (props) => {
         : []}
 
       {/**********************first type content************ */}
-      <div style={commonStyles.contentLeftBorder}>
+      <div>
         {content && content.length
           ? content
               .filter((item) => {
@@ -121,7 +121,10 @@ const ThirtyEight = (props) => {
                 <>
                   {isLeft ? (
                     <Animated isVisible={true} animationIn={'fadeInLeft'}>
-                      <div style={styles.imgContentWrapper}>
+                      <div
+                        style={styles.imgContentWrapper}
+                        // className="text-res-wrap"
+                      >
                         <CustomImage
                           src={`${IMAGE_BASE_URL}${image}`}
                           style={{
@@ -139,7 +142,10 @@ const ThirtyEight = (props) => {
                     </Animated>
                   ) : (
                     <Animated isVisible={true} animationIn={'fadeInRight'}>
-                      <div style={styles.imgContentWrapper}>
+                      <div
+                        style={styles.imgContentWrapper}
+                        // className="text-res-wrap"
+                      >
                         <CardDescription
                           key={index}
                           style={styles.descStyle}
@@ -196,8 +202,8 @@ const styles = {
   },
   descStyle: {
     width: '85%',
-    margin: '0 10px',
-    textAlign: 'justify',
+    margin: '0 10px 10px 10px',
+    // textAlign: 'justify',
     border: `1px solid ${BUTTON_ORANGE}`,
     padding: '10px',
     borderRadius: '10px',

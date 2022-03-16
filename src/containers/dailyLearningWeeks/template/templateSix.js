@@ -253,7 +253,9 @@ const TemplateSix = (props) => {
             })
         : []}
       {/*******************************ASSESSMENT DESCRIPTION*********************** */}
-      <div style={commonStyles.assessmentWrapper}>
+      <div
+        style={{...commonStyles.assessmentWrapper, justifyContent: 'center'}}
+        className="wrap-2line">
         {images && images.length
           ? images.map((item, i) => {
               return (
@@ -294,7 +296,7 @@ const TemplateSix = (props) => {
               .map((item, i) => {
                 return (
                   <div key={i}>
-                    <input
+                    <textarea
                       type="text"
                       className="f-field"
                       name="leftInput"
@@ -336,7 +338,7 @@ const TemplateSix = (props) => {
               .map((item, i) => {
                 return (
                   <div key={i}>
-                    <input
+                    <textarea
                       type="text"
                       className="f-field"
                       name="leftInput"
@@ -390,8 +392,8 @@ const TemplateSix = (props) => {
             }}>
             <span style={styles.leftPlusIcon}>+</span>
           </div>
-          <input
-            type="text"
+          <textarea
+            // type="text"
             className="f-field"
             name="leftInput"
             placeholder={headers && headers.length ? headers[0].header : ''}
@@ -433,8 +435,8 @@ const TemplateSix = (props) => {
             }}>
             <span style={styles.plusIcon}>+</span>
           </div>
-          <input
-            type="text"
+          <textarea
+            // type="textare"
             className="f-field"
             placeholder={headers && headers.length ? headers[1].header : ''}
             style={{

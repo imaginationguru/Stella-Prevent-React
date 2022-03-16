@@ -25,6 +25,8 @@ import {translate as ts} from '../../../i18n/translate';
 import commonStyles from '../../dailyLearningWeeks/commonStyles';
 import {emailRegex} from '../../../utils/RegexUtils';
 import GLOBALS from '../../../constants';
+import Footer from '../../../components/Footer';
+
 const {IMAGE_BASE_URL} = GLOBALS;
 import {Linking, Platform} from 'react-native';
 const SignIn = (componentId) => {
@@ -96,10 +98,10 @@ const SignIn = (componentId) => {
   };
 
   const onSocialLogin = (params) => {
-   dispatch(
-      AppActions.verifySocialUser(params,undefined, (res) => {
+    dispatch(
+      AppActions.verifySocialUser(params, undefined, (res) => {
         if (res && !res.is_user_exist) {
-        // setSocialError("User does not exist");
+          // setSocialError("User does not exist");
           // Platform.OS == 'web'
           //   ? window.open(json.data.redirect_url, '_blank')
           //   : Linking.openURL(json.data.redirect_url);
@@ -116,9 +118,9 @@ const SignIn = (componentId) => {
     getUserData();
   }, [getId]);
   const getUserData = () => {
-    console.log("get user id")
+    console.log('get user id');
     let id = query.get('id');
-    console.log("get user id",id)
+    console.log('get user id', id);
     setGetId(id);
     if (getId) {
       const params = {
@@ -136,7 +138,10 @@ const SignIn = (componentId) => {
             className="login-left"
             style={{
               backgroundColor: 'black',
-              backgroundImage: quotes.quoteImg != '' ?`url(${IMAGE_BASE_URL}${quotes.quoteImg})` : `url(${rightCover})`,
+              backgroundImage:
+                quotes.quoteImg != ''
+                  ? `url(${IMAGE_BASE_URL}${quotes.quoteImg})`
+                  : `url(${rightCover})`,
             }}>
             <div className="quote-view">
               <h1 className="quote-text">{quotes.quoteText}</h1>
@@ -169,7 +174,9 @@ const SignIn = (componentId) => {
               <div className="formRow">
                 <div className="w100">
                   <div className="formSubmit">
-                  <AppleLoginComponent  onSocialLogin={(params)=>onSocialLogin(params)}/>
+                    <AppleLoginComponent
+                      onSocialLogin={(params) => onSocialLogin(params)}
+                    />
                   </div>
                 </div>
               </div>
@@ -246,7 +253,6 @@ const SignIn = (componentId) => {
                         />
                       </div>
                     </div>
-                 
                   </div>
                   <div style={{marginTop: 15}}>
                     {/* <div className="signup-text-view">
@@ -262,8 +268,8 @@ const SignIn = (componentId) => {
                         Sign up
                       </Link>
                     </div> */}
-                   
-                    <p
+
+                    {/* <p
                       onClick={() =>
                         window.open(
                           'https://stella-careportal.curio-dtx.com/upload/PRIVACY_POLICY0203_stella.pdf',
@@ -272,21 +278,22 @@ const SignIn = (componentId) => {
                       }
                       className="terms-condition">
                       terms & conditions.
-                    </p>
-                   
+                    </p> */}
                   </div>
                 </form>
               </div>
-              <div
+
+              {/* <div
                 className="power-image"
                 onClick={() =>
                   window.open('http://www.curiodigitaltx.com/', '_blank')
                 }>
                 <img src={powerBy} className="footer-logo" />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
+        <Footer />
       </MasterLayout>
     </>
   );
