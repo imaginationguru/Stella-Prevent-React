@@ -49,7 +49,8 @@ const ThirtyTwo = (props) => {
   const [selected, setSelected] = useState([]);
   const [userInputs, setUserInputs] = useState([]);
   const [inputs, setInputs] = useState([]);
-
+  const [positiveMessage, setPositiveMessage] = useState([]);
+  const [negativeMessage, setNegativeMessage] = useState([]);
   const {
     assessmentData = {},
     assessmentData2 = {},
@@ -64,7 +65,18 @@ const ThirtyTwo = (props) => {
     /// dispatch(AppActions.getUserAssessment(props._id, assessment_id2));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessment_id2]);
-
+  useEffect(() => {
+    if (props.submit_messages.length) {
+      let positive = props.submit_messages
+        .filter((item) => item.condition === 'Yes to all')
+        .map((ele) => ele.message);
+      setPositiveMessage(positive);
+      let negative = props.submit_messages
+        .filter((item) => item.condition === 'Atleast 1 is no')
+        .map((ele) => ele.message);
+      setNegativeMessage(negative);
+    }
+  }, [props.submit_messages]);
   useEffect(() => {
     const assessmentCards = [];
     if (userAssessmentData && userAssessmentData.length) {
@@ -193,13 +205,32 @@ const ThirtyTwo = (props) => {
   };
   /**********************SECOND ASSESSMENT****************** */
   const onSaveMyths = (e) => {
+    e.preventDefault();
     let userAssessment = selected.map((item) => {
       return {
         assessment_header_id: item._id,
         content: [{content: item.content}],
       };
     });
-    e.preventDefault();
+    let temp = [];
+    let isValid = '';
+    if (userAssessment.length) {
+      userAssessment.forEach((item) => {
+        temp.push(item.content[0] && item.content[0].content);
+      });
+    }
+
+    if (temp.length) {
+      isValid = temp.some((item) => item === 'NO');
+    }
+    console.log(
+      'user submit message',
+
+      temp,
+      'isValid',
+      isValid,
+    );
+
     let params = {
       user_id: userId,
       user_card_id: props._id,
@@ -208,9 +239,18 @@ const ThirtyTwo = (props) => {
     };
     if (userAssessment.length) {
       if (userAssessmentData && userAssessmentData.length) {
-        dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
+        // dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
+        if (isValid) {
+          dispatch(AppActions.rearrangeAssessments(params, negativeMessage));
+        } else {
+          dispatch(AppActions.rearrangeAssessments(params, positiveMessage));
+        }
       } else {
-        dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+        if (isValid) {
+          dispatch(AppActions.saveUserAssessment(params, negativeMessage));
+        } else {
+          dispatch(AppActions.saveUserAssessment(params, positiveMessage));
+        }
       }
     } else {
       dispatch({
@@ -230,7 +270,7 @@ const ThirtyTwo = (props) => {
       return CIRCLE_GRAY;
     }
   };
-
+  console.log('header in 32', headers, userInputs);
   return (
     <>
       {/**********************quotes************** */}
@@ -391,20 +431,21 @@ const ThirtyTwo = (props) => {
                           },
                         ]);
                       }
-                      // headers &&
-                      //   headers.length &&
-                      //   setInputs(
-                      //     headers.map((val) => {
-                      //       return {
-                      //         content: [],
-                      //         name: val.header,
-                      //         placeholder: val.description,
-                      //         order: val.order,
-                      //         value: '',
-                      //         _id: val._id,
-                      //       };
-                      //     }),
-                      //   );
+
+                      headers &&
+                        headers.length &&
+                        setInputs(
+                          headers.map((val) => {
+                            return {
+                              content: [],
+                              name: val.header,
+                              placeholder: val.description,
+                              order: val.order,
+                              value: '',
+                              _id: val._id,
+                            };
+                          }),
+                        );
                     }}>
                     <span style={styles.plusIcon}>+</span>
                   </div>

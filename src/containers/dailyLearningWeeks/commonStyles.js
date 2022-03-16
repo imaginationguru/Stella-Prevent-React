@@ -41,6 +41,7 @@ const commonStyles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    minHeight: '130px',
   },
   dragItem: {
     marginTop: '20px',
@@ -114,7 +115,7 @@ const commonStyles = {
     justifyContent: 'center',
   },
   w501: {marginBottom: '21px'},
-  error: {color: 'red', paddingLeft: '5px'},
+  error: {color: 'red', paddingLeft: '10px'},
   socialError: {
     textAlign: 'center',
     align: 'center',

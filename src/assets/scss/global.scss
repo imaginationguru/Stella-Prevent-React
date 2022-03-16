@@ -5,6 +5,10 @@ body * {
   box-sizing: border-box;
   font-family: 'HKGrotesk-Regular';
 }
+b,
+strong {
+  font-family: 'HKGrotesk Bold';
+}
 
 img {
   max-width: 100%;
@@ -180,6 +184,10 @@ img {
   width: 100%;
   padding: 0 15px;
   outline: none;
+
+  &.height-auto {
+    height: auto;
+  }
 }
 
 .formLabel {
@@ -250,7 +258,8 @@ img {
   border: 0;
   //height: 50px;
   width: 100%;
-  background: #000000 url('../images/appleIcon.png') no-repeat top 13px left 30px;
+  background: #000000 url('../images/appleIcon.png') no-repeat top 13px left
+    30px;
   color: #ffffff;
   padding: 10px 0 10px 0;
   text-align: center;
@@ -334,7 +343,6 @@ img {
   }
 
   .formField {
-
     //margin-bottom: 21px;
     &.has-icon {
       position: relative;
@@ -524,7 +532,7 @@ img {
   display: flex;
   flex: 1 1 auto;
 
-  &>.container {
+  & > .container {
     display: flex;
   }
 }
@@ -794,7 +802,6 @@ footer {
 
   .f-nav-link {
     &:hover {
-
       h3,
       h6 {
         color: #006f59;
@@ -927,7 +934,7 @@ footer {
     padding: 5px 12px;
     min-height: 95px;
 
-    &>div {
+    & > div {
       flex: 0 0 100%;
       align-items: center;
       justify-content: center;
@@ -1141,7 +1148,7 @@ button.navbutton {
   }
 }
 
-.bk-btn-wrap>div {
+.bk-btn-wrap > div {
   padding: 15px 0;
 }
 
@@ -1250,7 +1257,7 @@ button.btn-green {
   display: flex;
   flex-direction: column;
 
-  &>div {
+  & > div {
     flex: 1 1 auto;
     overflow: auto;
     max-height: 68vh;
@@ -1264,10 +1271,14 @@ button.btn-green {
 
 .pWrap {
   box-shadow: 0px 18.965px 54.1858px rgba(0, 111, 89, 0.38);
-  background: linear-gradient(161.44deg,
-      #cee6e1 55.96%,
-      #a1cdc4 78.08%,
-      #97bece 95.87%);
+
+  background: linear-gradient(
+    161.44deg,
+    #cee6e1 55.96%,
+    #a1cdc4 78.08%,
+    #97bece 95.87%
+  );
+
   border: 2px solid #5bb7a4;
   width: 80%;
   position: static;
@@ -1324,7 +1335,6 @@ button.btn-green {
   }
 }
 
-
 .green-bg {
   background-color: #5dbda9 !important;
 }
@@ -1347,6 +1357,7 @@ button.btn-green {
   padding: 10px 45px 10px 15px;
   position: relative;
   min-height: 44px;
+
   &.selected-green {
     border: 1px solid #5dbda9;
   }
@@ -1409,8 +1420,8 @@ button.btn-green {
         display: none;
       }
 
-      input[type="radio"]:checked {
-        &~span {
+      input[type='radio']:checked {
+        & ~ span {
           display: flex;
           align-items: center;
           justify-content: center;
@@ -1468,7 +1479,6 @@ button.btn-green {
   }
 }
 
-
 // slider css
 @media only screen and (max-width: 1200px) {
   .week-list {
@@ -1510,6 +1520,11 @@ button.btn-green {
 
   .res-vw {
     display: block;
+  }
+
+  .dashboard-body-inner {
+    display: block;
+    overflow: hidden;
   }
 }
 
@@ -1637,7 +1652,9 @@ button.btn-green {
   }
 
   .display-board {
-    min-height: 400px;
+    // min-height: 400px;
+    padding-bottom: 95%;
+
     box-shadow: 0px 18.965px 54.1858px rgba(0, 111, 89, 0.38);
   }
 
@@ -1714,7 +1731,6 @@ button.btn-green {
 
 @media only screen and (max-width: 767px) {
   .login {
-
     .btn-fb,
     .btn-google,
     .btn-apple {
@@ -1723,7 +1739,6 @@ button.btn-green {
   }
 
   .formRow {
-
     .w100,
     .w50,
     .w25,
@@ -1803,7 +1818,7 @@ button.btn-green {
   }
 
   .seachBlock {
-    &>div {
+    & > div {
       max-height: 50vh;
     }
 
@@ -1895,7 +1910,8 @@ body {
   position: relative;
 }
 
-.list__item {}
+.list__item {
+}
 
 .card {
   background-color: hsl(215, 14%, 37.5%);
@@ -1906,7 +1922,7 @@ body {
   // position: relative;
 }
 
-.list__item+.list__item {
+.list__item + .list__item {
   margin-top: 0.5rem;
 }
 

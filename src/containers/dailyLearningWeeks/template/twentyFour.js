@@ -81,6 +81,7 @@ const TwentyFour = (props) => {
                     marginBottom: '60px',
                   }}>
                   <CustomImage
+                    imageSize={item.imageSize}
                     src={`${IMAGE_BASE_URL}${item.image}`}
                     style={{
                       ...styles.bigImage,
@@ -111,6 +112,7 @@ const TwentyFour = (props) => {
             .map((item) => {
               return (
                 <CustomImage
+                  imageSize={item.imageSize}
                   src={`${IMAGE_BASE_URL}${item.image}`}
                   style={{
                     display: item.image !== '' ? 'flex' : 'none',

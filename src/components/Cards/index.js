@@ -100,31 +100,32 @@ const CustomImage = ({
   imageSize = 'small',
 }) => {
   return (
-    <Animated
-      animationIn={animationIn}
-      animationOut={animationOut}
-      animationInDelay={animationInDelay}>
-      <div
-        className="dash-icon"
-        style={
-          ({...styles.imageWrapper, ...style},
-          imageSize == 'medium'
-            ? {...styles.mediumimageWrapper, ...style}
-            : imageSize == 'large'
-            ? {...styles.largeimageWrapper, ...style}
-            : {...styles.imageWrapper, ...style})
-        }>
-        <img
-          className="nav-hover"
-          src={src}
-          style={{...styles.imageTag, ...imageStyle}}
-        />
-      </div>
-      {/* <p style={{textAlign: 'center'}}>
+    <div
+      style={
+        ({...styles.imageWrapper, ...style},
+        imageSize == 'medium'
+          ? {...styles.mediumimageWrapper, ...style}
+          : imageSize == 'large'
+          ? {...styles.largeimageWrapper, ...style}
+          : {...styles.imageWrapper, ...style})
+      }>
+      <Animated
+        animationIn={animationIn}
+        animationOut={animationOut}
+        animationInDelay={animationInDelay}>
+        <div className="dash-icon">
+          <img
+            className="nav-hover"
+            src={src}
+            style={{...styles.imageTag, ...imageStyle}}
+          />
+        </div>
+        {/* <p style={{textAlign: 'center'}}>
         {title.toString().replace(/\xA0/g, ' ')}
       </p> */}
-      <p style={{textAlign: 'center'}}>{title}</p>
-    </Animated>
+        <p style={{textAlign: 'center'}}>{title}</p>
+      </Animated>
+    </div>
   );
 };
 export {
