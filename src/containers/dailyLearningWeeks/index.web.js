@@ -70,7 +70,8 @@ const DailyLearningWeeks = (props) => {
           AppActions.getAssessmentData(
             assessment_id,
             currentData._id,
-            currentData.card.template_data[0].template_number == 6
+            currentData.card.template_data[0].template_number == 6 ||
+              currentData.card.template_data[0].template_number == 34
               ? currentData._id
               : null,
           ),
