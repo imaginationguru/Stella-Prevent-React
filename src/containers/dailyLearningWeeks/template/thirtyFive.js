@@ -16,6 +16,9 @@ import {
   CustomImage,
 } from '../../../components/Cards';
 import {Dimensions} from 'react-native';
+import GreenCheck from '../../../assets/images/tick.svg';
+import cancel from '../../../assets/images/cancel.svg';
+
 const {IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const unique = (arr, keyProps) => {
@@ -54,6 +57,7 @@ const ThirtyFive = (props) => {
     (state) => state.moduleOne,
   );
   const [dragCardData, setDragCardData] = useState([]);
+  const [correctAns, setCorrectAns] = useState('false');
   const dispatch = useDispatch();
   const {
     card_title,
@@ -78,14 +82,22 @@ const ThirtyFive = (props) => {
               return item.assessment_header_id === null;
             })
             .map((item) => {
-              return {...item, content: item.data};
+              return {
+                ...item,
+                content: item.data,
+                correct_assessment_header_id: item.correct_assessment_header_id,
+              };
             })
         : [];
+    console.log('option data content assessment data', optionData);
+
     setOptionDataContent(optionData);
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData]);
-
+  useEffect(() => {
+    setCorrectAns(false);
+  }, []);
   useEffect(() => {
     if (userAssessmentData && userAssessmentData.length) {
       let temp = [];
@@ -99,16 +111,19 @@ const ThirtyFive = (props) => {
               {
                 assessment_header_id: item.assessment_header_id,
                 content: item.content,
+                correct_assessment_header_id: item.correct_assessment_header_id,
               },
             ],
           };
         });
+        console.log('zz?????????', zz);
         tempHeaderParams.push(...zz);
         setHeaderParams(onlySingleId(tempHeaderParams));
         return;
       });
       setDragCardData(temp);
       let x = [...optionDataContent, ...temp];
+
       // /************ UNIQUE FILTERATION FOR ARRAY ************* */
 
       const uniqueOptionDataContent = x.length
@@ -123,9 +138,11 @@ const ThirtyFive = (props) => {
    * on drag item  we used ev.dataTransfer.setData method for drag item with id
    */
 
-  const onDragStart = (ev, id) => {
-    console.log('dragstart:', id);
+  const onDragStart = (ev, id, correctId) => {
+    console.log('dragstart:', id, correctId);
+    setCorrectAns(false);
     ev.dataTransfer.setData('id', id);
+    ev.dataTransfer.setData('correctId', correctId);
   };
 
   /*
@@ -143,7 +160,10 @@ const ThirtyFive = (props) => {
 
   const onDrop = (ev, header_id, order) => {
     let id = ev.dataTransfer.getData('id');
+    let correctId = ev.dataTransfer.getData('correctId');
+    console.log('correct id', correctId, 'header params', headerParams);
     let x = headerParams.map((item) => {
+      console.log('item drpop', item);
       return {
         ...item,
         content: item.content.filter((val) => val.content !== id),
@@ -153,9 +173,16 @@ const ThirtyFive = (props) => {
       ...x,
       {
         assessment_header_id: header_id,
-        content: [{assessment_header_id: header_id, content: id}],
+        content: [
+          {
+            assessment_header_id: header_id,
+            content: id,
+            correct_assessment_header_id: correctId,
+          },
+        ],
       },
     ];
+    console.log('x?????????', x, y);
     setHeaderParams(onlySingleId(y));
     let tasks = optionDataContent.filter((task) => {
       if (task.content === id) {
@@ -165,7 +192,7 @@ const ThirtyFive = (props) => {
     });
     setOptionDataContent([...optionDataContent, tasks]);
   };
-
+  console.log('header params ??????? option content data', optionDataContent);
   const onSave = (e) => {
     e.preventDefault();
     const params = {
@@ -175,11 +202,14 @@ const ThirtyFive = (props) => {
       assessment: headerParams,
     };
 
+    console.log('header params?????', JSON.stringify(headerParams));
     if (headerParams.length) {
       if (userAssessmentData && userAssessmentData.length) {
         dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
+        setCorrectAns(true);
       } else {
         dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+        setCorrectAns(true);
       }
     } else {
       dispatch({
@@ -211,6 +241,7 @@ const ThirtyFive = (props) => {
   const dragCardDataContent = dragCardData.length
     ? dragCardData.map((item) => item.content)
     : [];
+  console.log('correct ans???????', correctAns);
 
   /************************************** */
   return (
@@ -248,6 +279,7 @@ const ThirtyFive = (props) => {
               );
             })
         : []}
+
       {/*****************assessment description***************** */}
       {assessments &&
       assessments.length &&
@@ -313,18 +345,42 @@ const ThirtyFive = (props) => {
                           })
                           .map((item) => {
                             return (
-                              <p
-                                style={{
-                                  ...commonStyles.dragItem,
-                                  borderColor: boxBackgroundColor(order),
-                                }}
-                                onDragStart={(e) =>
-                                  onDragStart(e, item.content)
-                                }
-                                draggable
-                                className="draggable">
-                                {item.content}
-                              </p>
+                              <div style={{position: 'relative'}}>
+                                {correctAns ? (
+                                  <div style={styles.iconWrapper}>
+                                    {item.correct_assessment_header_id ===
+                                    header_id ? (
+                                      <img
+                                        src={GreenCheck}
+                                        style={styles.icon}
+                                      />
+                                    ) : (
+                                      <img src={cancel} style={styles.icon} />
+                                    )}
+                                  </div>
+                                ) : (
+                                  ''
+                                )}
+
+                                <p
+                                  style={{
+                                    textAlign: 'center',
+                                    border: '1px solid',
+                                    borderColor: boxBackgroundColor(order),
+                                    // borderColor:
+                                    //   item.correct_assessment_header_id ===
+                                    //   header_id
+                                    //     ? 'green'
+                                    //     : 'red',
+                                  }}
+                                  onDragStart={(e) =>
+                                    onDragStart(e, item.content)
+                                  }
+                                  draggable
+                                  className="draggable">
+                                  {item.content}
+                                </p>
+                              </div>
                             );
                           })
                       : []}
@@ -350,7 +406,13 @@ const ThirtyFive = (props) => {
                   return (
                     <div
                       key={index}
-                      onDragStart={(e) => onDragStart(e, item.content)}
+                      onDragStart={(e) =>
+                        onDragStart(
+                          e,
+                          item.content,
+                          item.correct_assessment_header_id,
+                        )
+                      }
                       draggable
                       className="draggable"
                       style={styles.draggableContent}>
@@ -424,5 +486,18 @@ const styles = {
     width: DEVICE_WIDTH > 767 ? '23%' : '48%',
     paddingBottom: DEVICE_WIDTH > 767 ? '60px' : '30px',
     //  display: 'flex',
+  },
+  iconWrapper: {
+    display: 'flex',
+    position: 'absolute',
+    right: -5,
+    top: -15,
+    flexDirection: 'row-reverse',
+    marginLeft: '20px',
+    marginBottom: '-10px',
+  },
+  icon: {
+    width: '22px',
+    height: '22px',
   },
 };
