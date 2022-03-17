@@ -45,15 +45,18 @@ const BackToDashboard = (props) => {
           resizeMode={'contain'}
           source={back}
           style={{
-            width: DEVICE_WIDTH > 767 ? '1.3vw' : '15px',
-            height: DEVICE_WIDTH > 767 ? '1.3vw' : '15px',
+            // width: DEVICE_WIDTH > 767 ? '1.3vw' : '15px',
+            // height: DEVICE_WIDTH > 767 ? '1.3vw' : '15px',
+            width: '15px',
+            height: '15px',
           }}
         />
         <Text
           style={{
             marginLeft: '1vw',
             fontFamily: FONTS.SEMI_BOLD,
-            fontSize: DEVICE_WIDTH > 767 ? '1.3vw' : '16px',
+            // fontSize: DEVICE_WIDTH > 767 ? '1.3vw' : '16px',
+            fontSize: '17px',
             fontStyle: 'normal',
             fontWeight: '800',
             color: COLORS.LIGHT_BLACK,

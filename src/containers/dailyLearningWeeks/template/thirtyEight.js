@@ -10,6 +10,7 @@ import {
   CardDescription,
   CardContent,
   CustomImage,
+  OldCustomImage,
 } from '../../../components/Cards';
 import {Animated} from 'react-animated-css';
 const {IMAGE_BASE_URL, COLORS} = GLOBALS;
@@ -57,7 +58,7 @@ const ThirtyEight = (props) => {
             })
             .map((item, index) => {
               return (
-                <CustomImage
+                <OldCustomImage
                   key={index}
                   src={
                     item.image !== '' ? `${IMAGE_BASE_URL}${item.image}` : null
@@ -125,7 +126,7 @@ const ThirtyEight = (props) => {
                         style={styles.imgContentWrapper}
                         // className="text-res-wrap"
                       >
-                        <CustomImage
+                        <OldCustomImage
                           src={`${IMAGE_BASE_URL}${image}`}
                           style={{
                             ...styles.imageWrapper,
@@ -151,7 +152,7 @@ const ThirtyEight = (props) => {
                           style={styles.descStyle}
                           description={ReactHtmlParser(item.desc)}
                         />
-                        <CustomImage
+                        <OldCustomImage
                           src={`${IMAGE_BASE_URL}${image}`}
                           style={{
                             ...styles.imageWrapper,

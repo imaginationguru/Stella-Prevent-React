@@ -64,18 +64,11 @@ const Dashboard = () => {
     }
     return temp;
   };
-
   useEffect(() => {
-    //console.log('calling dashboard..');
-    /**Once program is bind then get program details content */
-    // dispatch(
-    //   AppActions.bindProgram((cb) => {
     if (getItem('userId') != null) {
       dispatch(AppActions.getProgramById(false));
       dispatch(AppActions.getCurrentActiveCard(false));
     }
-    // }),
-    // );
   }, []);
   useEffect(() => {
     console.log(trackerStatus, 'trackerStatus....');
@@ -85,14 +78,14 @@ const Dashboard = () => {
 
     return (
       <div
-        style={styles.trackerWrap}
+        style={styles().trackerWrap}
         onClick={onClick}
         className="tracker-option">
         <div className="tracker-desc">
           <div className="tracker-icon">
             <img src={src} />
           </div>
-          <p style={styles.trackerTitle} className="tracker-text">
+          <p style={styles().trackerTitle} className="tracker-text">
             {title}
           </p>
         </div>
@@ -201,7 +194,7 @@ const Dashboard = () => {
         <div className="v-parent">
           <div className="v-cell-50">
             <div
-              style={styles.dailylearnWrap}
+              style={styles().dailylearnWrap}
               onClick={() => {
                 onDailyLearningClick();
                 //   debugger
@@ -222,14 +215,15 @@ const Dashboard = () => {
                   cursor: 'pointer',
                   paddingTop: 10,
                   paddingBottom: 10,
-                  background: COLORS.WHITE,
+                  backgroundColor: COLORS.WHITE,
                 }}>
                 <p
                   style={{
                     fontWeight: 'bold',
-                    fontSize: 22,
+                    fontSize: 18,
                     fontFamily: FONTS.SEMI_BOLD,
                     marginBottom: 0,
+                    lineHeight: '23px',
                   }}>
                   Today’s Daily Learning
                 </p>
@@ -337,11 +331,11 @@ const Dashboard = () => {
 
                   <span
                     style={{
-                      ...styles.weekTitle,
+                      ...styles().weekTitle,
                       color: selectedWeek === item ? '#fff' : '#000',
                     }}>
                     Week <br />
-                    <span style={styles.weekNumber}>{item}</span>
+                    <span style={styles().weekNumber}>{item}</span>
                   </span>
                 </div>
               </div>
@@ -364,7 +358,7 @@ const Dashboard = () => {
               }}>
               <p
                 style={{
-                  ...styles.weekNumber,
+                  ...styles().weekNumber,
                   fontSize: 15,
                   margin: 0,
                 }}>
@@ -382,68 +376,70 @@ const Dashboard = () => {
 };
 export default Dashboard;
 
-const styles = {
-  weekNumber: {
-    alignSelf: 'center',
-    justifyContent: 'center',
-    display: 'flex',
-    fontSize: 25,
-    fontWeight: '700',
-    cursor: 'pointer',
-  },
-  weekTitle: {paddingTop: 10, fontSize: 15, fontWeight: '700'},
-  trackerWrap: {
-    display: 'flex',
-    //  justifyContent: 'space-around',
-    borderRadius: 10,
-    //height: 50,
-    border: `2px solid ${DARK_GREEN}`,
-    paddingTop: 15,
-    paddingBottom: 15,
-    marginBottom: 15,
-    cursor: 'pointer',
-    //boxShadow: '1px 3px 1px #D6F0EB',
-    boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
-  },
-  trackerTitle: {
-    fontWeight: 'bold',
-    display: 'flex',
-    alignSelf: 'center',
-    marginBottom: 0,
-    fontFamily: FONTS.SEMI_BOLD,
-  },
-  profileWrapper: {
-    //height: '30%',
-    border: `2px solid ${DARK_GREEN}`,
-    width: '80%',
-    //margin: '0 auto',
-    position: 'absolute',
-    top: 30,
-    left: '10%',
-    boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
-    background:
-      'linear-gradient(161.44deg, #CEE6E1 55.96%, #A1CDC4 78.08%, #97BECE 95.87%)',
-    opacity: 0.8,
-    borderRadius: 20,
-    borderShadow: ' 0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
-  },
-  dailylearnWrap: {
-    background:
-      'linear-gradient(180deg, rgba(214, 240, 235, 0) 0%, #FFFFFF 73.96%) top right',
-    // background: 'white',
-    backgroundImage: `url(${stellaGirlGif})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    width: '100%',
-    height: '95%',
-    borderRadius: 20,
-    // marginTop: 30,
-    marginBottom: 30,
-    position: 'relative',
-    // border: '1px solid blue',
-    boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
-    cursor: 'pointer',
-    backgroundPosition: '50%',
-    // backgroundPosition: 'center left',
-  },
+export const styles = () => {
+  return {
+    weekNumber: {
+      alignSelf: 'center',
+      justifyContent: 'center',
+      display: 'flex',
+      fontSize: 25,
+      fontWeight: '700',
+      cursor: 'pointer',
+    },
+    weekTitle: {paddingTop: 10, fontSize: 15, fontWeight: '700'},
+    trackerWrap: {
+      display: 'flex',
+      //  justifyContent: 'space-around',
+      borderRadius: 10,
+      //height: 50,
+      border: `2px solid ${DARK_GREEN}`,
+      paddingTop: 15,
+      paddingBottom: 15,
+      marginBottom: 15,
+      cursor: 'pointer',
+      //boxShadow: '1px 3px 1px #D6F0EB',
+      boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
+    },
+    trackerTitle: {
+      fontWeight: 'bold',
+      display: 'flex',
+      alignSelf: 'center',
+      marginBottom: 0,
+      fontFamily: FONTS.SEMI_BOLD,
+    },
+    profileWrapper: {
+      //height: '30%',
+      border: `2px solid ${DARK_GREEN}`,
+      width: '80%',
+      //margin: '0 auto',
+      position: 'absolute',
+      top: 30,
+      left: '10%',
+      boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
+      background:
+        'linear-gradient(161.44deg, #CEE6E1 55.96%, #A1CDC4 78.08%, #97BECE 95.87%)',
+      opacity: 0.8,
+      borderRadius: 20,
+      borderShadow: ' 0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
+    },
+    dailylearnWrap: {
+      background:
+        'linear-gradient(180deg, rgba(214, 240, 235, 0) 0%, #FFFFFF 73.96%) top right',
+      // background: 'white',
+      backgroundImage: `url(${stellaGirlGif})`,
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+      width: '100%',
+      height: '95%',
+      borderRadius: 20,
+      // marginTop: 30,
+      marginBottom: 30,
+      position: 'relative',
+      // border: '1px solid blue',
+      boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
+      cursor: 'pointer',
+      backgroundPosition: '50%',
+      // backgroundPosition: 'center left',
+    },
+  };
 };
