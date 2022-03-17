@@ -150,6 +150,8 @@ const ThirtyFour = (props) => {
           ...item,
           sub_heading: item.sub_heading.length
             ? item.sub_heading.map((val) => {
+              console.log("here data ==>", data);
+              console.log("here val ==>", val);
               const inputsArr = data.length
                 ? data.filter((e) => e.assessment_content_id === val._id)
                 : [];
@@ -166,12 +168,18 @@ const ThirtyFour = (props) => {
                 : [dummyInput, dummyInput];
               // const finalInput = [...inputsArr, dummyInput]
               return {
+                // ...val,
+                // textInput: data.length
+                //   ? finalInput.length
+                //     ? finalInput.sort(
+                //       (a, b) => (a.order > b.order && 1) || -1,
+                //     )
+                //     : [] // TODO : Existing ( Add NEW OBJECT FOR END)
+                //   : [dummyInput], // TODO : NEW USER
                 ...val,
                 textInput: data.length
                   ? finalInput.length
-                    ? finalInput.sort(
-                      (a, b) => (a.order > b.order && 1) || -1,
-                    )
+                    ? finalInput
                     : [] // TODO : Existing ( Add NEW OBJECT FOR END)
                   : [dummyInput], // TODO : NEW USER
               };
