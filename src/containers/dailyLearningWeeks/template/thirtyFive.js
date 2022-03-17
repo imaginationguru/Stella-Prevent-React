@@ -374,7 +374,11 @@ const ThirtyFive = (props) => {
                                     //     : 'red',
                                   }}
                                   onDragStart={(e) =>
-                                    onDragStart(e, item.content)
+                                    onDragStart(
+                                      e,
+                                      item.content,
+                                      item.correct_assessment_header_id,
+                                    )
                                   }
                                   draggable
                                   className="draggable">
