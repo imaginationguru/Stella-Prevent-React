@@ -143,9 +143,7 @@ const ThirtyFour = (props) => {
 
   useEffect(() => {
     const data = userAssMapper(userAssessmentData);
-    console.log(data, 'data.....');
     console.log('inputes===>', inputs);
-    // return;
     const inputData = inputs.length
       ? inputs.map((item) => {
           return {
@@ -155,15 +153,9 @@ const ThirtyFour = (props) => {
                   const inputsArr = data.length
                     ? data.filter((e) => e.assessment_content_id === val._id)
                     : [];
-                  // debugger;
-                  console.log(inputsArr, data, 'lll');
-                  const extractOrder =
-                    inputsArr.length > 0
-                      ? data.length
-                        ? data[data.length - 1].order
-                        : 0
-                      : 0;
-
+                  const extractOrder = data.length
+                    ? data[data.length - 1].order
+                    : 0;
                   const dummyInput = emptyTextInputMapper(
                     item._id,
                     val._id,
@@ -188,7 +180,6 @@ const ThirtyFour = (props) => {
           };
         })
       : [];
-    console.log(inputData, 'inputData.....');
     setInputs(inputData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
@@ -297,7 +288,7 @@ const ThirtyFour = (props) => {
 
   const onSave = () => {
     console.log(inputs, 'inputs');
-    //return;
+    return;
     const modifiedAssessment = inputs.length
       ? inputs.map((item) => {
           const temp = {assessment_heading_id: item._id, content: []};
