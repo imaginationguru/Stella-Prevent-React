@@ -147,7 +147,7 @@ const MoodTracker = ({location}) => {
       {isFromCard ? <BackBtn title="Back to Card" /> : <BackToDashboard />}
       <div style={styles.wrapper}>
         <p style={styles.ques} className="res-100">
-          How is your mood today?
+          <strong>How is your mood today?</strong>
         </p>
         {moodList.map((item, index) => {
           return (
@@ -234,7 +234,8 @@ const styles = {
   ques: {
     fontWeight: 'bold',
     fontSize: '18px',
-    marginBottom: '50px',
+    marginBottom: '40px',
+    paddingTop: '10px',
     textAlign: 'center',
   },
 };

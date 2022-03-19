@@ -143,56 +143,43 @@ const ThirtyFour = (props) => {
 
   useEffect(() => {
     const data = userAssMapper(userAssessmentData);
-    console.log(data, 'data.....');
     console.log('inputes===>', inputs);
-    // return;
     const inputData = inputs.length
       ? inputs.map((item) => {
-        return {
-          ...item,
-          sub_heading: item.sub_heading.length
-            ? item.sub_heading.map((val) => {
-              console.log("here data ==>", data);
-              console.log("here val ==>", val);
-              const inputsArr = data.length
-                ? data.filter((e) => e.assessment_content_id === val._id)
-                : [];
-              const extractOrder = data.length
-                ? data[data.length - 1].order
-                : 0;
-              const dummyInput = emptyTextInputMapper(
-                item._id,
-                val._id,
-                extractOrder,
-              );
-              const finalInput = inputsArr.length
-                ? [...inputsArr, dummyInput]
-                : [dummyInput, dummyInput];
-              // const finalInput = [...inputsArr, dummyInput]
-              return {
-                // ...val,
-                // textInput: data.length
-                //   ? finalInput.length
-                //     ? finalInput.sort(
-                //       (a, b) => (a.order > b.order && 1) || -1,
-                //     )
-                //     : [] // TODO : Existing ( Add NEW OBJECT FOR END)
-                //   : [dummyInput], // TODO : NEW USER
-                ...val,
-                textInput: data.length
-                  ? finalInput.length
-                    ? finalInput
-                    : [] // TODO : Existing ( Add NEW OBJECT FOR END)
-                  : [dummyInput], // TODO : NEW USER
-              };
-            })
-            : [],
-        };
-      })
-
-
+          return {
+            ...item,
+            sub_heading: item.sub_heading.length
+              ? item.sub_heading.map((val) => {
+                  const inputsArr = data.length
+                    ? data.filter((e) => e.assessment_content_id === val._id)
+                    : [];
+                  const extractOrder = data.length
+                    ? data[data.length - 1].order
+                    : 0;
+                  const dummyInput = emptyTextInputMapper(
+                    item._id,
+                    val._id,
+                    extractOrder,
+                  );
+                  const finalInput = inputsArr.length
+                    ? [...inputsArr, dummyInput]
+                    : [dummyInput, dummyInput];
+                  // const finalInput = [...inputsArr, dummyInput]
+                  return {
+                    ...val,
+                    textInput: data.length
+                      ? finalInput.length
+                        ? finalInput.sort(
+                            (a, b) => (a.order > b.order && 1) || -1,
+                          )
+                        : [] // TODO : Existing ( Add NEW OBJECT FOR END)
+                      : [dummyInput], // TODO : NEW USER
+                  };
+                })
+              : [],
+          };
+        })
       : [];
-    console.log(inputData, 'inputData.....');
     setInputs(inputData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
@@ -301,7 +288,7 @@ const ThirtyFour = (props) => {
 
   const onSave = () => {
     console.log(inputs, 'inputs');
-    //return;
+    return;
     const modifiedAssessment = inputs.length
       ? inputs.map((item) => {
           const temp = {assessment_heading_id: item._id, content: []};

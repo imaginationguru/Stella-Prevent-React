@@ -160,6 +160,10 @@ const DailyLearningWeeks = (props) => {
       window.scrollTo(0, 200);
       setScrollerLoad(false);
     }
+    dispatch({
+      type: GLOBALS.ACTION_TYPE.GET_USER_ASSESSMENT_SUCCESS,
+      payload: [],
+    });
     setCurrentData(data);
     console.log('set current data', cIds);
     if (cIds.length) {
@@ -342,6 +346,10 @@ const DailyLearningWeeks = (props) => {
 
         if (canProceed) {
           dispatch({
+            type: GLOBALS.ACTION_TYPE.GET_USER_ASSESSMENT_SUCCESS,
+            payload: [],
+          });
+          dispatch({
             type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
             payload: selectedDay + 1,
           });
@@ -473,6 +481,10 @@ const DailyLearningWeeks = (props) => {
                       const isClickable = id ? applicableCards(id) : false;
 
                       if (isClickable) {
+                        dispatch({
+                          type: GLOBALS.ACTION_TYPE.GET_USER_ASSESSMENT_SUCCESS,
+                          payload: [],
+                        });
                         console.log('is clickable??????');
                         dispatch({
                           type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
@@ -574,6 +586,11 @@ const DailyLearningWeeks = (props) => {
                         style={{alignItems: 'flex-end'}}>
                         <div
                           onClick={() => {
+                            dispatch({
+                              type: GLOBALS.ACTION_TYPE
+                                .GET_USER_ASSESSMENT_SUCCESS,
+                              payload: [],
+                            });
                             dispatch({
                               type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
                               payload: selectedDay - 1,
@@ -772,9 +789,15 @@ const DailyLearningWeeks = (props) => {
                       <div
                         onClick={() => {
                           // debugger;
+
                           console.log('next week >>>>>>', selectedWeek);
                           if (selectedWeek <= 4) {
                             console.log('selected week', selectedWeek + 1);
+                            dispatch({
+                              type: GLOBALS.ACTION_TYPE
+                                .GET_USER_ASSESSMENT_SUCCESS,
+                              payload: [],
+                            });
                             dispatch(
                               AppActions.getTemplateData(selectedWeek + 1),
                             );
