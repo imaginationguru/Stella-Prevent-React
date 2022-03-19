@@ -317,7 +317,7 @@ const Report = ({location}) => {
         {isFromCard ? <BackBtn title="Back to Card" /> : <BackToDashboard />}
         <View
           style={{
-            width: '60%',
+            width: DEVICE_WIDTH < 500 ? '80%' : '60%',
             marginLeft: 'auto',
             marginRight: 'auto',
             height: '40%',
