@@ -148,45 +148,49 @@ const ThirtyFour = (props) => {
     // return;
     const inputData = inputs.length
       ? inputs.map((item) => {
-          return {
-            ...item,
-            sub_heading: item.sub_heading.length
-              ? item.sub_heading.map((val) => {
-                  const inputsArr = data.length
-                    ? data.filter((e) => e.assessment_content_id === val._id)
-                    : [];
-                  // debugger;
-                  console.log(inputsArr, data, 'lll');
-                  const extractOrder =
-                    inputsArr.length > 0
-                      ? data.length
-                        ? data[data.length - 1].order
-                        : 0
-                      : 0;
+        return {
+          ...item,
+          sub_heading: item.sub_heading.length
+            ? item.sub_heading.map((val) => {
+              console.log("here data ==>", data);
+              console.log("here val ==>", val);
+              const inputsArr = data.length
+                ? data.filter((e) => e.assessment_content_id === val._id)
+                : [];
+              const extractOrder = data.length
+                ? data[data.length - 1].order
+                : 0;
+              const dummyInput = emptyTextInputMapper(
+                item._id,
+                val._id,
+                extractOrder,
+              );
+              const finalInput = inputsArr.length
+                ? [...inputsArr, dummyInput]
+                : [dummyInput, dummyInput];
+              // const finalInput = [...inputsArr, dummyInput]
+              return {
+                // ...val,
+                // textInput: data.length
+                //   ? finalInput.length
+                //     ? finalInput.sort(
+                //       (a, b) => (a.order > b.order && 1) || -1,
+                //     )
+                //     : [] // TODO : Existing ( Add NEW OBJECT FOR END)
+                //   : [dummyInput], // TODO : NEW USER
+                ...val,
+                textInput: data.length
+                  ? finalInput.length
+                    ? finalInput
+                    : [] // TODO : Existing ( Add NEW OBJECT FOR END)
+                  : [dummyInput], // TODO : NEW USER
+              };
+            })
+            : [],
+        };
+      })
 
-                  const dummyInput = emptyTextInputMapper(
-                    item._id,
-                    val._id,
-                    extractOrder,
-                  );
-                  const finalInput = inputsArr.length
-                    ? [...inputsArr, dummyInput]
-                    : [dummyInput, dummyInput];
-                  // const finalInput = [...inputsArr, dummyInput]
-                  return {
-                    ...val,
-                    textInput: data.length
-                      ? finalInput.length
-                        ? finalInput.sort(
-                            (a, b) => (a.order > b.order && 1) || -1,
-                          )
-                        : [] // TODO : Existing ( Add NEW OBJECT FOR END)
-                      : [dummyInput], // TODO : NEW USER
-                  };
-                })
-              : [],
-          };
-        })
+
       : [];
     console.log(inputData, 'inputData.....');
     setInputs(inputData);
