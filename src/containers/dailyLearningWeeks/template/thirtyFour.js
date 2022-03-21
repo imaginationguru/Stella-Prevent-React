@@ -143,54 +143,138 @@ const ThirtyFour = (props) => {
 
   useEffect(() => {
     const data = userAssMapper(userAssessmentData);
-    console.log(data, 'data.....');
-    console.log('inputes===>', inputs);
-    // return;
+    /**Add selected data in array */
+    const headerData = inputs.length
+      ? inputs.map((item) => {
+          return {
+            ...item,
+            sub_heading: item.sub_heading.length
+              ? item.sub_heading.map((val) => {
+                  const inputsArr = data.length
+                    ? data
+                        .filter((e) => e.assessment_content_id === val._id)
+                        .sort((a, b) => (a.order > b.order ? 1 : -1))
+                    : [];
+                  const finalInput = inputsArr.length ? [...inputsArr] : [];
+                  return {
+                    ...val,
+                    textInput: data.length
+                      ? finalInput.length
+                        ? finalInput
+                        : [] // TODO : Existing ( Add NEW OBJECT FOR END)
+                      : [], // TODO : NEW USER
+                  };
+                })
+              : [],
+          };
+        })
+      : [];
+    /**Add empty rows with comparison */
+    const addEmtpyRow = headerData.map((item, index) => {
+      return {
+        ...item,
+        sub_heading: item.sub_heading.map((val, sub_heading_index) => {
+          let newItem = [];
+          let lastOrder =
+            val.textInput.length > 0
+              ? val.textInput[val.textInput.length - 1].order
+              : 0;
+          /**Add rows in cloumn 1  */
+          if (sub_heading_index == 0) {
+            let diff =
+              val.textInput.length -
+              item.sub_heading[sub_heading_index + 1].textInput.length;
+            if (diff < 0) {
+              for (
+                let i = lastOrder;
+                i < lastOrder + (Math.abs(diff) + 1);
+                i++
+              ) {
+                newItem.push(emptyTextInputMapper(item._id, val._id, i));
+              }
+            }
+            if (diff >= 0) {
+              for (let i = lastOrder; i < lastOrder + 1; i++) {
+                newItem.push(emptyTextInputMapper(item._id, val._id, i));
+              }
+            }
+          } else {
+            let diff =
+              val.textInput.length -
+              item.sub_heading[sub_heading_index - 1].textInput.length;
+            console.log(diff, 'diff....');
+            if (diff < 0) {
+              for (
+                let i = lastOrder;
+                i < lastOrder + (Math.abs(diff) + 1);
+                i++
+              ) {
+                newItem.push(emptyTextInputMapper(item._id, val._id, i));
+              }
+            }
+            if (diff >= 0) {
+              for (let i = lastOrder; i < lastOrder + 1; i++) {
+                newItem.push(emptyTextInputMapper(item._id, val._id, i));
+              }
+            }
+          }
+          const finalInput =
+            newItem.length > 0
+              ? [...val.textInput, ...newItem]
+              : [...val.textInput];
+          return {
+            ...val,
+            textInput: finalInput, // TODO : NEW USER
+          };
+        }),
+      };
+    });
+    console.log(addEmtpyRow, 'addEmtpyRow....');
+    setInputs(addEmtpyRow);
+    return;
     const inputData = inputs.length
       ? inputs.map((item) => {
-        return {
-          ...item,
-          sub_heading: item.sub_heading.length
-            ? item.sub_heading.map((val) => {
-              console.log("here data ==>", data);
-              console.log("here val ==>", val);
-              const inputsArr = data.length
-                ? data.filter((e) => e.assessment_content_id === val._id)
-                : [];
-              const extractOrder = data.length
-                ? data[data.length - 1].order
-                : 0;
-              const dummyInput = emptyTextInputMapper(
-                item._id,
-                val._id,
-                extractOrder,
-              );
-              const finalInput = inputsArr.length
-                ? [...inputsArr, dummyInput]
-                : [dummyInput, dummyInput];
-              // const finalInput = [...inputsArr, dummyInput]
-              return {
-                // ...val,
-                // textInput: data.length
-                //   ? finalInput.length
-                //     ? finalInput.sort(
-                //       (a, b) => (a.order > b.order && 1) || -1,
-                //     )
-                //     : [] // TODO : Existing ( Add NEW OBJECT FOR END)
-                //   : [dummyInput], // TODO : NEW USER
-                ...val,
-                textInput: data.length
-                  ? finalInput.length
-                    ? finalInput
-                    : [] // TODO : Existing ( Add NEW OBJECT FOR END)
-                  : [dummyInput], // TODO : NEW USER
-              };
-            })
-            : [],
-        };
-      })
-
-
+          return {
+            ...item,
+            sub_heading: item.sub_heading.length
+              ? item.sub_heading.map((val) => {
+                  console.log('here data ==>', data);
+                  console.log('here val ==>', val);
+                  const inputsArr = data.length
+                    ? data.filter((e) => e.assessment_content_id === val._id)
+                    : [];
+                  const extractOrder = data.length
+                    ? data[data.length - 1].order
+                    : 0;
+                  const dummyInput = emptyTextInputMapper(
+                    item._id,
+                    val._id,
+                    extractOrder,
+                  );
+                  const finalInput = inputsArr.length
+                    ? [...inputsArr, dummyInput]
+                    : [dummyInput, dummyInput];
+                  // const finalInput = [...inputsArr, dummyInput]
+                  return {
+                    // ...val,
+                    // textInput: data.length
+                    //   ? finalInput.length
+                    //     ? finalInput.sort(
+                    //       (a, b) => (a.order > b.order && 1) || -1,
+                    //     )
+                    //     : [] // TODO : Existing ( Add NEW OBJECT FOR END)
+                    //   : [dummyInput], // TODO : NEW USER
+                    ...val,
+                    textInput: data.length
+                      ? finalInput.length
+                        ? finalInput
+                        : [] // TODO : Existing ( Add NEW OBJECT FOR END)
+                      : [dummyInput], // TODO : NEW USER
+                  };
+                })
+              : [],
+          };
+        })
       : [];
     console.log(inputData, 'inputData.....');
     setInputs(inputData);
@@ -489,6 +573,7 @@ const ThirtyFour = (props) => {
                                         idx === 1 && i === arr.length - 1;
                                       const isDelete =
                                         idx === 1 && i < arr.length - 1;
+                                      const isDisabled = i < arr.length - 1;
                                       return (
                                         <div
                                           style={styles.plusIconWrapper}
@@ -496,6 +581,7 @@ const ThirtyFour = (props) => {
                                             ele.order === 1 ? 'mr0' : 'mr20'
                                           }>
                                           <input
+                                            disabled={isDisabled ? true : false}
                                             type="text"
                                             className="f-field"
                                             name={ele.name}
@@ -516,9 +602,11 @@ const ThirtyFour = (props) => {
                                             <div
                                               style={{
                                                 ...styles.circleDiv,
-                                                // backgroundColor: item.value.length
-                                                //   ? GREEN_TEXT
-                                                //   : GRAY,
+                                                // backgroundColor: GREEN_TEXT,
+                                                backgroundColor: val.content
+                                                  .length
+                                                  ? GREEN_TEXT
+                                                  : GRAY,
                                               }}
                                               onClick={() => {
                                                 if (val.content) {
