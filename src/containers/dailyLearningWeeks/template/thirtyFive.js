@@ -312,11 +312,12 @@ const ThirtyFive = (props) => {
     headerId = '',
     contentId = '',
     headerOrder = null,
-    //correctHeaderId = '',
+    correctHeaderId = '',
   ) => {
     if (optionDataContent.length) {
       const data = optionDataContent.map((item, i) => {
         if (item._id === contentId) {
+          console.log('item._id');
           return {
             ...item,
             assessment_header_id: headerId,
@@ -327,7 +328,7 @@ const ThirtyFive = (props) => {
           return {...item};
         }
       });
-
+      console.log('data?????', data);
       setOptionDataContent(data);
     }
   };
@@ -342,7 +343,7 @@ const ThirtyFive = (props) => {
       optionDataContent
         .filter((val) => val.assessment_header_id !== null)
         .map((item) => {
-          console.log('itme', item);
+          //  console.log('itme', item);
           return {
             assessment_header_id: item.assessment_header_id,
             content: [
@@ -611,19 +612,21 @@ const ThirtyFive = (props) => {
                 showTick =
                   headers && headers.length
                     ? headers.some((val) => {
-                        console.log(
+                        {
+                          /* console.log(
                           'val????',
                           val,
                           val._id,
                           item.content,
                           item.correct_assessment_header_id,
                           val._id === item.correct_assessment_header_id,
-                        );
-                        return (
-                          item.correct_assessment_header_id === val._id &&
-                          item.assessment_header.length &&
-                          item.assessment_header[0].header === val.header
-                        );
+                        ); */
+                          {
+                            /* item.assessment_header.length &&
+                          item.assessment_header[0].header === val.header */
+                          }
+                        }
+                        return item.correct_assessment_header_id === val._id;
                       })
                     : false;
 
