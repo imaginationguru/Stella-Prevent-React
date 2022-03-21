@@ -42,7 +42,9 @@ const ThirtyThree = (props) => {
     (state) => state.moduleOne,
   );
 
+
   const { headers } = assessmentData;
+
   const dispatch = useDispatch();
   let userId = getItem('userId');
 
