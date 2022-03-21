@@ -41,12 +41,14 @@ const ThirtyThree = (props) => {
   const { assessmentData = {}, userAssessmentData = [] } = useSelector(
     (state) => state.moduleOne,
   );
+
   const { headers } = assessmentData;
   const dispatch = useDispatch();
   let userId = getItem('userId');
 
   useEffect(() => {
     const assessmentCards = [];
+    console.log(userAssessmentData, 'userAssessmentData...');
     if (userAssessmentData && userAssessmentData.length) {
       userAssessmentData.forEach((item) => {
         assessmentCards.push(...item.cards);
