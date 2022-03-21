@@ -31,10 +31,11 @@ console.log("app version-->",version,packageJson.version);
         })
     });
     window.location.reload(true);
+    localStorage.setItem('version',packageJson.version);
 }
 
-      localStorage.clear();
-      localStorage.setItem('version',packageJson.version);
+      // localStorage.clear();
+      // localStorage.setItem('version',packageJson.version);
     }
 };
 
