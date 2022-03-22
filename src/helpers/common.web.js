@@ -1,6 +1,6 @@
 import store from '../store/setup';
 
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 const isInternet = () => window.navigator.onLine;
 let accessToken = () => store.getState().authReducer.loginToken;
 
@@ -9,10 +9,10 @@ const checkIfWeekCanAccess = (week = 1, planInfo = {}) => {
   else if (planInfo.numericPrice > 0) return true;
   else return false;
 };
-const getSelectedWeekDayCards = (curr_week, curr_day, data) => {};
+const getSelectedWeekDayCards = (curr_week, curr_day, data) => { };
 
 const canProceedNextDay = (curr_week, curr_day, total_week, total_day) => {
-  console.log(curr_week, curr_day, total_week, total_day,"curr_week, curr_day, total_week, total_day")
+  console.log(curr_week, curr_day, total_week, total_day, "curr_week, curr_day, total_week, total_day")
   if (curr_week < total_week) {
     return true;
   } else if (curr_week == total_week) {
@@ -56,4 +56,24 @@ const checkNextDayUnlocked = (curr_week, curr_day, total_week, total_day) => {
   }
 };
 
-export {isInternet, accessToken, checkIfWeekCanAccess, getSelectedWeekDayCards,canProceedNextDay};
+const detectBrowser = () => {
+  let userAgent = navigator.userAgent;
+  let browserName;
+
+  if (userAgent.match(/chrome|chromium|crios/i)) {
+    browserName = "chrome";
+  } else if (userAgent.match(/firefox|fxios/i)) {
+    browserName = "firefox";
+  } else if (userAgent.match(/safari/i)) {
+    browserName = "safari";
+  } else if (userAgent.match(/opr\//i)) {
+    browserName = "opera";
+  } else if (userAgent.match(/edg/i)) {
+    browserName = "edge";
+  } else {
+    browserName = "No browser detection";
+  }
+  return browserName
+}
+
+export { isInternet, accessToken, checkIfWeekCanAccess, getSelectedWeekDayCards, canProceedNextDay, detectBrowser };
