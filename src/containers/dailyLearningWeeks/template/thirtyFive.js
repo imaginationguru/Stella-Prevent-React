@@ -72,8 +72,8 @@ const ThirtyFive = (props) => {
     showExercises,
     week,
   } = props.card;
-  const {assessments} = props;
-  const {headers} = assessmentData;
+  const {assessments = {}} = props;
+  const {headers = []} = assessmentData || {};
 
   useEffect(() => {
     let optionData =
@@ -165,9 +165,10 @@ const ThirtyFive = (props) => {
 
   const onDragStart = (ev, id, correctId) => {
     console.log('dragstart:', id, correctId);
-    setCorrectAns(false);
+
     ev.dataTransfer.setData('id', id);
     ev.dataTransfer.setData('correctId', correctId);
+    setCorrectAns(false);
   };
 
   /*
@@ -313,6 +314,7 @@ const ThirtyFive = (props) => {
     contentId = '',
     headerOrder = null,
     correctHeaderId = '',
+    headerName,
   ) => {
     if (optionDataContent.length) {
       const data = optionDataContent.map((item, i) => {
@@ -322,28 +324,27 @@ const ThirtyFive = (props) => {
             ...item,
             assessment_header_id: headerId,
             headerOrder,
-            //  correct_assessment_header_id: correctHeaderId,
+            correct_assessment_header_id: correctHeaderId,
+            assessment_header: [{header: headerName}],
           };
         } else {
           return {...item};
         }
       });
-      console.log('data?????', data);
+
       setOptionDataContent(data);
     }
   };
-  console.log('option data content', optionDataContent);
 
   const onSaveMobileView = (e) => {
     e.preventDefault();
-    //  console.log('option data content', optionDataContent);
+
     let assessment =
       optionDataContent &&
       optionDataContent.length &&
       optionDataContent
         .filter((val) => val.assessment_header_id !== null)
         .map((item) => {
-          //  console.log('itme', item);
           return {
             assessment_header_id: item.assessment_header_id,
             content: [
@@ -356,7 +357,7 @@ const ThirtyFive = (props) => {
           };
         });
     let y = onlySingleId(assessment);
-    console.log('y??????', y);
+
     const params = {
       user_id: getItem('userId'),
       user_card_id: props._id,
@@ -379,7 +380,7 @@ const ThirtyFive = (props) => {
       });
     }
   };
-  console.log('option data content data 1????', optionDataContent);
+
   return (
     <>
       {/**********************quotes************** */}
@@ -607,32 +608,24 @@ const ThirtyFive = (props) => {
             optionDataContent.map((item, index) => {
               let checkAssessmentHeaderId = item.assessment_header_id !== null;
               let showTick = false;
-              if (item.assessment_header_id !== null) {
-                console.log('item1', item);
-                showTick =
-                  headers && headers.length
-                    ? headers.some((val) => {
-                        {
-                          /* console.log(
-                          'val????',
-                          val,
-                          val._id,
-                          item.content,
-                          item.correct_assessment_header_id,
-                          val._id === item.correct_assessment_header_id,
-                        ); */
-                          {
-                            /* item.assessment_header.length &&
-                          item.assessment_header[0].header === val.header */
-                          }
-                        }
-                        return item.correct_assessment_header_id === val._id;
-                      })
-                    : false;
-
-                // console.log('show tick?????', showTick);
+              console.log(
+                '614?????',
+                // item.hasOwnProperty(item.assessment_header),
+                typeof item['assessment_header'] !== 'undefined',
+              );
+              if (
+                item.assessment_header_id !== null &&
+                typeof item['assessment_header'] !== 'undefined'
+              ) {
+                if (headers && headers.length) {
+                  showTick = headers.some(
+                    (val) =>
+                      item.correct_assessment_header_id === val._id &&
+                      item.assessment_header.length &&
+                      item.assessment_header[0].header === val.header,
+                  );
+                }
               }
-              // console.log('show tick 630?????', showTick);
               return (
                 <div
                   className={`colored-question  ${
@@ -645,7 +638,6 @@ const ThirtyFive = (props) => {
                   onClick={() => {
                     onSetActiveMenu(index);
                   }}>
-                  {/*correctAns item.correct_assessment_header_id === header_id  */}
                   {checkAssessmentHeaderId ? (
                     correctAns ? (
                       <div style={styles.iconWrapper1}>
@@ -677,7 +669,7 @@ const ThirtyFive = (props) => {
                               onClick={() => {
                                 setTimeout(() => {
                                   setActiveId('');
-                                }, overRideOptionContentDataHandler(val._id, item._id, val.order, item.correct_assessment_header_id));
+                                }, overRideOptionContentDataHandler(val._id, item._id, val.order, item.correct_assessment_header_id, val.header));
                               }}>
                               <label
                                 className={optionBackgroundColor(val.order)}
