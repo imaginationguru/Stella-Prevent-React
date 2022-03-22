@@ -16,6 +16,9 @@ import {
   CustomImage,
 } from '../../../components/Cards';
 import {Dimensions} from 'react-native';
+import GreenCheck from '../../../assets/images/tick.svg';
+import cancel from '../../../assets/images/cancel.svg';
+import tickWhite from '../../../assets/images/right.svg';
 const {IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const unique = (arr, keyProps) => {
@@ -54,6 +57,8 @@ const ThirtyFive = (props) => {
     (state) => state.moduleOne,
   );
   const [dragCardData, setDragCardData] = useState([]);
+  const [correctAns, setCorrectAns] = useState('false');
+  const [activeId, setActiveId] = useState('');
   const dispatch = useDispatch();
   const {
     card_title,
@@ -67,8 +72,8 @@ const ThirtyFive = (props) => {
     showExercises,
     week,
   } = props.card;
-  const {assessments} = props;
-  const {headers} = assessmentData;
+  const {assessments = {}} = props;
+  const {headers = []} = assessmentData || {};
 
   useEffect(() => {
     let optionData =
@@ -78,14 +83,22 @@ const ThirtyFive = (props) => {
               return item.assessment_header_id === null;
             })
             .map((item) => {
-              return {...item, content: item.data};
+              return {
+                ...item,
+                content: item.data,
+                correct_assessment_header_id: item.correct_assessment_header_id,
+              };
             })
         : [];
+    console.log('option data content assessment data', optionData);
+
     setOptionDataContent(optionData);
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData]);
-
+  useEffect(() => {
+    setCorrectAns(false);
+  }, []);
   useEffect(() => {
     if (userAssessmentData && userAssessmentData.length) {
       let temp = [];
@@ -99,22 +112,49 @@ const ThirtyFive = (props) => {
               {
                 assessment_header_id: item.assessment_header_id,
                 content: item.content,
+                correct_assessment_header_id: item.correct_assessment_header_id,
               },
             ],
           };
         });
+        console.log('zz?????????', zz);
         tempHeaderParams.push(...zz);
-        setHeaderParams(onlySingleId(tempHeaderParams));
+        setHeaderParams(
+          onlySingleId(
+            tempHeaderParams.filter(
+              (item) => item.assessment_header_id != undefined,
+            ),
+          ),
+        );
+        // setHeaderParams(onlySingleId(tempHeaderParams));
         return;
       });
       setDragCardData(temp);
       let x = [...optionDataContent, ...temp];
+
       // /************ UNIQUE FILTERATION FOR ARRAY ************* */
 
       const uniqueOptionDataContent = x.length
         ? unique(x, ['content', 'assessment_header_id' !== null])
         : [];
-      setOptionDataContent(uniqueOptionDataContent);
+      if (uniqueOptionDataContent.length) {
+        const data = uniqueOptionDataContent.map((item, i) => {
+          if (item.assessment_header_id !== null) {
+            return {
+              ...item,
+              headerOrder:
+                item.assessment_header &&
+                item.assessment_header.length &&
+                item.assessment_header[0].order,
+            };
+          } else {
+            return {...item};
+          }
+        });
+        const data1 = data.filter((item) => item.content !== null);
+        setOptionDataContent(data1);
+      }
+      //  setOptionDataContent(uniqueOptionDataContent);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
@@ -123,9 +163,12 @@ const ThirtyFive = (props) => {
    * on drag item  we used ev.dataTransfer.setData method for drag item with id
    */
 
-  const onDragStart = (ev, id) => {
-    console.log('dragstart:', id);
+  const onDragStart = (ev, id, correctId) => {
+    console.log('dragstart:', id, correctId);
+
     ev.dataTransfer.setData('id', id);
+    ev.dataTransfer.setData('correctId', correctId);
+    setCorrectAns(false);
   };
 
   /*
@@ -143,7 +186,10 @@ const ThirtyFive = (props) => {
 
   const onDrop = (ev, header_id, order) => {
     let id = ev.dataTransfer.getData('id');
+    let correctId = ev.dataTransfer.getData('correctId');
+    console.log('correct id', correctId, 'header params', headerParams);
     let x = headerParams.map((item) => {
+      console.log('item drpop', item);
       return {
         ...item,
         content: item.content.filter((val) => val.content !== id),
@@ -153,9 +199,16 @@ const ThirtyFive = (props) => {
       ...x,
       {
         assessment_header_id: header_id,
-        content: [{assessment_header_id: header_id, content: id}],
+        content: [
+          {
+            assessment_header_id: header_id,
+            content: id,
+            correct_assessment_header_id: correctId,
+          },
+        ],
       },
     ];
+    console.log('x?????????', x, y);
     setHeaderParams(onlySingleId(y));
     let tasks = optionDataContent.filter((task) => {
       if (task.content === id) {
@@ -165,7 +218,7 @@ const ThirtyFive = (props) => {
     });
     setOptionDataContent([...optionDataContent, tasks]);
   };
-
+  console.log('header params ??????? option content data', optionDataContent);
   const onSave = (e) => {
     e.preventDefault();
     const params = {
@@ -175,11 +228,14 @@ const ThirtyFive = (props) => {
       assessment: headerParams,
     };
 
+    console.log('header params?????', JSON.stringify(headerParams));
     if (headerParams.length) {
       if (userAssessmentData && userAssessmentData.length) {
         dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
+        setCorrectAns(true);
       } else {
         dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+        setCorrectAns(true);
       }
     } else {
       dispatch({
@@ -211,8 +267,120 @@ const ThirtyFive = (props) => {
   const dragCardDataContent = dragCardData.length
     ? dragCardData.map((item) => item.content)
     : [];
+  console.log('correct ans???????', correctAns);
 
-  /************************************** */
+  /************************************** Mobile view************/
+
+  const optionBackgroundColor = (order) => {
+    if (order === 0) {
+      return 'green-bg';
+    }
+    if (order === 1) {
+      return 'yellow-bg';
+    }
+    if (order === 2) {
+      return 'orange-bg';
+    }
+    if (order === 3) {
+      return 'grey-bg';
+    }
+  };
+
+  const selectedBorderColor = (order) => {
+    if (order === 0) {
+      return 'selected-green';
+    }
+    if (order === 1) {
+      return 'selected-yellow';
+    }
+    if (order === 2) {
+      return 'selected-orange';
+    }
+    if (order === 3) {
+      return 'selected-grey';
+    }
+  };
+
+  const onSetActiveMenu = (index) => {
+    setActiveId(index);
+    setCorrectAns(false);
+    if (activeId === index) {
+      setActiveId('');
+    }
+  };
+
+  const overRideOptionContentDataHandler = (
+    headerId = '',
+    contentId = '',
+    headerOrder = null,
+    correctHeaderId = '',
+    headerName,
+  ) => {
+    if (optionDataContent.length) {
+      const data = optionDataContent.map((item, i) => {
+        if (item._id === contentId) {
+          console.log('item._id');
+          return {
+            ...item,
+            assessment_header_id: headerId,
+            headerOrder,
+            correct_assessment_header_id: correctHeaderId,
+            assessment_header: [{header: headerName}],
+          };
+        } else {
+          return {...item};
+        }
+      });
+
+      setOptionDataContent(data);
+    }
+  };
+
+  const onSaveMobileView = (e) => {
+    e.preventDefault();
+
+    let assessment =
+      optionDataContent &&
+      optionDataContent.length &&
+      optionDataContent
+        .filter((val) => val.assessment_header_id !== null)
+        .map((item) => {
+          return {
+            assessment_header_id: item.assessment_header_id,
+            content: [
+              {
+                assessment_header_id: item.assessment_header_id,
+                content: item.content,
+                correct_assessment_header_id: item.correct_assessment_header_id,
+              },
+            ],
+          };
+        });
+    let y = onlySingleId(assessment);
+
+    const params = {
+      user_id: getItem('userId'),
+      user_card_id: props._id,
+      assessment_id: assessment_id,
+      assessment: y,
+    };
+
+    if (y.length) {
+      if (userAssessmentData && userAssessmentData.length) {
+        dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
+        setCorrectAns(true);
+      } else {
+        dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+        setCorrectAns(true);
+      }
+    } else {
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: 'Please perform your exercise',
+      });
+    }
+  };
+
   return (
     <>
       {/**********************quotes************** */}
@@ -248,6 +416,7 @@ const ThirtyFive = (props) => {
               );
             })
         : []}
+
       {/*****************assessment description***************** */}
       {assessments &&
       assessments.length &&
@@ -281,109 +450,281 @@ const ThirtyFive = (props) => {
         </div>
       ) : null}
       {/******************Droppable div************************* */}
-      <div style={styles.wrapper}>
-        <div style={styles.fourBoxContainer}>
-          {headers && headers.length
-            ? headers.map((item, index) => {
-                const header_id = item._id;
-                const order = item.order;
-                return (
-                  <div
-                    key={index}
-                    style={{
-                      ...styles.droppableDiv,
-                    }}
-                    className="wip"
-                    onDragOver={(e) => onDragOver(e, item._id)}
-                    onDrop={(e) => {
-                      onDrop(e, item._id, item.order);
-                    }}>
-                    <p
-                      className="task-header"
-                      style={{
-                        ...commonStyles.dropTitle,
-                        backgroundColor: boxBackgroundColor(item.order),
-                      }}>
-                      {ReactHtmlParser(item.header)}
-                    </p>
-                    {optionDataContent && optionDataContent.length
-                      ? optionDataContent
-                          .filter((item) => {
-                            return item.assessment_header_id === header_id;
-                          })
-                          .map((item) => {
-                            return (
-                              <p
-                                style={{
-                                  ...commonStyles.dragItem,
-                                  borderColor: boxBackgroundColor(order),
-                                }}
-                                onDragStart={(e) =>
-                                  onDragStart(e, item.content)
-                                }
-                                draggable
-                                className="draggable">
-                                {item.content}
-                              </p>
-                            );
-                          })
-                      : []}
-                  </div>
-                );
-              })
-            : []}
-        </div>
-        {/****************************OPTIONS CONTAINER with gray box******************** */}
 
-        <div style={styles.optionsDiv}>
-          {optionDataContent && optionDataContent.length
-            ? optionDataContent
-                .filter((item, i) => {
-                  const exist = dragCardDataContent.find(
-                    (val) => val === item.content,
-                  )
-                    ? true
-                    : false;
-                  return item.assessment_header_id === null && !exist;
-                })
-                .map((item, index) => {
+      <div className="web-vw">
+        <div style={styles.wrapper}>
+          <div style={styles.fourBoxContainer}>
+            {headers && headers.length
+              ? headers.map((item, index) => {
+                  const header_id = item._id;
+                  const order = item.order;
                   return (
                     <div
                       key={index}
-                      onDragStart={(e) => onDragStart(e, item.content)}
-                      draggable
-                      className="draggable"
-                      style={styles.draggableContent}>
-                      {item.content}
+                      style={{
+                        ...styles.droppableDiv,
+                      }}
+                      className="wip"
+                      onDragOver={(e) => onDragOver(e, item._id)}
+                      onDrop={(e) => {
+                        onDrop(e, item._id, item.order);
+                      }}>
+                      <p
+                        className="task-header"
+                        style={{
+                          ...commonStyles.dropTitle,
+                          backgroundColor: boxBackgroundColor(item.order),
+                        }}>
+                        {ReactHtmlParser(item.header)}
+                      </p>
+                      {optionDataContent && optionDataContent.length
+                        ? optionDataContent
+                            .filter((item) => {
+                              return item.assessment_header_id === header_id;
+                            })
+                            .map((item) => {
+                              return (
+                                <div style={{position: 'relative'}}>
+                                  {correctAns ? (
+                                    <div style={styles.iconWrapper}>
+                                      {item.correct_assessment_header_id ===
+                                      header_id ? (
+                                        <img
+                                          src={GreenCheck}
+                                          style={styles.icon}
+                                        />
+                                      ) : (
+                                        <img src={cancel} style={styles.icon} />
+                                      )}
+                                    </div>
+                                  ) : (
+                                    ''
+                                  )}
+
+                                  <p
+                                    style={{
+                                      textAlign: 'center',
+                                      border: '1px solid',
+                                      borderColor: boxBackgroundColor(order),
+                                    }}
+                                    onDragStart={(e) =>
+                                      onDragStart(
+                                        e,
+                                        item.content,
+                                        item.correct_assessment_header_id,
+                                      )
+                                    }
+                                    draggable
+                                    className="draggable">
+                                    {item.content}
+                                  </p>
+                                </div>
+                              );
+                            })
+                        : []}
                     </div>
+                  );
+                })
+              : []}
+          </div>
+          {/****************************OPTIONS CONTAINER with gray box******************** */}
+
+          <div style={styles.optionsDiv}>
+            {optionDataContent && optionDataContent.length
+              ? optionDataContent
+                  .filter((item, i) => {
+                    const exist = dragCardDataContent.find(
+                      (val) => val === item.content,
+                    )
+                      ? true
+                      : false;
+                    return item.assessment_header_id === null && !exist;
+                  })
+                  .map((item, index) => {
+                    return (
+                      <div
+                        key={index}
+                        onDragStart={(e) =>
+                          onDragStart(
+                            e,
+                            item.content,
+                            item.correct_assessment_header_id,
+                          )
+                        }
+                        draggable
+                        className="draggable"
+                        style={styles.draggableContent}>
+                        {item.content}
+                      </div>
+                    );
+                  })
+              : []}
+          </div>
+        </div>
+        {headers && headers.length ? (
+          <div style={commonStyles.buttonWrapper}>
+            <button className="btn-orange" onClick={(e) => onSave(e)}>
+              {ts('SAVE')}
+            </button>
+          </div>
+        ) : null}
+        {/*************Content************ */}
+        <div style={{...commonStyles.contentLeftBorder, marginBottom: '20px'}}>
+          {content && content.length
+            ? content
+                .sort((a, b) => (a.order > b.order && 1) || -1)
+                .map((item, i) => {
+                  return (
+                    <CardContent
+                      key={i}
+                      content={ReactHtmlParser(item.content)}
+                    />
                   );
                 })
             : []}
         </div>
+        {showExercises && <ExerciseBox week={week} />}
       </div>
-      {headers && headers.length ? (
+      <div className="res-vw">
+        <div className="colored-headers">
+          {headers &&
+            headers.length &&
+            headers.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className="colored-header"
+                  style={{
+                    backgroundColor: boxBackgroundColor(item.order),
+                  }}>
+                  <h5>{ReactHtmlParser(item.header)}</h5>
+                </div>
+              );
+            })}
+        </div>
+        <div className="colored-questions">
+          {optionDataContent &&
+            optionDataContent.length &&
+            optionDataContent.map((item, index) => {
+              let checkAssessmentHeaderId = item.assessment_header_id !== null;
+              let showTick = false;
+              console.log(
+                '614?????',
+                // item.hasOwnProperty(item.assessment_header),
+                typeof item['assessment_header'] !== 'undefined',
+              );
+              if (
+                item.assessment_header_id !== null &&
+                typeof item['assessment_header'] !== 'undefined'
+              ) {
+                if (headers && headers.length) {
+                  showTick = headers.some(
+                    (val) =>
+                      item.correct_assessment_header_id === val._id &&
+                      item.assessment_header.length &&
+                      item.assessment_header[0].header === val.header,
+                  );
+                }
+              }
+              return (
+                <div
+                  className={`colored-question  ${
+                    activeId === index ? 'active-menu1' : ''
+                  }  ${
+                    item.headerOrder !== null && item.headerOrder !== undefined
+                      ? selectedBorderColor(item.headerOrder)
+                      : '#ffff'
+                  }`}
+                  onClick={() => {
+                    onSetActiveMenu(index);
+                  }}>
+                  {checkAssessmentHeaderId ? (
+                    correctAns ? (
+                      <div style={styles.iconWrapper1}>
+                        {showTick ? (
+                          <img src={GreenCheck} style={styles.icon} />
+                        ) : (
+                          <img src={cancel} style={styles.icon} />
+                        )}
+                      </div>
+                    ) : (
+                      ''
+                    )
+                  ) : (
+                    ''
+                  )}
+
+                  <p>{ReactHtmlParser(item.content)}</p>
+                  <button className="btn-select">
+                    <span>+</span>
+                  </button>
+                  <ul className="colored-options-list">
+                    {headers.length &&
+                      headers.map((val) => {
+                        const header_id = item._id;
+                        // console.log('item assessment header id', item);
+                        return (
+                          <>
+                            <li
+                              onClick={() => {
+                                setTimeout(() => {
+                                  setActiveId('');
+                                }, overRideOptionContentDataHandler(val._id, item._id, val.order, item.correct_assessment_header_id, val.header));
+                              }}>
+                              <label
+                                className={optionBackgroundColor(val.order)}
+                                htmlFor={val.id}>
+                                <input
+                                  type="radio"
+                                  id={val._id}
+                                  checked={
+                                    item.assessment_header_id === val._id
+                                      ? item.content
+                                      : ''
+                                  }
+                                />
+
+                                <span>
+                                  <img
+                                    src={tickWhite}
+                                    style={{
+                                      width: '15px',
+                                      height: '15px',
+                                    }}
+                                  />
+                                </span>
+                              </label>
+                            </li>
+                          </>
+                        );
+                      })}
+                  </ul>
+                </div>
+              );
+            })}
+        </div>
+
         <div style={commonStyles.buttonWrapper}>
-          <button className="btn-orange" onClick={(e) => onSave(e)}>
+          <button className="btn-orange" onClick={(e) => onSaveMobileView(e)}>
             {ts('SAVE')}
           </button>
         </div>
-      ) : null}
-      {/*************Content************ */}
-      <div style={{...commonStyles.contentLeftBorder, marginBottom: '20px'}}>
-        {content && content.length
-          ? content
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, i) => {
-                return (
-                  <CardContent
-                    key={i}
-                    content={ReactHtmlParser(item.content)}
-                  />
-                );
-              })
-          : []}
+        <div style={{...commonStyles.contentLeftBorder, marginBottom: '20px'}}>
+          {content && content.length
+            ? content
+                .sort((a, b) => (a.order > b.order && 1) || -1)
+                .map((item, i) => {
+                  return (
+                    <CardContent
+                      key={i}
+                      content={ReactHtmlParser(item.content)}
+                    />
+                  );
+                })
+            : []}
+        </div>
+        {showExercises && <ExerciseBox week={week} />}
       </div>
-      {showExercises && <ExerciseBox week={week} />}
     </>
   );
 };
@@ -424,5 +765,29 @@ const styles = {
     width: DEVICE_WIDTH > 767 ? '23%' : '48%',
     paddingBottom: DEVICE_WIDTH > 767 ? '60px' : '30px',
     //  display: 'flex',
+  },
+  iconWrapper: {
+    display: 'flex',
+    position: 'absolute',
+    right: -5,
+    top: -15,
+    flexDirection: 'row-reverse',
+    marginLeft: '20px',
+    marginBottom: '-10px',
+  },
+  iconWrapper1: {
+    display: 'flex',
+    position: 'absolute',
+    right: -2,
+    top: -13,
+    flexDirection: 'row-reverse',
+    marginLeft: '20px',
+    marginBottom: '-10px',
+    zIndex: 999,
+    //  border: '1px solid red',
+  },
+  icon: {
+    width: '24px',
+    height: '24px',
   },
 };
