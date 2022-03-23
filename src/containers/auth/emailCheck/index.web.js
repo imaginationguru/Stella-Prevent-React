@@ -6,16 +6,17 @@
  * @flow strict-local
  */
 
-import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import brand from '../../../assets/images/brand.svg';
 import graphic01 from '../../../assets/images/graphic01.svg';
 import icon01 from '../../../assets/images/icon01.svg';
 import successTick from '../../../assets/images/successTick.svg';
 import MasterLayout from '../../../components/MasterLayout';
-import {translate as ts} from '../../../i18n/translate';
-import {emailRegex} from '../../../utils/RegexUtils';
-import {useDispatch, useSelector} from 'react-redux';
+import logoWhite from '../../../assets/images/logoWhite.png';
+import { translate as ts } from '../../../i18n/translate';
+import { emailRegex } from '../../../utils/RegexUtils';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '../../../actions';
 import history from '../../../helpers/history';
 
@@ -23,12 +24,12 @@ const EmailCheck = () => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const dispatch = useDispatch();
-  const {userData = []} = useSelector((state) => state.authReducer);
+  const { userData = [] } = useSelector((state) => state.authReducer);
 
   /* FUNCTION FOR EMAIL VALUE SET  */
 
   const onHandleEmailChange = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     if (name === 'email') {
       setEmail(value);
       setEmailError('');
@@ -55,7 +56,7 @@ const EmailCheck = () => {
         <div className="login">
           <div className="login-left">
             <div className="b-name">
-              <img src={brand} />
+              <img src={logoWhite} />
             </div>
             <div className="graphics">
               <img src={graphic01} />
@@ -145,5 +146,5 @@ const EmailCheck = () => {
 export default EmailCheck;
 
 const styles = {
-  error: {color: 'red', paddingLeft: '5px'},
+  error: { color: 'red', paddingLeft: '5px' },
 };

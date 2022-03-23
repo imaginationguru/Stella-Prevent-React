@@ -1,18 +1,18 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import GLOBALS from '../../../constants';
 import whiteHeart from '../../../assets/images/whiteHeart@3x.png';
 import heart from '../../../assets/images/heart@3x.png';
 import commentImg from '../../../assets/images/comment@3x.png';
 import Rating from 'react-rating';
-import {Modal, TouchableOpacity} from 'react-native';
+import { Modal, TouchableOpacity, Dimensions } from 'react-native';
 import commonStyles from '../commonStyles';
-import {translate as ts} from '../../../i18n/translate';
+import { translate as ts } from '../../../i18n/translate';
 import blackStar from '../../../assets/images/blackStar.png';
 import yellowStar from '../../../assets/images/yellowStar.png';
-import {getItem} from '../../../utils/AsyncUtils';
+import { getItem } from '../../../utils/AsyncUtils';
 import * as AppActions from '../../../actions';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import leftArrow from '../../../assets/images/leftArrow.svg';
 import header1 from '../../../assets/images/BANNER-1.gif';
 import menu from '../../../assets/images/menu.svg';
@@ -26,9 +26,9 @@ import {
   CardDescription,
   CardContent,
 } from '../../../components/Cards';
-const {COLORS} = GLOBALS;
-const {LIGHT_GRAY} = COLORS;
-
+const { COLORS, FONTS } = GLOBALS;
+const { LIGHT_GRAY, YELLOW } = COLORS;
+const DEVICE_WIDTH = Dimensions.get('window').width;
 const TwentyTwo = (props) => {
   const [rating, setRating] = useState(0);
   const [like, setLike] = useState(false);
@@ -46,11 +46,11 @@ const TwentyTwo = (props) => {
     week,
     showExercises,
   } = props.card;
-  const {weeksCount} = props;
+  const { weeksCount } = props;
   console.log(props, 'props.......');
   const dispatch = useDispatch();
-  const {userRatingData = []} = useSelector((state) => state.moduleOne);
-  const {isDashboardModal} = useSelector((state) => state.common);
+  const { userRatingData = [] } = useSelector((state) => state.moduleOne);
+  const { isDashboardModal } = useSelector((state) => state.common);
 
   /***************Disable browser back button************** */
   history.pushState(null, null, location.href);
@@ -87,7 +87,7 @@ const TwentyTwo = (props) => {
       );
       //  console.log(week_rating, 'filetrr');
       if (week_rating.length > 0) {
-        const {comments, star, isLiked, _id} = week_rating[0];
+        const { comments, star, isLiked, _id } = week_rating[0];
         getDataSet(isLiked, 'LIKE');
         getDataSet(star, 'STAR');
         getDataSet(comments, 'COMMENT');
@@ -105,7 +105,7 @@ const TwentyTwo = (props) => {
   /***********************set input value function************* */
 
   const onHandleChange = (e, item) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     if (name === 'comment') {
       setComment(value);
       setCommentError('');
@@ -128,7 +128,7 @@ const TwentyTwo = (props) => {
       params.star = value;
     }
     if (mode === 'COMMENT') {
-      params.comments = [{comment: value}];
+      params.comments = [{ comment: value }];
       setComment('');
     }
 
@@ -179,15 +179,15 @@ const TwentyTwo = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -199,15 +199,15 @@ const TwentyTwo = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
       {/**********************Star System************** */}
 
@@ -249,15 +249,15 @@ const TwentyTwo = (props) => {
       {/**********************content************** */}
       {content && content.length
         ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardContent
-                  key={index}
-                  content={ReactHtmlParser(item.content)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardContent
+                key={index}
+                content={ReactHtmlParser(item.content)}
+              />
+            );
+          })
         : []}
       {commentModal && (
         <Modal
@@ -269,8 +269,8 @@ const TwentyTwo = (props) => {
           style={{
             backgroundColor: 'white',
           }}>
-          <div style={{position: 'relative'}}>
-            <img src={week1} style={{width: '100%'}} />
+          <div style={{ position: 'relative' }}>
+            <img src={week1} style={{ width: '100%' }} />
             <TouchableOpacity
               style={styles.menuIcon}
               onPress={() => {
@@ -281,7 +281,7 @@ const TwentyTwo = (props) => {
             </TouchableOpacity>
           </div>
           <div
-            style={{width: '80%', marginLeft: 'auto', marginRight: 'auto'}}
+            style={{ width: '80%', marginLeft: 'auto', marginRight: 'auto' }}
             onClick={() => setCommentModal(false)}>
             <img src={leftArrow} style={styles.backButton} />
             Back
@@ -294,18 +294,18 @@ const TwentyTwo = (props) => {
             <div style={styles.commentWrapper}>
               {commentData.length
                 ? commentData.map((item, i) => {
-                    return (
-                      <>
-                        {item !== null ? (
-                          <p key={i} style={styles.commentedData}>
-                            {item.comment}
-                          </p>
-                        ) : null}
-                      </>
-                    );
-                  })
+                  return (
+                    <>
+                      {item !== null ? (
+                        <p key={i} style={styles.commentedData}>
+                          {item.comment}
+                        </p>
+                      ) : null}
+                    </>
+                  );
+                })
                 : []}
-              <form noValidate style={{marginTop: '50px'}}>
+              <form noValidate style={{ marginTop: '50px' }}>
                 <div className="formRow">
                   <div className="w100">
                     <div className="formField has-icon">
@@ -326,13 +326,26 @@ const TwentyTwo = (props) => {
                 </div>
               </form>
 
-              <div style={styles.button}>
+              <div style={{ width: DEVICE_WIDTH > 767 ? '50%' : '68%' }}>
+                <p
+                  onClick={() => submitHandler('COMMENT', true, comment)}
+                  className="btn-orange"
+                  style={{
+                    ...styles.rightText,
+                    // backgroundColor: YELLOW,
+                    textAlign: 'center',
+                  }}>
+                  {ts('SAVE')}
+                </p>
+
+              </div>
+              {/* <div style={styles.button}>
                 <button
                   className="btn-orange"
                   onClick={() => submitHandler('COMMENT', true, comment)}>
                   {ts('SAVE')}
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
           {/*********************************MODAL POPUP FOR MENU START*************** */}
@@ -371,7 +384,7 @@ const styles = {
     justifyContent: 'center',
     display: 'flex',
   },
-  imageTag: {width: '100%', height: '100%'},
+  imageTag: { width: '100%', height: '100%' },
   title: {
     justifyContent: 'center',
     display: 'flex',
@@ -397,7 +410,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  iconSize: {width: '40px', height: '40px'},
+  iconSize: { width: '40px', height: '40px' },
   socialTitle: {
     paddingTop: '9px',
     paddingLeft: '10px',
@@ -428,10 +441,19 @@ const styles = {
     borderRadius: '10px',
     backgroundColor: LIGHT_GRAY,
   },
-  starStyle: {width: '40px', height: '40px'},
+  starStyle: { width: '40px', height: '40px' },
   menuIcon: {
     position: 'absolute',
     top: '30%',
     right: '5%',
+  },
+  rightText: {
+    paddingTop: '15px',
+    paddingBottom: '15px',
+    borderRadius: '5px',
+    fontFamily: FONTS.SEMI_BOLD,
+    fontSize: '15px',
+    height: 'auto',
+    marginTop: "30px"
   },
 };
