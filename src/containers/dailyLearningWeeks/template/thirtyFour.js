@@ -160,7 +160,9 @@ const ThirtyFour = (props) => {
                 ...val,
                 textInput: data.length
                   ? finalInput.length
-                    ? finalInput
+                    ? finalInput.sort(
+                      (a, b) => (a.order > b.order && 1) || -1,
+                    )
                     : [] // TODO : Existing ( Add NEW OBJECT FOR END)
                   : [], // TODO : NEW USER
               };

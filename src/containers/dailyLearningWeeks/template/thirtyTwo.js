@@ -422,7 +422,6 @@ const ThirtyTwo = (props) => {
                   value={item.value}
                   onChange={(e) => {
                     onHandleChange(e, item);
-                    console.log('--->', inputs);
                   }}
                 />
                 <div

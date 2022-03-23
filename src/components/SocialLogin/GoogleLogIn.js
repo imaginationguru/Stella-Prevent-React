@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin, useGoogleLogout } from 'react-google-login';
 import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '../../actions';
 import {
@@ -8,7 +8,7 @@ import {
 const GoogleLogIn = (props) => {
   let {
     onSocialLogin = () => { },
-} = props;
+  } = props;
   const googleCLientId =
     '868302960918-car2574j9cd95m72sehkfipp24hmrdku.apps.googleusercontent.com';
 
@@ -29,14 +29,38 @@ const GoogleLogIn = (props) => {
     }
     onSocialLogin(params);
   }
+  const onLogoutSuccess = () => {
+    console.log('logout');
+    const auth2 = window.gapi.auth2.getAuthInstance()
+    auth2.signOut().then(() => {
+      auth2.disconnect()
+      console.log('logout===>');
+      document.cookie = "__Secure-3PSIDCC" + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    })
+    localStorage.clear()
+  };
+  const onFailuree = () => {
+    console.log('logout fail');
+  };
+  const { signOut } = useGoogleLogout({
+    clientId: googleCLientId,
+    onLogoutSuccess: onLogoutSuccess,
+    onFailure: onFailuree,
+    cookiePolicy: 'single_host_origin'
+  });
+
+
 
   return (
     <>
       <GoogleLogin
         clientId={googleCLientId}
         render={(renderProps) => (
-          <div 
-            onClick={renderProps.onClick}
+          <div
+            onClick={() => {
+              signOut()
+              renderProps.onClick()
+            }}
             disabled={renderProps.disabled}
             className="btn-google">
             <span className="btn-google-title">Log In with Google</span>
@@ -45,7 +69,8 @@ const GoogleLogIn = (props) => {
         onSuccess={responseGoogle}
         onFailure={onFailure}
         cookiePolicy={'single_host_origin'}
-        isSignedIn={false}
+        ux_mode={'redirect'}
+        // isSignedIn={false}
         autoLoad={false}
       />
     </>
