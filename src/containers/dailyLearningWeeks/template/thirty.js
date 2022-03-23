@@ -87,6 +87,7 @@ const Thirty = (props) => {
   const [allCards, setAllCards] = useState([]);
   const [getCardsData, setGetCardsData] = useState([]);
   const [getCardsInputs, setGetCardsInputs] = useState([]);
+  const [allCardsData, setAllCardsData] = useState([]);
   const {
     card_title,
     descriptions,
@@ -106,7 +107,7 @@ const Thirty = (props) => {
     assessmentData2 = {},
     userAssessmentData = [],
   } = useSelector((state) => state.moduleOne);
-  console.log('user assessmnet?????????', userAssessmentData);
+  console.log('user assessmnet????????? template 30', userAssessmentData);
   useEffect(() => {
     dispatch(AppActions.getAssessmentDataSecond(assessment_id2));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -130,7 +131,8 @@ const Thirty = (props) => {
             name: item.header,
             placeholder: item.description,
             order: item.order,
-            value: '',
+            //  value: '',
+            value: item.value,
             _id: item._id,
           };
         }),
@@ -145,7 +147,7 @@ const Thirty = (props) => {
       getCardsData.forEach((item) =>
         cardsInputs.push(
           item.data.map((val) => {
-            console.log('val??????', val);
+            // console.log('val??????', val);
             return {
               name: val.assessment_header && val.assessment_header[0].header,
               placeholder: val.description ? val.description : '',
@@ -159,7 +161,20 @@ const Thirty = (props) => {
     setGetCardsInputs(cardsInputs);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getCardsData]);
-  console.log('getcards data inputs?????', getCardsInputs);
+
+  useEffect(() => {
+    let temp = [];
+    getCardsInputs &&
+      getCardsInputs.length &&
+      getCardsInputs.forEach((item) => temp.push(item));
+    setAllCardsData(temp);
+  }, [getCardsInputs]);
+  console.log(
+    'get cards inputs????? data',
+    getCardsInputs,
+    'get cards data',
+    getCardsData,
+  );
   useEffect(() => {
     let uniqueTime = [];
     let temp = [];
@@ -250,8 +265,9 @@ const Thirty = (props) => {
     }
   }, [userAssessmentData]);
   /******************First assessment data save************** */
-  const onSaveMyths = (e) => {
-    e.preventDefault();
+  const onSaveMyths = () => {
+    //e.preventDefault();
+    console.log('inputs??????', inputs);
     let params = {
       user_id: userId,
       user_card_id: props._id,
@@ -274,6 +290,20 @@ const Thirty = (props) => {
     if (isValid) {
       console.log('is valid', isValid);
       dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+      assessmentData.headers &&
+        assessmentData.headers.length &&
+        setInputs(
+          assessmentData.headers.map((item) => {
+            return {
+              name: item.header,
+              placeholder: item.description,
+              order: item.order,
+              //  value: '',
+              value: item.value,
+              _id: item._id,
+            };
+          }),
+        );
     } else {
       dispatch({
         type: ACTION_TYPE.ERROR,
@@ -307,6 +337,7 @@ const Thirty = (props) => {
   /******************Second assessment data save************** */
   const onSaveSecondAssessment = (e) => {
     e.preventDefault();
+    onSaveMyths();
     let contentArray = [];
 
     let modifyUserInput = userInputs.map((item) => {
@@ -348,7 +379,12 @@ const Thirty = (props) => {
         assessment_id: assessment_id2,
         assessment: modifyArray,
       };
-      dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
+      console.log('modify array?????????', modifyArray);
+      if (newUserInputs.length) {
+        dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
+      } else {
+        console.log('no save');
+      }
       // if (userInputs.length) {
       //   if (
       //     userAssessmentData &&
@@ -361,19 +397,19 @@ const Thirty = (props) => {
       //   } else {
       //     dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
       //   }
-      // }
-      //  else {
+      // } else {
       //   dispatch({
       //     type: ACTION_TYPE.ERROR,
       //     payload: 'Please perform your exercise',
       //   });
       // }
-    } else {
-      dispatch({
-        type: ACTION_TYPE.ERROR,
-        payload: 'Please perform your exercise',
-      });
     }
+    // else {
+    //   dispatch({
+    //     type: ACTION_TYPE.ERROR,
+    //     payload: 'Please perform your exercise',
+    //   });
+    // }
   };
 
   const setInputValue = (val) => {
@@ -567,6 +603,7 @@ const Thirty = (props) => {
     }
   };
   const onPlusBtnClick = (item) => {
+    console.log('new user inputs?????', newUserInputs);
     if (userDate.length && newUserInputs.length) {
       Array.prototype.push.apply(newUserInputs, userDate);
       let concatArray = userInputs;
@@ -595,7 +632,13 @@ const Thirty = (props) => {
       return GREEN_TEXT;
     }
   };
-  //console.log('user Input ???????', userInputs, 'inputs?????????', inputs);
+  console.log(
+    'user Input ???????',
+    userInputs,
+    'inputs?????????',
+    inputs,
+    ...allCardsData,
+  );
   return (
     <div>
       {/**********************quotes************** */}
@@ -687,13 +730,13 @@ const Thirty = (props) => {
               );
             })
         : null}
-      {inputs.length ? (
+      {/* {inputs.length ? (
         <div style={commonStyles.buttonWrapper}>
           <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
             {ts('SAVE')}
           </button>
         </div>
-      ) : null}
+      ) : null} */}
 
       {headingOne && headingOne.length ? (
         <CardContent
@@ -897,7 +940,7 @@ const Thirty = (props) => {
         </button>
       </div>
 
-      {/* {headingSecond && headingSecond.length ? (
+      {headingSecond && headingSecond.length ? (
         <CardContent
           content={ReactHtmlParser(headingSecond)}
           style={{
@@ -906,8 +949,8 @@ const Thirty = (props) => {
             paddingBottom: '3px',
           }}
         />
-      ) : null} */}
-      {/* {firstHeaderContent && firstHeaderContent.length
+      ) : null}
+      {firstHeaderContent && firstHeaderContent.length
         ? firstHeaderContent
             .sort((a, b) => (a.i > b.i && 1) || -1)
             .map((item, index) => {
@@ -922,7 +965,7 @@ const Thirty = (props) => {
                 />
               );
             })
-        : []} */}
+        : []}
       {content && content.length
         ? content
             .sort((a, b) => (a.order > b.order && 1) || -1)
@@ -936,28 +979,35 @@ const Thirty = (props) => {
               );
             })
         : []}
-      {/* {getCardsInputs.length
-        ? getCardsInputs.map((item, idx) => {
-            // console.log('item get cards', item);
-            item.map((val) => {
-              console.log('item get val cards', val.name);
+      <div style={{border: '1px solid red'}}>
+        {getCardsInputs.length
+          ? getCardsInputs.forEach((item, idx) => {
+              console.log('item get cards', item);
               return (
-                <InputBoxWithContent
-                  key={idx}
-                  title={ReactHtmlParser(val.name)}
-                  name={val.name}
-                  placeholder={val.placeholder}
-                  value={val.value}
-                  onChange={(e) => onHandleChange(e, val)}
-                  style={{
-                    backgroundColor: YELLOW,
-                    width: '20%',
-                  }}
-                />
+                <div>
+                  {item.map((val) => {
+                    console.log('item get val cards', val);
+                    return (
+                      <InputBoxWithContent
+                        key={idx}
+                        title={ReactHtmlParser(val.name)}
+                        name={val.name}
+                        placeholder={val.placeholder}
+                        value={val.value}
+                        onChange={(e) => onHandleChange(e, val)}
+                        style={{
+                          backgroundColor: YELLOW,
+                          width: '20%',
+                        }}
+                      />
+                    );
+                  })}
+                </div>
               );
-            });
-          })
-        : null} */}
+            })
+          : null}
+      </div>
+
       {/* <div style={commonStyles.buttonWrapper}>
         <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
           {ts('SAVE')}
@@ -975,6 +1025,7 @@ const styles = {
     marginTop: '30px',
     justifyContent: 'space-between',
     alignSelf: 'center',
+    border: '1px solid red',
   },
   secondAssessment: {
     display: 'flex',
