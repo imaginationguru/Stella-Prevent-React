@@ -12,6 +12,7 @@ import brand from '../../../assets/images/brand.svg';
 import graphic01 from '../../../assets/images/graphic01.svg';
 import icon02 from '../../../assets/images/icon02.svg';
 import successTick from '../../../assets/images/successTick.svg';
+import logoWhite from '../../../assets/images/logoWhite.png';
 import MasterLayout from '../../../components/MasterLayout';
 import {translate as ts} from '../../../i18n/translate';
 import {passwordRegex} from '../../../utils/RegexUtils';
@@ -90,7 +91,7 @@ const RecoverPassword = () => {
         <div className="login">
           <div className="login-left">
             <div className="b-name">
-              <img src={brand} />
+              <img src={logoWhite} />
             </div>
             <div className="graphics">
               <img src={graphic01} />

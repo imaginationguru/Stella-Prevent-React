@@ -1,27 +1,34 @@
 import React, {useState} from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-
+import {customAlert} from '../../helpers/commonAlerts.web';
 const FacebookLogIn = (props) => {
-  let {
-    onSocialLogin = () => { },
-} = props;
+  let {onSocialLogin = () => {}} = props;
   const fbAppId = '416468470173904';
   const resFblogin = (res) => {
     console.log('facebook login res', res);
-    verifyUser(res);
+    if (res.status == 'unknown') {
+      customAlert('Facebook login cancelled.', 'error');
+    } else {
+      verifyUser(res);
+    }
   };
 
   const verifyUser = (profile_data) => {
+    console.log(window.FB, 'window');
+
     let params = {
       firstName: profile_data.name,
       email: profile_data.email,
       social_media_id: profile_data.id,
-      platform: "facebook",
-      session_token: profile_data.accessToken
-    }
-    profile_data.picture?params["image_path"]=profile_data.picture.data.url:null;
+      platform: 'facebook',
+      session_token: profile_data.accessToken,
+    };
+    profile_data.picture
+      ? (params['image_path'] = profile_data.picture.data.url)
+      : null;
     onSocialLogin(params);
-  }
+    window.FB.logout();
+  };
 
   return (
     <>

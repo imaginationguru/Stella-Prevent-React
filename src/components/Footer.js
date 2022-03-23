@@ -3,7 +3,8 @@ import {translate as ts} from '../i18n/translate';
 import {Link} from 'react-router-dom';
 import {navigatorPush} from '../config/navigationOptions.web';
 import footerlogo from '../assets/images/footerlogo.svg';
-
+import GLOBALS from '../constants';
+const {IMAGE_BASE_URL} = GLOBALS;
 const Footer = () => {
   return (
     <footer className="dashboard-footer">
@@ -17,14 +18,14 @@ const Footer = () => {
               <div className="footer-link-item">
                 <a
                   target="_blank"
-                  href="https://stella-careportal.curio-dtx.com/upload/acknowldgement.pdf">
+                  href={`${IMAGE_BASE_URL}upload/acknowldgement.pdf`}>
                   Terms of Use
                 </a>
               </div>
               <div className="footer-link-item">
                 <a
                   target="_blank"
-                  href="https://stella-careportal.curio-dtx.com/upload/PRIVACY_POLICY0203_stella.pdf">
+                  href={`${IMAGE_BASE_URL}upload/PRIVACY_POLICY0203_stella.pdf`}>
                   Privacy Policy
                 </a>
               </div>
