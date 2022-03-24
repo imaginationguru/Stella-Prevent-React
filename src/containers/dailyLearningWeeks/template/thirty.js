@@ -20,7 +20,8 @@ import {
 } from '../../../components/Cards';
 import commonStyles from '../commonStyles';
 import moment from 'moment';
-
+import arrowDown from '../../../assets/images/arrowDown.png';
+import upArrow from '../../../assets/images/upArrow.png';
 import {Dimensions} from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -44,9 +45,18 @@ const dataMapperAss = (arr = []) => {
 };
 
 const InputBoxWithContent = (props) => {
-  const {title, placeholder, value, onChange, style, name} = props;
+  const {
+    title,
+    placeholder,
+    value,
+    onChange,
+    style,
+    name,
+    boxWrapper,
+    disable,
+  } = props;
   return (
-    <div style={styles.inputBoxWrapper}>
+    <div style={{...styles.inputBoxWrapper, ...boxWrapper}}>
       <div style={style}>
         <p style={styles.header}>{title}</p>
       </div>
@@ -62,6 +72,7 @@ const InputBoxWithContent = (props) => {
             placeholder={placeholder}
             style={styles.inputStyle}
             rows={3}
+            disabled={disable}
           />
         </form>
       </div>
@@ -88,6 +99,7 @@ const Thirty = (props) => {
   const [getCardsData, setGetCardsData] = useState([]);
   const [getCardsInputs, setGetCardsInputs] = useState([]);
   const [allCardsData, setAllCardsData] = useState([]);
+  const [showData, setShowData] = useState(false);
   const {
     card_title,
     descriptions,
@@ -422,6 +434,7 @@ const Thirty = (props) => {
   };
 
   const onHandleChange = (e, item) => {
+    console.log('inputs???????', inputs);
     const updateInputs = inputs.length
       ? inputs.map((val) => {
           return {
@@ -430,6 +443,7 @@ const Thirty = (props) => {
           };
         })
       : [];
+
     setInputs(updateInputs);
   };
   /****************Second assessment data fetch*********** */
@@ -632,12 +646,50 @@ const Thirty = (props) => {
       return GREEN_TEXT;
     }
   };
+
+  const onHandleChangeData = (e, ele, idx, secondIndex) => {
+    console.log('ee????????', e, ele, idx, secondIndex);
+    let x =
+      getCardsInputs &&
+      getCardsInputs.length &&
+      getCardsInputs.map((item, i) => {
+        if (i === idx) {
+          console.log('map first', i, idx);
+          item.map((val, id) => {
+            return {
+              ...val,
+              value: val.name === e.target.name ? e.target.value : val.value,
+            };
+            // if (id === secondIndex) {
+            //   console.log(
+            //     'value????handle change?',
+            //     val,
+            //     id,
+            //     secondIndex,
+            //     e.target.value,
+            //   );
+            //   console.log('val??????', val, e.target.value);
+            //   return val;
+            //   //value: val.name === e.target.name ? e.target.value : val.value,
+            // } else {
+            //   console.log('else in second llopp', val);
+            //   return val;
+            // }
+          });
+        } else {
+          return item;
+        }
+        console.log('item on handle change', item);
+      });
+    console.log('on handel change', getCardsInputs, 'x????', x);
+    // setGetCardsInputs(x);
+  };
   console.log(
     'user Input ???????',
     userInputs,
     'inputs?????????',
     inputs,
-    ...allCardsData,
+    getCardsInputs,
   );
   return (
     <div>
@@ -979,29 +1031,88 @@ const Thirty = (props) => {
               );
             })
         : []}
-      <div style={{border: '1px solid red'}}>
+      <div>
         {getCardsInputs.length
-          ? getCardsInputs.forEach((item, idx) => {
+          ? getCardsInputs.map((item, idx) => {
               console.log('item get cards', item);
               return (
                 <div>
-                  {item.map((val) => {
-                    console.log('item get val cards', val);
-                    return (
-                      <InputBoxWithContent
-                        key={idx}
-                        title={ReactHtmlParser(val.name)}
-                        name={val.name}
-                        placeholder={val.placeholder}
-                        value={val.value}
-                        onChange={(e) => onHandleChange(e, val)}
-                        style={{
-                          backgroundColor: YELLOW,
-                          width: '20%',
-                        }}
-                      />
-                    );
-                  })}
+                  {item
+                    .sort((a, b) => (a.order > b.order && 1) || -1)
+                    .map((ele, i) => {
+                      let firstOrder = ele.order === 0;
+                      let visibleData = showData === idx;
+                      return (
+                        <div style={{position: 'relative'}}>
+                          {i === 0 && (
+                            <div
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                if (idx === showData) {
+                                  setShowData('');
+                                } else {
+                                  setShowData(idx);
+                                }
+                              }}
+                              style={styles.iconDiv}>
+                              <div style={styles.circleWrapper}>
+                                <img
+                                  src={visibleData ? upArrow : arrowDown}
+                                  color={'#fff'}
+                                  style={styles.img}
+                                />
+                              </div>
+                            </div>
+                          )}
+                          {visibleData ? (
+                            <InputBoxWithContent
+                              key={idx}
+                              title={ReactHtmlParser(ele.name)}
+                              name={ele.name}
+                              placeholder={ele.placeholder}
+                              value={ele.value}
+                              // onChange={(e) => {
+                              //   onHandleChange(e, ele);
+                              // }}
+                              onChange={(e) => {
+                                console.log(
+                                  'e .target dta',
+                                  e.target.name,
+                                  e.target.value,
+                                );
+                                onHandleChangeData(e, ele, idx, i);
+                              }}
+                              style={{
+                                backgroundColor: headerColor(ele.order),
+                                width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+                              }}
+                              disable={ele.order === 0 ? true : false}
+                            />
+                          ) : (
+                            i === 0 && (
+                              <InputBoxWithContent
+                                boxWrapper={
+                                  {
+                                    // border: '1px solid blue',
+                                  }
+                                }
+                                key={idx}
+                                title={ReactHtmlParser(ele.name)}
+                                name={ele.name}
+                                placeholder={ele.placeholder}
+                                value={ele.value}
+                                // onChange={(e) => onHandleChange(e, ele)}
+                                style={{
+                                  backgroundColor: headerColor(ele.order),
+                                  width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+                                }}
+                                disable={true}
+                              />
+                            )
+                          )}
+                        </div>
+                      );
+                    })}
                 </div>
               );
             })
@@ -1025,7 +1136,6 @@ const styles = {
     marginTop: '30px',
     justifyContent: 'space-between',
     alignSelf: 'center',
-    border: '1px solid red',
   },
   secondAssessment: {
     display: 'flex',
@@ -1102,5 +1212,29 @@ const styles = {
     backgroundColor: '#F1F3FA',
     width: '100%',
     // marginBottom: '3%',
+  },
+  iconDiv: {
+    display: 'flex',
+    justifyContent: 'end',
+    // marginTop: '20px',
+    //  border: '1px solid red',
+    position: 'absolute',
+    right: 10,
+    top: -15,
+  },
+  circleWrapper: {
+    // border: '1px solid red',
+    width: '30px',
+    height: '30px',
+    borderRadius: '30px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.BUTTON_ORANGE,
+  },
+  img: {
+    width: '20px',
+    height: '20px',
+    alignItems: 'center',
   },
 };
