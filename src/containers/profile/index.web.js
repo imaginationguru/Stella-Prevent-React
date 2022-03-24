@@ -105,7 +105,7 @@ function ProfileDetails(props) {
       setCountry(loginData.user.countryName);
       setZipcode(loginData.user.zipcode);
       setCity(loginData.user.city ? loginData.user.city : '');
-      setAge(loginData.user.age);
+      setAge(loginData.user.ageYear + 'Y');
       let temp_language = language.map((el) =>
         el.value === loginData.user.language
           ? {...el, isSelected: true}
@@ -360,7 +360,6 @@ function ProfileDetails(props) {
                 marginTop: '1.1vw',
                 marginBottom: '2.1vw',
               }}
-              textStyle={{fontSize: 16}}
               title="Change Password"
               bgColor={DARK_GREEN}
               textColor={WHITE}></Button>
