@@ -9,8 +9,12 @@ import {Linking, Platform} from 'react-native';
 import {getWeek} from '../moduleOne';
 import Swal from 'sweetalert2';
 import {Dimensions} from 'react-native-web';
+
+import packageJson from '../../../package.json'
+
 const {COLORS, FONTS, IMAGE_BASE_URL} = GLOBALS;
 import {detectBrowser} from '../../helpers/common.web';
+
 import {customAlert} from '../../helpers/commonAlerts.web';
 
 //******************************Login******************* */
@@ -61,6 +65,7 @@ export function login(email, password, componentId) {
         storeItem('lastName', json.data.user.lastName);
         storeItem('hospitalId', json.data.user.hospital_id);
         storeItem('epdsAssesment', json.data.epds_assesment);
+        storeItem('version', packageJson.version);
         dispatch({
           type: ACTION_TYPE.SET_PROFILE_IMAGE,
           payload: json.data.user.image_path,
