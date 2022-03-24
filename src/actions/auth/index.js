@@ -44,8 +44,8 @@ export function login(email, password, componentId) {
         product: 1.5,
         deviceDetails: {
           operatingSystem: user_platform,
-          browser: 'detectBrowser()',
-          systemInfo: 'navigator.userAgent',
+          browser: detectBrowser(),
+          systemInfo: navigator.userAgent,
         },
       });
       console.log('codeLogin', json, componentId);
