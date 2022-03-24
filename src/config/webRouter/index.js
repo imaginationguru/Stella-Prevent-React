@@ -55,7 +55,7 @@ const WebRouter = () => {
 
         <PrivateRoute
           component={DailyLearningWeeks}
-          path="/DailyLearningWeeks"
+          path="/DailyLearningModule"
         />
         <PrivateRoute component={ModuleSecond} path="/ModuleSecond" />
         <PrivateRoute component={ModuleThird} path="/ModuleThird" />

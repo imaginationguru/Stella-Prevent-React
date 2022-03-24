@@ -12,14 +12,14 @@ import AngryActive from '../assets/images/angryActive/angryActive.png';
 const isLive = true;
 export default {
   BASE_URL: isLive
-    ? 'https://stella-prevent-careportal.curio-dtx.com/api/'
+    ? 'https://mamalift.curiodigitaltx.com/api/'
     : 'http://52.170.117.197/api/', //1.5 stella
   IMAGE_BASE_URL: isLive
-    ? 'https://stella-prevent-careportal.curio-dtx.com/' //UAT
+    ? 'https://mamalift.curiodigitaltx.com/' //UAT
     : 'http://52.170.117.197/', //dev
 
-  // BASE_URL: 'http://104.43.172.201:4001/api/',
-  // IMAGE_BASE_URL: 'http://104.43.172.201:4001/', //QA
+  // BASE_URL: 'https://mamalift-qa.curio-dtx.com/api/',
+  // IMAGE_BASE_URL: 'https://mamalift-qa.curio-dtx.com/', //QA
   /********************************** * URL ***********************************/
   URL: {
     LOGIN: 'login',
