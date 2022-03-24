@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import GLOBALS from '../../../constants';
 import whiteHeart from '../../../assets/images/whiteHeart@3x.png';
 import heart from '../../../assets/images/heart@3x.png';
 import commentImg from '../../../assets/images/comment@3x.png';
 import Rating from 'react-rating';
-import { Modal, TouchableOpacity, Dimensions } from 'react-native';
+import {Modal, TouchableOpacity, Dimensions} from 'react-native';
 import commonStyles from '../commonStyles';
-import { translate as ts } from '../../../i18n/translate';
+import {translate as ts} from '../../../i18n/translate';
 import blackStar from '../../../assets/images/blackStar.png';
 import yellowStar from '../../../assets/images/yellowStar.png';
-import { getItem } from '../../../utils/AsyncUtils';
+import {getItem} from '../../../utils/AsyncUtils';
 import * as AppActions from '../../../actions';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import leftArrow from '../../../assets/images/leftArrow.svg';
-import header1 from '../../../assets/images/BANNER-1.gif';
 import menu from '../../../assets/images/menu.svg';
 import Menu from '../../../components/Menu';
 import week1 from '../../../assets/images/Week1.svg';
@@ -26,8 +25,8 @@ import {
   CardDescription,
   CardContent,
 } from '../../../components/Cards';
-const { COLORS, FONTS } = GLOBALS;
-const { LIGHT_GRAY, YELLOW } = COLORS;
+const {COLORS, FONTS} = GLOBALS;
+const {LIGHT_GRAY} = COLORS;
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const TwentyTwo = (props) => {
   const [rating, setRating] = useState(0);
@@ -46,11 +45,10 @@ const TwentyTwo = (props) => {
     week,
     showExercises,
   } = props.card;
-  const { weeksCount } = props;
-  console.log(props, 'props.......');
+
   const dispatch = useDispatch();
-  const { userRatingData = [] } = useSelector((state) => state.moduleOne);
-  const { isDashboardModal } = useSelector((state) => state.common);
+  const {userRatingData = []} = useSelector((state) => state.moduleOne);
+  const {isDashboardModal} = useSelector((state) => state.common);
 
   /***************Disable browser back button************** */
   history.pushState(null, null, location.href);
@@ -66,7 +64,6 @@ const TwentyTwo = (props) => {
   }, []);
 
   const getDataSet = (data, type) => {
-    console.log(data, 'data....... comnt', type);
     if (type === 'LIKE') {
       setLike(data);
     }
@@ -79,15 +76,12 @@ const TwentyTwo = (props) => {
   };
   useEffect(() => {
     if (userRatingData.length) {
-      // console.log(week, 'weeekkkk', weeksCount);
-      //const {comments, star, isLiked, _id} = userRatingData[0];
+      let week_rating = userRatingData.filter((data) => {
+        return data.week == props.week;
+      });
 
-      let week_rating = userRatingData.filter(
-        (data) => data.week == weeksCount,
-      );
-      //  console.log(week_rating, 'filetrr');
       if (week_rating.length > 0) {
-        const { comments, star, isLiked, _id } = week_rating[0];
+        const {comments, star, isLiked, _id} = week_rating[0];
         getDataSet(isLiked, 'LIKE');
         getDataSet(star, 'STAR');
         getDataSet(comments, 'COMMENT');
@@ -96,7 +90,6 @@ const TwentyTwo = (props) => {
         getDataSet(false, 'LIKE');
         getDataSet(null, 'STAR');
         getDataSet([], 'COMMENT');
-        //setUpdateId(_id);
       }
     }
 
@@ -105,7 +98,7 @@ const TwentyTwo = (props) => {
   /***********************set input value function************* */
 
   const onHandleChange = (e, item) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     if (name === 'comment') {
       setComment(value);
       setCommentError('');
@@ -116,8 +109,7 @@ const TwentyTwo = (props) => {
     let params = {
       user_id: getItem('userId'),
       program_id: getItem('programId'),
-      // week: week,
-      week: weeksCount,
+      week: props.week,
     };
     if (mode === 'LIKE') {
       setLike(!value);
@@ -128,14 +120,14 @@ const TwentyTwo = (props) => {
       params.star = value;
     }
     if (mode === 'COMMENT') {
-      params.comments = [{ comment: value }];
+      params.comments = [{comment: value}];
       setComment('');
     }
 
     if (isAPI) {
       if (
         userRatingData &&
-        userRatingData.filter((data) => data.week == weeksCount).length > 0
+        userRatingData.filter((data) => data.week == props.week).length > 0
       ) {
         //if (userRatingData && userRatingData.length) {
         let updateParams = {
@@ -179,15 +171,15 @@ const TwentyTwo = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardQuote
-                key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardQuote
+                  key={index}
+                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                />
+              );
+            })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -199,15 +191,15 @@ const TwentyTwo = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardDescription
-                key={index}
-                description={ReactHtmlParser(item.desc)}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardDescription
+                  key={index}
+                  description={ReactHtmlParser(item.desc)}
+                />
+              );
+            })
         : []}
       {/**********************Star System************** */}
 
@@ -249,15 +241,15 @@ const TwentyTwo = (props) => {
       {/**********************content************** */}
       {content && content.length
         ? content
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardContent
-                key={index}
-                content={ReactHtmlParser(item.content)}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardContent
+                  key={index}
+                  content={ReactHtmlParser(item.content)}
+                />
+              );
+            })
         : []}
       {commentModal && (
         <Modal
@@ -269,8 +261,8 @@ const TwentyTwo = (props) => {
           style={{
             backgroundColor: 'white',
           }}>
-          <div style={{ position: 'relative' }}>
-            <img src={week1} style={{ width: '100%' }} />
+          <div style={{position: 'relative'}}>
+            <img src={week1} style={{width: '100%'}} />
             <TouchableOpacity
               style={styles.menuIcon}
               onPress={() => {
@@ -281,7 +273,7 @@ const TwentyTwo = (props) => {
             </TouchableOpacity>
           </div>
           <div
-            style={{ width: '80%', marginLeft: 'auto', marginRight: 'auto' }}
+            style={{width: '80%', marginLeft: 'auto', marginRight: 'auto'}}
             onClick={() => setCommentModal(false)}>
             <img src={leftArrow} style={styles.backButton} />
             Back
@@ -294,18 +286,18 @@ const TwentyTwo = (props) => {
             <div style={styles.commentWrapper}>
               {commentData.length
                 ? commentData.map((item, i) => {
-                  return (
-                    <>
-                      {item !== null ? (
-                        <p key={i} style={styles.commentedData}>
-                          {item.comment}
-                        </p>
-                      ) : null}
-                    </>
-                  );
-                })
+                    return (
+                      <>
+                        {item !== null ? (
+                          <p key={i} style={styles.commentedData}>
+                            {item.comment}
+                          </p>
+                        ) : null}
+                      </>
+                    );
+                  })
                 : []}
-              <form noValidate style={{ marginTop: '50px' }}>
+              <form noValidate style={{marginTop: '50px'}}>
                 <div className="formRow">
                   <div className="w100">
                     <div className="formField has-icon">
@@ -326,7 +318,7 @@ const TwentyTwo = (props) => {
                 </div>
               </form>
 
-              <div style={{ width: DEVICE_WIDTH > 767 ? '50%' : '68%' }}>
+              <div style={{width: DEVICE_WIDTH > 767 ? '50%' : '68%'}}>
                 <p
                   onClick={() => submitHandler('COMMENT', true, comment)}
                   className="btn-orange"
@@ -337,7 +329,6 @@ const TwentyTwo = (props) => {
                   }}>
                   {ts('SAVE')}
                 </p>
-
               </div>
               {/* <div style={styles.button}>
                 <button
@@ -384,7 +375,7 @@ const styles = {
     justifyContent: 'center',
     display: 'flex',
   },
-  imageTag: { width: '100%', height: '100%' },
+  imageTag: {width: '100%', height: '100%'},
   title: {
     justifyContent: 'center',
     display: 'flex',
@@ -410,7 +401,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  iconSize: { width: '40px', height: '40px' },
+  iconSize: {width: '40px', height: '40px'},
   socialTitle: {
     paddingTop: '9px',
     paddingLeft: '10px',
@@ -441,7 +432,7 @@ const styles = {
     borderRadius: '10px',
     backgroundColor: LIGHT_GRAY,
   },
-  starStyle: { width: '40px', height: '40px' },
+  starStyle: {width: '40px', height: '40px'},
   menuIcon: {
     position: 'absolute',
     top: '30%',
@@ -454,6 +445,6 @@ const styles = {
     fontFamily: FONTS.SEMI_BOLD,
     fontSize: '15px',
     height: 'auto',
-    marginTop: "30px"
+    marginTop: '30px',
   },
 };
