@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import ModuleBox from './ModuleBox';
 import user from '../assets/images/user.png';
 import maternity from '../assets/images/maternity.svg';
@@ -8,12 +8,12 @@ import warnings from '../assets/images/warnings.svg';
 import exercise from '../assets/images/exercise.svg';
 import couple from '../assets/images/couple.svg';
 import GLOBALS from '../constants';
-import {TouchableOpacity} from 'react-native';
-import {navigatorPush} from '../config/navigationOptions.web';
-import {useDispatch, useSelector} from 'react-redux';
+import { TouchableOpacity } from 'react-native';
+import { navigatorPush } from '../config/navigationOptions.web';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '../actions';
-import {translate as ts} from '../i18n/translate';
-import {getItem} from '../utils/AsyncUtils';
+import { translate as ts } from '../i18n/translate';
+import { getItem } from '../utils/AsyncUtils';
 import stellaLogo from '../assets/images/dashboardHeader/StellaLogo.png';
 import dashboardHeader from '../assets/images/dashboardHeader/dashboardHeader.png';
 import sleep from '../assets/images/sleep/sleep.png';
@@ -21,14 +21,15 @@ import dashboard from '../assets/images/sleep/dashboard.png';
 import activity from '../assets/images/sleep/activity.png';
 import daily from '../assets/images/sleep/daily.png';
 import face from '../assets/images/sleep/face.png';
-const {COLORS} = GLOBALS;
-const {GRAY} = COLORS;
+import logoWhite from '../assets/images/logoWhite.png';
+const { COLORS } = GLOBALS;
+const { GRAY } = COLORS;
 const Menu = (props) => {
-  const {modalVisible, menuStyle} = props;
+  const { modalVisible, menuStyle } = props;
 
   const dispatch = useDispatch();
 
-  const TabUI = ({src, title, onClick, imgWrap, imgSize, img}) => {
+  const TabUI = ({ src, title, onClick, imgWrap, imgSize, img }) => {
     return (
       <div
         style={{
@@ -40,9 +41,9 @@ const Menu = (props) => {
           ${'#BDBDBD'}`,
         }}
         onClick={onClick}>
-        <div style={{...styles.imageWrap, ...imgWrap}}>
-          <div style={{...styles.imgDiv, ...imgSize}}>
-            <img src={src} style={{...styles.imgStyle, ...img}} />
+        <div style={{ ...styles.imageWrap, ...imgWrap }}>
+          <div style={{ ...styles.imgDiv, ...imgSize }}>
+            <img src={src} style={{ ...styles.imgStyle, ...img }} />
           </div>
         </div>
         <p
@@ -58,7 +59,7 @@ const Menu = (props) => {
   };
   return (
     <div
-      style={{...styles.container, ...menuStyle}}
+      style={{ ...styles.container, ...menuStyle }}
       onClick={() => dispatch(AppActions.dashboardModalAction(false))}>
       <div
         style={{
@@ -76,8 +77,8 @@ const Menu = (props) => {
           style={{
             padding: 10,
           }}>
-          <div style={{width: '70%', margin: '0 auto'}}>
-            <img src={stellaLogo} style={{width: '100%', height: '100%'}} />
+          <div style={{ width: '70%', margin: '0 auto' }}>
+            <img src={logoWhite} style={{ width: '100%', height: '100%' }} />
           </div>
 
           <div
@@ -86,58 +87,58 @@ const Menu = (props) => {
               marginRight: 15,
               marginTop: 15,
             }}>
-            <p style={{fontWeight: 'bold'}}>Daily Playlist</p>
+            <p style={{ fontWeight: 'bold' }}>Daily Playlist</p>
 
             <TabUI
               src={sleep}
               title={'Sleep Tracker'}
-              imgWrap={{backgroundColor: '#FFD789'}}
+              imgWrap={{ backgroundColor: '#FFD789' }}
               onClick={(e) => {
                 e.stopPropagation();
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({screenName: 'SleepTracker'});
+                navigatorPush({ screenName: 'SleepTracker' });
               }}
             />
             <TabUI
               src={daily}
               title={'Daily Learning'}
-              imgWrap={{backgroundColor: '#6FCF97'}}
+              imgWrap={{ backgroundColor: '#6FCF97' }}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({screenName: 'DailyLearningWeeks'});
+                navigatorPush({ screenName: 'DailyLearningWeeks' });
               }}
             />
             <TabUI
               src={face}
               title={'Mood Check In'}
-              imgWrap={{backgroundColor: '#FFCEFF'}}
-              imgSize={{width: 15, height: 13}}
-              img={{marginLeft: '45%'}}
+              imgWrap={{ backgroundColor: '#FFCEFF' }}
+              imgSize={{ width: 15, height: 13 }}
+              img={{ marginLeft: '45%' }}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({screenName: 'MoodTracker'});
+                navigatorPush({ screenName: 'MoodTracker' });
               }}
             />
             <TabUI
               src={activity}
               title={'Activity Tracker'}
-              imgWrap={{backgroundColor: '#87DEFF'}}
-              imgSize={{width: 13, height: 10}}
-              img={{marginLeft: '59%'}}
+              imgWrap={{ backgroundColor: '#87DEFF' }}
+              imgSize={{ width: 13, height: 10 }}
+              img={{ marginLeft: '59%' }}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({screenName: 'ActivityTracker'});
+                navigatorPush({ screenName: 'ActivityTracker' });
               }}
             />
             <TabUI
               src={dashboard}
               title={'Dashboard'}
-              imgWrap={{backgroundColor: '#DADADA'}}
-              imgSize={{width: 15, height: 13}}
-              img={{marginLeft: '59%'}}
+              imgWrap={{ backgroundColor: '#DADADA' }}
+              imgSize={{ width: 15, height: 13 }}
+              img={{ marginLeft: '59%' }}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({screenName: 'Dashboard'});
+                navigatorPush({ screenName: 'Dashboard' });
               }}
             />
           </div>

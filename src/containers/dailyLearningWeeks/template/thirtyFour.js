@@ -172,6 +172,7 @@ const ThirtyFour = (props) => {
       })
       : [];
     /**Add empty rows with comparison */
+    console.log(headerData, "headerData...")
     const addEmtpyRow = headerData.map((item, index) => {
       return {
         ...item,
@@ -201,10 +202,16 @@ const ThirtyFour = (props) => {
               }
             }
           } else {
+            console.log(val, item, "diff2....", sub_heading_index)
             let diff =
               val.textInput.length -
               item.sub_heading[sub_heading_index - 1].textInput.length;
-            console.log(diff, 'diff....');
+
+            let lastOrder =
+              val.textInput.length > 0
+                ? val.textInput[val.textInput.length - 1].order
+                : 0;
+            console.log(diff, 'diff.... 2 ', lastOrder);
             if (diff < 0) {
               for (
                 let i = lastOrder;
@@ -215,11 +222,12 @@ const ThirtyFour = (props) => {
               }
             }
             if (diff >= 0) {
-              for (let i = lastOrder; i < lastOrder + 1; i++) {
+              for (let i = lastOrder; i < lastOrder + (Math.abs(diff) + 1); i++) {
                 newItem.push(emptyTextInputMapper(item._id, val._id, i));
               }
             }
           }
+          console.log(newItem, "newItem......")
           const finalInput =
             newItem.length > 0
               ? [...val.textInput, ...newItem]
@@ -233,53 +241,53 @@ const ThirtyFour = (props) => {
     });
     console.log(addEmtpyRow, 'addEmtpyRow....');
     setInputs(addEmtpyRow);
-    return;
-    const inputData = inputs.length
-      ? inputs.map((item) => {
-        return {
-          ...item,
-          sub_heading: item.sub_heading.length
-            ? item.sub_heading.map((val) => {
-              console.log('here data ==>', data);
-              console.log('here val ==>', val);
-              const inputsArr = data.length
-                ? data.filter((e) => e.assessment_content_id === val._id)
-                : [];
-              const extractOrder = data.length
-                ? data[data.length - 1].order
-                : 0;
-              const dummyInput = emptyTextInputMapper(
-                item._id,
-                val._id,
-                extractOrder,
-              );
-              const finalInput = inputsArr.length
-                ? [...inputsArr, dummyInput]
-                : [dummyInput, dummyInput];
-              // const finalInput = [...inputsArr, dummyInput]
-              return {
-                // ...val,
-                // textInput: data.length
-                //   ? finalInput.length
-                //     ? finalInput.sort(
-                //       (a, b) => (a.order > b.order && 1) || -1,
-                //     )
-                //     : [] // TODO : Existing ( Add NEW OBJECT FOR END)
-                //   : [dummyInput], // TODO : NEW USER
-                ...val,
-                textInput: data.length
-                  ? finalInput.length
-                    ? finalInput
-                    : [] // TODO : Existing ( Add NEW OBJECT FOR END)
-                  : [dummyInput], // TODO : NEW USER
-              };
-            })
-            : [],
-        };
-      })
-      : [];
-    console.log(inputData, 'inputData.....');
-    setInputs(inputData);
+    // return;
+    // const inputData = inputs.length
+    //   ? inputs.map((item) => {
+    //     return {
+    //       ...item,
+    //       sub_heading: item.sub_heading.length
+    //         ? item.sub_heading.map((val) => {
+    //           console.log('here data ==>', data);
+    //           console.log('here val ==>', val);
+    //           const inputsArr = data.length
+    //             ? data.filter((e) => e.assessment_content_id === val._id)
+    //             : [];
+    //           const extractOrder = data.length
+    //             ? data[data.length - 1].order
+    //             : 0;
+    //           const dummyInput = emptyTextInputMapper(
+    //             item._id,
+    //             val._id,
+    //             extractOrder,
+    //           );
+    //           const finalInput = inputsArr.length
+    //             ? [...inputsArr, dummyInput]
+    //             : [dummyInput, dummyInput];
+    //           // const finalInput = [...inputsArr, dummyInput]
+    //           return {
+    //             // ...val,
+    //             // textInput: data.length
+    //             //   ? finalInput.length
+    //             //     ? finalInput.sort(
+    //             //       (a, b) => (a.order > b.order && 1) || -1,
+    //             //     )
+    //             //     : [] // TODO : Existing ( Add NEW OBJECT FOR END)
+    //             //   : [dummyInput], // TODO : NEW USER
+    //             ...val,
+    //             textInput: data.length
+    //               ? finalInput.length
+    //                 ? finalInput
+    //                 : [] // TODO : Existing ( Add NEW OBJECT FOR END)
+    //               : [dummyInput], // TODO : NEW USER
+    //           };
+    //         })
+    //         : [],
+    //     };
+    //   })
+    //   : [];
+    // console.log(inputData, 'inputData.....');
+    // setInputs(inputData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
 
@@ -340,6 +348,8 @@ const ThirtyFour = (props) => {
   };
 
   const deleteHandler = (hId, i, item, val, isAPICall = false) => {
+    console.log(hId, i, item, val);
+    console.log(i, "index")
     let temp = [];
     if (inputs.length) {
       temp = inputs.map((details) => {
@@ -372,9 +382,23 @@ const ThirtyFour = (props) => {
         }
       });
     });
-    let contentIdsArray = selectedArray.map((ele) => ele.inputId);
+    console.log(hId, i, item, val);
+    let leftItem = item.sub_heading[0].textInput[i].inputId;
+    let rightItem = item.sub_heading[1].textInput[i].inputId;
+
+    let contentIdsArray = [];
+    if (leftItem) {
+      contentIdsArray.push(leftItem)
+    } if (rightItem) {
+      contentIdsArray.push(rightItem)
+    }
+    // console.log(leftItem, rightItem, " left right");
+
+    // let contentIdsArray = selectedArray.map((ele) => ele.inputId);
     let content_id = contentIdsArray[0] !== "" ? contentIdsArray[0] : contentIdsArray[1]
-    isAPICall = content_id !== "" ? true : false
+    console.log(contentIdsArray, content_id, "llll");
+    isAPICall = (leftItem != "" || rightItem != "") ? true : false;
+    // isAPICall = content_id !== "" ? true : false;
     if (contentIdsArray.length && isAPICall) {
 
       dispatch(
@@ -642,7 +666,8 @@ const ThirtyFour = (props) => {
                                             i,
                                             item,
                                             val,
-                                            val.inputId !== '', // TODO : if "" = local delete
+                                            val.inputId !== '', // TODO : if "" = local delete,
+
                                           );
                                         }}>
                                         <span

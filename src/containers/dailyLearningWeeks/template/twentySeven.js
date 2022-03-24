@@ -15,6 +15,7 @@ import {
   CardContent,
 } from '../../../components/Cards';
 import {Dimensions} from 'react-native';
+import {customAlert} from '../../../helpers/commonAlerts.web';
 
 const {COLORS, ACTION_TYPE} = GLOBALS;
 const {LIGHT_GRAY, GREEN_TEXT, BUTTON_ORANGE, YELLOW, CIRCLE_GRAY} = COLORS;
@@ -394,16 +395,18 @@ const TwentySeven = (props) => {
           );
         }
       } else {
-        dispatch({
-          type: ACTION_TYPE.ERROR,
-          payload: 'Please answer to all questions',
-        });
+        customAlert('Please answer all questions.', 'error');
+        // dispatch({
+        //   type: ACTION_TYPE.ERROR,
+        //   payload: 'Please answer to all questions',
+        // });
       }
     } else {
-      dispatch({
-        type: ACTION_TYPE.ERROR,
-        payload: 'Please perform your exercise',
-      });
+      customAlert('Please perform your exercise', 'error');
+      // dispatch({
+      //   type: ACTION_TYPE.ERROR,
+      //   payload: 'Please perform your exercise',
+      // });
     }
   };
   return (
@@ -585,7 +588,8 @@ const styles = {
   optionStyle: {
     textAlign: 'center',
     //  width: DEVICE_WIDTH > 767 ? '20%' : '48%',
-    width: '19%',
+    // width: '19%',
+    width: '18%',
     paddingTop: '7px',
     paddingBottom: '7px',
     marginTop: '12px ',

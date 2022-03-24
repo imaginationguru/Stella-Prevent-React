@@ -421,11 +421,11 @@ const DailyLearningWeeks = (props) => {
                   Home /
                   <span style={{color: COLORS.GRAY1, fontWeight: 'bold'}}>
                     {''}
-                    Week{' '}
-                    {weeksCount === undefined
+                    Module{' '}
+                    {/* {weeksCount === undefined
                       ? currentActiveCard.current_week
-                      : weeksCount}{' '}
-                    Day {selectedDay}
+                      : weeksCount}{' '} */}
+                    {selectedWeek} Day {selectedDay}
                   </span>
                 </p>
               </div>
@@ -823,7 +823,7 @@ const DailyLearningWeeks = (props) => {
                           completeCardAPI();
                         }}
                         className="f-nav-link">
-                        <h3>Next Week</h3>
+                        <h3>Next Module</h3>
                       </div>
                     </div>
                   )}

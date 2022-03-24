@@ -1,55 +1,65 @@
-import React, { useState } from 'react';
-import { GoogleLogin, useGoogleLogout } from 'react-google-login';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useState} from 'react';
+import {GoogleLogin, useGoogleLogout, GoogleLogout} from 'react-google-login';
+import {useDispatch, useSelector} from 'react-redux';
 import * as AppActions from '../../actions';
-import {
-  Linking, Platform
-} from "react-native";
+import {Linking, Platform} from 'react-native';
+import {customAlert} from '../../helpers/commonAlerts.web';
 const GoogleLogIn = (props) => {
-  let {
-    onSocialLogin = () => { },
-  } = props;
+  let {onSocialLogin = () => {}} = props;
+
   const googleCLientId =
     '868302960918-car2574j9cd95m72sehkfipp24hmrdku.apps.googleusercontent.com';
 
-  const responseGoogle = (res) => {
-    verifyUser(res.profileObj, res)
+  const onLogoutSuccess = () => {
+    console.log('done........');
+    const auth2 = window.gapi.auth2.getAuthInstance();
+    console.log(auth2, 'auth2...');
+    if (auth2 != null) {
+      auth2.signOut().then(auth2.disconnect().then(onLogoutSuccess));
+    }
   };
   const onFailure = (res) => {
     console.log('Google login fail res', res);
+    // customAlert(
+    //   'An unexpected error has occured. Please try logging in again after sometime.',
+    //   'error',
+    // );
   };
+  const {signOut} = useGoogleLogout({
+    clientId: googleCLientId,
+    onFailure: onFailure,
+    onLogoutSuccess: onLogoutSuccess,
+    // jsSrc,
+    // onFailure,
+    // clientId,
+    // cookiePolicy,
+    // loginHint,
+    // hostedDomain,
+    // fetchBasicProfile,
+    // discoveryDocs,
+    // uxMode,
+    // redirectUri,
+    // scope,
+    // accessType,
+    // onLogoutSuccess,
+  });
+  const responseGoogle = (res) => {
+    verifyUser(res.profileObj, res);
+  };
+
   const verifyUser = (profile_data, userInfo) => {
     let params = {
       firstName: profile_data.givenName,
       email: profile_data.email,
       image_path: profile_data.imageUrl,
       social_media_id: userInfo.googleId,
-      platform: "google",
-      session_token: userInfo.accessToken
-    }
+      platform: 'google',
+      session_token: userInfo.accessToken,
+    };
     onSocialLogin(params);
-  }
-  const onLogoutSuccess = () => {
-    console.log('logout');
-    const auth2 = window.gapi.auth2.getAuthInstance()
-    auth2.signOut().then(() => {
-      auth2.disconnect()
-      console.log('logout===>');
-      document.cookie = "__Secure-3PSIDCC" + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    })
-    localStorage.clear()
+    console.log('logout....');
+    // signOut();
   };
-  const onFailuree = () => {
-    console.log('logout fail');
-  };
-  const { signOut } = useGoogleLogout({
-    clientId: googleCLientId,
-    onLogoutSuccess: onLogoutSuccess,
-    onFailure: onFailuree,
-    cookiePolicy: 'single_host_origin'
-  });
-
-
 
   return (
     <>
@@ -57,28 +67,30 @@ const GoogleLogIn = (props) => {
         clientId={googleCLientId}
         render={(renderProps) => (
           <div
-            onClick={() => {
-              signOut()
-              renderProps.onClick()
-            }}
+            onClick={renderProps.onClick}
             disabled={renderProps.disabled}
             className="btn-google">
             <span className="btn-google-title">Log In with Google</span>
           </div>
         )}
         onSuccess={responseGoogle}
+        approvalPrompt="force"
         onFailure={onFailure}
         cookiePolicy={'single_host_origin'}
-        ux_mode={'redirect'}
-        // isSignedIn={false}
+        isSignedIn={false}
         autoLoad={false}
+        uxMode={'popup'}
       />
+      {/* <GoogleLogout
+        clientId={googleCLientId}
+        buttonText="Logout"
+        onFailure={onFailure}
+        onLogoutSuccess={onLogoutSuccess}></GoogleLogout> */}
     </>
   );
 };
 
 export default GoogleLogIn;
-
 
 /**
  *

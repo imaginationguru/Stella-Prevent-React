@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useReducer} from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import {
   View,
   Text,
@@ -10,20 +10,20 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import GLOBALS from '../../constants';
-import {navigatortoStart} from '../../config/navigationOptions.web';
+import { navigatortoStart } from '../../config/navigationOptions.web';
 import dashboardHeader from '../../assets/images/dashboardHeader/dashboardHeader.png';
 import profile from '../../assets/images/profile.png';
 import cancel from '../../assets/images/cancel.png';
 import edit from '../../assets/images/edit.png';
-const {COLORS, FONTS, IMAGE_BASE_URL} = GLOBALS;
-const {DARK_GREEN, WHITE, GreenForSlider} = COLORS;
-import {getItem} from '../../utils/AsyncUtils';
-import {useDispatch, useSelector} from 'react-redux';
+const { COLORS, FONTS, IMAGE_BASE_URL } = GLOBALS;
+const { DARK_GREEN, WHITE, GreenForSlider } = COLORS;
+import { getItem } from '../../utils/AsyncUtils';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '../../actions';
 import Dropzone from 'react-dropzone';
-import {normalize} from '../../utils/Helper';
-import Slider, {SliderThumb} from '@mui/material/Slider';
-import {styled} from '@mui/material/styles';
+import { normalize } from '../../utils/Helper';
+import Slider, { SliderThumb } from '@mui/material/Slider';
+import { styled } from '@mui/material/styles';
 
 // import {MDCSlider} from '../../updatedNodeModules/@material/slider';
 
@@ -36,11 +36,11 @@ import {styled} from '@mui/material/styles';
 
 const ProfileHeader = (props) => {
   console.log('ProfileHeader..');
-  const {loginData = {}, profileImg = ''} = useSelector(
+  const { loginData = {}, profileImg = '' } = useSelector(
     (state) => state.authReducer,
   );
   const moduleOne = useSelector((state) => state.moduleOne);
-  const {currentActiveCard = {}} = useSelector((state) => state.moduleOne);
+  const { currentActiveCard = {} } = useSelector((state) => state.moduleOne);
   console.log('profile image user', profileImg);
   const [profileImage, setProfilePhoto] = useState('');
   const [selectedWeek, setSelectedWeek] = useState(1);
@@ -76,7 +76,7 @@ const ProfileHeader = (props) => {
     }
   }, [profileImg, moduleOne?.currentActiveCard?.current_week]);
   useEffect(() => {
-    Dimensions.addEventListener('change', ({window, screen}) => {
+    Dimensions.addEventListener('change', ({ window, screen }) => {
       console.log('device change profile', window);
       setDimensionsW(window.width);
       setDimensionsH(window.height);
@@ -135,7 +135,7 @@ const ProfileHeader = (props) => {
                       onDrop={(acceptedFiles) => {
                         onEditClick(acceptedFiles[0]);
                       }}>
-                      {({getRootProps, getInputProps}) => (
+                      {({ getRootProps, getInputProps }) => (
                         <section>
                           <div
                             style={{
@@ -180,7 +180,7 @@ const ProfileHeader = (props) => {
                     </Text>
                   </TouchableOpacity>
                 )}
-                <View style={{flexDirection: 'column'}}>
+                <View style={{ flexDirection: 'column' }}>
                   <TouchableOpacity
                     style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).btn}
                     onPress={() => {
@@ -221,7 +221,7 @@ const ProfileHeader = (props) => {
             <View style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).profileWrapRight}>
               <View>
                 <Text style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).username}>
-                  Week {moduleOne?.currentActiveCard?.current_week}
+                  Module {moduleOne?.currentActiveCard?.current_week}
                 </Text>
               </View>
 

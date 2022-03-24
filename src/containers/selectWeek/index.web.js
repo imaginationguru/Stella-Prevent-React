@@ -151,7 +151,7 @@ function SelectWeek(props) {
   const {currentActiveCard = {}} = useSelector((state) => state.moduleOne);
   const [value, setValue] = useSessionStorage(
     'value',
-    `Week ${currentActiveCard.current_week}`,
+    `Module ${currentActiveCard.current_week}`,
   );
   const [selectedDay, setSelectedDay] = useSessionStorage(
     'day',
@@ -192,8 +192,8 @@ function SelectWeek(props) {
     let weekDataDynamic = [];
     for (var i = 1; i <= 5; i++) {
       weekDataDynamic.push({
-        value: 'Week' + ' ' + i,
-        label: 'Week' + ' ' + i,
+        value: 'Module' + ' ' + i,
+        label: 'Module' + ' ' + i,
       });
       setweekDataDynamic([...weekDataDynamic]);
     }
@@ -223,7 +223,7 @@ function SelectWeek(props) {
           payload: '',
         });
         navigatorPush({
-          screenName: 'DailyLearningWeeks',
+          screenName: 'DailyLearningModule',
           passProps: {
             weeksCount: parseInt(selectedWeek),
             backTitle: 'Back to Past Modules',
@@ -235,7 +235,7 @@ function SelectWeek(props) {
 
   const onWeekChange = (event) => {
     setValue(event.target.value);
-    setSelectedWeek(event.target.value.replace('Week' + ' ', ''));
+    setSelectedWeek(event.target.value.replace('Module' + ' ', ''));
     setSelectedDay(1);
   };
 

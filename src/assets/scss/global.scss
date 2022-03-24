@@ -1466,6 +1466,19 @@ button.btn-green {
   }
 }
 
+.active-menu1 {
+  .colored-options-list {
+    overflow: visible;
+    pointer-events: all;
+    width: 95px;
+    opacity: 1;
+  }
+
+  .btn-select span {
+    transform: rotate(45deg);
+  }
+}
+
 .colored-question {
   p {
     margin: 0;

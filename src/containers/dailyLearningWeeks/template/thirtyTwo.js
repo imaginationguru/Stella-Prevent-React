@@ -18,6 +18,7 @@ import {
   CardAudio,
   CustomImage,
 } from '../../../components/Cards';
+import { customAlert } from '../../../helpers/commonAlerts.web';
 import { inputClasses } from '@mui/material';
 const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
 const {
@@ -93,6 +94,7 @@ const ThirtyTwo = (props) => {
         content: item.content,
         content_id: item._id,
         order: item.order,
+        is_added: true,
         assessment_id: item.assessment_header.length
           ? item.assessment_header.map((val) => {
             return val.assessment_id;
@@ -104,7 +106,21 @@ const ThirtyTwo = (props) => {
       ? selectUserInputs.filter((ele) => ele.assessment_id[0] === assessment_id)
       : [];
     setSelected(selectedFormat);
-    setUserInputs(firstAssessmentContent);
+    console.log(firstAssessmentContent, "firstAssessmentContent....", assessmentData.headers);
+    let dummyInput = assessmentData.headers.map(header => {
+      console.log(firstAssessmentContent.filter((e) => e.assessment_header_id === header._id).sort((a, b) => (a.order > b.order ? 1 : -1)), "count...");
+      let arrayToSearchIn = firstAssessmentContent.filter((e) => e.assessment_header_id === header._id).sort((a, b) => (a.order > b.order ? 1 : -1));
+      let maxOrder = Math.max(...arrayToSearchIn.map(o => o.order), 0);
+      return {
+        assessment_header_id: header._id,
+        content: "",
+        order: maxOrder + 1,
+        is_added: false
+      }
+    })
+    console.log(dummyInput, "dummyInput...")
+    setUserInputs([...firstAssessmentContent, ...dummyInput]);
+    // setUserInputs(firstAssessmentContent, ...dummyInput);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
   useEffect(() => {
@@ -130,16 +146,53 @@ const ThirtyTwo = (props) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData]);
-  const onHandleChange = (e, item) => {
-    const updateInputs = inputs.length
-      ? inputs.map((val) => {
-        return {
-          ...val,
-          value: val.name === e.target.name ? e.target.value : val.value,
-        };
-      })
-      : [];
-    setInputs(updateInputs);
+  const onHandleChange = (e, item, inner) => {
+    console.log(e, item, "inputs.....", userInputs)
+    // const updateInputs = inputs.length
+    //   ? inputs.map((val) => {
+    //     return {
+    //       ...val,
+    //       value: val.name === e.target.name ? e.target.value : val.value,
+    //     };
+    //   })
+    //   : [];
+    // setInputs(updateInputs);
+
+    const temp = userInputs.map((val) => {
+      return {
+        ...val,
+        content: (val.assessment_header_id === item._id && val.order === inner.order) ? e.target.value : val.content,
+      };
+    }
+    );
+    console.log(temp, "temp....");
+    setUserInputs(temp);
+
+  };
+
+  const addHandler = (header, innnerItem) => {
+    console.log(header, innnerItem, "header,innnerItem.....", userInputs);
+    const temp = userInputs.map((val) => {
+      return {
+        ...val,
+        is_added: ((val.assessment_header_id === innnerItem.assessment_header_id && val.order === innnerItem.order)) ? true : val.is_added,
+      };
+    }
+    );
+    console.log(temp, "temp....");
+    //  return;
+    // return;
+    // setUserInputs(temp);
+    // return;
+    let dummyInput = {
+      assessment_header_id: header._id,
+      content: "",
+      order: innnerItem.order + 1,
+      is_added: false
+
+    }
+    //  setUserInputs([...userInputs, dummyInput]);
+    setUserInputs([...temp, dummyInput]);
   };
 
   /**********************FIRST ASSESSMENT****************** */
@@ -150,8 +203,9 @@ const ThirtyTwo = (props) => {
     inputs.map((item, i) => {
       indexArray.push({ index: i, id: item?._id });
     });
+    console.log(indexArray, "inputs......", userInputs)
     let modifyData = userInputs.length
-      ? userInputs.map((item) => {
+      ? userInputs.filter(m => (m.content != '' && m.is_added == true)).map((item) => {
         indexArray.map((data, index) => {
           if (data.id == item.assessment_header_id) {
             contexIndex = index;
@@ -170,23 +224,26 @@ const ThirtyTwo = (props) => {
         };
       })
       : [];
+
+    console.log(modifyData, "modifyData...");
     let firstParams = {
       user_id: userId,
       user_card_id: props._id,
       assessment_id: assessment_id,
       assessment: modifyData,
     };
-    if (userInputs.length) {
+    if (modifyData.length) {
       if (userAssessmentData && userAssessmentData.length) {
         dispatch(AppActions.rearrangeAssessments(firstParams, onSubmitMessage));
       } else {
         dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
       }
     } else {
-      dispatch({
-        type: ACTION_TYPE.ERROR,
-        payload: 'Please perform your exercise',
-      });
+      customAlert("Please perform your exercise", 'error');
+      // dispatch({
+      //   type: ACTION_TYPE.ERROR,
+      //   payload: 'Please perform your exercise',
+      // });
     }
   };
   const updateYESNO = (data = {}, arr = []) => {
@@ -221,6 +278,7 @@ const ThirtyTwo = (props) => {
   };
   /**********************SECOND ASSESSMENT****************** */
   const onSaveMyths = (e) => {
+
     e.preventDefault();
     let userAssessment = selected.map((item) => {
       return {
@@ -269,10 +327,11 @@ const ThirtyTwo = (props) => {
         }
       }
     } else {
-      dispatch({
-        type: ACTION_TYPE.ERROR,
-        payload: 'Please perform your exercise',
-      });
+      customAlert("Please perform your exercise", 'error');
+      // dispatch({
+      //   type: ACTION_TYPE.ERROR,
+      //   payload: 'Please perform your exercise',
+      // });
     }
   };
   const generateDynamicColor = (order) => {
@@ -371,48 +430,138 @@ const ThirtyTwo = (props) => {
                   .filter((ele) => {
                     return ele.assessment_header_id === item._id;
                   })
-                  .map((val) => {
+                  .map((val, i) => {
+                    const showPlus =
+                      i == userInputs
+                        .sort((a, b) => (a.order > b.order && 1) || -1)
+                        .filter((ele) => {
+                          return ele.assessment_header_id === item._id;
+                        }).length - 1;
+                    const isDelete =
+                      i < userInputs
+                        .sort((a, b) => (a.order > b.order && 1) || -1)
+                        .filter((ele) => {
+                          return ele.assessment_header_id === item._id;
+                        }).length - 1;
+                    const isDisabled = i < userInputs
+                      .sort((a, b) => (a.order > b.order && 1) || -1)
+                      .filter((ele) => {
+                        return ele.assessment_header_id === item._id;
+                      }).length - 1;
                     return (
-                      <div style={styles.crossIconWrapper}>
+                      <div style={styles.crossIconWrapper} className={'mr20'}>
                         <input
+                          disabled={isDisabled ? true : false}
                           type="text"
                           className="f-field"
                           name={name}
-                          disabled={'true'}
+                          onChange={(e) => {
+                            onHandleChange(e, item, val);
+                            console.log('--->', inputs);
+                          }}
+                          // disabled={'true'}
                           style={styles.selectedText}
                           value={val.content}
                         />
-                        <div
-                          style={styles.circleCrossDiv}
-                          onClick={() => {
-                            setUserInputs(
-                              userInputs.filter(
-                                (ele) => ele.content !== val.content,
-                              ),
-                            );
-                            if (val.content_id) {
-                              dispatch(
-                                AppActions.deleteUserAssessmentData(
-                                  val.content_id,
-                                  props._id,
-                                  assessment_id,
-                                ),
-                              );
-                            }
-                          }}>
-                          <span
-                            style={{
-                              ...styles.plusIcon,
-                              fontSize: '15px',
+                        {isDelete ? (
+                          <div
+                            style={styles.circleCrossDiv}
+                            onClick={() => {
+                              let filter_data = userInputs.filter(
+                                (ele) => (ele.assessment_header_id == val.assessment_header_id && val.order != ele.order),
+                              ).sort((a, b) => (a.order > b.order && 1) || -1);
+
+                              let other_header = userInputs.filter(
+                                (ele) => (ele.assessment_header_id != val.assessment_header_id),
+                              ).sort((a, b) => (a.order > b.order && 1) || -1);
+
+                              filter_data = filter_data.map((item, index) => {
+                                return {
+                                  ...item,
+                                  order: index + 1
+                                }
+                              });
+
+                              // console.log("new data", filter_data);
+                              // setUserInputs([...other_header, ...filter_data]);
+                              // return;
+                              // setUserInputs(
+                              //   userInputs.filter(
+                              //     (ele) => ele.content !== val.content,
+                              //   ),
+                              // );
+                              if (val.content_id) {
+                                dispatch(
+                                  AppActions.deleteUserAssessmentData(
+                                    val.content_id,
+                                    props._id,
+                                    assessment_id,
+                                  ),
+                                );
+                              }
                             }}>
-                            x
-                          </span>
-                        </div>
+                            <span
+                              style={{
+                                ...styles.plusIcon,
+                                fontSize: '15px',
+                              }}>
+                              x
+                            </span>
+                          </div>
+                        ) : null}
+                        {showPlus ? (
+                          <div
+                            style={{
+                              ...styles.circleDiv,
+                              backgroundColor: val.content.length ? GREEN_TEXT : GRAY,
+                            }}
+                            onClick={() => {
+                              console.log(val, "val...");
+                              if (val.content != "") {
+                                addHandler(item, val)
+                              }
+
+                              // const userInputsOrder =
+                              //   userInputs && userInputs.length
+                              //     ? userInputs.filter(
+                              //       (ele) => ele.assessment_header_id === item._id,
+                              //     ).length
+                              //     : 0;
+                              // if (item.value.length) {
+                              //   setUserInputs([
+                              //     ...userInputs,
+                              //     {
+                              //       assessment_header_id: item._id,
+                              //       content: item.value,
+                              //       order: userInputsOrder + 1,
+                              //     },
+                              //   ]);
+                              // }
+
+                              // headers &&
+                              //   headers.length &&
+                              //   setInputs(
+                              //     headers.map((val) => {
+                              //       return {
+                              //         content: [],
+                              //         name: val.header,
+                              //         placeholder: val.description,
+                              //         order: val.order,
+                              //         value: "",
+                              //         _id: val._id,
+                              //       };
+                              //     }),
+                              //   );
+                            }}>
+                            <span style={styles.plusIcon}>+</span>
+                          </div>
+                        ) : null}
+
                       </div>
                     );
                   })
                 : null}
-              <div style={styles.plusIconWrapper} className="v-p-field">
+              {/* <div style={styles.plusIconWrapper} className="v-p-field">
                 <input
                   type="text"
                   className="f-field"
@@ -464,7 +613,7 @@ const ThirtyTwo = (props) => {
                   }}>
                   <span style={styles.plusIcon}>+</span>
                 </div>
-              </div>
+              </div> */}
             </div>
           );
         })

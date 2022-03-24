@@ -10,7 +10,7 @@ import successTick from '../../assets/images/successTick.svg';
 import past_module from '../../assets/images/dashboardHeader/past_module.png';
 import report from '../../assets/images/dashboardHeader/report.png';
 import lock from '../../assets/images/lock.png';
-import logoWhite from '../../assets/images/logoWhite.svg';
+import logoWhite from '../../assets/images/logoWhite.png';
 
 import GLOBALS from '../../constants';
 import MasterLayout from '../../components/MasterLayout';
@@ -32,7 +32,7 @@ import {Dimensions} from 'react-native-web';
 import Header from '../../components/Header';
 import {epdsModalAction} from '../../actions';
 const DEVICE_WIDTH = Dimensions.get('window').width;
-import {checkIfWeekCanAccess} from '../../helpers/common.web';
+import {checkIfWeekCanAccess, detectBrowser} from '../../helpers/common.web';
 import {customAlert} from '../../helpers/commonAlerts.web';
 const Dashboard = () => {
   const [click_week, setClickWeek] = useState(1);
@@ -128,7 +128,7 @@ const Dashboard = () => {
             dispatch(AppActions.dashboardModalAction(false));
             setTimeout(() => {
               navigatorPush({
-                screenName: 'DailyLearningWeeks',
+                screenName: 'DailyLearningModule',
                 passProps: {weeksCount: item},
               });
             }, 1000);
@@ -173,7 +173,7 @@ const Dashboard = () => {
       payload: currentActiveCard.current_week,
     });
     navigatorPush({
-      screenName: 'DailyLearningWeeks',
+      screenName: 'DailyLearningModule',
       passProps: {isFromDashboard: true},
     });
   };
