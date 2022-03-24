@@ -9,6 +9,7 @@ import { Linking, Platform } from 'react-native';
 import { getWeek } from '../moduleOne';
 import Swal from 'sweetalert2';
 import { Dimensions } from 'react-native-web';
+import moment from 'moment';
 
 import packageJson from '../../../package.json'
 
@@ -51,6 +52,7 @@ export function login(email, password, componentId) {
           browser: detectBrowser(),
           systemInfo: navigator.userAgent,
         },
+        timeZone: moment.tz.guess(),
       });
       console.log('codeLogin', json, componentId);
       if (json.code === 200) {
