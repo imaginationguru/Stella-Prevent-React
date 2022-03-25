@@ -71,9 +71,11 @@ const CardAudio = ({ src, style }) => {
 };
 
 const CardVideo = ({ src, style }) => {
+
   return (
     <div
       className="dash-icon text-center"
+      oncontextmenu={e => e.preventDefault()}
       style={{
         ...styles.videoDiv,
         ...style,
@@ -82,8 +84,13 @@ const CardVideo = ({ src, style }) => {
         width="100%"
         height="100%"
         controls="controls"
-        preload="none"
-        onclick="this.play()">
+        // preload="none"
+        onclick="this.play()"
+        controlsList="nodownload"
+        // Disable right click
+        onContextMenu={e => e.preventDefault()}
+
+      >
         <source type="video/mp4" src={src} />
       </video>
     </div>
