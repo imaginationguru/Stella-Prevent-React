@@ -26,6 +26,9 @@ export default {
 
   // BASE_URL: 'https://mamalift-qa.curio-dtx.com/api/',
   // IMAGE_BASE_URL: 'https://mamalift-qa.curio-dtx.com/', //QA
+
+  // BASE_URL: 'https://mamalift-uat.curio-dtx.com/api/',
+  // IMAGE_BASE_URL: 'https://mamalift-uat.curio-dtx.com/', //UAT
   /********************************** * URL ***********************************/
   URL: {
     LOGIN: 'login',
