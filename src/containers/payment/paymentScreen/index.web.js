@@ -38,7 +38,7 @@ import {
   CreditCardInput,
 } from 'react-square-web-payments-sdk';
 import {getItem} from '../../../utils/AsyncUtils';
-const {COLORS, FONTS} = GLOBALS;
+const {COLORS, FONTS, IMAGE_BASE_URL} = GLOBALS;
 const {
   BLUR,
   WHITE,
@@ -192,7 +192,7 @@ const Payment = (props) => {
                 <TouchableOpacity
                   onPress={() =>
                     window.open(
-                      'https://stella-careportal.curio-dtx.com/upload/acknowldgement.pdf',
+                      `${IMAGE_BASE_URL}upload/acknowldgement.pdf`,
                       '_blank',
                     )
                   }
@@ -202,7 +202,7 @@ const Payment = (props) => {
                 <TouchableOpacity
                   onPress={() =>
                     window.open(
-                      'https://stella-careportal.curio-dtx.com/upload/PRIVACY_POLICY0203_stella.pdf',
+                      `${IMAGE_BASE_URL}upload/PRIVACY_POLICY0203_stella.pdf`,
                       '_blank',
                     )
                   }>

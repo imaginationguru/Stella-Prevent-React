@@ -65,7 +65,6 @@ const Dashboard = () => {
     return temp;
   };
   useEffect(() => {
-
     if (getItem('userId') != null) {
       dispatch(AppActions.getProgramById(false));
       dispatch(AppActions.getCurrentActiveCard(false));
@@ -129,7 +128,7 @@ const Dashboard = () => {
             dispatch(AppActions.dashboardModalAction(false));
             setTimeout(() => {
               navigatorPush({
-                screenName: 'DailyLearningWeeks',
+                screenName: 'DailyLearningModule',
                 passProps: { weeksCount: item },
               });
             }, 1000);
@@ -174,7 +173,7 @@ const Dashboard = () => {
       payload: currentActiveCard.current_week,
     });
     navigatorPush({
-      screenName: 'DailyLearningWeeks',
+      screenName: 'DailyLearningModule',
       passProps: { isFromDashboard: true },
     });
   };

@@ -38,6 +38,8 @@ const extractSelectQ = (x = []) => {
       ? selectedQuesArr.filter((val) => val === true).length
       : 0;
 
+    console.log("fafaf--->", selectedQuesArr);
+
     return selectedQues;
   }
 };
@@ -265,7 +267,32 @@ const TwentySeven = (props) => {
   };
   const onSave = (e) => {
     e.preventDefault();
-    let answer = extractSelectQ(assessmentQues);
+
+
+
+
+
+    let dataArray = assessmentQues.map((item) => {
+      if (item.textAns !== undefined) {
+        console.log("here===>", item);
+        return {
+          ...item,
+          options: item.options.map((val) => {
+            return { ...val, status: true, selected: true };
+          }),
+        };
+      } else {
+        return item;
+      }
+
+    });
+
+    let answer = extractSelectQ(dataArray);
+
+    // setAssessmentQues(y);
+
+
+
     setSelectQ(answer);
     let sum = 0;
     let firstCondition = '0-9';
@@ -273,8 +300,8 @@ const TwentySeven = (props) => {
     let thirdCondition = '17-21';
     let fourthCondition = '>21';
 
-    let modifyData = assessmentQues.length
-      ? assessmentQues.map((item) => {
+    let modifyData = dataArray.length
+      ? dataArray.map((item) => {
         return {
           ...item,
           card_id: _id,
@@ -285,11 +312,13 @@ const TwentySeven = (props) => {
       })
       : [];
 
-    let last_answer = assessmentQues[assessmentQues.length - 1].options.filter(
+    let last_answer = dataArray[dataArray.length - 1].options.filter(
       (val) => val.status === true,
     )[0];
 
     console.log(last_answer, 'last_answer..');
+    console.log('data===>.', assessmentQues);
+    console.log('ModifiyData===>.', modifyData);
     let onlyOptionPoint =
       modifyData &&
       modifyData.length &&
@@ -395,14 +424,14 @@ const TwentySeven = (props) => {
           );
         }
       } else {
-        customAlert("Please answer all questions.", 'error');
+        customAlert('Please answer all questions.', 'error');
         // dispatch({
         //   type: ACTION_TYPE.ERROR,
         //   payload: 'Please answer to all questions',
         // });
       }
     } else {
-      customAlert("Please perform your exercise", 'error');
+      customAlert('Please perform your exercise', 'error');
       // dispatch({
       //   type: ACTION_TYPE.ERROR,
       //   payload: 'Please perform your exercise',
@@ -586,7 +615,8 @@ const styles = {
   optionStyle: {
     textAlign: 'center',
     //  width: DEVICE_WIDTH > 767 ? '20%' : '48%',
-    width: '19%',
+    // width: '19%',
+    width: '18%',
     paddingTop: '7px',
     paddingBottom: '7px',
     marginTop: '12px ',

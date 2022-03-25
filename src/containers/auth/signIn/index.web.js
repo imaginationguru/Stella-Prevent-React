@@ -44,11 +44,6 @@ const SignIn = (componentId) => {
   const dispatch = useDispatch();
   const { quotes = {} } = useSelector((state) => state.moduleOne);
   //console.log(quotes, 'quotes.......');
-  useEffect(() => {
-    let platform = navigator?.userAgentData?.platform || navigator?.platform || 'unknown'
-    console.log(platform, "testttt");
-    console.log(navigator?.userAgentData, "check....")
-  });
 
   const onHandleChange = (e) => {
     const { name, value } = e.target;
@@ -193,9 +188,9 @@ const SignIn = (componentId) => {
                           onChange={onHandleChange}
                           required
                           maxLength={320}
-                          onPaste={copyPasteHandler}
-                          onCopy={copyPasteHandler}
-                          onCut={copyPasteHandler}
+                        // onPaste={copyPasteHandler}
+                        // onCopy={copyPasteHandler}
+                        // onCut={copyPasteHandler}
                         />
                         <span className="f-icon">
                           <img src={icon01} />
@@ -216,9 +211,9 @@ const SignIn = (componentId) => {
                           onChange={onHandleChange}
                           maxLength={16}
                           required
-                          onPaste={copyPasteHandler}
-                          onCopy={copyPasteHandler}
-                          onCut={copyPasteHandler}
+                        // onPaste={copyPasteHandler}
+                        // onCopy={copyPasteHandler}
+                        // onCut={copyPasteHandler}
                         />
                         <span className="f-icon">
                           <img src={icon02} />

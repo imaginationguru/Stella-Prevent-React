@@ -9,8 +9,13 @@ import { Linking, Platform } from 'react-native';
 import { getWeek } from '../moduleOne';
 import Swal from 'sweetalert2';
 import { Dimensions } from 'react-native-web';
-const { COLORS, FONTS } = GLOBALS;
+import moment from 'moment';
+
+import packageJson from '../../../package.json'
+
+const { COLORS, FONTS, IMAGE_BASE_URL } = GLOBALS;
 import { detectBrowser } from '../../helpers/common.web';
+
 import { customAlert } from '../../helpers/commonAlerts.web';
 
 //******************************Login******************* */
@@ -35,7 +40,8 @@ export function login(email, password, componentId) {
     dispatch({ type: ACTION_TYPE.LOGIN_RESET });
     dispatch({ type: ACTION_TYPE.LOGIN_REQUEST });
     try {
-      let user_platform = navigator?.userAgentData?.platform || navigator?.platform || 'unknown'
+      let user_platform =
+        navigator?.userAgentData?.platform || navigator?.platform || 'unknown';
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.LOGIN, {
         email: email,
@@ -43,9 +49,10 @@ export function login(email, password, componentId) {
         product: 1.5,
         deviceDetails: {
           operatingSystem: user_platform,
-          browser: "detectBrowser()",
-          systemInfo: "navigator.userAgent"
-        }
+          browser: detectBrowser(),
+          systemInfo: navigator.userAgent,
+        },
+        timeZone: moment.tz.guess(),
       });
       console.log('codeLogin', json, componentId);
       if (json.code === 200) {
@@ -60,6 +67,7 @@ export function login(email, password, componentId) {
         storeItem('lastName', json.data.user.lastName);
         storeItem('hospitalId', json.data.user.hospital_id);
         storeItem('epdsAssesment', json.data.epds_assesment);
+        storeItem('version', packageJson.version);
         dispatch({
           type: ACTION_TYPE.SET_PROFILE_IMAGE,
           payload: json.data.user.image_path,
@@ -257,17 +265,19 @@ export function emailExists(email) {
       } else {
         if (json.code === 400) {
           dispatch(loadingAction(false));
-          dispatch({
-            type: ACTION_TYPE.ERROR,
-            payload: json.message,
-          });
+          customAlert(json.message, 'error');
+          // dispatch({
+          //   type: ACTION_TYPE.ERROR,
+          //   payload: json.message,
+          // });
         }
         if (json.code === 401) {
           dispatch(loadingAction(false));
-          dispatch({
-            type: ACTION_TYPE.ERROR,
-            payload: json.message,
-          });
+          customAlert(json.message, 'error');
+          // dispatch({
+          //   type: ACTION_TYPE.ERROR,
+          //   payload: json.message,
+          // });
         }
         dispatch({
           type: ACTION_TYPE.USER_EMAIL_EXISTS_FAIL,
@@ -432,7 +442,7 @@ export function verifySocialUser(params, componentId, cb) {
         if (!json.data.is_user_exist) {
           if (Platform.OS == 'web') {
             Swal.fire({
-              html: 'This user is currently not registered with Mamalift. Please register at <a target="_blank" href="https://stella-prevent-careportal.curio-dtx.com/ ">https://stella-prevent-careportal.curio-dtx.com/</a>',
+              html: `This user is currently not registered with Mamalift. Please register at <a target="_blank" href=${IMAGE_BASE_URL}>${IMAGE_BASE_URL}</a>`,
               allowOutsideClick: false,
               allowEscapeKey: false,
               confirmButtonColor: COLORS.DARK_RED,
@@ -458,7 +468,7 @@ export function verifySocialUser(params, componentId, cb) {
           });
           dispatch(getWeek(1));
           console.log('token>>>>>>>>>>>>>>>>>', json.data.token);
-          storeItem('token', json.data.token);
+          // storeItem('token', json.data.token);
           storeItem('programId', json.data.user.programId); // '608aa90eb9a5442de2e81673';
           storeItem('userId', json.data.user._id);
           storeItem('firstName', json.data.user.firstName);
@@ -466,12 +476,15 @@ export function verifySocialUser(params, componentId, cb) {
           storeItem('hospitalId', json.data.user.hospital_id);
           // if (json.data.user.isProgramBind !== true) {
           //   console.log('bind PAI hit');
-          dispatch(bindProgram());
+          //dispatch(bindProgram());
           // }
           // dispatch(getProgramById());
           if (json.data.user.isInterest === true) {
             console.log('heloooo1111');
             // navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
+            storeItem('token', json.data.token);
+            dispatch(bindProgram());
+            dispatch(getProgramById());
             navigatorPush({ componentId, screenName: 'Dashboard' });
           } else {
             console.log('heloooo11111222222');
@@ -498,7 +511,6 @@ export function verifySocialUser(params, componentId, cb) {
           dispatch({
             type: ACTION_TYPE.VERIFY_USER_DATA_FAIL,
           });
-
           // toast(STRINGS.SOMETHING_WENT_WRONG);
         }
       }

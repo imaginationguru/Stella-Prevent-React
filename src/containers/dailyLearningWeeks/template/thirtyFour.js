@@ -160,7 +160,9 @@ const ThirtyFour = (props) => {
                 ...val,
                 textInput: data.length
                   ? finalInput.length
-                    ? finalInput
+                    ? finalInput.sort(
+                      (a, b) => (a.order > b.order && 1) || -1,
+                    )
                     : [] // TODO : Existing ( Add NEW OBJECT FOR END)
                   : [], // TODO : NEW USER
               };
@@ -200,7 +202,6 @@ const ThirtyFour = (props) => {
               }
             }
           } else {
-            console.log(val, item, "diff2....", sub_heading_index)
             let diff =
               val.textInput.length -
               item.sub_heading[sub_heading_index - 1].textInput.length;
@@ -210,6 +211,7 @@ const ThirtyFour = (props) => {
                 ? val.textInput[val.textInput.length - 1].order
                 : 0;
             console.log(diff, 'diff.... 2 ', lastOrder);
+
             if (diff < 0) {
               for (
                 let i = lastOrder;
@@ -220,7 +222,8 @@ const ThirtyFour = (props) => {
               }
             }
             if (diff >= 0) {
-              for (let i = lastOrder; i < lastOrder + (Math.abs(diff) + 1); i++) {
+              console.log(lastOrder, lastOrder + (Math.abs(diff) + 1), "checkinggg")
+              for (let i = lastOrder; i < lastOrder + 1; i++) {
                 newItem.push(emptyTextInputMapper(item._id, val._id, i));
               }
             }
@@ -411,8 +414,9 @@ const ThirtyFour = (props) => {
   };
 
   const onSave = () => {
+    //  console.log(modifiedAssessment,"modifiedAssessment...")
     console.log(inputs, 'inputs');
-    //return;
+
     const modifiedAssessment = inputs.length
       ? inputs.map((item) => {
         const temp = { assessment_heading_id: item._id, content: [] };
@@ -437,12 +441,19 @@ const ThirtyFour = (props) => {
       })
       : [];
 
+    let final = saveDateValidator(modifiedAssessment);
+    final.map((m, ind) => {
+      console.log(m.content.length, "index", ind)
+    })
+    console.log(saveDateValidator(modifiedAssessment), "modifiedAssessment....")
+    // return;
     let params = {
-      user_id: userId,
+      user_id: getItem('userId'),
       user_card_id: props._id,
       assessment_id: assessment_id,
       assessment: saveDateValidator(modifiedAssessment),
     };
+
     let content = [];
     let isAPICall = false;
     if (modifiedAssessment.length) {
