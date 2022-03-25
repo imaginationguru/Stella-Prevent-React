@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import TemplateOne from './template/templateOne';
 import TemplateTwo from './template/templateTwo';
 import TemplateThree from './template/templateThree';
@@ -44,9 +44,10 @@ import FourThree from './template/fourThree';
 import Template44 from './template/fourfour';
 import FourFive from './template/fourFive';
 import FourSix from './template/fourSix';
-import {useDispatch} from 'react-redux';
+import FourSeven from './template/fourSeven';
+import { useDispatch } from 'react-redux';
 import * as AppActions from '../../actions';
-const GenerateUI = ({status, data = {}}) => {
+const GenerateUI = ({ status, data = {} }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -66,6 +67,8 @@ const GenerateUI = ({status, data = {}}) => {
       }
     }
   }, [data._id]);
+  // return <FourSeven {...data} />
+
   switch (status) {
     case 1:
       return <TemplateOne {...data} />;
@@ -160,6 +163,8 @@ const GenerateUI = ({status, data = {}}) => {
       return <FourFive {...data} />;
     case 46:
       return <FourSix {...data} />;
+    case 47:
+      return <FourSeven {...data} />;
     default:
       return <></>;
   }
