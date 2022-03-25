@@ -107,7 +107,7 @@ const ThirtyTwo = (props) => {
       : [];
     setSelected(selectedFormat);
     console.log(firstAssessmentContent, "firstAssessmentContent....", assessmentData.headers);
-    let dummyInput = assessmentData.headers.map(header => {
+    let dummyInput = assessmentData?.headers?.map(header => {
       console.log(firstAssessmentContent.filter((e) => e.assessment_header_id === header._id).sort((a, b) => (a.order > b.order ? 1 : -1)), "count...");
       let arrayToSearchIn = firstAssessmentContent.filter((e) => e.assessment_header_id === header._id).sort((a, b) => (a.order > b.order ? 1 : -1));
       let maxOrder = Math.max(...arrayToSearchIn.map(o => o.order), 0);
@@ -226,6 +226,8 @@ const ThirtyTwo = (props) => {
       : [];
 
     console.log(modifyData, "modifyData...");
+    // return;
+
     let firstParams = {
       user_id: userId,
       user_card_id: props._id,
@@ -278,6 +280,9 @@ const ThirtyTwo = (props) => {
   };
   /**********************SECOND ASSESSMENT****************** */
   const onSaveMyths = (e) => {
+
+    customAlert("Row 14 In progress", 'error');
+    return;
 
     e.preventDefault();
     let userAssessment = selected.map((item) => {
@@ -571,7 +576,6 @@ const ThirtyTwo = (props) => {
                   value={item.value}
                   onChange={(e) => {
                     onHandleChange(e, item);
-                    console.log('--->', inputs);
                   }}
                 />
                 <div

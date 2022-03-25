@@ -63,7 +63,7 @@ const checkNextDayUnlocked = (curr_week, curr_day, total_week, total_day) => {
 };
 
 const detectBrowser = () => {
-  let userAgent = navigator.userAgent;
+  let userAgent = navigator?.userAgent;
   let browserName;
   if (userAgent.match(/edg/i)) {
     browserName = 'Microsoft Edge (Chromium)';
