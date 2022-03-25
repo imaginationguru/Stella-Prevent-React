@@ -404,7 +404,7 @@ const DailyLearningWeeks = (props) => {
   };
 
   return (
-    <>
+    <div className="m-main">
       <MasterLayout>
         {backTitle ? (
           <BackBtn title={backTitle} goBack={false} />
@@ -415,142 +415,143 @@ const DailyLearningWeeks = (props) => {
         <div className="dashboard-body">
           <div className="container">
             <div className="dashboard-body-inner">
-              {/* ***********************************Navbar Start********************** */}
-              <div>
-                <p style={{color: COLORS.GREEN_TEXT, fontWeight: 'bold'}}>
-                  Home /
-                  <span style={{color: COLORS.GRAY1, fontWeight: 'bold'}}>
-                    {''}
-                    Module{' '}
-                    {/* {weeksCount === undefined
-                      ? currentActiveCard.current_week
-                      : weeksCount}{' '} */}
-                    {selectedWeek} Day {selectedDay}
-                  </span>
-                </p>
-              </div>
+              <div className="n-content">
+                {/* ***********************************Navbar Start********************** */}
+                <div>
+                  <p style={{color: COLORS.GREEN_TEXT, fontWeight: 'bold'}}>
+                    Home /
+                    <span style={{color: COLORS.GRAY1, fontWeight: 'bold'}}>
+                      {''}
+                      Module{' '}
+                      {/* {weeksCount === undefined
+                        ? currentActiveCard.current_week
+                        : weeksCount}{' '} */}
+                      {selectedWeek} Day {selectedDay}
+                    </span>
+                  </p>
+                </div>
 
-              {templateData.length ? (
-                <>
-                  {/* <Header
-                    data={templateData}
-                    currentDay={selectedDay}
-                    isDisabled={applicableDay()}
-                    onDayChange={(val) => {
-                      console.log(val, 'val....');
-                      const isClickable = applicableDay().length
-                        ? applicableDay().some((e) => {
-                          return e.day === val && e.isDisabled === false;
-                        })
-                        : false;
-                      if (isClickable) {
-                        dispatch({
-                          type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
-                          payload: val,
-                        });
-                        dispatch({
-                          type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                          payload: '',
-                        });
-                      } else if (
-                        loginData?.planInfo?.numericPrice == 0 &&
-                        val > 2
-                      ) {
-                        customAlert(
-                          "You've reached your free content limit. Please upgrade your plan.",
-                          'error',
-                          { showCloseButton: true },
-                          'Upgrade',
-                          _onPressUpgrade,
-                        );
-                        return;
-                      } else {
-                        customAlert(`Content not unlocked`, 'error');
-                      
-                      }
-                    }}
-                  /> */}
-                  <SubHeader
-                    data={templateData.filter(
-                      (item) => item.day === selectedDay,
-                    )}
-                    isDisabled={cardsColorDisable()}
-                    // isDisabled={applicableCards(currentData._id)}
-                    // onCardChange={(id) => setCurrentCardId(id)}
-                    onCardChange={(id, i) => {
-                      const isClickable = id ? applicableCards(id) : false;
+                {templateData.length ? (
+                  <>
+                    {/* <Header
+                      data={templateData}
+                      currentDay={selectedDay}
+                      isDisabled={applicableDay()}
+                      onDayChange={(val) => {
+                        console.log(val, 'val....');
+                        const isClickable = applicableDay().length
+                          ? applicableDay().some((e) => {
+                            return e.day === val && e.isDisabled === false;
+                          })
+                          : false;
+                        if (isClickable) {
+                          dispatch({
+                            type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
+                            payload: val,
+                          });
+                          dispatch({
+                            type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+                            payload: '',
+                          });
+                        } else if (
+                          loginData?.planInfo?.numericPrice == 0 &&
+                          val > 2
+                        ) {
+                          customAlert(
+                            "You've reached your free content limit. Please upgrade your plan.",
+                            'error',
+                            { showCloseButton: true },
+                            'Upgrade',
+                            _onPressUpgrade,
+                          );
+                          return;
+                        } else {
+                          customAlert(`Content not unlocked`, 'error');
+                        
+                        }
+                      }}
+                    /> */}
+                    <SubHeader
+                      data={templateData.filter(
+                        (item) => item.day === selectedDay,
+                      )}
+                      isDisabled={cardsColorDisable()}
+                      // isDisabled={applicableCards(currentData._id)}
+                      // onCardChange={(id) => setCurrentCardId(id)}
+                      onCardChange={(id, i) => {
+                        const isClickable = id ? applicableCards(id) : false;
 
-                      if (isClickable) {
-                        dispatch({
-                          type: GLOBALS.ACTION_TYPE.GET_USER_ASSESSMENT_SUCCESS,
-                          payload: [],
-                        });
-                        console.log('is clickable??????');
-                        dispatch({
-                          type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                          payload: id,
-                        });
-                      }
-                      // if (
-                      //   currentData.is_disabled == false &&
-                      //   currentData.is_read == true &&
-                      //   currentData.is_completed == true
-                      // ) {
-                      //   dispatch({
-                      //     type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                      //     payload: id,
-                      //   });
-                      // } else {
-                      //   customAlert(
-                      //     'Please complete the previous card',
-                      //     'error',
-                      //   );
-                      // }
-                      else if (
-                        currentData.is_disabled == false &&
-                        currentData.is_read == true &&
-                        currentData.is_completed == false &&
-                        currentData._id != id
-                      ) {
-                        console.log('else please complete previous caed');
-                        customAlert(
-                          'Please complete the previous card',
-                          'error',
-                        );
-                      } else {
-                        console.log('else??????');
-                        customAlert('Please read previous card', 'error');
-                        // dispatch({
-                        //   type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                        //   payload: id,
-                        // });
-                      }
+                        if (isClickable) {
+                          dispatch({
+                            type: GLOBALS.ACTION_TYPE.GET_USER_ASSESSMENT_SUCCESS,
+                            payload: [],
+                          });
+                          console.log('is clickable??????');
+                          dispatch({
+                            type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+                            payload: id,
+                          });
+                        }
+                        // if (
+                        //   currentData.is_disabled == false &&
+                        //   currentData.is_read == true &&
+                        //   currentData.is_completed == true
+                        // ) {
+                        //   dispatch({
+                        //     type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+                        //     payload: id,
+                        //   });
+                        // } else {
+                        //   customAlert(
+                        //     'Please complete the previous card',
+                        //     'error',
+                        //   );
+                        // }
+                        else if (
+                          currentData.is_disabled == false &&
+                          currentData.is_read == true &&
+                          currentData.is_completed == false &&
+                          currentData._id != id
+                        ) {
+                          console.log('else please complete previous caed');
+                          customAlert(
+                            'Please complete the previous card',
+                            'error',
+                          );
+                        } else {
+                          console.log('else??????');
+                          customAlert('Please read previous card', 'error');
+                          // dispatch({
+                          //   type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+                          //   payload: id,
+                          // });
+                        }
+                      }}
+                      cardNumber={currentData.card_number || ''}
+                    />
+                  </>
+                ) : null}
+
+                {/* ***********************************Navbar End********************** */}
+
+                {/* ******** ************************** Cards Render UI Start********************** */}
+                {currentData._id && (
+                  <GenerateUI
+                    status={currentData.card?.template_data[0]?.template_number}
+                    data={{
+                      ...currentData,
+                      is_last_day: !nextData._id,
+                      is_last_week: isLastDay,
+                      status: currentData.card?.template_data[0]?.template_number,
+                      weeksCount: weeksCount,
                     }}
-                    cardNumber={currentData.card_number || ''}
                   />
-                </>
-              ) : null}
+                )}
 
-              {/* ***********************************Navbar End********************** */}
+                {/* ******** ************************** Cards Render UI End********************** */}
 
-              {/* ******** ************************** Cards Render UI Start********************** */}
-              {currentData._id && (
-                <GenerateUI
-                  status={currentData.card?.template_data[0]?.template_number}
-                  data={{
-                    ...currentData,
-                    is_last_day: !nextData._id,
-                    is_last_week: isLastDay,
-                    status: currentData.card?.template_data[0]?.template_number,
-                    weeksCount: weeksCount,
-                  }}
-                />
-              )}
-
-              {/* ******** ************************** Cards Render UI End********************** */}
-
-              {/* ***********************NAVIGATION BACK AND NEXT BUTTON FOR DAYS START**************** */}
-
+                {/* ***********************NAVIGATION BACK AND NEXT BUTTON FOR DAYS START**************** */}
+              </div>
               <div className="dashboard-footer-nav">
                 <div className="footer-nav-inner">
                   {/*****************************************BOTTOM PREVIOUS BUTTON************* */}
@@ -835,7 +836,7 @@ const DailyLearningWeeks = (props) => {
         </div>
       </MasterLayout>
       <Footer />
-    </>
+    </div>
   );
 };
 
