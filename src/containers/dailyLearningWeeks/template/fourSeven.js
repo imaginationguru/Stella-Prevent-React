@@ -92,12 +92,12 @@ const FourSeven = (props) => {
         : []} */}
 
       {/**********************Show Images********************** */}
-      <div style={styles.bottomImages} className="wrap-2line" >
+      <div style={styles.bottomImages} className="f-r" >
         {image && image.length
           ? image
             .map((item, index) => {
               return (
-                <div style={styles.twoImageDiv} key={index}>
+                <div className="f-3" key={index}>
                   <OldCustomImage
                     key={index}
                     src={`${item.image}`}
