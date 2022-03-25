@@ -188,9 +188,9 @@ const SignIn = (componentId) => {
                           onChange={onHandleChange}
                           required
                           maxLength={320}
-                          onPaste={copyPasteHandler}
-                          onCopy={copyPasteHandler}
-                          onCut={copyPasteHandler}
+                        // onPaste={copyPasteHandler}
+                        // onCopy={copyPasteHandler}
+                        // onCut={copyPasteHandler}
                         />
                         <span className="f-icon">
                           <img src={icon01} />
@@ -211,9 +211,9 @@ const SignIn = (componentId) => {
                           onChange={onHandleChange}
                           maxLength={16}
                           required
-                          onPaste={copyPasteHandler}
-                          onCopy={copyPasteHandler}
-                          onCut={copyPasteHandler}
+                        // onPaste={copyPasteHandler}
+                        // onCopy={copyPasteHandler}
+                        // onCut={copyPasteHandler}
                         />
                         <span className="f-icon">
                           <img src={icon02} />
