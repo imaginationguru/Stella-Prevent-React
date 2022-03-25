@@ -92,29 +92,31 @@ const FourSeven = (props) => {
         : []} */}
 
       {/**********************Show Images********************** */}
-      <div style={styles.bottomImages} className="f-r" >
-        {image && image.length
-          ? image
-            .map((item, index) => {
-              return (
-                <div className="f-3" key={index}>
-                  <OldCustomImage
-                    key={index}
-                    src={`${item.image}`}
-                    // src={`${IMAGE_BASE_URL}${item.image}`}
-                    style={{
-                      display: item.image !== '' ? 'flex' : 'none',
-                      height: "120px", width: "120px"
-                    }}
-                    isVisible={true}
-                    animationIn={'fadeInLeft'}
-                    title={item.title}
-                  // title={ReactHtmlParser(item.image)}
-                  />
-                </div>
-              );
-            })
-          : []}
+      <div className="inner-container">
+        <div style={styles.bottomImages} className="f-r" >
+          {image && image.length
+            ? image
+              .map((item, index) => {
+                return (
+                  <div className="f-3" key={index}>
+                    <OldCustomImage
+                      key={index}
+                      src={`${item.image}`}
+                      // src={`${IMAGE_BASE_URL}${item.image}`}
+                      style={{
+                        display: item.image !== '' ? 'flex' : 'none',
+                        height: "120px", width: "120px"
+                      }}
+                      isVisible={true}
+                      animationIn={'fadeInLeft'}
+                      title={item.title}
+                    // title={ReactHtmlParser(item.image)}
+                    />
+                  </div>
+                );
+              })
+            : []}
+        </div>
       </div>
 
 

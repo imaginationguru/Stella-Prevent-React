@@ -1515,6 +1515,10 @@ button.btn-green {
   padding: 0px 15px 15px 15px;
 }
 
+.inner-container {
+    padding: 0 60px;
+}
+
 // slider css
 @media only screen and (max-width: 1200px) {
   .week-list {
@@ -1562,6 +1566,10 @@ button.btn-green {
     display: block;
     overflow: hidden;
   }
+  .inner-container {
+    padding: 0 0;
+}
+
 }
 
 @media only screen and (max-width: 991px) {
