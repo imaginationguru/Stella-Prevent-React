@@ -81,9 +81,11 @@ const LineGraphUI = ({xAxis, yAxis, lable}) => {
         background:
           'linear-gradient(40deg, rgba(69,136,198,0.9) 30%, #49A694 70%)',
         backgroundColor: '#49A694',
+        // width: '100%',
+        // height: '150px',
       }}
-      // height={'150vw'}
-      // width={"1vw"}
+      // height={'200vw'}
+      // width={'1vw'}
     />
   );
 };
@@ -315,7 +317,7 @@ const Report = ({location}) => {
         {isFromCard ? <BackBtn title="Back to Card" /> : <BackToDashboard />}
         <View
           style={{
-            width: '60%',
+            width: DEVICE_WIDTH < 500 ? '80%' : '60%',
             marginLeft: 'auto',
             marginRight: 'auto',
             height: '40%',
@@ -336,7 +338,6 @@ const Report = ({location}) => {
           ) : (
             <LineGraphUI lable={'Daily Sleep Tracker: hours/day'} />
           )}
-
           <Text style={styles.labelText}>Average Daily Mood Report</Text>
           {moodXAxis && moodXAxis.length && moodYAxis && moodYAxis.length ? (
             <LineGraphUI
@@ -347,6 +348,7 @@ const Report = ({location}) => {
           ) : (
             <LineGraphUI lable={'Average Daily Mood  Report'} />
           )}
+
           <Text style={styles.labelText}>Weekly Mood Report</Text>
           {getWeeklySummaryReportData !== undefined &&
           getWeeklySummaryReportData.newMooddataavg &&

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import AppleLogin from 'react-apple-login';
+import {customAlert} from '../../helpers/commonAlerts.web';
 import jwt_decode from 'jwt-decode';
 const AppleLogIn = (props) => {
   let {onSocialLogin = () => {}} = props;
@@ -8,6 +9,9 @@ const AppleLogIn = (props) => {
   const handleResponse = (res) => {
     console.log('apple login response', res);
     if (res.error) {
+      if (res.error.error == 'popup_closed_by_user') {
+        customAlert('Apple login cancelled.', 'error');
+      }
       return;
     } else {
       try {
@@ -45,7 +49,9 @@ const AppleLogIn = (props) => {
         scope={'name email'}
         responseType={'code id_token'}
         responseMode={'form_post'}
-        redirectURI="https://stella-prevent-web.curio-dtx.com/Dashboard"
+        //redirectURI="https://bc53-101-0-49-75.ngrok.io/Dashboard"
+        redirectURI="https://mamalift-web.curiodigitaltx.com/Dashboard"
+        // redirectURI="https://mamalift-qa-web.curio-dtx.com/Dashboard"
         render={(renderProps) => (
           <div
             onClick={renderProps.onClick}

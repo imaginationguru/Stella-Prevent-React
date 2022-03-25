@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import dashboardHeader from '../../assets/images/dashboardHeader/dashboardHeader.png';
 import sleep from '../../assets/images/sleep/sleep.png';
 import activity from '../../assets/images/sleep/activity.png';
@@ -10,7 +10,7 @@ import successTick from '../../assets/images/successTick.svg';
 import past_module from '../../assets/images/dashboardHeader/past_module.png';
 import report from '../../assets/images/dashboardHeader/report.png';
 import lock from '../../assets/images/lock.png';
-import logoWhite from '../../assets/images/logoWhite.svg';
+import logoWhite from '../../assets/images/logoWhite.png';
 
 import GLOBALS from '../../constants';
 import MasterLayout from '../../components/MasterLayout';
@@ -20,20 +20,20 @@ import ProfileHeader from '../../components/common/profileHeader';
 import Footer from '../../components/Footer';
 import profile from '../../assets/images/profile.png';
 import Loader from '../../components/Loader';
-import {getItem} from '../../utils/AsyncUtils';
-import {useDispatch, useSelector} from 'react-redux';
+import { getItem } from '../../utils/AsyncUtils';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '../../actions';
-import {navigatorPush} from '../../config/navigationOptions.web';
+import { navigatorPush } from '../../config/navigationOptions.web';
 import Modal from 'modal-react-native-web';
 import EpdsScreener from '../../components/common/epdsScreener';
-const {COLORS, ACTION_TYPE, FONTS} = GLOBALS;
-const {DARK_GREEN, WHITE} = COLORS;
-import {Dimensions} from 'react-native-web';
+const { COLORS, ACTION_TYPE, FONTS } = GLOBALS;
+const { DARK_GREEN, WHITE } = COLORS;
+import { Dimensions } from 'react-native-web';
 import Header from '../../components/Header';
-import {epdsModalAction} from '../../actions';
+import { epdsModalAction } from '../../actions';
 const DEVICE_WIDTH = Dimensions.get('window').width;
-import {checkIfWeekCanAccess} from '../../helpers/common.web';
-import {customAlert} from '../../helpers/commonAlerts.web';
+import { checkIfWeekCanAccess, detectBrowser } from '../../helpers/common.web';
+import { customAlert } from '../../helpers/commonAlerts.web';
 const Dashboard = () => {
   const [click_week, setClickWeek] = useState(1);
 
@@ -42,18 +42,18 @@ const Dashboard = () => {
   let epdsAssesment = getItem('epdsAssesment');
   let duration = getItem('duration');
   const dispatch = useDispatch();
-  const {data = {}} = useSelector((state) => state);
+  const { data = {} } = useSelector((state) => state);
   const {
     currentActiveCard = [],
     selectedWeek = 1,
     selectedCardId = '',
   } = useSelector((state) => state.moduleOne);
-  const {isEPDSModalShow = true} = useSelector((state) => state.common);
-  const {programData = []} = useSelector((state) => state.authReducer);
-  const {isLoading} = useSelector((state) => state.common);
-  const {loginData = []} = useSelector((state) => state.authReducer);
-  const {trackerStatus = {}} = useSelector((state) => state.moduleOne);
-  const {week, day} = currentActiveCard.length ? currentActiveCard[0] : {};
+  const { isEPDSModalShow = true } = useSelector((state) => state.common);
+  const { programData = [] } = useSelector((state) => state.authReducer);
+  const { isLoading } = useSelector((state) => state.common);
+  const { loginData = [] } = useSelector((state) => state.authReducer);
+  const { trackerStatus = {} } = useSelector((state) => state.moduleOne);
+  const { week, day } = currentActiveCard.length ? currentActiveCard[0] : {};
 
   const lengthToArray = (len = 0) => {
     let temp = [];
@@ -64,45 +64,38 @@ const Dashboard = () => {
     }
     return temp;
   };
-
   useEffect(() => {
-    //console.log('calling dashboard..');
-    /**Once program is bind then get program details content */
-    // dispatch(
-    //   AppActions.bindProgram((cb) => {
     if (getItem('userId') != null) {
       dispatch(AppActions.getProgramById(false));
       dispatch(AppActions.getCurrentActiveCard(false));
     }
-    // }),
-    // );
   }, []);
   useEffect(() => {
     console.log(trackerStatus, 'trackerStatus....');
   }, [trackerStatus]);
-  const TrackersUI = ({title, src, onClick, isComplete}) => {
+  const TrackersUI = ({ title, src, onClick, isComplete }) => {
     console.log(isComplete, 'isComplete....');
 
     return (
       <div
-        style={styles.trackerWrap}
+        style={styles().trackerWrap}
         onClick={onClick}
         className="tracker-option">
         <div className="tracker-desc">
           <div className="tracker-icon">
             <img src={src} />
           </div>
-          <p style={styles.trackerTitle} className="tracker-text">
+          <p style={styles().trackerTitle} className="tracker-text">
             {title}
           </p>
         </div>
         <div
           className="tracker-arrow"
-          style={isComplete ? {width: '30px', height: '30px'} : {}}>
+          style={isComplete ? { width: '30px', height: '30px' } : {}}>
           {isComplete ? (
-            <img style={{width: '100%', height: '100%'}} src={successTick} />
+            <img style={{ width: '100%', height: '100%' }} src={successTick} />
           ) : (
-            <img src={rightArrow} style={{width: '100%', height: '100%'}} />
+            <img src={rightArrow} style={{ width: '100%', height: '100%' }} />
           )}
         </div>
       </div>
@@ -135,8 +128,8 @@ const Dashboard = () => {
             dispatch(AppActions.dashboardModalAction(false));
             setTimeout(() => {
               navigatorPush({
-                screenName: 'DailyLearningWeeks',
-                passProps: {weeksCount: item},
+                screenName: 'DailyLearningModule',
+                passProps: { weeksCount: item },
               });
             }, 1000);
           } else {
@@ -153,7 +146,7 @@ const Dashboard = () => {
       customAlert(
         'Please upgrade your plan to Premium to access content',
         'error',
-        {showCloseButton: true},
+        { showCloseButton: true },
       );
     }
   };
@@ -180,8 +173,8 @@ const Dashboard = () => {
       payload: currentActiveCard.current_week,
     });
     navigatorPush({
-      screenName: 'DailyLearningWeeks',
-      passProps: {isFromDashboard: true},
+      screenName: 'DailyLearningModule',
+      passProps: { isFromDashboard: true },
     });
   };
   return (
@@ -191,7 +184,7 @@ const Dashboard = () => {
         <img src={logoWhite} alt="" />
       </div>
       <ProfileHeader
-        onProfileClick={() => navigatorPush({screenName: 'Profile'})}
+        onProfileClick={() => navigatorPush({ screenName: 'Profile' })}
         showProfileBtn={true}
         showEditIcon={false}
       />
@@ -201,7 +194,7 @@ const Dashboard = () => {
         <div className="v-parent">
           <div className="v-cell-50">
             <div
-              style={styles.dailylearnWrap}
+              style={styles().dailylearnWrap}
               onClick={() => {
                 onDailyLearningClick();
                 //   debugger
@@ -220,24 +213,26 @@ const Dashboard = () => {
                   //   'linear-gradient(180deg, rgba(214, 240, 235, 0) 0%, #FFFFFF 18%)',
                   paddingLeft: 30,
                   cursor: 'pointer',
-                  paddingTop: 15,
-                  paddingBottom: 15,
-                  background: COLORS.WHITE,
+                  paddingTop: 10,
+                  paddingBottom: 10,
+                  backgroundColor: COLORS.WHITE,
                 }}>
                 <p
                   style={{
                     fontWeight: 'bold',
-                    fontSize: 22,
+                    fontSize: 18,
                     fontFamily: FONTS.SEMI_BOLD,
-                    marginBottom: 10,
+                    marginBottom: 0,
+                    lineHeight: '23px',
                   }}>
                   Today’s Daily Learning
                 </p>
                 <p
                   style={{
-                    lineHeight: 0,
+                    lineHeight: '17px',
                     fontSize: 14,
                     fontFamily: FONTS.REGULAR,
+                    margin: 0,
                   }}>
                   Click here to complete today’s learnings
                 </p>
@@ -250,7 +245,7 @@ const Dashboard = () => {
               src={sleep}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({screenName: 'SleepTracker'});
+                navigatorPush({ screenName: 'SleepTracker' });
               }}
               isComplete={trackerStatus.sleepChecked}
             />
@@ -258,7 +253,7 @@ const Dashboard = () => {
               title="What activities have you done?"
               src={activity}
               onClick={() => {
-                navigatorPush({screenName: 'ActivityTracker'});
+                navigatorPush({ screenName: 'ActivityTracker' });
               }}
               isComplete={trackerStatus.activityChecked}
             />
@@ -267,7 +262,7 @@ const Dashboard = () => {
               src={face}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({screenName: 'MoodTracker'});
+                navigatorPush({ screenName: 'MoodTracker' });
               }}
               isComplete={trackerStatus.moodChecked}
             />
@@ -277,7 +272,7 @@ const Dashboard = () => {
               src={report}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({screenName: 'Report'});
+                navigatorPush({ screenName: 'Report' });
               }}
             />
             <TrackersUI
@@ -285,7 +280,7 @@ const Dashboard = () => {
               src={past_module}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({screenName: 'PastModule'});
+                navigatorPush({ screenName: 'PastModule' });
                 window.sessionStorage.removeItem('value');
                 window.sessionStorage.removeItem('day');
                 window.sessionStorage.removeItem('week');
@@ -336,11 +331,11 @@ const Dashboard = () => {
 
                   <span
                     style={{
-                      ...styles.weekTitle,
+                      ...styles().weekTitle,
                       color: selectedWeek === item ? '#fff' : '#000',
                     }}>
                     Week <br />
-                    <span style={styles.weekNumber}>{item}</span>
+                    <span style={styles().weekNumber}>{item}</span>
                   </span>
                 </div>
               </div>
@@ -363,7 +358,7 @@ const Dashboard = () => {
               }}>
               <p
                 style={{
-                  ...styles.weekNumber,
+                  ...styles().weekNumber,
                   fontSize: 15,
                   margin: 0,
                 }}>
@@ -381,68 +376,70 @@ const Dashboard = () => {
 };
 export default Dashboard;
 
-const styles = {
-  weekNumber: {
-    alignSelf: 'center',
-    justifyContent: 'center',
-    display: 'flex',
-    fontSize: 25,
-    fontWeight: '700',
-    cursor: 'pointer',
-  },
-  weekTitle: {paddingTop: 10, fontSize: 15, fontWeight: '700'},
-  trackerWrap: {
-    display: 'flex',
-    //  justifyContent: 'space-around',
-    borderRadius: 10,
-    //height: 50,
-    border: `2px solid ${DARK_GREEN}`,
-    paddingTop: 15,
-    paddingBottom: 15,
-    marginBottom: 15,
-    cursor: 'pointer',
-    //boxShadow: '1px 3px 1px #D6F0EB',
-    boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
-  },
-  trackerTitle: {
-    fontWeight: 'bold',
-    display: 'flex',
-    alignSelf: 'center',
-    marginBottom: 0,
-    fontFamily: FONTS.SEMI_BOLD,
-  },
-  profileWrapper: {
-    //height: '30%',
-    border: `2px solid ${DARK_GREEN}`,
-    width: '80%',
-    //margin: '0 auto',
-    position: 'absolute',
-    top: 30,
-    left: '10%',
-    boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
-    background:
-      'linear-gradient(161.44deg, #CEE6E1 55.96%, #A1CDC4 78.08%, #97BECE 95.87%)',
-    opacity: 0.8,
-    borderRadius: 20,
-    borderShadow: ' 0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
-  },
-  dailylearnWrap: {
-    background:
-      'linear-gradient(180deg, rgba(214, 240, 235, 0) 0%, #FFFFFF 73.96%) top right',
-    // background: 'white',
-    backgroundImage: `url(${stellaGirlGif})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    width: '100%',
-    height: '95%',
-    borderRadius: 20,
-    // marginTop: 30,
-    marginBottom: 30,
-    position: 'relative',
-    // border: '1px solid blue',
-    boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
-    cursor: 'pointer',
-    backgroundPosition: '50%',
-    // backgroundPosition: 'center left',
-  },
+export const styles = () => {
+  return {
+    weekNumber: {
+      alignSelf: 'center',
+      justifyContent: 'center',
+      display: 'flex',
+      fontSize: 25,
+      fontWeight: '700',
+      cursor: 'pointer',
+    },
+    weekTitle: { paddingTop: 10, fontSize: 15, fontWeight: '700' },
+    trackerWrap: {
+      display: 'flex',
+      //  justifyContent: 'space-around',
+      borderRadius: 10,
+      //height: 50,
+      border: `2px solid ${DARK_GREEN}`,
+      paddingTop: 15,
+      paddingBottom: 15,
+      marginBottom: 15,
+      cursor: 'pointer',
+      //boxShadow: '1px 3px 1px #D6F0EB',
+      boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
+    },
+    trackerTitle: {
+      fontWeight: 'bold',
+      display: 'flex',
+      alignSelf: 'center',
+      marginBottom: 0,
+      fontFamily: FONTS.SEMI_BOLD,
+    },
+    profileWrapper: {
+      //height: '30%',
+      border: `2px solid ${DARK_GREEN}`,
+      width: '80%',
+      //margin: '0 auto',
+      position: 'absolute',
+      top: 30,
+      left: '10%',
+      boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
+      background:
+        'linear-gradient(161.44deg, #CEE6E1 55.96%, #A1CDC4 78.08%, #97BECE 95.87%)',
+      opacity: 0.8,
+      borderRadius: 20,
+      borderShadow: ' 0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
+    },
+    dailylearnWrap: {
+      background:
+        'linear-gradient(180deg, rgba(214, 240, 235, 0) 0%, #FFFFFF 73.96%) top right',
+      // background: 'white',
+      backgroundImage: `url(${stellaGirlGif})`,
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+      width: '100%',
+      height: '95%',
+      borderRadius: 20,
+      // marginTop: 30,
+      marginBottom: 30,
+      position: 'relative',
+      // border: '1px solid blue',
+      boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
+      cursor: 'pointer',
+      backgroundPosition: '50%',
+      // backgroundPosition: 'center left',
+    },
+  };
 };

@@ -10,6 +10,7 @@ import React, {useState, useEffect} from 'react';
 //import brand from '../../../assets/images/brand.svg';
 import powerBy from '../../../assets/images/powerby.png';
 import logo from '../../../assets/images/stella_logo.png';
+import logoWhite from '../../../assets/images/logoWhite.png';
 import rightCover from '../../../assets/images/candle.png';
 import icon01 from '../../../assets/images/icon01.svg';
 import icon02 from '../../../assets/images/icon02.svg';
@@ -43,14 +44,6 @@ const SignIn = (componentId) => {
   const dispatch = useDispatch();
   const {quotes = {}} = useSelector((state) => state.moduleOne);
   //console.log(quotes, 'quotes.......');
-  // useEffect(() => {
-  //   console.log("use effect")
-  //   dispatch(AppActions.getQuoteData(res => {
-  //     console.log("get Quote data res",res);
-  //     setQuoteText(res[0].qText);
-  //     setQuoteImage(res[0].qImg);
-  //   }));
-  // });
 
   const onHandleChange = (e) => {
     const {name, value} = e.target;
@@ -150,7 +143,7 @@ const SignIn = (componentId) => {
           <div className="login-right">
             <div className="login-content">
               <div className="logo-view">
-                <img src={logo} className="logo-img" />
+                <img src={logoWhite} className="logo-img" />
               </div>
               <h2 className="heading">{ts('LOGIN')}</h2>
               <div className="formRow">
@@ -171,7 +164,7 @@ const SignIn = (componentId) => {
                   </div>
                 </div>
               </div>
-              <div className="formRow">
+              {/* <div className="formRow">
                 <div className="w100">
                   <div className="formSubmit">
                     <AppleLoginComponent
@@ -179,7 +172,7 @@ const SignIn = (componentId) => {
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
               <p style={commonStyles.socialError}>{socialError}</p>
               <div className="login-form">
                 <form noValidate onSubmit={(e) => loginHandler(e)}>
@@ -195,9 +188,9 @@ const SignIn = (componentId) => {
                           onChange={onHandleChange}
                           required
                           maxLength={320}
-                          onPaste={copyPasteHandler}
-                          onCopy={copyPasteHandler}
-                          onCut={copyPasteHandler}
+                        // onPaste={copyPasteHandler}
+                        // onCopy={copyPasteHandler}
+                        // onCut={copyPasteHandler}
                         />
                         <span className="f-icon">
                           <img src={icon01} />
@@ -218,9 +211,9 @@ const SignIn = (componentId) => {
                           onChange={onHandleChange}
                           maxLength={16}
                           required
-                          onPaste={copyPasteHandler}
-                          onCopy={copyPasteHandler}
-                          onCut={copyPasteHandler}
+                        // onPaste={copyPasteHandler}
+                        // onCopy={copyPasteHandler}
+                        // onCut={copyPasteHandler}
                         />
                         <span className="f-icon">
                           <img src={icon02} />

@@ -10,6 +10,7 @@ import {
   Modal,
   TouchableOpacity,
   Image,
+  Linking,
 } from 'react-native';
 import GLOBALS from '../../../constants';
 import Header from '../../../components/Header';
@@ -37,7 +38,7 @@ import {
   CreditCardInput,
 } from 'react-square-web-payments-sdk';
 import {getItem} from '../../../utils/AsyncUtils';
-const {COLORS, FONTS} = GLOBALS;
+const {COLORS, FONTS, IMAGE_BASE_URL} = GLOBALS;
 const {
   BLUR,
   WHITE,
@@ -47,6 +48,8 @@ const {
   BLACK,
   DARK_GREEN,
 } = COLORS;
+
+import BackBtn from '../../../components/common/backbtn';
 import {useSelector, useDispatch} from 'react-redux';
 import * as AppActions from '../../../actions';
 import {validateEmail, validateIsEmpty} from '../../../utils/validations';
@@ -56,7 +59,9 @@ const Payment = (props) => {
   let premiumPrice = props.location.state.price;
   const [price, setPrice] = useState(premiumPrice);
   const [email, setEmail] = useState(loginData?.user?.email);
-  const [name, setName] = useState(loginData?.user?.firstName +" "+ loginData?.user?.lastName);
+  const [name, setName] = useState(
+    loginData?.user?.firstName + ' ' + loginData?.user?.lastName,
+  );
   const [cardNumber, setCardNumber] = useState('');
   const [expDate, setExpDate] = useState('');
   const [cvc, setCvc] = useState('');
@@ -74,6 +79,11 @@ const Payment = (props) => {
 
   const dispatch = useDispatch();
   const {isLoading} = useSelector((state) => state.common);
+  useEffect(() => {
+    console.log(loginData, 'loginData........');
+    setName(loginData?.user?.firstName + ' ' + loginData?.user?.lastName);
+    setEmail(loginData?.user?.email);
+  }, [loginData]);
   const onSubmit = () => {
     if (
       validateIsEmpty(name) ||
@@ -139,39 +149,18 @@ const Payment = (props) => {
         showEditIcon={false}
       />
       {isLoading ? <Loader /> : null}
+      <BackBtn title={'Back'} btnStyle={{paddingLeft: '20px'}} />
       <View style={styles.innerContainer}>
-        <View style={styles.backBtn}>
-          <TouchableOpacity
-            style={{flexDirection: 'row', alignItems: 'center'}}
-            onPress={() => navigatorPop()}>
-            <Image
-              resizeMode={'contain'}
-              source={back}
-              style={{width: '1.3vw', height: '1.3vw'}}
-            />
-            <Text
-              style={{
-                marginLeft: '1vw',
-                fontFamily: FONTS.SEMI_BOLD,
-                fontSize: '1.5vw',
-                fontStyle: 'normal',
-                fontWeight: '800',
-                color: COLORS.LIGHT_BLACK,
-                alignItems: 'center',
-                textAlignVertical: 'center',
-              }}>
-              Back
-            </Text>
-          </TouchableOpacity>
-        </View>
         <View style={styles.innerLeft}>
-          {/* <Image source={logo} style={{ width: 150, height: 50 }} /> */}
-          <View style={{marginTop: '4vw', marginHorizontal: '7.5vw'}}>
-            <View style={{marginLeft: '3vw', marginTop: '3.5vw'}}>
+          <View style={{marginTop: '20px', marginHorizontal: '80px'}}>
+            <View
+              style={{
+                alignItems: 'center',
+              }}>
               <Text
                 style={{
-                  fontFamily: 'HKGrostesk',
-                  fontSize: '1.5vw',
+                  fontFamily: FONTS.SEMI_BOLD,
+                  fontSize: '22px',
                   fontStyle: 'normal',
                   fontWeight: '500',
                   color: '#697386',
@@ -181,8 +170,8 @@ const Payment = (props) => {
               <Text
                 style={{
                   marginTop: '1vw',
-                  fontFamily: 'HKGrostesk',
-                  fontSize: '2.2vw',
+                  fontFamily: FONTS.SEMI_BOLD,
+                  fontSize: '20px',
                   fontStyle: 'normal',
                   fontWeight: '600',
                   color: '#1A1F36',
@@ -192,18 +181,31 @@ const Payment = (props) => {
             </View>
             <View
               style={{
-                marginLeft: '5vw',
+                //  marginLeft: '5vw',
                 marginTop: '3vw',
                 alignItems: 'center',
               }}>
-              <Image source={book} style={{height: 222, width: 222}} />
-              <View style={{flexDirection: 'row', marginTop: '10vw'}}>
+              <Image source={book} style={{height: '100px', width: '100px'}} />
+              <View style={{flexDirection: 'row', marginTop: '30px'}}>
                 <View style={styles.verticalLine} />
 
-                <TouchableOpacity style={{marginHorizontal: '1vw'}}>
+                <TouchableOpacity
+                  onPress={() =>
+                    window.open(
+                      `${IMAGE_BASE_URL}upload/acknowldgement.pdf`,
+                      '_blank',
+                    )
+                  }
+                  style={{marginHorizontal: '10px'}}>
                   <Text style={styles.terms}>Terms</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    window.open(
+                      `${IMAGE_BASE_URL}upload/PRIVACY_POLICY0203_stella.pdf`,
+                      '_blank',
+                    )
+                  }>
                   <Text style={styles.terms}>Privacy</Text>
                 </TouchableOpacity>
               </View>
@@ -215,7 +217,7 @@ const Payment = (props) => {
             type="email"
             labelStyle={{
               color: COLORS.text_Gray,
-              fontSize: '1vw',
+              fontSize: '12px',
               paddingBottom: '5px',
             }}
             inputStyle={{padding: 10, height: 40}}
@@ -227,7 +229,7 @@ const Payment = (props) => {
           <Input
             labelStyle={{
               color: COLORS.text_Gray,
-              fontSize: '1vw',
+              fontSize: '12px',
               paddingBottom: '5px',
             }}
             type=""
@@ -294,25 +296,23 @@ const styles = StyleSheet.create({
   innerContainer: {
     flex: 1,
     flexDirection: 'row',
-    padding: '2%',
+    flexWrap: 'wrap',
+    padding: '15px',
+    justifyContent: 'center',
   },
   innerLeft: {
-    flex: 0.5,
+    marginBottom: '40px',
+    justifyContent: 'center',
   },
-  innerRight: {
-    flex: 0.5,
-    paddingHorizontal: '7.5vw',
-    marginTop: '5%',
-    //justifyContent:"center"
-  },
+  innerRight: {},
   horizontalLine: {
     height: 1,
     width: '15.5vw',
     backgroundColor: '#3c42571f',
   },
   verticalLine: {
-    height: 20,
-    width: 2,
+    height: '25px',
+    width: '2px',
     backgroundColor: '#8792A2',
   },
   paypalBox: {
@@ -341,7 +341,8 @@ const styles = StyleSheet.create({
     height: 40,
   },
   terms: {
-    fontSize: '1vw',
+    paddingTop: '3px',
+    fontSize: '13px',
     fontStyle: 'normal',
     fontWeight: '500',
     color: '#8792A2',

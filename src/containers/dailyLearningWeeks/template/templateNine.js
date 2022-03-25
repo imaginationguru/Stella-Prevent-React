@@ -97,6 +97,7 @@ const TemplateNine = (props) => {
 
   const onSaveExperience = (e) => {
     e.preventDefault();
+    console.log('on save experienc');
     const params = {
       user_id: getItem('userId'),
       user_card_id: props._id,
@@ -108,11 +109,19 @@ const TemplateNine = (props) => {
         },
       ],
     };
-    if (experience.length === 0) {
-      setExperienceError('Please complete the exercise!');
-    } else if (experience !== '') {
+
+    if (experience !== '' && experience !== null) {
+      console.log('experien if', experience !== '', experience);
       dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+    } else {
+      setExperienceError('Please complete the exercise!');
     }
+    // if (experience && experience.length === 0) {
+    //   console.log('experien lenght', experience.length);
+    //   setExperienceError('Please complete the exercise!');
+    // } else if (experience !== '') {
+    //   dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+    // }
     /* 
      if (userAssessmentData && userAssessmentData.length) {
        const params = {
@@ -256,9 +265,11 @@ const TemplateNine = (props) => {
                     key={index}
                     src={`${IMAGE_BASE_URL}${item.image}`}
                     style={{
-                      width: '120px',
-                      height: '80px',
+                      // width: '120px',
+                      // height: '80px',
                       display: item.image !== '' ? 'flex' : 'none',
+                      width: '120px',
+                      flex: '0 0 auto',
                     }}
                   />
                 );

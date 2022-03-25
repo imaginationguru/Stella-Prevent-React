@@ -9,6 +9,7 @@ import {
   CardDescription,
   CardContent,
   CustomImage,
+  OldCustomImage,
 } from '../../../components/Cards';
 import {Animated} from 'react-animated-css';
 const {IMAGE_BASE_URL} = GLOBALS;
@@ -68,7 +69,7 @@ const ThirtySeven = (props) => {
               return (
                 <Animated isVisible={true} animationIn={'fadeInUp'}>
                   <div style={styles.wrapper} key={i}>
-                    <CustomImage
+                    <OldCustomImage
                       src={`${IMAGE_BASE_URL}${item.image}`}
                       style={{
                         ...styles.customImageStyle,

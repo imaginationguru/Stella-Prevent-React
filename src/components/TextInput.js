@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
   },
   error: {
     fontStyle: FONTS.NEW_REGULAR,
-    fontSize: '0.8vw',
+    fontSize: '11px',
     padding: 1,
     color: ERROR,
   },

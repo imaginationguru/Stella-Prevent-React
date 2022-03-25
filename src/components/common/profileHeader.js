@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useReducer} from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import {
   View,
   Text,
@@ -10,20 +10,20 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import GLOBALS from '../../constants';
-import {navigatortoStart} from '../../config/navigationOptions.web';
+import { navigatortoStart } from '../../config/navigationOptions.web';
 import dashboardHeader from '../../assets/images/dashboardHeader/dashboardHeader.png';
 import profile from '../../assets/images/profile.png';
 import cancel from '../../assets/images/cancel.png';
 import edit from '../../assets/images/edit.png';
-const {COLORS, FONTS, IMAGE_BASE_URL} = GLOBALS;
-const {DARK_GREEN, WHITE, GreenForSlider} = COLORS;
-import {getItem} from '../../utils/AsyncUtils';
-import {useDispatch, useSelector} from 'react-redux';
+const { COLORS, FONTS, IMAGE_BASE_URL } = GLOBALS;
+const { DARK_GREEN, WHITE, GreenForSlider } = COLORS;
+import { getItem } from '../../utils/AsyncUtils';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '../../actions';
 import Dropzone from 'react-dropzone';
-import {normalize} from '../../utils/Helper';
-import Slider, {SliderThumb} from '@mui/material/Slider';
-import {styled} from '@mui/material/styles';
+import { normalize } from '../../utils/Helper';
+import Slider, { SliderThumb } from '@mui/material/Slider';
+import { styled } from '@mui/material/styles';
 
 // import {MDCSlider} from '../../updatedNodeModules/@material/slider';
 
@@ -31,18 +31,25 @@ import {styled} from '@mui/material/styles';
 
 // @use "../slider/styles";
 
-const DEVICE_WIDTH = Dimensions.get('window').width;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
+// const DEVICE_WIDTH = Dimensions.get('window').width;
+// const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 const ProfileHeader = (props) => {
-  const {loginData = {}, profileImg = ''} = useSelector(
+  console.log('ProfileHeader..');
+  const { loginData = {}, profileImg = '' } = useSelector(
     (state) => state.authReducer,
   );
   const moduleOne = useSelector((state) => state.moduleOne);
-  const {currentActiveCard = {}} = useSelector((state) => state.moduleOne);
+  const { currentActiveCard = {} } = useSelector((state) => state.moduleOne);
   console.log('profile image user', profileImg);
   const [profileImage, setProfilePhoto] = useState('');
   const [selectedWeek, setSelectedWeek] = useState(1);
+  const [DEVICE_WIDTH, setDimensionsW] = useState(
+    Dimensions.get('window').width,
+  );
+  const [DEVICE_HEIGHT, setDimensionsH] = useState(
+    Dimensions.get('window').height,
+  );
   let firstName = getItem('firstName');
   let lastName = getItem('lastName');
   const dispatch = useDispatch();
@@ -68,7 +75,20 @@ const ProfileHeader = (props) => {
       setProfilePhoto(`${IMAGE_BASE_URL}${profileImg}`);
     }
   }, [profileImg, moduleOne?.currentActiveCard?.current_week]);
-
+  useEffect(() => {
+    Dimensions.addEventListener('change', ({ window, screen }) => {
+      console.log('device change profile', window);
+      setDimensionsW(window.width);
+      setDimensionsH(window.height);
+    });
+    return () => {
+      console.log('unmoiunt profile......');
+      Dimensions.removeEventListener('change', () => {
+        console.log('event removed');
+      });
+      // subscription?.remove();
+    };
+  }, []);
   const marks = [
     {
       value: 20,
@@ -88,16 +108,17 @@ const ProfileHeader = (props) => {
   ];
 
   return (
-    <View style={styles.outerContainer}>
+    <View style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).outerContainer}>
       <ImageBackground
         resizeMode="cover"
         // source={dashboardHeader}
-        style={styles.bgImage}>
+        style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).bgImage}>
         <div className="pWrap">
-          <View style={styles.profileWrapp}>
-            <View style={styles.profileWrapLeft}>
-              <View style={styles.profileConatiner}>
-                <View style={styles.profileWrap}>
+          <View style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).profileWrapp}>
+            <View style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).profileWrapLeft}>
+              <View
+                style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).profileConatiner}>
+                <View style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).profileWrap}>
                   <Image
                     resizeMode={'cover'}
                     source={profileImage == '' ? profile : profileImage}
@@ -114,7 +135,7 @@ const ProfileHeader = (props) => {
                       onDrop={(acceptedFiles) => {
                         onEditClick(acceptedFiles[0]);
                       }}>
-                      {({getRootProps, getInputProps}) => (
+                      {({ getRootProps, getInputProps }) => (
                         <section>
                           <div
                             style={{
@@ -144,32 +165,39 @@ const ProfileHeader = (props) => {
                   )}
                 </View>
               </View>
-              <View style={styles.textConatiner}>
+              <View style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).textConatiner}>
                 <View>
-                  <Text style={styles.username}>
+                  <Text style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).username}>
                     {firstName} {lastName}
                   </Text>
                 </View>
                 {showProfileBtn && (
                   <TouchableOpacity
                     onPress={() => onProfileClick()}
-                    style={styles.btn}>
-                    <Text style={styles.btnTxt}>Profile</Text>
+                    style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).btn}>
+                    <Text style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).btnTxt}>
+                      Profile
+                    </Text>
                   </TouchableOpacity>
                 )}
-                <View style={{flexDirection: 'column'}}>
+                <View style={{ flexDirection: 'column' }}>
                   <TouchableOpacity
-                    style={styles.btn}
+                    style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).btn}
                     onPress={() => {
                       dispatch(AppActions.logout());
                     }}>
-                    <Text style={[styles.btnTxtLogout]}>Logout</Text>
+                    <Text
+                      style={[
+                        styles(DEVICE_WIDTH, DEVICE_HEIGHT).btnTxtLogout,
+                      ]}>
+                      Logout
+                    </Text>
                   </TouchableOpacity>
 
                   {showEditIcon && profileImg != null && profileImg != '' && (
                     <TouchableOpacity
                       style={[
-                        styles.btn,
+                        styles(DEVICE_WIDTH, DEVICE_HEIGHT).btn,
                         {
                           backgroundColor: 'rgba(255, 0, 0, 0.78)',
                           height: 'auto',
@@ -179,51 +207,23 @@ const ProfileHeader = (props) => {
                       onPress={() => {
                         onDeleteClick();
                       }}>
-                      <Text style={[styles.btnTxtLogout]}>Delete Image</Text>
+                      <Text
+                        style={[
+                          styles(DEVICE_WIDTH, DEVICE_HEIGHT).btnTxtLogout,
+                        ]}>
+                        Delete Image
+                      </Text>
                     </TouchableOpacity>
                   )}
                 </View>
               </View>
             </View>
-            <View style={styles.profileWrapRight}>
+            <View style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).profileWrapRight}>
               <View>
-                <Text style={styles.username}>
-                  Week {moduleOne?.currentActiveCard?.current_week}
+                <Text style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).username}>
+                  Module {moduleOne?.currentActiveCard?.current_week}
                 </Text>
               </View>
-              {/* <h4>Add Range Slider Here</h4> */}
-              {/* <div class="mdc-slider mdc-slider--discrete mdc-slider--tick-marks ">
-                <input
-                  class="mdc-slider__input"
-                  type="range"
-                  min="0"
-                  max="100"
-                  value="50"
-                  name="volume"
-                  aria-label="Continuous slider demo"
-                />
-                <div class="mdc-slider__track">
-                  <div class="mdc-slider__track--inactive"></div>
-                  <div class="mdc-slider__track--active">
-                    <div class="mdc-slider__track--active_fill mdc-slider_thumbColor"></div>
-                  </div>
-                  <div class="mdc-slider__tick-marks">
-                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
-                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
-                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
-                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
-                    <div class="mdc-slider__tick-mark--active mdc-slider_thumbColorActive"></div>
-                  </div>
-                </div>
-                <div
-                  class="mdc-slider__thumb"
-                  // style="left:calc(30%-24px)"
-                  // style={{left: calc('24px')}}
-                  // style={{left: normalize(setRange())}}
-                >
-                  <div class="mdc-slider__thumb-knob mdc-slider_thumbColor"></div>
-                </div>
-              </div> */}
 
               <Slider
                 track="inverted"
@@ -259,131 +259,129 @@ const ProfileHeader = (props) => {
 };
 
 export default ProfileHeader;
-const styles = StyleSheet.create({
-  outerContainer: {
-    width: '100%',
-    // height: DEVICE_WIDTH > 767 ? '15vw' : '320px',
-    paddingTop: '30px',
-    paddingBottom: '30px',
-  },
-  profileWrapper: {
-    boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
-    background:
-      'linear-gradient(161.44deg, #CEE6E1 55.96%, #A1CDC4 78.08%, #97BECE 95.87%)',
-    border: `2px solid ${DARK_GREEN}`,
-    width: '80%',
-    position: 'static',
-    // top: 30,
-    // left: '10%',
-    // backgroundColor: '#ffffff',
-    opacity: 0.8,
-    borderRadius: 20,
-    flexDirection: 'row',
-    padding: '1vw',
-    flexWrap: 'wrap',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  },
-  profileConatiner: {
-    flex: DEVICE_WIDTH > 767 ? '0 0 auto' : '0 0 100%',
-    alignItems: 'center',
-  },
-  profileWrap: {
-    width: DEVICE_WIDTH > 767 ? '11vw' : '175px',
-  },
-  edit: {
-    position: 'absolute',
-    width: '3.5vw',
-    height: '3.5vw',
-    right: '1.8vw',
-    bottom: 0,
-  },
-  username: {
-    fontSize: DEVICE_WIDTH > 767 ? '2.9vw' : '22px',
-    fontFamily: FONTS.SEMI_BOLD,
-    // font-style: normal;
-    // font-weight: bold;
-    color: DARK_GREEN,
-    // margin-bottom: 0;
-    textAlign: DEVICE_WIDTH > 767 ? 'left' : 'center',
-  },
-  btn: {
-    backgroundColor: '#C4C4C4',
-    width: DEVICE_WIDTH > 767 ? '10vw' : '80px',
-    borderRadius: 5,
-    height: DEVICE_WIDTH > 767 ? '2.2vw' : '30px',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: DEVICE_WIDTH > 767 ? '' : 'auto',
-    marginTop: '1vw',
-  },
-  btnTxt: {
-    color: DARK_GREEN,
-    fontFamily: FONTS.SEMI_BOLD,
-    fontSize: DEVICE_WIDTH > 767 ? '1.3vw' : '16px',
-  },
-  btnLogout: {
-    backgroundColor: '#979797',
-    width: '18%',
-    borderRadius: 5,
-    height: '1.7vw',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: '1vw',
-  },
-  btnTxtLogout: {
-    color: COLORS.HEADING_BLACK,
-    fontFamily: FONTS.SEMI_BOLD,
-    fontSize: DEVICE_WIDTH > 767 ? '1.3vw' : '16px',
-    textAlign: 'center',
-  },
-  textConatiner: {
-    flex: DEVICE_WIDTH > 767 ? '1 1 auto' : '0 0 100%',
-  },
-  titleStyle: {
-    fontStyle: FONTS.NEW_REGULAR,
-    fontSize: '1.2vw',
-    textAlign: 'center',
-  },
-  bgImage: {
-    width: '100%',
-    height: '100%',
-  },
-  profileWrapp: {
-    width: '100%',
-    flex: '0 0 100%',
-    display: 'flex',
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-  },
-  profileWrapLeft: {
-    flex: DEVICE_WIDTH > 767 ? '0 0 50%' : '0 0 100%',
-    display: 'flex',
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-  },
-  profileWrapRight: {
-    flex: DEVICE_WIDTH > 767 ? '0 0 50%' : '0 0 100%',
-    padding: 15,
-  },
+export const styles = (DEVICE_WIDTH, DEVICE_HEIGHT) => {
+  //const styles = StyleSheet.create({
+  return StyleSheet.create({
+    outerContainer: {
+      width: '100%',
+      paddingTop: '30px',
+      paddingBottom: '30px',
+    },
+    // profileWrapper: {
+    //   boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
+    //   background:
+    //     'linear-gradient(161.44deg, #CEE6E1 55.96%, #A1CDC4 78.08%, #97BECE 95.87%)',
+    //   border: `2px solid ${DARK_GREEN}`,
+    //   width: '80%',
+    //   position: 'static',
 
-  sliderheader: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingLeft: '24px',
-    paddingRight: '24px',
-  },
-  weektitle: {
-    fontSize: DEVICE_WIDTH > 767 ? '2.2vw' : '22px',
-    fontFamily: FONTS.SEMI_BOLD,
-    color: DARK_GREEN,
-  },
-  alltitle: {
-    fontSize: DEVICE_WIDTH > 767 ? '1.5vw' : '16px',
-    fontFamily: FONTS.SEMI_BOLD,
-    color: DARK_GREEN,
-  },
-});
+    //   opacity: 0.8,
+    //   borderRadius: 20,
+    //   flexDirection: 'row',
+    //   padding: '1vw',
+    //   flexWrap: 'wrap',
+    //   marginLeft: 'auto',
+    //   marginRight: 'auto',
+    // },
+    profileConatiner: {
+      flex: DEVICE_WIDTH > 767 ? '0 0 auto' : '0 0 100%',
+      alignItems: 'center',
+    },
+    profileWrap: {
+      width: DEVICE_WIDTH > 767 ? '11vw' : '175px',
+    },
+    edit: {
+      position: 'absolute',
+      width: '3.5vw',
+      height: '3.5vw',
+      right: '1.8vw',
+      bottom: 0,
+    },
+    username: {
+      fontSize: DEVICE_WIDTH > 767 ? '2.9vw' : '22px',
+      fontFamily: FONTS.SEMI_BOLD,
+
+      color: DARK_GREEN,
+      textAlign: DEVICE_WIDTH > 767 ? 'left' : 'center',
+    },
+    btn: {
+      backgroundColor: '#C4C4C4',
+      width: DEVICE_WIDTH > 767 ? '10vw' : '80px',
+      borderRadius: 5,
+      height: DEVICE_WIDTH > 767 ? '2.2vw' : '30px',
+      alignItems: 'center',
+      justifyContent: 'center',
+      margin: DEVICE_WIDTH > 767 ? '' : 'auto',
+      marginTop: '1vw',
+    },
+    btnTxt: {
+      color: DARK_GREEN,
+      fontFamily: FONTS.SEMI_BOLD,
+      fontSize: DEVICE_WIDTH > 767 ? '1.3vw' : '16px',
+    },
+    btnLogout: {
+      backgroundColor: '#979797',
+      width: '18%',
+      borderRadius: 5,
+      height: '1.7vw',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: '1vw',
+    },
+    btnTxtLogout: {
+      color: COLORS.HEADING_BLACK,
+      fontFamily: FONTS.SEMI_BOLD,
+      fontSize: DEVICE_WIDTH > 767 ? '1.3vw' : '16px',
+      textAlign: 'center',
+    },
+    textConatiner: {
+      flex: DEVICE_WIDTH > 767 ? '1 1 auto' : '0 0 100%',
+    },
+    titleStyle: {
+      fontStyle: FONTS.NEW_REGULAR,
+      fontSize: '1.2vw',
+      textAlign: 'center',
+    },
+    bgImage: {
+      width: '100%',
+      height: '100%',
+    },
+    profileWrapp: {
+      width: '100%',
+      flex: '0 0 100%',
+      display: 'flex',
+      flexWrap: 'wrap',
+      flexDirection: 'row',
+    },
+    profileWrapLeft: {
+      flex: DEVICE_WIDTH > 767 ? '0 0 50%' : '0 0 100%',
+      display: 'flex',
+      flexWrap: 'wrap',
+      flexDirection: 'row',
+    },
+    profileWrapRight: {
+      flex: DEVICE_WIDTH > 767 ? '0 0 50%' : '0 0 100%',
+      padding: 15,
+    },
+
+    sliderheader: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'space-between',
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingLeft: '24px',
+      paddingRight: '24px',
+    },
+    weektitle: {
+      fontSize: DEVICE_WIDTH > 767 ? '2.2vw' : '22px',
+      fontFamily: FONTS.SEMI_BOLD,
+      color: DARK_GREEN,
+    },
+    alltitle: {
+      fontSize: DEVICE_WIDTH > 767 ? '1.5vw' : '16px',
+      fontFamily: FONTS.SEMI_BOLD,
+      color: DARK_GREEN,
+    },
+  });
+};

@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import GLOBALS from '../../../constants';
 import whiteHeart from '../../../assets/images/whiteHeart@3x.png';
 import heart from '../../../assets/images/heart@3x.png';
 import commentImg from '../../../assets/images/comment@3x.png';
 import Rating from 'react-rating';
-import {Modal, TouchableOpacity} from 'react-native';
+import {Modal, TouchableOpacity, Dimensions} from 'react-native';
 import commonStyles from '../commonStyles';
 import {translate as ts} from '../../../i18n/translate';
 import blackStar from '../../../assets/images/blackStar.png';
@@ -14,7 +14,6 @@ import {getItem} from '../../../utils/AsyncUtils';
 import * as AppActions from '../../../actions';
 import {useDispatch, useSelector} from 'react-redux';
 import leftArrow from '../../../assets/images/leftArrow.svg';
-import header1 from '../../../assets/images/BANNER-1.gif';
 import menu from '../../../assets/images/menu.svg';
 import Menu from '../../../components/Menu';
 import week1 from '../../../assets/images/Week1.svg';
@@ -26,9 +25,9 @@ import {
   CardDescription,
   CardContent,
 } from '../../../components/Cards';
-const {COLORS} = GLOBALS;
+const {COLORS, FONTS} = GLOBALS;
 const {LIGHT_GRAY} = COLORS;
-
+const DEVICE_WIDTH = Dimensions.get('window').width;
 const TwentyTwo = (props) => {
   const [rating, setRating] = useState(0);
   const [like, setLike] = useState(false);
@@ -46,8 +45,7 @@ const TwentyTwo = (props) => {
     week,
     showExercises,
   } = props.card;
-  const {weeksCount} = props;
-  console.log(props, 'props.......');
+
   const dispatch = useDispatch();
   const {userRatingData = []} = useSelector((state) => state.moduleOne);
   const {isDashboardModal} = useSelector((state) => state.common);
@@ -66,7 +64,6 @@ const TwentyTwo = (props) => {
   }, []);
 
   const getDataSet = (data, type) => {
-    console.log(data, 'data....... comnt', type);
     if (type === 'LIKE') {
       setLike(data);
     }
@@ -79,13 +76,10 @@ const TwentyTwo = (props) => {
   };
   useEffect(() => {
     if (userRatingData.length) {
-      // console.log(week, 'weeekkkk', weeksCount);
-      //const {comments, star, isLiked, _id} = userRatingData[0];
+      let week_rating = userRatingData.filter((data) => {
+        return data.week == props.week;
+      });
 
-      let week_rating = userRatingData.filter(
-        (data) => data.week == weeksCount,
-      );
-      //  console.log(week_rating, 'filetrr');
       if (week_rating.length > 0) {
         const {comments, star, isLiked, _id} = week_rating[0];
         getDataSet(isLiked, 'LIKE');
@@ -96,7 +90,6 @@ const TwentyTwo = (props) => {
         getDataSet(false, 'LIKE');
         getDataSet(null, 'STAR');
         getDataSet([], 'COMMENT');
-        //setUpdateId(_id);
       }
     }
 
@@ -116,8 +109,7 @@ const TwentyTwo = (props) => {
     let params = {
       user_id: getItem('userId'),
       program_id: getItem('programId'),
-      // week: week,
-      week: weeksCount,
+      week: props.week,
     };
     if (mode === 'LIKE') {
       setLike(!value);
@@ -135,7 +127,7 @@ const TwentyTwo = (props) => {
     if (isAPI) {
       if (
         userRatingData &&
-        userRatingData.filter((data) => data.week == weeksCount).length > 0
+        userRatingData.filter((data) => data.week == props.week).length > 0
       ) {
         //if (userRatingData && userRatingData.length) {
         let updateParams = {
@@ -326,13 +318,25 @@ const TwentyTwo = (props) => {
                 </div>
               </form>
 
-              <div style={styles.button}>
+              <div style={{width: DEVICE_WIDTH > 767 ? '50%' : '68%'}}>
+                <p
+                  onClick={() => submitHandler('COMMENT', true, comment)}
+                  className="btn-orange"
+                  style={{
+                    ...styles.rightText,
+                    // backgroundColor: YELLOW,
+                    textAlign: 'center',
+                  }}>
+                  {ts('SAVE')}
+                </p>
+              </div>
+              {/* <div style={styles.button}>
                 <button
                   className="btn-orange"
                   onClick={() => submitHandler('COMMENT', true, comment)}>
                   {ts('SAVE')}
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
           {/*********************************MODAL POPUP FOR MENU START*************** */}
@@ -433,5 +437,14 @@ const styles = {
     position: 'absolute',
     top: '30%',
     right: '5%',
+  },
+  rightText: {
+    paddingTop: '15px',
+    paddingBottom: '15px',
+    borderRadius: '5px',
+    fontFamily: FONTS.SEMI_BOLD,
+    fontSize: '15px',
+    height: 'auto',
+    marginTop: '30px',
   },
 };

@@ -9,6 +9,7 @@ import {
   CardDescription,
   CardContent,
   CustomImage,
+  OldCustomImage,
 } from '../../../components/Cards';
 import {Animated} from 'react-animated-css';
 import {Dimensions} from 'react-native';
@@ -91,7 +92,7 @@ const ThirtyOne = (props) => {
               return (
                 <Animated animationIn={'fadeInUp'}>
                   <div style={styles.wrapper} key={i} className="wrap-data">
-                    <CustomImage
+                    <OldCustomImage
                       src={`${IMAGE_BASE_URL}${item.image}`}
                       style={{
                         ...styles.customImageStyle,
@@ -132,7 +133,7 @@ const ThirtyOne = (props) => {
               return (
                 <Animated isVisible={true} animationIn={'fadeInUp'}>
                   <div style={styles.wrapper} key={i} className="wrap-data">
-                    <CustomImage
+                    <OldCustomImage
                       src={`${IMAGE_BASE_URL}${item.image}`}
                       style={{
                         ...styles.customImageStyle,
@@ -173,7 +174,7 @@ const ThirtyOne = (props) => {
               return (
                 <Animated isVisible={true} animationIn={'fadeInUp'}>
                   <div style={styles.wrapper} key={i} className="wrap-data">
-                    <CustomImage
+                    <OldCustomImage
                       src={`${IMAGE_BASE_URL}${item.image}`}
                       style={{
                         ...styles.customImageStyle,
@@ -198,7 +199,7 @@ const ThirtyOne = (props) => {
               return (
                 <CardContent
                   key={index}
-                  // content={ReactHtmlParser(item.content)}
+                  content={ReactHtmlParser(item.content)}
                   isVisible={true}
                   animationIn={'fadeInUp'}
                 />
