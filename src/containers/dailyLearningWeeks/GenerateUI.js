@@ -67,7 +67,10 @@ const GenerateUI = ({ status, data = {} }) => {
       }
     }
   }, [data._id]);
+
   // return <FourSeven {...data} />
+
+
 
   switch (status) {
     case 1:
