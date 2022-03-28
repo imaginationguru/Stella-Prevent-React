@@ -47,7 +47,6 @@ const onlySingleId = (arr = []) => {
       }
       temp.push({ assessment_header_id: item, content: q });
     });
-    console.log('temp???????', temp);
     return temp;
   }
 };
@@ -115,7 +114,6 @@ const FourNine = (props) => {
         };
       })
       : [];
-    console.log('formatd adata', formatData, matchData);
     setSubmitData(formatData);
     setOptionDataContent(item);
   };
@@ -149,7 +147,6 @@ const FourNine = (props) => {
 
     setOptionDataContent(optionData.reverse());
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData]);
 
   useEffect(() => {
@@ -159,7 +156,6 @@ const FourNine = (props) => {
       userAssessmentData.forEach((item, i) => {
         temp.push(...item.cards);
         let zz = item.cards.map((item) => {
-          console.log('assessment header', item);
           return {
             assessment_header_id: item.assessment_header_id,
             content: [
@@ -186,7 +182,6 @@ const FourNine = (props) => {
 
       setOptionDataContent(uniqueOptionDataContent);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
 
   const onSave = (e) => {
@@ -201,10 +196,8 @@ const FourNine = (props) => {
 
     if (submitData.length === optionDataContent.length) {
       if (userAssessmentData && userAssessmentData.length) {
-        console.log('is save??????', isSave);
         dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
       } else {
-        console.log('is else save??????', isSave);
         dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
       }
     } else {
@@ -346,10 +339,10 @@ const FourNine = (props) => {
                                 provided.draggableProps.style,
                               ),
                               border: `1px solid ${isSave
-                                  ? isMatched
-                                    ? BOX_GRAY
-                                    : 'red'
-                                  : BOX_GRAY
+                                ? isMatched
+                                  ? BOX_GRAY
+                                  : 'red'
+                                : BOX_GRAY
                                 }`,
                               borderRadius: '5px',
                             }}>

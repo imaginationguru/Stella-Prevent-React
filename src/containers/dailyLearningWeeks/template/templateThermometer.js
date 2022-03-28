@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import commonStyles from '../commonStyles';
 import GLOBALS from '../../../constants';
 import Thermometer from './Thermometer';
 import ReactHtmlParser from 'react-html-parser';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as AppActions from '../../../actions';
-import {getItem} from '../../../utils/AsyncUtils';
-import {translate as ts} from '../../../i18n/translate';
+import { getItem } from '../../../utils/AsyncUtils';
+import { translate as ts } from '../../../i18n/translate';
 import ExerciseBox from '../../../components/ExerciseBox';
 import {
   CardQuote,
@@ -16,7 +16,7 @@ import {
   CardContent,
   CustomImage,
 } from '../../../components/Cards';
-const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
+const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
 
 const TemplateThermometer = (props) => {
   const {
@@ -31,11 +31,11 @@ const TemplateThermometer = (props) => {
     week,
     showExercises,
   } = props.card;
-  const {assessmentData = {}, userAssessmentData = []} = useSelector(
+  const { assessmentData = {}, userAssessmentData = [] } = useSelector(
     (state) => state.moduleOne,
   );
   const [headerData, setHeaderData] = useState([]);
-  const {headers} = assessmentData;
+  const { headers } = assessmentData;
   const dispatch = useDispatch();
   const staticData = [
     {
@@ -62,11 +62,11 @@ const TemplateThermometer = (props) => {
       assessmentData &&
       assessmentData.headers &&
       assessmentData.headers.map((item) => {
-        return {...item, content: '', assessment_header_id: item._id};
+        return { ...item, content: '', assessment_header_id: item._id };
       });
     setHeaderData(x);
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-   }, [assessmentData]);
+  }, [assessmentData]);
 
   /***********user assessment data set in header content***** */
   useEffect(() => {
@@ -76,11 +76,11 @@ const TemplateThermometer = (props) => {
         const onlyOneCard = item.cards.length
           ? item.cards.sort((a, b) => (a.createdAt < b.createdAt && 1) || -1)[0]
           : [];
-         return temp.push(onlyOneCard);
+        return temp.push(onlyOneCard);
       });
       setHeaderData(temp);
     }
-   }, [userAssessmentData]);
+  }, [userAssessmentData]);
 
   /********function for increase the thermometer value */
   const plusHandler = (item) => {
@@ -135,7 +135,7 @@ const TemplateThermometer = (props) => {
 
         let nArray = headerData.map((val) => {
           if (val._id === item._id && thermometerValue > 0) {
-            return {...val, content: parseInt(thermometerValue) - 1};
+            return { ...val, content: parseInt(thermometerValue) - 1 };
           } else {
             return val;
           }
@@ -164,11 +164,11 @@ const TemplateThermometer = (props) => {
     e.preventDefault();
     const modifyHeaderData = headerData.length
       ? headerData.map((item) => {
-          return {
-            assessment_header_id: item.assessment_header_id,
-            content: [{content: item.content || 0, order: item.order}],
-          };
-        })
+        return {
+          assessment_header_id: item.assessment_header_id,
+          content: [{ content: item.content || 0, order: item.order }],
+        };
+      })
       : [];
 
     const params = {
@@ -179,7 +179,7 @@ const TemplateThermometer = (props) => {
     };
 
     if (userAssessmentData && userAssessmentData.length) {
-       dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+      dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
     } else {
       let isValid = false;
       if (modifyHeaderData.length) {
@@ -211,15 +211,15 @@ const TemplateThermometer = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -231,94 +231,93 @@ const TemplateThermometer = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
       {/**************************ASSESSMENT****DESCRIPTION*************** */}
       <div
-        style={{...commonStyles.assessmentWrapper, justifyContent: 'center'}}
+        style={{ ...commonStyles.assessmentWrapper, justifyContent: 'center' }}
         className="wrap-2line">
         {images && images.length
           ? images.map((item) => {
-              return (
-                <CustomImage
-                  src={`${IMAGE_BASE_URL}${item.image}`}
-                  style={{
-                    ...commonStyles.assessImage,
-                    display: item.image !== '' ? 'flex' : 'none',
-                  }}
-                />
-              );
-            })
+            return (
+              <CustomImage
+                src={`${IMAGE_BASE_URL}${item.image}`}
+                style={{
+                  ...commonStyles.assessImage,
+                  display: item.image !== '' ? 'flex' : 'none',
+                }}
+              />
+            );
+          })
           : []}
 
         {props.assessments && props.assessments.length
           ? props.assessments.map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.description)}
-                  style={commonStyles.assessDesc}
-                />
-              );
-            })
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.description)}
+                style={commonStyles.assessDesc}
+              />
+            );
+          })
           : []}
       </div>
       {/******************************HEADER*************** */}
       <div style={styles.thermometerHeader}>
         {headers && headers.length
           ? headers
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item) => {
-                return (
-                  <div style={commonStyles.col4}>
-                    <p
-                      style={commonStyles.thermoTitle}
-                      className="therma-title">
-                      {ReactHtmlParser(item.header)}
-                    </p>
-                  </div>
-                );
-              })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item) => {
+              return (
+                <div style={commonStyles.col4}>
+                  <p
+                    style={commonStyles.thermoTitle}
+                    className="therma-title">
+                    {ReactHtmlParser(item.header)}
+                  </p>
+                </div>
+              );
+            })
           : []}
       </div>
       {/******************************THERMOMETER FUNTIONALITY*************** */}
       <div style={styles.thermometerImage}>
         {headerData && headerData.length
           ? headerData
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item) => {
-                console.log('item>>>>>>>>thermomete', item);
-                return (
-                  <Thermometer
-                    current={item.content ? item.content : 0}
-                    plusHandler={() => plusHandler(item)}
-                    minusHandler={() => minusHandler(item)}
-                  />
-                );
-              })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item) => {
+              return (
+                <Thermometer
+                  current={item.content ? item.content : 0}
+                  plusHandler={() => plusHandler(item)}
+                  minusHandler={() => minusHandler(item)}
+                />
+              );
+            })
           : []}
       </div>
 
       <div style={styles.colorIndication}>
         {staticData && staticData.length
           ? staticData.map((item) => {
-              return (
-                <div style={styles.row}>
-                  <div style={{...styles.color, backgroundColor: item.color}} />
-                  <p style={{...styles.title, color: item.color}}>
-                    {item.title}
-                  </p>
-                </div>
-              );
-            })
+            return (
+              <div style={styles.row}>
+                <div style={{ ...styles.color, backgroundColor: item.color }} />
+                <p style={{ ...styles.title, color: item.color }}>
+                  {item.title}
+                </p>
+              </div>
+            );
+          })
           : null}
       </div>
       {headerData && headerData.length ? (
@@ -331,15 +330,15 @@ const TemplateThermometer = (props) => {
       {/******************************CONTENTS*************** */}
       {content && content.length
         ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardContent
-                  key={index}
-                  content={ReactHtmlParser(item.content)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardContent
+                key={index}
+                content={ReactHtmlParser(item.content)}
+              />
+            );
+          })
         : []}
       {showExercises && <ExerciseBox week={week} />}
     </>
@@ -359,7 +358,7 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
-  colorIndication: {marginTop: '50px'},
+  colorIndication: { marginTop: '50px' },
   row: {
     flexDirection: 'row',
     display: 'flex',
@@ -369,5 +368,5 @@ const styles = {
     height: '20px',
     borderRadius: '4px',
   },
-  title: {color: COLORS.DARK_RED, paddingLeft: '20px'},
+  title: { color: COLORS.DARK_RED, paddingLeft: '20px' },
 };

@@ -37,7 +37,6 @@ const FourEight = (props) => {
   );
   const dispatch = useDispatch();
 
-  console.log('four eight????????', userAssessmentData);
   useEffect(() => {
     const { headers, content } = assessmentData;
     let data =
@@ -51,7 +50,6 @@ const FourEight = (props) => {
           };
         })
         : [];
-    console.log('data???????/', data);
     setQuestions(data);
   }, [assessmentData]);
 
@@ -60,7 +58,6 @@ const FourEight = (props) => {
     userAssessmentData.length
       ? userAssessmentData.forEach((item) => y.push(...item.cards))
       : [];
-    console.log('y?????', y);
     setUserAnswers(
       y
         .sort((a, b) => (a.order > b.order && 1) || -1)
@@ -137,7 +134,6 @@ const FourEight = (props) => {
       ]);
     }
   };
-  console.log('user ', userAnswers);
   const onSave = (e) => {
     e.preventDefault();
 
@@ -149,7 +145,6 @@ const FourEight = (props) => {
         assessment: userAnswers,
       };
       if (userAnswers.length === questions.length) {
-        console.log('params', params);
         if (userAssessmentData && userAssessmentData.length) {
           dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
         } else {

@@ -144,7 +144,6 @@ const FourTwo = (props) => {
         : [];
     setOptionDataContent(optionData);
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData2]);
   useEffect(() => {
     if (userAssessmentData && userAssessmentData.length) {
@@ -164,7 +163,6 @@ const FourTwo = (props) => {
             ],
           };
         });
-        console.log('zz??????170', zz);
         tempHeaderParams.push(...zz);
         setHeaderParams(
           onlySingleId(
@@ -207,7 +205,6 @@ const FourTwo = (props) => {
    */
 
   const onDragStart = (ev, id, correctId) => {
-    console.log('dragstart:', id);
     setCorrectAns(false);
     ev.dataTransfer.setData('id', id);
     ev.dataTransfer.setData('correctId', correctId);
@@ -458,7 +455,6 @@ const FourTwo = (props) => {
     if (optionDataContent.length) {
       const data = optionDataContent.map((item, i) => {
         if (item._id === contentId) {
-          console.log('item._id');
           return {
             ...item,
             assessment_header_id: headerId,
@@ -495,7 +491,6 @@ const FourTwo = (props) => {
           };
         });
     let y = onlySingleId(assessment);
-    console.log('y??????', y);
     const params = {
       user_id: getItem('userId'),
       user_card_id: props._id,
@@ -601,13 +596,7 @@ const FourTwo = (props) => {
             );
           })
         : null}
-      {/* {inputs.length ? (
-        <div style={commonStyles.buttonWrapper}>
-          <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
-            {ts('SAVE')}
-          </button>
-        </div>
-      ) : null} */}
+
       {/*******************************ASSESSMENT DESCRIPTION*********************** */}
       <div style={commonStyles.assessmentWrapper}>
         {images && images.length

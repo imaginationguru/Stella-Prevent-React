@@ -71,10 +71,8 @@ const Dashboard = () => {
     }
   }, []);
   useEffect(() => {
-    console.log(trackerStatus, 'trackerStatus....');
   }, [trackerStatus]);
   const TrackersUI = ({ title, src, onClick, isComplete }) => {
-    console.log(isComplete, 'isComplete....');
 
     return (
       <div
@@ -158,7 +156,7 @@ const Dashboard = () => {
       type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
       payload: currentActiveCard._id,
     });
-     dispatch({
+    dispatch({
       type: GLOBALS.ACTION_TYPE.GET_SELECTED_WEEK,
       payload: currentActiveCard.current_week,
     });
@@ -195,7 +193,7 @@ const Dashboard = () => {
               style={styles().dailylearnWrap}
               onClick={() => {
                 onDailyLearningClick();
-               
+
               }}
               className="display-board">
               <div
@@ -205,7 +203,7 @@ const Dashboard = () => {
                   bottom: 0,
                   width: '100%',
                   borderRadius: 8,
-                    paddingLeft: 30,
+                  paddingLeft: 30,
                   cursor: 'pointer',
                   paddingTop: 10,
                   paddingBottom: 10,
@@ -383,13 +381,13 @@ export const styles = () => {
     weekTitle: { paddingTop: 10, fontSize: 15, fontWeight: '700' },
     trackerWrap: {
       display: 'flex',
-       borderRadius: 10,
-       border: `2px solid ${DARK_GREEN}`,
+      borderRadius: 10,
+      border: `2px solid ${DARK_GREEN}`,
       paddingTop: 15,
       paddingBottom: 15,
       marginBottom: 15,
       cursor: 'pointer',
-       boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
+      boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
     },
     trackerTitle: {
       fontWeight: 'bold',
@@ -399,9 +397,9 @@ export const styles = () => {
       fontFamily: FONTS.SEMI_BOLD,
     },
     profileWrapper: {
-       border: `2px solid ${DARK_GREEN}`,
+      border: `2px solid ${DARK_GREEN}`,
       width: '80%',
-       position: 'absolute',
+      position: 'absolute',
       top: 30,
       left: '10%',
       boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
@@ -414,17 +412,17 @@ export const styles = () => {
     dailylearnWrap: {
       background:
         'linear-gradient(180deg, rgba(214, 240, 235, 0) 0%, #FFFFFF 73.96%) top right',
-       backgroundImage: `url(${stellaGirlGif})`,
+      backgroundImage: `url(${stellaGirlGif})`,
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
       width: '100%',
       height: '95%',
       borderRadius: 20,
-       marginBottom: 30,
+      marginBottom: 30,
       position: 'relative',
-       boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
+      boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
       cursor: 'pointer',
       backgroundPosition: '50%',
-     },
+    },
   };
 };

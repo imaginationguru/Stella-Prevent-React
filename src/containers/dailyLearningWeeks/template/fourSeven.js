@@ -10,14 +10,14 @@ import {
   CardContent,
   CustomImage,
 } from '../../../components/Cards';
-import {Animated} from 'react-animated-css';
+import { Animated } from 'react-animated-css';
 
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
-const {COLORS, IMAGE_BASE_URL} = GLOBALS;
+const { COLORS, IMAGE_BASE_URL } = GLOBALS;
 const FourSeven = (props) => {
   const {
     card_time,
@@ -35,15 +35,15 @@ const FourSeven = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -52,64 +52,13 @@ const FourSeven = (props) => {
         }
       />
 
-      {/**********************description************** */}
-      {/* {descriptions && descriptions.length
-        ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                  isVisible={true}
-                  animationIn={'fadeInUp'}
-                />
-              );
-            })
-        : []} */}
+
 
       {/**********************Images********************** */}
       <div style={styles.imageView}>
         {images && images.length
           ? images
-              .filter((item) => item.image_type === 'first')
-              .map((item, index) => {
-                return (
-                  <CustomImage
-                    key={index}
-                    src={`${IMAGE_BASE_URL}${item.image}`}
-                    style={{
-                      display: item.image !== '' ? 'flex' : 'none',
-                    }}
-                    isVisible={true}
-                    animationIn={'fadeInLeft'}
-                  />
-                );
-              })
-          : []}
-
-        {/********************************content******************* */}
-
-        {props.assessments.length
-          ? props.assessments
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, index) => {
-                return (
-                  <CardDescription
-                    key={index}
-                    description={ReactHtmlParser(item.description)}
-                    isVisible={true}
-                    animationIn={'fadeInUp'}
-                    style={{paddingLeft: '40px'}}
-                  />
-                );
-              })
-          : []}
-      </div>
-
-      {images && images.length
-        ? images
-            .filter((item) => item.image_type === 'second')
+            .filter((item) => item.image_type === 'first')
             .map((item, index) => {
               return (
                 <CustomImage
@@ -123,6 +72,43 @@ const FourSeven = (props) => {
                 />
               );
             })
+          : []}
+
+        {/********************************content******************* */}
+
+        {props.assessments.length
+          ? props.assessments
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardDescription
+                  key={index}
+                  description={ReactHtmlParser(item.description)}
+                  isVisible={true}
+                  animationIn={'fadeInUp'}
+                  style={{ paddingLeft: '40px' }}
+                />
+              );
+            })
+          : []}
+      </div>
+
+      {images && images.length
+        ? images
+          .filter((item) => item.image_type === 'second')
+          .map((item, index) => {
+            return (
+              <CustomImage
+                key={index}
+                src={`${IMAGE_BASE_URL}${item.image}`}
+                style={{
+                  display: item.image !== '' ? 'flex' : 'none',
+                }}
+                isVisible={true}
+                animationIn={'fadeInLeft'}
+              />
+            );
+          })
         : []}
 
       {/********************************content ******************* */}
@@ -130,15 +116,15 @@ const FourSeven = (props) => {
         <div style={styles.contentView}>
           {content && content.length
             ? content
-                .sort((a, b) => (a.order > b.order && 1) || -1)
-                .map((item, i) => {
-                  return (
-                    <CardContent
-                      key={i}
-                      content={ReactHtmlParser(item.content)}
-                    />
-                  );
-                })
+              .sort((a, b) => (a.order > b.order && 1) || -1)
+              .map((item, i) => {
+                return (
+                  <CardContent
+                    key={i}
+                    content={ReactHtmlParser(item.content)}
+                  />
+                );
+              })
             : []}
         </div>
       </Animated>

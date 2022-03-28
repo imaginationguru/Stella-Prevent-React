@@ -10,7 +10,6 @@ const DropDown = (props) => {
     let { title, data, textColor, onItemSelection } = props;
     const [selectedItem, setSelectedData] = useState("");
     const onItemSelected = (item) => {
-        console.log(item, "l")
         setSelectedData(item.name);
         onItemSelection("selected_gender", item.name)
     }

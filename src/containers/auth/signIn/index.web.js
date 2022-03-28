@@ -68,7 +68,6 @@ const SignIn = (componentId) => {
   };
 
   const loginHandler = (e) => {
-    console.log('email>>>>>>', email);
     e.preventDefault();
 
     if (email.length === 0) {
@@ -103,9 +102,7 @@ const SignIn = (componentId) => {
     getUserData();
   }, [getId]);
   const getUserData = () => {
-    console.log('get user id');
     let id = query.get('id');
-    console.log('get user id', id);
     setGetId(id);
     if (getId) {
       const params = {

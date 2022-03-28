@@ -89,53 +89,7 @@ const Menu = (props) => {
         </TouchableOpacity>
       </div>
       <div className="row" style={styles.weekBox}>
-        {/**************CONTENT MANAGEMENT********************* */}
-        {/* {lengthToArray(duration).map((item, index) => {
-          let isDisabled = true;
-          if (programData.length && programData !== null) {
-            const isData = programData.filter((val) => val.week === item)
-              .length;
 
-            const isExists = programData.some(
-              (val) => val.week === item && val.is_disabled === true,
-            );
-            if (isData !== 0) {
-              isDisabled = isExists;
-            }
-          }
-
-          return (
-            <div className="col-md-4">
-              <ModuleBox
-                key={index}
-                img={image(item)}
-                moduleStyle={{color: !isDisabled ? '#000000' : GRAY}}
-                moduleText={`Week ${item}`}
-                onNavigate={() => {
-                  if (!isDisabled) {
-                    dispatch(AppActions.getWeek(item));
-                    dispatch({type: 'GET_SELECTED_WEEK', payload: item});
-                    dispatch({
-                      type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
-                      payload: item === week ? day : 1,
-                    });
-                    dispatch({
-                      type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                      payload: '',
-                    });
-                    dispatch(AppActions.getTemplateData(item));
-
-                    navigatorPush({
-                      screenName: 'DailyLearningWeeks',
-                      passProps: item,
-                    });
-                    dispatch(AppActions.dashboardModalAction(false));
-                  }
-                }}
-              />
-            </div>
-          );
-        })} */}
         {lengthToArray(duration).map((item, index) => {
           return (
             <div className="col-md-4">

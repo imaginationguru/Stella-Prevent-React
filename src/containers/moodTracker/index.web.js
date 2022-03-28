@@ -1,13 +1,13 @@
-import React, {useState, useEffect} from 'react';
-import {TouchableOpacity, Dimensions} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { TouchableOpacity, Dimensions } from 'react-native';
 import MasterLayout from '../../components/MasterLayout';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
 import momentZone from 'moment-timezone';
 import GLOBALS from '../../constants';
 import * as AppActions from '../../actions';
-import {translate as ts} from '../../i18n/translate';
+import { translate as ts } from '../../i18n/translate';
 import Happy from '../../assets/images/happy/happy@3x.png';
 import HappyActive from '../../assets/images/happyActive/happyActive@3x.png';
 import BackToDashboard from '../../components/common/backToDashboard';
@@ -26,11 +26,11 @@ import AngryActive from '../../assets/images/angryActive/angryActive@3x.png';
 let currentTimeZone = momentZone.tz.guess();
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
-const {STRINGS, ACTION_TYPE} = GLOBALS;
-const MoodTracker = ({location}) => {
+const { STRINGS, ACTION_TYPE } = GLOBALS;
+const MoodTracker = ({ location }) => {
   let isFromCard = location?.state?.isFromCard;
   const dispatch = useDispatch();
-  const {moodTrackerData} = useSelector((state) => state.tracker);
+  const { moodTrackerData } = useSelector((state) => state.tracker);
   const [moodId, setMoodId] = useState();
   const timeStamp = moment().format();
   const currentDate = moment(timeStamp).format(STRINGS.DATE_FORMATE);
@@ -80,7 +80,6 @@ const MoodTracker = ({location}) => {
   }, []);
 
   useEffect(() => {
-     console.log('mood tracker data', moodTrackerData);
     if (
       moodTrackerData &&
       moodTrackerData.data &&
@@ -88,9 +87,7 @@ const MoodTracker = ({location}) => {
       moodTrackerData.data.length > 0
     ) {
       let index = moodTrackerData.data[0].mood;
-      console.log('index of get mood tracker', index);
       moodList.map((element) => {
-        console.log('element ', element);
         if (element.id === index) {
           element.isClickTrue = true;
         } else {
@@ -98,14 +95,12 @@ const MoodTracker = ({location}) => {
         }
       });
       setMoodList([...moodList]);
-      console.log('moodListArrayasdhaasdbj', moodList);
     }
-      
 
-   }, [moodTrackerData]);
+
+  }, [moodTrackerData]);
 
   const onMoodClick = (id) => {
-    console.log('onMoodClick', id);
     setMoodId(id);
     moodList.map((element) => {
       if (element.id == id) {
@@ -115,7 +110,6 @@ const MoodTracker = ({location}) => {
       }
     });
     setMoodList([...moodList]);
-    console.log('moodListArray', moodList);
   };
 
   return (
@@ -144,19 +138,16 @@ const MoodTracker = ({location}) => {
           <button
             className="btn-solid"
             onClick={() => {
-              console.log('moodIdSave', moodId);
               let selectedMoodId;
               if (moodId != undefined) {
                 selectedMoodId = moodId;
               } else {
                 moodList.forEach((element) => {
                   if (element.isClickTrue == true) {
-                    console.log('idddddd', element.id);
                     selectedMoodId = element.id;
                   }
                 });
               }
-              console.log('selectedMoodId', selectedMoodId);
               if (selectedMoodId !== undefined) {
                 let postData = {
                   patientDate: moment().format(STRINGS.DATE_FORMATE),
@@ -193,17 +184,17 @@ const styles = {
     alignItems: 'flex-end',
     display: 'flex',
   },
-  imageStyle: {width: '70px', height: '70px'},
+  imageStyle: { width: '70px', height: '70px' },
   itemWrapper: {
     display: 'flex',
     marginBottom: '30px',
-   },
+  },
   wrapper: {
     width: DEVICE_WIDTH > 767 ? '50%' : '100%',
     padding: DEVICE_WIDTH > 767 ? '0%' : '0 10px',
     marginLeft: 'auto',
     marginRight: 'auto',
-   },
+  },
   ques: {
     fontWeight: 'bold',
     fontSize: '18px',

@@ -38,7 +38,6 @@ const extractSelectQ = (x = []) => {
       ? selectedQuesArr.filter((val) => val === true).length
       : 0;
 
-    console.log("fafaf--->", selectedQuesArr);
 
     return selectedQues;
   }
@@ -64,7 +63,7 @@ const TwentySeven = (props) => {
   const [totalQ, setTotalQ] = useState(0);
   const [selectQ, setSelectQ] = useState(0);
   const [textValue, setTextValue] = useState('');
-   const alternateColor = [
+  const alternateColor = [
     [GREEN_TEXT],
     [BUTTON_ORANGE],
     [YELLOW],
@@ -79,14 +78,12 @@ const TwentySeven = (props) => {
       card_id: _id,
     };
     dispatch(AppActions.getUserQuestionInfo(params));
-   }, [_id]);
-   useEffect(() => {
+  }, [_id]);
+  useEffect(() => {
     if (userQuestion.length) {
-      console.log(userQuestion, 'userQuestion....');
       let x = userQuestion.map((item, index) => {
         if (item.assessmentType === 'radio') {
           if (index == 0 && item.totalPointEarned) {
-            console.log('enter');
             let firstCondition = '0-9';
             let secondCondition = '10-16';
             let thirdCondition = '17-21';
@@ -160,7 +157,7 @@ const TwentySeven = (props) => {
             : [],
         };
       });
-       setTotalQ(x.length);
+      setTotalQ(x.length);
       setAssessmentQues(x);
       setSelectQ(extractSelectQ(x));
     }
@@ -222,7 +219,6 @@ const TwentySeven = (props) => {
     }
   };
   const onHandleChange = (quesId, optionId, e) => {
-     console.log('e,target alue', e.target.value);
     if (assessmentQues.length) {
       let y = assessmentQues.map((item) => {
         if (item.question_id === quesId) {
@@ -255,7 +251,6 @@ const TwentySeven = (props) => {
 
     let dataArray = assessmentQues.map((item) => {
       if (item.textAns !== undefined) {
-        console.log("here===>", item);
         return {
           ...item,
           options: item.options.map((val) => {
@@ -270,7 +265,7 @@ const TwentySeven = (props) => {
 
     let answer = extractSelectQ(dataArray);
 
- 
+
 
 
     setSelectQ(answer);
@@ -296,9 +291,6 @@ const TwentySeven = (props) => {
       (val) => val.status === true,
     )[0];
 
-    console.log(last_answer, 'last_answer..');
-    console.log('data===>.', assessmentQues);
-    console.log('ModifiyData===>.', modifyData);
     let onlyOptionPoint =
       modifyData &&
       modifyData.length &&
@@ -316,8 +308,7 @@ const TwentySeven = (props) => {
     }
 
     if (modifyData && modifyData.length) {
-      console.log('modify dtaa on submit>>>>>', modifyData, totalQ, answer);
-       const isAPICall = totalQ === answer;
+      const isAPICall = totalQ === answer;
       if (isAPICall) {
         setGlobalAPICall(false);
         if (last_answer && last_answer.optionPoint > 1) {
@@ -397,18 +388,17 @@ const TwentySeven = (props) => {
             ),
           );
         } else {
-          console.log('feedback survey???????', modifyData);
           dispatch(
             AppActions.savePatientAssessment(modifyData, '', choosenAssessment),
           );
         }
       } else {
         customAlert('Please answer all questions.', 'error');
-        
+
       }
     } else {
       customAlert('Please perform your exercise', 'error');
-      
+
     }
   };
   return (
@@ -458,7 +448,7 @@ const TwentySeven = (props) => {
                       const isSelected = val.status === true;
                       return (
                         <p
-                           onClick={() => {
+                          onClick={() => {
                             onSaveHandler(item.question_id, val._id);
                           }}
                           key={index}
@@ -481,7 +471,6 @@ const TwentySeven = (props) => {
                 <div>
                   {item.options.length
                     ? item.options.map((val, index) => {
-                      console.log('val text', val, item);
                       return (
                         <form noValidate style={{ marginTop: '50px' }}>
                           <div className="formRow">
@@ -490,7 +479,7 @@ const TwentySeven = (props) => {
                                 <textarea
                                   type="textarea"
                                   className="f-field"
-                                   value={item.textAns}
+                                  value={item.textAns}
                                   name="text"
                                   onChange={(e) =>
                                     onHandleChange(
@@ -518,7 +507,7 @@ const TwentySeven = (props) => {
                       const isSelected = val.status === true;
                       return (
                         <p
-                           onClick={() => {
+                          onClick={() => {
                             onCheckHandler(item.question_id, val._id);
                           }}
                           key={index}
@@ -579,11 +568,11 @@ const styles = {
     alignSelf: 'center',
     justifyContent: 'center',
     display: 'flex',
-   },
+  },
   button: { width: '20%', marginBottom: '50px' },
   optionStyle: {
     textAlign: 'center',
-     width: '18%',
+    width: '18%',
     paddingTop: '7px',
     paddingBottom: '7px',
     marginTop: '12px ',

@@ -94,7 +94,6 @@ const DailyLearningWeeks = (props) => {
             return item.day === selectedDay;
           }
         });
-        console.log('data >???????', data);
         if (data && data._id) {
           setScrollerLoad(false);
           cardDataHandler(data);
@@ -110,7 +109,6 @@ const DailyLearningWeeks = (props) => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log('match');
     setTimeout(() => {
       window.scrollTo(0, 0);
     }, 1000);
@@ -148,7 +146,6 @@ const DailyLearningWeeks = (props) => {
     .map((item) => item._id);
 
   const cardDataHandler = (data) => {
-    console.log(data, 'dataaaa cardDataHandler');
     if (isScrollerLoad) {
       window.scrollTo(0, 200);
       setScrollerLoad(false);
@@ -366,7 +363,6 @@ const DailyLearningWeeks = (props) => {
                           type: GLOBALS.ACTION_TYPE.GET_USER_ASSESSMENT_SUCCESS,
                           payload: [],
                         });
-                        console.log('is clickable??????');
                         dispatch({
                           type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                           payload: id,
@@ -379,13 +375,11 @@ const DailyLearningWeeks = (props) => {
                         currentData.is_completed == false &&
                         currentData._id != id
                       ) {
-                        console.log('else please complete previous caed');
                         customAlert(
                           'Please complete the previous card',
                           'error',
                         );
                       } else {
-                        console.log('else??????');
                         customAlert('Please read previous card', 'error');
 
                       }
@@ -554,7 +548,6 @@ const DailyLearningWeeks = (props) => {
                           ) {
                             if (userAssessmentData.length == 0) {
                               // debugger;
-                              console.log('right one??????1');
                               customAlert(
                                 'Please perform your exercise',
                                 'error',

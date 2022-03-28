@@ -3,7 +3,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState, useEffect } from 'react';
- import {
+import {
   TouchableOpacity,
   View,
   Text,
@@ -88,14 +88,14 @@ const LineGraphUI = ({ xAxis, yAxis, lable }) => {
             radius: 5,
             data: yAxis,
 
-            
+
             hoverBackgroundColor: COLORS.WHITE,
-             borderColor: COLORS.WHITE,
+            borderColor: COLORS.WHITE,
             fill: 'start',
           },
         ],
       }}
-     
+
       options={lable == "Average Daily Mood Report" ? graphOptionsForMood : graphOptions}
 
       style={{
@@ -105,22 +105,20 @@ const LineGraphUI = ({ xAxis, yAxis, lable }) => {
         background:
           'linear-gradient(40deg, rgba(69,136,198,0.9) 30%, #49A694 70%)',
         backgroundColor: '#49A694',
-       }}
-     />
+      }}
+    />
   );
 };
 const Report = ({ location }) => {
   let isFromCard = location?.state?.isFromCard;
   const { getWeeklySummaryReportData } = useSelector((state) => state.tracker);
   const dispatch = useDispatch();
-  console.log('get weekly summary report data', getWeeklySummaryReportData);
   useEffect(() => {
     let postData = {
       user_id: getItem('userId'),
       patientDate: moment().format('YYYY - MM - DD'),
       timeZone: currentTimeZone,
     };
-    console.log('post data?????', postData);
     dispatch(AppActions.getWeeklySummaryReport(postData));
   }, []);
   let moodYAxis = [];
@@ -133,7 +131,6 @@ const Report = ({ location }) => {
   let pointsXAxis = [];
 
   let moodData = MOODS_ARRAY;
-  console.log('mood data?????????', moodData);
   const daysCheckWithSleep = (arr = []) => {
     let minDate = new Date();
     let temp = [];
@@ -242,10 +239,10 @@ const Report = ({ location }) => {
 
   let sleepHoursArray = sleepData?.length
     ? sleepData?.map((item) => {
-       return (
+      return (
         parseFloat(item.total_hours) + parseFloat(item.total_minutes) / 60
       );
-     
+
     })
     : [];
   let sleepXAxis = sleepData?.length
@@ -382,7 +379,6 @@ const Report = ({ location }) => {
               showsHorizontalScrollIndicator={false}
               keyExtractor={(item) => `${item._id}`}
               renderItem={({ item, index }) => {
-                console.log('item??????', moodData);
                 return (
                   <View
                     key={index}
@@ -446,12 +442,11 @@ const Report = ({ location }) => {
             ListEmptyComponent={<Text>No record for this Week</Text>}
             numColumns={4}
             renderItem={({ item, index }) => {
-              console.log(item.image, 'item.image......');
               return (
                 <View
                   style={{
                     paddingHorizontal: 5,
-                    
+
                   }}
                   key={index}>
                   <div style={{ display: 'flex' }}>
@@ -536,6 +531,6 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
 
-   
+
   },
 });

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import TemplateOne from './template/templateOne';
 import TemplateTwo from './template/templateTwo';
 import TemplateThree from './template/templateThree';
@@ -44,9 +44,9 @@ import FourThree from './template/fourThree';
 import Template44 from './template/fourfour';
 import FourFive from './template/fourFive';
 import FourSix from './template/fourSix';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as AppActions from '../../actions';
-const GenerateUI = ({status, data = {}}) => {
+const GenerateUI = ({ status, data = {} }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -60,7 +60,6 @@ const GenerateUI = ({status, data = {}}) => {
     };
     if (data._id) {
       if (data.is_read) {
-        console.log('card already read', data.is_read);
       } else {
         dispatch(AppActions.markRead(readParams, data.week));
       }

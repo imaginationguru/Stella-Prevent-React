@@ -102,7 +102,6 @@ const Fifty = (props) => {
 
     dispatch(AppActions.getAssessmentDataSecond(assessment_id2));
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessment_id2]);
 
   useEffect(() => {
@@ -137,7 +136,6 @@ const Fifty = (props) => {
       return { _id: item.assessment_header_id, content: item.content };
     });
     setSelected(selectedFormat);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
   useEffect(() => {
     const getDataMapper = (arr = []) => {
@@ -243,7 +241,6 @@ const Fifty = (props) => {
         }
       }
       if (isValid) {
-        console.log('gjhfjhf');
         dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
       } else {
         dispatch({

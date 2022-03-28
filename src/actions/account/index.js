@@ -15,7 +15,6 @@ export function changeLanguage(param) {
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.CHANGE_LANGUAGE, param);
-      console.log('codeLogin', json);
       if (json.code === 200) {
 
         customAlert(json.message, 'success');
@@ -28,7 +27,6 @@ export function changeLanguage(param) {
       }
       dispatch(loadingAction(false));
     } catch (error) {
-      console.log('error>>>>>>>>>>>', error);
       dispatch(loadingAction(false));
 
       customAlert(
@@ -48,7 +46,6 @@ export function toggleNotification(param) {
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.UPDATE_NOTIFICATION, param);
-      console.log('codeLogin', json);
       if (json.code === 200) {
 
         customAlert(json.message, 'success');
@@ -60,7 +57,6 @@ export function toggleNotification(param) {
       }
       dispatch(loadingAction(false));
     } catch (error) {
-      console.log('error>>>>>>>>>>>', error);
       dispatch(loadingAction(false));
       customAlert(
         error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -80,7 +76,6 @@ export function updatePassword(param) {
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.UPDATE_PASSWORD, param);
-      console.log('codeLogin', json);
       if (json.code === 200) {
         dispatch({
           type: ACTION_TYPE.GET_USER_SUCCESS,
@@ -97,7 +92,6 @@ export function updatePassword(param) {
       dispatch(loadingAction(false));
     } catch (error) {
       dispatch(loadingAction(false));
-      console.log('error>>>>>>>>>>>', error);
 
       customAlert(
         error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -116,7 +110,6 @@ export function uploadProfile(param) {
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.UPDATE_PROFILE, param);
-      console.log('URL.UPDATE_PROFILE', json);
       if (json.code === 200) {
         dispatch({
           type: ACTION_TYPE.GET_USER_SUCCESS,
@@ -137,7 +130,6 @@ export function uploadProfile(param) {
         }
       }
     } catch (error) {
-      console.log('error>>>>>>>>>>>', error);
       dispatch(loadingAction(false));
 
       customAlert(
@@ -157,7 +149,6 @@ export function updateUserDetails(param) {
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.UPDATE_USER_DATA, param);
-      console.log('URL.UPDATE_PROFILE', json);
       if (json.code === 200) {
 
         customAlert(json.message, 'success');
@@ -173,7 +164,6 @@ export function updateUserDetails(param) {
       }
       dispatch(loadingAction(false));
     } catch (error) {
-      console.log('error>>>>>>>>>>>', error);
       dispatch(loadingAction(false));
 
       customAlert(

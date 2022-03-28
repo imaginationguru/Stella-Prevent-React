@@ -61,7 +61,6 @@ const RecoverPassword = () => {
    validation Reset Password and API hit for changed Password* */
 
   const _id = useParams();
-  console.log('reset toekn>>>>>>>>>>', _id.resetToken);
   const onRecoverPassword = (e) => {
     e.preventDefault();
     if (password.length === 0) {

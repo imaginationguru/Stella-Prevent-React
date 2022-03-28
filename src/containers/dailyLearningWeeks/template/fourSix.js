@@ -61,7 +61,6 @@ const FourSix = (props) => {
         assessmentCards.push(...item.cards);
       });
     }
-    console.log('assessmentCards', assessmentCards);
     let selectedFormat = assessmentCards.map((item) => {
       return { _id: item.assessment_header_id, content: item.content };
     });
@@ -131,14 +130,11 @@ const FourSix = (props) => {
     }
 
     setUserInputs(firstAssessmentContent);
-    console.log(firstAssessmentContent, 'firstAssessmentContent..');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
 
   /**********************SAVE ASSESSMENT****************** */
   const onSaveFirstAssessment = (e) => {
     e.preventDefault();
-    console.log(userInputs, 'userInputs...', headers);
     let emptyRowCount = userInputs.filter((item) => item.content == '').length;
 
     /**If any of the row is empty */
@@ -153,14 +149,12 @@ const FourSix = (props) => {
         .filter((ele) => ele.content !== '');
       contentArray.push(filterValue);
     });
-    console.log(contentArray, 'contentArray....');
     let modifyArray = contentArray.map((element, index) => {
       return {
         assessment_header_id: headers[index]._id,
         content: element,
       };
     });
-    console.log('modifyArray1', modifyArray);
 
     let firstParams = {
       user_id: userId,
@@ -168,7 +162,6 @@ const FourSix = (props) => {
       assessment_id: assessment_id,
       assessment: modifyArray,
     };
-    console.log('firstParams', firstParams);
     if (userInputs.length) {
       if (userAssessmentData && userAssessmentData.length) {
         dispatch(AppActions.rearrangeAssessments(firstParams, onSubmitMessage));
@@ -231,22 +224,12 @@ const FourSix = (props) => {
   };
 
   const onCrossBtnClick = (val) => {
-    console.log(val);
     // debugger;
     let order = val.order;
     let secondContentId = [val.content_id];
 
-    console.log(
-      userInputs.filter(
-        (ele) => ele.content !== val.content && ele.order !== order + 1,
-      ),
-    );
-    console.log(
-      userInputs.filter(
-        (ele) => ele.content !== val.content && ele.order !== order + 1,
-      ),
-      'filelee',
-    );
+
+
 
     let updatedUserInput = userInputs.filter(
       (ele) => ele.content !== val.content && ele.order !== order + 1,
@@ -277,13 +260,11 @@ const FourSix = (props) => {
         });
       }
 
-      console.log(headerInputs, 'headerInputs...');
       setUserInputs(headerInputs);
     }
 
 
   };
-  console.log('user inputs????????', userInputs);
   return (
     <>
       {/**********************quotes************** */}

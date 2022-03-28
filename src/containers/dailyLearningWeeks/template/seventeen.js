@@ -195,25 +195,20 @@ const Seventeen = (props) => {
     };
 
     if (userAssessmentData && userAssessmentData.length) {
-      console.log('if block');
       dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
     } else {
       let isValid = false;
       if (inputs && inputs.length) {
         let temp = [];
         let disabledInputs = inputs.filter((item) => item.isDisabled === false);
-        console.log('disabled inputs', disabledInputs);
         disabledInputs.forEach((item) => {
           temp.push(item.value);
         });
-        console.log('temp >>>>>>', temp);
         if (temp.length) {
           isValid = temp.filter((item) => item === '').length === 0; //fill all inputs
         }
       }
-      console.log('is valid ', isValid);
       if (isValid) {
-        console.log('gjhfjhf');
         dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
       } else {
         dispatch({
@@ -422,93 +417,7 @@ const Seventeen = (props) => {
         </div>
       ) : null}
       {/*******************exercise uncomment after******** */}
-      {/* 
-      {getCardsData.length
-        ? getCardsData.map((item) => {
-            return (
-              <div style={{marginBottom: '50px'}}>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    alignSelf: 'flex-end',
-                    position: 'relative',
-                  }}>
-                  <div
-                    style={{
-                      width: '40px',
-                      height: '40px',
-                      borderRadius: '40px',
-                      position: 'absolute',
-                      right: 0,
-                      top: '-20px',
-                      backgroundColor: YELLOW,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      display: 'flex',
-                    }}
-                    onClick={() => showHandler(item.updatedAt)}>
-                    {show.some((ele) => ele === item.updatedAt) ? (
-                      <img
-                        src={upArrow}
-                        style={{
-                          width: '20px',
-                          height: '20px',
-                        }}
-                      />
-                    ) : (
-                      <img
-                        src={arrowDown}
-                        style={{
-                          width: '20px',
-                          height: '20px',
-                        }}
-                      />
-                    )}
-                  </div>
-                </div>
-                {item.data
-                  .sort((a, b) => (a.order > b.order && 1) || -1)
-                  .filter((e, index) => {
-                    console.log('e.length???????', index);
-                    if (show.length) {
-                      let isShow = false;
-                      isShow = show.some((ele) => ele === item.updatedAt);
-                      return isShow ? index === 0 || index : index < 2;
-                    } else {
-                      return index < 2;
-                    }
-                  })
-                  .map((val) => {
-                    return (
-                      <div>
-                        <div style={styles.cardsDataWrapper}>
-                          <div
-                            style={{
-                              width: '20%',
-                            }}>
-                            <p
-                              style={{
-                                ...styles.valHeader,
-                                backgroundColor: headerColor(val.order),
-                              }}>
-                              {ReactHtmlParser(
-                                val.assessment_header.length &&
-                                  val.assessment_header[0].header,
-                              )}
-                            </p>
-                          </div>
-                          <div style={{width: '78%'}}>
-                            <p style={styles.valContent}>{val.content}</p>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-              </div>
-            );
-          })
-        : null} */}
+
 
       {content && content.length
         ? content

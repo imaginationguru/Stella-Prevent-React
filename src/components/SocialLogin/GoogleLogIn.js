@@ -11,9 +11,7 @@ const GoogleLogIn = (props) => {
     '868302960918-car2574j9cd95m72sehkfipp24hmrdku.apps.googleusercontent.com';
 
   const onLogoutSuccess = () => {
-    console.log('done........');
     const auth2 = window.gapi.auth2.getAuthInstance();
-    console.log(auth2, 'auth2...');
     if (auth2 != null) {
       auth2.signOut().then(auth2.disconnect().then(onLogoutSuccess));
     }
@@ -42,7 +40,6 @@ const GoogleLogIn = (props) => {
       session_token: userInfo.accessToken,
     };
     onSocialLogin(params);
-    console.log('logout....');
   };
 
   return (

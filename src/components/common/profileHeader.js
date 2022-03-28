@@ -28,13 +28,11 @@ import { styled } from '@mui/material/styles';
 
 
 const ProfileHeader = (props) => {
-  console.log('ProfileHeader..');
   const { loginData = {}, profileImg = '' } = useSelector(
     (state) => state.authReducer,
   );
   const moduleOne = useSelector((state) => state.moduleOne);
   const { currentActiveCard = {} } = useSelector((state) => state.moduleOne);
-  console.log('profile image user', profileImg);
   const [profileImage, setProfilePhoto] = useState('');
   const [selectedWeek, setSelectedWeek] = useState(1);
   const [DEVICE_WIDTH, setDimensionsW] = useState(
@@ -57,27 +55,19 @@ const ProfileHeader = (props) => {
   } = props;
 
   useEffect(() => {
-    console.log('use effect..profileImg', profileImg);
-    console.log('use effect..profile', profile);
-    console.log(profileImage == '' ? profile : profileImage, 'llll');
     if (profileImg == null || profileImg == '') {
-      console.log('if');
       setProfilePhoto(profile);
     } else {
-      console.log('else');
       setProfilePhoto(`${IMAGE_BASE_URL}${profileImg}`);
     }
   }, [profileImg, moduleOne?.currentActiveCard?.current_week]);
   useEffect(() => {
     Dimensions.addEventListener('change', ({ window, screen }) => {
-      console.log('device change profile', window);
       setDimensionsW(window.width);
       setDimensionsH(window.height);
     });
     return () => {
-      console.log('unmoiunt profile......');
       Dimensions.removeEventListener('change', () => {
-        console.log('event removed');
       });
     };
   }, []);

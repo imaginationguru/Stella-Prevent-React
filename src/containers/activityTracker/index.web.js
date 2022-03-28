@@ -172,8 +172,6 @@ const ActivityTracker = ({ location }) => {
   }, []);
 
   useEffect(() => {
-    console.log('activity data>>>>>>>', getActivityData);
-    console.log('selected activity data>>>>>>>', getSelectedActivityData);
     const getActivityTrackerData = [],
       getDailtActivityData = [],
       getAddNewActivity = [],
@@ -232,7 +230,6 @@ const ActivityTracker = ({ location }) => {
 
       pleasentActivityArray = pleasentArray.concat(newSelectedActivity);
       pleasentActivityArray = pleasentArray.concat(newPlasentActivity);
-      console.log('pleasentActivityArray>>>>', pleasentActivityArray);
 
       pleasentActivityArray.map((item) => {
         getActivityTrackerData.push(item);
@@ -272,7 +269,6 @@ const ActivityTracker = ({ location }) => {
   }
 
   const onProceedClick = () => {
-    console.log('on process click 1');
     if (selectedListArray.length > 0) {
       let patientActivity = [];
       let id = '';
@@ -296,7 +292,6 @@ const ActivityTracker = ({ location }) => {
         patientactivity: patientActivity,
         _id: id,
       };
-      console.log('on process click 2');
       dispatch(AppActions.saveActivityTracker(postData));
     } else {
       dispatch({
@@ -323,7 +318,6 @@ const ActivityTracker = ({ location }) => {
               <FlatList
                 data={[...plasentActivityArray, { plusImage: true }]}
                 contentContainerStyle={styles.contentContainerStyle}
-                // style={{border: '2px solid blue', width: '100%'}}
                 numColumns={DEVICE_WIDTH > 767 ? 4 : 2}
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}

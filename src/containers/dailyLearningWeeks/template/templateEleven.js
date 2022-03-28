@@ -122,13 +122,7 @@ const TemplateEleven = (props) => {
     if (temp.length) {
       isValid = temp.some((item) => item === 'YES');
     }
-    console.log(
-      'user submit message',
 
-      temp,
-      'isValid',
-      isValid,
-    );
     let params = {
       user_id: userId,
       user_card_id: props._id,

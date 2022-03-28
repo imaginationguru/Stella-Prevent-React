@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import GLOBALS from '../../../constants';
 import ReactHtmlParser from 'react-html-parser';
-import {getItem} from '../../../utils/AsyncUtils';
-import {useDispatch, useSelector} from 'react-redux';
+import { getItem } from '../../../utils/AsyncUtils';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '../../../actions';
 import commonStyles from '../commonStyles';
-import {translate as ts} from '../../../i18n/translate';
+import { translate as ts } from '../../../i18n/translate';
 import ExerciseBox from '../../../components/ExerciseBox';
 import {
   CardQuote,
@@ -17,13 +17,13 @@ import {
 } from '../../../components/Cards';
 import moment from 'moment';
 
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
-const {IMAGE_BASE_URL, COLORS} = GLOBALS;
-const {YELLOW} = COLORS;
+const { IMAGE_BASE_URL, COLORS } = GLOBALS;
+const { YELLOW } = COLORS;
 const TemplateNine = (props) => {
   const [inputBoxId, setInputBoxId] = useState('');
   const [experience, setExperience] = useState('');
@@ -43,24 +43,19 @@ const TemplateNine = (props) => {
     week,
     buttonText = ts('SAVE_GOOD_EXPERIENCE'),
   } = props.card;
-  const {userAssessmentData = []} = useSelector((state) => state.moduleOne);
-  const {inputs, assessments} = props;
-  console.log('props template nine', props.card);
+  const { userAssessmentData = [] } = useSelector((state) => state.moduleOne);
+  const { inputs, assessments } = props;
   const dispatch = useDispatch();
 
-  
-  console.log(
-    'userAssessmentData??????????',
-    userAssessmentData,
-    inputCardData,
-  );
+
+
   useEffect(() => {
     let cardsData = [];
     if (userAssessmentData.length) {
       userAssessmentData.forEach((item) => cardsData.push(...item.cards));
     }
     setInputCardData(cardsData);
-   }, [userAssessmentData]);
+  }, [userAssessmentData]);
 
   /*****************************function for fetch input value, id and set   */
 
@@ -75,12 +70,12 @@ const TemplateNine = (props) => {
       inputCardData.map((item) => {
         return setUpdateId(item._id);
       });
-   }, [inputCardData]);
+  }, [inputCardData]);
 
   /***********************set input value function************* */
 
   const onHandleChange = (e, item) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     if (name === 'experience') {
       setInputBoxId(item._id);
       setExperience(value);
@@ -92,7 +87,6 @@ const TemplateNine = (props) => {
 
   const onSaveExperience = (e) => {
     e.preventDefault();
-    console.log('on save experienc');
     const params = {
       user_id: getItem('userId'),
       user_card_id: props._id,
@@ -106,52 +100,51 @@ const TemplateNine = (props) => {
     };
 
     if (experience !== '' && experience !== null) {
-      console.log('experien if', experience !== '', experience);
       dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
     } else {
       setExperienceError('Please complete the exercise!');
     }
-    
+
   };
   const dateJSX = inputCardData.length
     ? inputCardData
-        .sort((a, b) => (a.updatedAt < b.updatedAt && 1) || -1)
-        .map((item) => {
-          return (
-            <p style={styles.leftDate}>
-              {moment(item.updatedAt).format('YYYY - MM - DD')}
-            </p>
-          );
-        })
-    : null;
-  const goodExperienceText = inputCardData.length
-    ? inputCardData.map((item) => {
+      .sort((a, b) => (a.updatedAt < b.updatedAt && 1) || -1)
+      .map((item) => {
         return (
-          <p
-            style={{
-              ...styles.rightText,
-              border: `1px solid ${YELLOW}`,
-              paddingLeft: '10px',
-            }}>
-            {item.input_content}
+          <p style={styles.leftDate}>
+            {moment(item.updatedAt).format('YYYY - MM - DD')}
           </p>
         );
       })
+    : null;
+  const goodExperienceText = inputCardData.length
+    ? inputCardData.map((item) => {
+      return (
+        <p
+          style={{
+            ...styles.rightText,
+            border: `1px solid ${YELLOW}`,
+            paddingLeft: '10px',
+          }}>
+          {item.input_content}
+        </p>
+      );
+    })
     : null;
   return (
     <>
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -163,123 +156,123 @@ const TemplateNine = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
       {/************************GRAY BOX WITH CONTENT AND IMAGE************** */}
       <div
-        style={{...commonStyles.assessmentWrapper, justifyContent: 'center'}}
+        style={{ ...commonStyles.assessmentWrapper, justifyContent: 'center' }}
         className="wrap-2line">
         {images && images.length
           ? images
-              .filter((item) => {
-                return item.image_type === 'second';
-              })
-              .map((item, index) => {
-                return (
-                  <CustomImage
-                    key={index}
-                    src={`${IMAGE_BASE_URL}${item.image}`}
-                    style={{
-                      ...commonStyles.assessImage,
-                      display: item.image !== '' ? 'flex' : 'none',
-                    }}
-                  />
-                );
-              })
+            .filter((item) => {
+              return item.image_type === 'second';
+            })
+            .map((item, index) => {
+              return (
+                <CustomImage
+                  key={index}
+                  src={`${IMAGE_BASE_URL}${item.image}`}
+                  style={{
+                    ...commonStyles.assessImage,
+                    display: item.image !== '' ? 'flex' : 'none',
+                  }}
+                />
+              );
+            })
           : []}
 
         {assessments && assessments.length
           ? assessments.map((item, i) => {
-              return (
-                <CardDescription
-                  key={i}
-                  style={commonStyles.assessDesc}
-                  description={ReactHtmlParser(item.description)}
-                />
-              );
-            })
+            return (
+              <CardDescription
+                key={i}
+                style={commonStyles.assessDesc}
+                description={ReactHtmlParser(item.description)}
+              />
+            );
+          })
           : []}
       </div>
       {/*****************************INPUT BOX*********************** */}
       <div style={styles.imageWithInput}>
         {images && images.length
           ? images
-              .filter((item) => {
-                return item.image_type === 'first';
-              })
-              .map((item, index) => {
-                return (
-                  <CustomImage
-                    key={index}
-                    src={`${IMAGE_BASE_URL}${item.image}`}
-                    style={{
-                       display: item.image !== '' ? 'flex' : 'none',
-                      width: '120px',
-                      flex: '0 0 auto',
-                    }}
-                  />
-                );
-              })
+            .filter((item) => {
+              return item.image_type === 'first';
+            })
+            .map((item, index) => {
+              return (
+                <CustomImage
+                  key={index}
+                  src={`${IMAGE_BASE_URL}${item.image}`}
+                  style={{
+                    display: item.image !== '' ? 'flex' : 'none',
+                    width: '120px',
+                    flex: '0 0 auto',
+                  }}
+                />
+              );
+            })
           : []}
       </div>
       {inputs && inputs.length
         ? inputs.map((item, i) => {
-            return (
-              <>
-                <div
-                  key={i}
-                  style={{
-                    marginTop: '-63px',
-                  }}>
-                  <form noValidate style={{marginTop: '50px'}}>
-                    <div className="formRow">
-                      <div className="w100">
-                        <div className="formField has-icon">
-                          <textarea
-                            type="textarea"
-                            className="f-field"
-                            value={experience}
-                            name="experience"
-                            onChange={(e) => onHandleChange(e, item)}
-                            required
-                            placeholder={item.placeholder}
-                            style={commonStyles.inputFieldStyle}
-                          />
-                        </div>
+          return (
+            <>
+              <div
+                key={i}
+                style={{
+                  marginTop: '-63px',
+                }}>
+                <form noValidate style={{ marginTop: '50px' }}>
+                  <div className="formRow">
+                    <div className="w100">
+                      <div className="formField has-icon">
+                        <textarea
+                          type="textarea"
+                          className="f-field"
+                          value={experience}
+                          name="experience"
+                          onChange={(e) => onHandleChange(e, item)}
+                          required
+                          placeholder={item.placeholder}
+                          style={commonStyles.inputFieldStyle}
+                        />
                       </div>
-                      <span style={commonStyles.error}>{experienceError}</span>
                     </div>
-                  </form>
-                </div>
-                <div style={commonStyles.buttonWrapper}>
-                  <button
-                    className="btn-orange"
-                    onClick={(e) => onSaveExperience(e)}>
-                    {buttonText}
-                    {/* {ts('SAVE_GOOD_EXPERIENCE')} */}
-                  </button>
-                </div>
-              </>
-            );
-          })
+                    <span style={commonStyles.error}>{experienceError}</span>
+                  </div>
+                </form>
+              </div>
+              <div style={commonStyles.buttonWrapper}>
+                <button
+                  className="btn-orange"
+                  onClick={(e) => onSaveExperience(e)}>
+                  {buttonText}
+                  {/* {ts('SAVE_GOOD_EXPERIENCE')} */}
+                </button>
+              </div>
+            </>
+          );
+        })
         : []}
       {/***********Exercise Part************* */}
       {false ? (
         <div style={styles.boxWrapper}>
-          <div style={{width: DEVICE_WIDTH > 767 ? '20%' : '30%'}}>
+          <div style={{ width: DEVICE_WIDTH > 767 ? '20%' : '30%' }}>
             <p style={styles.leftDate}>Date</p>
             {dateJSX}
           </div>
 
-          <div style={{width: DEVICE_WIDTH > 767 ? '78%' : '68%'}}>
+          <div style={{ width: DEVICE_WIDTH > 767 ? '78%' : '68%' }}>
             <p
               style={{
                 ...styles.rightText,
@@ -296,12 +289,12 @@ const TemplateNine = (props) => {
       {/****************************CONTENT********************** */}
       {content && content.length
         ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, i) => {
-              return (
-                <CardContent key={i} content={ReactHtmlParser(item.content)} />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, i) => {
+            return (
+              <CardContent key={i} content={ReactHtmlParser(item.content)} />
+            );
+          })
         : []}
       {showExercises && <ExerciseBox week={week} />}
     </>
@@ -315,7 +308,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     display: 'flex',
-     marginTop: '50px',
+    marginTop: '50px',
   },
   leftDate: {
     textAlign: 'center',

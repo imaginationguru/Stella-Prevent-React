@@ -116,7 +116,6 @@ const DailyLearningWeeks = (props) => {
   }, [assessId, userCardId]);
   /****************SUB CARDS HANLDER ****************** */
   const subCardHandler = (idx = 0, data = {}) => {
-    console.log('sub card handler>>>>>>', idx, data);
     setSubCardIndex(idx);
     setsubCardOnBasisOfIndexData(data);
   };
@@ -138,7 +137,6 @@ const DailyLearningWeeks = (props) => {
       let data =
         currentDayBasicCardData && currentDayBasicCardData.length
           ? currentDayBasicCardData.find((item) => {
-            console.log('card Id sub cards handler', item);
             return item._id === cardId;
           })
           : {};
@@ -232,7 +230,6 @@ const DailyLearningWeeks = (props) => {
 
   /************************************************ */
   useEffect(() => {
-    console.log('get template daily learningd', currentWeek);
 
     dispatch(AppActions.getTemplateData(selectedWeek));
 
@@ -240,7 +237,6 @@ const DailyLearningWeeks = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log('initial fetch template data');
     initialFetchTemplateData();
 
   }, [templateData]);
@@ -475,7 +471,6 @@ const DailyLearningWeeks = (props) => {
                   <div
                     className="footer-nav-right"
                     onClick={() => {
-                      console.log('sub card Id>>>on clikc>', subCardId);
                       subCardNextPrev(subCardIndex + 1, subCardId);
                     }}>
                     {subCardIndex === currentTemplateIds.length - 1 ? (

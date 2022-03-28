@@ -172,7 +172,6 @@ const ThirtyFour = (props) => {
       })
       : [];
     /**Add empty rows with comparison */
-    console.log(headerData, "headerData...")
     const addEmtpyRow = headerData.map((item, index) => {
       return {
         ...item,
@@ -210,7 +209,6 @@ const ThirtyFour = (props) => {
               val.textInput.length > 0
                 ? val.textInput[val.textInput.length - 1].order
                 : 0;
-            console.log(diff, 'diff.... 2 ', lastOrder);
 
             if (diff < 0) {
               for (
@@ -222,13 +220,11 @@ const ThirtyFour = (props) => {
               }
             }
             if (diff >= 0) {
-              console.log(lastOrder, lastOrder + (Math.abs(diff) + 1), "checkinggg")
               for (let i = lastOrder; i < lastOrder + 1; i++) {
                 newItem.push(emptyTextInputMapper(item._id, val._id, i));
               }
             }
           }
-          console.log(newItem, "newItem......")
           const finalInput =
             newItem.length > 0
               ? [...val.textInput, ...newItem]
@@ -240,9 +236,8 @@ const ThirtyFour = (props) => {
         }),
       };
     });
-    console.log(addEmtpyRow, 'addEmtpyRow....');
     setInputs(addEmtpyRow);
-   
+
   }, [userAssessmentData]);
 
   const onChangeHandler = (hId, sId, i, e) => {
@@ -302,8 +297,6 @@ const ThirtyFour = (props) => {
   };
 
   const deleteHandler = (hId, i, item, val, isAPICall = false) => {
-    console.log(hId, i, item, val);
-    console.log(i, "index")
     let temp = [];
     if (inputs.length) {
       temp = inputs.map((details) => {
@@ -336,7 +329,6 @@ const ThirtyFour = (props) => {
         }
       });
     });
-    console.log(hId, i, item, val);
     let leftItem = item.sub_heading[0].textInput[i].inputId;
     let rightItem = item.sub_heading[1].textInput[i].inputId;
 
@@ -346,11 +338,10 @@ const ThirtyFour = (props) => {
     } if (rightItem) {
       contentIdsArray.push(rightItem)
     }
- 
-     let content_id = contentIdsArray[0] !== "" ? contentIdsArray[0] : contentIdsArray[1]
-    console.log(contentIdsArray, content_id, "llll");
+
+    let content_id = contentIdsArray[0] !== "" ? contentIdsArray[0] : contentIdsArray[1]
     isAPICall = (leftItem != "" || rightItem != "") ? true : false;
-     if (contentIdsArray.length && isAPICall) {
+    if (contentIdsArray.length && isAPICall) {
 
       dispatch(
         AppActions.deleteUserAssessmentData(
@@ -364,7 +355,6 @@ const ThirtyFour = (props) => {
   };
 
   const onSave = () => {
-     console.log(inputs, 'inputs');
 
     const modifiedAssessment = inputs.length
       ? inputs.map((item) => {
@@ -392,10 +382,8 @@ const ThirtyFour = (props) => {
 
     let final = saveDateValidator(modifiedAssessment);
     final.map((m, ind) => {
-      console.log(m.content.length, "index", ind)
     })
-    console.log(saveDateValidator(modifiedAssessment), "modifiedAssessment....")
-     let params = {
+    let params = {
       user_id: getItem('userId'),
       user_card_id: props._id,
       assessment_id: assessment_id,
@@ -411,13 +399,13 @@ const ThirtyFour = (props) => {
         .filter((val) => val !== '').length
         ? true
         : false;
-     }
+    }
 
     if (modifiedAssessment.length && isAPICall) {
       if (userAssessmentData && userAssessmentData.length) {
-         dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
+        dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
       } else {
-         dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+        dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
       }
     } else {
       dispatch({
@@ -532,7 +520,7 @@ const ThirtyFour = (props) => {
                                     ? '15px'
                                     : '0',
                             }}
-                           >
+                          >
                             <div
                               style={{
                                 backgroundColor: YELLOW,
@@ -567,7 +555,7 @@ const ThirtyFour = (props) => {
                                       type="text"
                                       className="f-field"
                                       name={ele.name}
-                                       style={styles.selectedText}
+                                      style={styles.selectedText}
                                       value={val.content}
                                       onChange={(e) =>
                                         onChangeHandler(
@@ -583,7 +571,7 @@ const ThirtyFour = (props) => {
                                       <div
                                         style={{
                                           ...styles.circleDiv,
-                                           backgroundColor: val.content
+                                          backgroundColor: val.content
                                             .length
                                             ? GREEN_TEXT
                                             : GRAY,
@@ -607,7 +595,7 @@ const ThirtyFour = (props) => {
                                       <div
                                         style={{
                                           ...styles.circleCrossDiv,
-                                         }}
+                                        }}
                                         onClick={() => {
                                           deleteHandler(
                                             item._id,
@@ -711,5 +699,5 @@ const styles = {
     backgroundColor: '#F1F3FA',
     width: '100%',
     marginBottom: '30px',
-   },
+  },
 };

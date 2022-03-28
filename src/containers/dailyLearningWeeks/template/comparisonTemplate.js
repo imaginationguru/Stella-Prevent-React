@@ -100,13 +100,11 @@ const ComparisonTemplate = (props) => {
       duplicatesHandler(finalPData);
       userAssessmentData.length && setActiveState(3);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
 
   useEffect(() => {
     duplicatesHandler([...duringPregnancy, ...afterPregnancy]);
     setParamsAssessment([...duringPregnancy, ...afterPregnancy]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeState]);
 
   const localDataManage = (after = [], during = [], final = []) => {
@@ -196,7 +194,6 @@ const ComparisonTemplate = (props) => {
       });
     }
   };
-  console.log('active state????', activeState);
   return (
     <>
       <CardTitle title={ReactHtmlParser(card_title)} />

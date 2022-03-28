@@ -118,7 +118,6 @@ const AddActivityTracker = (props) => {
     });
   }
 
-  console.log('newSortedList', newSortedList);
   return (
     <MasterLayout>
       <BackBtn title="Back to Activities" />

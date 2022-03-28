@@ -88,11 +88,10 @@ const ThirtyThree = (props) => {
         is_added: false
       }
     })
-    console.log(dummyInput, "dummyInput...")
     setUserInputs([...firstAssessmentContent, ...dummyInput]);
-   }, [userAssessmentData]);
+  }, [userAssessmentData]);
   useEffect(() => {
-     headers &&
+    headers &&
       headers.length &&
       setInputs(
         headers.map((item) => {
@@ -108,9 +107,9 @@ const ThirtyThree = (props) => {
         }),
       );
 
-   }, [headers]);
+  }, [headers]);
   const onHandleChange = (e, item, inner) => {
-   
+
 
     const temp = userInputs.map((val) => {
       return {
@@ -152,7 +151,6 @@ const ThirtyThree = (props) => {
         };
       })
       : [];
-    console.log(modifyData, "modifyData,,,,,,");
     let firstParams = {
       user_id: userId,
       user_card_id: props._id,
@@ -168,7 +166,7 @@ const ThirtyThree = (props) => {
       }
     } else {
       customAlert("Please perform your exercise", 'error');
-     }
+    }
   };
 
   const generateDynamicColor = (order) => {
@@ -191,7 +189,6 @@ const ThirtyThree = (props) => {
       };
     }
     );
-    console.log(temp, "temp....");
     let dummyInput = {
       assessment_header_id: header._id,
       content: "",
@@ -334,7 +331,7 @@ const ThirtyThree = (props) => {
                           type="text"
                           className="f-field"
                           name={name}
-                           style={styles.selectedText}
+                          style={styles.selectedText}
                           value={val.content}
                           onChange={(e) => {
                             onHandleChange(e, item, val);
@@ -360,8 +357,8 @@ const ThirtyThree = (props) => {
                                 }
                               })
 
-                               setUserInputs([...other_header, ...filter_data]);
-                               if (val.content_id) {
+                              setUserInputs([...other_header, ...filter_data]);
+                              if (val.content_id) {
                                 dispatch(
                                   AppActions.deleteUserAssessmentData(
                                     val.content_id,
@@ -389,9 +386,9 @@ const ThirtyThree = (props) => {
                               if (val.content != "") {
                                 addHandler(item, val)
                               }
-                             
 
-                              
+
+
                             }}>
                             <span style={styles.plusIcon}>+</span>
                           </div>
@@ -400,7 +397,7 @@ const ThirtyThree = (props) => {
                     );
                   })
                 : null}
-              
+
             </div>
           );
         })
@@ -480,7 +477,7 @@ const styles = {
   selectedText: {
     backgroundColor: '#F1F3FA',
     width: '100%',
-   },
+  },
   circleDiv: {
     backgroundColor: GRAY,
     width: '35px',
@@ -508,7 +505,7 @@ const styles = {
     fontSize: '25px',
   },
   crossIconWrapper: {
-     display: 'flex',
+    display: 'flex',
     marginBottom: '15px',
     position: 'relative',
   },

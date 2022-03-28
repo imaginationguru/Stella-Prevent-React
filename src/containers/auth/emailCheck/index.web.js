@@ -45,7 +45,6 @@ const EmailCheck = () => {
     } else if (email.length && !emailRegex.test(email)) {
       setEmailError('Please enter a valid email');
     } else if (email) {
-      console.log('email check API hit>>>>>>>>>');
       dispatch(AppActions.emailExists(email));
     }
   };

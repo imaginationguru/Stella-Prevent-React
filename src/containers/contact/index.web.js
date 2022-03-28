@@ -75,7 +75,6 @@ function Contact(props) {
 
   useEffect(() => {
     if (loginData?.user?._id) {
-      console.log('enter');
       setFirstName(loginData.user.firstName);
       setEmail(loginData.user.email);
       setLastName(loginData.user.lastName);
@@ -107,7 +106,6 @@ function Contact(props) {
   };
 
   const onSend = (e) => {
-    console.log(value, 'value...');
     e.preventDefault();
 
     const params = {
@@ -117,7 +115,6 @@ function Contact(props) {
       message: message,
       subject: value,
     };
-    console.log(params);
 
     if (firstName.length === 0) {
       setFirstNameError('Please fill first name');

@@ -63,7 +63,7 @@ const ThirtyTwo = (props) => {
 
   useEffect(() => {
     dispatch(AppActions.getAssessmentDataSecond(assessment_id2));
-   }, [assessment_id2]);
+  }, [assessment_id2]);
   useEffect(() => {
     if (props.submit_messages.length) {
       let positive = props.submit_messages
@@ -104,9 +104,7 @@ const ThirtyTwo = (props) => {
       ? selectUserInputs.filter((ele) => ele.assessment_id[0] === assessment_id)
       : [];
     setSelected(selectedFormat);
-    console.log(firstAssessmentContent, "firstAssessmentContent....", assessmentData.headers);
     let dummyInput = assessmentData?.headers?.map(header => {
-      console.log(firstAssessmentContent.filter((e) => e.assessment_header_id === header._id).sort((a, b) => (a.order > b.order ? 1 : -1)), "count...");
       let arrayToSearchIn = firstAssessmentContent.filter((e) => e.assessment_header_id === header._id).sort((a, b) => (a.order > b.order ? 1 : -1));
       let maxOrder = Math.max(...arrayToSearchIn.map(o => o.order), 0);
       return {
@@ -116,9 +114,8 @@ const ThirtyTwo = (props) => {
         is_added: false
       }
     })
-    console.log(dummyInput, "dummyInput...")
     setUserInputs([...firstAssessmentContent, ...dummyInput]);
-   }, [userAssessmentData]);
+  }, [userAssessmentData]);
   useEffect(() => {
     let headers =
       assessmentData.headers && assessmentData.headers.length
@@ -135,14 +132,13 @@ const ThirtyTwo = (props) => {
             order: item.order,
             value: '',
             _id: item._id,
-           };
+          };
         }),
       );
 
-   }, [assessmentData]);
+  }, [assessmentData]);
   const onHandleChange = (e, item, inner) => {
-    console.log(e, item, "inputs.....", userInputs)
-   
+
 
     const temp = userInputs.map((val) => {
       return {
@@ -151,13 +147,11 @@ const ThirtyTwo = (props) => {
       };
     }
     );
-    console.log(temp, "temp....");
     setUserInputs(temp);
 
   };
 
   const addHandler = (header, innnerItem) => {
-    console.log(header, innnerItem, "header,innnerItem.....", userInputs);
     const temp = userInputs.map((val) => {
       return {
         ...val,
@@ -165,15 +159,14 @@ const ThirtyTwo = (props) => {
       };
     }
     );
-    console.log(temp, "temp....");
-     let dummyInput = {
+    let dummyInput = {
       assessment_header_id: header._id,
       content: "",
       order: innnerItem.order + 1,
       is_added: false
 
     }
-     setUserInputs([...temp, dummyInput]);
+    setUserInputs([...temp, dummyInput]);
   };
 
   /**********************FIRST ASSESSMENT****************** */
@@ -184,7 +177,6 @@ const ThirtyTwo = (props) => {
     inputs.map((item, i) => {
       indexArray.push({ index: i, id: item?._id });
     });
-    console.log(indexArray, "inputs......", userInputs)
     let modifyData = userInputs.length
       ? userInputs.filter(m => (m.content != '' && m.is_added == true)).map((item) => {
         indexArray.map((data, index) => {
@@ -206,8 +198,7 @@ const ThirtyTwo = (props) => {
       })
       : [];
 
-    console.log(modifyData, "modifyData...");
- 
+
     let firstParams = {
       user_id: userId,
       user_card_id: props._id,
@@ -222,7 +213,7 @@ const ThirtyTwo = (props) => {
       }
     } else {
       customAlert("Please perform your exercise", 'error');
-     }
+    }
   };
   const updateYESNO = (data = {}, arr = []) => {
     if (arr.length) {
@@ -278,13 +269,7 @@ const ThirtyTwo = (props) => {
     if (temp.length) {
       isValid = temp.some((item) => item === 'NO');
     }
-    console.log(
-      'user submit message',
 
-      temp,
-      'isValid',
-      isValid,
-    );
 
     let params = {
       user_id: userId,
@@ -294,7 +279,7 @@ const ThirtyTwo = (props) => {
     };
     if (userAssessment.length) {
       if (userAssessmentData && userAssessmentData.length) {
-         if (isValid) {
+        if (isValid) {
           dispatch(AppActions.rearrangeAssessments(params, negativeMessage));
         } else {
           dispatch(AppActions.rearrangeAssessments(params, positiveMessage));
@@ -308,7 +293,7 @@ const ThirtyTwo = (props) => {
       }
     } else {
       customAlert("Please perform your exercise", 'error');
-     }
+    }
   };
   const generateDynamicColor = (order) => {
     if (order === 0) {
@@ -321,7 +306,6 @@ const ThirtyTwo = (props) => {
       return CIRCLE_GRAY;
     }
   };
-  console.log('header in 32', headers, userInputs);
   return (
     <>
       {/**********************quotes************** */}
@@ -433,9 +417,8 @@ const ThirtyTwo = (props) => {
                           name={name}
                           onChange={(e) => {
                             onHandleChange(e, item, val);
-                            console.log('--->', inputs);
                           }}
-                           style={styles.selectedText}
+                          style={styles.selectedText}
                           value={val.content}
                         />
                         {isDelete ? (
@@ -457,8 +440,7 @@ const ThirtyTwo = (props) => {
                                 }
                               });
 
-                               console.log("new data", filter_data);
-                               if (val.content_id) {
+                              if (val.content_id) {
                                 dispatch(
                                   AppActions.deleteUserAssessmentData(
                                     val.content_id,
@@ -484,12 +466,11 @@ const ThirtyTwo = (props) => {
                               backgroundColor: val.content.length ? GREEN_TEXT : GRAY,
                             }}
                             onClick={() => {
-                              console.log(val, "val...");
                               if (val.content != "") {
                                 addHandler(item, val)
                               }
 
-                              
+
                             }}>
                             <span style={styles.plusIcon}>+</span>
                           </div>
@@ -499,7 +480,7 @@ const ThirtyTwo = (props) => {
                     );
                   })
                 : null}
-              
+
             </div>
           );
         })
@@ -665,7 +646,7 @@ const styles = {
   selectedText: {
     backgroundColor: '#F1F3FA',
     width: '100%',
-   },
+  },
   circleDiv: {
     backgroundColor: GRAY,
     width: '35px',

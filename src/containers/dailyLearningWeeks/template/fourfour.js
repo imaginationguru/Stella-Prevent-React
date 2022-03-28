@@ -170,7 +170,6 @@ const Template44 = (props) => {
   };
   const addHandler = () => {
     const initial = { content: '', order: '' };
-    console.log('is API call>in add');
     const temp = inputs.length
       ? inputs.map((item) => {
         return {
@@ -189,7 +188,6 @@ const Template44 = (props) => {
         const deleteData1 = item.content
           .filter((e, i) => i === index)
           .map((val) => {
-            console.log('delete cal', val);
             return val.id;
           });
         if (deleteData1.length) {
@@ -203,12 +201,10 @@ const Template44 = (props) => {
       : [];
 
     let isAPICall = false;
-    console.log('data delete datatemp', deleteDataTemp, deleteDataTemp.length);
     if (deleteDataTemp.length) {
       const tempCall = deleteDataTemp.find(
         (item) => item !== undefined || item !== 0 || item !== '',
       );
-      console.log('tempcall>>>>>', tempCall, tempCall ? true : false);
       isAPICall = tempCall ? true : false;
     }
     if (deleteDataTemp.length && isAPICall) {
@@ -252,7 +248,6 @@ const Template44 = (props) => {
       assessment_id: assessment_id,
       assessment: modifyData,
     };
-    console.log('params modif data', modifyData);
     let isAPICall = false;
     if (modifyData.length) {
       let index = 0;
@@ -284,11 +279,9 @@ const Template44 = (props) => {
     }
 
     if (userAssessmentData && userAssessmentData.length && isAPICall) {
-      console.log('PArams>> update>>>', JSON.stringify(params));
       dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
     } else {
       if (isAPICall) {
-        console.log('PArams>>>>>', JSON.stringify(params));
         dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
       } else {
         dispatch({

@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import GLOBALS from '../../../constants';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as AppActions from '../../../actions';
 import commonStyles from '../commonStyles';
-import {translate as ts} from '../../../i18n/translate';
+import { translate as ts } from '../../../i18n/translate';
 import tickBox from '../../../assets/images/tickBox.png';
-import {getItem} from '../../../utils/AsyncUtils';
+import { getItem } from '../../../utils/AsyncUtils';
 import ExerciseBox from '../../../components/ExerciseBox';
 import {
   CardQuote,
@@ -16,12 +16,12 @@ import {
   CardContent,
   CustomImage,
 } from '../../../components/Cards';
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
-const {IMAGE_BASE_URL, COLORS, ACTION_TYPE} = GLOBALS;
-const {BUTTON_ORANGE} = COLORS;
+const { IMAGE_BASE_URL, COLORS, ACTION_TYPE } = GLOBALS;
+const { BUTTON_ORANGE } = COLORS;
 const userId = getItem('userId');
 const TwentyOne = (props) => {
   const [headerData, setHeaderData] = useState([]);
@@ -39,13 +39,13 @@ const TwentyOne = (props) => {
   } = props.card;
   const dispatch = useDispatch();
   const [paramAssessment, setParamAssessment] = useState([]);
-  const {assessmentData = {}, userAssessmentData = []} = useSelector(
+  const { assessmentData = {}, userAssessmentData = [] } = useSelector(
     (state) => state.moduleOne,
   );
 
   useEffect(() => {
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-   }, [assessment_id]);
+  }, [assessment_id]);
 
   useEffect(() => {
     let headers =
@@ -53,7 +53,7 @@ const TwentyOne = (props) => {
         ? assessmentData.headers
         : [];
     setHeaderData(headers);
-   }, [assessmentData]);
+  }, [assessmentData]);
 
   useEffect(() => {
     const cardData = [];
@@ -65,13 +65,12 @@ const TwentyOne = (props) => {
     let modifyCardData = cardData.map((item) => {
       return {
         assessment_header_id: item.assessment_header_id,
-        content: [{content: item.content}],
+        content: [{ content: item.content }],
       };
     });
     setParamAssessment([...modifyCardData]);
-   }, [userAssessmentData]);
+  }, [userAssessmentData]);
   const clickOnCheck = (item) => {
-    console.log('item>>>>>>>>', item, paramAssessment);
     if (paramAssessment && paramAssessment.length) {
       let ids = paramAssessment.map((val) => val.assessment_header_id);
       const isAlready = ids.length
@@ -79,23 +78,22 @@ const TwentyOne = (props) => {
         : false;
       if (isAlready) {
         let y = paramAssessment.map((val) => {
-          console.log('val>>>>>>>', val, item.content);
           return {
             ...val,
             content:
               val.assessment_header_id === item._id
                 ? [
-                    {
-                      content: !val.content[0].content,
-                      order: item.order,
-                      assessment_content_id: item._id,
-                    },
-                  ]
+                  {
+                    content: !val.content[0].content,
+                    order: item.order,
+                    assessment_content_id: item._id,
+                  },
+                ]
                 : val.content,
           };
         });
-         setParamAssessment(y);
-       } else {
+        setParamAssessment(y);
+      } else {
         setParamAssessment([
           ...paramAssessment,
           {
@@ -115,7 +113,7 @@ const TwentyOne = (props) => {
         {
           assessment_header_id: item._id,
           content: [
-            {content: true, order: item.order, assessment_content_id: item._id},
+            { content: true, order: item.order, assessment_content_id: item._id },
           ],
         },
       ]);
@@ -130,7 +128,7 @@ const TwentyOne = (props) => {
       assessment_id: assessment_id,
       assessment: paramAssessment,
     };
-     if (paramAssessment && paramAssessment.length) {
+    if (paramAssessment && paramAssessment.length) {
       if (userAssessmentData && userAssessmentData.length) {
         dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
       } else {
@@ -149,15 +147,15 @@ const TwentyOne = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -169,88 +167,87 @@ const TwentyOne = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
       {/**********************Images************** */}
       {images && images.length
         ? images.map((item) => {
-            return (
-              <CustomImage
-                src={`${IMAGE_BASE_URL}${item.image}`}
-                style={{display: item.image !== '' ? 'flex' : 'none'}}
-              />
-            );
-          })
+          return (
+            <CustomImage
+              src={`${IMAGE_BASE_URL}${item.image}`}
+              style={{ display: item.image !== '' ? 'flex' : 'none' }}
+            />
+          );
+        })
         : null}
       <div style={commonStyles.contentLeftBorder}>
         {/**********Assessment descriptions**************** */}
         {props.assessments && props.assessments.length
           ? props.assessments.map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  style={styles.assessmentDescription}
-                  description={ReactHtmlParser(item.description)}
-                />
-              );
-            })
+            return (
+              <CardDescription
+                key={index}
+                style={styles.assessmentDescription}
+                description={ReactHtmlParser(item.description)}
+              />
+            );
+          })
           : []}
 
-        <div style={{marginTop: '30px'}}>
+        <div style={{ marginTop: '30px' }}>
           {headerData && headerData.length
             ? headerData
-                .sort((a, b) => (a.order > b.order && 1) || -1)
-                .map((item) => {
-                  let data = false;
+              .sort((a, b) => (a.order > b.order && 1) || -1)
+              .map((item) => {
+                let data = false;
 
-                  const checkData =
-                    paramAssessment.length &&
-                    paramAssessment.find(
-                      (val) => val.assessment_header_id === item._id,
-                    );
-                  if (checkData) {
-                    if (checkData.content && checkData.content.length) {
-                      data = checkData.content[0].content;
-                    }
-                  }
-
-                  console.log('check data>>>>', checkData, paramAssessment);
-                  return (
-                    <div
-                      onClick={() => clickOnCheck(item)}
-                      style={styles.checkWithQues}>
-                      {data ? (
-                        <img
-                          src={tickBox}
-                          style={{
-                            width: '18px',
-                            height: '18px',
-                            position: 'relative',
-                            top: '3px',
-                            left: '-2px',
-                          }}
-                        />
-                      ) : (
-                        <div
-                          style={{
-                            ...styles.checkBox,
-                          }}
-                        />
-                      )}
-                      <p style={{paddingLeft: '20px'}}>
-                        {ReactHtmlParser(item.header)}
-                      </p>
-                    </div>
+                const checkData =
+                  paramAssessment.length &&
+                  paramAssessment.find(
+                    (val) => val.assessment_header_id === item._id,
                   );
-                })
+                if (checkData) {
+                  if (checkData.content && checkData.content.length) {
+                    data = checkData.content[0].content;
+                  }
+                }
+
+                return (
+                  <div
+                    onClick={() => clickOnCheck(item)}
+                    style={styles.checkWithQues}>
+                    {data ? (
+                      <img
+                        src={tickBox}
+                        style={{
+                          width: '18px',
+                          height: '18px',
+                          position: 'relative',
+                          top: '3px',
+                          left: '-2px',
+                        }}
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          ...styles.checkBox,
+                        }}
+                      />
+                    )}
+                    <p style={{ paddingLeft: '20px' }}>
+                      {ReactHtmlParser(item.header)}
+                    </p>
+                  </div>
+                );
+              })
             : []}
         </div>
       </div>
@@ -264,16 +261,16 @@ const TwentyOne = (props) => {
       {/**********************content************** */}
       {content && content.length
         ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardContent
-                  key={index}
-                  content={ReactHtmlParser(item.content)}
-                  style={{paddingTop: '10px'}}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardContent
+                key={index}
+                content={ReactHtmlParser(item.content)}
+                style={{ paddingTop: '10px' }}
+              />
+            );
+          })
         : []}
       {showExercises && <ExerciseBox week={week} />}
     </>

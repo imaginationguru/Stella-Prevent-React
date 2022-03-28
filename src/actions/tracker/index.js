@@ -27,7 +27,6 @@ export const sessionExpire = (message) => {
 };
 /********************GET MOOD DATA************** */
 export function getMoodData(date) {
-  console.log('getMoodData inside actions');
   let userId = getItem('userId');
   return async (dispatch) => {
     dispatch({ type: ACTION_TYPE.GET_MOOD_REQUEST });
@@ -39,9 +38,7 @@ export function getMoodData(date) {
         timeZone: moment.tz.guess(),
         patientDate: date,
       };
-      console.log('get mood data paramsss', params);
       let json = await RestClient.postCall(URL.GET_MOOD_API, params);
-      console.log('json MOOD in actions', json);
       if (json.code === 200) {
         dispatch({
           type: ACTION_TYPE.GET_MOOD_SUCCESS,
@@ -56,7 +53,6 @@ export function getMoodData(date) {
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd>>>>>>>get assessment data');
           dispatch(sessionExpire(json.message));
 
           dispatch(loadingAction(false));
@@ -67,10 +63,7 @@ export function getMoodData(date) {
         }
       }
     } catch (error) {
-      console.log(
-        'erroe>>get template cards data>>>>>>>>>>get assessment data>>>>',
-        error,
-      );
+
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -96,7 +89,6 @@ export function saveUserMood(params) {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.SAVE_MOOD_API, postData);
       if (json.code === 200) {
-        console.log('JSON data SAVE USER ASSESSMENT >>>>>>>>>', json);
         customAlert(json.message, 'success', {}, null, (onPress) => {
           dispatch(navigatorPop());
         });
@@ -108,17 +100,13 @@ export function saveUserMood(params) {
         dispatch(loadingAction(false));
       } else {
         if (json.code === 400) {
-          console.log(
-            'erroe>> csave USER ASSESSMENT>>>>>400>>>>>>>>>',
-            json.message,
-          );
+
           dispatch({
             type: ACTION_TYPE.ERROR,
             payload: json.message,
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd>>>>>>>save user assessment');
           dispatch(sessionExpire(json.message));
 
           dispatch(loadingAction(false));
@@ -129,7 +117,6 @@ export function saveUserMood(params) {
         }
       }
     } catch (error) {
-      console.log('erroe>> csave USER ASSESSMENT>>>>>>>>>>>>>>', error);
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -145,7 +132,6 @@ export function saveUserMood(params) {
 /********************GET ACTIVITY DATA************** */
 export function getActivityTracker(params) {
   let userId = getItem('userId');
-  console.log('get activity tracker params', params);
   return async (dispatch) => {
     dispatch({ type: ACTION_TYPE.GET_ACTIVITY_TRACKER_REQUEST });
     try {
@@ -155,7 +141,6 @@ export function getActivityTracker(params) {
         params,
       );
       if (json.code === 200) {
-        console.log('get activity tracker data', json.data);
         dispatch({
           type: ACTION_TYPE.GET_ACTIVITY_TRACKER_SUCCESS,
           payload: json.data,
@@ -169,7 +154,6 @@ export function getActivityTracker(params) {
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd>>>>>>>get assessment data');
           dispatch(sessionExpire(json.message));
 
           dispatch(loadingAction(false));
@@ -180,10 +164,7 @@ export function getActivityTracker(params) {
         }
       }
     } catch (error) {
-      console.log(
-        'erroe>>get template cards data>>>>>>>>>>get assessment data>>>>',
-        error,
-      );
+
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -198,7 +179,6 @@ export function getActivityTracker(params) {
 
 /********************GET SELECTED ACTIVITY DATA************** */
 export function getSelectedActivityTracker(params) {
-  console.log('get selected activity tracker params', params);
   let userId = getItem('userId');
   return async (dispatch) => {
     dispatch({ type: ACTION_TYPE.GET_SELECTED_ACTIVITY_TRACKER_REQUEST });
@@ -209,7 +189,6 @@ export function getSelectedActivityTracker(params) {
         params,
       );
       if (json.code === 200) {
-        console.log('get selected activity tracker data', json.data);
         dispatch({
           type: ACTION_TYPE.GET_SELECTED_ACTIVITY_TRACKER_SUCCESS,
           payload: json.data,
@@ -223,7 +202,6 @@ export function getSelectedActivityTracker(params) {
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd>>>>>>>get assessment data');
           dispatch(sessionExpire(json.message));
 
           dispatch(loadingAction(false));
@@ -234,10 +212,7 @@ export function getSelectedActivityTracker(params) {
         }
       }
     } catch (error) {
-      console.log(
-        'erroe>>get template cards data>>>>>>>>>>get assessment data>>>>',
-        error,
-      );
+
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -252,14 +227,12 @@ export function getSelectedActivityTracker(params) {
 
 /********************SAVE ACTIVITY DATA************** */
 export function saveActivityTracker(params) {
-  console.log('params>>>>>>', params);
   let postData = {
     hospital_id: params.hospital_id,
     patient_id: params.patient_id,
     timeZone: moment.tz.guess(),
     patientDate: moment().format(STRINGS.DATE_FORMATE),
   };
-  console.log(' save post data get selected activity tracker', postData);
   return async (dispatch) => {
     dispatch({ type: ACTION_TYPE.SAVE_OTHER_ACTIVITY_REQUEST });
     try {
@@ -318,7 +291,6 @@ export function saveSleepTracker(params, postDataGetAPI) {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.SAVE_SLEEP_API, postData);
       if (json.code === 200) {
-        console.log('JSON data SAVE SLEEP >>>>>>>>>', json);
         dispatch({
           type: ACTION_TYPE.SAVE_SLEEP_TRACKER_SUCCESS,
           payload: json.message,
@@ -332,17 +304,13 @@ export function saveSleepTracker(params, postDataGetAPI) {
         });
       } else {
         if (json.code === 400) {
-          console.log(
-            'erroe>> csave USER ASSESSMENT>>>>>400>>>>>>>>>',
-            json.message,
-          );
+
           dispatch({
             type: ACTION_TYPE.ERROR,
             payload: json.message,
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd>>>>>>>save user assessment');
           dispatch(sessionExpire(json.message));
 
           dispatch(loadingAction(false));
@@ -354,7 +322,6 @@ export function saveSleepTracker(params, postDataGetAPI) {
         dispatch(loadingAction(false));
       }
     } catch (error) {
-      console.log('erroe>> csave USER ASSESSMENT>>>>>>>>>>>>>>', error);
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -379,7 +346,6 @@ export function getSleepData(params) {
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.GET_SLEEP_TRACKER_API, postData);
-      console.log('json sleep in actions', json);
       if (json.code === 200) {
         dispatch({
           type: ACTION_TYPE.GET_SLEEP_TRACKER_SUCCESS,
@@ -394,7 +360,6 @@ export function getSleepData(params) {
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd>>>>>>>get assessment data');
           dispatch(sessionExpire(json.message));
 
           dispatch(loadingAction(false));
@@ -406,10 +371,7 @@ export function getSleepData(params) {
         }
       }
     } catch (error) {
-      console.log(
-        'erroe>>get template cards data>>>>>>>>>>get assessment data>>>>',
-        error,
-      );
+
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -431,7 +393,6 @@ export function getWeeklySummaryReport(params) {
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.GET_WEEKLY_SUMMARY_API, params);
-      console.log('json sleep in actions', json);
       if (json.code === 200) {
         dispatch({
           type: ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_SUCCESS,
@@ -446,7 +407,6 @@ export function getWeeklySummaryReport(params) {
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd>>>>>>>get assessment data');
           dispatch(sessionExpire(json.message));
 
           dispatch(loadingAction(false));
@@ -457,10 +417,7 @@ export function getWeeklySummaryReport(params) {
         }
       }
     } catch (error) {
-      console.log(
-        'erroe>>get template cards data>>>>>>>>>>get assessment data>>>>',
-        error,
-      );
+
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,

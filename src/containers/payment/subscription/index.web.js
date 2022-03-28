@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -22,31 +22,28 @@ import Button from '../../../components/common/button';
 
 import BackBtn from '../../../components/common/backbtn';
 import ProfileHeader from '../../../components/common/profileHeader';
-const {COLORS, FONTS} = GLOBALS;
-const {LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN} = COLORS;
+const { COLORS, FONTS } = GLOBALS;
+const { LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN } = COLORS;
 import Header from '../../../components/Header';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as AppActions from '../../../actions';
 import back from '../../../assets/images/subscription/back.png';
-import {Dimensions} from 'react-native-web';
+import { Dimensions } from 'react-native-web';
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const {IMAGE_BASE_URL} = GLOBALS;
+const { IMAGE_BASE_URL } = GLOBALS;
 const Subscription = (props) => {
   const [current_numericPrice, setPrice] = useState(0);
   const dispatch = useDispatch();
-  const {plansData = []} = useSelector((state) => state.moduleOne);
-  console.log(plansData, 'plans.......', props);
+  const { plansData = [] } = useSelector((state) => state.moduleOne);
 
   const backButtonTitle = props.location.state?.fromScreenDailyLearing
     ? 'Back to Card'
     : 'Back to Profile';
   useEffect(() => {
     dispatch(AppActions.getPlans());
-    console.log('setting', props.location);
     if (props.location && props.location.state) {
       setPrice(props.location.state.currentPlan.numericPrice);
     }
-    console.log(current_numericPrice, 'numericPrice');
   }, []);
 
   const getPlanbg = (index) => {
@@ -89,12 +86,12 @@ const Subscription = (props) => {
     <>
       <View style={styles.container}>
         <ProfileHeader
-          onProfileClick={() => navigatorPush({screenName: 'Profile'})}
+          onProfileClick={() => navigatorPush({ screenName: 'Profile' })}
           showProfileBtn={true}
           showEditIcon={false}
         />
         <BackBtn title={backButtonTitle} />
-        <View style={{alignItems: 'center'}}>
+        <View style={{ alignItems: 'center' }}>
           <View style={styles.middleContainer}>
             {plansData.length != 0 &&
               plansData.map((item, index) => {
@@ -107,20 +104,20 @@ const Subscription = (props) => {
                         backgroundColor: getPlanbg(index),
                       },
                     ]}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                       <Image
                         source={`${IMAGE_BASE_URL}${item.image}`}
-                        style={{width: 30, height: 30}}
+                        style={{ width: 30, height: 30 }}
                       />
                       <Text
-                        style={[styles.planText, {color: getTextColor(index)}]}>
+                        style={[styles.planText, { color: getTextColor(index) }]}>
                         {item.title}
                       </Text>
                     </View>
                     <Text
                       style={[
                         styles.getText,
-                        {color: getSubTitleColor(index)},
+                        { color: getSubTitleColor(index) },
                       ]}>
                       {item.subtitle}
                     </Text>
@@ -129,12 +126,12 @@ const Subscription = (props) => {
                         <View style={styles.listView}>
                           <Image
                             source={getCheckboxImage(index)}
-                            style={{width: 18, height: 18}}
+                            style={{ width: 18, height: 18 }}
                           />
                           <Text
                             style={[
                               styles.itemText,
-                              {color: getTextColor(index)},
+                              { color: getTextColor(index) },
                             ]}>
                             {content.content}
                           </Text>
@@ -146,8 +143,8 @@ const Subscription = (props) => {
                       <Text
                         style={[
                           styles.planText,
-                          {marginLeft: 0, marginTop: '6.4vw'},
-                          {color: getTextColor(index)},
+                          { marginLeft: 0, marginTop: '6.4vw' },
+                          { color: getTextColor(index) },
                         ]}>
                         {item.price}
                         <Text style={styles.planInnerText}>
@@ -166,7 +163,7 @@ const Subscription = (props) => {
                             width: '100%',
                             marginTop: '1.1vw',
                             alignSelf: 'center',
-                            fontSize:"18px",
+                            fontSize: "18px",
                             opacity:
                               current_numericPrice == item.numericPrice
                                 ? 0.3
@@ -181,7 +178,7 @@ const Subscription = (props) => {
                           title="Choose"
                           bgColor={getBtnColor(index)}
                           textColor={getPlanbg(index)}
-                          textStyle={{fontSize: 20}}
+                          textStyle={{ fontSize: 20 }}
                         />
                       )}
                     </View>
@@ -201,13 +198,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-   },
+  },
   middleContainer: {
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     padding: '15px',
-   
+
   },
   middleInnerLeft: {
     flex: 0.5,
@@ -226,7 +223,7 @@ const styles = StyleSheet.create({
   planText: {
     fontFamily: 'Inter',
     fontSize: DEVICE_WIDTH > 1000 ? '1.7vw' : '18px',
-     color: '#0B0914',
+    color: '#0B0914',
     marginLeft: DEVICE_WIDTH > 1000 ? '1vw' : '15px',
     fontFamily: FONTS.SEMI_BOLD,
   },
@@ -267,11 +264,11 @@ const styles = StyleSheet.create({
   },
 
   planContainer: {
-    
+
     borderRadius: DEVICE_WIDTH > 1000 ? '0.5vw' : '12px',
     padding: DEVICE_WIDTH > 1000 ? '1vw' : '15px',
 
-   
+
     elevation: 15,
     marginTop: DEVICE_WIDTH > 1000 ? '3vw' : '20px',
     marginBottom: DEVICE_WIDTH > 1000 ? '3vw' : '20px',
@@ -279,7 +276,7 @@ const styles = StyleSheet.create({
     marginRight: DEVICE_WIDTH > 1000 ? '0.5vw' : '0',
 
     shadowColor: COLORS.PLAN_GRAY,
-    shadowOffset: {width: -2, height: 4},
+    shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.5,
     shadowRadius: '3vw',
     maxWidth: DEVICE_WIDTH > 1000 ? '25vw' : '100%',

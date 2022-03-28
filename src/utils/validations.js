@@ -29,27 +29,19 @@ export function validateNumber(text) {
 
 export function validatePhoneNumber(text) {
   var re = /^[0-9]*$/;
-  console.log(
-    're.test(text) && re.length>0 && re.length<11 :>> ',
-    re.test(text),
-    text.length,
-  );
+
   return re.test(text) && text.length > 0 && text.length == 10;
 }
 
 export function validateContact(text) {
-   var re = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
-  console.log(
-    're.test(text) && re.length>0 && re.length<11 :>> ',
-    re.test(text),
-    text.length,
-  );
+  var re = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
+
   return re.test(text) && text.length > 0 && text.length <= 10;
 }
 
 export function validateContactCode(text) {
   var re = /^\+(?:[0-9] ?){6,15}[0-9]$/;
-   return re.test(text);
+  return re.test(text);
 }
 
 export function validateAddress(text) {
@@ -63,15 +55,11 @@ export function validateZipcode(text) {
 }
 export function validatePhoneWithSpecialSymbol(text) {
   var re = /^[0-9*#+'-]+$/;
-  console.log(
-    're.test(text) && re.length>0 && re.length<11 :>> ',
-    re.test(text),
-    text.length,
-  );
+
   return re.test(text) && text.length > 0;
 }
 export function validateANZipcode(text) {
-   var re = /^[- A-Za-z0-9]{0,15}\d{1,10}[- A-Za-z0-9]{0,15}$/; //use before
+  var re = /^[- A-Za-z0-9]{0,15}\d{1,10}[- A-Za-z0-9]{0,15}$/; //use before
 
-   return re.test(text);
+  return re.test(text);
 }

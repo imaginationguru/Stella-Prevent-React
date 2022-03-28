@@ -50,7 +50,6 @@ const FourOne = (props) => {
 
 
   useEffect(() => {
-    console.log('userAssessmentData', userAssessmentData);
     const assessmentCards = [];
     if (userAssessmentData && userAssessmentData.length) {
       userAssessmentData.forEach((item) => {
@@ -60,8 +59,6 @@ const FourOne = (props) => {
     let selectedFormat = assessmentCards.map((item) => {
       return { _id: item.assessment_header_id, content: item.content };
     });
-    console.log('assessmentCards', assessmentCards);
-    console.log('props.inputs>>>>>', props.inputs);
     assessmentCards.map((item) => {
       props.inputs.map((ele) => {
         if (item.order === ele.order) {
@@ -72,7 +69,6 @@ const FourOne = (props) => {
     });
 
     setSelected(selectedFormat);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
 
   const updateYESNO = (data = {}, arr = []) => {
@@ -181,7 +177,6 @@ const FourOne = (props) => {
       userAssessment !== undefined
         ? userAssessment.filter((fil) => fil.assessment_header_id)
         : [];
-    console.log('filter user ', filterUserAssessment);
     let temp = [];
     let isValid = '';
     if (filterUserAssessment.length) {
@@ -189,17 +184,10 @@ const FourOne = (props) => {
         temp.push(item.content[0] && item.content[0].content);
       });
     }
-    console.log('temp?????', temp);
     if (temp.length) {
       isValid = temp.some((item) => item === 'YES');
     }
-    console.log(
-      'user submit message',
 
-      temp,
-      'isValid',
-      //isValid,
-    );
     e.preventDefault();
     let params = {
       user_id: userId,
@@ -217,16 +205,11 @@ const FourOne = (props) => {
       data: filterUserInputsUpdtae,
     };
 
-    console.log('userInputsUpdate>>>>>', userInputsUpdate);
-    console.log('paramsUpdateInput>>>>>', paramsUpdateInput);
-    console.log('params>>>>>', params, userAssessment);
     if (userAssessment.length) {
       if (userAssessmentData && userAssessmentData.length) {
         if (isValid) {
-          console.log('is vlaid true');
           dispatch(AppActions.rearrangeAssessments(params, positiveMessage));
         } else {
-          console.log('is vlaid false');
           dispatch(AppActions.rearrangeAssessments(params, negativeMessage));
         }
 

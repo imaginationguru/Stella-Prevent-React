@@ -101,7 +101,6 @@ const FourThree = (props) => {
         }),
       );
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData, assessment_id]);
   useEffect(() => {
     let cardData = [];
