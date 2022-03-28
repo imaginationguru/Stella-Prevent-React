@@ -1,10 +1,10 @@
-
+/**
  * Sample React Native App
-  * https://github.com/facebook/react-native
+ * https://github.com/facebook/react-native
  *
  * @format
- * @flow strict - local
-  * /
+ * @flow strict-local
+ */
 
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -82,6 +82,7 @@ const SignUp = () => {
     : [];
 
   const handleChange = (e) => {
+    console.log('name>>>>>>>>>>>>', e.target.name, e.target.value);
     const { name, value } = e.target;
     if (name === 'firstName') {
       setFirstName(value);
@@ -155,6 +156,7 @@ const SignUp = () => {
       registeredFromStellaPrevent: true,
       language: language,
     };
+    console.log('language>>>>data>>>>>>', params);
     if (firstName.length === 0) {
       setFirstNameError('please fill first name');
     }
@@ -201,6 +203,7 @@ const SignUp = () => {
     dispatch(AppActions.register(params));
   };
 
+  console.log('dial_code>>>>>>>>>>>', country);
   return (
     <>
       <MasterLayout>

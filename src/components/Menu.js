@@ -25,7 +25,7 @@ import face from '../assets/images/sleep/face.png';
 import logout from '../assets/images/logout.png';
 import logoWhite from '../assets/images/logoWhite.png';
 const { COLORS } = GLOBALS;
-const { GRAY, PLAN_GRAY } = COLORS;
+const { GRAY, PLAN_GRAY, WHITE, GreenForSlider, DARK_RED } = COLORS;
 const Menu = (props) => {
   const { modalVisible, menuStyle } = props;
   const {
@@ -99,7 +99,7 @@ const Menu = (props) => {
         style={{
           width: 220,
           height: 400,
-          backgroundColor: '#ffff',
+          backgroundColor: WHITE,
           borderBottomLeftRadius: 15,
           borderBottomRightRadius: 15,
           overflow: 'hidden',
@@ -138,7 +138,7 @@ const Menu = (props) => {
             <TabUI
               src={daily}
               title={'Daily Learning'}
-              imgWrap={{ backgroundColor: '#6FCF97' }}
+              imgWrap={{ backgroundColor: GreenForSlider }}
               onClick={() => {
                 if (!checkMenuDisable('module')) {
                   dispatch(AppActions.dashboardModalAction(false));
@@ -215,7 +215,7 @@ const Menu = (props) => {
             <TabUI
               src={logout}
               title={'Logout'}
-              imgWrap={{ backgroundColor: '#D85454' }}
+              imgWrap={{ backgroundColor: DARK_RED }}
               imgSize={{ width: 13, height: 10 }}
               img={{ marginLeft: '70%' }}
               onClick={() => {

@@ -57,18 +57,19 @@ const LineGraphUI = ({ xAxis, yAxis, lable }) => {
       y: {
         ticks: {
           color: COLORS.WHITE,
+          precision: 0,
           callback: function (label, index, labels) {
             if (label <= 0.5) {
-              return "Terrible: " + label;
+              return label + " (Terrible)";
             } else if (label >= 1 && label < 2) {
-              return "Bad: " + label;
+              return label + " (Bad)";
             } else if (label >= 2 && label < 3) {
-              return "Ok: " + label;
+              return label + " (Ok)";
             } else if (label >= 3 && label < 4) {
-              return "Good: " + label;
+              return label + " (Good)";
             }
             else {
-              return "Awesome: " + label;
+              return label + " (Awesome)";
             }
           }
         }

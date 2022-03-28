@@ -18,10 +18,10 @@ const Toggle = (props) => {
       <Switch
         trackColor={{ false: '#767577', true: '#49A694' }}
         thumbColor={'#f4f3f4'}
-        ios_backgroundColor=3e3e3e"
-      onValueChange={() => { }}
-      value={enabled}
-      style={{ transform: [{ scaleX: 0.7 }, { scaleY: 1 }] }}
+        ios_backgroundColor="#3e3e3e"
+        onValueChange={() => { }}
+        value={enabled}
+        style={{ transform: [{ scaleX: 0.7 }, { scaleY: 1 }] }}
       />
     </TouchableOpacity>
   );

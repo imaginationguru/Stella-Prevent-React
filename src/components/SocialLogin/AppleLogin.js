@@ -7,7 +7,6 @@ const AppleLogIn = (props) => {
   const appleId = 'com.stellaPreventWeb';
 
   const handleResponse = (res) => {
-    console.log('apple login response', res);
     if (res.error) {
       if (res.error.error == 'popup_closed_by_user') {
         customAlert('Apple login cancelled.', 'error');
@@ -16,12 +15,9 @@ const AppleLogIn = (props) => {
     } else {
       try {
         var decoded = jwt_decode(res.authorization.id_token);
-        console.log(decoded);
         var email_id = decoded.email;
-        console.log(email_id);
         verifyUser(res, email_id);
       } catch (err) {
-        console.log(err);
       }
     }
   };
