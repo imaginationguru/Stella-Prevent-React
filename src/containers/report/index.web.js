@@ -17,9 +17,7 @@ import BackBtn from '../../components/common/backbtn';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import GLOBALS from '../../constants';
-
 import * as AppActions from '../../actions';
-
 import momentZone from 'moment-timezone';
 import BackToDashboard from '../../components/common/backToDashboard';
 import { Line } from 'react-chartjs-2';
