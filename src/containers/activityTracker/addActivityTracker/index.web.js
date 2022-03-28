@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import {Modal, TouchableOpacity, FlatList, TextInput} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Modal, TouchableOpacity, FlatList, TextInput } from 'react-native';
 import MasterLayout from '../../../components/MasterLayout';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '../../../actions';
 import menu from '../../../assets/images/menu.svg';
 import header from '../../../assets/images/header.png';
@@ -10,13 +10,13 @@ import unChecked from '../../../assets/images/uncheckedSquare@3x.png';
 import Menu from '../../../components/Menu';
 import GLOBALS from '../../../constants';
 import BackBtn from '../../../components/common/backbtn';
-import {getItem} from '../../../utils/AsyncUtils';
-import {translate as ts} from '../../../i18n/translate';
-const {STRINGS, COLORS} = GLOBALS;
+import { getItem } from '../../../utils/AsyncUtils';
+import { translate as ts } from '../../../i18n/translate';
+const { STRINGS, COLORS } = GLOBALS;
 
 const AddActivityTracker = (props) => {
   const dispatch = useDispatch();
-  const {saveActivityData} = useSelector((state) => state.tracker);
+  const { saveActivityData } = useSelector((state) => state.tracker);
   const [addPlasentActivity, setPlasentActivityArray] = useState(
     props.location.state.AddPlesantActivityArray,
   );
@@ -41,19 +41,7 @@ const AddActivityTracker = (props) => {
   let selectedListArray = props.location.state.selectedListArray;
   let updatedId = props.location.state.updateId;
 
-  // useEffect(() => {
-  //   if (saveActivityData) {
-  //     if (loginData !== null) {
-  //       let postData = {
-  //         hospital_id: loginData.user.hospital_id,
-  //         patient_id: loginData.user._id,
-  //       };
-  //       dispatch(AppActions.getActivityTracker(postData));
-  //       dispatch(AppActions.getSelectedActivityTracker(postData));
-  //       // go to previous screen
-  //     }
-  //   }
-  // }, saveActivityData);
+
 
   const searchUpdated = (text) => {
     if (text != '') {
@@ -157,7 +145,7 @@ const AddActivityTracker = (props) => {
                 showsHorizontalScrollIndicator={false}
                 extraData={refresh}
                 keyExtractor={(item) => item._id}
-                renderItem={({item, index}) => (
+                renderItem={({ item, index }) => (
                   <TouchableOpacity
                     style={styles.activityTitle}
                     onPress={() => _onCheckActivity(item._id)}>
@@ -196,13 +184,12 @@ const styles = {
   wrapper: {
     marginTop: '4%',
   },
-  ques: {fontSize: '18px', fontWeight: 'bold'},
-  saveButton: {maxWidth: '150px', marginTop: '50px', marginBottom: '50px'},
+  ques: { fontSize: '18px', fontWeight: 'bold' },
+  saveButton: { maxWidth: '150px', marginTop: '50px', marginBottom: '50px' },
   searchTitle: {
     fontSize: '16px',
     color: '#747878',
     paddingLeft: '20px',
-    // border: '1px solid blue',
     paddingTop: '5px',
   },
   searchedTextInput: {
@@ -218,18 +205,13 @@ const styles = {
     fontSize: 14,
   },
   activityImage: {
-    //padding: '1%',
-    //  width: '5%',
     width: '35px',
     height: '35px',
-    //border: '1px solid pink',
   },
   activityTitle: {
     flexDirection: 'row',
     alignContent: 'center',
     display: 'flex',
-    //margin: '1%',
-    //border: '1px solid red',
     marginTop: '10px',
   },
 };

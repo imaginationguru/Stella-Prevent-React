@@ -48,10 +48,7 @@ const TemplateNine = (props) => {
   console.log('props template nine', props.card);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  
   console.log(
     'userAssessmentData??????????',
     userAssessmentData,
@@ -63,8 +60,7 @@ const TemplateNine = (props) => {
       userAssessmentData.forEach((item) => cardsData.push(...item.cards));
     }
     setInputCardData(cardsData);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userAssessmentData]);
+   }, [userAssessmentData]);
 
   /*****************************function for fetch input value, id and set   */
 
@@ -79,8 +75,7 @@ const TemplateNine = (props) => {
       inputCardData.map((item) => {
         return setUpdateId(item._id);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputCardData]);
+   }, [inputCardData]);
 
   /***********************set input value function************* */
 
@@ -116,46 +111,7 @@ const TemplateNine = (props) => {
     } else {
       setExperienceError('Please complete the exercise!');
     }
-    // if (experience && experience.length === 0) {
-    //   console.log('experien lenght', experience.length);
-    //   setExperienceError('Please complete the exercise!');
-    // } else if (experience !== '') {
-    //   dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
-    // }
-    /* 
-     if (userAssessmentData && userAssessmentData.length) {
-       const params = {
-         data: [
-           {
-             id: updateId,
-             input_content: experience,
-           },
-         ],
-       };
-       if (experience.length === 0) {
-         setExperienceError('Please enter good experience');
-       } else if (experience !== '') {
-         dispatch(AppActions.updateUserAssessment(params, onSubmitMessage));
-       }
-     } else {
-       const params = {
-         user_id: getItem('userId'),
-         user_card_id: props._id,
-         assessment_id: assessment_id,
-         input_assessment: [
-           {
-             input_box_id: inputBoxId,
-             data: experience,
-           },
-        ],
-       };
-       if (experience.length === 0) {
-         setExperienceError('Please enter good experience');
-       } else if (experience !== '') {
-         dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
-       }
-     }
-    */
+    
   };
   const dateJSX = inputCardData.length
     ? inputCardData
@@ -265,9 +221,7 @@ const TemplateNine = (props) => {
                     key={index}
                     src={`${IMAGE_BASE_URL}${item.image}`}
                     style={{
-                      // width: '120px',
-                      // height: '80px',
-                      display: item.image !== '' ? 'flex' : 'none',
+                       display: item.image !== '' ? 'flex' : 'none',
                       width: '120px',
                       flex: '0 0 auto',
                     }}
@@ -361,8 +315,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     display: 'flex',
-    //zIndex: '999',
-    marginTop: '50px',
+     marginTop: '50px',
   },
   leftDate: {
     textAlign: 'center',

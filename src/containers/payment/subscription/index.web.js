@@ -201,24 +201,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    // alignItems: 'center',
-  },
+   },
   middleContainer: {
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     padding: '15px',
-    // paddingHorizontal: '3%',
-    // shadowColor: '#D1D2D3',
-    // shadowOffset: {
-    //   width: 200,
-    //   height: 50,
-    // },
-    // shadowOpacity: 0.5,
-    // shadowRadius: 100,
-    // elevation: 15,
-    // marginTop: '3vw',
-    // marginBottom: '8vw',
+   
   },
   middleInnerLeft: {
     flex: 0.5,
@@ -237,9 +226,7 @@ const styles = StyleSheet.create({
   planText: {
     fontFamily: 'Inter',
     fontSize: DEVICE_WIDTH > 1000 ? '1.7vw' : '18px',
-    /// fontWeight: '800',
-    //  fontStyle: 'normal',
-    color: '#0B0914',
+     color: '#0B0914',
     marginLeft: DEVICE_WIDTH > 1000 ? '1vw' : '15px',
     fontFamily: FONTS.SEMI_BOLD,
   },
@@ -280,20 +267,11 @@ const styles = StyleSheet.create({
   },
 
   planContainer: {
-    // flex: 0.5,
-    // flexDirection: 'column',
-    // marginTop: '4vw',
-    // paddingHorizontal: '3%',
+    
     borderRadius: DEVICE_WIDTH > 1000 ? '0.5vw' : '12px',
     padding: DEVICE_WIDTH > 1000 ? '1vw' : '15px',
 
-    // shadowColor: '#D1D2D3',
-    // shadowOffset: {
-    //   width:"8vw",
-    //   height: "0vw",
-    // },
-    // shadowOpacity: 1,
-    // shadowRadius: 100,
+   
     elevation: 15,
     marginTop: DEVICE_WIDTH > 1000 ? '3vw' : '20px',
     marginBottom: DEVICE_WIDTH > 1000 ? '3vw' : '20px',

@@ -64,8 +64,7 @@ const SignUp = () => {
                 console.log(data);
                 setGender(data);
                 setGenderError('')
-                // setArryData(countryData)
-                // setTitle("Select Country")
+
                 setModalVisibility(false)
                 break;
 
@@ -234,7 +233,6 @@ const styles = StyleSheet.create({
     title: {
         fontStyle: FONTS.NEW_REGULAR,
         fontSize: 40,
-        //lineHeight: 52,
         color: HEADING_BLACK,
         textAlign: "center"
     },

@@ -16,15 +16,12 @@ import Header from '../../../components/Header';
 import Button from '../../../components/common/button';
 import DropDown from '../../../components/common/dropDown';
 import {countryData} from '../../../utils/CountryCode';
-//import {screenHeight, screenWidth} from '../../utils/dimension';
-import back from '../../../assets/images/subscription/back.png';
+ import back from '../../../assets/images/subscription/back.png';
 import logo from '../../../assets/images/subscription/logoTm.png';
 import book from '../../../assets/images/subscription/book.png';
 import paypal from '../../../assets/images/subscription/paypal.png';
 import apple from '../../../assets/images/subscription/apple.png';
-//import key from '../../../assets/images/subscription/key.png';
-//import cards from '../../../assets/images/subscription/cards.png';
-import Input from '../../../components/Input';
+  import Input from '../../../components/Input';
 import {navigatorPush} from '../../../config/navigationOptions.web';
 
 const {COLORS, FONTS} = GLOBALS;
@@ -76,8 +73,7 @@ const Payment = (props) => {
       if (validateIsEmpty(country)) setCountryError('please select country');
       if (validateIsEmpty(zipCode)) setZipError('please enter zipcode');
     } else {
-      // dispatch(AppActions.payment);
-    }
+     }
   };
 
   const navigator = (type, data) => {
@@ -212,8 +208,7 @@ const Payment = (props) => {
               inputStyle={{padding: 10, height: 40}}
               setCode={(text) => setCardNumber(text)}
               value={cardNumber}
-              // error={cardNumberError}
-              label="Card number"
+               label="Card number"
               placeholder="1234 1234 1234 1234"></Input>
             <View style={{flex:1,flexDirection: 'row',marginTop:-25,}}>
               <Input
@@ -222,16 +217,14 @@ const Payment = (props) => {
                 inputStyle={{padding: 10,  height: 40,}}
                 setCode={(text) => setExpDate(text)}
                 value={expDate}
-                // error={expDateError}
-                placeholder="MM / YY"></Input>
+                 placeholder="MM / YY"></Input>
               <Input
                 type="key"
                 maxLength={20}
                 inputStyle={{padding: 10, height: 40,}}
                 setCode={(text) => setCvc(text)}
                 value={cvc}
-                //  error={cvcError}
-                placeholder="CVC"></Input>
+                 placeholder="CVC"></Input>
             </View>
             <Input
               type=""

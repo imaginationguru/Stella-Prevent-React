@@ -96,8 +96,7 @@ const SleepTracker = ({location}) => {
   const [isEditUI, setIsEditUI] = useState(false);
   let currentTimeZone = momentZone.tz.guess();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  var dateArrayList = [];
+   var dateArrayList = [];
   useEffect(() => {
     for (var i = 6; i >= 0; i--) {
       dateArrayList.push({
@@ -131,8 +130,7 @@ const SleepTracker = ({location}) => {
   }, []);
 
   useEffect(() => {
-    //   getSleepTrackerAPI(moment(new Date()).format(STRINGS.DATE_FORMATE));
-  }, []);
+   }, []);
 
   useEffect(() => {
     if (getSleepTrackerData && getSleepTrackerData.sleepData) {
@@ -177,8 +175,7 @@ const SleepTracker = ({location}) => {
     // Sleep Hours
     let sleepHoursYAxis = sleepDataArray.length
       ? sleepDataArray.map((item) => {
-          // return (Number(item.hours) + Number(item.minute) / 60).toFixed(2);
-          return Number(item.hours) + '.' + Number(item.minute);
+           return Number(item.hours) + '.' + Number(item.minute);
         })
       : [];
     setSleepHoursYaxis(sleepHoursYAxis.reverse());
@@ -199,8 +196,7 @@ const SleepTracker = ({location}) => {
       : [];
     setSleepEnergyYaxis(sleepEnergyYAxis.reverse());
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getSleepTrackerData]);
+   }, [getSleepTrackerData]);
 
   const daysCheck = (arr = []) => {
     let minDate = new Date();
@@ -259,8 +255,7 @@ const SleepTracker = ({location}) => {
       };
 
       dispatch(AppActions.saveSleepTracker(postData, postDataGetAPI));
-      // getSleepTrackerAPI(selectedDate);
-    }
+     }
   };
 
   const onHoursPlus = () => {
@@ -342,14 +337,12 @@ const SleepTracker = ({location}) => {
             }}>
             <View style={{padding: '10px'}}>
               <h2 className="dashboard-heading">{'Sleep Tracker'}</h2>
-              {/* <h6 className="dash-time m-b-30"> {'3 Minute'} </h6> */}
-            </View>
+             </View>
             {/* Date strip UI */}
             <View
               style={{
                 flexDirection: 'row',
-                //  border: '1px solid blue',
-                padding: '10px',
+                 padding: '10px',
                 width: '100%',
                 maxWidth: '520px',
               }}>
@@ -616,27 +609,20 @@ const styles = {
   dateViewStyle: {
     padding: 5,
     alignItems: 'center',
-    // border: '1px solid red',
-  },
+   },
   sleepHoursOuterView: {
     flexDirection: 'row',
     marginTop: 10,
     alignItems: 'center',
-    // flex: 1,
-    // width: '200px',
-    // backgroundColor: 'red',
-    padding: 20,
+      padding: 20,
   },
   sleepHrsView: {
-    // flex: 0.4,
-    backgroundColor: 'white',
-    // width: '10%',
-    paddingTop: '10px',
+     backgroundColor: 'white',
+     paddingTop: '10px',
     paddingBottom: '10px',
     paddingLeft: '40px',
     paddingRight: '40px',
-    // alignItems: 'center',
-  },
+   },
   flStyles: {
     backgroundColor: 'white',
     alignItems: 'center',
@@ -646,8 +632,7 @@ const styles = {
     paddingBottom: 10,
   },
   colonStyle: {
-    // flex: 0.2,
-    marginLeft: 20,
+     marginLeft: 20,
     marginRight: 20,
     alignItems: 'center',
   },
@@ -661,8 +646,7 @@ const styles = {
     marginTop: 20,
   },
   graphOuterView: {
-    //width: '350px',
-    width: '100%',
+     width: '100%',
     minHeight: '300px',
     flexDirection: 'row',
     padding: '10px',

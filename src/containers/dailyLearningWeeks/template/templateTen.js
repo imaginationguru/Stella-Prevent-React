@@ -12,9 +12,7 @@ const TemplateTen = (props) => {
   const {templateData = []} = useSelector((state) => state.moduleOne);
   console.log('template data> ten>>>>>>>>>>>', templateData);
   useEffect(() => {
-    // dispatch(AppActions.getTemplateData(1));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+   }, []);
   /* 
   onSave function API call for save the data of input field
   */

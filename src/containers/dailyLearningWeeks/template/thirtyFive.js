@@ -94,8 +94,7 @@ const ThirtyFive = (props) => {
 
     setOptionDataContent(optionData);
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [assessmentData]);
+   }, [assessmentData]);
   useEffect(() => {
     setCorrectAns(false);
   }, []);
@@ -126,8 +125,7 @@ const ThirtyFive = (props) => {
             ),
           ),
         );
-        // setHeaderParams(onlySingleId(tempHeaderParams));
-        return;
+         return;
       });
       setDragCardData(temp);
       let x = [...optionDataContent, ...temp];
@@ -154,10 +152,8 @@ const ThirtyFive = (props) => {
         const data1 = data.filter((item) => item.content !== null);
         setOptionDataContent(data1);
       }
-      //  setOptionDataContent(uniqueOptionDataContent);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userAssessmentData]);
+     }
+   }, [userAssessmentData]);
 
   /*
    * on drag item  we used ev.dataTransfer.setData method for drag item with id
@@ -610,8 +606,7 @@ const ThirtyFive = (props) => {
               let showTick = false;
               console.log(
                 '614?????',
-                // item.hasOwnProperty(item.assessment_header),
-                typeof item['assessment_header'] !== 'undefined',
+                 typeof item['assessment_header'] !== 'undefined',
               );
               if (
                 item.assessment_header_id !== null &&
@@ -662,8 +657,7 @@ const ThirtyFive = (props) => {
                     {headers.length &&
                       headers.map((val) => {
                         const header_id = item._id;
-                        // console.log('item assessment header id', item);
-                        return (
+                         return (
                           <>
                             <li
                               onClick={() => {
@@ -754,8 +748,7 @@ const styles = {
     borderRadius: '5px',
     backgroundColor: '#F1F3FA',
     paddingLeft: '20px',
-    //  border: '1px solid red',
-  },
+   },
   wrapper: {marginTop: '40px'},
   droppableDiv: {
     width: '48%',
@@ -764,8 +757,7 @@ const styles = {
   droppableDivDrag: {
     width: DEVICE_WIDTH > 767 ? '23%' : '48%',
     paddingBottom: DEVICE_WIDTH > 767 ? '60px' : '30px',
-    //  display: 'flex',
-  },
+   },
   iconWrapper: {
     display: 'flex',
     position: 'absolute',
@@ -784,8 +776,7 @@ const styles = {
     marginLeft: '20px',
     marginBottom: '-10px',
     zIndex: 999,
-    //  border: '1px solid red',
-  },
+   },
   icon: {
     width: '24px',
     height: '24px',

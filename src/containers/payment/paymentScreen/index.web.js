@@ -20,15 +20,12 @@ import DropDown from '../../../components/common/dropDown';
 import {countryData} from '../../../utils/CountryCode';
 
 import ProfileHeader from '../../../components/common/profileHeader';
-//import {screenHeight, screenWidth} from '../../utils/dimension';
-import back from '../../../assets/images/subscription/back.png';
+ import back from '../../../assets/images/subscription/back.png';
 import logo from '../../../assets/images/subscription/logoTm.png';
 import book from '../../../assets/images/subscription/book.png';
 import paypal from '../../../assets/images/subscription/paypal.png';
 import apple from '../../../assets/images/subscription/apple.png';
-//import key from '../../../assets/images/subscription/key.png';
-//import cards from '../../../assets/images/subscription/cards.png';
-import Input from '../../../components/Input';
+ import Input from '../../../components/Input';
 import {
   navigatorPush,
   navigatorPop,
@@ -97,8 +94,7 @@ const Payment = (props) => {
       if (validateIsEmpty(country)) setCountryError('please select country');
       if (validateIsEmpty(zipCode)) setZipError('please enter zipcode');
     } else {
-      // dispatch(AppActions.payment);
-    }
+     }
   };
 
   const purchasePlan = (token, buyer) => {
@@ -181,8 +177,7 @@ const Payment = (props) => {
             </View>
             <View
               style={{
-                //  marginLeft: '5vw',
-                marginTop: '3vw',
+                 marginTop: '3vw',
                 alignItems: 'center',
               }}>
               <Image source={book} style={{height: '100px', width: '100px'}} />
@@ -263,8 +258,7 @@ const Payment = (props) => {
              */
             createVerificationDetails={() => ({
               amount: '40.00',
-              // amount: {price},
-              /* collected from the buyer */
+               /* collected from the buyer */
               billingContact: {
                 addressLines: ['123 Main Street', 'Apartment 1'],
                 familyName: 'Doe',

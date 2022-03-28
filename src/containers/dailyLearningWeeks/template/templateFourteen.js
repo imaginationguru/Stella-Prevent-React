@@ -98,8 +98,7 @@ const TemplateFourteen = (props) => {
                         style={{
                           display: imgItem.image !== '' ? 'flex' : 'none',
                         }}
-                        // title={imgItem.description}
-                        title={ReactHtmlParser(text)
+                         title={ReactHtmlParser(text)
                           .toString()
                           .replace(/\xA0/g, ' ')}
                         isVisible={true}
@@ -151,8 +150,7 @@ const TemplateFourteen = (props) => {
                         style={{
                           display: imgItem.image !== '' ? 'flex' : 'none',
                         }}
-                        // title={imgItem.description}
-                        title={ReactHtmlParser(text)}
+                         title={ReactHtmlParser(text)}
                         isVisible={true}
                         animationIn={'fadeInUp'}
                         animationInDelay={'200'}

@@ -54,8 +54,7 @@ const InputBoxWithContent = (props) => {
         <form noValidate>
           <textarea
             type="description"
-            // className="f-field"
-            value={value}
+             value={value}
             name={name}
             onChange={onChange}
             required
@@ -109,8 +108,7 @@ const Thirty = (props) => {
   console.log('user assessmnet?????????', userAssessmentData);
   useEffect(() => {
     dispatch(AppActions.getAssessmentDataSecond(assessment_id2));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [assessment_id2]);
+   }, [assessment_id2]);
 
   useEffect(() => {
     let headers =
@@ -135,9 +133,7 @@ const Thirty = (props) => {
           };
         }),
       );
-    // dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [assessmentData, assessment_id]);
+   }, [assessmentData, assessment_id]);
   useEffect(() => {
     let cardsInputs = [];
     getCardsData &&
@@ -157,8 +153,7 @@ const Thirty = (props) => {
         ),
       );
     setGetCardsInputs(cardsInputs);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getCardsData]);
+   }, [getCardsData]);
   console.log('getcards data inputs?????', getCardsInputs);
   useEffect(() => {
     let uniqueTime = [];
@@ -267,8 +262,7 @@ const Thirty = (props) => {
       console.log('temp??????', temp);
       if (temp.length) {
         isValid = temp.filter((item) => item === '').length === 0;
-        // isValid = temp.some((item) => item !== '') ? true : false;
-      }
+       }
     }
 
     if (isValid) {
@@ -280,29 +274,7 @@ const Thirty = (props) => {
         payload: 'Please fill all fields',
       });
     }
-    // if (userAssessmentData && userAssessmentData.length) {
-    //   //  dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
-    // } else {
-    //   let isValid = false;
-    //   if (inputs && inputs.length) {
-    //     let temp = [];
-    //     inputs.forEach((item) => {
-    //       temp.push(item.value);
-    //     });
-    //     console.log('temp??????', temp);
-    //     if (temp.length) {
-    //       isValid = temp.find((item) => item !== 0) ? true : false;
-    //     }
-    //   }
-    //   if (isValid) {
-    //     //dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
-    //   } else {
-    //     dispatch({
-    //       type: ACTION_TYPE.ERROR,
-    //       payload: 'Please perform your exercise',
-    //     });
-    //   }
-    // }
+  
   };
   /******************Second assessment data save************** */
   const onSaveSecondAssessment = (e) => {
@@ -349,25 +321,7 @@ const Thirty = (props) => {
         assessment: modifyArray,
       };
       dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
-      // if (userInputs.length) {
-      //   if (
-      //     userAssessmentData &&
-      //     userAssessmentData.length &&
-      //     secondAssemssmentArray.length
-      //   ) {
-      //     console.log('params ???????', firstParams);
-      //     // dispatch(AppActions.rearrangeAssessments(firstParams, onSubmitMessage));
-      //     dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
-      //   } else {
-      //     dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
-      //   }
-      // }
-      //  else {
-      //   dispatch({
-      //     type: ACTION_TYPE.ERROR,
-      //     payload: 'Please perform your exercise',
-      //   });
-      // }
+    
     } else {
       dispatch({
         type: ACTION_TYPE.ERROR,
@@ -580,8 +534,7 @@ const Thirty = (props) => {
       setSelectedValueSecond('');
       setSelectedDate('');
     } else {
-      // alert('Please select value.');
-      dispatch({
+       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: 'Please select value.',
       });
@@ -595,8 +548,7 @@ const Thirty = (props) => {
       return GREEN_TEXT;
     }
   };
-  //console.log('user Input ???????', userInputs, 'inputs?????????', inputs);
-  return (
+   return (
     <div>
       {/**********************quotes************** */}
       {quotes && quotes.length
@@ -936,33 +888,7 @@ const Thirty = (props) => {
               );
             })
         : []}
-      {/* {getCardsInputs.length
-        ? getCardsInputs.map((item, idx) => {
-            // console.log('item get cards', item);
-            item.map((val) => {
-              console.log('item get val cards', val.name);
-              return (
-                <InputBoxWithContent
-                  key={idx}
-                  title={ReactHtmlParser(val.name)}
-                  name={val.name}
-                  placeholder={val.placeholder}
-                  value={val.value}
-                  onChange={(e) => onHandleChange(e, val)}
-                  style={{
-                    backgroundColor: YELLOW,
-                    width: '20%',
-                  }}
-                />
-              );
-            });
-          })
-        : null} */}
-      {/* <div style={commonStyles.buttonWrapper}>
-        <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
-          {ts('SAVE')}
-        </button>
-      </div> */}
+     
       {showExercises && <ExerciseBox week={week} />}
     </div>
   );
@@ -1004,11 +930,8 @@ const styles = {
     color: WHITE,
     textAlign: 'center',
     padding: '10px',
-    // paddingTop: '10px',
-    // paddingBottom: '10px',
-    borderRadius: '5px',
-    // marginTop: '10px',
-  },
+     borderRadius: '5px',
+   },
 
   circleDiv: {
     backgroundColor: GRAY,
@@ -1042,14 +965,12 @@ const styles = {
     top: '0px',
   },
   crossIconWrapper: {
-    //  border: '1px solid red',
-    display: 'flex',
+     display: 'flex',
     marginBottom: '15px',
     position: 'relative',
   },
   selectedText: {
     backgroundColor: '#F1F3FA',
     width: '100%',
-    // marginBottom: '3%',
-  },
+   },
 };

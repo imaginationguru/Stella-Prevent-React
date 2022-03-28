@@ -14,15 +14,12 @@ const api = create({
     'Content-Type': 'application/json',
     Accept: 'application/json',
     'Cache-Control': 'no-cache',
-    //Authorization: setToken,
-  },
-  // timeout: 10 * 3000 /* 1 second = 1000 ms */,
-});
+   },
+ });
 const setToken = () => {
   let Token = storeObj.store.getState().authReducer.loginToken;
   console.log(Token, 'accessToken.......');
-  //let Token = getItem('token');
-  if (Token) {
+   if (Token) {
     console.log(Token, 'Token......');
     api.setHeader('Authorization', Token);
   }
@@ -30,9 +27,7 @@ const setToken = () => {
 class RestClient {
   static getCall(url, params = {}) {
     console.log('url get URL>>>>>>>>>>>>>>>>', BASE_URL + url, params);
-    // api.setHeader('Authorization', url === 'login' ? '' : Token);
-    //api.setHeader('Authorization', Token);
-    setToken();
+     setToken();
     return new Promise(function (fulfill, reject) {
       if (isInternet()) {
         api.get(BASE_URL + url, params).then((response) => {
@@ -58,8 +53,7 @@ class RestClient {
       params,
     );
     setToken();
-    // api.setHeader('Authorization', Token);
-    return new Promise(function (fulfill, reject) {
+     return new Promise(function (fulfill, reject) {
       if (isInternet()) {
         api.post(BASE_URL + url, params).then((response) => {
           console.log('response Post API Rest Client>>>>>>>', url, response);
@@ -84,8 +78,7 @@ class RestClient {
       params,
     );
     setToken();
-    // api.setHeader('Authorization', Token);
-    return new Promise(function (fulfill, reject) {
+     return new Promise(function (fulfill, reject) {
       if (isInternet()) {
         api.delete(BASE_URL + url, params).then((response) => {
           console.log('response Post API Rest Client>>>>>>>', response);
@@ -103,41 +96,8 @@ class RestClient {
     });
   }
 
-  // static putCall(url, params) {
-  //   return new Promise(function (fulfill, reject) {
-  //     if (isInternet()) {
-  //       api.put(`https://reqres.in/api` + url, params).then((response) => {
-  //         if (response.status === 200) {
-  //           fulfill(response.data);
-  //         }
-  //         reject(response);
-  //       });
-  //     } else {
-  //       fulfill({
-  //         message:
-  //           'The server is not reachable right now, sorry for inconvenience.',
-  //       });
-  //     }
-  //   });
-  // }
-
-  // static patchCall(url, params) {
-  //   return new Promise(function (fulfill, reject) {
-  //     if (isInternet()) {
-  //       api.put(`https://reqres.in/api` + url, params).then((response) => {
-  //         if (response.status === 200) {
-  //           fulfill(response.data);
-  //         }
-  //         reject(response);
-  //       });
-  //     } else {
-  //       fulfill({
-  //         message:
-  //           'The server is not reachable right now, sorry for inconvenience.',
-  //       });
-  //     }
-  //   });
-  // }
+  
+  
 }
 
 export default RestClient;

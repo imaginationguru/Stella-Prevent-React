@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import {GoogleLogin, useGoogleLogout, GoogleLogout} from 'react-google-login';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useState } from 'react';
+import { GoogleLogin, useGoogleLogout, GoogleLogout } from 'react-google-login';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '../../actions';
-import {Linking, Platform} from 'react-native';
-import {customAlert} from '../../helpers/commonAlerts.web';
+import { Linking, Platform } from 'react-native';
+import { customAlert } from '../../helpers/commonAlerts.web';
 const GoogleLogIn = (props) => {
-  let {onSocialLogin = () => {}} = props;
+  let { onSocialLogin = () => { } } = props;
 
   const googleCLientId =
     '868302960918-car2574j9cd95m72sehkfipp24hmrdku.apps.googleusercontent.com';
@@ -20,28 +20,13 @@ const GoogleLogIn = (props) => {
   };
   const onFailure = (res) => {
     console.log('Google login fail res', res);
-    // customAlert(
-    //   'An unexpected error has occured. Please try logging in again after sometime.',
-    //   'error',
-    // );
+
   };
-  const {signOut} = useGoogleLogout({
+  const { signOut } = useGoogleLogout({
     clientId: googleCLientId,
     onFailure: onFailure,
     onLogoutSuccess: onLogoutSuccess,
-    // jsSrc,
-    // onFailure,
-    // clientId,
-    // cookiePolicy,
-    // loginHint,
-    // hostedDomain,
-    // fetchBasicProfile,
-    // discoveryDocs,
-    // uxMode,
-    // redirectUri,
-    // scope,
-    // accessType,
-    // onLogoutSuccess,
+
   });
   const responseGoogle = (res) => {
     verifyUser(res.profileObj, res);
@@ -58,7 +43,6 @@ const GoogleLogIn = (props) => {
     };
     onSocialLogin(params);
     console.log('logout....');
-    // signOut();
   };
 
   return (
@@ -81,11 +65,7 @@ const GoogleLogIn = (props) => {
         autoLoad={false}
         uxMode={'popup'}
       />
-      {/* <GoogleLogout
-        clientId={googleCLientId}
-        buttonText="Logout"
-        onFailure={onFailure}
-        onLogoutSuccess={onLogoutSuccess}></GoogleLogout> */}
+
     </>
   );
 };

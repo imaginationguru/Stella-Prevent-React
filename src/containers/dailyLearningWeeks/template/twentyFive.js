@@ -74,8 +74,7 @@ const TwentyFive = (props) => {
   };
   useEffect(() => {
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+   }, []);
 
   /****************Set input value************** */
   useEffect(() => {
@@ -136,8 +135,7 @@ const TwentyFive = (props) => {
       setFourthInput(fourthInput[0].content || '');
       setFourthUpdateId(fourthInput[0]._id || '');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userAssessmentData]);
+   }, [userAssessmentData]);
   useEffect(() => {
     const firstInputId = inputs.length
       ? inputs.filter((item) => item.order === 0).map((val) => val._id)
@@ -284,8 +282,7 @@ const TwentyFive = (props) => {
         }}>
         <div
           style={{
-            //  border: '1px solid blue',
-            width: DEVICE_WIDTH > 767 ? '888px' : '100%',
+             width: DEVICE_WIDTH > 767 ? '888px' : '100%',
             height: DEVICE_WIDTH > 767 ? '700px' : 'auto',
             marginLeft: 'auto',
             marginRight: 'auto',
@@ -456,11 +453,8 @@ const styles = {
     backgroundColor: WHITE,
     fontStyle: 'italic',
     resize: 'none',
-    // paddingTop: '20px',
-    height: '80px',
-    //width: '100%',
-    //border: '1px solid red',
-  },
+     height: '80px',
+   },
   button: {
     width: '20%',
     marginBottom: '50px',

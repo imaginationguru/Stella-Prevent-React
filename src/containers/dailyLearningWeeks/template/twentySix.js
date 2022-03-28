@@ -102,8 +102,7 @@ const TwentySix = (props) => {
         };
       }),
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userAssessmentData]);
+   }, [userAssessmentData]);
   useEffect(() => {
     if (props.submit_messages.length) {
       let positive = props.submit_messages
@@ -172,8 +171,7 @@ const TwentySix = (props) => {
 
       It is possible that both your different experiences influence your idea of what it is like to "be a good mother" and "to be a good father". This means that in addition to creating an idea of you as a mother (the mother you want to be) you have also created an idea of your partner as a father/mother you want them to be, and your partner did the same. These ideas seem “natural” and “the absolute truth” because that is the reality you have always known - but your partner has lived another reality and, therefore, their ideas may be different​`;
     }
-    // return;
-    let a = [];
+     let a = [];
     let b = [];
     let c = [];
     let customMsg1 = '';
@@ -212,15 +210,9 @@ const TwentySix = (props) => {
       let contentMessage = onlyContentData.map((item) => item.content);
       z = contentMessage.every((val) => val == 'Never');
       console.log(z, 'bvnb');
-      // let y = contentMessage.filter((item, i) => i === 0 || i === 3);
-      // //   console.log(contentMessage.filter((item, i) => i === 0 || i === 3))
-      // z = !y.includes('Never');
-
-      // let p = contentMessage.filter((item, i) => i === 1 || i === 2 || i === 4);
-
-      // q = !p.includes('Oftentimes');
-      // console.log(contentMessage, z, p, 'llll');
-    }
+ 
+ 
+     }
     if (userAssessmentData && userAssessmentData.length) {
       if (assessment.length) {
         let onlyContentData = [];
@@ -274,28 +266,7 @@ const TwentySix = (props) => {
               AppActions.rearrangeAssessments(params, differenceMessage),
             );
           }
-          // if (contentMessage.length) {
-          //   let positiveRes = contentMessage.filter(
-          //     (item) => item === 'Sometimes' || item === 'Oftentimes',
-          //   );
-          //   if (positiveRes.length === 0) {
-          //     dispatch(
-          //       AppActions.rearrangeAssessments(
-          //         params,
-          //         negativeMessage,
-          //         customMsg,
-          //       ),
-          //     );
-          //   } else {
-          //     dispatch(
-          //       AppActions.rearrangeAssessments(
-          //         params,
-          //         positiveMessage,
-          //         customMsg,
-          //       ),
-          //     );
-          //   }
-          // }
+         
         } else {
           if (contentMessage.length) {
             let agreeMessage = contentMessage.filter(
@@ -332,9 +303,7 @@ const TwentySix = (props) => {
           assessment.forEach((item) => {
             onlyContentData.push(...item.content);
           });
-          // let contentMessage = onlyContentData.map(
-          //   (item) => item.assessment_content_id,
-          // );
+          
           let contentMessage = onlyContentData.map((item) => item.content);
 
           if (slugData === 'different,similiar,i_do_not_know') {
@@ -374,35 +343,9 @@ const TwentySix = (props) => {
                   ),
                 );
               }
-              // else {
-              //   dispatch(
-              //     AppActions.saveUserAssessment(params, differenceMessage),
-              //   );
-              // }
-
-              // let positiveRes = contentMessage.filter(
-              //   (item) => item === 'Sometimes' || item === 'Oftentimes',
-              // );
-              // if (positiveRes.length === 0) {
-              // dispatch(
-              //   AppActions.saveUserAssessment(
-              //     params,
-              //     negativeMessage,
-              //     customMsg,
-              //   ),
-              // );
-              // } else {
-              //   dispatch(
-              //     AppActions.saveUserAssessment(
-              //       params,
-              //       positiveMessage,
-              //       customMsg,
-              //     ),
-              //   );
-              // }
+             
             }
-            //  dispatch(AppActions.saveUserAssessment(params, differenceMessage));
-          } else {
+           } else {
             if (contentMessage.length) {
               let agreeMessage = contentMessage.filter(
                 (item) =>

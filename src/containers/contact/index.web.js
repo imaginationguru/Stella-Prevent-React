@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -18,20 +18,20 @@ import {
 import GLOBALS from '../../constants';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
-const {COLORS, FONTS} = GLOBALS;
-const {LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN} = COLORS;
+const { COLORS, FONTS } = GLOBALS;
+const { LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN } = COLORS;
 import Header from '../../components/Header';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import MasterLayout from '../../components/MasterLayout';
 import BackToDashboard from '../../components/common/backToDashboard';
 import Footer from '../../components/Footer';
 import BackBtn from '../../components/common/backbtn';
 import ProfileHeader from '../../components/common/profileHeader';
 import commonStyles from '../dailyLearningWeeks/commonStyles';
-import {emailRegex} from '../../utils/RegexUtils';
+import { emailRegex } from '../../utils/RegexUtils';
 import * as AppActions from '../../actions';
 function Contact(props) {
-  const {loginData} = useSelector((state) => state.authReducer);
+  const { loginData } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -87,7 +87,7 @@ function Contact(props) {
   };
 
   const handleChange = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     if (name === 'firstName') {
       setFirstName(value);
       setFirstNameError('');
@@ -131,20 +131,15 @@ function Contact(props) {
       setMesageError('Please fill message');
     } else {
       dispatch(AppActions.contactUs(params));
-      // setFirstName('');
-      // setLastName('');
+
+
       setMesage('');
-      // setEmail('');
+
     }
   };
 
   return (
-    // <MasterLayout>
-    //   <div className="main-dashboard">
-    //     <BackToDashboard />
-    //     <Text>hhi</Text>
-    //   </div>
-    // </MasterLayout>
+
     <div className="main-dashboard">
       <View style={[styles.container, {}]}>
         {loginData?.user?._id ? (
@@ -269,7 +264,6 @@ function Contact(props) {
   );
 }
 export default Contact = React.memo(Contact);
-//export default ProfileDetails;
 const styles = StyleSheet.create({
   container: {},
 });

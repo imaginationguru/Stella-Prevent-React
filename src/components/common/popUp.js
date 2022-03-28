@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,12 +9,12 @@ import {
 import GLOBALS from '../../constants';
 import Button from './button';
 import cross from '../../assets/images/cross.svg';
-const {COLORS, FONTS} = GLOBALS;
-const {DARK_GREEN, WHITE} = COLORS;
+const { COLORS, FONTS } = GLOBALS;
+const { DARK_GREEN, WHITE } = COLORS;
 import * as AppActions from '../../actions';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 const PopUp = (props) => {
-  let {title, bgColor, textColor, onVerifyPress, btnStyle, textStyle} = props;
+  let { title, bgColor, textColor, onVerifyPress, btnStyle, textStyle } = props;
   const dispatch = useDispatch();
   const {
     isLoading,
@@ -51,15 +51,15 @@ const PopUp = (props) => {
       )}
       {isError && (
         <View style={styles.mainContainer}>
-          <View style={[styles.innerView, {borderColor: 'red'}]}>
+          <View style={[styles.innerView, { borderColor: 'red' }]}>
             <TouchableOpacity
               onPress={() => {
                 dispatch(AppActions.clearErrorAction());
               }}
-              style={[styles.crossContainer, {backgroundColor: 'red'}]}>
+              style={[styles.crossContainer, { backgroundColor: 'red' }]}>
               <img src={cross} />
             </TouchableOpacity>
-            <Text style={[styles.text, {color: 'red'}]}>{errorMessage}</Text>
+            <Text style={[styles.text, { color: 'red' }]}>{errorMessage}</Text>
           </View>
         </View>
       )}
@@ -85,15 +85,11 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   innerView: {
-    //   justifyContent: "space-around",
     alignItems: 'center',
-    //  top: "20%",
     backgroundColor: WHITE,
     width: '30%',
     height: '20%',
     borderRadius: '2vw',
-    //padding: "2vw",
-    //borderWidth:"0.3vw",
     borderColor: DARK_GREEN,
   },
   text: {

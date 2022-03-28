@@ -6,8 +6,8 @@
  * @flow strict-local
  */
 
-import React, {useState, useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import MasterLayout from '../../components/MasterLayout';
 import Footer from '../../components/Footer';
 import TemplateOne from './template/templateOne';
@@ -47,7 +47,7 @@ import ThirtyFour from './template/thirtyFour';
 import ThirtyFive from './template/thirtyFive';
 import ThirtySix from './template/thirtySix';
 import ThirtySeven from './template/thirtySeven';
-import {Header, SubHeader} from './Navbar';
+import { Header, SubHeader } from './Navbar';
 import ThirtyOne from './template/thirtyOne';
 import ThirtyEight from './template/thirtyEight';
 import ThirtyNine from './template/thirtyNine';
@@ -62,7 +62,7 @@ import FourSeven from './template/fourSeven';
 import FourEight from './template/fourEight';
 import FourNine from './template/fourNine';
 import Fifty from './template/fifty';
-const {COLORS} = GLOBALS;
+const { COLORS } = GLOBALS;
 const DailyLearningWeeks = (props) => {
   const dispatch = useDispatch();
   const {
@@ -94,14 +94,14 @@ const DailyLearningWeeks = (props) => {
 
   const assessId =
     subCardOnBasisOfIndexData &&
-    subCardOnBasisOfIndexData.card &&
-    subCardOnBasisOfIndexData.card.assessment_id
+      subCardOnBasisOfIndexData.card &&
+      subCardOnBasisOfIndexData.card.assessment_id
       ? subCardOnBasisOfIndexData.card.assessment_id
       : null;
   const userCardId =
     subCardOnBasisOfIndexData &&
-    subCardOnBasisOfIndexData.card &&
-    subCardOnBasisOfIndexData.card._id
+      subCardOnBasisOfIndexData.card &&
+      subCardOnBasisOfIndexData.card._id
       ? subCardOnBasisOfIndexData.card._id
       : null;
   useEffect(() => {
@@ -110,7 +110,7 @@ const DailyLearningWeeks = (props) => {
         let assessment_id = subCardOnBasisOfIndexData.card.assessment_id;
         let user_card_id = subCardOnBasisOfIndexData._id;
         dispatch(AppActions.getAssessmentData(assessment_id, user_card_id));
-        // dispatch(AppActions.getUserAssessment(user_card_id, assessment_id));
+
       }
     }
   }, [assessId, userCardId]);
@@ -126,21 +126,21 @@ const DailyLearningWeeks = (props) => {
   /*Function  changing for card components */
 
   const subCardNextPrev = (idx, id) => {
-    console.log('card >>>>id>>>>>', id);
-    //dispatch(AppActions.markRead(id));
+
+
 
     let cardId = currentCardIds.length
       ? currentCardIds.find((item, index) => {
-          return index === idx;
-        })
+        return index === idx;
+      })
       : null;
     if (cardId) {
       let data =
         currentDayBasicCardData && currentDayBasicCardData.length
           ? currentDayBasicCardData.find((item) => {
-              console.log('card Id sub cards handler', item);
-              return item._id === cardId;
-            })
+            console.log('card Id sub cards handler', item);
+            return item._id === cardId;
+          })
           : {};
       subCardHandler(idx, data);
     }
@@ -151,30 +151,30 @@ const DailyLearningWeeks = (props) => {
     if (idx >= 0) {
       nextCardId = currentCardIds.length
         ? currentCardIds.find((item, index) => {
-            return index === idx + 1;
-          })
+          return index === idx + 1;
+        })
         : null;
       if (nextCardId) {
         let data =
           currentDayBasicCardData && currentDayBasicCardData.length
             ? currentDayBasicCardData.find((item) => {
-                return item._id === nextCardId;
-              })
+              return item._id === nextCardId;
+            })
             : {};
         setSubCardNextData(data); // Sub Card Data set for next card
       }
       if (idx >= 1) {
         prevCardId = currentCardIds.length
           ? currentCardIds.find((item, index) => {
-              return index === idx - 1;
-            })
+            return index === idx - 1;
+          })
           : null;
         if (prevCardId) {
           let data =
             currentDayBasicCardData && currentDayBasicCardData.length
               ? currentDayBasicCardData.find((item) => {
-                  return item._id === prevCardId;
-                })
+                return item._id === prevCardId;
+              })
               : {};
           setSubCardPrevData(data); // Sub Card Data set for previous card
         }
@@ -191,8 +191,8 @@ const DailyLearningWeeks = (props) => {
         data
           ? data.cards.length
             ? data.cards.map((item) => {
-                return item.card.template_id;
-              })
+              return item.card.template_id;
+            })
             : []
           : [],
       );
@@ -233,22 +233,22 @@ const DailyLearningWeeks = (props) => {
   /************************************************ */
   useEffect(() => {
     console.log('get template daily learningd', currentWeek);
-    // dispatch(AppActions.getTemplateData(currentWeek)); //uncomment when unlock contents
+
     dispatch(AppActions.getTemplateData(selectedWeek));
-    // dispatch(AppActions.getCurrentActiveCard()); //uncomment when unlock contents
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+
   }, []);
 
   useEffect(() => {
     console.log('initial fetch template data');
     initialFetchTemplateData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [templateData]);
 
-  useEffect(() => {}, [subCardIndex]);
+  useEffect(() => { }, [subCardIndex]);
   useEffect(() => {
     initialFetchTemplateData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [currentDay]);
 
   const generateUI = (status, data = {}) => {
@@ -360,13 +360,13 @@ const DailyLearningWeeks = (props) => {
   };
 
   const nextDayOnNextClickHandler = () => {
-    //  setDay(day + 1);
+
     setCurrentDay(currentDay + 1);
     initialFetchTemplateData();
   };
 
   const previousDayOnNextClickHandler = () => {
-    //  setDay(day - 1);
+
     setCurrentDay(currentDay - 1);
     initialFetchTemplateData();
   };
@@ -385,9 +385,9 @@ const DailyLearningWeeks = (props) => {
             <div className="dashboard-body-inner">
               {/* ***********************************Navbar Start********************** */}
               <div>
-                <p style={{color: COLORS.GREEN_TEXT, fontWeight: 'bold'}}>
+                <p style={{ color: COLORS.GREEN_TEXT, fontWeight: 'bold' }}>
                   Home /{'  '}
-                  <span style={{color: COLORS.GRAY1, fontWeight: 'bold'}}>
+                  <span style={{ color: COLORS.GRAY1, fontWeight: 'bold' }}>
                     Week{' '}
                     {/* {props.location.state !== '' &&
                     props.location.state !== undefined
@@ -401,7 +401,7 @@ const DailyLearningWeeks = (props) => {
               {/****************************************************************************** */}
 
               {templateData.length ? (
-                <div style={{width: '100%'}}>
+                <div style={{ width: '100%' }}>
                   <Header
                     data={templateData}
                     currentDay={currentDay}
@@ -425,15 +425,15 @@ const DailyLearningWeeks = (props) => {
 
               {/* ******** ************************** Cards Render UI Start********************** */}
 
-              <div style={{width: '100%'}}>
+              <div style={{ width: '100%' }}>
                 {subCardOnBasisOfIndexData.card &&
-                subCardOnBasisOfIndexData.card.template_data[0] &&
-                subCardOnBasisOfIndexData.card.template_data[0].template_number
+                  subCardOnBasisOfIndexData.card.template_data[0] &&
+                  subCardOnBasisOfIndexData.card.template_data[0].template_number
                   ? generateUI(
-                      subCardOnBasisOfIndexData.card.template_data[0]
-                        .template_number,
-                      subCardOnBasisOfIndexData,
-                    )
+                    subCardOnBasisOfIndexData.card.template_data[0]
+                      .template_number,
+                    subCardOnBasisOfIndexData,
+                  )
                   : []}
               </div>
 
@@ -444,7 +444,7 @@ const DailyLearningWeeks = (props) => {
               <div className="dashboard-footer-nav">
                 <div className="footer-nav-inner">
                   {/*****************************************BOTTOM PREVIOUS BUTTON************* */}
-                  <div style={{alignItems: 'flex-end'}}>
+                  <div style={{ alignItems: 'flex-end' }}>
                     <div
                       className="footer-nav-left"
                       onClick={() => {
@@ -518,45 +518,4 @@ const DailyLearningWeeks = (props) => {
 
 export default DailyLearningWeeks;
 
-// const styles = {
-//   menuIcon: {
-//     position: 'absolute',
-//     top: '30%',
-//     right: '5%',
-//   },
-//   outerCircle: {
-//     border: '1px solid',
-//     height: '20px',
-//     width: '20px',
-//     borderRadius: '20px',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     display: 'flex',
-//   },
-//   innerCircle: {
-//     border: '1px solid',
-//     borderColor: COLORS.GREEN_TEXT,
-//     height: '12px',
-//     width: '12px',
-//     borderRadius: '12px',
-//   },
-//   cardDiv: {
-//     display: 'flex',
-//     marginTop: '2%',
-//     marginBottom: '3%',
-//   },
-//   daysContainer: {
-//     width: '100%',
-//     marginTop: '20px',
-//     display: 'flex',
-//     justifyContent: 'center',
-//     alignSelf: 'center',
-//   },
-//   radioDiv: {
-//     marginBottom: '10px',
-//     height: '20px',
-//     alignSelf: 'center',
-//     justifyContent: 'center',
-//     display: 'flex',
-//   },
-// };
+

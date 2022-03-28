@@ -164,8 +164,7 @@ const ThirtyFour = (props) => {
                   const finalInput = inputsArr.length
                     ? [...inputsArr, dummyInput]
                     : [dummyInput, dummyInput];
-                  // const finalInput = [...inputsArr, dummyInput]
-                  return {
+                   return {
                     ...val,
                     textInput: data.length
                       ? finalInput.length
@@ -181,8 +180,7 @@ const ThirtyFour = (props) => {
         })
       : [];
     setInputs(inputData);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userAssessmentData]);
+   }, [userAssessmentData]);
 
   const onChangeHandler = (hId, sId, i, e) => {
     if (inputs.length) {
@@ -328,16 +326,13 @@ const ThirtyFour = (props) => {
         .filter((val) => val !== '').length
         ? true
         : false;
-      //console.log('empty check>>>>.', isAPICall);
-    }
+     }
 
     if (modifiedAssessment.length && isAPICall) {
       if (userAssessmentData && userAssessmentData.length) {
-        //  console.log('update item params>>>>>>>>', params);
-        dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
+         dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
       } else {
-        // console.log('save item params>>>>>>>>', JSON.stringify(params));
-        dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+         dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
       }
     } else {
       dispatch({
@@ -452,8 +447,7 @@ const ThirtyFour = (props) => {
                                       ? '15px'
                                       : '0',
                                 }}
-                                // className={ele.order === 1 ? 'mr0' : 'mr20'}
-                              >
+                               >
                                 <div
                                   style={{
                                     backgroundColor: YELLOW,
@@ -486,8 +480,7 @@ const ThirtyFour = (props) => {
                                             type="text"
                                             className="f-field"
                                             name={ele.name}
-                                            // placeholder={`${ele.name}`}
-                                            style={styles.selectedText}
+                                             style={styles.selectedText}
                                             value={val.content}
                                             onChange={(e) =>
                                               onChangeHandler(
@@ -503,10 +496,7 @@ const ThirtyFour = (props) => {
                                             <div
                                               style={{
                                                 ...styles.circleDiv,
-                                                // backgroundColor: item.value.length
-                                                //   ? GREEN_TEXT
-                                                //   : GRAY,
-                                              }}
+                                               }}
                                               onClick={() => {
                                                 if (val.content) {
                                                   addHandler(
@@ -526,10 +516,7 @@ const ThirtyFour = (props) => {
                                             <div
                                               style={{
                                                 ...styles.circleCrossDiv,
-                                                // backgroundColor: item.value.length
-                                                //   ? GREEN_TEXT
-                                                //   : GRAY,
-                                              }}
+                                               }}
                                               onClick={() => {
                                                 deleteHandler(
                                                   item._id,
@@ -632,6 +619,5 @@ const styles = {
     backgroundColor: '#F1F3FA',
     width: '100%',
     marginBottom: '30px',
-    // marginTop: '3%',
-  },
+   },
 };

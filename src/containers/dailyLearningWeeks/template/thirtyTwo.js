@@ -63,9 +63,7 @@ const ThirtyTwo = (props) => {
 
   useEffect(() => {
     dispatch(AppActions.getAssessmentDataSecond(assessment_id2));
-    /// dispatch(AppActions.getUserAssessment(props._id, assessment_id2));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [assessment_id2]);
+   }, [assessment_id2]);
   useEffect(() => {
     if (props.submit_messages.length) {
       let positive = props.submit_messages
@@ -120,9 +118,7 @@ const ThirtyTwo = (props) => {
     })
     console.log(dummyInput, "dummyInput...")
     setUserInputs([...firstAssessmentContent, ...dummyInput]);
-    // setUserInputs(firstAssessmentContent, ...dummyInput);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userAssessmentData]);
+   }, [userAssessmentData]);
   useEffect(() => {
     let headers =
       assessmentData.headers && assessmentData.headers.length
@@ -139,24 +135,14 @@ const ThirtyTwo = (props) => {
             order: item.order,
             value: '',
             _id: item._id,
-            // order: idx,
-          };
+           };
         }),
       );
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [assessmentData]);
+   }, [assessmentData]);
   const onHandleChange = (e, item, inner) => {
     console.log(e, item, "inputs.....", userInputs)
-    // const updateInputs = inputs.length
-    //   ? inputs.map((val) => {
-    //     return {
-    //       ...val,
-    //       value: val.name === e.target.name ? e.target.value : val.value,
-    //     };
-    //   })
-    //   : [];
-    // setInputs(updateInputs);
+   
 
     const temp = userInputs.map((val) => {
       return {
@@ -180,19 +166,14 @@ const ThirtyTwo = (props) => {
     }
     );
     console.log(temp, "temp....");
-    //  return;
-    // return;
-    // setUserInputs(temp);
-    // return;
-    let dummyInput = {
+     let dummyInput = {
       assessment_header_id: header._id,
       content: "",
       order: innnerItem.order + 1,
       is_added: false
 
     }
-    //  setUserInputs([...userInputs, dummyInput]);
-    setUserInputs([...temp, dummyInput]);
+     setUserInputs([...temp, dummyInput]);
   };
 
   /**********************FIRST ASSESSMENT****************** */
@@ -226,8 +207,7 @@ const ThirtyTwo = (props) => {
       : [];
 
     console.log(modifyData, "modifyData...");
-    // return;
-
+ 
     let firstParams = {
       user_id: userId,
       user_card_id: props._id,
@@ -242,11 +222,7 @@ const ThirtyTwo = (props) => {
       }
     } else {
       customAlert("Please perform your exercise", 'error');
-      // dispatch({
-      //   type: ACTION_TYPE.ERROR,
-      //   payload: 'Please perform your exercise',
-      // });
-    }
+     }
   };
   const updateYESNO = (data = {}, arr = []) => {
     if (arr.length) {
@@ -318,8 +294,7 @@ const ThirtyTwo = (props) => {
     };
     if (userAssessment.length) {
       if (userAssessmentData && userAssessmentData.length) {
-        // dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
-        if (isValid) {
+         if (isValid) {
           dispatch(AppActions.rearrangeAssessments(params, negativeMessage));
         } else {
           dispatch(AppActions.rearrangeAssessments(params, positiveMessage));
@@ -333,11 +308,7 @@ const ThirtyTwo = (props) => {
       }
     } else {
       customAlert("Please perform your exercise", 'error');
-      // dispatch({
-      //   type: ACTION_TYPE.ERROR,
-      //   payload: 'Please perform your exercise',
-      // });
-    }
+     }
   };
   const generateDynamicColor = (order) => {
     if (order === 0) {
@@ -464,8 +435,7 @@ const ThirtyTwo = (props) => {
                             onHandleChange(e, item, val);
                             console.log('--->', inputs);
                           }}
-                          // disabled={'true'}
-                          style={styles.selectedText}
+                           style={styles.selectedText}
                           value={val.content}
                         />
                         {isDelete ? (
@@ -487,15 +457,8 @@ const ThirtyTwo = (props) => {
                                 }
                               });
 
-                              // console.log("new data", filter_data);
-                              // setUserInputs([...other_header, ...filter_data]);
-                              // return;
-                              // setUserInputs(
-                              //   userInputs.filter(
-                              //     (ele) => ele.content !== val.content,
-                              //   ),
-                              // );
-                              if (val.content_id) {
+                               console.log("new data", filter_data);
+                               if (val.content_id) {
                                 dispatch(
                                   AppActions.deleteUserAssessmentData(
                                     val.content_id,
@@ -526,37 +489,7 @@ const ThirtyTwo = (props) => {
                                 addHandler(item, val)
                               }
 
-                              // const userInputsOrder =
-                              //   userInputs && userInputs.length
-                              //     ? userInputs.filter(
-                              //       (ele) => ele.assessment_header_id === item._id,
-                              //     ).length
-                              //     : 0;
-                              // if (item.value.length) {
-                              //   setUserInputs([
-                              //     ...userInputs,
-                              //     {
-                              //       assessment_header_id: item._id,
-                              //       content: item.value,
-                              //       order: userInputsOrder + 1,
-                              //     },
-                              //   ]);
-                              // }
-
-                              // headers &&
-                              //   headers.length &&
-                              //   setInputs(
-                              //     headers.map((val) => {
-                              //       return {
-                              //         content: [],
-                              //         name: val.header,
-                              //         placeholder: val.description,
-                              //         order: val.order,
-                              //         value: "",
-                              //         _id: val._id,
-                              //       };
-                              //     }),
-                              //   );
+                              
                             }}>
                             <span style={styles.plusIcon}>+</span>
                           </div>
@@ -566,59 +499,7 @@ const ThirtyTwo = (props) => {
                     );
                   })
                 : null}
-              {/* <div style={styles.plusIconWrapper} className="v-p-field">
-                <input
-                  type="text"
-                  className="f-field"
-                  name={item.name}
-                  placeholder={item.placeholder}
-                  style={styles.selectedText}
-                  value={item.value}
-                  onChange={(e) => {
-                    onHandleChange(e, item);
-                  }}
-                />
-                <div
-                  style={{
-                    ...styles.circleDiv,
-                    backgroundColor: item.value.length ? GREEN_TEXT : GRAY,
-                  }}
-                  onClick={() => {
-                    const userInputsOrder =
-                      userInputs && userInputs.length
-                        ? userInputs.filter(
-                          (ele) => ele.assessment_header_id === item._id,
-                        ).length
-                        : 0;
-                    if (item.value.length) {
-                      setUserInputs([
-                        ...userInputs,
-                        {
-                          assessment_header_id: item._id,
-                          content: item.value,
-                          order: userInputsOrder + 1,
-                        },
-                      ]);
-                    }
-
-                    headers &&
-                      headers.length &&
-                      setInputs(
-                        headers.map((val) => {
-                          return {
-                            content: [],
-                            name: val.header,
-                            placeholder: val.description,
-                            order: val.order,
-                            value: "",
-                            _id: val._id,
-                          };
-                        }),
-                      );
-                  }}>
-                  <span style={styles.plusIcon}>+</span>
-                </div>
-              </div> */}
+              
             </div>
           );
         })
@@ -784,8 +665,7 @@ const styles = {
   selectedText: {
     backgroundColor: '#F1F3FA',
     width: '100%',
-    // marginBottom: '3%',
-  },
+   },
   circleDiv: {
     backgroundColor: GRAY,
     width: '35px',

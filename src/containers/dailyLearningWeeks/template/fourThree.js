@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import GLOBALS from '../../../constants';
 import ReactHtmlParser from 'react-html-parser';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as AppActions from '../../../actions';
-import {getItem} from '../../../utils/AsyncUtils';
+import { getItem } from '../../../utils/AsyncUtils';
 import ExerciseBox from '../../../components/ExerciseBox';
-import {translate as ts} from '../../../i18n/translate';
+import { translate as ts } from '../../../i18n/translate';
 import {
   CardQuote,
   CardTitle,
@@ -15,8 +15,8 @@ import {
   CustomImage,
 } from '../../../components/Cards';
 import commonStyles from '../commonStyles';
-const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
-const {YELLOW, WHITE, CIRCLE_GRAY, LIGHT_GRAY} = COLORS;
+const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
+const { YELLOW, WHITE, CIRCLE_GRAY, LIGHT_GRAY } = COLORS;
 let userId = getItem('userId');
 const dataMapperAss = (arr = []) => {
   let temp = [];
@@ -24,7 +24,7 @@ const dataMapperAss = (arr = []) => {
     temp = arr.map((item) => {
       return {
         assessment_header_id: item._id,
-        content: [{content: item.value, order: item.order}],
+        content: [{ content: item.value, order: item.order }],
       };
     });
   }
@@ -32,7 +32,7 @@ const dataMapperAss = (arr = []) => {
 };
 
 const InputBoxWithContent = (props) => {
-  const {title, placeholder, value, onChange, style, name} = props;
+  const { title, placeholder, value, onChange, style, name } = props;
   return (
     <div style={styles.inputBoxWrapper}>
       <div style={style}>
@@ -42,7 +42,6 @@ const InputBoxWithContent = (props) => {
         <form noValidate>
           <textarea
             type="description"
-            // className="f-field"
             value={value}
             name={name}
             onChange={onChange}
@@ -73,7 +72,7 @@ const FourThree = (props) => {
     week,
   } = props.card;
   const dispatch = useDispatch();
-  const {assessmentData = {heading: []}, userAssessmentData = []} = useSelector(
+  const { assessmentData = { heading: [] }, userAssessmentData = [] } = useSelector(
     (state) => state.moduleOne,
   );
 
@@ -149,11 +148,11 @@ const FourThree = (props) => {
   const onHandleChange = (e, item) => {
     const updateInputs = inputs.length
       ? inputs.map((val) => {
-          return {
-            ...val,
-            value: val.name === e.target.name ? e.target.value : val.value,
-          };
-        })
+        return {
+          ...val,
+          value: val.name === e.target.name ? e.target.value : val.value,
+        };
+      })
       : [];
     setInputs(updateInputs);
   };
@@ -163,15 +162,15 @@ const FourThree = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -189,65 +188,65 @@ const FourThree = (props) => {
         }}>
         {images && images.length
           ? images
-              .filter((item) => item.image_type === 'first')
-              .map((item) => {
-                return (
-                  <CustomImage
-                    src={`${IMAGE_BASE_URL}${item.image}`}
-                    style={{
-                      display: item.image !== '' ? 'flex' : 'none',
-                    }}
-                  />
-                );
-              })
+            .filter((item) => item.image_type === 'first')
+            .map((item) => {
+              return (
+                <CustomImage
+                  src={`${IMAGE_BASE_URL}${item.image}`}
+                  style={{
+                    display: item.image !== '' ? 'flex' : 'none',
+                  }}
+                />
+              );
+            })
           : null}
       </div>
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
       {/*******************************ASSESSMENT DESCRIPTION*********************** */}
       <div style={commonStyles.assessmentWrapper}>
         {images && images.length
           ? images
-              .filter((item) => item.image_type === 'second')
-              .map((item, i) => {
-                return (
-                  <CustomImage
-                    key={i}
-                    src={
-                      item.image !== ''
-                        ? `${IMAGE_BASE_URL}${item.image}`
-                        : null
-                    }
-                    style={{
-                      ...commonStyles.assessImage,
-                      display: item.image !== '' ? 'flex' : 'none',
-                    }}
-                  />
-                );
-              })
+            .filter((item) => item.image_type === 'second')
+            .map((item, i) => {
+              return (
+                <CustomImage
+                  key={i}
+                  src={
+                    item.image !== ''
+                      ? `${IMAGE_BASE_URL}${item.image}`
+                      : null
+                  }
+                  style={{
+                    ...commonStyles.assessImage,
+                    display: item.image !== '' ? 'flex' : 'none',
+                  }}
+                />
+              );
+            })
           : []}
 
         {props.assessments && props.assessments.length
           ? props.assessments.map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  style={commonStyles.assessDesc}
-                  description={ReactHtmlParser(item.description)}
-                />
-              );
-            })
+            return (
+              <CardDescription
+                key={index}
+                style={commonStyles.assessDesc}
+                description={ReactHtmlParser(item.description)}
+              />
+            );
+          })
           : []}
       </div>
       {/* {assessmentData.heading && assessmentData.heading.length ? (
@@ -259,39 +258,39 @@ const FourThree = (props) => {
       ) : null} */}
       {assessmentData.heading && assessmentData.heading.length
         ? assessmentData.heading
-            .filter((item) => item.order === 1)
-            .map((item) => {
-              return (
-                <div style={styles.inputBoxWrapper}>
-                  <p style={{...styles.heading, width: '100%'}}>
-                    {ReactHtmlParser(item.heading)}
-                  </p>
-                </div>
-              );
-            })
+          .filter((item) => item.order === 1)
+          .map((item) => {
+            return (
+              <div style={styles.inputBoxWrapper}>
+                <p style={{ ...styles.heading, width: '100%' }}>
+                  {ReactHtmlParser(item.heading)}
+                </p>
+              </div>
+            );
+          })
         : null}
       {inputs.length
         ? inputs
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, idx) => {
-              return (
-                <InputBoxWithContent
-                  key={idx}
-                  title={ReactHtmlParser(item.name)}
-                  name={item.name}
-                  placeholder={item.placeholder}
-                  value={item.value}
-                  onChange={(e) => onHandleChange(e, item)}
-                  style={{
-                    backgroundColor:
-                      assessmentData.heading && assessmentData.heading.length
-                        ? CIRCLE_GRAY
-                        : YELLOW,
-                    width: '33%',
-                  }}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, idx) => {
+            return (
+              <InputBoxWithContent
+                key={idx}
+                title={ReactHtmlParser(item.name)}
+                name={item.name}
+                placeholder={item.placeholder}
+                value={item.value}
+                onChange={(e) => onHandleChange(e, item)}
+                style={{
+                  backgroundColor:
+                    assessmentData.heading && assessmentData.heading.length
+                      ? CIRCLE_GRAY
+                      : YELLOW,
+                  width: '33%',
+                }}
+              />
+            );
+          })
         : null}
       {inputs.length ? (
         <div style={commonStyles.buttonWrapper}>
@@ -302,44 +301,44 @@ const FourThree = (props) => {
       ) : null}
       {assessmentData.heading && assessmentData.heading.length
         ? assessmentData.heading
-            .filter((item) => item.order === 2)
-            .map((item) => {
-              return (
-                <div style={styles.inputBoxWrapper}>
-                  <p style={{...styles.heading, width: '100%'}}>
-                    {ReactHtmlParser(item.heading)}
-                  </p>
-                </div>
-              );
-            })
+          .filter((item) => item.order === 2)
+          .map((item) => {
+            return (
+              <div style={styles.inputBoxWrapper}>
+                <p style={{ ...styles.heading, width: '100%' }}>
+                  {ReactHtmlParser(item.heading)}
+                </p>
+              </div>
+            );
+          })
         : null}
       {firstHeaderContent && firstHeaderContent.length
         ? firstHeaderContent
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardContent
-                  key={index}
-                  content={ReactHtmlParser(item.content)}
-                  style={{
-                    padding: '10px',
-                    backgroundColor: LIGHT_GRAY,
-                  }}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardContent
+                key={index}
+                content={ReactHtmlParser(item.content)}
+                style={{
+                  padding: '10px',
+                  backgroundColor: LIGHT_GRAY,
+                }}
+              />
+            );
+          })
         : []}
       {content && content.length
         ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardContent
-                  key={index}
-                  content={ReactHtmlParser(item.content)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardContent
+                key={index}
+                content={ReactHtmlParser(item.content)}
+              />
+            );
+          })
         : []}
       {showExercises && <ExerciseBox week={week} />}
     </div>
@@ -362,7 +361,7 @@ const styles = {
     color: COLORS.WHITE,
     paddingTop: '30px',
   },
-  inputBox: {width: '65%'},
+  inputBox: { width: '65%' },
   inputStyle: {
     backgroundColor: COLORS.LIGHT_GRAY,
     fontStyle: 'italic',

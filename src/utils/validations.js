@@ -38,8 +38,7 @@ export function validatePhoneNumber(text) {
 }
 
 export function validateContact(text) {
-  // var re = /^[1-9][0-9]*$/;
-  var re = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
+   var re = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
   console.log(
     're.test(text) && re.length>0 && re.length<11 :>> ',
     re.test(text),
@@ -50,8 +49,7 @@ export function validateContact(text) {
 
 export function validateContactCode(text) {
   var re = /^\+(?:[0-9] ?){6,15}[0-9]$/;
-  //console.log('re.test(text) && re.length>0 && re.length<19 :>> ',re.test(text),text.length);
-  return re.test(text);
+   return re.test(text);
 }
 
 export function validateAddress(text) {
@@ -73,11 +71,7 @@ export function validatePhoneWithSpecialSymbol(text) {
   return re.test(text) && text.length > 0;
 }
 export function validateANZipcode(text) {
-  // var re = /^((\d{5}-\d{4})|(\d{5})|([A-Z]\d[A-Z]\s\d[A-Z]\d))$/;
-  ///var re = /^[a-zA-Z0-9][a-zA-Z0-9\- ]{0,10}[a-zA-Z0-9]$/;
-  ///^[A-Za-z]{0,15}\d{1,10}[A-Za-z]{0,15}$/;
-  var re = /^[- A-Za-z0-9]{0,15}\d{1,10}[- A-Za-z0-9]{0,15}$/; //use before
+   var re = /^[- A-Za-z0-9]{0,15}\d{1,10}[- A-Za-z0-9]{0,15}$/; //use before
 
-  //var re = /^[-_ a-zA-Z0-9]+$/;
-  return re.test(text);
+   return re.test(text);
 }

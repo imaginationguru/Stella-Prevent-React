@@ -7,7 +7,6 @@
  */
 
 import React, { useState, useEffect } from 'react';
-//import brand from '../../../assets/images/brand.svg';
 import powerBy from '../../../assets/images/powerby.png';
 import logo from '../../../assets/images/stella_logo.png';
 import logoWhite from '../../../assets/images/logoWhite.png';
@@ -31,7 +30,6 @@ import Footer from '../../../components/Footer';
 const { IMAGE_BASE_URL } = GLOBALS;
 import { Linking, Platform } from 'react-native';
 const SignIn = (componentId) => {
-  // document.addEventListener('contextmenu', (event) => event.preventDefault()); //disabled right click
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -40,10 +38,8 @@ const SignIn = (componentId) => {
   const [quoteText, setQuoteText] = useState('');
   const [quoteImg, setQuoteImage] = useState('');
   const [getId, setGetId] = useState('');
-  //console.log(props,"propopopopopo")
   const dispatch = useDispatch();
   const { quotes = {} } = useSelector((state) => state.moduleOne);
-  //console.log(quotes, 'quotes.......');
 
   const onHandleChange = (e) => {
     const { name, value } = e.target;
@@ -87,17 +83,13 @@ const SignIn = (componentId) => {
     if (email && password) {
       dispatch(AppActions.login(email, password));
     }
-    //navigatorPush({screenName: 'DailyLearningWeeks'});
   };
 
   const onSocialLogin = (params) => {
     dispatch(
       AppActions.verifySocialUser(params, undefined, (res) => {
         if (res && !res.is_user_exist) {
-          // setSocialError("User does not exist");
-          // Platform.OS == 'web'
-          //   ? window.open(json.data.redirect_url, '_blank')
-          //   : Linking.openURL(json.data.redirect_url);
+
         }
       }),
     );
@@ -188,9 +180,7 @@ const SignIn = (componentId) => {
                           onChange={onHandleChange}
                           required
                           maxLength={320}
-                        // onPaste={copyPasteHandler}
-                        // onCopy={copyPasteHandler}
-                        // onCut={copyPasteHandler}
+
                         />
                         <span className="f-icon">
                           <img src={icon01} />
@@ -211,9 +201,7 @@ const SignIn = (componentId) => {
                           onChange={onHandleChange}
                           maxLength={16}
                           required
-                        // onPaste={copyPasteHandler}
-                        // onCopy={copyPasteHandler}
-                        // onCut={copyPasteHandler}
+
                         />
                         <span className="f-icon">
                           <img src={icon02} />

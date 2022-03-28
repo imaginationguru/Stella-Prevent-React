@@ -103,14 +103,7 @@ const DayView = ({
               backgroundColor:
                 selectedDay == item ? COLORS.WHITE : COLORS.WHITE,
             },
-            // {
-            //   backgroundColor:
-            //     selectedDay == item
-            //       ? COLOR.WHITE
-            //       : selectedDay <= currentDay
-            //       ? COLOR.DARK_GREEN
-            //       : COLOR.PRIMARY,
-            // },
+            
           ]}>
           <Text style={[styles.dayText, {}]}>{item}</Text>
         </View>
@@ -161,24 +154,14 @@ function SelectWeek(props) {
     'week',
     parseInt(currentActiveCard.current_week),
   );
-  // const [selectedDay, setSelectedDay] = useState(currentActiveCard.current_day);
-  // const [selectedWeek, setSelectedWeek] = useState(
-  //   parseInt(currentActiveCard.current_week),
-  // );
+  
 
   const [weekDataDynamic, setweekDataDynamic] = useState([]);
-  // const [value, setValue] = useState(
-  //   currentActiveCard.current_week
-  //     ? `Week ${currentActiveCard.current_week}`
-  //     : 'Week 1',
-  // );
+  
 
   useEffect(() => {
     setweekDataDynamic([]);
-    // setSelectedWeek(parseInt(currentActiveCard.current_week));
-    // setSelectedDay(currentActiveCard.current_day);
-
-    // setValue(`Week ${currentActiveCard.current_week}`);
+     
     _setDynamicWeeks();
     console.log(currentActiveCard, 'currentActiveCard........');
   }, [currentActiveCard]);
@@ -308,12 +291,7 @@ function SelectWeek(props) {
                     <DayView
                       item={element.index}
                       onClick={daySelected}
-                      // selectedDay={1}
-                      // selectedWeek={1}
-                      // currentWeekDay={{
-                      //   week: 1,
-                      //   day: 5,
-                      // }}
+                      
                       selectedDay={selectedDay}
                       selectedWeek={selectedWeek}
                       currentWeekDay={{

@@ -7,14 +7,14 @@ import {
   clearSuccessAction,
   clearSessionExpiredAction,
 } from '../common';
-import {getItem} from '../../utils/AsyncUtils';
-import {navigatorPush, navigatorPop} from '../../config/navigationOptions';
+import { getItem } from '../../utils/AsyncUtils';
+import { navigatorPush, navigatorPop } from '../../config/navigationOptions';
 import moment from 'moment';
-import {customAlert} from '../../helpers/commonAlerts.web';
+import { customAlert } from '../../helpers/commonAlerts.web';
 import history from '../../helpers/history';
 
-const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
-const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
+const { ACTION_TYPE, URL, STRINGS } = GLOBALS;
+const { TRY_AGAIN, CHECK_NETWORK } = STRINGS;
 
 export const sessionExpire = (message) => {
   return async (dispatch) => {
@@ -30,7 +30,7 @@ export function getMoodData(date) {
   console.log('getMoodData inside actions');
   let userId = getItem('userId');
   return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.GET_MOOD_REQUEST});
+    dispatch({ type: ACTION_TYPE.GET_MOOD_REQUEST });
     try {
       dispatch(loadingAction(true));
       let params = {
@@ -58,10 +58,7 @@ export function getMoodData(date) {
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>get assessment data');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -94,7 +91,7 @@ export function saveUserMood(params) {
       ...params,
       user_id: userId,
     };
-    dispatch({type: ACTION_TYPE.SAVE_MOOD_REQUEST});
+    dispatch({ type: ACTION_TYPE.SAVE_MOOD_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.SAVE_MOOD_API, postData);
@@ -107,10 +104,7 @@ export function saveUserMood(params) {
           type: ACTION_TYPE.SAVE_MOOD_SUCCESS,
           payload: json.message,
         });
-        // dispatch({
-        //   type: ACTION_TYPE.SUCCESS_MESSAGE,
-        //   payload: json.message,
-        // });
+
         dispatch(loadingAction(false));
       } else {
         if (json.code === 400) {
@@ -126,10 +120,7 @@ export function saveUserMood(params) {
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>save user assessment');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -156,7 +147,7 @@ export function getActivityTracker(params) {
   let userId = getItem('userId');
   console.log('get activity tracker params', params);
   return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.GET_ACTIVITY_TRACKER_REQUEST});
+    dispatch({ type: ACTION_TYPE.GET_ACTIVITY_TRACKER_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(
@@ -180,10 +171,7 @@ export function getActivityTracker(params) {
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>get assessment data');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -213,7 +201,7 @@ export function getSelectedActivityTracker(params) {
   console.log('get selected activity tracker params', params);
   let userId = getItem('userId');
   return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.GET_SELECTED_ACTIVITY_TRACKER_REQUEST});
+    dispatch({ type: ACTION_TYPE.GET_SELECTED_ACTIVITY_TRACKER_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(
@@ -237,10 +225,7 @@ export function getSelectedActivityTracker(params) {
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>get assessment data');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -276,7 +261,7 @@ export function saveActivityTracker(params) {
   };
   console.log(' save post data get selected activity tracker', postData);
   return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.SAVE_OTHER_ACTIVITY_REQUEST});
+    dispatch({ type: ACTION_TYPE.SAVE_OTHER_ACTIVITY_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.SAVE_ACTIVITY_API, params);
@@ -288,13 +273,7 @@ export function saveActivityTracker(params) {
         customAlert(json.message, 'success', {}, null, (onPress) => {
           dispatch(navigatorPop());
         });
-        // dispatch({
-        //   type: ACTION_TYPE.SUCCESS_MESSAGE,
-        //   payload: json.message,
-        // });
-        // dispatch(getActivityTracker(postData));
-        // dispatch(getSelectedActivityTracker(postData));
-        // navigatorPush({screenName: 'ActivityTracker'});
+
         dispatch(loadingAction(false));
       } else {
         if (json.code === 400) {
@@ -305,10 +284,7 @@ export function saveActivityTracker(params) {
         }
         if (json.code === 417) {
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -337,7 +313,7 @@ export function saveSleepTracker(params, postDataGetAPI) {
       ...params,
       user_id: userId,
     };
-    dispatch({type: ACTION_TYPE.SAVE_SLEEP_TRACKER_REQUEST});
+    dispatch({ type: ACTION_TYPE.SAVE_SLEEP_TRACKER_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.SAVE_SLEEP_API, postData);
@@ -347,11 +323,7 @@ export function saveSleepTracker(params, postDataGetAPI) {
           type: ACTION_TYPE.SAVE_SLEEP_TRACKER_SUCCESS,
           payload: json.message,
         });
-        // dispatch({
-        //   type: ACTION_TYPE.SUCCESS_MESSAGE,
-        //   payload: json.message,
-        // });
-        // customAlert(json.message, 'success');
+
 
         dispatch(getSleepData(postDataGetAPI));
         dispatch(loadingAction(false));
@@ -372,10 +344,7 @@ export function saveSleepTracker(params, postDataGetAPI) {
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>save user assessment');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -406,7 +375,7 @@ export function getSleepData(params) {
     user_id: userId,
   };
   return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.GET_SLEEP_TRACKER_REQUEST});
+    dispatch({ type: ACTION_TYPE.GET_SLEEP_TRACKER_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.GET_SLEEP_TRACKER_API, postData);
@@ -427,16 +396,7 @@ export function getSleepData(params) {
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>get assessment data');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
-          // customAlert(json.message, 'success', {}, null, (onPress) => {
-          //   dispatch(clearSessionExpiredAction());
-          //   localStorage.clear();
-          //   history.push('/');
-          //   // dispatch(navigatorPop());
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch(loadingAction(false));
@@ -465,13 +425,9 @@ export function getSleepData(params) {
 //getWeeklySummaryReport
 
 export function getWeeklySummaryReport(params) {
-  // let userId = getItem('userId');
-  // let postData = {
-  //   ...params,
-  //   user_id: userId,
-  // };
+
   return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_REQUEST});
+    dispatch({ type: ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.GET_WEEKLY_SUMMARY_API, params);
@@ -492,10 +448,7 @@ export function getWeeklySummaryReport(params) {
         if (json.code === 417) {
           console.log('Session expierd>>>>>>>get assessment data');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({

@@ -77,8 +77,7 @@ const TwentyFour = (props) => {
                 <div
                   style={{
                     height: DEVICE_WIDTH > 767 ? '400px' : '230px',
-                    // border: '1px solid red',
-                    marginBottom: '60px',
+                     marginBottom: '60px',
                   }}>
                   <CustomImage
                     imageSize={item.imageSize}
@@ -86,8 +85,7 @@ const TwentyFour = (props) => {
                     style={{
                       ...styles.bigImage,
                       display: item.image !== '' ? 'flex' : 'none',
-                      // border: '1px solid red',
-                    }}
+                     }}
                     isVisible={true}
                     animationIn={'fadeInUp'}
                   />
@@ -95,8 +93,7 @@ const TwentyFour = (props) => {
                     style={{
                       textAlign: 'center',
                       marginBottom: '60px',
-                      //border: '1px solid red',
-                    }}>
+                     }}>
                     {item.description}
                   </p>
                 </div>
@@ -149,16 +146,9 @@ const TwentyFour = (props) => {
 export default TwentyFour;
 const styles = {
   bigImage: {
-    //width: '680px',
-    width: DEVICE_WIDTH > 767 ? '60%' : '100%',
+     width: DEVICE_WIDTH > 767 ? '60%' : '100%',
     height: DEVICE_WIDTH > 767 ? '400px' : '230px',
-    // height: 'auto',
-    margin: '0 auto',
-    // width: 'auto',
-    // alignSelf: 'center',
-    // justifyContent: 'center',
-    // display: 'flex',
-    marginBottom: '40px',
-    //border: '1px solid red',
-  },
+     margin: '0 auto',
+     marginBottom: '40px',
+   },
 };

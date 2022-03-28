@@ -30,21 +30,8 @@ const dummyData = [
       'Throughout the module, we will learn about some useful strategies for dealing with negative and self-critical thoughts that may arise at this stage of your life.',
     template_description_seven: "Let's Start ?",
   },
-  // {
-  //   _id: 2,
-  //   template_id: '2',
-  //   template_icon: flag,
-  //   template_name: 'Theme 1',
-  //   template_title: 'The Thoughts',
-  //   template_time: '1 minute',
-  //   template_greeting: null,
-  //   template_description_one:
-  //     'My Name is Sofia, I am Psychologist and I will accompany you throughout the modules of a Mom, offering you some exercises or reflection and summarise the most important messages in each module. ',
-  //   template_description_two:
-  //     'In addition to me , three mothers will share their experience with you on the different topics covered.',
-  //   template_description_third:
-  //     'Want to know we are going to talk about in the first module?',
-  // },
+ 
+  
   {
     _id: 2,
     template_id: '2',
@@ -150,40 +137,7 @@ const dummyData = [
     template_description_two:
       'After reading each question, click on one of the two icons on the right. If your answer is yes click on  + . If your answer is no click on x . At the end, click SAVE.',
   },
-  // {
-  //   _id: 9,
-  //   template_id: '9',
-  //   template_icon: null,
-  //   template_name: 'Theme 1',
-  //   template_title: 'Important',
-  //   template_time: '1 minute',
-  //   template_greeting: null,
-  //   template_description_one:
-  //     'It is normal to have negative thoughts at all stages of life.',
-  //   template_description_two:
-  //     'Your head is always thinking automatically: some thoughts are useful for you, but even without realizing it, it is possible that some negative thoughts may also arise , related to your experience of motherhood or other everyday situations -day.',
-  //   template_description_third:
-  //     "We usually pay more attention to thoughts that refer to topics that are more important to us , or that are more frequent - so when negative thoughts about motherhood are noticed, some women may feel worried and guilty because they think they shouldn't think like that",
-  //   template_description_four:
-  //     "It is important to realize that most of your negative thoughts arise automatically in your head - you don't choose to think that way!",
-  // },
-  // {
-  //   _id: 10,
-  //   template_id: '10',
-  //   template_icon: null,
-  //   template_name: 'Theme 1',
-  //   template_title: 'Strategies',
-  //   template_time: '1 minute',
-  //   template_greeting: null,
-  //   template_description_one:
-  //     'Try to notice your thoughts and distinguish useful thoughts from thoughts that are negative or useless .',
-  //   template_description_two:
-  //     'Your head is always thinking automatically: some thoughts are useful for you, but even without realizing it, it is possible that some negative thoughts may also arise , related to your experience of motherhood or other everyday situations -day.',
-  //   template_description_third:
-  //     "We usually pay more attention to thoughts that refer to topics that are more important to us , or that are more frequent - so when negative thoughts about motherhood are noticed, some women may feel worried and guilty because they think they shouldn't think like that",
-  //   template_description_four:
-  //     "It is important to realize that most of your negative thoughts arise automatically in your head - you don't choose to think that way!",
-  // },
+ 
   {
     _id: 10,
     template_id: '10',
@@ -390,19 +344,7 @@ const dummyData = [
     template_description_fourth:
       'Try to start putting this strategy into practice when you notice some useless or negative thoughts.',
   },
-  // {
-  //   _id: 24,
-  //   template_id: '24',
-  //   template_icon: flag,
-  //   template_name: 'Theme 3',
-  //   template_title: 'Self-criticism',
-  //   template_time: '1 minute',
-  //   template_greeting: null,
-  //   template_description_one:
-  //     'Start using your Thoughts Diary to get to know your negative thoughts and to question them , contradicting the idea that they are absolute truths.',
-  //   template_description_two:
-  //     'Think of a situation in which you felt negative emotions (sadness, anxiety, guilt, anger) and describe it, filling in all the fields in the diary. Question your thoughts by filling in the Alternative Interpretations and Alternative Behaviors fields . At the end, click SAVE. Whenever you add a situation to your Diary, it will be recorded in the Exercises & Readings section .',
-  // },
+  
   {
     _id: 24,
     template_id: '24',
@@ -460,21 +402,7 @@ const dummyData = [
     template_description_third:
       'Try to think of the teacher you would like your child to have when learning a new topic at school. Would you prefer that he had a critical teacher or a wise and kind teacher (who was firm but moved by a sincere desire to help his son grow and develop)? Which teacher would you think would most help you achieve your goals? Remember: We are all human and it is normal for us to not always be able to handle all tasks, at least at the same time or on the same day. If this happens to you, instead of your self-critical voice, try to listen to a wiser and kinder voice that will help you improve .',
   },
-  // {
-  //   _id: 28,
-  //   template_id: '28',
-  //   template_icon: null,
-  //   template_name: 'Theme 3',
-  //   template_title: 'Important!',
-  //   template_time: '1 minute',
-  //   template_greeting: null,
-  //   template_description_one:
-  //     'We are usually much more critical of ourselves than of others!',
-  //   template_description_two:
-  //     'It is important to recognize that sometimes it is precisely this self-critical stance that prevents you from doing things better.',
-  //   template_description_third:
-  //     'So it can be helpful to adopt a more kind posture with yourself , as you will see below.',
-  // },
+  
   {
     _id: 28,
     template_id: '28',
@@ -483,8 +411,7 @@ const dummyData = [
     template_title: 'Strategies',
     template_time: '1 minute',
     template_greeting: null,
-    //template_description_one: 'Identify what is really important to you!',
-    template_description_one:
+     template_description_one:
       'Think a little about what it means to you to be a mother. What are the values ​​that are important to you in this area of ​​your life?',
     template_description_two:
       'Try to complete the following fields with your Values in relation to parenting (for example: “ my child can trust me ”) and the Behaviors you may have to act according to what is important to you (the values ). There are no right or wrong answers - they are your answers. At the end, click SAVE.',

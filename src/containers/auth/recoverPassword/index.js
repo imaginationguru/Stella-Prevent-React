@@ -8,18 +8,7 @@
 
 import React from 'react';
 
-// import navIcon01_regular from '../../../assets/images/navIcon01_regular.svg';
-// import navIcon01_hover from '../../../assets/images/navIcon01_hover.svg';
-// import navIcon02_regular from '../../../assets/images/navIcon02_regular.svg';
-// import navIcon02_hover from '../../../assets/images/navIcon02_hover.svg';
-// import navIcon03_regular from '../../../assets/images/navIcon03_regular.svg';
-// import navIcon03_hover from '../../../assets/images/navIcon03_hover.svg';
-// import navIcon04_regular from '../../../assets/images/navIcon04_regular.svg';
-// import navIcon04_hover from '../../../assets/images/navIcon04_hover.svg';
-// import navIcon05_regular from '../../../assets/images/navIcon05_regular.svg';
-// import navIcon05_hover from '../../../assets/images/navIcon05_hover.svg';
-// import navIcon06_regular from '../../../assets/images/navIcon06_regular.svg';
-// import navIcon06_hover from '../../../assets/images/navIcon06_hover.svg';
+
 
 import user from '../../../assets/images/user.svg';
 import {

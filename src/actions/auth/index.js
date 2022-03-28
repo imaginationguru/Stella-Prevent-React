@@ -89,12 +89,8 @@ export function login(email, password, componentId) {
             allowEscapeKey: false,
             confirmButtonColor: COLORS.DARK_RED,
             width: DEVICE_WIDTH > 1000 ? '' : '60vw',
-            // width: DEVICE_WIDTH > 1000 ? '25vw' : '60vw',
           });
-          // dispatch({
-          //  type: ACTION_TYPE.ERROR,
-          // payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         }
       }
@@ -170,12 +166,7 @@ export function bindProgram(cb) {
           payload: json.data,
         });
       } else {
-        // if (json.code === 400) {
-        //   dispatch({
-        //     type: ACTION_TYPE.ERROR,
-        //     payload: json.message,
-        //   });
-        // }
+
         dispatch({
           type: ACTION_TYPE.BIND_PROGRAM_USER_FAIL,
         });
@@ -266,18 +257,12 @@ export function emailExists(email) {
         if (json.code === 400) {
           dispatch(loadingAction(false));
           customAlert(json.message, 'error');
-          // dispatch({
-          //   type: ACTION_TYPE.ERROR,
-          //   payload: json.message,
-          // });
+
         }
         if (json.code === 401) {
           dispatch(loadingAction(false));
           customAlert(json.message, 'error');
-          // dispatch({
-          //   type: ACTION_TYPE.ERROR,
-          //   payload: json.message,
-          // });
+
         }
         dispatch({
           type: ACTION_TYPE.USER_EMAIL_EXISTS_FAIL,
@@ -393,10 +378,7 @@ export function getQuoteData(cb) {
     try {
       let json = await RestClient.getCall(`${URL.GET_QUOTE_DATA}`);
       if (json.code === 200) {
-        // dispatch({
-        //   type: ACTION_TYPE.GET_QUOTE_DATA_SUCCESS,
-        //   payload: json.data,
-        // });
+
         const result = json.data.map((e) => {
           dispatch({
             type: ACTION_TYPE.SET_QUOTES_DATA,
@@ -468,20 +450,14 @@ export function verifySocialUser(params, componentId, cb) {
           });
           dispatch(getWeek(1));
           console.log('token>>>>>>>>>>>>>>>>>', json.data.token);
-          // storeItem('token', json.data.token);
           storeItem('programId', json.data.user.programId); // '608aa90eb9a5442de2e81673';
           storeItem('userId', json.data.user._id);
           storeItem('firstName', json.data.user.firstName);
           storeItem('lastName', json.data.user.lastName);
           storeItem('hospitalId', json.data.user.hospital_id);
-          // if (json.data.user.isProgramBind !== true) {
-          //   console.log('bind PAI hit');
-          //dispatch(bindProgram());
-          // }
-          // dispatch(getProgramById());
+
           if (json.data.user.isInterest === true) {
             console.log('heloooo1111');
-            // navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
             storeItem('token', json.data.token);
             dispatch(bindProgram());
             dispatch(getProgramById());
@@ -489,8 +465,7 @@ export function verifySocialUser(params, componentId, cb) {
           } else {
             console.log('heloooo11111222222');
             navigatorPush({ componentId, screenName: 'VerifyUserOTP' });
-            // navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
-            //navigatorPush({componentId, screenName: 'Dashboard'});
+
           }
         }
         // cb(json.data);
@@ -511,18 +486,10 @@ export function verifySocialUser(params, componentId, cb) {
           dispatch({
             type: ACTION_TYPE.VERIFY_USER_DATA_FAIL,
           });
-          // toast(STRINGS.SOMETHING_WENT_WRONG);
         }
       }
     } catch (error) {
-      // dispatch({
-      //   type: ACTION_TYPE.ERROR,
-      //   payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
-      // });
-      // dispatch({
-      //   type: ACTION_TYPE.VERIFY_USER_DATA_FAIL,
-      //   payload: error,
-      // });
+
     }
   };
 }
@@ -552,10 +519,8 @@ export function getUser(params, componentId, isRedirect = true) {
         storeItem('firstName', json.data.user.firstName);
         storeItem('lastName', json.data.user.lastName);
         storeItem('hospitalId', json.data.user.hospital_id);
-        // if (json.data.user.isProgramBind !== true) {
-        //   console.log('bind PAI hit');
+
         dispatch(bindProgram());
-        // }
         dispatch({
           type: ACTION_TYPE.SET_PROFILE_IMAGE,
           payload: json.data.user.image_path,
@@ -680,7 +645,6 @@ export function resendRegistrationCode(params, cb) {
         cb(json.data);
       } else {
         customAlert(json.message, 'error');
-        // navigatorPush({screenName: 'Dashboard'});
       }
       dispatch(loadingAction(false));
     } catch (error) {

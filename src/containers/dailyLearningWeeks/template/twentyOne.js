@@ -45,8 +45,7 @@ const TwentyOne = (props) => {
 
   useEffect(() => {
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [assessment_id]);
+   }, [assessment_id]);
 
   useEffect(() => {
     let headers =
@@ -54,8 +53,7 @@ const TwentyOne = (props) => {
         ? assessmentData.headers
         : [];
     setHeaderData(headers);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [assessmentData]);
+   }, [assessmentData]);
 
   useEffect(() => {
     const cardData = [];
@@ -71,8 +69,7 @@ const TwentyOne = (props) => {
       };
     });
     setParamAssessment([...modifyCardData]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userAssessmentData]);
+   }, [userAssessmentData]);
   const clickOnCheck = (item) => {
     console.log('item>>>>>>>>', item, paramAssessment);
     if (paramAssessment && paramAssessment.length) {
@@ -97,14 +94,8 @@ const TwentyOne = (props) => {
                 : val.content,
           };
         });
-        //console.log('y>>>>>>>>>>>', y);
-        setParamAssessment(y);
-        // setParamAssessment(
-        //   paramAssessment.filter(
-        //     (val) => val.assessment_header_id !== item._id,
-        //   ),
-        // );
-      } else {
+         setParamAssessment(y);
+       } else {
         setParamAssessment([
           ...paramAssessment,
           {
@@ -139,8 +130,7 @@ const TwentyOne = (props) => {
       assessment_id: assessment_id,
       assessment: paramAssessment,
     };
-    //console.log('patrams>>>>>>>>', params);
-    if (paramAssessment && paramAssessment.length) {
+     if (paramAssessment && paramAssessment.length) {
       if (userAssessmentData && userAssessmentData.length) {
         dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
       } else {

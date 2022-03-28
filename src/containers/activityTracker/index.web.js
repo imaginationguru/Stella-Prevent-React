@@ -84,21 +84,10 @@ const ActivityView = ({
           })
         }
         style={styles.activityBox}>
-        {/* <p
-          style={{
-            width: '30%',
-            border: '1px solid #1B82D4',
-            textAlign: 'center',
-            borderRadius: '70%',
-            borderWidth: '5%',
-            color: COLORS.PRIMARY,
-          }}>
-          {'+'}
-        </p> */}
+
         <div
           style={{
             textAlign: 'center',
-            // border: '1px solid blue',
           }}>
           <img src={plusIcon} style={{ width: '70px' }} />
         </div>
@@ -114,7 +103,6 @@ const ActivityView = ({
       <div
         style={{
           textAlign: 'center',
-          // border: '1px solid blue',
           width: '80px',
           height: '80px',
           borderRadius: '50%',
@@ -227,9 +215,7 @@ const ActivityTracker = ({ location }) => {
         (x) => x.category == 'Pleasant',
       );
 
-      // pleasentArray.map((item) => {
-      //   getActivityTrackerData.push(item);
-      // });
+
       dailyArray.map((item) => {
         getDailtActivityData.push(item);
       });
@@ -320,10 +306,8 @@ const ActivityTracker = ({ location }) => {
     }
   };
 
-  // console.log('plasentActivityArray>>>>', plasentActivityArray)
   return (
     <MasterLayout>
-      {/* <BackBtn title = {isFromCard ? 'Back to Card' : 'Back to Dashboard'} /> */}
       {isFromCard ? <BackBtn title="Back to Card " /> : <BackToDashboard />}
       <div style={styles.wrapper}>
         <ActivityTab
@@ -416,7 +400,6 @@ const styles = {
   activityBox: {
     padding: '2%',
     width: DEVICE_WIDTH > 767 ? '25%' : '50%',
-    // border: '1px solid pink',
     alignItems: 'center',
     justifyContent: 'center',
   },

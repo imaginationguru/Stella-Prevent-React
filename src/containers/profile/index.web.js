@@ -135,9 +135,7 @@ function ProfileDetails(props) {
           setPhoneError('Please enter phone number');
         else if (!validatePhoneWithSpecialSymbol(phone) || phone.length < 10)
           setPhoneError('Please enter a valid phone number');
-        // else if (!validateContact(phone))
-        //   setPhoneError('Please enter a valid phone number');
-        else if (validateIsEmpty(city?.trim()))
+         else if (validateIsEmpty(city?.trim()))
           setCityError('Please enter a city');
         else if (!validateName(city?.trim()))
           setCityError('Please enter valid city');
@@ -231,11 +229,7 @@ function ProfileDetails(props) {
       let formdata = new FormData();
       formdata.append('user_id', getItem('userId'));
       formdata.append('file', file);
-      // formdata.append("file", {
-      //   uri: file.path,
-      //   name: file.name,
-      //   type: file.type,
-      // });
+      
       console.log(formdata, 'fo');
       dispatch(AppActions.uploadProfile(formdata));
     } else {
@@ -307,8 +301,7 @@ function ProfileDetails(props) {
                 })
               }
               textStyle={{
-                // fontSize: '16px',
-                fontSize: '16px',
+                 fontSize: '16px',
               }}
               title={
                 loginData?.planInfo?.numericPrice == 0
@@ -531,8 +524,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   heading: {
-    // fontSize: '1.2vw',
-    fontSize: '24px',
+     fontSize: '24px',
 
     fontWeight: '700',
     fontStyle: 'normal',

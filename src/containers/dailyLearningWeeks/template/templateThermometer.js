@@ -66,8 +66,7 @@ const TemplateThermometer = (props) => {
       });
     setHeaderData(x);
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [assessmentData]);
+   }, [assessmentData]);
 
   /***********user assessment data set in header content***** */
   useEffect(() => {
@@ -77,13 +76,11 @@ const TemplateThermometer = (props) => {
         const onlyOneCard = item.cards.length
           ? item.cards.sort((a, b) => (a.createdAt < b.createdAt && 1) || -1)[0]
           : [];
-        // return temp.push(...item.cards);
-        return temp.push(onlyOneCard);
+         return temp.push(onlyOneCard);
       });
       setHeaderData(temp);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userAssessmentData]);
+   }, [userAssessmentData]);
 
   /********function for increase the thermometer value */
   const plusHandler = (item) => {
@@ -182,8 +179,7 @@ const TemplateThermometer = (props) => {
     };
 
     if (userAssessmentData && userAssessmentData.length) {
-      // dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
-      dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+       dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
     } else {
       let isValid = false;
       if (modifyHeaderData.length) {

@@ -199,10 +199,8 @@ const Exercises = () => {
 export default Exercises;
 const styles = {
   readingWrapper: {
-    // marginTop: '30px',
-    marginBottom: '50px',
-    // border: '1px solid red',
-    backgroundColor: LIGHT_GRAY,
+     marginBottom: '50px',
+     backgroundColor: LIGHT_GRAY,
     paddingTop: '10px',
     paddingBottom: '10px',
     display: 'flex',

@@ -242,54 +242,7 @@ const ThirtyFour = (props) => {
     });
     console.log(addEmtpyRow, 'addEmtpyRow....');
     setInputs(addEmtpyRow);
-    // return;
-    // const inputData = inputs.length
-    //   ? inputs.map((item) => {
-    //     return {
-    //       ...item,
-    //       sub_heading: item.sub_heading.length
-    //         ? item.sub_heading.map((val) => {
-    //           console.log('here data ==>', data);
-    //           console.log('here val ==>', val);
-    //           const inputsArr = data.length
-    //             ? data.filter((e) => e.assessment_content_id === val._id)
-    //             : [];
-    //           const extractOrder = data.length
-    //             ? data[data.length - 1].order
-    //             : 0;
-    //           const dummyInput = emptyTextInputMapper(
-    //             item._id,
-    //             val._id,
-    //             extractOrder,
-    //           );
-    //           const finalInput = inputsArr.length
-    //             ? [...inputsArr, dummyInput]
-    //             : [dummyInput, dummyInput];
-    //           // const finalInput = [...inputsArr, dummyInput]
-    //           return {
-    //             // ...val,
-    //             // textInput: data.length
-    //             //   ? finalInput.length
-    //             //     ? finalInput.sort(
-    //             //       (a, b) => (a.order > b.order && 1) || -1,
-    //             //     )
-    //             //     : [] // TODO : Existing ( Add NEW OBJECT FOR END)
-    //             //   : [dummyInput], // TODO : NEW USER
-    //             ...val,
-    //             textInput: data.length
-    //               ? finalInput.length
-    //                 ? finalInput
-    //                 : [] // TODO : Existing ( Add NEW OBJECT FOR END)
-    //               : [dummyInput], // TODO : NEW USER
-    //           };
-    //         })
-    //         : [],
-    //     };
-    //   })
-    //   : [];
-    // console.log(inputData, 'inputData.....');
-    // setInputs(inputData);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, [userAssessmentData]);
 
   const onChangeHandler = (hId, sId, i, e) => {
@@ -393,14 +346,11 @@ const ThirtyFour = (props) => {
     } if (rightItem) {
       contentIdsArray.push(rightItem)
     }
-    // console.log(leftItem, rightItem, " left right");
-
-    // let contentIdsArray = selectedArray.map((ele) => ele.inputId);
-    let content_id = contentIdsArray[0] !== "" ? contentIdsArray[0] : contentIdsArray[1]
+ 
+     let content_id = contentIdsArray[0] !== "" ? contentIdsArray[0] : contentIdsArray[1]
     console.log(contentIdsArray, content_id, "llll");
     isAPICall = (leftItem != "" || rightItem != "") ? true : false;
-    // isAPICall = content_id !== "" ? true : false;
-    if (contentIdsArray.length && isAPICall) {
+     if (contentIdsArray.length && isAPICall) {
 
       dispatch(
         AppActions.deleteUserAssessmentData(
@@ -414,8 +364,7 @@ const ThirtyFour = (props) => {
   };
 
   const onSave = () => {
-    //  console.log(modifiedAssessment,"modifiedAssessment...")
-    console.log(inputs, 'inputs');
+     console.log(inputs, 'inputs');
 
     const modifiedAssessment = inputs.length
       ? inputs.map((item) => {
@@ -446,8 +395,7 @@ const ThirtyFour = (props) => {
       console.log(m.content.length, "index", ind)
     })
     console.log(saveDateValidator(modifiedAssessment), "modifiedAssessment....")
-    // return;
-    let params = {
+     let params = {
       user_id: getItem('userId'),
       user_card_id: props._id,
       assessment_id: assessment_id,
@@ -463,16 +411,13 @@ const ThirtyFour = (props) => {
         .filter((val) => val !== '').length
         ? true
         : false;
-      //console.log('empty check>>>>.', isAPICall);
-    }
+     }
 
     if (modifiedAssessment.length && isAPICall) {
       if (userAssessmentData && userAssessmentData.length) {
-        //  console.log('update item params>>>>>>>>', params);
-        dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
+         dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
       } else {
-        // console.log('save item params>>>>>>>>', JSON.stringify(params));
-        dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+         dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
       }
     } else {
       dispatch({
@@ -587,8 +532,7 @@ const ThirtyFour = (props) => {
                                     ? '15px'
                                     : '0',
                             }}
-                          // className={ele.order === 1 ? 'mr0' : 'mr20'}
-                          >
+                           >
                             <div
                               style={{
                                 backgroundColor: YELLOW,
@@ -623,8 +567,7 @@ const ThirtyFour = (props) => {
                                       type="text"
                                       className="f-field"
                                       name={ele.name}
-                                      // placeholder={`${ele.name}`}
-                                      style={styles.selectedText}
+                                       style={styles.selectedText}
                                       value={val.content}
                                       onChange={(e) =>
                                         onChangeHandler(
@@ -640,8 +583,7 @@ const ThirtyFour = (props) => {
                                       <div
                                         style={{
                                           ...styles.circleDiv,
-                                          // backgroundColor: GREEN_TEXT,
-                                          backgroundColor: val.content
+                                           backgroundColor: val.content
                                             .length
                                             ? GREEN_TEXT
                                             : GRAY,
@@ -665,10 +607,7 @@ const ThirtyFour = (props) => {
                                       <div
                                         style={{
                                           ...styles.circleCrossDiv,
-                                          // backgroundColor: item.value.length
-                                          //   ? GREEN_TEXT
-                                          //   : GRAY,
-                                        }}
+                                         }}
                                         onClick={() => {
                                           deleteHandler(
                                             item._id,
@@ -772,6 +711,5 @@ const styles = {
     backgroundColor: '#F1F3FA',
     width: '100%',
     marginBottom: '30px',
-    // marginTop: '3%',
-  },
+   },
 };

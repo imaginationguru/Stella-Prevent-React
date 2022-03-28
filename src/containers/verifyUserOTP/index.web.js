@@ -43,19 +43,8 @@ const VerifyUserOTP = () => {
       dispatch(AppActions.logout());
     } else {
       navigatorPop();
-      //  props.history.push("/");
-    }
-    // e.preventDefault();
-    // if (!finishStatus) {
-    //    if (window.confirm("Do you want to go back ?")) {
-    //       setfinishStatus(true)
-    //       // your logic
-    //       props.history.push("/");
-    //    } else {
-    //       window.history.pushState(null, null, window.location.pathname);
-    //       setfinishStatus(false)
-    //    }
-    // }
+     }
+    
   };
   useEffect(() => {
     window.history.pushState(null, null, window.location.pathname);

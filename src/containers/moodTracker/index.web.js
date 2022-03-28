@@ -80,8 +80,7 @@ const MoodTracker = ({location}) => {
   }, []);
 
   useEffect(() => {
-    //  const getMoodTrackerData = [];
-    console.log('mood tracker data', moodTrackerData);
+     console.log('mood tracker data', moodTrackerData);
     if (
       moodTrackerData &&
       moodTrackerData.data &&
@@ -101,31 +100,9 @@ const MoodTracker = ({location}) => {
       setMoodList([...moodList]);
       console.log('moodListArrayasdhaasdbj', moodList);
     }
-    // setMoodTracker([...getMoodTrackerData]);
-    {
-      /* 
-  
-   console.log("get mood tracker data for setting mood",getMoodTrackerData)
-    if (getMoodTracker !== undefined && getMoodTracker.length > 0) {
-      let index = getMoodTracker[0].mood;
-      console.log('index of get mood tracker',index)
-      moodList.map((element) => {
-        console.log("element ",element);
-        console.log("element ",element.id)
-        if (element.id === index) {
-          element.isClickTrue = true;
-        } else {
-          element.isClickTrue = false;
-        }
-      });
-      setMoodList([...moodList]);
-      console.log('moodListArrayasdhaasdbj', moodList);
-    }
-  */
-    }
+      
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [moodTrackerData]);
+   }, [moodTrackerData]);
 
   const onMoodClick = (id) => {
     console.log('onMoodClick', id);
@@ -220,17 +197,13 @@ const styles = {
   itemWrapper: {
     display: 'flex',
     marginBottom: '30px',
-    // border: '1px solid red',
-    // justifyContent: 'center',
-    // alignItems: 'center',
-  },
+   },
   wrapper: {
     width: DEVICE_WIDTH > 767 ? '50%' : '100%',
     padding: DEVICE_WIDTH > 767 ? '0%' : '0 10px',
     marginLeft: 'auto',
     marginRight: 'auto',
-    //  marginTop: '0%',
-  },
+   },
   ques: {
     fontWeight: 'bold',
     fontSize: '18px',

@@ -46,8 +46,7 @@ const InputBoxWithContent = (props) => {
         <form noValidate>
           <textarea
             type="description"
-            // className="f-field"
-            value={value}
+             value={value}
             onChange={onChange}
             required
             placeholder={placeholder}

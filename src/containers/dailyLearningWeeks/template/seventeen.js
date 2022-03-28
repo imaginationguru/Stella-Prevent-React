@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import GLOBALS from '../../../constants';
 import ReactHtmlParser from 'react-html-parser';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as AppActions from '../../../actions';
-import {getItem} from '../../../utils/AsyncUtils';
+import { getItem } from '../../../utils/AsyncUtils';
 import ExerciseBox from '../../../components/ExerciseBox';
-import {translate as ts} from '../../../i18n/translate';
+import { translate as ts } from '../../../i18n/translate';
 
 import {
   CardQuote,
@@ -17,13 +17,13 @@ import {
 } from '../../../components/Cards';
 import commonStyles from '../commonStyles';
 
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
-const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
-const {YELLOW, WHITE, CIRCLE_GRAY, LIGHT_GRAY, GREEN_TEXT} = COLORS;
+const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
+const { YELLOW, WHITE, CIRCLE_GRAY, LIGHT_GRAY, GREEN_TEXT } = COLORS;
 let userId = getItem('userId');
 const dataMapperAss = (arr = []) => {
   let temp = [];
@@ -31,7 +31,7 @@ const dataMapperAss = (arr = []) => {
     temp = arr.map((item) => {
       return {
         assessment_header_id: item._id,
-        content: [{content: item.value, order: item.order}],
+        content: [{ content: item.value, order: item.order }],
       };
     });
   }
@@ -39,7 +39,7 @@ const dataMapperAss = (arr = []) => {
 };
 
 const InputBoxWithContent = (props) => {
-  const {title, placeholder, value, onChange, style, name, disable} = props;
+  const { title, placeholder, value, onChange, style, name, disable } = props;
   return (
     <div style={styles.inputBoxWrapper}>
       <div style={style}>
@@ -49,7 +49,6 @@ const InputBoxWithContent = (props) => {
         <form noValidate>
           <textarea
             type="description"
-            // className="f-field"
             value={value}
             name={name}
             onChange={onChange}
@@ -84,7 +83,7 @@ const Seventeen = (props) => {
     week,
   } = props.card;
   const dispatch = useDispatch();
-  const {assessmentData = {heading: []}, userAssessmentData = []} = useSelector(
+  const { assessmentData = { heading: [] }, userAssessmentData = [] } = useSelector(
     (state) => state.moduleOne,
   );
 
@@ -107,8 +106,6 @@ const Seventeen = (props) => {
           };
         }),
       );
-    //dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData, assessment_id]);
   useEffect(() => {
     const getDataMapper = (arr = []) => {
@@ -123,19 +120,19 @@ const Seventeen = (props) => {
         arr.forEach((item, i) => {
           const onlyOneCard = item.cards.length
             ? item.cards.sort(
-                (a, b) => (a.createdAt < b.createdAt && 1) || -1,
-              )[0]
+              (a, b) => (a.createdAt < b.createdAt && 1) || -1,
+            )[0]
             : [];
           return pTemp.push(onlyOneCard);
         });
         temp = pTemp.length
           ? pTemp.map((item) => {
-              return {
-                placeholder: item.content ? item.content : 'enter value',
-                value: item.content,
-                _id: item.assessment_header_id,
-              };
-            })
+            return {
+              placeholder: item.content ? item.content : 'enter value',
+              value: item.content,
+              _id: item.assessment_header_id,
+            };
+          })
           : [];
       }
 
@@ -153,12 +150,11 @@ const Seventeen = (props) => {
                 val = data.value;
               }
             }
-            return {...item, value: val};
+            return { ...item, value: val };
           }),
         );
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
   const showHandler = (time = '') => {
     if (show.length) {
@@ -200,7 +196,6 @@ const Seventeen = (props) => {
 
     if (userAssessmentData && userAssessmentData.length) {
       console.log('if block');
-      //dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
       dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
     } else {
       let isValid = false;
@@ -214,7 +209,6 @@ const Seventeen = (props) => {
         console.log('temp >>>>>>', temp);
         if (temp.length) {
           isValid = temp.filter((item) => item === '').length === 0; //fill all inputs
-          //isValid = temp.some((item) => item !== 0) ? true : false;
         }
       }
       console.log('is valid ', isValid);
@@ -233,11 +227,11 @@ const Seventeen = (props) => {
   const onHandleChange = (e, item) => {
     const updateInputs = inputs.length
       ? inputs.map((val) => {
-          return {
-            ...val,
-            value: val.name === e.target.name ? e.target.value : val.value,
-          };
-        })
+        return {
+          ...val,
+          value: val.name === e.target.name ? e.target.value : val.value,
+        };
+      })
       : [];
     setInputs(updateInputs);
   };
@@ -256,14 +250,14 @@ const Seventeen = (props) => {
   };
   const headingOne =
     assessmentData.heading &&
-    assessmentData.heading.length &&
-    assessmentData.heading[0]
+      assessmentData.heading.length &&
+      assessmentData.heading[0]
       ? assessmentData.heading[0].heading
       : null;
   const headingSecond =
     assessmentData.heading &&
-    assessmentData.heading.length &&
-    assessmentData.heading[1]
+      assessmentData.heading.length &&
+      assessmentData.heading[1]
       ? assessmentData.heading[1].heading
       : null;
 
@@ -272,15 +266,15 @@ const Seventeen = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -298,71 +292,71 @@ const Seventeen = (props) => {
         }}>
         {images && images.length
           ? images
-              .filter((item) => item.image_type === 'first')
-              .map((item, i) => {
-                return (
-                  <CustomImage
-                    key={i}
-                    src={`${IMAGE_BASE_URL}${item.image}`}
-                    style={{
-                      display: item.image !== '' ? 'flex' : 'none',
-                    }}
-                  />
-                );
-              })
+            .filter((item) => item.image_type === 'first')
+            .map((item, i) => {
+              return (
+                <CustomImage
+                  key={i}
+                  src={`${IMAGE_BASE_URL}${item.image}`}
+                  style={{
+                    display: item.image !== '' ? 'flex' : 'none',
+                  }}
+                />
+              );
+            })
           : null}
       </div>
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                  isVisible={true}
-                  animationIn={'fadeInUp'}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+                isVisible={true}
+                animationIn={'fadeInUp'}
+              />
+            );
+          })
         : []}
       {/*******************************ASSESSMENT DESCRIPTION*********************** */}
       {props.assessments &&
-      props.assessments.length &&
-      props.assessments[0].description !== '' ? (
+        props.assessments.length &&
+        props.assessments[0].description !== '' ? (
         <div style={commonStyles.assessmentWrapper}>
           {images && images.length
             ? images
-                .filter((item) => item.image_type === 'second')
-                .map((item, i) => {
-                  return (
-                    <CustomImage
-                      key={i}
-                      src={
-                        item.image !== ''
-                          ? `${IMAGE_BASE_URL}${item.image}`
-                          : null
-                      }
-                      style={{
-                        ...commonStyles.assessImage,
-                        display: item.image !== '' ? 'flex' : 'none',
-                      }}
-                    />
-                  );
-                })
+              .filter((item) => item.image_type === 'second')
+              .map((item, i) => {
+                return (
+                  <CustomImage
+                    key={i}
+                    src={
+                      item.image !== ''
+                        ? `${IMAGE_BASE_URL}${item.image}`
+                        : null
+                    }
+                    style={{
+                      ...commonStyles.assessImage,
+                      display: item.image !== '' ? 'flex' : 'none',
+                    }}
+                  />
+                );
+              })
             : []}
 
           {props.assessments && props.assessments.length
             ? props.assessments.map((item, index) => {
-                return (
-                  <CardDescription
-                    key={index}
-                    style={commonStyles.assessDesc}
-                    description={ReactHtmlParser(item.description)}
-                  />
-                );
-              })
+              return (
+                <CardDescription
+                  key={index}
+                  style={commonStyles.assessDesc}
+                  description={ReactHtmlParser(item.description)}
+                />
+              );
+            })
             : []}
         </div>
       ) : null}
@@ -398,27 +392,27 @@ const Seventeen = (props) => {
 
       {inputs.length
         ? inputs
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, idx) => {
-              return (
-                <InputBoxWithContent
-                  key={idx}
-                  title={ReactHtmlParser(item.name)}
-                  name={item.name}
-                  placeholder={item.placeholder}
-                  value={item.value}
-                  onChange={(e) => onHandleChange(e, item)}
-                  style={{
-                    backgroundColor:
-                      assessmentData.heading && assessmentData.heading.length
-                        ? headerColor(item.order)
-                        : YELLOW,
-                    width: DEVICE_WIDTH > 767 ? '20%' : '30%',
-                  }}
-                  disable={item.isDisabled === true ? true : false}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, idx) => {
+            return (
+              <InputBoxWithContent
+                key={idx}
+                title={ReactHtmlParser(item.name)}
+                name={item.name}
+                placeholder={item.placeholder}
+                value={item.value}
+                onChange={(e) => onHandleChange(e, item)}
+                style={{
+                  backgroundColor:
+                    assessmentData.heading && assessmentData.heading.length
+                      ? headerColor(item.order)
+                      : YELLOW,
+                  width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+                }}
+                disable={item.isDisabled === true ? true : false}
+              />
+            );
+          })
         : null}
       {inputs.length ? (
         <div style={commonStyles.buttonWrapper}>
@@ -518,17 +512,17 @@ const Seventeen = (props) => {
 
       {content && content.length
         ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardContent
-                  key={index}
-                  content={ReactHtmlParser(item.content)}
-                  isVisible={true}
-                  animationIn={'fadeInUp'}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardContent
+                key={index}
+                content={ReactHtmlParser(item.content)}
+                isVisible={true}
+                animationIn={'fadeInUp'}
+              />
+            );
+          })
         : []}
       {showExercises && <ExerciseBox week={week} />}
     </div>
@@ -551,7 +545,7 @@ const styles = {
     color: COLORS.WHITE,
     paddingTop: '30px',
   },
-  inputBox: {width: DEVICE_WIDTH > 767 ? '78%' : '68%'},
+  inputBox: { width: DEVICE_WIDTH > 767 ? '78%' : '68%' },
   inputStyle: {
     backgroundColor: COLORS.LIGHT_GRAY,
     fontStyle: 'italic',
@@ -584,6 +578,5 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    // border: '2px solid blue',
   },
 };
