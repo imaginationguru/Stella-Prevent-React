@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import AppleLogin from 'react-apple-login';
-import { customAlert } from '../../helpers/commonAlerts.web';
+import {customAlert} from '../../helpers/commonAlerts.web';
 import jwt_decode from 'jwt-decode';
 import GLOBALS from '../../constants';
-const { IMAGE_BASE_URL } = GLOBALS;
+const {IMAGE_BASE_URL, WEB_BASE_URL} = GLOBALS;
 const AppleLogIn = (props) => {
-  let { onSocialLogin = () => { } } = props;
+  let {onSocialLogin = () => {}} = props;
   const appleId = 'com.stellaPreventWeb';
-
+  console.log(`${WEB_BASE_URL}Dashboard`, 'apple');
   const handleResponse = (res) => {
     if (res.error) {
       if (res.error.error == 'popup_closed_by_user') {
@@ -19,8 +19,7 @@ const AppleLogIn = (props) => {
         var decoded = jwt_decode(res.authorization.id_token);
         var email_id = decoded.email;
         verifyUser(res, email_id);
-      } catch (err) {
-      }
+      } catch (err) {}
     }
   };
 
@@ -45,7 +44,7 @@ const AppleLogIn = (props) => {
         scope={'name email'}
         responseType={'code id_token'}
         responseMode={'form_post'}
-        redirectURI={`${IMAGE_BASE_URL}Dashboard`}
+        redirectURI={`${WEB_BASE_URL}Dashboard`}
         render={(renderProps) => (
           <div
             onClick={renderProps.onClick}

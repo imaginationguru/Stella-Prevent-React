@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import { customAlert } from '../../helpers/commonAlerts.web';
+import {customAlert} from '../../helpers/commonAlerts.web';
 const FacebookLogIn = (props) => {
-  let { onSocialLogin = () => { } } = props;
+  let {onSocialLogin = () => {}} = props;
   const fbAppId = '416468470173904';
   const resFblogin = (res) => {
     if (res.status == 'unknown') {
@@ -13,7 +13,14 @@ const FacebookLogIn = (props) => {
   };
 
   const verifyUser = (profile_data) => {
-
+    console.log(profile_data, 'profile_data.......');
+    if (profile_data.email == '' || profile_data.email == undefined) {
+      customAlert(
+        "Facebook Login fails! Unable to access user's email",
+        'error',
+      );
+      return;
+    }
     let params = {
       firstName: profile_data.name,
       email: profile_data.email,
