@@ -382,7 +382,7 @@ const Report = ({location}) => {
             />
           ) : (
             <LineGraphUI
-              yAxis={[1, 2, 3, 4, 5]}
+              yAxis={[0, 1, 2, 3, 4, 5]}
               lable={'Average Daily Mood Report'}
             />
           )}
