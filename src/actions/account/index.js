@@ -1,13 +1,14 @@
 import GLOBALS from '../../constants';
 import RestClient from '../../helpers/RestClient';
-import { navigatorPush } from '../../config/navigationOptions';
-import { storeItem, getItem } from '../../utils/AsyncUtils';
-import { loadingAction } from '../common';
-const { ACTION_TYPE, URL, STRINGS } = GLOBALS;
-const { TRY_AGAIN, CHECK_NETWORK } = STRINGS;
-import { Linking, Platform } from 'react-native';
-import { getWeek } from '../moduleOne';
-import { customAlert } from '../../helpers/commonAlerts.web';
+import {navigatorPush} from '../../config/navigationOptions';
+import {storeItem, getItem} from '../../utils/AsyncUtils';
+import {loadingAction} from '../common';
+const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
+const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
+import {Linking, Platform} from 'react-native';
+import {getWeek} from '../moduleOne';
+import {customAlert} from '../../helpers/commonAlerts.web';
+import {sessionExpire} from '../tracker';
 //******************************Login******************* */
 
 export function changeLanguage(param) {
@@ -16,13 +17,18 @@ export function changeLanguage(param) {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.CHANGE_LANGUAGE, param);
       if (json.code === 200) {
-
         customAlert(json.message, 'success');
-
       } else {
         if (json.code === 400) {
-
           customAlert(json.message, 'error');
+        }
+        if (json.code === 417) {
+          dispatch(sessionExpire(json.message));
+          dispatch({
+            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+            payload: json.message,
+          });
+          dispatch(loadingAction(false));
         }
       }
       dispatch(loadingAction(false));
@@ -47,12 +53,18 @@ export function toggleNotification(param) {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.UPDATE_NOTIFICATION, param);
       if (json.code === 200) {
-
         customAlert(json.message, 'success');
       } else {
         if (json.code === 400) {
-
           customAlert(json.message, 'error');
+        }
+        if (json.code === 417) {
+          dispatch(sessionExpire(json.message));
+          dispatch({
+            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+            payload: json.message,
+          });
+          dispatch(loadingAction(false));
         }
       }
       dispatch(loadingAction(false));
@@ -85,8 +97,15 @@ export function updatePassword(param) {
         customAlert(json.message, 'success');
       } else {
         if (json.code === 400) {
-
           customAlert(json.message, 'error');
+        }
+        if (json.code === 417) {
+          dispatch(sessionExpire(json.message));
+          dispatch({
+            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+            payload: json.message,
+          });
+          dispatch(loadingAction(false));
         }
       }
       dispatch(loadingAction(false));
@@ -124,8 +143,15 @@ export function uploadProfile(param) {
         dispatch(loadingAction(false));
       } else {
         if (json.code === 400) {
-
           customAlert(json.message, 'error');
+          dispatch(loadingAction(false));
+        }
+        if (json.code === 417) {
+          dispatch(sessionExpire(json.message));
+          dispatch({
+            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+            payload: json.message,
+          });
           dispatch(loadingAction(false));
         }
       }
@@ -150,7 +176,6 @@ export function updateUserDetails(param) {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.UPDATE_USER_DATA, param);
       if (json.code === 200) {
-
         customAlert(json.message, 'success');
         dispatch({
           type: ACTION_TYPE.SET_PROFILE_IMAGE,
@@ -158,8 +183,15 @@ export function updateUserDetails(param) {
         });
       } else {
         if (json.code === 400) {
-
           customAlert(json.message, 'error');
+        }
+        if (json.code === 417) {
+          dispatch(sessionExpire(json.message));
+          dispatch({
+            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+            payload: json.message,
+          });
+          dispatch(loadingAction(false));
         }
       }
       dispatch(loadingAction(false));
@@ -177,8 +209,3 @@ export function updateUserDetails(param) {
     }
   };
 }
-
-
-
-
-

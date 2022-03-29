@@ -10,7 +10,7 @@ import {getWeek} from '../moduleOne';
 import Swal from 'sweetalert2';
 import {Dimensions} from 'react-native-web';
 import moment from 'moment';
-
+import {sessionExpire} from '../tracker';
 import packageJson from '../../../package.json';
 
 const {COLORS, FONTS, IMAGE_BASE_URL} = GLOBALS;
@@ -213,6 +213,14 @@ export function getProgramById(isLoading = true, cb) {
             type: ACTION_TYPE.ERROR,
             payload: json.message,
           });
+        }
+        if (json.code === 417) {
+          dispatch(sessionExpire(json.message));
+          dispatch({
+            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+            payload: json.message,
+          });
+          dispatch(loadingAction(false));
         } else {
           dispatch({
             type: ACTION_TYPE.GET_PROGRAM_FAIL,
@@ -256,6 +264,14 @@ export function emailExists(email) {
           dispatch(loadingAction(false));
           customAlert(json.message, 'error');
         }
+        if (json.code === 417) {
+          dispatch(sessionExpire(json.message));
+          dispatch({
+            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+            payload: json.message,
+          });
+          dispatch(loadingAction(false));
+        }
         dispatch({
           type: ACTION_TYPE.USER_EMAIL_EXISTS_FAIL,
         });
@@ -298,6 +314,14 @@ export function changePassword(_id, password, forgot_password_token) {
             type: ACTION_TYPE.ERROR,
             payload: json.message,
           });
+        }
+        if (json.code === 417) {
+          dispatch(sessionExpire(json.message));
+          dispatch({
+            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+            payload: json.message,
+          });
+          dispatch(loadingAction(false));
         }
         dispatch({
           type: ACTION_TYPE.CHANGE_PASSWORD_FAIL,
