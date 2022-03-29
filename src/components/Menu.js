@@ -50,7 +50,7 @@ const Menu = (props) => {
           display: 'flex',
           flexDirection: 'row',
           paddingTop: '5%',
-
+          cursor: 'pointer',
           borderTop: `0.5px solid 
           ${'#BDBDBD'}`,
         }}
