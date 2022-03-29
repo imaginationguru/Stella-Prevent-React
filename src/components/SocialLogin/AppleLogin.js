@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import AppleLogin from 'react-apple-login';
 import { customAlert } from '../../helpers/commonAlerts.web';
 import jwt_decode from 'jwt-decode';
+import GLOBALS from '../../constants';
+const { IMAGE_BASE_URL } = GLOBALS;
 const AppleLogIn = (props) => {
   let { onSocialLogin = () => { } } = props;
   const appleId = 'com.stellaPreventWeb';
@@ -43,7 +45,7 @@ const AppleLogIn = (props) => {
         scope={'name email'}
         responseType={'code id_token'}
         responseMode={'form_post'}
-        redirectURI="https://mamalift-web.curiodigitaltx.com/Dashboard"
+        redirectURI={`${IMAGE_BASE_URL}Dashboard`}
         render={(renderProps) => (
           <div
             onClick={renderProps.onClick}

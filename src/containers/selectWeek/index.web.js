@@ -230,7 +230,7 @@ function SelectWeek(props) {
       <ProfileHeader></ProfileHeader>
 
       <View style={[styles.container, {}]}>
-        <div className="v-container m-tb-30">
+        <div className="v-container m-tb-30 sl-week">
           <div className="blob-container">
             {/* <BackBtn btnStyle={{padding: 0}} /> */}
             <BackToDashboard btnStyle={{ padding: 0 }} />

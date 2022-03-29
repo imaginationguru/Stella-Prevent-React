@@ -8,7 +8,7 @@ import {
   CardTime,
   CardDescription,
   CardContent,
-  CustomImage,
+  CustomImage, OldCustomImage
 } from '../../../components/Cards';
 import { Animated } from 'react-animated-css';
 
@@ -29,106 +29,126 @@ const FourSeven = (props) => {
     week,
     showExercises,
   } = props.card;
+  const description = [{
+    desc: 'Postpartum Depression is usually associated with the presence of the following symptoms.'
+  }]
+
+  const image = [
+    { image: "https://mamalift.curiodigitaltx.com/upload/0.08738200966836329--sandy_rounded.png", title: "Sadness,crying spells" },
+    { image: "https://mamalift.curiodigitaltx.com/upload/0.39541503332044936--jamila_rounded.png", title: "Irritability" },
+    { image: "https://mamalift.curiodigitaltx.com/upload/0.39541503332044936--jamila_rounded.png", title: "Anxiety or persistent worry" },
+    { image: "https://mamalift.curiodigitaltx.com/upload/0.08738200966836329--sandy_rounded.png", title: `Feeling guilty or undervalued("I'm not a good mother)"` },
+    { image: "https://mamalift.curiodigitaltx.com/upload/0.39541503332044936--jamila_rounded.png", title: `Difficulty concentrating` },
+    { image: "https://mamalift.curiodigitaltx.com/upload/0.39541503332044936--jamila_rounded.png", title: `Lack of motivation or interest in activities that were previously enjoyable` },
+    { image: "https://mamalift.curiodigitaltx.com/upload/0.08738200966836329--sandy_rounded.png", title: `Fatigue, lack of energy` },
+    { image: "https://mamalift.curiodigitaltx.com/upload/0.39541503332044936--jamila_rounded.png", title: `Isolating oneself from family and friends ` },
+    { image: "https://mamalift.curiodigitaltx.com/upload/0.39541503332044936--jamila_rounded.png", title: `Changes in appetite and/or sleep ` }
+  ];
+
+  const contents = [{
+    content: `Remember: It is normal to occasionally experience one or two of these symptoms. Postpartum depression means that you experience several of these symptoms, intensely, and almost every day for a period of time. In some cases, in addition to these symptoms, women may have some thoughts related to the possibility of ending their life or other frightening thoughts. If this happens to you, it is important to seek help!`
+  }]
 
   return (
     <>
       {/**********************quotes************** */}
-      {quotes && quotes.length
-        ? quotes
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardQuote
-                key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-              />
-            );
-          })
-        : []}
-      <CardTitle title={ReactHtmlParser(card_title)} />
+      <CardTitle
+        // title={ReactHtmlParser(card_title)} 
+        title={"Postpartum Depression"} />
       <CardTime
         time={
           card_time === '1' ? `${card_time} Minute` : `${card_time} Minutes`
         }
       />
 
-
-
-      {/**********************Images********************** */}
-      <div style={styles.imageView}>
-        {images && images.length
-          ? images
-            .filter((item) => item.image_type === 'first')
-            .map((item, index) => {
-              return (
-                <CustomImage
-                  key={index}
-                  src={`${IMAGE_BASE_URL}${item.image}`}
-                  style={{
-                    display: item.image !== '' ? 'flex' : 'none',
-                  }}
-                  isVisible={true}
-                  animationIn={'fadeInLeft'}
-                />
-              );
-            })
-          : []}
-
-        {/********************************content******************* */}
-
-        {props.assessments.length
-          ? props.assessments
+      {/**********************description************** */}
+      {description && description.length
+        ? description
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={item.desc}
+                // description={ReactHtmlParser(item.desc)}
+                isVisible={true}
+                animationIn={'fadeInUp'}
+              />
+            );
+          })
+        : []}
+      {/* {descriptions && descriptions.length
+        ? descriptions
             .sort((a, b) => (a.order > b.order && 1) || -1)
             .map((item, index) => {
               return (
                 <CardDescription
                   key={index}
-                  description={ReactHtmlParser(item.description)}
+                  description={ReactHtmlParser(item.desc)}
                   isVisible={true}
                   animationIn={'fadeInUp'}
-                  style={{ paddingLeft: '40px' }}
                 />
               );
             })
-          : []}
+        : []} */}
+
+      {/**********************Show Images********************** */}
+      <div className="inner-container">
+        <div style={styles.bottomImages} className="f-r" >
+          {image && image.length
+            ? image
+              .map((item, index) => {
+                return (
+                  <div className="f-3" key={index}>
+                    <OldCustomImage
+                      key={index}
+                      src={`${item.image}`}
+                      // src={`${IMAGE_BASE_URL}${item.image}`}
+                      style={{
+                        display: item.image !== '' ? 'flex' : 'none',
+                        height: "120px", width: "120px"
+                      }}
+                      isVisible={true}
+                      animationIn={'fadeInLeft'}
+                      title={item.title}
+                    // title={ReactHtmlParser(item.image)}
+                    />
+                  </div>
+                );
+              })
+            : []}
+        </div>
       </div>
 
-      {images && images.length
-        ? images
-          .filter((item) => item.image_type === 'second')
-          .map((item, index) => {
-            return (
-              <CustomImage
-                key={index}
-                src={`${IMAGE_BASE_URL}${item.image}`}
-                style={{
-                  display: item.image !== '' ? 'flex' : 'none',
-                }}
-                isVisible={true}
-                animationIn={'fadeInLeft'}
-              />
-            );
-          })
-        : []}
+
+      <CustomImage
+        // key={index}
+        src={`${image[0].image}`}
+        style={{
+          display: image[0].image !== '' ? 'flex' : 'none', height: "100px", width: "100px"
+        }}
+        isVisible={true}
+        animationIn={'fadeInLeft'}
+      />
 
       {/********************************content ******************* */}
       <Animated isVisible={true} animationIn={'fadeInUp'}>
         <div style={styles.contentView}>
-          {content && content.length
-            ? content
+          {contents && contents.length
+            ? contents
               .sort((a, b) => (a.order > b.order && 1) || -1)
               .map((item, i) => {
                 return (
                   <CardContent
                     key={i}
-                    content={ReactHtmlParser(item.content)}
+                    // content={ReactHtmlParser(item.content)}
+                    content={item.content}
                   />
                 );
               })
             : []}
         </div>
       </Animated>
-      {showExercises && <ExerciseBox week={week} />}
+
     </>
   );
 };
@@ -152,5 +172,20 @@ const styles = {
   imageView: {
     display: 'flex',
     flexDirection: 'row',
+  },
+  bottomImages: {
+    marginTop: '30px',
+    marginBottom: '40px',
+    display: 'flex',
+    paddingHorizontal: "20px",
+    //margin: '20px',
+    //  width: "80%",
+    flexWrap: 'wrap'
+  },
+  twoImageDiv: {
+    minWidth: '30%',
+    margin: '0 auto',
+    flexWrap: 'wrap',
+    padding: '10px'
   },
 };
