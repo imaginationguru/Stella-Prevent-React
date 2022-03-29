@@ -1,9 +1,9 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import GLOBALS from '../constants';
-const {COLORS} = GLOBALS;
+const { COLORS } = GLOBALS;
 const ModuleBox = (props) => {
-  const {moduleText, onNavigate, img, moduleStyle} = props;
+  const { moduleText, onNavigate, img, moduleStyle } = props;
   return (
     <TouchableOpacity
       onPress={(val) => onNavigate(val)}
@@ -13,7 +13,7 @@ const ModuleBox = (props) => {
         <img src={img} />
       </div>
       <div style={styles.moduleTextWrapper}>
-        <p style={{...styles.moduleText, ...moduleStyle}}>{moduleText}</p>
+        <p style={{ ...styles.moduleText, ...moduleStyle }}>{moduleText}</p>
       </div>
     </TouchableOpacity>
   );
@@ -21,7 +21,7 @@ const ModuleBox = (props) => {
 
 export default ModuleBox;
 const styles = {
-  moduleTextWrapper: {paddingLeft: '15px', width: '60%'},
+  moduleTextWrapper: { paddingLeft: '15px', width: '60%' },
   moduleText: {
     alignSelf: 'center',
     display: 'flex',
@@ -40,7 +40,6 @@ const styles = {
     paddingBottom: '20px',
     alignItems: 'center',
     borderRadius: '5px',
-    // marginLeft: '13px',
     marginTop: '40px',
   },
   imgDiv: {

@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import bookmark from '../../assets/images/bookmark.svg';
 import GLOBALS from '../../constants';
 
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
-const {COLORS} = GLOBALS;
+const { COLORS } = GLOBALS;
 const data = [
   {
     id: 1,
@@ -19,7 +19,7 @@ const data = [
   },
 ];
 const InputBoxWithContent = (props) => {
-  const {title, placeholder, value, onChange, style} = props;
+  const { title, placeholder, value, onChange, style } = props;
   return (
     <div
       style={{
@@ -42,11 +42,10 @@ const InputBoxWithContent = (props) => {
           {title}
         </p>
       </div>
-      <div style={{width: DEVICE_WIDTH > 767 ? '78%' : '68%'}}>
+      <div style={{ width: DEVICE_WIDTH > 767 ? '78%' : '68%' }}>
         <form noValidate>
           <textarea
             type="description"
-            // className="f-field"
             value={value}
             onChange={onChange}
             required
@@ -75,16 +74,7 @@ const TwentyOne = (props) => {
   const [alternateBehaviour, setAlternateBehaviour] = useState('');
   const [alternateThoughts, setAlternateThoughts] = useState('');
 
-  console.log(
-    'all>>>>>>',
-    situation,
-    emotions,
-    thoughts,
-    behaviour,
-    date,
-    alternateBehaviour,
-    alternateThoughts,
-  );
+
 
   const onSaveMyths = (e) => {
     e.preventDefault();
@@ -200,7 +190,7 @@ const TwentyOne = (props) => {
             }}
           />
 
-          <div style={{width: '20%', marginTop: '30px'}}>
+          <div style={{ width: '20%', marginTop: '30px' }}>
             <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
               Save
             </button>

@@ -18,25 +18,23 @@ import packageJson from "../package.json"
 const store = setup();
 
 
-const caching= ()=> {
-let version = localStorage.getItem('version');
-console.log("app version-->",version,packageJson.version);
-    if(version!=packageJson.version)
-    {
-        if('caches' in window){
-         caches.keys().then((names) => {
+const caching = () => {
+  let version = localStorage.getItem('version');
+  if (version != packageJson.version) {
+    if ('caches' in window) {
+      caches.keys().then((names) => {
         // Delete all the cache files
         names.forEach(name => {
-            caches.delete(name);
+          caches.delete(name);
         })
-    });
-    window.location.reload(true);
-    localStorage.setItem('version',packageJson.version);
-}
-
-      // localStorage.clear();
-      // localStorage.setItem('version',packageJson.version);
+      });
+      window.location.reload(true);
+      localStorage.setItem('version', packageJson.version);
     }
+
+    // localStorage.clear();
+    // localStorage.setItem('version',packageJson.version);
+  }
 };
 
 const App = () => {
@@ -46,7 +44,6 @@ const App = () => {
     };
     caching()
   }, []);
-  console.log(store, 'my store');
   store.dispatch(AppActions.getQuoteData((res) => { }));
   return (
     <Provider store={store}>

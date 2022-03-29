@@ -77,8 +77,7 @@ function trackerReducer(state = INITIAL_STATE, action) {
     case ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_SUCCESS:
       return {
         ...state,
-        //  getSleepTrackerLoader: false,
-        getWeeklySummaryReportData: action.payload,
+         getWeeklySummaryReportData: action.payload,
       };
 
     default:

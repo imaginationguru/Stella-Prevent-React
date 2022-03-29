@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -15,19 +15,16 @@ import GLOBALS from '../../../constants';
 import Header from '../../../components/Header';
 import Button from '../../../components/common/button';
 import DropDown from '../../../components/common/dropDown';
-import {countryData} from '../../../utils/CountryCode';
-//import {screenHeight, screenWidth} from '../../utils/dimension';
+import { countryData } from '../../../utils/CountryCode';
 import back from '../../../assets/images/subscription/back.png';
 import logo from '../../../assets/images/subscription/logoTm.png';
 import book from '../../../assets/images/subscription/book.png';
 import paypal from '../../../assets/images/subscription/paypal.png';
 import apple from '../../../assets/images/subscription/apple.png';
-//import key from '../../../assets/images/subscription/key.png';
-//import cards from '../../../assets/images/subscription/cards.png';
 import Input from '../../../components/Input';
-import {navigatorPush} from '../../../config/navigationOptions.web';
+import { navigatorPush } from '../../../config/navigationOptions.web';
 
-const {COLORS, FONTS} = GLOBALS;
+const { COLORS, FONTS } = GLOBALS;
 const {
   BLUR,
   WHITE,
@@ -37,11 +34,10 @@ const {
   BLACK,
   DARK_GREEN,
 } = COLORS;
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as AppActions from '../../../actions';
-import {validateEmail, validateIsEmpty} from '../../../utils/validations';
+import { validateEmail, validateIsEmpty } from '../../../utils/validations';
 const Payment = (props) => {
-  console.log('payment module props', props);
   let premiumPrice = props.location.state;
   const [price, setPrice] = useState(premiumPrice);
   const [email, setEmail] = useState('');
@@ -76,7 +72,6 @@ const Payment = (props) => {
       if (validateIsEmpty(country)) setCountryError('please select country');
       if (validateIsEmpty(zipCode)) setZipError('please enter zipcode');
     } else {
-      // dispatch(AppActions.payment);
     }
   };
 
@@ -88,7 +83,6 @@ const Payment = (props) => {
         setModalVisibility(true);
         break;
       case 'selected_gender':
-        console.log(data);
         setCountry(data);
         setCountryError('');
         setModalVisibility(false);
@@ -102,16 +96,16 @@ const Payment = (props) => {
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         <View style={styles.innerLeft}>
-          <Image source={logo} style={{width: 150, height: 50}} />
-          <View style={{marginTop: '3vw', marginHorizontal: '7.5vw'}}>
+          <Image source={logo} style={{ width: 150, height: 50 }} />
+          <View style={{ marginTop: '3vw', marginHorizontal: '7.5vw' }}>
             <TouchableOpacity
-              style={{flexDirection: 'row', width: '25%'}}
+              style={{ flexDirection: 'row', width: '25%' }}
               onPress={() =>
                 navigatorPush({
                   screenName: 'Subscription',
                 })
               }>
-              <Image source={back} style={{width: 20, height: 20}} />
+              <Image source={back} style={{ width: 20, height: 20 }} />
               <Text
                 style={{
                   marginLeft: '1.5vw',
@@ -124,7 +118,7 @@ const Payment = (props) => {
                 Back
               </Text>
             </TouchableOpacity>
-            <View style={{marginLeft: '3vw', marginTop: '2.5vw'}}>
+            <View style={{ marginLeft: '3vw', marginTop: '2.5vw' }}>
               <Text
                 style={{
                   fontFamily: 'HKGrostesk',
@@ -153,11 +147,11 @@ const Payment = (props) => {
                 marginTop: '3vw',
                 alignItems: 'center',
               }}>
-              <Image source={book} style={{height: 222, width: 222}} />
-              <View style={{flexDirection: 'row', marginTop: '6vw'}}>
+              <Image source={book} style={{ height: 222, width: 222 }} />
+              <View style={{ flexDirection: 'row', marginTop: '6vw' }}>
                 <View style={styles.verticalLine} />
 
-                <TouchableOpacity style={{marginHorizontal: '1vw'}}>
+                <TouchableOpacity style={{ marginHorizontal: '1vw' }}>
                   <Text style={styles.terms}>Terms</Text>
                 </TouchableOpacity>
                 <TouchableOpacity>
@@ -197,10 +191,10 @@ const Payment = (props) => {
           </View>
           */}
 
-          <View style={{marginTop: '5vw'}}>
+          <View style={{ marginTop: '5vw' }}>
             <Input
               type="email"
-              inputStyle={{padding: 10, height: 40}}
+              inputStyle={{ padding: 10, height: 40 }}
               setCode={(text) => setEmail(text)}
               value={email}
               error={emailError}
@@ -209,34 +203,31 @@ const Payment = (props) => {
             <Input
               type="cards"
               maxLength={20}
-              inputStyle={{padding: 10, height: 40}}
+              inputStyle={{ padding: 10, height: 40 }}
               setCode={(text) => setCardNumber(text)}
               value={cardNumber}
-              // error={cardNumberError}
               label="Card number"
               placeholder="1234 1234 1234 1234"></Input>
-            <View style={{flex:1,flexDirection: 'row',marginTop:-25,}}>
+            <View style={{ flex: 1, flexDirection: 'row', marginTop: -25, }}>
               <Input
                 type=""
                 maxLength={20}
-                inputStyle={{padding: 10,  height: 40,}}
+                inputStyle={{ padding: 10, height: 40, }}
                 setCode={(text) => setExpDate(text)}
                 value={expDate}
-                // error={expDateError}
                 placeholder="MM / YY"></Input>
               <Input
                 type="key"
                 maxLength={20}
-                inputStyle={{padding: 10, height: 40,}}
+                inputStyle={{ padding: 10, height: 40, }}
                 setCode={(text) => setCvc(text)}
                 value={cvc}
-                //  error={cvcError}
                 placeholder="CVC"></Input>
             </View>
             <Input
               type=""
               maxLength={30}
-              inputStyle={{padding: 10, height: 40}}
+              inputStyle={{ padding: 10, height: 40 }}
               setCode={(text) => setName(text)}
               value={name}
               error={nameError}
@@ -247,7 +238,7 @@ const Payment = (props) => {
               btnPress={() => navigator('country')}
               isDropdown={true}
               maxLength={20}
-              inputStyle={{padding: 10}}
+              inputStyle={{ padding: 10 }}
               setCode={(text) => setCountry(text)}
               value={country}
               error={countryError}
@@ -257,7 +248,7 @@ const Payment = (props) => {
             <Input
               type=""
               maxLength={6}
-              inputStyle={{padding: 10,marginTop:-25, height: 40}}
+              inputStyle={{ padding: 10, marginTop: -25, height: 40 }}
               setCode={(text) => setZipCode(text)}
               value={zipCode}
               error={zipError}
@@ -282,7 +273,6 @@ const Payment = (props) => {
         visible={showModal}
         onDismiss={() => {
           setModalVisibility(false);
-          console.log('Modal has been closed.');
         }}>
         <DropDown
           onItemSelection={(type, data) => {

@@ -1,8 +1,8 @@
 import React from 'react';
-import {Spinner} from 'reactstrap';
+import { Spinner } from 'reactstrap';
 import GLOBALS from '../constants';
-import {View} from 'react-native';
-const {COLORS} = GLOBALS;
+import { View } from 'react-native';
+const { COLORS } = GLOBALS;
 const Loader = () => {
   return (
     <div style={styles.overlay}>
@@ -29,13 +29,10 @@ const styles = {
     color: COLORS.WHITE,
   },
   loaderOuter: {
-    // position: 'absolute',
-    // width: '100%',
-    // height: '100%',
+
   },
   overlay: {
-    // opacity: 0.8,
-    //  backgroundColor: '#ccc',
+
     position: 'fixed',
     width: '100%',
     height: '100%',

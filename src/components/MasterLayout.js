@@ -6,9 +6,9 @@
  * @flow strict-local
  */
 
-import React, {useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {Modal, TouchableOpacity} from 'react-native';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Modal, TouchableOpacity } from 'react-native';
 import Loader from './Loader';
 import GLOBALS from '../constants';
 import cancel from '../assets/images/cancel.png';
@@ -25,13 +25,12 @@ import week3 from '../assets/images/week3.svg';
 import week4 from '../assets/images/week4.svg';
 import week5 from '../assets/images/week5.svg';
 
-// import header from '../assets/images/header.svg';
 import menu from '../assets/images/menu.svg';
 import Menu from './Menu';
-import {getItem} from '../utils/AsyncUtils';
+import { getItem } from '../utils/AsyncUtils';
 import ReactHtmlParser from 'react-html-parser';
 import history from '../helpers/history';
-const {COLORS} = GLOBALS;
+const { COLORS } = GLOBALS;
 
 const MasterLayout = (props) => {
   const {
@@ -45,11 +44,10 @@ const MasterLayout = (props) => {
     sessionExpireMessage,
     isDashboardModal,
   } = useSelector((state) => state.common);
-  const {selectedWeek} = useSelector((state) => state.moduleOne);
+  const { selectedWeek } = useSelector((state) => state.moduleOne);
   const dispatch = useDispatch();
-  useEffect(() => {}, [lang]);
+  useEffect(() => { }, [lang]);
   const isLogin = getItem('token') ? true : false;
-  // console.log('selectedWeek>>>>>>>>>>', selectedWeek);
   useEffect(() => {
     if (isSuccess) {
       setTimeout(() => dispatch(clearSuccessAction()), 3000);
@@ -65,25 +63,25 @@ const MasterLayout = (props) => {
       {/*********************Header Image****************************** */}
       {isLogin && (
         <div
-          style={{position: 'relative', opacity: isDashboardModal ? 0.4 : 1}}>
+          style={{ position: 'relative', opacity: isDashboardModal ? 0.4 : 1 }}>
           {selectedWeek === 1 ? (
-            <img src={week1} style={{width: '100%'}} />
+            <img src={week1} style={{ width: '100%' }} />
           ) : null}
 
           {selectedWeek === 2 ? (
-            <img src={week2} style={{width: '100%'}} />
+            <img src={week2} style={{ width: '100%' }} />
           ) : null}
 
           {selectedWeek === 3 ? (
-            <img src={week3} style={{width: '100%'}} />
+            <img src={week3} style={{ width: '100%' }} />
           ) : null}
 
           {selectedWeek === 4 ? (
-            <img src={week4} style={{width: '100%'}} />
+            <img src={week4} style={{ width: '100%' }} />
           ) : null}
 
           {selectedWeek === 5 ? (
-            <img src={week5} style={{width: '100%'}} />
+            <img src={week5} style={{ width: '100%' }} />
           ) : null}
 
           <TouchableOpacity
@@ -94,7 +92,7 @@ const MasterLayout = (props) => {
         </div>
       )}
       {/*********************Header Image End****************************** */}
-      <div className="wrapper" style={{opacity: isDashboardModal ? 0.4 : 1}}>
+      <div className="wrapper" style={{ opacity: isDashboardModal ? 0.4 : 1 }}>
         {props.children}
       </div>
 

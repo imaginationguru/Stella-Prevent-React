@@ -1,25 +1,25 @@
-import React, {useState, useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import MasterLayout from '../../components/MasterLayout';
 import Footer from '../../components/Footer';
 import GLOBALS from '../../constants';
 import * as AppActions from '../../actions';
-import {Header, SubHeader} from './Navbar';
+import { Header, SubHeader } from './Navbar';
 import GenerateUI from './GenerateUI';
 import BackToDashboard from '../../components/common/backToDashboard';
 import {
   getSelectedWeekDayCards,
   canProceedNextDay,
 } from '../../helpers/common.web';
-import {customAlert} from '../../helpers/commonAlerts.web';
-import {navigatorPush} from '../../config/navigationOptions.web';
+import { customAlert } from '../../helpers/commonAlerts.web';
+import { navigatorPush } from '../../config/navigationOptions.web';
 import BackBtn from '../../components/common/backbtn';
-const {COLORS} = GLOBALS;
+const { COLORS } = GLOBALS;
 const DailyLearningWeeks = (props) => {
   let isFromDashboard = props.location?.state?.isFromDashboard;
   let backTitle = props.location?.state?.backTitle;
   const dispatch = useDispatch();
-  const {userAssessmentData = [], userRatingData = []} = useSelector(
+  const { userAssessmentData = [], userRatingData = [] } = useSelector(
     (state) => state.moduleOne,
   );
   const {
@@ -32,31 +32,26 @@ const DailyLearningWeeks = (props) => {
     currentActiveCard = [],
     selectedCardId = '',
   } = useSelector((state) => state.moduleOne);
-  let {selectedDay, selectedWeek} = useSelector((state) => state.moduleOne);
+  let { selectedDay, selectedWeek } = useSelector((state) => state.moduleOne);
   let [weeksCount, setWeeksCount] = useState(
     props.location?.state?.isFromDashboard
       ? currentActiveCard.current_week
       : props.location?.state?.weeksCount
-      ? props.location?.state?.weeksCount
-      : 1,
+        ? props.location?.state?.weeksCount
+        : 1,
   );
-  const {loginData = []} = useSelector((state) => state.authReducer);
-  const {week, day} = currentActiveCard.length ? currentActiveCard[0] : {};
+  const { loginData = [] } = useSelector((state) => state.authReducer);
+  const { week, day } = currentActiveCard.length ? currentActiveCard[0] : {};
   const [currentData, setCurrentData] = useState({});
   const [isScrollerLoad, setScrollerLoad] = useState(false);
   const [nextData, setNextData] = useState({});
   const [prevData, setPrevData] = useState({});
 
-  // useEffect(() => {
-  //   let nextCardIsActive = mData.find((item) => item._id === currentData._id);
-  //   // console.log('index value', nextCardIsActive);
-  // }, [currentData]);
-  // Api calling part
+
 
   useEffect(() => {
     applicableCards(selectedCardId);
     if (isFromDashboard) {
-      // console.log('selected card ID', selectedCardId);
       applicableCards(selectedCardId);
     }
   }, [isFromDashboard]);
@@ -64,7 +59,7 @@ const DailyLearningWeeks = (props) => {
   useEffect(() => {
     console.log(currentData, 'currentData........');
     if (currentData._id) {
-      const {card: {assessment_id} = {}} = currentData;
+      const { card: { assessment_id } = {} } = currentData;
       if (assessment_id !== null) {
         dispatch(
           AppActions.getAssessmentData(
@@ -76,7 +71,6 @@ const DailyLearningWeeks = (props) => {
               : null,
           ),
         );
-        // dispatch(AppActions.getUserAssessment(currentData._id, assessment_id));
       }
     }
   }, [currentData, currentData._id, dispatch]);
@@ -100,7 +94,6 @@ const DailyLearningWeeks = (props) => {
             return item.day === selectedDay;
           }
         });
-        console.log('data >???????', data);
         if (data && data._id) {
           setScrollerLoad(false);
           cardDataHandler(data);
@@ -110,14 +103,12 @@ const DailyLearningWeeks = (props) => {
   }, [selectedCardId, selectedDay, selectedWeek, templateData, dispatch]);
 
   useEffect(() => {
-    // dispatch(AppActions.getTemplateData(currentWeek)); No Need
     if (templateData.length == 0) {
       dispatch(AppActions.getCurrentActiveCard());
     }
   }, [dispatch]);
 
   useEffect(() => {
-    console.log('match');
     setTimeout(() => {
       window.scrollTo(0, 0);
     }, 1000);
@@ -127,7 +118,7 @@ const DailyLearningWeeks = (props) => {
     let temp = [];
     if (data.length) {
       data.forEach((item) => {
-        const {cards = []} = item;
+        const { cards = [] } = item;
         if (cards.length) {
           temp.push(
             ...cards.sort(
@@ -155,7 +146,6 @@ const DailyLearningWeeks = (props) => {
     .map((item) => item._id);
 
   const cardDataHandler = (data) => {
-    console.log(data, 'dataaaa cardDataHandler');
     if (isScrollerLoad) {
       window.scrollTo(0, 200);
       setScrollerLoad(false);
@@ -197,7 +187,6 @@ const DailyLearningWeeks = (props) => {
   };
   const applicableDay = () => {
     let temp = [];
-    //  console.log('mdtaa', mData);
     if (mData.length) {
       const daysArr = [...new Set(mData.map((item) => item.day))];
       daysArr.forEach((item) => {
@@ -209,7 +198,6 @@ const DailyLearningWeeks = (props) => {
         });
       });
     }
-    // console.log('temp', temp);
     return temp;
   };
   const cardsColorDisable = () => {
@@ -247,45 +235,14 @@ const DailyLearningWeeks = (props) => {
 
   const applicableCards = (id = '') => {
     let temp = cardsColorDisable();
-    // console.log(temp, 'Data......', id);
     var selectedObject = temp.filter((el) => {
       return el.card === id;
     });
-    //  console.log('selectedObject', selectedObject);
     return selectedObject.length > 0 ? selectedObject[0].isCompleted : false;
-
-    // console.log("selectedObject",selectedObject)
-
-    // const currentIndex = temp.length
-    //   ? temp.findIndex((val) => val.card === id)
-    //   : null;
-    // let prevCardStatus = false;
-    // if (temp.length) {
-    //    if (currentIndex >= 1) {
-    //     const data = temp[currentIndex - 1] || {};
-    //     console.log(data,"data",temp)
-    //     if (data.card) {
-    //       console.log(data,"secrent  ")
-    //       prevCardStatus = data.isCompleted === true;
-    //     }
-    //   } else {
-    //     const data = temp[currentIndex] || {};
-
-    //     if (data.card) {
-    //       prevCardStatus = data.isCompleted === true;
-    //     }
-    //   }
-    // }
-
-    // return prevCardStatus ? true : false;
   };
-  // console.log('mData>>>>>>>', mData);
-  // console.log('prev data>>>>>>>>>>...', prevData);
   console.log('current data>>>>>>>>', currentData);
-  // console.log('next Data>>>>>>>>>>>.', nextData);
   console.log('current active cards', currentActiveCard);
   const completeCardAPI = (nextday = '') => {
-    //  console.log('complete current data', nextday, currentData);
     if (currentData._id) {
       let completeParams = {
         id: currentData._id,
@@ -322,7 +279,7 @@ const DailyLearningWeeks = (props) => {
       customAlert(
         "You've reached your free content limit. Please upgrade your plan.",
         'error',
-        {showCloseButton: true},
+        { showCloseButton: true },
         'Upgrade',
         _onPressUpgrade,
       );
@@ -333,13 +290,9 @@ const DailyLearningWeeks = (props) => {
     /**Check if next day is unlocked */
     dispatch(
       AppActions.checkActiveCard((res) => {
-        // console.log(res, 'res check active card');
-        // console.log('selected day', selectedDay);
         let canProceed = canProceedNextDay(
           selectedWeek,
           selectedDay + 1,
-          // res.unlocked_week,
-          // res.unlocked_day,
           res.current_week,
           res.current_day,
         );
@@ -357,48 +310,12 @@ const DailyLearningWeeks = (props) => {
             type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
             payload: mData[current_Index + 1]._id,
           });
-          // console.log(mData[current_Index + 1], 'mData[current_Index + 1....');
           completeCardAPI(true);
           setScrollerLoad(true);
           cardDataHandler(mData[current_Index + 1]);
         } else {
           customAlert('Content will unlock tomorrow', 'error');
         }
-        // if(selectedDay + 1 > res.current_day ){
-        //   customAlert('Content will unlock tomorrow', 'error');
-        // }
-        // else if(selectedDay + 1 <= res.current_day  ){
-        //   console.log(mData,"mData......")
-        //   dispatch({
-        //     type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
-        //     payload: selectedDay + 1,
-        //   });
-        //   dispatch({
-        //     type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-        //     payload: mData[current_Index + 1]._id,
-        //   });
-        //   console.log(mData[current_Index + 1],"mData[current_Index + 1....");
-        //   completeCardAPI(true);
-        //   setScrollerLoad(true)
-        //   cardDataHandler(mData[current_Index + 1]);
-        // } else {
-
-        // }
-        /* 
-        if (res.is_disabled == true) {
-          customAlert('Content will unlock tomorrow', 'error');
-        } else if (selectedDay + 1 <= res.current_day) {
-          dispatch({
-            type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
-            payload: selectedDay + 1,
-          });
-          dispatch({
-            type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-            payload: mData[current_Index + 1]._id,
-          });
-        } else {
-        }
-        */
       }),
     );
   };
@@ -415,6 +332,7 @@ const DailyLearningWeeks = (props) => {
         <div className="dashboard-body">
           <div className="container">
             <div className="dashboard-body-inner">
+
               <div className="n-content">
                 {/* ***********************************Navbar Start********************** */}
                 <div>
@@ -556,7 +474,7 @@ const DailyLearningWeeks = (props) => {
                 <div className="footer-nav-inner">
                   {/*****************************************BOTTOM PREVIOUS BUTTON************* */}
 
-                  <div style={{alignItems: 'flex-end'}}>
+                  <div style={{ alignItems: 'flex-end' }}>
                     {prevData._id ? (
                       <div className="footer-nav-left">
                         <div
@@ -584,7 +502,7 @@ const DailyLearningWeeks = (props) => {
                     ) : !isFirstDay ? (
                       <div
                         className="footer-nav-left"
-                        style={{alignItems: 'flex-end'}}>
+                        style={{ alignItems: 'flex-end' }}>
                         <div
                           onClick={() => {
                             dispatch({
@@ -617,7 +535,6 @@ const DailyLearningWeeks = (props) => {
                             currentData.card?.template_data[0]
                               ?.template_number == 27
                           ) {
-                            //  alert('first one');
 
                             if (!userQuestion[0]?.saved) {
                               //debugger;
@@ -638,7 +555,6 @@ const DailyLearningWeeks = (props) => {
                             currentData.card?.template_data[0]
                               ?.template_number == 22
                           ) {
-                            //  alert('first one');
 
                             if (userRatingData.length === 0) {
                               //debugger;
@@ -691,11 +607,8 @@ const DailyLearningWeeks = (props) => {
                             currentData.card?.template_data[0]
                               ?.template_number == 46
                           ) {
-                            // alert('11');
                             if (userAssessmentData.length == 0) {
                               // debugger;
-                              // alert('two');
-                              console.log('right one??????1');
                               customAlert(
                                 'Please perform your exercise',
                                 'error',
@@ -737,47 +650,6 @@ const DailyLearningWeeks = (props) => {
                           onNextDayClick();
                           return;
 
-                          //   console.log(nextData,"selectedDay.....");
-                          //     const isClickable = applicableDay().length
-                          //     ? applicableDay().some((e) => {
-                          //       console.log(e,"lololllll")
-                          //         return (
-                          //           e.day === selectedDay + 1 &&
-                          //           e.isDisabled === false
-                          //         );
-                          //       })
-                          //     : false;
-                          //  return;
-                          // const isClickable = applicableDay().length
-                          //   ? applicableDay().some((e) => {
-                          //       return (
-                          //         e.day === selectedDay + 1 &&
-                          //         e.isDisabled === false
-                          //       );
-                          //     })
-                          //   : false;
-                          // const isClickable = applicableDay().length
-                          //   ? applicableDay().some((e) => {
-                          //       return (
-                          //         e.day === selectedDay &&
-                          //         e.isDisabled === false
-                          //       );
-                          //     })
-                          //   : false;
-                          // if (isClickable) {
-                          //   completeCardAPI();
-                          //   dispatch({
-                          //     type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
-                          //     payload: selectedDay + 1,
-                          //   });
-                          //   dispatch({
-                          //     type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                          //     payload: '',
-                          //   });
-                          // } else {
-                          //   alert(` Next day's card enable by tomorrow`);
-                          //   completeCardAPI(true);
-                          // }
                         }}
                         className="f-nav-link">
                         <h3>Next Day </h3>
@@ -789,11 +661,9 @@ const DailyLearningWeeks = (props) => {
                     <div className="footer-nav-right">
                       <div
                         onClick={() => {
-                          // debugger;
 
-                          console.log('next week >>>>>>', selectedWeek);
                           if (selectedWeek <= 4) {
-                            console.log('selected week', selectedWeek + 1);
+
                             dispatch({
                               type: GLOBALS.ACTION_TYPE
                                 .GET_USER_ASSESSMENT_SUCCESS,

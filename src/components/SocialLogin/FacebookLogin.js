@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import {customAlert} from '../../helpers/commonAlerts.web';
+import { customAlert } from '../../helpers/commonAlerts.web';
 const FacebookLogIn = (props) => {
-  let {onSocialLogin = () => {}} = props;
+  let { onSocialLogin = () => { } } = props;
   const fbAppId = '416468470173904';
   const resFblogin = (res) => {
-    console.log('facebook login res', res);
     if (res.status == 'unknown') {
       customAlert('Facebook login cancelled.', 'error');
     } else {
@@ -14,7 +13,6 @@ const FacebookLogIn = (props) => {
   };
 
   const verifyUser = (profile_data) => {
-    console.log(window.FB, 'window');
 
     let params = {
       firstName: profile_data.name,

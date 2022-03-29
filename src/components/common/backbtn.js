@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -18,7 +18,7 @@ import back from '../../assets/images/subscription/back.png';
 import GLOBALS from '../../constants';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
-const {COLORS, FONTS} = GLOBALS;
+const { COLORS, FONTS } = GLOBALS;
 const BackBtn = (props) => {
   let {
     title = 'Back to Dashboard',
@@ -33,7 +33,7 @@ const BackBtn = (props) => {
   return (
     <View style={[styles.backBtn, btnStyle]}>
       <TouchableOpacity
-        style={{flexDirection: 'row', alignItems: 'center'}}
+        style={{ flexDirection: 'row', alignItems: 'center' }}
         onPress={() => {
           goBack ? navigatorPop() : goToPastModule();
         }}>
@@ -41,18 +41,15 @@ const BackBtn = (props) => {
           resizeMode={'contain'}
           source={back}
           style={{
-            // width: DEVICE_WIDTH > 767 ? '1.3vw' : '15px',
-            // height: DEVICE_WIDTH > 767 ? '1.3vw' : '15px',
+
             width: 14,
             height: 14,
           }}
         />
         <Text
           style={{
-            // marginLeft: '1vw',
             marginLeft: 5,
             fontFamily: FONTS.SEMI_BOLD,
-            // fontSize: DEVICE_WIDTH > 767 ? '1.3vw' : '16px',
             fontSize: 14,
             fontStyle: 'normal',
             fontWeight: '800',

@@ -1,14 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import GLOBALS from '../../../constants';
 import ReactHtmlParser from 'react-html-parser';
-import {TextInput, View, Text} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import { TextInput, View, Text } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import * as AppActions from '../../../actions';
-import {getItem} from '../../../utils/AsyncUtils';
+import { getItem } from '../../../utils/AsyncUtils';
 import ExerciseBox from '../../../components/ExerciseBox';
-import {translate as ts} from '../../../i18n/translate';
+import { translate as ts } from '../../../i18n/translate';
 import Calendar from 'react-calendar';
 import {
   CardQuote,
@@ -21,13 +21,13 @@ import {
 import commonStyles from '../commonStyles';
 import moment from 'moment';
 
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
-const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
-const {YELLOW, WHITE, CIRCLE_GRAY, LIGHT_GRAY, GRAY, RED, GREEN_TEXT} = COLORS;
+const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
+const { YELLOW, WHITE, CIRCLE_GRAY, LIGHT_GRAY, GRAY, RED, GREEN_TEXT } = COLORS;
 let userId = getItem('userId');
 
 const dataMapperAss = (arr = []) => {
@@ -36,7 +36,7 @@ const dataMapperAss = (arr = []) => {
     temp = arr.map((item) => {
       return {
         assessment_header_id: item._id,
-        content: [{content: item.value, order: item.order}],
+        content: [{ content: item.value, order: item.order }],
       };
     });
   }
@@ -44,7 +44,7 @@ const dataMapperAss = (arr = []) => {
 };
 
 const InputBoxWithContent = (props) => {
-  const {title, placeholder, value, onChange, style, name} = props;
+  const { title, placeholder, value, onChange, style, name } = props;
   return (
     <div style={styles.inputBoxWrapper}>
       <div style={style}>
@@ -54,7 +54,6 @@ const InputBoxWithContent = (props) => {
         <form noValidate>
           <textarea
             type="description"
-            // className="f-field"
             value={value}
             name={name}
             onChange={onChange}
@@ -106,10 +105,8 @@ const Thirty = (props) => {
     assessmentData2 = {},
     userAssessmentData = [],
   } = useSelector((state) => state.moduleOne);
-  console.log('user assessmnet?????????', userAssessmentData);
   useEffect(() => {
     dispatch(AppActions.getAssessmentDataSecond(assessment_id2));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessment_id2]);
 
   useEffect(() => {
@@ -135,8 +132,6 @@ const Thirty = (props) => {
           };
         }),
       );
-    // dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData, assessment_id]);
   useEffect(() => {
     let cardsInputs = [];
@@ -145,7 +140,6 @@ const Thirty = (props) => {
       getCardsData.forEach((item) =>
         cardsInputs.push(
           item.data.map((val) => {
-            console.log('val??????', val);
             return {
               name: val.assessment_header && val.assessment_header[0].header,
               placeholder: val.description ? val.description : '',
@@ -157,9 +151,7 @@ const Thirty = (props) => {
         ),
       );
     setGetCardsInputs(cardsInputs);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getCardsData]);
-  console.log('getcards data inputs?????', getCardsInputs);
   useEffect(() => {
     let uniqueTime = [];
     let temp = [];
@@ -176,7 +168,6 @@ const Thirty = (props) => {
       setGetCardsData(temp);
     }
   }, [allCards]);
-  console.log('get cards data', getCardsData, allCards);
   useEffect(() => {
     let cardData = [];
     let cardsData = [];
@@ -219,8 +210,8 @@ const Thirty = (props) => {
             header_id = item.assessment_header_id;
             assessmentId = item.assessment_header.length
               ? item.assessment_header.map((val) => {
-                  return val.assessment_id;
-                })
+                return val.assessment_id;
+              })
               : null;
 
             selectedFormat.push({
@@ -264,15 +255,12 @@ const Thirty = (props) => {
       inputs.forEach((item) => {
         temp.push(item.value);
       });
-      console.log('temp??????', temp);
       if (temp.length) {
         isValid = temp.filter((item) => item === '').length === 0;
-        // isValid = temp.some((item) => item !== '') ? true : false;
       }
     }
 
     if (isValid) {
-      console.log('is valid', isValid);
       dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
     } else {
       dispatch({
@@ -280,29 +268,7 @@ const Thirty = (props) => {
         payload: 'Please fill all fields',
       });
     }
-    // if (userAssessmentData && userAssessmentData.length) {
-    //   //  dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
-    // } else {
-    //   let isValid = false;
-    //   if (inputs && inputs.length) {
-    //     let temp = [];
-    //     inputs.forEach((item) => {
-    //       temp.push(item.value);
-    //     });
-    //     console.log('temp??????', temp);
-    //     if (temp.length) {
-    //       isValid = temp.find((item) => item !== 0) ? true : false;
-    //     }
-    //   }
-    //   if (isValid) {
-    //     //dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
-    //   } else {
-    //     dispatch({
-    //       type: ACTION_TYPE.ERROR,
-    //       payload: 'Please perform your exercise',
-    //     });
-    //   }
-    // }
+
   };
   /******************Second assessment data save************** */
   const onSaveSecondAssessment = (e) => {
@@ -330,7 +296,6 @@ const Thirty = (props) => {
         .filter((ele) => ele.content !== '');
       contentArray.push(filterValue);
     });
-    console.log('content array ', contentArray.length, userInputs);
 
     if (userInputs.length) {
       let modifyArray = contentArray.map((element, index) => {
@@ -349,25 +314,7 @@ const Thirty = (props) => {
         assessment: modifyArray,
       };
       dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
-      // if (userInputs.length) {
-      //   if (
-      //     userAssessmentData &&
-      //     userAssessmentData.length &&
-      //     secondAssemssmentArray.length
-      //   ) {
-      //     console.log('params ???????', firstParams);
-      //     // dispatch(AppActions.rearrangeAssessments(firstParams, onSubmitMessage));
-      //     dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
-      //   } else {
-      //     dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
-      //   }
-      // }
-      //  else {
-      //   dispatch({
-      //     type: ACTION_TYPE.ERROR,
-      //     payload: 'Please perform your exercise',
-      //   });
-      // }
+
     } else {
       dispatch({
         type: ACTION_TYPE.ERROR,
@@ -388,11 +335,11 @@ const Thirty = (props) => {
   const onHandleChange = (e, item) => {
     const updateInputs = inputs.length
       ? inputs.map((val) => {
-          return {
-            ...val,
-            value: val.name === e.target.name ? e.target.value : val.value,
-          };
-        })
+        return {
+          ...val,
+          value: val.name === e.target.name ? e.target.value : val.value,
+        };
+      })
       : [];
     setInputs(updateInputs);
   };
@@ -406,13 +353,13 @@ const Thirty = (props) => {
           order: item.order,
           content: item.content.length
             ? item.content.map((ele) => {
-                return {
-                  content: ele.content,
-                  order: ele.order,
-                  assessment_header_id: ele.assessment_header_id,
-                  _id: ele._id,
-                };
-              })
+              return {
+                content: ele.content,
+                order: ele.order,
+                assessment_header_id: ele.assessment_header_id,
+                _id: ele._id,
+              };
+            })
             : [],
         };
       });
@@ -525,14 +472,14 @@ const Thirty = (props) => {
 
   const headingOne =
     assessmentData.heading &&
-    assessmentData.heading.length &&
-    assessmentData.heading[0]
+      assessmentData.heading.length &&
+      assessmentData.heading[0]
       ? assessmentData.heading[0].heading
       : null;
   const headingSecond =
     assessmentData.heading &&
-    assessmentData.heading.length &&
-    assessmentData.heading[1]
+      assessmentData.heading.length &&
+      assessmentData.heading[1]
       ? assessmentData.heading[1].heading
       : null;
 
@@ -580,7 +527,6 @@ const Thirty = (props) => {
       setSelectedValueSecond('');
       setSelectedDate('');
     } else {
-      // alert('Please select value.');
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: 'Please select value.',
@@ -595,21 +541,20 @@ const Thirty = (props) => {
       return GREEN_TEXT;
     }
   };
-  //console.log('user Input ???????', userInputs, 'inputs?????????', inputs);
   return (
     <div>
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -621,71 +566,71 @@ const Thirty = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
       {/*******************************ASSESSMENT DESCRIPTION*********************** */}
       <div style={commonStyles.assessmentWrapper}>
         {images && images.length
           ? images
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, i) => {
-                return (
-                  <CustomImage
-                    key={i}
-                    src={
-                      item.image !== ''
-                        ? `${IMAGE_BASE_URL}${item.image}`
-                        : null
-                    }
-                    style={{
-                      ...commonStyles.assessImage,
-                      display: item.image !== '' ? 'flex' : 'none',
-                    }}
-                  />
-                );
-              })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, i) => {
+              return (
+                <CustomImage
+                  key={i}
+                  src={
+                    item.image !== ''
+                      ? `${IMAGE_BASE_URL}${item.image}`
+                      : null
+                  }
+                  style={{
+                    ...commonStyles.assessImage,
+                    display: item.image !== '' ? 'flex' : 'none',
+                  }}
+                />
+              );
+            })
           : []}
 
         {props.assessments && props.assessments.length
           ? props.assessments.map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  style={commonStyles.assessDesc}
-                  description={ReactHtmlParser(item.description)}
-                />
-              );
-            })
+            return (
+              <CardDescription
+                key={index}
+                style={commonStyles.assessDesc}
+                description={ReactHtmlParser(item.description)}
+              />
+            );
+          })
           : []}
       </div>
 
       {inputs.length
         ? inputs
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, idx) => {
-              return (
-                <InputBoxWithContent
-                  key={idx}
-                  title={ReactHtmlParser(item.name)}
-                  name={item.name}
-                  placeholder={item.placeholder}
-                  value={item.value}
-                  onChange={(e) => onHandleChange(e, item)}
-                  style={{
-                    backgroundColor: headerColor(item.order),
-                    width: DEVICE_WIDTH > 767 ? '20%' : '30%',
-                  }}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, idx) => {
+            return (
+              <InputBoxWithContent
+                key={idx}
+                title={ReactHtmlParser(item.name)}
+                name={item.name}
+                placeholder={item.placeholder}
+                value={item.value}
+                onChange={(e) => onHandleChange(e, item)}
+                style={{
+                  backgroundColor: headerColor(item.order),
+                  width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+                }}
+              />
+            );
+          })
         : null}
       {inputs.length ? (
         <div style={commonStyles.buttonWrapper}>
@@ -709,184 +654,184 @@ const Thirty = (props) => {
       <div style={styles.secondAssessment}>
         {assessmentSecond.length
           ? assessmentSecond.map((item, i) => {
-              return (
-                <div
+            return (
+              <div
+                style={{
+                  width: '33%',
+                }}>
+                <CardContent
+                  key={i}
+                  content={ReactHtmlParser(item.header)}
                   style={{
-                    width: '33%',
-                  }}>
-                  <CardContent
-                    key={i}
-                    content={ReactHtmlParser(item.header)}
-                    style={{
-                      ...styles.contentHeading,
-                    }}
-                  />
-                  {item.content && item.content.length ? (
-                    <View style={{}}>
-                      {userInputs && userInputs.length
-                        ? userInputs
-                            .sort((a, b) => (a.order > b.order && 1) || -1)
-                            .filter((ele) => {
-                              return ele.assessment_header_id === item._id;
-                            })
-                            .map((val, index) => {
-                              return (
-                                <div style={styles.crossIconWrapper}>
-                                  <View style={{margin: 0, width: '100%'}}>
-                                    <TextInput
-                                      style={[
-                                        styles.selectedText,
-                                        {
-                                          height: '50px',
-                                          paddingLeft: 10,
-                                          paddingTop: 10,
-                                        },
-                                      ]}
-                                      underlineColorAndroid="transparent"
-                                      multiline={true}
-                                      disable={true}
-                                      value={
-                                        val.content && val.content.length
-                                          ? setInputValue(val.content)
-                                          : null
-                                      }
-                                    />
-                                  </View>
-                                </div>
-                              );
-                            })
-                        : null}
-                      <select
-                        style={{
-                          width: '100%',
-                          paddingTop: '12px',
-                          paddingBottom: '12px',
-                          paddingLeft: '10px',
-                          backgroundColor: '#F1F3FA',
-                          borderRadius: '5px',
-                          border: `1px solid ${LIGHT_GRAY}`,
-                        }}
-                        value={
-                          item.order === 0
-                            ? selectedValue
-                            : item.order === 1
+                    ...styles.contentHeading,
+                  }}
+                />
+                {item.content && item.content.length ? (
+                  <View style={{}}>
+                    {userInputs && userInputs.length
+                      ? userInputs
+                        .sort((a, b) => (a.order > b.order && 1) || -1)
+                        .filter((ele) => {
+                          return ele.assessment_header_id === item._id;
+                        })
+                        .map((val, index) => {
+                          return (
+                            <div style={styles.crossIconWrapper}>
+                              <View style={{ margin: 0, width: '100%' }}>
+                                <TextInput
+                                  style={[
+                                    styles.selectedText,
+                                    {
+                                      height: '50px',
+                                      paddingLeft: 10,
+                                      paddingTop: 10,
+                                    },
+                                  ]}
+                                  underlineColorAndroid="transparent"
+                                  multiline={true}
+                                  disable={true}
+                                  value={
+                                    val.content && val.content.length
+                                      ? setInputValue(val.content)
+                                      : null
+                                  }
+                                />
+                              </View>
+                            </div>
+                          );
+                        })
+                      : null}
+                    <select
+                      style={{
+                        width: '100%',
+                        paddingTop: '12px',
+                        paddingBottom: '12px',
+                        paddingLeft: '10px',
+                        backgroundColor: '#F1F3FA',
+                        borderRadius: '5px',
+                        border: `1px solid ${LIGHT_GRAY}`,
+                      }}
+                      value={
+                        item.order === 0
+                          ? selectedValue
+                          : item.order === 1
                             ? selectedValueSecond
                             : ''
-                        }
-                        onChange={(e) => onChangeDropDown(e, item._id, item)}
-                        onSelect={(e) => onChangeDropDown(e, item._id, item)}>
-                        {/* {selectedValue ? '' : <option>select</option>} */}
-                        <option>select</option>
-                        {item.content &&
-                          item.content.length &&
-                          item.content.map((option, idx) => {
-                            return (
-                              <option value={option._id}>
-                                {`${option.content}`}
-                              </option>
-                            );
-                          })}
-                      </select>
-                    </View>
-                  ) : (
-                    <View style={{marginTop: 40}}>
-                      {userInputs && userInputs.length
-                        ? userInputs
-                            .sort((a, b) => (a.order > b.order && 1) || -1)
-                            .filter((ele) => {
-                              return ele.assessment_header_id === item._id;
-                            })
-                            .map((val, index) => {
-                              return (
-                                <div style={styles.crossIconWrapper}>
-                                  <View style={{margin: 0, width: '100%'}}>
-                                    <TextInput
-                                      style={[
-                                        styles.selectedText,
-                                        {
-                                          height: '50px',
-                                          paddingLeft: 10,
-                                          paddingTop: 10,
-                                        },
-                                      ]}
-                                      underlineColorAndroid="transparent"
-                                      multiline={true}
-                                      disable={true}
-                                      value={
-                                        val.content && val.content.length
-                                          ? setInputValue(val.content)
-                                          : null
-                                      }
-                                    />
-                                  </View>
-                                  <div
-                                    style={styles.circleCrossDiv}
-                                    onClick={() => onCrossBtnClick(val)}>
-                                    <span
-                                      style={{
-                                        ...styles.plusIcon,
-                                        fontSize: '15px',
-                                      }}>
-                                      x
-                                    </span>
-                                  </div>
-                                </div>
-                              );
-                            })
-                        : null}
+                      }
+                      onChange={(e) => onChangeDropDown(e, item._id, item)}
+                      onSelect={(e) => onChangeDropDown(e, item._id, item)}>
+                      {/* {selectedValue ? '' : <option>select</option>} */}
+                      <option>select</option>
+                      {item.content &&
+                        item.content.length &&
+                        item.content.map((option, idx) => {
+                          return (
+                            <option value={option._id}>
+                              {`${option.content}`}
+                            </option>
+                          );
+                        })}
+                    </select>
+                  </View>
+                ) : (
+                  <View style={{ marginTop: 40 }}>
+                    {userInputs && userInputs.length
+                      ? userInputs
+                        .sort((a, b) => (a.order > b.order && 1) || -1)
+                        .filter((ele) => {
+                          return ele.assessment_header_id === item._id;
+                        })
+                        .map((val, index) => {
+                          return (
+                            <div style={styles.crossIconWrapper}>
+                              <View style={{ margin: 0, width: '100%' }}>
+                                <TextInput
+                                  style={[
+                                    styles.selectedText,
+                                    {
+                                      height: '50px',
+                                      paddingLeft: 10,
+                                      paddingTop: 10,
+                                    },
+                                  ]}
+                                  underlineColorAndroid="transparent"
+                                  multiline={true}
+                                  disable={true}
+                                  value={
+                                    val.content && val.content.length
+                                      ? setInputValue(val.content)
+                                      : null
+                                  }
+                                />
+                              </View>
+                              <div
+                                style={styles.circleCrossDiv}
+                                onClick={() => onCrossBtnClick(val)}>
+                                <span
+                                  style={{
+                                    ...styles.plusIcon,
+                                    fontSize: '15px',
+                                  }}>
+                                  x
+                                </span>
+                              </div>
+                            </div>
+                          );
+                        })
+                      : null}
 
-                      {item.order === 2 ? (
-                        <div
+                    {item.order === 2 ? (
+                      <div
+                        style={{
+                          marginBottom: '2%',
+                          position: 'relative',
+                        }}>
+                        <TextInput
                           style={{
-                            marginBottom: '2%',
-                            position: 'relative',
-                          }}>
-                          <TextInput
-                            style={{
-                              backgroundColor: '#F1F3FA',
-                              width: '100%',
-                              height: 50,
-                              paddingLeft: 5,
-                            }}
-                            placeholder={'yyyy-mm-dd'}
-                            underlineColorAndroid="transparent"
-                            value={
-                              selectedDate !== ''
-                                ? moment(selectedDate).format('YYYY-MM-DD')
-                                : 'YYYY-MM-DD'
-                            }
-                            type="number"
-                            editable={false}
-                            onClick={() => {
-                              setShowCalendar(true);
+                            backgroundColor: '#F1F3FA',
+                            width: '100%',
+                            height: 50,
+                            paddingLeft: 5,
+                          }}
+                          placeholder={'yyyy-mm-dd'}
+                          underlineColorAndroid="transparent"
+                          value={
+                            selectedDate !== ''
+                              ? moment(selectedDate).format('YYYY-MM-DD')
+                              : 'YYYY-MM-DD'
+                          }
+                          type="number"
+                          editable={false}
+                          onClick={() => {
+                            setShowCalendar(true);
+                          }}
+                        />
+                        {showCalendar ? (
+                          <Calendar
+                            onChange={onChange}
+                            value={value}
+                            maxDate={new Date()}
+                            onClickDay={(date) => {
+                              onDayChange(date, item);
                             }}
                           />
-                          {showCalendar ? (
-                            <Calendar
-                              onChange={onChange}
-                              value={value}
-                              maxDate={new Date()}
-                              onClickDay={(date) => {
-                                onDayChange(date, item);
-                              }}
-                            />
-                          ) : null}
-                          <div
-                            onClick={() => onPlusBtnClick(item)}
-                            style={{
-                              ...styles.circleDiv,
-                              backgroundColor:
-                                selectedDate !== '' ? GREEN_TEXT : GRAY,
-                            }}>
-                            <span style={styles.plusIcon}>+</span>
-                          </div>
+                        ) : null}
+                        <div
+                          onClick={() => onPlusBtnClick(item)}
+                          style={{
+                            ...styles.circleDiv,
+                            backgroundColor:
+                              selectedDate !== '' ? GREEN_TEXT : GRAY,
+                          }}>
+                          <span style={styles.plusIcon}>+</span>
                         </div>
-                      ) : null}
-                    </View>
-                  )}
-                </div>
-              );
-            })
+                      </div>
+                    ) : null}
+                  </View>
+                )}
+              </div>
+            );
+          })
           : []}
       </div>
       <div style={commonStyles.buttonWrapper}>
@@ -925,44 +870,18 @@ const Thirty = (props) => {
         : []} */}
       {content && content.length
         ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardContent
-                  key={index}
-                  style={{marginTop: '20px'}}
-                  content={ReactHtmlParser(item.content)}
-                />
-              );
-            })
-        : []}
-      {/* {getCardsInputs.length
-        ? getCardsInputs.map((item, idx) => {
-            // console.log('item get cards', item);
-            item.map((val) => {
-              console.log('item get val cards', val.name);
-              return (
-                <InputBoxWithContent
-                  key={idx}
-                  title={ReactHtmlParser(val.name)}
-                  name={val.name}
-                  placeholder={val.placeholder}
-                  value={val.value}
-                  onChange={(e) => onHandleChange(e, val)}
-                  style={{
-                    backgroundColor: YELLOW,
-                    width: '20%',
-                  }}
-                />
-              );
-            });
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardContent
+                key={index}
+                style={{ marginTop: '20px' }}
+                content={ReactHtmlParser(item.content)}
+              />
+            );
           })
-        : null} */}
-      {/* <div style={commonStyles.buttonWrapper}>
-        <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
-          {ts('SAVE')}
-        </button>
-      </div> */}
+        : []}
+
       {showExercises && <ExerciseBox week={week} />}
     </div>
   );
@@ -990,7 +909,7 @@ const styles = {
     color: WHITE,
     paddingTop: '30px',
   },
-  inputBox: {width: DEVICE_WIDTH > 767 ? '78%' : '68%'},
+  inputBox: { width: DEVICE_WIDTH > 767 ? '78%' : '68%' },
   inputStyle: {
     backgroundColor: LIGHT_GRAY,
     fontStyle: 'italic',
@@ -1004,10 +923,7 @@ const styles = {
     color: WHITE,
     textAlign: 'center',
     padding: '10px',
-    // paddingTop: '10px',
-    // paddingBottom: '10px',
     borderRadius: '5px',
-    // marginTop: '10px',
   },
 
   circleDiv: {
@@ -1042,7 +958,6 @@ const styles = {
     top: '0px',
   },
   crossIconWrapper: {
-    //  border: '1px solid red',
     display: 'flex',
     marginBottom: '15px',
     position: 'relative',
@@ -1050,6 +965,5 @@ const styles = {
   selectedText: {
     backgroundColor: '#F1F3FA',
     width: '100%',
-    // marginBottom: '3%',
   },
 };

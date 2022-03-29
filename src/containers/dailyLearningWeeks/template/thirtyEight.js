@@ -124,7 +124,6 @@ const ThirtyEight = (props) => {
                     <Animated isVisible={true} animationIn={'fadeInLeft'}>
                       <div
                         style={styles.imgContentWrapper}
-                        // className="text-res-wrap"
                       >
                         <OldCustomImage
                           src={`${IMAGE_BASE_URL}${image}`}
@@ -145,7 +144,6 @@ const ThirtyEight = (props) => {
                     <Animated isVisible={true} animationIn={'fadeInRight'}>
                       <div
                         style={styles.imgContentWrapper}
-                        // className="text-res-wrap"
                       >
                         <CardDescription
                           key={index}
@@ -204,7 +202,6 @@ const styles = {
   descStyle: {
     width: '85%',
     margin: '0 10px 10px 10px',
-    // textAlign: 'justify',
     border: `1px solid ${BUTTON_ORANGE}`,
     padding: '10px',
     borderRadius: '10px',

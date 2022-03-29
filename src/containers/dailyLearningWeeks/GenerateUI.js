@@ -61,7 +61,6 @@ const GenerateUI = ({ status, data = {} }) => {
     };
     if (data._id) {
       if (data.is_read) {
-        console.log('card already read', data.is_read);
       } else {
         dispatch(AppActions.markRead(readParams, data.week));
       }

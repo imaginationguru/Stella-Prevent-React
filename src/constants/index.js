@@ -94,7 +94,6 @@ export default {
     CIRCULAR_BOLD: 'CircularStd-Bold',
     SF_DISPLAY_REGULAR: 'SFUIDisplay-Regular',
     NEW_REGULAR: 'HKGrotesk-Regular',
-    // NEW_REGULAR: 'HKGrotesk-Medium',
   },
 
   /******************************STRINGS************************* */
@@ -112,8 +111,6 @@ export default {
   MOODS_ARRAY: [
     {
       id: 5,
-      // image: VeryHappy,
-      // activeImage: Images.VeryHappyActive,
       image: VeryHappy,
       activeImage: VeryHappyActive,
       isClickTrue: false,
@@ -123,8 +120,6 @@ export default {
       id: 4,
       image: Happy,
       activeImage: HappyActive,
-      // image: '../assets/images/happy/happy.png',
-      // activeImage: '../assets/images/happyActive/happyActive.png',
       isClickTrue: false,
       moodValue: 1,
     },
@@ -132,8 +127,6 @@ export default {
       id: 3,
       image: Confused,
       activeImage: ConfusedActive,
-      // image: '../assets/images/confused/confused.png',
-      // activeImage: '../assets/images/confusedActive/confusedActive.png',
       isClickTrue: false,
       moodValue: 2,
     },
@@ -141,8 +134,6 @@ export default {
       id: 2,
       image: Sad,
       activeImage: SadActive,
-      // image: '../assets/images/sad/sad.png',
-      // activeImage: '../assets/images/sadActive/sadActive.png',
       isClickTrue: false,
       moodValue: 1,
     },
@@ -150,8 +141,6 @@ export default {
       id: 1,
       image: Angry,
       activeImage: AngryActive,
-      // image: '../assets/images/angry/angry.png',
-      // activeImage: '../assets/images/angryActive/angryActive.png',
       isClickTrue: false,
       moodValue: 1,
     },
@@ -352,5 +341,6 @@ export default {
     LIGHT_SHADOW_GREEN: '#C9E2DE',
     GREY: '#676767' /* Font Regular */,
     GreenForSlider: '#6FCF97',
+    LightYellow: "#CBCBCB"
   },
 };

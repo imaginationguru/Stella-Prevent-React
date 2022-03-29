@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import commonStyles from '../commonStyles';
 import ReactHtmlParser from 'react-html-parser';
 import {
@@ -9,14 +9,14 @@ import {
   CardContent,
   CustomImage,
 } from '../../../components/Cards';
-import {useDispatch, useSelector} from 'react-redux';
-import {translate as ts} from '../../../i18n/translate';
+import { useDispatch, useSelector } from 'react-redux';
+import { translate as ts } from '../../../i18n/translate';
 import * as AppActions from '../../../actions';
 import GLOBALS from '../../../constants';
 import ExerciseBox from '../../../components/ExerciseBox';
-import {getItem} from '../../../utils/AsyncUtils';
-const {IMAGE_BASE_URL, ACTION_TYPE, COLORS} = GLOBALS;
-const {GRAY, WHITE, BOX_GRAY, LIGHT_PINK} = COLORS;
+import { getItem } from '../../../utils/AsyncUtils';
+const { IMAGE_BASE_URL, ACTION_TYPE, COLORS } = GLOBALS;
+const { GRAY, WHITE, BOX_GRAY, LIGHT_PINK } = COLORS;
 const FourEight = (props) => {
   const {
     card_title,
@@ -32,26 +32,24 @@ const FourEight = (props) => {
   } = props.card;
   const [questions, setQuestions] = useState([]);
   const [userAnswers, setUserAnswers] = useState([]);
-  const {assessmentData, userAssessmentData = []} = useSelector(
+  const { assessmentData, userAssessmentData = [] } = useSelector(
     (state) => state.moduleOne,
   );
   const dispatch = useDispatch();
 
-  console.log('four eight????????', userAssessmentData);
   useEffect(() => {
-    const {headers, content} = assessmentData;
+    const { headers, content } = assessmentData;
     let data =
       headers && headers.length
         ? headers.map((item) => {
-            return {
-              _id: item._id,
-              header: item.header,
-              order: item.order,
-              contents: content.filter((val) => val.order === item.order),
-            };
-          })
+          return {
+            _id: item._id,
+            header: item.header,
+            order: item.order,
+            contents: content.filter((val) => val.order === item.order),
+          };
+        })
         : [];
-    console.log('data???????/', data);
     setQuestions(data);
   }, [assessmentData]);
 
@@ -60,7 +58,6 @@ const FourEight = (props) => {
     userAssessmentData.length
       ? userAssessmentData.forEach((item) => y.push(...item.cards))
       : [];
-    console.log('y?????', y);
     setUserAnswers(
       y
         .sort((a, b) => (a.order > b.order && 1) || -1)
@@ -137,7 +134,6 @@ const FourEight = (props) => {
       ]);
     }
   };
-  console.log('user ', userAnswers);
   const onSave = (e) => {
     e.preventDefault();
 
@@ -149,7 +145,6 @@ const FourEight = (props) => {
         assessment: userAnswers,
       };
       if (userAnswers.length === questions.length) {
-        console.log('params', params);
         if (userAssessmentData && userAssessmentData.length) {
           dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
         } else {
@@ -173,15 +168,15 @@ const FourEight = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
 
@@ -194,82 +189,82 @@ const FourEight = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                  isVisible={true}
-                  animationIn={'fadeInUp'}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+                isVisible={true}
+                animationIn={'fadeInUp'}
+              />
+            );
+          })
         : []}
 
       {/**********************Images************** */}
 
       {images && images.length
         ? images.map((item) => {
-            return (
-              <CustomImage
-                src={`${IMAGE_BASE_URL}${item.image}`}
-                style={{display: item.image !== '' ? 'flex' : 'none'}}
-                isVisible={true}
-                animationIn={'fadeInUp'}
-              />
-            );
-          })
+          return (
+            <CustomImage
+              src={`${IMAGE_BASE_URL}${item.image}`}
+              style={{ display: item.image !== '' ? 'flex' : 'none' }}
+              isVisible={true}
+              animationIn={'fadeInUp'}
+            />
+          );
+        })
         : null}
 
       {questions.length
         ? questions.map((item) => (
-            <div>
-              <p
-                style={{
-                  border: `1px solid #b0c4de`,
-                  backgroundColor: '#b0c4de',
-                  paddingLeft: '10px',
-                  paddingTop: '13px',
-                  borderRadius: '5px',
-                  marginTop: '40px',
-                  marginBottom: '30px',
-                  fontWeight: 'bold',
-                }}>
-                {ReactHtmlParser(item.header)}
-              </p>
-              <div
-                style={{
-                  // border: '1px solid red',
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-around',
-                }}>
-                {item.contents && item.contents.length
-                  ? item.contents.map((val) => (
-                      <p
-                        onClick={() => selectContent(item, val)}
-                        style={{
-                          border: `3px solid #436b95`,
-                          paddingTop: '5px',
-                          paddingBottom: '5px',
-                          width: '45%',
-                          textAlign: 'center',
-                          borderRadius: '5px',
-                          backgroundColor: userAnswers.find(
-                            (ele) =>
-                              ele.content[0].assessment_content_id === val._id,
-                          )
-                            ? '#b0c4de'
-                            : '#ffffff',
-                        }}>
-                        {val.content}
-                      </p>
-                    ))
-                  : []}
-              </div>
+          <div>
+            <p
+              style={{
+                border: `1px solid #b0c4de`,
+                backgroundColor: '#b0c4de',
+                paddingLeft: '10px',
+                paddingTop: '13px',
+                borderRadius: '5px',
+                marginTop: '40px',
+                marginBottom: '30px',
+                fontWeight: 'bold',
+              }}>
+              {ReactHtmlParser(item.header)}
+            </p>
+            <div
+              style={{
+
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+              }}>
+              {item.contents && item.contents.length
+                ? item.contents.map((val) => (
+                  <p
+                    onClick={() => selectContent(item, val)}
+                    style={{
+                      border: `3px solid #436b95`,
+                      paddingTop: '5px',
+                      paddingBottom: '5px',
+                      width: '45%',
+                      textAlign: 'center',
+                      borderRadius: '5px',
+                      backgroundColor: userAnswers.find(
+                        (ele) =>
+                          ele.content[0].assessment_content_id === val._id,
+                      )
+                        ? '#b0c4de'
+                        : '#ffffff',
+                    }}>
+                    {val.content}
+                  </p>
+                ))
+                : []}
             </div>
-          ))
+          </div>
+        ))
         : null}
       <div style={commonStyles.buttonWrapper}>
         <button className="btn-orange" onClick={(e) => onSave(e)}>
@@ -280,17 +275,17 @@ const FourEight = (props) => {
       <div style={commonStyles.contentLeftBorder}>
         {content && content.length
           ? content
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, index) => {
-                return (
-                  <CardContent
-                    key={index}
-                    content={ReactHtmlParser(item.content)}
-                    isVisible={true}
-                    animationIn={'fadeInUp'}
-                  />
-                );
-              })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardContent
+                  key={index}
+                  content={ReactHtmlParser(item.content)}
+                  isVisible={true}
+                  animationIn={'fadeInUp'}
+                />
+              );
+            })
           : []}
       </div>
 
