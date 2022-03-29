@@ -71,10 +71,8 @@ const Dashboard = () => {
     }
   }, []);
   useEffect(() => {
-    console.log(trackerStatus, 'trackerStatus....');
   }, [trackerStatus]);
   const TrackersUI = ({ title, src, onClick, isComplete }) => {
-    console.log(isComplete, 'isComplete....');
 
     return (
       <div
@@ -158,8 +156,6 @@ const Dashboard = () => {
       type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
       payload: currentActiveCard._id,
     });
-    //   :
-    // null};
     dispatch({
       type: GLOBALS.ACTION_TYPE.GET_SELECTED_WEEK,
       payload: currentActiveCard.current_week,
@@ -197,9 +193,7 @@ const Dashboard = () => {
               style={styles().dailylearnWrap}
               onClick={() => {
                 onDailyLearningClick();
-                //   debugger
-                //  {selectedCardId == '' ?
-                // dispatch(AppActions.getCurrentActiveCard());
+
               }}
               className="display-board">
               <div
@@ -209,8 +203,6 @@ const Dashboard = () => {
                   bottom: 0,
                   width: '100%',
                   borderRadius: 8,
-                  // background:
-                  //   'linear-gradient(180deg, rgba(214, 240, 235, 0) 0%, #FFFFFF 18%)',
                   paddingLeft: 30,
                   cursor: 'pointer',
                   paddingTop: 10,
@@ -389,15 +381,12 @@ export const styles = () => {
     weekTitle: { paddingTop: 10, fontSize: 15, fontWeight: '700' },
     trackerWrap: {
       display: 'flex',
-      //  justifyContent: 'space-around',
       borderRadius: 10,
-      //height: 50,
       border: `2px solid ${DARK_GREEN}`,
       paddingTop: 15,
       paddingBottom: 15,
       marginBottom: 15,
       cursor: 'pointer',
-      //boxShadow: '1px 3px 1px #D6F0EB',
       boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
     },
     trackerTitle: {
@@ -408,10 +397,8 @@ export const styles = () => {
       fontFamily: FONTS.SEMI_BOLD,
     },
     profileWrapper: {
-      //height: '30%',
       border: `2px solid ${DARK_GREEN}`,
       width: '80%',
-      //margin: '0 auto',
       position: 'absolute',
       top: 30,
       left: '10%',
@@ -425,21 +412,17 @@ export const styles = () => {
     dailylearnWrap: {
       background:
         'linear-gradient(180deg, rgba(214, 240, 235, 0) 0%, #FFFFFF 73.96%) top right',
-      // background: 'white',
       backgroundImage: `url(${stellaGirlGif})`,
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
       width: '100%',
       height: '95%',
       borderRadius: 20,
-      // marginTop: 30,
       marginBottom: 30,
       position: 'relative',
-      // border: '1px solid blue',
       boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
       cursor: 'pointer',
       backgroundPosition: '50%',
-      // backgroundPosition: 'center left',
     },
   };
 };

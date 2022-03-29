@@ -40,8 +40,7 @@ const TemplateTwo = (props) => {
 
   useEffect(() => {
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+   }, []);
 
   useEffect(() => {
     let cardsData = [];
@@ -49,8 +48,7 @@ const TemplateTwo = (props) => {
       userAssessmentData.forEach((item) => cardsData.push(...item.cards));
     }
     setInputCardData(cardsData);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userAssessmentData]);
+   }, [userAssessmentData]);
 
   /*****************************function for fetch input value, id and set   */
 
@@ -63,8 +61,7 @@ const TemplateTwo = (props) => {
       inputCardData.map((item) => {
         return setUpdateId(item._id);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputCardData]);
+   }, [inputCardData]);
 
   /***********************set input value function************* */
 

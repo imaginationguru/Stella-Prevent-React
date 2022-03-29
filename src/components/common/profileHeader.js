@@ -25,23 +25,14 @@ import { normalize } from '../../utils/Helper';
 import Slider, { SliderThumb } from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
 
-// import {MDCSlider} from '../../updatedNodeModules/@material/slider';
 
-// const slider = new MDCSlider(document.querySelector('.mdc-slider'));
-
-// @use "../slider/styles";
-
-// const DEVICE_WIDTH = Dimensions.get('window').width;
-// const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 const ProfileHeader = (props) => {
-  console.log('ProfileHeader..');
   const { loginData = {}, profileImg = '' } = useSelector(
     (state) => state.authReducer,
   );
   const moduleOne = useSelector((state) => state.moduleOne);
   const { currentActiveCard = {} } = useSelector((state) => state.moduleOne);
-  console.log('profile image user', profileImg);
   const [profileImage, setProfilePhoto] = useState('');
   const [selectedWeek, setSelectedWeek] = useState(1);
   const [DEVICE_WIDTH, setDimensionsW] = useState(
@@ -64,29 +55,20 @@ const ProfileHeader = (props) => {
   } = props;
 
   useEffect(() => {
-    console.log('use effect..profileImg', profileImg);
-    console.log('use effect..profile', profile);
-    console.log(profileImage == '' ? profile : profileImage, 'llll');
     if (profileImg == null || profileImg == '') {
-      console.log('if');
       setProfilePhoto(profile);
     } else {
-      console.log('else');
       setProfilePhoto(`${IMAGE_BASE_URL}${profileImg}`);
     }
   }, [profileImg, moduleOne?.currentActiveCard?.current_week]);
   useEffect(() => {
     Dimensions.addEventListener('change', ({ window, screen }) => {
-      console.log('device change profile', window);
       setDimensionsW(window.width);
       setDimensionsH(window.height);
     });
     return () => {
-      console.log('unmoiunt profile......');
       Dimensions.removeEventListener('change', () => {
-        console.log('event removed');
       });
-      // subscription?.remove();
     };
   }, []);
   const marks = [
@@ -111,7 +93,6 @@ const ProfileHeader = (props) => {
     <View style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).outerContainer}>
       <ImageBackground
         resizeMode="cover"
-        // source={dashboardHeader}
         style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).bgImage}>
         <div className="pWrap">
           <View style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).profileWrapp}>
@@ -227,7 +208,6 @@ const ProfileHeader = (props) => {
 
               <Slider
                 track="inverted"
-                // disabled={true}
                 aria-labelledby="track-inverted-slider"
                 value={moduleOne?.currentActiveCard?.current_week * 20}
                 defaultValue={20}
@@ -260,29 +240,13 @@ const ProfileHeader = (props) => {
 
 export default ProfileHeader;
 export const styles = (DEVICE_WIDTH, DEVICE_HEIGHT) => {
-  //const styles = StyleSheet.create({
   return StyleSheet.create({
     outerContainer: {
       width: '100%',
       paddingTop: '30px',
       paddingBottom: '30px',
     },
-    // profileWrapper: {
-    //   boxShadow: '0px 18.965px 54.1858px rgba(0, 111, 89, 0.38)',
-    //   background:
-    //     'linear-gradient(161.44deg, #CEE6E1 55.96%, #A1CDC4 78.08%, #97BECE 95.87%)',
-    //   border: `2px solid ${DARK_GREEN}`,
-    //   width: '80%',
-    //   position: 'static',
 
-    //   opacity: 0.8,
-    //   borderRadius: 20,
-    //   flexDirection: 'row',
-    //   padding: '1vw',
-    //   flexWrap: 'wrap',
-    //   marginLeft: 'auto',
-    //   marginRight: 'auto',
-    // },
     profileConatiner: {
       flex: DEVICE_WIDTH > 767 ? '0 0 auto' : '0 0 100%',
       alignItems: 'center',

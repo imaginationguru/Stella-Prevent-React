@@ -1,23 +1,23 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import GLOBALS from '../../constants';
 import styles from './styles';
 import compass1 from '../../assets/images/compass1.svg';
 
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
-const {COLORS} = GLOBALS;
+const { COLORS } = GLOBALS;
 
 const InputBoxWithContent = (props) => {
-  const {title, placeholder, value, onChange, style} = props;
+  const { title, placeholder, value, onChange, style } = props;
   return (
     <div style={styles.inputBoxStyle}>
       <div style={style}>
         <p style={styles.leftTitle}>{title}</p>
       </div>
-      <div style={{width: '78%'}}>
+      <div style={{ width: '78%' }}>
         <form noValidate>
           <textarea
             type="description"
@@ -38,7 +38,6 @@ const TemplateEleven = (props) => {
   const [myBehaviours, setMyBehaviours] = useState('');
   const [myValues, setMyValues] = useState('');
 
-  console.log('all>>>>>>', myBehaviours, myValues);
 
   const onSaveMyths = (e) => {
     e.preventDefault();
@@ -116,7 +115,7 @@ const TemplateEleven = (props) => {
             onChange={(myValues) => {
               setMyValues(myValues.target.value);
             }}
-            style={{backgroundColor: COLORS.CIRCLE_GRAY, width: '20%'}}
+            style={{ backgroundColor: COLORS.CIRCLE_GRAY, width: '20%' }}
           />
           <InputBoxWithContent
             title={'My Behaviours'}
@@ -125,10 +124,10 @@ const TemplateEleven = (props) => {
             onChange={(myBehaviours) => {
               setMyBehaviours(myBehaviours.target.value);
             }}
-            style={{backgroundColor: COLORS.CIRCLE_GRAY, width: '20%'}}
+            style={{ backgroundColor: COLORS.CIRCLE_GRAY, width: '20%' }}
           />
 
-          <div style={{width: '20%', marginTop: '30px'}}>
+          <div style={{ width: '20%', marginTop: '30px' }}>
             <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
               Save
             </button>

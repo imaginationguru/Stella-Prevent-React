@@ -61,11 +61,9 @@ const SignUp = () => {
                 setModalVisibility(true)
                 break;
             case "selected_gender":
-                console.log(data);
                 setGender(data);
                 setGenderError('')
-                // setArryData(countryData)
-                // setTitle("Select Country")
+
                 setModalVisibility(false)
                 break;
 
@@ -198,7 +196,6 @@ const SignUp = () => {
                 visible={showModal}
                 onDismiss={() => {
                     setModalVisibility(false)
-                    console.log('Modal has been closed.');
                 }}>
                 <DropDown
                     onItemSelection={(type, data) => { navigator(type, data) }}
@@ -234,7 +231,6 @@ const styles = StyleSheet.create({
     title: {
         fontStyle: FONTS.NEW_REGULAR,
         fontSize: 40,
-        //lineHeight: 52,
         color: HEADING_BLACK,
         textAlign: "center"
     },

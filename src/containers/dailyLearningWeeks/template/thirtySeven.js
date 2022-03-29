@@ -120,10 +120,7 @@ const styles = {
     flexDirection: 'column',
   },
   descStyle: {
-    // width: '80%',
-    // alignContent: 'center',
-    marginTop: '23px',
-    //  border: '1px solid red',
-    marginLeft: '50px',
+     marginTop: '23px',
+     marginLeft: '50px',
   },
 };

@@ -172,7 +172,6 @@ const ThirtyFour = (props) => {
       })
       : [];
     /**Add empty rows with comparison */
-    console.log(headerData, "headerData...")
     const addEmtpyRow = headerData.map((item, index) => {
       return {
         ...item,
@@ -210,7 +209,6 @@ const ThirtyFour = (props) => {
               val.textInput.length > 0
                 ? val.textInput[val.textInput.length - 1].order
                 : 0;
-            console.log(diff, 'diff.... 2 ', lastOrder);
 
             if (diff < 0) {
               for (
@@ -222,13 +220,11 @@ const ThirtyFour = (props) => {
               }
             }
             if (diff >= 0) {
-              console.log(lastOrder, lastOrder + (Math.abs(diff) + 1), "checkinggg")
               for (let i = lastOrder; i < lastOrder + 1; i++) {
                 newItem.push(emptyTextInputMapper(item._id, val._id, i));
               }
             }
           }
-          console.log(newItem, "newItem......")
           const finalInput =
             newItem.length > 0
               ? [...val.textInput, ...newItem]
@@ -240,56 +236,8 @@ const ThirtyFour = (props) => {
         }),
       };
     });
-    console.log(addEmtpyRow, 'addEmtpyRow....');
     setInputs(addEmtpyRow);
-    // return;
-    // const inputData = inputs.length
-    //   ? inputs.map((item) => {
-    //     return {
-    //       ...item,
-    //       sub_heading: item.sub_heading.length
-    //         ? item.sub_heading.map((val) => {
-    //           console.log('here data ==>', data);
-    //           console.log('here val ==>', val);
-    //           const inputsArr = data.length
-    //             ? data.filter((e) => e.assessment_content_id === val._id)
-    //             : [];
-    //           const extractOrder = data.length
-    //             ? data[data.length - 1].order
-    //             : 0;
-    //           const dummyInput = emptyTextInputMapper(
-    //             item._id,
-    //             val._id,
-    //             extractOrder,
-    //           );
-    //           const finalInput = inputsArr.length
-    //             ? [...inputsArr, dummyInput]
-    //             : [dummyInput, dummyInput];
-    //           // const finalInput = [...inputsArr, dummyInput]
-    //           return {
-    //             // ...val,
-    //             // textInput: data.length
-    //             //   ? finalInput.length
-    //             //     ? finalInput.sort(
-    //             //       (a, b) => (a.order > b.order && 1) || -1,
-    //             //     )
-    //             //     : [] // TODO : Existing ( Add NEW OBJECT FOR END)
-    //             //   : [dummyInput], // TODO : NEW USER
-    //             ...val,
-    //             textInput: data.length
-    //               ? finalInput.length
-    //                 ? finalInput
-    //                 : [] // TODO : Existing ( Add NEW OBJECT FOR END)
-    //               : [dummyInput], // TODO : NEW USER
-    //           };
-    //         })
-    //         : [],
-    //     };
-    //   })
-    //   : [];
-    // console.log(inputData, 'inputData.....');
-    // setInputs(inputData);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [userAssessmentData]);
 
   const onChangeHandler = (hId, sId, i, e) => {
@@ -349,8 +297,6 @@ const ThirtyFour = (props) => {
   };
 
   const deleteHandler = (hId, i, item, val, isAPICall = false) => {
-    console.log(hId, i, item, val);
-    console.log(i, "index")
     let temp = [];
     if (inputs.length) {
       temp = inputs.map((details) => {
@@ -383,7 +329,6 @@ const ThirtyFour = (props) => {
         }
       });
     });
-    console.log(hId, i, item, val);
     let leftItem = item.sub_heading[0].textInput[i].inputId;
     let rightItem = item.sub_heading[1].textInput[i].inputId;
 
@@ -393,13 +338,9 @@ const ThirtyFour = (props) => {
     } if (rightItem) {
       contentIdsArray.push(rightItem)
     }
-    // console.log(leftItem, rightItem, " left right");
 
-    // let contentIdsArray = selectedArray.map((ele) => ele.inputId);
     let content_id = contentIdsArray[0] !== "" ? contentIdsArray[0] : contentIdsArray[1]
-    console.log(contentIdsArray, content_id, "llll");
     isAPICall = (leftItem != "" || rightItem != "") ? true : false;
-    // isAPICall = content_id !== "" ? true : false;
     if (contentIdsArray.length && isAPICall) {
 
       dispatch(
@@ -414,8 +355,6 @@ const ThirtyFour = (props) => {
   };
 
   const onSave = () => {
-    //  console.log(modifiedAssessment,"modifiedAssessment...")
-    console.log(inputs, 'inputs');
 
     const modifiedAssessment = inputs.length
       ? inputs.map((item) => {
@@ -443,10 +382,7 @@ const ThirtyFour = (props) => {
 
     let final = saveDateValidator(modifiedAssessment);
     final.map((m, ind) => {
-      console.log(m.content.length, "index", ind)
     })
-    console.log(saveDateValidator(modifiedAssessment), "modifiedAssessment....")
-    // return;
     let params = {
       user_id: getItem('userId'),
       user_card_id: props._id,
@@ -463,15 +399,12 @@ const ThirtyFour = (props) => {
         .filter((val) => val !== '').length
         ? true
         : false;
-      //console.log('empty check>>>>.', isAPICall);
     }
 
     if (modifiedAssessment.length && isAPICall) {
       if (userAssessmentData && userAssessmentData.length) {
-        //  console.log('update item params>>>>>>>>', params);
         dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
       } else {
-        // console.log('save item params>>>>>>>>', JSON.stringify(params));
         dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
       }
     } else {
@@ -587,7 +520,6 @@ const ThirtyFour = (props) => {
                                     ? '15px'
                                     : '0',
                             }}
-                          // className={ele.order === 1 ? 'mr0' : 'mr20'}
                           >
                             <div
                               style={{
@@ -623,7 +555,6 @@ const ThirtyFour = (props) => {
                                       type="text"
                                       className="f-field"
                                       name={ele.name}
-                                      // placeholder={`${ele.name}`}
                                       style={styles.selectedText}
                                       value={val.content}
                                       onChange={(e) =>
@@ -640,7 +571,6 @@ const ThirtyFour = (props) => {
                                       <div
                                         style={{
                                           ...styles.circleDiv,
-                                          // backgroundColor: GREEN_TEXT,
                                           backgroundColor: val.content
                                             .length
                                             ? GREEN_TEXT
@@ -665,9 +595,6 @@ const ThirtyFour = (props) => {
                                       <div
                                         style={{
                                           ...styles.circleCrossDiv,
-                                          // backgroundColor: item.value.length
-                                          //   ? GREEN_TEXT
-                                          //   : GRAY,
                                         }}
                                         onClick={() => {
                                           deleteHandler(
@@ -772,6 +699,5 @@ const styles = {
     backgroundColor: '#F1F3FA',
     width: '100%',
     marginBottom: '30px',
-    // marginTop: '3%',
   },
 };

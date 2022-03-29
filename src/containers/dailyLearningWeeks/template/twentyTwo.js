@@ -60,8 +60,7 @@ const TwentyTwo = (props) => {
     let userId = getItem('userId');
     let programId = getItem('programId');
     dispatch(AppActions.getUserRating(userId, programId, week));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+   }, []);
 
   const getDataSet = (data, type) => {
     if (type === 'LIKE') {
@@ -93,8 +92,7 @@ const TwentyTwo = (props) => {
       }
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userRatingData]);
+   }, [userRatingData]);
   /***********************set input value function************* */
 
   const onHandleChange = (e, item) => {
@@ -129,8 +127,7 @@ const TwentyTwo = (props) => {
         userRatingData &&
         userRatingData.filter((data) => data.week == props.week).length > 0
       ) {
-        //if (userRatingData && userRatingData.length) {
-        let updateParams = {
+         let updateParams = {
           id: updateId,
         };
         if (mode === 'LIKE') {
@@ -324,19 +321,12 @@ const TwentyTwo = (props) => {
                   className="btn-orange"
                   style={{
                     ...styles.rightText,
-                    // backgroundColor: YELLOW,
-                    textAlign: 'center',
+                     textAlign: 'center',
                   }}>
                   {ts('SAVE')}
                 </p>
               </div>
-              {/* <div style={styles.button}>
-                <button
-                  className="btn-orange"
-                  onClick={() => submitHandler('COMMENT', true, comment)}>
-                  {ts('SAVE')}
-                </button>
-              </div> */}
+              
             </div>
           </div>
           {/*********************************MODAL POPUP FOR MENU START*************** */}

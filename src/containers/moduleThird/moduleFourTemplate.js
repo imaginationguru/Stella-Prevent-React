@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import GLOBALS from '../../constants';
 import styles from './styles';
 import squareCheckCircle from '../../assets/images/squareCheckCircle.svg';
-const {COLORS} = GLOBALS;
+const { COLORS } = GLOBALS;
 import right from '../../assets/images/right.svg';
 const quesData = [
   {
@@ -78,7 +78,6 @@ const ModuleFourTemplate = (props) => {
   };
 
   const onSubmit = () => {
-    console.log('submit>>>>>>>', ques);
   };
   return (
     <div>
@@ -87,7 +86,7 @@ const ModuleFourTemplate = (props) => {
           <h2 className="dashboard-heading">{props.data.template_title}</h2>
           <h6 className="dash-time m-b-30">{props.data.template_time}</h6>
           <p className="dash-text-shadow">{props.data.template_userName}</p>
-          <p className="dash-text-color" style={{textAlign: 'center'}}>
+          <p className="dash-text-color" style={{ textAlign: 'center' }}>
             {props.data.template_description_one}
           </p>
           <div
@@ -204,7 +203,7 @@ const ModuleFourTemplate = (props) => {
                 </div>
               );
             })}
-          <div style={{width: '20%'}}>
+          <div style={{ width: '20%' }}>
             <button className="btn-orange" onClick={(e) => onSubmit()}>
               Save
             </button>

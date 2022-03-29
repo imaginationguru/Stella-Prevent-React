@@ -1,16 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useState, useEffect} from 'react';
-import {TextInput, View, Text, FlatList, Dimensions} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { TextInput, View, Text, FlatList, Dimensions } from 'react-native';
 import commonStyles from '../commonStyles';
 import GLOBALS from '../../../constants';
 import ReactHtmlParser from 'react-html-parser';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '../../../actions';
-import {getItem} from '../../../utils/AsyncUtils';
-import {translate as ts} from '../../../i18n/translate';
+import { getItem } from '../../../utils/AsyncUtils';
+import { translate as ts } from '../../../i18n/translate';
 import ExerciseBox from '../../../components/ExerciseBox';
-import {customAlert} from '../../../helpers/commonAlerts.web';
+import { customAlert } from '../../../helpers/commonAlerts.web';
 import {
   CardQuote,
   CardTitle,
@@ -19,11 +19,11 @@ import {
   CardContent,
   CustomImage,
 } from '../../../components/Cards';
-import {wrap} from 'lodash';
+import { wrap } from 'lodash';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
-const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
-const {BOX_GRAY, GREEN_TEXT, CIRCLE_GRAY, WHITE, GRAY, RED} = COLORS;
+const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
+const { BOX_GRAY, GREEN_TEXT, CIRCLE_GRAY, WHITE, GRAY, RED } = COLORS;
 
 const FourSix = (props) => {
   const {
@@ -42,10 +42,10 @@ const FourSix = (props) => {
   const [userInputs, setUserInputs] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
-  const {assessmentData = {}, userAssessmentData = []} = useSelector(
+  const { assessmentData = {}, userAssessmentData = [] } = useSelector(
     (state) => state.moduleOne,
   );
-  const {headers} = assessmentData;
+  const { headers } = assessmentData;
   const dispatch = useDispatch();
   let userId = getItem('userId');
 
@@ -54,7 +54,6 @@ const FourSix = (props) => {
       assessmentData.headers && assessmentData.headers.length
         ? assessmentData.headers
         : [];
-    // console.log('headers', headers);
 
     const assessmentCards = [];
     if (userAssessmentData && userAssessmentData.length) {
@@ -62,9 +61,8 @@ const FourSix = (props) => {
         assessmentCards.push(...item.cards);
       });
     }
-    console.log('assessmentCards', assessmentCards);
     let selectedFormat = assessmentCards.map((item) => {
-      return {_id: item.assessment_header_id, content: item.content};
+      return { _id: item.assessment_header_id, content: item.content };
     });
     let selectUserInputs = assessmentCards.map((item) => {
       return {
@@ -74,8 +72,8 @@ const FourSix = (props) => {
         order: item.order,
         assessment_id: item.assessment_header.length
           ? item.assessment_header.map((val) => {
-              return val.assessment_id;
-            })
+            return val.assessment_id;
+          })
           : null,
       };
     });
@@ -83,11 +81,11 @@ const FourSix = (props) => {
     selectUserInputs.map((element) => {
       headers && headers.length
         ? headers.map((item) => {
-            if (element.assessment_header_id === item._id) {
-              element.placeholder = item.description;
-              element.name = item.header;
-            }
-          })
+          if (element.assessment_header_id === item._id) {
+            element.placeholder = item.description;
+            element.name = item.header;
+          }
+        })
         : null;
     });
     let sortedOrderArray = selectUserInputs.sort((a, b) =>
@@ -105,10 +103,10 @@ const FourSix = (props) => {
     let firstAssessmentContent =
       sortedOrderArray && sortedOrderArray.length
         ? sortedOrderArray.filter(
-            (ele) =>
-              ele.assessment_id.length &&
-              ele.assessment_id[0] === assessment_id,
-          )
+          (ele) =>
+            ele.assessment_id.length &&
+            ele.assessment_id[0] === assessment_id,
+        )
         : [];
     setSelected(selectedFormat);
     if (firstAssessmentContent.length == 0) {
@@ -132,14 +130,11 @@ const FourSix = (props) => {
     }
 
     setUserInputs(firstAssessmentContent);
-    console.log(firstAssessmentContent, 'firstAssessmentContent..');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
 
   /**********************SAVE ASSESSMENT****************** */
   const onSaveFirstAssessment = (e) => {
     e.preventDefault();
-    console.log(userInputs, 'userInputs...', headers);
     let emptyRowCount = userInputs.filter((item) => item.content == '').length;
 
     /**If any of the row is empty */
@@ -154,15 +149,12 @@ const FourSix = (props) => {
         .filter((ele) => ele.content !== '');
       contentArray.push(filterValue);
     });
-    console.log(contentArray, 'contentArray....');
     let modifyArray = contentArray.map((element, index) => {
       return {
-        // assessment_header_id: element[0].assessment_header_id,
         assessment_header_id: headers[index]._id,
         content: element,
       };
     });
-    console.log('modifyArray1', modifyArray);
 
     let firstParams = {
       user_id: userId,
@@ -170,8 +162,6 @@ const FourSix = (props) => {
       assessment_id: assessment_id,
       assessment: modifyArray,
     };
-    console.log('firstParams', firstParams);
-    // return;
     if (userInputs.length) {
       if (userAssessmentData && userAssessmentData.length) {
         dispatch(AppActions.rearrangeAssessments(firstParams, onSubmitMessage));
@@ -189,10 +179,10 @@ const FourSix = (props) => {
   const onTextChange = (text, item) => {
     userInputs.length
       ? userInputs.map((val) => {
-          if (val.order === item.order) {
-            val.content = text;
-          }
-        })
+        if (val.order === item.order) {
+          val.content = text;
+        }
+      })
       : [];
   };
 
@@ -221,7 +211,6 @@ const FourSix = (props) => {
             assessment_id: null,
             placeholder: item.description,
             value: '',
-            // order: idx,
           };
         });
       }
@@ -235,24 +224,12 @@ const FourSix = (props) => {
   };
 
   const onCrossBtnClick = (val) => {
-    console.log(val);
     // debugger;
     let order = val.order;
     let secondContentId = [val.content_id];
-    // let findValue = secondContentId.push(
-    //   userInputs.find((ele) => ele.order === order + 1).content_id,
-    // );
-    console.log(
-      userInputs.filter(
-        (ele) => ele.content !== val.content && ele.order !== order + 1,
-      ),
-    );
-    console.log(
-      userInputs.filter(
-        (ele) => ele.content !== val.content && ele.order !== order + 1,
-      ),
-      'filelee',
-    );
+
+
+
 
     let updatedUserInput = userInputs.filter(
       (ele) => ele.content !== val.content && ele.order !== order + 1,
@@ -283,38 +260,25 @@ const FourSix = (props) => {
         });
       }
 
-      console.log(headerInputs, 'headerInputs...');
       setUserInputs(headerInputs);
     }
 
-    // if (val.content_id) {
-    //   dispatch(
-    //     AppActions.deleteUserAssessmentData(
-    //       // val.content_id,
-    //       secondContentId[0],
-    //       props._id,
-    //       assessment_id,
-    //       secondContentId,
-    //       //findValue.content_id,
-    //     ),
-    //   );
-    // }
+
   };
-  console.log('user inputs????????', userInputs);
   return (
     <>
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -325,19 +289,37 @@ const FourSix = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
       {images && images.length
         ? images
-            .filter((img) => img.image_type === 'first')
+          .filter((img) => img.image_type === 'first')
+          .map((item, i) => {
+            return (
+              <CustomImage
+                key={i}
+                src={`${IMAGE_BASE_URL}${item.image}`}
+                style={{
+                  ...commonStyles.assessImage,
+                  display: item.image !== '' ? 'flex' : 'none',
+                }}
+              />
+            );
+          })
+        : []}
+      {/***************************ASSESSMENTS DESCRIPTION ONE ************* */}
+      <div style={{ ...commonStyles.assessmentWrapper, marginBottom: '50px' }}>
+        {images && images.length
+          ? images
+            .filter((img) => img.image_type === 'second')
             .map((item, i) => {
               return (
                 <CustomImage
@@ -350,48 +332,30 @@ const FourSix = (props) => {
                 />
               );
             })
-        : []}
-      {/***************************ASSESSMENTS DESCRIPTION ONE ************* */}
-      <div style={{...commonStyles.assessmentWrapper, marginBottom: '50px'}}>
-        {images && images.length
-          ? images
-              .filter((img) => img.image_type === 'second')
-              .map((item, i) => {
-                return (
-                  <CustomImage
-                    key={i}
-                    src={`${IMAGE_BASE_URL}${item.image}`}
-                    style={{
-                      ...commonStyles.assessImage,
-                      display: item.image !== '' ? 'flex' : 'none',
-                    }}
-                  />
-                );
-              })
           : []}
 
         {props.assessments && props.assessments.length
           ? props.assessments.map((item, i) => {
-              return (
-                <CardDescription
-                  key={i}
-                  style={commonStyles.assessDesc}
-                  description={ReactHtmlParser(item.description)}
-                />
-              );
-            })
+            return (
+              <CardDescription
+                key={i}
+                style={commonStyles.assessDesc}
+                description={ReactHtmlParser(item.description)}
+              />
+            );
+          })
           : []}
       </div>
       {/******************************************************************* */}
       {userInputs && userInputs.length ? (
         <FlatList
           data={userInputs}
-          contentContainerStyle={{padding: '4%'}}
+          contentContainerStyle={{ padding: '4%' }}
           extraData={refresh}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item.id}
-          renderItem={({item, index}) => (
+          renderItem={({ item, index }) => (
             <View
               style={{
                 flex: 1,
@@ -407,13 +371,13 @@ const FourSix = (props) => {
                   justifyContent: 'center',
                 }}>
                 <Text
-                  style={{padding: '15px', color: WHITE, textAlign: 'center'}}>
+                  style={{ padding: '15px', color: WHITE, textAlign: 'center' }}>
                   {' '}
                   {ReactHtmlParser(item.name)}
                 </Text>
               </View>
               <View style={styles.crossIconWrapper}>
-                <View style={{height: '150px'}}>
+                <View style={{ height: '150px' }}>
                   {item.content !== '' ? (
                     <input
                       type="text"
@@ -424,7 +388,6 @@ const FourSix = (props) => {
                     />
                   ) : (
                     <textarea
-                      //value={item.content}
                       style={styles.selectedText}
                       placeholder={item.placeholder}
                       underlineColorAndroid="transparent"
@@ -440,7 +403,7 @@ const FourSix = (props) => {
                       onClick={() => {
                         onCrossBtnClick(item);
                       }}>
-                      <span style={{...styles.plusIcon, fontSize: '15px'}}>
+                      <span style={{ ...styles.plusIcon, fontSize: '15px' }}>
                         x
                       </span>
                     </div>
@@ -520,12 +483,12 @@ const FourSix = (props) => {
       {/*************Content************ */}
       {content && content.length
         ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, i) => {
-              return (
-                <CardContent key={i} content={ReactHtmlParser(item.content)} />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, i) => {
+            return (
+              <CardContent key={i} content={ReactHtmlParser(item.content)} />
+            );
+          })
         : []}
       {showExercises && <ExerciseBox week={week} />}
     </>
@@ -573,8 +536,8 @@ const styles = {
     justifyContent: 'center',
     marginLeft: '25px',
   },
-  button: {width: '20%', marginTop: '30px'},
-  image: {width: '100%', height: '100%'},
+  button: { width: '20%', marginTop: '30px' },
+  image: { width: '100%', height: '100%' },
   imageWrapper: {
     width: '120px',
     height: '100px',
@@ -585,7 +548,6 @@ const styles = {
     height: '100%',
     paddingLeft: 5,
     color: CIRCLE_GRAY,
-    // marginBottom: '3%',
   },
   circleDiv: {
     backgroundColor: GRAY,
@@ -596,8 +558,6 @@ const styles = {
     right: '-15px',
     top: '90px',
     cursor: 'pointer',
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
   circleCrossDiv: {
     backgroundColor: RED,
@@ -626,8 +586,6 @@ const styles = {
   },
   plusIconWrapper: {
     flex: 0.8,
-    // display: 'flex',
-    // marginBottom: '3%',
     position: 'relative',
     marginLeft: 10,
   },

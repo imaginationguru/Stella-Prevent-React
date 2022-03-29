@@ -1,15 +1,15 @@
 /* eslint-disable prettier/prettier */
-import React, {useState, useEffect} from 'react';
-import {TextInput, FlatList, View} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { TextInput, FlatList, View } from 'react-native';
 import right from '../../../assets/images/right.svg';
 import cross from '../../../assets/images/cross.svg';
 import commonStyles from '../commonStyles';
 import GLOBALS from '../../../constants';
 import ReactHtmlParser from 'react-html-parser';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '../../../actions';
-import {getItem} from '../../../utils/AsyncUtils';
-import {translate as ts} from '../../../i18n/translate';
+import { getItem } from '../../../utils/AsyncUtils';
+import { translate as ts } from '../../../i18n/translate';
 import ExerciseBox from '../../../components/ExerciseBox';
 import {
   CardQuote,
@@ -19,8 +19,8 @@ import {
   CardContent,
   CustomImage,
 } from '../../../components/Cards';
-const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
-const {BOX_GRAY, GRAY2, BUTTON_ORANGE} = COLORS;
+const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
+const { BOX_GRAY, GRAY2, BUTTON_ORANGE } = COLORS;
 
 const FourOne = (props) => {
   const {
@@ -39,21 +39,17 @@ const FourOne = (props) => {
   const [isInputVisible, setInputVisible] = useState(false);
   const [positiveMessage, setPositiveMessage] = useState([]);
   const [negativeMessage, setNegativeMessage] = useState([]);
-  const {assessmentData = {}, userAssessmentData = []} = useSelector(
+  const { assessmentData = {}, userAssessmentData = [] } = useSelector(
     (state) => state.moduleOne,
   );
-  const {inputs, assessments} = props;
-  const {headers} = assessmentData;
+  const { inputs, assessments } = props;
+  const { headers } = assessmentData;
   const dispatch = useDispatch();
   let userId = getItem('userId');
 
-  // useEffect(() => {
-  //   dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [assessment_id]);
+
 
   useEffect(() => {
-    console.log('userAssessmentData', userAssessmentData);
     const assessmentCards = [];
     if (userAssessmentData && userAssessmentData.length) {
       userAssessmentData.forEach((item) => {
@@ -61,10 +57,8 @@ const FourOne = (props) => {
       });
     }
     let selectedFormat = assessmentCards.map((item) => {
-      return {_id: item.assessment_header_id, content: item.content};
+      return { _id: item.assessment_header_id, content: item.content };
     });
-    console.log('assessmentCards', assessmentCards);
-    console.log('props.inputs>>>>>', props.inputs);
     assessmentCards.map((item) => {
       props.inputs.map((ele) => {
         if (item.order === ele.order) {
@@ -75,7 +69,6 @@ const FourOne = (props) => {
     });
 
     setSelected(selectedFormat);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
 
   const updateYESNO = (data = {}, arr = []) => {
@@ -129,7 +122,7 @@ const FourOne = (props) => {
         if (item._id !== undefined) {
           return {
             assessment_header_id: item._id,
-            content: [{content: item.content}],
+            content: [{ content: item.content }],
           };
         } else {
           return [];
@@ -160,7 +153,7 @@ const FourOne = (props) => {
       userAssessment = selected.map((item) => {
         return {
           assessment_header_id: item._id,
-          content: [{content: item.content}],
+          content: [{ content: item.content }],
         };
       });
 
@@ -184,7 +177,6 @@ const FourOne = (props) => {
       userAssessment !== undefined
         ? userAssessment.filter((fil) => fil.assessment_header_id)
         : [];
-    console.log('filter user ', filterUserAssessment);
     let temp = [];
     let isValid = '';
     if (filterUserAssessment.length) {
@@ -192,17 +184,10 @@ const FourOne = (props) => {
         temp.push(item.content[0] && item.content[0].content);
       });
     }
-    console.log('temp?????', temp);
     if (temp.length) {
       isValid = temp.some((item) => item === 'YES');
     }
-    console.log(
-      'user submit message',
 
-      temp,
-      'isValid',
-      //isValid,
-    );
     e.preventDefault();
     let params = {
       user_id: userId,
@@ -220,23 +205,18 @@ const FourOne = (props) => {
       data: filterUserInputsUpdtae,
     };
 
-    console.log('userInputsUpdate>>>>>', userInputsUpdate);
-    console.log('paramsUpdateInput>>>>>', paramsUpdateInput);
-    console.log('params>>>>>', params, userAssessment);
     if (userAssessment.length) {
       if (userAssessmentData && userAssessmentData.length) {
         if (isValid) {
-          console.log('is vlaid true');
           dispatch(AppActions.rearrangeAssessments(params, positiveMessage));
         } else {
-          console.log('is vlaid false');
           dispatch(AppActions.rearrangeAssessments(params, negativeMessage));
         }
-        // dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
+
         dispatch(
           AppActions.updateUserAssessment(
             paramsUpdateInput,
-            //  onSubmitMessage,
+
             false,
           ),
         ); // input update
@@ -246,7 +226,6 @@ const FourOne = (props) => {
         } else {
           dispatch(AppActions.saveUserAssessment(params, negativeMessage));
         }
-        // dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
       }
     } else {
       dispatch({
@@ -273,15 +252,15 @@ const FourOne = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -293,138 +272,137 @@ const FourOne = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
       {/***************************ASSESSMENTS DESCRIPTION************* */}
-      <div style={{...commonStyles.assessmentWrapper, marginBottom: '60px'}}>
+      <div style={{ ...commonStyles.assessmentWrapper, marginBottom: '60px' }}>
         {images && images.length
           ? images.map((item, index) => {
-              return (
-                <CustomImage
-                  key={index}
-                  src={`${IMAGE_BASE_URL}${item.image}`}
-                  style={{
-                    ...commonStyles.assessImage,
-                    display: item.image !== '' ? 'flex' : 'none',
-                  }}
-                />
-              );
-            })
+            return (
+              <CustomImage
+                key={index}
+                src={`${IMAGE_BASE_URL}${item.image}`}
+                style={{
+                  ...commonStyles.assessImage,
+                  display: item.image !== '' ? 'flex' : 'none',
+                }}
+              />
+            );
+          })
           : []}
 
         {props.assessments && props.assessments.length
           ? props.assessments.map((item, i) => {
-              return (
-                <CardDescription
-                  key={i}
-                  style={commonStyles.assessDesc}
-                  description={ReactHtmlParser(item.description)}
-                />
-              );
-            })
+            return (
+              <CardDescription
+                key={i}
+                style={commonStyles.assessDesc}
+                description={ReactHtmlParser(item.description)}
+              />
+            );
+          })
           : []}
       </div>
 
       {/***************************ASSESSMENTS HEADERS************* */}
       {headers && headers.length
         ? headers
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, i) => {
-              const isYES =
-                selected && selected.length
-                  ? selected.find((val) => {
-                      return val._id === item._id && val.content === 'YES';
-                    })
-                    ? true
-                    : false
-                  : false;
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, i) => {
+            const isYES =
+              selected && selected.length
+                ? selected.find((val) => {
+                  return val._id === item._id && val.content === 'YES';
+                })
+                  ? true
+                  : false
+                : false;
 
-              const isNO =
-                selected && selected.length
-                  ? selected.find(
-                      (val) => val._id === item._id && val.content === 'NO',
-                    )
-                    ? true
-                    : false
-                  : false;
+            const isNO =
+              selected && selected.length
+                ? selected.find(
+                  (val) => val._id === item._id && val.content === 'NO',
+                )
+                  ? true
+                  : false
+                : false;
 
-              return (
-                <div>
-                  <div key={i} style={commonStyles.question}>
-                    <p style={{width: '85%'}}>{ReactHtmlParser(item.header)}</p>
-                    <div style={styles.optionWrapper}>
-                      <div
-                        onClick={() => {
-                          updateYESNO(
-                            {_id: item._id, content: 'YES'},
-                            selected,
-                          );
-                        }}
-                        style={{
-                          ...styles.rightBox,
-                          backgroundColor: isYES ? BUTTON_ORANGE : GRAY2,
-                        }}>
-                        <img src={right} />
-                      </div>
-                      <div
-                        onClick={() => {
-                          updateYESNO({_id: item._id, content: 'NO'}, selected);
-                        }}
-                        style={{
-                          ...styles.crossBox,
-                          backgroundColor: isNO ? BUTTON_ORANGE : GRAY2,
-                        }}>
-                        <img src={cross} />
-                      </div>
+            return (
+              <div>
+                <div key={i} style={commonStyles.question}>
+                  <p style={{ width: '85%' }}>{ReactHtmlParser(item.header)}</p>
+                  <div style={styles.optionWrapper}>
+                    <div
+                      onClick={() => {
+                        updateYESNO(
+                          { _id: item._id, content: 'YES' },
+                          selected,
+                        );
+                      }}
+                      style={{
+                        ...styles.rightBox,
+                        backgroundColor: isYES ? BUTTON_ORANGE : GRAY2,
+                      }}>
+                      <img src={right} />
+                    </div>
+                    <div
+                      onClick={() => {
+                        updateYESNO({ _id: item._id, content: 'NO' }, selected);
+                      }}
+                      style={{
+                        ...styles.crossBox,
+                        backgroundColor: isNO ? BUTTON_ORANGE : GRAY2,
+                      }}>
+                      <img src={cross} />
                     </div>
                   </div>
-                  {props.inputs.map((element) => {
-                    //  console.log('element ??????', element, i, element.order);
-                    if (i === element.order) {
-                      return (
-                        <div style={{marginBottom: '5%'}}>
-                          <TextInput
-                            style={[
-                              styles.textInputStyle,
-                              {
-                                borderColor: isYES
-                                  ? COLORS.LIGHT_GRAY
-                                  : COLORS.GRAY2,
-                                backgroundColor: isYES
-                                  ? COLORS.LIGHT_GRAY
-                                  : COLORS.GRAY2,
-                              },
-                            ]}
-                            placeholder={element.placeholder}
-                            underlineColorAndroid="transparent"
-                            editable={isYES ? true : false}
-                            multiline={true}
-                            value={
-                              !isInputVisible
-                                ? element.inputAnswer !== undefined
-                                  ? element.inputAnswer
-                                  : ''
-                                : null
-                            }
-                            onChangeText={(term) => {
-                              onChangeInput(term, element, item._id);
-                            }}
-                          />
-                        </div>
-                      );
-                    }
-                  })}
                 </div>
-              );
-            })
+                {props.inputs.map((element) => {
+                  if (i === element.order) {
+                    return (
+                      <div style={{ marginBottom: '5%' }}>
+                        <TextInput
+                          style={[
+                            styles.textInputStyle,
+                            {
+                              borderColor: isYES
+                                ? COLORS.LIGHT_GRAY
+                                : COLORS.GRAY2,
+                              backgroundColor: isYES
+                                ? COLORS.LIGHT_GRAY
+                                : COLORS.GRAY2,
+                            },
+                          ]}
+                          placeholder={element.placeholder}
+                          underlineColorAndroid="transparent"
+                          editable={isYES ? true : false}
+                          multiline={true}
+                          value={
+                            !isInputVisible
+                              ? element.inputAnswer !== undefined
+                                ? element.inputAnswer
+                                : ''
+                              : null
+                          }
+                          onChangeText={(term) => {
+                            onChangeInput(term, element, item._id);
+                          }}
+                        />
+                      </div>
+                    );
+                  }
+                })}
+              </div>
+            );
+          })
         : []}
       {headers && headers.length ? (
         <div style={commonStyles.buttonWrapper}>
@@ -435,18 +413,18 @@ const FourOne = (props) => {
       ) : null}
 
       {/*************Content************ */}
-      <div style={{marginTop: '55px'}}>
+      <div style={{ marginTop: '55px' }}>
         {content && content.length
           ? content
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, i) => {
-                return (
-                  <CardContent
-                    key={i}
-                    content={ReactHtmlParser(item.content)}
-                  />
-                );
-              })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, i) => {
+              return (
+                <CardContent
+                  key={i}
+                  content={ReactHtmlParser(item.content)}
+                />
+              );
+            })
           : []}
       </div>
       {showExercises && <ExerciseBox week={week} />}
