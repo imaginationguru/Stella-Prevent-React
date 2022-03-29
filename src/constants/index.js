@@ -9,7 +9,7 @@ import Sad from '../assets/images/sad/sad.png';
 import SadActive from '../assets/images/sadActive/sadActive.png';
 import Angry from '../assets/images/angry/angry.png';
 import AngryActive from '../assets/images/angryActive/angryActive.png';
-const isLive = true;
+const isLive = false;
 export default {
   // BASE_URL: isLive
   //   ? 'http://172.24.0.157:4001/api/'
@@ -341,6 +341,6 @@ export default {
     LIGHT_SHADOW_GREEN: '#C9E2DE',
     GREY: '#676767' /* Font Regular */,
     GreenForSlider: '#6FCF97',
-    LightYellow: "#CBCBCB"
+    LightYellow: '#CBCBCB',
   },
 };

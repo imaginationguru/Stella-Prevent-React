@@ -31,6 +31,8 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
 let currentTimeZone = momentZone.tz.guess();
 
 const LineGraphUI = ({xAxis, yAxis, lable}) => {
+  console.log('here====>' + lable, xAxis);
+  console.log('hereYY====>' + lable, yAxis);
   const graphOptions = {
     scales: {
       x: {
@@ -57,6 +59,7 @@ const LineGraphUI = ({xAxis, yAxis, lable}) => {
   };
   const graphOptionsForMood = {
     scales: {
+      maintainAspectRatio: false,
       x: {
         ticks: {
           color: COLORS.WHITE,
@@ -378,7 +381,10 @@ const Report = ({location}) => {
               lable={'Average Daily Mood Report'}
             />
           ) : (
-            <LineGraphUI lable={'Average Daily Mood  Report'} />
+            <LineGraphUI
+              yAxis={[1, 2, 3, 4, 5]}
+              lable={'Average Daily Mood Report'}
+            />
           )}
 
           <Text style={styles.labelText}>Weekly Mood Report</Text>
