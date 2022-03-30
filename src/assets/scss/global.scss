@@ -733,7 +733,7 @@ footer {
 
   .footer-text {
     font-family: 'HKGrotesk-Regular';
-    font-size: 14px;
+    font-size: 13px;
     color: #ffffff;
     margin-bottom: 0px;
   }
@@ -1121,6 +1121,10 @@ button.navbutton {
   span {
     width: 140px;
     flex: 0 0 140px;
+  }
+  
+  img{
+    max-width: 90%;
   }
 }
 

@@ -148,7 +148,7 @@ function moduleOne(state = INITIAL_STATE, action) {
     case ACTION_TYPE.CLEAR_MODULE_ONE:
       return {
         ...state,
-        trackerStatus: action.payload,
+        // trackerStatus: action.payload,
         currentActiveCard: [],
         templateData: [],
         trackerStatus: {
