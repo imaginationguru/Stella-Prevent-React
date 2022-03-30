@@ -1,28 +1,28 @@
 /* eslint-disable prettier/prettier */
 import GLOBALS from '../../constants';
 import RestClient from '../../helpers/RestClient';
-import { loadingAction } from '../common';
-import { sessionExpire } from '../tracker';
-import { getItem, generateUrlParams } from '../../utils/AsyncUtils';
-import { navigatorPush } from '../../config/navigationOptions.web';
-import { epdsModalAction } from '..';
-import { Dimensions } from 'react-native-web';
-import { customAlert } from '../../helpers/commonAlerts.web';
-const { ACTION_TYPE, URL, COLORS, STRINGS } = GLOBALS;
-const { TRY_AGAIN, CHECK_NETWORK } = STRINGS;
+import {loadingAction} from '../common';
+import {sessionExpire} from '../tracker';
+import {getItem, generateUrlParams} from '../../utils/AsyncUtils';
+import {navigatorPush} from '../../config/navigationOptions.web';
+import {epdsModalAction} from '..';
+import {Dimensions} from 'react-native-web';
+import {customAlert} from '../../helpers/commonAlerts.web';
+const {ACTION_TYPE, URL, COLORS, STRINGS} = GLOBALS;
+const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
 import Swal from 'sweetalert2';
-import { getUser } from '../auth';
-import { useSelector } from 'react-redux';
+import {getUser} from '../auth';
+import {useSelector} from 'react-redux';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 var h2p = require('html2plaintext');
-import { store } from '../../store/setup.web';
+import {store} from '../../store/setup.web';
 
 /********************GET CURRENT ACTIVE CARD Data************** */
 export function getCurrentActiveCard(isLoading = true, cb) {
   let userId = getItem('userId');
   const selectedWeeks = store.getState().moduleOne.selectedWeek;
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_CURRENT_ACTIVE_CARD_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_CURRENT_ACTIVE_CARD_REQUEST});
     try {
       if (isLoading) {
         dispatch(loadingAction(true));
@@ -152,7 +152,7 @@ export function checkActiveCard(cb) {
 export function getTemplateData(week, isLoading = true) {
   let userId = getItem('userId');
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_TEMPLATE_DATA_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_TEMPLATE_DATA_REQUEST});
     try {
       if (isLoading) {
         dispatch(loadingAction(true));
@@ -209,7 +209,7 @@ export function getTemplateData(week, isLoading = true) {
 /********************MARK READ************** */
 export function markRead(params, week) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.CARD_MARK_READ_REQUEST });
+    dispatch({type: ACTION_TYPE.CARD_MARK_READ_REQUEST});
     try {
       // dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.MARK_READ, params);
@@ -259,7 +259,7 @@ export function markRead(params, week) {
 /********************MARK COMPLETE************** */
 export function markCompleteCard(params, week, nextDay) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.CARD_MARK_COMPLETE_REQUEST });
+    dispatch({type: ACTION_TYPE.CARD_MARK_COMPLETE_REQUEST});
     try {
       // dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.MARK_COMPLETE, params);
@@ -311,7 +311,7 @@ export function getAssessmentData(assessmentId, id, card_id = 'null') {
   let userId = getItem('userId');
   console.log('getAssessmentData......');
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_ASSESSMENT_DATA_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_ASSESSMENT_DATA_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.getCall(
@@ -368,7 +368,7 @@ export function getAssessmentData(assessmentId, id, card_id = 'null') {
 export function getAssessmentDataSecond(assessmentId2, id, card_id = 'null') {
   let userId = getItem('userId');
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_ASSESSMENT_DATA2_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_ASSESSMENT_DATA2_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.getCall(
@@ -419,7 +419,7 @@ export function getAssessmentDataSecond(assessmentId2, id, card_id = 'null') {
 /********************GET ASSESSMENT CONTENT************** */
 export function getAssessmentContent(assessmentId) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_ASSESSMENT_CONTENT_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_ASSESSMENT_CONTENT_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.getCall(
@@ -471,7 +471,7 @@ export function saveUserAssessment(params, onSubmitMessage, customMsg = '') {
   let assessmentId = params.assessment_id;
   console.log('parms>>>>>>>>>>>>>>params', params, userCardId, assessmentId);
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.SAVE_USER_ASSESSMENT_REQUEST });
+    dispatch({type: ACTION_TYPE.SAVE_USER_ASSESSMENT_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.SAVE_USER_ASSESSMENT, params);
@@ -576,13 +576,70 @@ export function saveUserAssessment(params, onSubmitMessage, customMsg = '') {
   };
 }
 
+/********************SAVE MULTI ASSESSMENT ************** */
+export function saveMultiAssessment(params, onSubmitMessage, customMsg = '') {
+  let userCardId = params.firstAssessment.user_card_id;
+  let assessmentId = params.firstAssessment.assessment_id;
+  console.log('parms>>>>>>>>>>>>>>params', params, userCardId, assessmentId);
+  return async (dispatch) => {
+    dispatch({type: ACTION_TYPE.SAVE_USER_MULTI_ASSESSMENT_REQUEST});
+    try {
+      dispatch(loadingAction(true));
+      let json = await RestClient.postCall(
+        URL.SAVE_USER_MULTI_ASSESSMENT,
+        params,
+      );
+      console.log('json in save assessment MULTI read', json);
+      if (json.code === 200) {
+        console.log('JSON data SAVE USER ASSESSMENT >>>>MULTI>>>>>', json);
+        const submitMsg = customMsg == '' ? h2p(onSubmitMessage) : customMsg;
+        if (submitMsg !== undefined && submitMsg !== null && submitMsg !== '') {
+          customAlert(submitMsg, 'success');
+        } else {
+          customAlert(json.message, 'success');
+        }
+
+        dispatch(getUserMultiAssessment(userCardId, assessmentId));
+        dispatch(loadingAction(false));
+      } else {
+        if (json.code === 400) {
+          dispatch({
+            type: ACTION_TYPE.ERROR,
+            payload: json.message,
+          });
+        }
+        if (json.code === 417) {
+          console.log('Session expierd>>>>>>>save user assessment');
+          dispatch(sessionExpire(json.message));
+
+          dispatch(loadingAction(false));
+        } else {
+          dispatch({
+            type: ACTION_TYPE.SAVE_USER_MULTIPLE_ASSESSMENT_FAIL,
+          });
+        }
+      }
+    } catch (error) {
+      console.log('erroe>> csave USER ASSESSMENT>>>>>>>>>>>>>>', error);
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+      });
+      dispatch({
+        type: ACTION_TYPE.SAVE_USER_MULTIPLE_ASSESSMENT_FAIL,
+        payload: error,
+      });
+    }
+  };
+}
+
 /********************GET USER ASSESSMENT ************** */
 export function getUserAssessment(userCardId, assessmentId) {
   return async (dispatch, getState) => {
-    console.log(getState().authReducer.loginData.user._id, "nbmbmbmb");
+    console.log(getState().authReducer.loginData.user._id, 'nbmbmbmb');
     //  let user_id = getState().authReducer.loginData.user._id;
     let user_id = getItem('userId');
-    dispatch({ type: ACTION_TYPE.GET_USER_ASSESSMENT_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_USER_ASSESSMENT_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.getCall(
@@ -630,6 +687,59 @@ export function getUserAssessment(userCardId, assessmentId) {
   };
 }
 
+/********************GET  USER MULTI ASSESSMENT ************** */
+export function getUserMultiAssessment(userCardId, assessmentId) {
+  return async (dispatch, getState) => {
+    console.log(getState().authReducer.loginData.user._id, 'nbmbmbmb');
+    //  let user_id = getState().authReducer.loginData.user._id;
+    let user_id = getItem('userId');
+    dispatch({type: ACTION_TYPE.GET_USER_MULTI_ASSESSMENT_REQUEST});
+    try {
+      dispatch(loadingAction(true));
+      let json = await RestClient.getCall(
+        `${URL.GET_USER_MULTI_ASSESSMENT}/${userCardId}/${assessmentId}/${user_id}`,
+      );
+      if (json.code === 200) {
+        console.log('JSON data gUSER  multi ASSESSMENT>>>>>>>>>', json);
+        dispatch({
+          type: ACTION_TYPE.GET_USER_MULTI_ASSESSMENT_SUCCESS,
+          payload: json.data,
+        });
+        dispatch(loadingAction(false));
+      } else {
+        if (json.code === 400) {
+          dispatch({
+            type: ACTION_TYPE.ERROR,
+            payload: json.message,
+          });
+        }
+        if (json.code === 417) {
+          console.log('Session expierd>>>>>>>>>>get user assessment');
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
+          dispatch(loadingAction(false));
+        } else {
+          dispatch({
+            type: ACTION_TYPE.GET_USER_MULTI_ASSESSMENT_FAIL,
+          });
+        }
+      }
+    } catch (error) {
+      console.log('erroe>>gGET USER ASSESSMENT>>>>>>>>>>>>>>', error);
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+      });
+      dispatch({
+        type: ACTION_TYPE.GET_USER_MULTI_ASSESSMENT_FAIL,
+        payload: error,
+      });
+    }
+  };
+}
 // /********************DELETE USER ASSESSMENT DATA ************** */
 export function deleteUserAssessmentDataNew(
   content_id,
@@ -642,14 +752,14 @@ export function deleteUserAssessmentDataNew(
   let content_ID3 = content_id3 !== undefined ? '&id3=' + content_id3 : '';
 
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.DELETE_USER_ASSESSMENT_DATA_REQUEST });
+    dispatch({type: ACTION_TYPE.DELETE_USER_ASSESSMENT_DATA_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.deleteCall(
         // eslint-disable-next-line prettier/prettier
         `${URL.DELETE_USER_ASSESSMENT_DATA}/${content_id}/${userCardId}` +
-        content_ID2 +
-        content_ID3,
+          content_ID2 +
+          content_ID3,
       );
       console.log('deleteJSON', json);
       if (json.code === 200) {
@@ -697,14 +807,14 @@ export function deleteUserAssessmentData(
 ) {
   return async (dispatch) => {
     console.log('id after 0 >>>>>>>>delete', idAfter0);
-    dispatch({ type: ACTION_TYPE.DELETE_USER_ASSESSMENT_DATA_REQUEST });
+    dispatch({type: ACTION_TYPE.DELETE_USER_ASSESSMENT_DATA_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = '';
       if (idAfter0.length) {
         json = await RestClient.deleteCall(
           `${URL.DELETE_USER_ASSESSMENT_DATA}/${content_id}/${userCardId}` +
-          generateUrlParams(idAfter0),
+            generateUrlParams(idAfter0),
         );
       } else {
         json = await RestClient.deleteCall(
@@ -754,7 +864,7 @@ export function rearrangeAssessments(params, onSubmitMessage, customMsg = '') {
   let assessmentId = params.assessment_id;
   console.log('parms>>>>>>>>>REAARNAGE>>>>>params', params);
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.REARRANGE_ASSESSMENT_REQUEST });
+    dispatch({type: ACTION_TYPE.REARRANGE_ASSESSMENT_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.REARRANGE_ASSESSMENT, params);
@@ -821,13 +931,73 @@ export function rearrangeAssessments(params, onSubmitMessage, customMsg = '') {
   };
 }
 
+/********************REARRANGE ASSESSMENT ************** */
+export function rearrangeMultiAssessments(
+  params,
+  onSubmitMessage,
+  customMsg = '',
+) {
+  let userCardId = params.user_card_id;
+  let assessmentId = params.assessment_id;
+  console.log('parms>>>>>>>>>REAARNAGE>>MULTI>>>params', params);
+  return async (dispatch) => {
+    dispatch({type: ACTION_TYPE.REARRANGE_MULTI_ASSESSMENT_REQUEST});
+    try {
+      dispatch(loadingAction(true));
+      let json = await RestClient.postCall(
+        URL.REARRANGE_MULTI_ASSESSMENT,
+        params,
+      );
+      if (json.code === 200) {
+        console.log('JSON dataREARRANGE multi USER ASSESSMENT >>>>>>>>>', json);
+        const submitMsg = customMsg == '' ? h2p(onSubmitMessage) : customMsg;
+        if (submitMsg !== undefined && submitMsg !== null && submitMsg !== '') {
+          customAlert(submitMsg, 'success');
+        } else {
+          customAlert(json.message, 'success');
+        }
+
+        dispatch(getUserMultiAssessment(userCardId, assessmentId));
+        dispatch(loadingAction(false));
+      } else {
+        if (json.code === 400) {
+          console.log('eREARRANGE ASSESSMENTS>>>>400>>>>>>>>>', json.message);
+          dispatch({
+            type: ACTION_TYPE.ERROR,
+            payload: json.message,
+          });
+        }
+        if (json.code === 417) {
+          console.log('Session expierd>>>>>>>>>>rearrange assessment');
+          dispatch(sessionExpire(json.message));
+          dispatch(loadingAction(false));
+        } else {
+          dispatch({
+            type: ACTION_TYPE.REARRANGE_MULTI_ASSESSMENT_FAIL,
+          });
+        }
+      }
+    } catch (error) {
+      console.log('erroeREAARANGE ASSEMENMENT>>>>>>>>>>>>>>', error);
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+      });
+      dispatch({
+        type: ACTION_TYPE.REARRANGE_MULTI_ASSESSMENT_FAIL,
+        payload: error,
+      });
+    }
+  };
+}
+
 /********************UPDATE USER ASSESSMENT ** INPUT************ */
 export function updateUserAssessment(params, msg = 'true') {
   // let userCardId = params.user_card_id;
   // let assessmentId = params.assessment_id;
   console.log('parms>>>>>>>>update>>>>params', params, msg);
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.UPDATE_USER_ASSESSMENT_REQUEST });
+    dispatch({type: ACTION_TYPE.UPDATE_USER_ASSESSMENT_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.UPDATE_USER_ASSESSMENT, params);
@@ -888,7 +1058,7 @@ export function addUserRating(params, week) {
   let userId = params.user_id;
   let programId = params.program_id;
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.ADD_USER_RATING_REQUEST });
+    dispatch({type: ACTION_TYPE.ADD_USER_RATING_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.ADD_USER_RATING, params);
@@ -948,7 +1118,7 @@ export function addUserRating(params, week) {
 /********************GET USER ASSESSMENT ************** */
 export function getUserRating(userId, programId, week) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_USER_RATING_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_USER_RATING_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.getCall(
@@ -999,7 +1169,7 @@ export function getUserRating(userId, programId, week) {
 /********************UPDATE USER RATING LIKE ASSESSMENT ************** */
 export function updateUserRating(params) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.UPDATE_USER_RATING_REQUEST });
+    dispatch({type: ACTION_TYPE.UPDATE_USER_RATING_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.UPDATE_USER_RATING, params);
@@ -1058,7 +1228,7 @@ export function updateUserRating(params) {
 /********************GET USER get-userQuestionInfo ************** */
 export function getUserQuestionInfo(params) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_USER_QUESTION_INFO_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_USER_QUESTION_INFO_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.GET_USER_QUESTION_INFO, params);
@@ -1128,7 +1298,7 @@ export function savePatientAssessment(
     card_id: params[0].card_id,
   };
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.SAVE_PATIENT_ASSESSMENT_REQUEST });
+    dispatch({type: ACTION_TYPE.SAVE_PATIENT_ASSESSMENT_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.SAVE_PATIENT_ASSESSMENT, params);
@@ -1232,7 +1402,7 @@ export function getProgramFiles() {
   let programId = getItem('programId');
   let hospitalId = getItem('hospitalId');
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_PROGRAM_FILES_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_PROGRAM_FILES_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.getCall(
@@ -1325,7 +1495,7 @@ export function Addpayment(params, componentId) {
         // });
         console.log('Addpayment', json);
         dispatch(getUser(postdata));
-        navigatorPush({ componentId, screenName: 'Dashboard' });
+        navigatorPush({componentId, screenName: 'Dashboard'});
       } else {
         if (json.code === 400) {
           dispatch({
@@ -1347,7 +1517,7 @@ export function Addpayment(params, componentId) {
 
 export function contactUs(params) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.SAVE_CONTACT_REQUEST });
+    dispatch({type: ACTION_TYPE.SAVE_CONTACT_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.CONTACT_US, params);
