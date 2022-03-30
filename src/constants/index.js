@@ -9,7 +9,7 @@ import Sad from '../assets/images/sad/sad.png';
 import SadActive from '../assets/images/sadActive/sadActive.png';
 import Angry from '../assets/images/angry/angry.png';
 import AngryActive from '../assets/images/angryActive/angryActive.png';
-const isLive = true;
+const isLive = false;
 export default {
   BASE_URL: isLive
     ? 'http://172.24.0.157:4001/api/'
@@ -83,6 +83,9 @@ export default {
     GET_WEEKLY_SUMMARY_API: 'get-alltrackerdata',
     CONTACT_US: 'contact-us',
     GET_SUBJECTS: 'list-subjects',
+    SAVE_USER_MULTI_ASSESSMENT: 'save-user-multiple-assessment',
+    GET_USER_MULTI_ASSESSMENT: 'get-user-multiple-assessments',
+    REARRANGE_MULTI_ASSESSMENT: 'rearrange-multiple-assessment',
   },
 
   /*************************FONTS************************** */
@@ -303,6 +306,16 @@ export default {
     SAVE_CONTACT_REQUEST: 'SAVE_CONTACT_REQUEST',
     SAVE_CONTACT_SUCCESS: 'SAVE_CONTACT_SUCCESS',
     SAVE_CONTACT_FAIL: 'SAVE_CONTACT_FAIL',
+    SAVE_USER_MULTI_ASSESSMENT_REQUEST: 'SAVE_USER_MULTI_ASSESSMENT_REQUEST',
+    SAVE_USER_MULTI_ASSESSMENT_SUCCESS: 'SAVE_USER_MULTI_ASSESSMENT_SUCCESS',
+    SAVE_USER_MULTI_ASSESSMENT_FAIL: 'SAVE_USER_MULTI_ASSESSMENT_FAIL',
+    GET_USER_MULTI_ASSESSMENT_REQUEST: 'GET_USER_MULTI_ASSESSMENT_REQUEST',
+    GET_USER_MULTI_ASSESSMENT_SUCCESS: 'GET_USER_MULTI_ASSESSMENT_SUCCESS',
+    GET_USER_MULTI_ASSESSMENT_FAIL: 'GET_USER_MULTI_ASSESSMENT_FAIL',
+
+    REARRANGE_MULTI_ASSESSMENT_REQUEST: 'REARRANGE_MULTI_ASSESSMENT_REQUEST',
+    REARRANGE_MULTI_ASSESSMENT_SUCCESS: 'REARRANGE_MULTI_ASSESSMENT_SUCCESS',
+    REARRANGE_MULTI_ASSESSMENT_FAIL: 'REARRANGE_MULTI_ASSESSMENT_FAIL',
   },
 
   /***************************COLORS*************************** */
