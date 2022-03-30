@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import bookmark from '../../assets/images/bookmark.svg';
 import GLOBALS from '../../constants';
 import circleWithPen from '../../assets/images/circleWithPen.svg';
@@ -6,12 +6,12 @@ import right from '../../assets/images/right.svg';
 import cross from '../../assets/images/cross.svg';
 import styles from './styles';
 
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
-const {COLORS} = GLOBALS;
+const { COLORS } = GLOBALS;
 const data = [
   {
     id: 1,
@@ -23,7 +23,7 @@ const data = [
   },
 ];
 const InputBoxWithContent = (props) => {
-  const {title, placeholder, value, onChange, style} = props;
+  const { title, placeholder, value, onChange, style } = props;
   return (
     <div
       style={{
@@ -46,11 +46,10 @@ const InputBoxWithContent = (props) => {
           {title}
         </p>
       </div>
-      <div style={{width: DEVICE_WIDTH > 767 ? '78%' : '68%'}}>
+      <div style={{ width: DEVICE_WIDTH > 767 ? '78%' : '68%' }}>
         <form noValidate>
           <textarea
             type="description"
-            // className="f-field"
             value={value}
             onChange={onChange}
             required
@@ -76,7 +75,6 @@ const EightTemplate = (props) => {
   const [thoughts, setThoughts] = useState('');
   const [behaviour, setBehaviour] = useState('');
   const [selected, setSelected] = useState([]);
-  console.log('all>>>>>>', situation, emotions, thoughts, behaviour);
 
   const updateYESNO = (data = {}, arr = []) => {
     if (arr.length) {
@@ -208,16 +206,16 @@ const EightTemplate = (props) => {
               const isYES =
                 selected && selected.length
                   ? selected.find((val) => {
-                      return val.id === item.id && val.value === 'YES';
-                    })
+                    return val.id === item.id && val.value === 'YES';
+                  })
                     ? true
                     : false
                   : false;
               const isNO =
                 selected && selected.length
                   ? selected.find(
-                      (val) => val.id === item.id && val.value === 'NO',
-                    )
+                    (val) => val.id === item.id && val.value === 'NO',
+                  )
                     ? true
                     : false
                   : false;
@@ -232,7 +230,7 @@ const EightTemplate = (props) => {
                     }}>
                     <div
                       onClick={() => {
-                        updateYESNO({id: item.id, value: 'YES'}, selected);
+                        updateYESNO({ id: item.id, value: 'YES' }, selected);
                       }}
                       style={{
                         backgroundColor: isYES
@@ -252,7 +250,7 @@ const EightTemplate = (props) => {
                     </div>
                     <div
                       onClick={() => {
-                        updateYESNO({id: item.id, value: 'NO'}, selected);
+                        updateYESNO({ id: item.id, value: 'NO' }, selected);
                       }}
                       style={{
                         backgroundColor: isNO
@@ -275,7 +273,7 @@ const EightTemplate = (props) => {
                 </div>
               );
             })}
-          <div style={{width: '20%'}}>
+          <div style={{ width: '20%' }}>
             <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
               Save
             </button>

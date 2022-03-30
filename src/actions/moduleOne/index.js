@@ -32,36 +32,15 @@ export function getCurrentActiveCard(isLoading = true, cb) {
         `${URL.GET_CURRENT_ACTIVE_CARD}/${userId}`,
       );
       if (json.code === 200) {
-        console.log('get current active card JSON>', json);
-        console.log('get current active card 200 JSON Data>', json.data);
-        console.log('get current active card datataas200>', json.data.data);
         if (cb) {
           cb(json.data);
         }
         dispatch({
           type: ACTION_TYPE.GET_CURRENT_ACTIVE_CARD_SUCCESS,
           payload: json.data,
-          //  payload: json.data.data,
         });
 
         dispatch(getTemplateData(selectedWeeks, isLoading));
-        // console.log(selectedWeeks, json.data, 'Setting data');
-        // dispatch({
-        //   type: 'GET_SELECTED_DAY',
-        //   payload:
-        //     json.data ? json.data.day : 1,
-        // });
-        {
-          /***on reload same card id exits */
-          //   //    payload:
-          //   //  json.data.data && json.data.data.length
-          //   //    ? json.data.data[0]._id
-          //   //    : '',
-        }
-        // dispatch({
-        //   type: 'GET_SELECTED_CARD_ID',
-        //   payload: json.data && json.data.length ? json.data._id : '',
-        // });
       } else {
         if (json.code === 400) {
           dispatch({
@@ -70,12 +49,8 @@ export function getCurrentActiveCard(isLoading = true, cb) {
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd=>>>>>>>>>>>get current active card');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -86,7 +61,6 @@ export function getCurrentActiveCard(isLoading = true, cb) {
       dispatch(loadingAction(false));
     } catch (error) {
       dispatch(loadingAction(false));
-      console.log('get current active card error>>>>>>>>>>>', error);
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -108,7 +82,6 @@ export function checkActiveCard(cb) {
         `${URL.GET_CURRENT_ACTIVE_CARD}/${userId}`,
       );
       if (json.code === 200) {
-        console.log('get current active card 200>', json.data);
         if (cb) {
           cb(json.data);
         }
@@ -120,12 +93,8 @@ export function checkActiveCard(cb) {
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd=>>>>>>>>>>>get current active card');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -136,7 +105,6 @@ export function checkActiveCard(cb) {
       dispatch(loadingAction(false));
     } catch (error) {
       dispatch(loadingAction(false));
-      console.log('get current active card error>>>>>>>>>>>', error);
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -161,9 +129,7 @@ export function getTemplateData(week, isLoading = true) {
       let json = await RestClient.getCall(
         `${URL.GET_USER_CARDS_BY_WEEK}/${week}/${userId}`,
       );
-      console.log('json in actions card by week', json);
       if (json.code === 200) {
-        console.log('JSON data get Template >>>>>>>>>', json.data);
         dispatch({
           type: ACTION_TYPE.GET_TEMPLATE_DATA_SUCCESS,
           payload: json.data,
@@ -190,10 +156,6 @@ export function getTemplateData(week, isLoading = true) {
         }
       }
     } catch (error) {
-      console.log(
-        'erroe>>get template cards data>>>get user cards by week>>>>>>>>>>>',
-        error,
-      );
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -211,15 +173,12 @@ export function markRead(params, week) {
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.CARD_MARK_READ_REQUEST});
     try {
-      // dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.MARK_READ, params);
-      console.log('json in mark read', json);
       if (json.code === 200) {
         dispatch({
           type: ACTION_TYPE.CARD_MARK_READ_SUCCESS,
           payload: json.data,
         });
-        // dispatch(getCurrentActiveCard());
         dispatch(loadingAction(false));
       } else {
         if (json.code === 400) {
@@ -229,12 +188,8 @@ export function markRead(params, week) {
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd in mark read>>>>>>>>');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -243,7 +198,6 @@ export function markRead(params, week) {
         }
       }
     } catch (error) {
-      console.log('erroe>> cards read data>>>>>>>>>>>>>>', error);
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -261,7 +215,6 @@ export function markCompleteCard(params, week, nextDay) {
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.CARD_MARK_COMPLETE_REQUEST});
     try {
-      // dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.MARK_COMPLETE, params);
       if (json.code === 200) {
         dispatch({
@@ -282,10 +235,7 @@ export function markCompleteCard(params, week, nextDay) {
         }
         if (json.code === 417) {
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -309,13 +259,11 @@ export function markCompleteCard(params, week, nextDay) {
 /********************GET ASSESSMENT DATA************** */
 export function getAssessmentData(assessmentId, id, card_id = 'null') {
   let userId = getItem('userId');
-  console.log('getAssessmentData......');
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.GET_ASSESSMENT_DATA_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.getCall(
-        // `${URL.GET_ASSESSMENT_DATA}/${assessmentId}/${userId}/`,
         `${URL.GET_ASSESSMENT_DATA}/${assessmentId}/${userId}/${card_id}`,
       );
 
@@ -324,7 +272,6 @@ export function getAssessmentData(assessmentId, id, card_id = 'null') {
           type: ACTION_TYPE.GET_ASSESSMENT_DATA_SUCCESS,
           payload: json.data,
         });
-        console.log('get Assesment data', json.data);
         if (id) {
           dispatch(getUserAssessment(id, assessmentId));
         }
@@ -338,17 +285,12 @@ export function getAssessmentData(assessmentId, id, card_id = 'null') {
         }
         if (json.code === 417) {
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
             type: ACTION_TYPE.GET_ASSESSMENT_DATA_FAIL,
           });
-
-          // toast(STRINGS.SOMETHING_WENT_WRONG);
         }
       }
     } catch (error) {
@@ -392,10 +334,7 @@ export function getAssessmentDataSecond(assessmentId2, id, card_id = 'null') {
         }
         if (json.code === 417) {
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -441,10 +380,7 @@ export function getAssessmentContent(assessmentId) {
         }
         if (json.code === 417) {
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -469,76 +405,18 @@ export function getAssessmentContent(assessmentId) {
 export function saveUserAssessment(params, onSubmitMessage, customMsg = '') {
   let userCardId = params.user_card_id;
   let assessmentId = params.assessment_id;
-  console.log('parms>>>>>>>>>>>>>>params', params, userCardId, assessmentId);
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.SAVE_USER_ASSESSMENT_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.SAVE_USER_ASSESSMENT, params);
-      console.log('json in save assessment read', json);
       if (json.code === 200) {
-        console.log('JSON data SAVE USER ASSESSMENT >>>>>>>>>', json);
         const submitMsg = customMsg == '' ? h2p(onSubmitMessage) : customMsg;
         if (submitMsg !== undefined && submitMsg !== null && submitMsg !== '') {
           customAlert(submitMsg, 'success');
         } else {
           customAlert(json.message, 'success');
         }
-        // dispatch({
-        //   type: ACTION_TYPE.SAVE_USER_ASSESSMENT_SUCCESS,
-        //   payload: json.data,
-        // });
-        // if (
-        //   submitMsg !== undefined &&
-        //   submitMsg !== null &&
-        //   submitMsg !== '' &&
-        //   submitMsg.length > 100
-        // )
-        {
-          /* 
-           Swal.fire({
-            text: submitMsg,
-            timer: 7000,
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            confirmButtonColor: COLORS.DARK_GREEN,
-            width: DEVICE_WIDTH > 1000 ? '25vw' : '60vw',
-          });
-          */
-        }
-        // else if (
-        //   submitMsg !== undefined &&
-        //   submitMsg !== null &&
-        //   submitMsg !== '' &&
-        //   submitMsg.length <= 100
-        // )
-        // {
-        //   dispatch({
-        //     type: ACTION_TYPE.SUCCESS_MESSAGE,
-        //     payload: submitMsg,
-        //   });
-        // } else {
-        //   dispatch({
-        //     type: ACTION_TYPE.SUCCESS_MESSAGE,
-        //     payload: json.message,
-        //   });
-        // }
-        /*
-         {
-          onSubmitMessage !== undefined &&
-          onSubmitMessage !== null &&
-          onSubmitMessage !== ''
-            ? dispatch({
-                type: ACTION_TYPE.SUCCESS_MESSAGE,
-                payload: onSubmitMessage,
-              })
-            : dispatch({
-                type: ACTION_TYPE.SUCCESS_MESSAGE,
-                payload: json.message,
-              });
-        }
-        */
-
         dispatch(getUserAssessment(userCardId, assessmentId));
         dispatch(loadingAction(false));
       } else {
@@ -549,12 +427,8 @@ export function saveUserAssessment(params, onSubmitMessage, customMsg = '') {
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd>>>>>>>save user assessment');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -563,7 +437,6 @@ export function saveUserAssessment(params, onSubmitMessage, customMsg = '') {
         }
       }
     } catch (error) {
-      console.log('erroe>> csave USER ASSESSMENT>>>>>>>>>>>>>>', error);
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -637,7 +510,6 @@ export function saveMultiAssessment(params, onSubmitMessage, customMsg = '') {
 export function getUserAssessment(userCardId, assessmentId) {
   return async (dispatch, getState) => {
     console.log(getState().authReducer.loginData.user._id, 'nbmbmbmb');
-    //  let user_id = getState().authReducer.loginData.user._id;
     let user_id = getItem('userId');
     dispatch({type: ACTION_TYPE.GET_USER_ASSESSMENT_REQUEST});
     try {
@@ -646,7 +518,6 @@ export function getUserAssessment(userCardId, assessmentId) {
         `${URL.GET_USER_ASSESSMENTS}/${userCardId}/${assessmentId}/${user_id}`,
       );
       if (json.code === 200) {
-        console.log('JSON data gUSER ASSESSMENT>>>>>>>>>', json);
         dispatch({
           type: ACTION_TYPE.GET_USER_ASSESSMENT_SUCCESS,
           payload: json.data,
@@ -660,12 +531,8 @@ export function getUserAssessment(userCardId, assessmentId) {
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd>>>>>>>>>>get user assessment');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -674,7 +541,6 @@ export function getUserAssessment(userCardId, assessmentId) {
         }
       }
     } catch (error) {
-      console.log('erroe>>gGET USER ASSESSMENT>>>>>>>>>>>>>>', error);
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -756,12 +622,10 @@ export function deleteUserAssessmentDataNew(
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.deleteCall(
-        // eslint-disable-next-line prettier/prettier
         `${URL.DELETE_USER_ASSESSMENT_DATA}/${content_id}/${userCardId}` +
           content_ID2 +
           content_ID3,
       );
-      console.log('deleteJSON', json);
       if (json.code === 200) {
         dispatch(getUserAssessment(userCardId, assessment_id));
         dispatch(loadingAction(false));
@@ -774,10 +638,7 @@ export function deleteUserAssessmentDataNew(
         }
         if (json.code === 417) {
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -806,7 +667,6 @@ export function deleteUserAssessmentData(
   idAfter0 = [],
 ) {
   return async (dispatch) => {
-    console.log('id after 0 >>>>>>>>delete', idAfter0);
     dispatch({type: ACTION_TYPE.DELETE_USER_ASSESSMENT_DATA_REQUEST});
     try {
       dispatch(loadingAction(true));
@@ -821,7 +681,6 @@ export function deleteUserAssessmentData(
           `${URL.DELETE_USER_ASSESSMENT_DATA}/${content_id}/${userCardId}`,
         );
       }
-      console.log('deleteJSON', json);
       if (json.code === 200) {
         dispatch(getUserAssessment(userCardId, assessment_id));
         dispatch(loadingAction(false));
@@ -834,10 +693,7 @@ export function deleteUserAssessmentData(
         }
         if (json.code === 417) {
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -862,54 +718,31 @@ export function deleteUserAssessmentData(
 export function rearrangeAssessments(params, onSubmitMessage, customMsg = '') {
   let userCardId = params.user_card_id;
   let assessmentId = params.assessment_id;
-  console.log('parms>>>>>>>>>REAARNAGE>>>>>params', params);
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.REARRANGE_ASSESSMENT_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.REARRANGE_ASSESSMENT, params);
       if (json.code === 200) {
-        console.log('JSON dataREARRANGE USER ASSESSMENT >>>>>>>>>', json);
         const submitMsg = customMsg == '' ? h2p(onSubmitMessage) : customMsg;
         if (submitMsg !== undefined && submitMsg !== null && submitMsg !== '') {
           customAlert(submitMsg, 'success');
         } else {
           customAlert(json.message, 'success');
         }
-        // dispatch({
-        //   type: ACTION_TYPE.REARRANGE_ASSESSMENT_SUCCESS,
-        //   payload: json.data,
-        // });
-        // {
-        //   onSubmitMessage !== undefined &&
-        //   onSubmitMessage !== null &&
-        //   onSubmitMessage !== ''
-        //     ? dispatch({
-        //         type: ACTION_TYPE.SUCCESS_MESSAGE,
-        //         payload: onSubmitMessage,
-        //       })
-        //     : dispatch({
-        //         type: ACTION_TYPE.SUCCESS_MESSAGE,
-        //         payload: json.message,
-        //       });
-        // }
+
         dispatch(getUserAssessment(userCardId, assessmentId));
         dispatch(loadingAction(false));
       } else {
         if (json.code === 400) {
-          console.log('eREARRANGE ASSESSMENTS>>>>400>>>>>>>>>', json.message);
           dispatch({
             type: ACTION_TYPE.ERROR,
             payload: json.message,
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd>>>>>>>>>>rearrange assessment');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -918,7 +751,6 @@ export function rearrangeAssessments(params, onSubmitMessage, customMsg = '') {
         }
       }
     } catch (error) {
-      console.log('erroeREAARANGE ASSEMENMENT>>>>>>>>>>>>>>', error);
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -993,17 +825,12 @@ export function rearrangeMultiAssessments(
 
 /********************UPDATE USER ASSESSMENT ** INPUT************ */
 export function updateUserAssessment(params, msg = 'true') {
-  // let userCardId = params.user_card_id;
-  // let assessmentId = params.assessment_id;
-  console.log('parms>>>>>>>>update>>>>params', params, msg);
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.UPDATE_USER_ASSESSMENT_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.UPDATE_USER_ASSESSMENT, params);
-      console.log('json in update assessment read', json);
       if (json.code === 200) {
-        console.log('JSON datupdate user assessmnet>>>>>>>>>', json);
         dispatch({
           type: ACTION_TYPE.UPDATE_USER_ASSESSMENT_SUCCESS,
           payload: json.data,
@@ -1015,23 +842,17 @@ export function updateUserAssessment(params, msg = 'true') {
           });
         }
 
-        //  dispatch(getUserAssessment(userCardId, assessmentId));
         dispatch(loadingAction(false));
       } else {
         if (json.code === 400) {
-          console.log('eREupdate user assessment>>400>>>>>>>>>', json.message);
           dispatch({
             type: ACTION_TYPE.ERROR,
             payload: json.message,
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd>>>>>>save user assessment');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -1040,7 +861,6 @@ export function updateUserAssessment(params, msg = 'true') {
         }
       }
     } catch (error) {
-      console.log('erroeupdate userassessment>>>>>>>>>>>>>>', error);
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -1062,38 +882,25 @@ export function addUserRating(params, week) {
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.ADD_USER_RATING, params);
-      console.log('json in save assessment read', json);
       if (json.code === 200) {
-        console.log('JSON data SAVE USER ASSESSMENT >>>>>>>>>', json);
         dispatch({
           type: ACTION_TYPE.ADD_USER_RATING_SUCCESS,
           payload: json.data,
         });
-        // dispatch({
-        //   type: ACTION_TYPE.SUCCESS_MESSAGE,
-        //   payload: json.message,
-        // });
+
         dispatch(getUserRating(userId, programId, week));
 
         dispatch(loadingAction(false));
       } else {
         if (json.code === 400) {
-          console.log(
-            'erroe>> csave USER ASSESSMENT>>>>>400>>>>>>>>>',
-            json.message,
-          );
           dispatch({
             type: ACTION_TYPE.ERROR,
             payload: json.message,
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd>>>>>>>save user assessment');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -1102,7 +909,6 @@ export function addUserRating(params, week) {
         }
       }
     } catch (error) {
-      console.log('erroe>> csave USER ASSESSMENT>>>>>>>>>>>>>>', error);
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -1125,7 +931,6 @@ export function getUserRating(userId, programId, week) {
         `${URL.GET_USER_RATING}/${userId}/${programId}/${week}`,
       );
       if (json.code === 200) {
-        console.log('JSON data gUSER ASSESSMENT>>>>>>>>>', json);
         dispatch({
           type: ACTION_TYPE.GET_USER_RATING_SUCCESS,
           payload: json.data,
@@ -1139,12 +944,8 @@ export function getUserRating(userId, programId, week) {
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd>>>>>>>>>>get user assessment');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -1153,7 +954,6 @@ export function getUserRating(userId, programId, week) {
         }
       }
     } catch (error) {
-      console.log('erroe>>gGET USER ARATING>>>>>>>>>>>>>>', error);
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -1173,37 +973,23 @@ export function updateUserRating(params) {
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.UPDATE_USER_RATING, params);
-      console.log('json in save assessment read', json);
       if (json.code === 200) {
-        console.log('JSON data SAVE USER ASSESSMENT >>>>>>>>>', json);
         dispatch({
           type: ACTION_TYPE.UPDATE_USER_RATING_SUCCESS,
           payload: json.data,
         });
-        // dispatch({
-        //   type: ACTION_TYPE.SUCCESS_MESSAGE,
-        //   payload: json.message,
-        // });
 
         dispatch(loadingAction(false));
       } else {
         if (json.code === 400) {
-          console.log(
-            'erroe>> csave USER ASSESSMENT>>>>>400>>>>>>>>>',
-            json.message,
-          );
           dispatch({
             type: ACTION_TYPE.ERROR,
             payload: json.message,
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd>>>>>>>save user assessment');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -1212,7 +998,6 @@ export function updateUserRating(params) {
         }
       }
     } catch (error) {
-      console.log('erroe>> csave USER ASSESSMENT>>>>>>>>>>>>>>', error);
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -1233,7 +1018,6 @@ export function getUserQuestionInfo(params) {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.GET_USER_QUESTION_INFO, params);
       if (json.code === 200) {
-        console.log('JSON data get-userQuestionInfo>>>>>>>>>', json.data);
         dispatch({
           type: ACTION_TYPE.GET_USER_QUESTION_INFO_SUCCESS,
           payload: json.data,
@@ -1247,12 +1031,8 @@ export function getUserQuestionInfo(params) {
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd>>>>>>>>>>get-userQuestionInfo');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -1262,7 +1042,6 @@ export function getUserQuestionInfo(params) {
         }
       }
     } catch (error) {
-      console.log('erroe>>gGET get-userQuestionInfo>>>>>>>>>>>>>', error);
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -1285,12 +1064,6 @@ export function savePatientAssessment(
   cb,
   _id,
 ) {
-  console.log(
-    'params save patient assessment',
-    JSON.stringify(params),
-    'message',
-    message,
-  );
   let getParams = {
     assessment_id: assessmentId,
     user_id: getItem('userId'),
@@ -1302,9 +1075,7 @@ export function savePatientAssessment(
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.SAVE_PATIENT_ASSESSMENT, params);
-      console.log('json in save assessment read', json);
       if (json.code === 200) {
-        console.log('JSON data SAVE patient ASSESSMENT >>>>>>>>>', json);
         dispatch({
           type: ACTION_TYPE.SAVE_PATIENT_ASSESSMENT_SUCCESS,
           payload: json.data,
@@ -1313,12 +1084,7 @@ export function savePatientAssessment(
           if (message && message.length) {
             const submitMsg = h2p(message);
             customAlert(submitMsg, 'success');
-            // customAlert(message,"success")
 
-            // dispatch({
-            //   type: ACTION_TYPE.SUCCESS_MESSAGE,
-            //   payload: message,
-            // });
             if (isEPDS) {
               dispatch(epdsModalAction(false));
               dispatch({
@@ -1326,42 +1092,24 @@ export function savePatientAssessment(
                 payload: json.data[0].userInfo,
               });
               cb();
-              // navigatorPush({
-              //   screenName: 'DailyLearningWeeks',
-              //   passProps: 1,
-              // });
             }
           } else {
             customAlert(json.message, 'success');
-            // dispatch({
-            //   type: ACTION_TYPE.SUCCESS_MESSAGE,
-            //   payload: json.message,
-            // });
           }
         }
-        // if (isEPDS) {
-        //   dispatch(epdsModalAction(false));
-        // }
+
         dispatch(getUserQuestionInfo(getParams));
         dispatch(loadingAction(false));
       } else {
         if (json.code === 400) {
-          console.log(
-            'erroe>> csave patient ASSESSMENT>>>>>400>>>>>>>>>',
-            json.message,
-          );
           dispatch({
             type: ACTION_TYPE.ERROR,
             payload: json.message,
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd>>>>>>>save user assessment');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -1370,7 +1118,6 @@ export function savePatientAssessment(
         }
       }
     } catch (error) {
-      console.log('erroe>> csave USER ASSESSMENT>>>>>>>>>>>>>>', error);
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -1423,10 +1170,7 @@ export function getProgramFiles() {
         }
         if (json.code === 417) {
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -1454,7 +1198,6 @@ export function getPlans() {
     try {
       let json = await RestClient.getCall(`${URL.GET_PLANS_LIST}`);
       if (json.code === 200) {
-        console.log('getPlanData', json);
         dispatch({
           type: ACTION_TYPE.GET_PLANS,
           payload: json.data,
@@ -1465,6 +1208,14 @@ export function getPlans() {
             type: ACTION_TYPE.ERROR,
             payload: json.message,
           });
+        }
+        if (json.code === 417) {
+          dispatch(sessionExpire(json.message));
+          dispatch({
+            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+            payload: json.message,
+          });
+          dispatch(loadingAction(false));
         }
       }
     } catch (error) {
@@ -1477,7 +1228,6 @@ export function getPlans() {
 }
 
 export function Addpayment(params, componentId) {
-  console.log('add payment');
   return async (dispatch) => {
     dispatch(loadingAction(true));
     let userId = getItem('userId');
@@ -1489,11 +1239,6 @@ export function Addpayment(params, componentId) {
       if (json.code === 200) {
         customAlert(json.message, 'success');
 
-        // dispatch({
-        //   type: ACTION_TYPE.SUCCESS_MESSAGE,
-        //   payload: json.message,
-        // });
-        console.log('Addpayment', json);
         dispatch(getUser(postdata));
         navigatorPush({componentId, screenName: 'Dashboard'});
       } else {
@@ -1502,6 +1247,14 @@ export function Addpayment(params, componentId) {
             type: ACTION_TYPE.ERROR,
             payload: json.message,
           });
+        }
+        if (json.code === 417) {
+          dispatch(sessionExpire(json.message));
+          dispatch({
+            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+            payload: json.message,
+          });
+          dispatch(loadingAction(false));
         }
       }
       dispatch(loadingAction(false));
@@ -1522,7 +1275,6 @@ export function contactUs(params) {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.CONTACT_US, params);
       if (json.code === 200) {
-        console.log('JSON data get-userQuestionInfo>>>>>>>>>', json.data);
         dispatch({
           type: ACTION_TYPE.SAVE_CONTACT_SUCCESS,
           payload: json,
@@ -1537,12 +1289,8 @@ export function contactUs(params) {
           });
         }
         if (json.code === 417) {
-          console.log('Session expierd>>>>>>>>>>get-userQuestionInfo');
           dispatch(sessionExpire(json.message));
-          // dispatch({
-          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-          //   payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -1552,7 +1300,6 @@ export function contactUs(params) {
         }
       }
     } catch (error) {
-      console.log('erroe>>gGET get-userQuestionInfo>>>>>>>>>>>>>', error);
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,

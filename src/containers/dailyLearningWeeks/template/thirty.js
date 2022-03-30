@@ -1,14 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import GLOBALS from '../../../constants';
 import ReactHtmlParser from 'react-html-parser';
-import {TextInput, View, Text} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import { TextInput, View, Text } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import * as AppActions from '../../../actions';
-import {getItem} from '../../../utils/AsyncUtils';
+import { getItem } from '../../../utils/AsyncUtils';
 import ExerciseBox from '../../../components/ExerciseBox';
-import {translate as ts} from '../../../i18n/translate';
+import { translate as ts } from '../../../i18n/translate';
 import Calendar from 'react-calendar';
 import {
   CardQuote,
@@ -20,20 +20,14 @@ import {
 } from '../../../components/Cards';
 import commonStyles from '../commonStyles';
 import moment from 'moment';
-import arrowDown from '../../../assets/images/arrowDown.png';
-import upArrow from '../../../assets/images/upArrow.png';
-import {Dimensions, Modal, TouchableOpacity} from 'react-native';
-import {navigatorPush} from '../../../config/navigationOptions';
-import leftArrow from '../../../assets/images/leftArrow.svg';
-import header1 from '../../../assets/images/BANNER-1.gif';
-import menu from '../../../assets/images/menu.svg';
-import Menu from '../../../components/Menu';
-import week1 from '../../../assets/images/Week1.svg';
+
+import { Dimensions } from 'react-native';
+
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
-const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
-const {YELLOW, WHITE, CIRCLE_GRAY, LIGHT_GRAY, GRAY, RED, GREEN_TEXT} = COLORS;
+const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
+const { YELLOW, WHITE, CIRCLE_GRAY, LIGHT_GRAY, GRAY, RED, GREEN_TEXT } = COLORS;
 let userId = getItem('userId');
 
 const dataMapperAss = (arr = []) => {
@@ -42,7 +36,7 @@ const dataMapperAss = (arr = []) => {
     temp = arr.map((item) => {
       return {
         assessment_header_id: item._id,
-        content: [{content: item.value, order: item.order}],
+        content: [{ content: item.value, order: item.order }],
       };
     });
   }
@@ -50,18 +44,9 @@ const dataMapperAss = (arr = []) => {
 };
 
 const InputBoxWithContent = (props) => {
-  const {
-    title,
-    placeholder,
-    value,
-    onChange,
-    style,
-    name,
-    boxWrapper,
-    disable,
-  } = props;
+  const { title, placeholder, value, onChange, style, name } = props;
   return (
-    <div style={{...styles.inputBoxWrapper, ...boxWrapper}}>
+    <div style={styles.inputBoxWrapper}>
       <div style={style}>
         <p style={styles.header}>{title}</p>
       </div>
@@ -69,7 +54,6 @@ const InputBoxWithContent = (props) => {
         <form noValidate>
           <textarea
             type="description"
-            // className="f-field"
             value={value}
             name={name}
             onChange={onChange}
@@ -77,14 +61,13 @@ const InputBoxWithContent = (props) => {
             placeholder={placeholder}
             style={styles.inputStyle}
             rows={3}
-            disabled={disable}
           />
         </form>
       </div>
     </div>
   );
 };
-const Thirty = (props, componentId) => {
+const Thirty = (props) => {
   const [inputs, setInputs] = useState([]);
   const [firstHeaderId, setFirstHeaderId] = useState([]);
   const [firstHeaderContent, setFirstHeaderContent] = useState([]);
@@ -103,10 +86,6 @@ const Thirty = (props, componentId) => {
   const [allCards, setAllCards] = useState([]);
   const [getCardsData, setGetCardsData] = useState([]);
   const [getCardsInputs, setGetCardsInputs] = useState([]);
-  const [allCardsData, setAllCardsData] = useState([]);
-  const [showData, setShowData] = useState(false);
-  const [updateInputData, setUpdateInputData] = useState([]);
-  const [commentModal, setCommentModal] = useState(false);
   const {
     card_title,
     descriptions,
@@ -126,12 +105,10 @@ const Thirty = (props, componentId) => {
     assessmentData2 = {},
     userAssessmentData = [],
   } = useSelector((state) => state.moduleOne);
-  //console.log('user assessmnet????????? template 30', userAssessmentData);
   useEffect(() => {
     dispatch(AppActions.getAssessmentDataSecond(assessment_id2));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessment_id2]);
-  const {isDashboardModal} = useSelector((state) => state.common);
+
   useEffect(() => {
     let headers =
       assessmentData.headers && assessmentData.headers.length
@@ -150,14 +127,11 @@ const Thirty = (props, componentId) => {
             name: item.header,
             placeholder: item.description,
             order: item.order,
-            //  value: '',
-            value: item.value,
+            value: '',
             _id: item._id,
           };
         }),
       );
-    // dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData, assessment_id]);
   useEffect(() => {
     let cardsInputs = [];
@@ -166,30 +140,18 @@ const Thirty = (props, componentId) => {
       getCardsData.forEach((item) =>
         cardsInputs.push(
           item.data.map((val) => {
-            // console.log('val??????get cards inputs', val);
             return {
               name: val.assessment_header && val.assessment_header[0].header,
               placeholder: val.description ? val.description : '',
               order: val.order,
               value: val.content,
               _id: val._id,
-              assessment_header_id: val.assessment_header_id,
             };
           }),
         ),
       );
     setGetCardsInputs(cardsInputs);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getCardsData]);
-
-  useEffect(() => {
-    let temp = [];
-    getCardsInputs &&
-      getCardsInputs.length &&
-      getCardsInputs.forEach((item) => temp.push(item));
-    setAllCardsData(temp);
-  }, [getCardsInputs]);
-
   useEffect(() => {
     let uniqueTime = [];
     let temp = [];
@@ -206,21 +168,12 @@ const Thirty = (props, componentId) => {
       setGetCardsData(temp);
     }
   }, [allCards]);
-  console.log(
-    'get cards data',
-    getCardsData,
-    allCards,
-    'get cards data',
-    getCardsData,
-    'get Cards data input',
-    getCardsInputs,
-  );
   useEffect(() => {
     let cardData = [];
     let cardsData = [];
     const assessmentCards = [];
     const assessmentCardsCopy = [];
-    console.log('user assessment data', JSON.stringify(userAssessmentData));
+
     if (userAssessmentData.length) {
       userAssessmentData
         .filter((item) => item._id.assessment_header_id === firstHeaderId)
@@ -229,8 +182,7 @@ const Thirty = (props, componentId) => {
       userAssessmentData.forEach((val) => cardsData.push(...val.cards));
       setAllCards(cardsData);
 
-      console.log('cards data????all cards????', allCards);
-      // {second assessment logic}
+      //second assessment logic
       let secondAssmentData = userAssessmentData.map((item) => {
         return item.cards.filter((fil) => fil.assessment_id === assessment_id2);
       });
@@ -256,13 +208,11 @@ const Thirty = (props, componentId) => {
           ) {
             orderValue = item.order;
             header_id = item.assessment_header_id;
-            assessmentId =
-              item.assessment_header !== undefined &&
-              item.assessment_header.length
-                ? item.assessment_header.map((val) => {
-                    return val.assessment_id;
-                  })
-                : null;
+            assessmentId = item.assessment_header.length
+              ? item.assessment_header.map((val) => {
+                return val.assessment_id;
+              })
+              : null;
 
             selectedFormat.push({
               content: item.content,
@@ -288,62 +238,41 @@ const Thirty = (props, componentId) => {
       let uniqueArray = Array.from(uniqueSet).map(JSON.parse);
 
       setUserInputs(uniqueArray);
-    } else {
-      console.log('else ');
     }
   }, [userAssessmentData]);
   /******************First assessment data save************** */
-  const onSaveMyths = () => {
-    //e.preventDefault();
-    console.log('inputs??????', inputs);
+  const onSaveMyths = (e) => {
+    e.preventDefault();
     let params = {
       user_id: userId,
       user_card_id: props._id,
       assessment_id: assessment_id,
       assessment: dataMapperAss(inputs),
     };
-
     let isValid = false;
     if (inputs && inputs.length) {
       let temp = [];
       inputs.forEach((item) => {
         temp.push(item.value);
       });
-      console.log('temp??????', temp);
       if (temp.length) {
         isValid = temp.filter((item) => item === '').length === 0;
-        // isValid = temp.some((item) => item !== '') ? true : false;
       }
     }
-    console.log('inputs???? first assessment???', JSON.stringify(params));
+
     if (isValid) {
-      console.log('is valid', isValid);
       dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
-      assessmentData.headers &&
-        assessmentData.headers.length &&
-        setInputs(
-          assessmentData.headers.map((item) => {
-            return {
-              name: item.header,
-              placeholder: item.description,
-              order: item.order,
-              //  value: '',
-              value: item.value,
-              _id: item._id,
-            };
-          }),
-        );
     } else {
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: 'Please fill all fields',
       });
     }
+
   };
   /******************Second assessment data save************** */
   const onSaveSecondAssessment = (e) => {
     e.preventDefault();
-    onSaveMyths();
     let contentArray = [];
 
     let modifyUserInput = userInputs.map((item) => {
@@ -367,7 +296,6 @@ const Thirty = (props, componentId) => {
         .filter((ele) => ele.content !== '');
       contentArray.push(filterValue);
     });
-    console.log('content array ', contentArray.length, userInputs);
 
     if (userInputs.length) {
       let modifyArray = contentArray.map((element, index) => {
@@ -385,38 +313,14 @@ const Thirty = (props, componentId) => {
         assessment_id: assessment_id2,
         assessment: modifyArray,
       };
-      console.log('modify array?????????', modifyArray);
-      console.log('second params', JSON.stringify(firstParams));
-      if (true) {
-        dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
-      } else {
-        console.log('no save');
-      }
-      // if (userInputs.length) {
-      //   if (
-      //     userAssessmentData &&
-      //     userAssessmentData.length &&
-      //     secondAssemssmentArray.length
-      //   ) {
-      //     console.log('params ???????', firstParams);
-      //     // dispatch(AppActions.rearrangeAssessments(firstParams, onSubmitMessage));
-      //     dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
-      //   } else {
-      //     dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
-      //   }
-      // } else {
-      //   dispatch({
-      //     type: ACTION_TYPE.ERROR,
-      //     payload: 'Please perform your exercise',
-      //   });
-      // }
+      dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
+
+    } else {
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: 'Please perform your exercise',
+      });
     }
-    // else {
-    //   dispatch({
-    //     type: ACTION_TYPE.ERROR,
-    //     payload: 'Please perform your exercise',
-    //   });
-    // }
   };
 
   const setInputValue = (val) => {
@@ -429,16 +333,14 @@ const Thirty = (props, componentId) => {
   };
 
   const onHandleChange = (e, item) => {
-    console.log('inputs???????', inputs);
     const updateInputs = inputs.length
       ? inputs.map((val) => {
-          return {
-            ...val,
-            value: val.name === e.target.name ? e.target.value : val.value,
-          };
-        })
+        return {
+          ...val,
+          value: val.name === e.target.name ? e.target.value : val.value,
+        };
+      })
       : [];
-
     setInputs(updateInputs);
   };
   /****************Second assessment data fetch*********** */
@@ -451,13 +353,13 @@ const Thirty = (props, componentId) => {
           order: item.order,
           content: item.content.length
             ? item.content.map((ele) => {
-                return {
-                  content: ele.content,
-                  order: ele.order,
-                  assessment_header_id: ele.assessment_header_id,
-                  _id: ele._id,
-                };
-              })
+              return {
+                content: ele.content,
+                order: ele.order,
+                assessment_header_id: ele.assessment_header_id,
+                _id: ele._id,
+              };
+            })
             : [],
         };
       });
@@ -570,14 +472,14 @@ const Thirty = (props, componentId) => {
 
   const headingOne =
     assessmentData.heading &&
-    assessmentData.heading.length &&
-    assessmentData.heading[0]
+      assessmentData.heading.length &&
+      assessmentData.heading[0]
       ? assessmentData.heading[0].heading
       : null;
   const headingSecond =
     assessmentData.heading &&
-    assessmentData.heading.length &&
-    assessmentData.heading[1]
+      assessmentData.heading.length &&
+      assessmentData.heading[1]
       ? assessmentData.heading[1].heading
       : null;
 
@@ -612,7 +514,6 @@ const Thirty = (props, componentId) => {
     }
   };
   const onPlusBtnClick = (item) => {
-    console.log('new user inputs?????', newUserInputs);
     if (userDate.length && newUserInputs.length) {
       Array.prototype.push.apply(newUserInputs, userDate);
       let concatArray = userInputs;
@@ -626,7 +527,6 @@ const Thirty = (props, componentId) => {
       setSelectedValueSecond('');
       setSelectedDate('');
     } else {
-      // alert('Please select value.');
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: 'Please select value.',
@@ -641,74 +541,20 @@ const Thirty = (props, componentId) => {
       return GREEN_TEXT;
     }
   };
-
-  const onHandleChangeData = (e, ele, idx, secondIndex) => {
-    console.log('ee????????', ele, idx, secondIndex);
-    let x =
-      getCardsInputs &&
-      getCardsInputs.length &&
-      getCardsInputs.map((item, i) => {
-        if (i === idx) {
-          console.log('map first', i, idx, item);
-          let y = item.map((val, id) => {
-            console.log(
-              'id === secondIndex ? e.target.value : val.value,',
-              id === secondIndex ? e.target.value : val.value,
-            );
-            if (id === secondIndex) {
-              console.log('val??????', val, e.target.value);
-              return {
-                ...val,
-                value: e.target.value,
-              };
-            } else {
-              console.log('else in second llopp', val);
-              return {...val};
-            }
-          });
-          console.log('y???????', y);
-          setUpdateInputData(y);
-          return y;
-        } else {
-          console.log('else in first condition', item);
-          return item;
-        }
-      });
-    console.log('on handel change', getCardsInputs, 'x????', x);
-    setGetCardsInputs(x);
-  };
-  const onUpdateData = () => {
-    let assessment = updateInputData.map((item) => {
-      console.log('item update data', item);
-      return {
-        assessment_header_id: item.assessment_header_id,
-        content: [{content: item.value, order: item.order}],
-      };
-    });
-    let params = {
-      user_id: userId,
-      user_card_id: props._id,
-      assessment_id: assessment_id,
-      assessment: assessment,
-    };
-    console.log('params???update??', JSON.stringify(params));
-    dispatch(AppActions.rearrangeAssessments(params));
-  };
-  console.log('update input Data', updateInputData, 'gt cards', getCardsInputs);
   return (
     <div>
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -716,73 +562,75 @@ const Thirty = (props, componentId) => {
           card_time === '1' ? `${card_time} Minute` : `${card_time} Minutes`
         }
       />
+
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
       {/*******************************ASSESSMENT DESCRIPTION*********************** */}
       <div style={commonStyles.assessmentWrapper}>
         {images && images.length
           ? images
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, i) => {
-                return (
-                  <CustomImage
-                    key={i}
-                    src={
-                      item.image !== ''
-                        ? `${IMAGE_BASE_URL}${item.image}`
-                        : null
-                    }
-                    style={{
-                      ...commonStyles.assessImage,
-                      display: item.image !== '' ? 'flex' : 'none',
-                    }}
-                  />
-                );
-              })
-          : []}
-
-        {props.assessments && props.assessments.length
-          ? props.assessments.map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  style={commonStyles.assessDesc}
-                  description={ReactHtmlParser(item.description)}
-                />
-              );
-            })
-          : []}
-      </div>
-      {inputs.length
-        ? inputs
             .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, idx) => {
+            .map((item, i) => {
               return (
-                <InputBoxWithContent
-                  key={idx}
-                  title={ReactHtmlParser(item.name)}
-                  name={item.name}
-                  placeholder={item.placeholder}
-                  value={item.value}
-                  onChange={(e) => onHandleChange(e, item)}
+                <CustomImage
+                  key={i}
+                  src={
+                    item.image !== ''
+                      ? `${IMAGE_BASE_URL}${item.image}`
+                      : null
+                  }
                   style={{
-                    backgroundColor: headerColor(item.order),
-                    width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+                    ...commonStyles.assessImage,
+                    display: item.image !== '' ? 'flex' : 'none',
                   }}
                 />
               );
             })
+          : []}
+
+        {props.assessments && props.assessments.length
+          ? props.assessments.map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                style={commonStyles.assessDesc}
+                description={ReactHtmlParser(item.description)}
+              />
+            );
+          })
+          : []}
+      </div>
+
+      {inputs.length
+        ? inputs
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, idx) => {
+            return (
+              <InputBoxWithContent
+                key={idx}
+                title={ReactHtmlParser(item.name)}
+                name={item.name}
+                placeholder={item.placeholder}
+                value={item.value}
+                onChange={(e) => onHandleChange(e, item)}
+                style={{
+                  backgroundColor: headerColor(item.order),
+                  width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+                }}
+              />
+            );
+          })
         : null}
       {inputs.length ? (
         <div style={commonStyles.buttonWrapper}>
@@ -791,6 +639,7 @@ const Thirty = (props, componentId) => {
           </button>
         </div>
       ) : null}
+
       {headingOne && headingOne.length ? (
         <CardContent
           content={ReactHtmlParser(headingOne)}
@@ -801,187 +650,188 @@ const Thirty = (props, componentId) => {
           }}
         />
       ) : null}
+
       <div style={styles.secondAssessment}>
         {assessmentSecond.length
           ? assessmentSecond.map((item, i) => {
-              return (
-                <div
+            return (
+              <div
+                style={{
+                  width: '33%',
+                }}>
+                <CardContent
+                  key={i}
+                  content={ReactHtmlParser(item.header)}
                   style={{
-                    width: '33%',
-                  }}>
-                  <CardContent
-                    key={i}
-                    content={ReactHtmlParser(item.header)}
-                    style={{
-                      ...styles.contentHeading,
-                    }}
-                  />
-                  {item.content && item.content.length ? (
-                    <View style={{}}>
-                      {userInputs && userInputs.length
-                        ? userInputs
-                            .sort((a, b) => (a.order > b.order && 1) || -1)
-                            .filter((ele) => {
-                              return ele.assessment_header_id === item._id;
-                            })
-                            .map((val, index) => {
-                              return (
-                                <div style={styles.crossIconWrapper}>
-                                  <View style={{margin: 0, width: '100%'}}>
-                                    <TextInput
-                                      style={[
-                                        styles.selectedText,
-                                        {
-                                          height: '50px',
-                                          paddingLeft: 10,
-                                          paddingTop: 10,
-                                        },
-                                      ]}
-                                      underlineColorAndroid="transparent"
-                                      multiline={true}
-                                      disable={true}
-                                      value={
-                                        val.content && val.content.length
-                                          ? setInputValue(val.content)
-                                          : null
-                                      }
-                                    />
-                                  </View>
-                                </div>
-                              );
-                            })
-                        : null}
-                      <select
-                        style={{
-                          width: '100%',
-                          paddingTop: '12px',
-                          paddingBottom: '12px',
-                          paddingLeft: '10px',
-                          backgroundColor: '#F1F3FA',
-                          borderRadius: '5px',
-                          border: `1px solid ${LIGHT_GRAY}`,
-                        }}
-                        value={
-                          item.order === 0
-                            ? selectedValue
-                            : item.order === 1
+                    ...styles.contentHeading,
+                  }}
+                />
+                {item.content && item.content.length ? (
+                  <View style={{}}>
+                    {userInputs && userInputs.length
+                      ? userInputs
+                        .sort((a, b) => (a.order > b.order && 1) || -1)
+                        .filter((ele) => {
+                          return ele.assessment_header_id === item._id;
+                        })
+                        .map((val, index) => {
+                          return (
+                            <div style={styles.crossIconWrapper}>
+                              <View style={{ margin: 0, width: '100%' }}>
+                                <TextInput
+                                  style={[
+                                    styles.selectedText,
+                                    {
+                                      height: '50px',
+                                      paddingLeft: 10,
+                                      paddingTop: 10,
+                                    },
+                                  ]}
+                                  underlineColorAndroid="transparent"
+                                  multiline={true}
+                                  disable={true}
+                                  value={
+                                    val.content && val.content.length
+                                      ? setInputValue(val.content)
+                                      : null
+                                  }
+                                />
+                              </View>
+                            </div>
+                          );
+                        })
+                      : null}
+                    <select
+                      style={{
+                        width: '100%',
+                        paddingTop: '12px',
+                        paddingBottom: '12px',
+                        paddingLeft: '10px',
+                        backgroundColor: '#F1F3FA',
+                        borderRadius: '5px',
+                        border: `1px solid ${LIGHT_GRAY}`,
+                      }}
+                      value={
+                        item.order === 0
+                          ? selectedValue
+                          : item.order === 1
                             ? selectedValueSecond
                             : ''
-                        }
-                        onChange={(e) => onChangeDropDown(e, item._id, item)}
-                        onSelect={(e) => onChangeDropDown(e, item._id, item)}>
-                        {/* {selectedValue ? '' : <option>select</option>} */}
-                        <option>select</option>
-                        {item.content &&
-                          item.content.length &&
-                          item.content.map((option, idx) => {
-                            return (
-                              <option value={option._id}>
-                                {`${option.content}`}
-                              </option>
-                            );
-                          })}
-                      </select>
-                    </View>
-                  ) : (
-                    <View style={{marginTop: 40}}>
-                      {userInputs && userInputs.length
-                        ? userInputs
-                            .sort((a, b) => (a.order > b.order && 1) || -1)
-                            .filter((ele) => {
-                              return ele.assessment_header_id === item._id;
-                            })
-                            .map((val, index) => {
-                              return (
-                                <div style={styles.crossIconWrapper}>
-                                  <View style={{margin: 0, width: '100%'}}>
-                                    <TextInput
-                                      style={[
-                                        styles.selectedText,
-                                        {
-                                          height: '50px',
-                                          paddingLeft: 10,
-                                          paddingTop: 10,
-                                        },
-                                      ]}
-                                      underlineColorAndroid="transparent"
-                                      multiline={true}
-                                      disable={true}
-                                      value={
-                                        val.content && val.content.length
-                                          ? setInputValue(val.content)
-                                          : null
-                                      }
-                                    />
-                                  </View>
-                                  <div
-                                    style={styles.circleCrossDiv}
-                                    onClick={() => onCrossBtnClick(val)}>
-                                    <span
-                                      style={{
-                                        ...styles.plusIcon,
-                                        fontSize: '15px',
-                                      }}>
-                                      x
-                                    </span>
-                                  </div>
-                                </div>
-                              );
-                            })
-                        : null}
+                      }
+                      onChange={(e) => onChangeDropDown(e, item._id, item)}
+                      onSelect={(e) => onChangeDropDown(e, item._id, item)}>
+                      {/* {selectedValue ? '' : <option>select</option>} */}
+                      <option>select</option>
+                      {item.content &&
+                        item.content.length &&
+                        item.content.map((option, idx) => {
+                          return (
+                            <option value={option._id}>
+                              {`${option.content}`}
+                            </option>
+                          );
+                        })}
+                    </select>
+                  </View>
+                ) : (
+                  <View style={{ marginTop: 40 }}>
+                    {userInputs && userInputs.length
+                      ? userInputs
+                        .sort((a, b) => (a.order > b.order && 1) || -1)
+                        .filter((ele) => {
+                          return ele.assessment_header_id === item._id;
+                        })
+                        .map((val, index) => {
+                          return (
+                            <div style={styles.crossIconWrapper}>
+                              <View style={{ margin: 0, width: '100%' }}>
+                                <TextInput
+                                  style={[
+                                    styles.selectedText,
+                                    {
+                                      height: '50px',
+                                      paddingLeft: 10,
+                                      paddingTop: 10,
+                                    },
+                                  ]}
+                                  underlineColorAndroid="transparent"
+                                  multiline={true}
+                                  disable={true}
+                                  value={
+                                    val.content && val.content.length
+                                      ? setInputValue(val.content)
+                                      : null
+                                  }
+                                />
+                              </View>
+                              <div
+                                style={styles.circleCrossDiv}
+                                onClick={() => onCrossBtnClick(val)}>
+                                <span
+                                  style={{
+                                    ...styles.plusIcon,
+                                    fontSize: '15px',
+                                  }}>
+                                  x
+                                </span>
+                              </div>
+                            </div>
+                          );
+                        })
+                      : null}
 
-                      {item.order === 2 ? (
-                        <div
+                    {item.order === 2 ? (
+                      <div
+                        style={{
+                          marginBottom: '2%',
+                          position: 'relative',
+                        }}>
+                        <TextInput
                           style={{
-                            marginBottom: '2%',
-                            position: 'relative',
-                          }}>
-                          <TextInput
-                            style={{
-                              backgroundColor: '#F1F3FA',
-                              width: '100%',
-                              height: 50,
-                              paddingLeft: 5,
-                            }}
-                            placeholder={'yyyy-mm-dd'}
-                            underlineColorAndroid="transparent"
-                            value={
-                              selectedDate !== ''
-                                ? moment(selectedDate).format('YYYY-MM-DD')
-                                : 'YYYY-MM-DD'
-                            }
-                            type="number"
-                            editable={false}
-                            onClick={() => {
-                              setShowCalendar(true);
+                            backgroundColor: '#F1F3FA',
+                            width: '100%',
+                            height: 50,
+                            paddingLeft: 5,
+                          }}
+                          placeholder={'yyyy-mm-dd'}
+                          underlineColorAndroid="transparent"
+                          value={
+                            selectedDate !== ''
+                              ? moment(selectedDate).format('YYYY-MM-DD')
+                              : 'YYYY-MM-DD'
+                          }
+                          type="number"
+                          editable={false}
+                          onClick={() => {
+                            setShowCalendar(true);
+                          }}
+                        />
+                        {showCalendar ? (
+                          <Calendar
+                            onChange={onChange}
+                            value={value}
+                            maxDate={new Date()}
+                            onClickDay={(date) => {
+                              onDayChange(date, item);
                             }}
                           />
-                          {showCalendar ? (
-                            <Calendar
-                              onChange={onChange}
-                              value={value}
-                              maxDate={new Date()}
-                              onClickDay={(date) => {
-                                onDayChange(date, item);
-                              }}
-                            />
-                          ) : null}
-                          <div
-                            onClick={() => onPlusBtnClick(item)}
-                            style={{
-                              ...styles.circleDiv,
-                              backgroundColor:
-                                selectedDate !== '' ? GREEN_TEXT : GRAY,
-                            }}>
-                            <span style={styles.plusIcon}>+</span>
-                          </div>
+                        ) : null}
+                        <div
+                          onClick={() => onPlusBtnClick(item)}
+                          style={{
+                            ...styles.circleDiv,
+                            backgroundColor:
+                              selectedDate !== '' ? GREEN_TEXT : GRAY,
+                          }}>
+                          <span style={styles.plusIcon}>+</span>
                         </div>
-                      ) : null}
-                    </View>
-                  )}
-                </div>
-              );
-            })
+                      </div>
+                    ) : null}
+                  </View>
+                )}
+              </div>
+            );
+          })
           : []}
       </div>
       <div style={commonStyles.buttonWrapper}>
@@ -991,7 +841,8 @@ const Thirty = (props, componentId) => {
           {ts('SAVE')}
         </button>
       </div>
-      {headingSecond && headingSecond.length ? (
+
+      {/* {headingSecond && headingSecond.length ? (
         <CardContent
           content={ReactHtmlParser(headingSecond)}
           style={{
@@ -1000,8 +851,8 @@ const Thirty = (props, componentId) => {
             paddingBottom: '3px',
           }}
         />
-      ) : null}
-      {firstHeaderContent && firstHeaderContent.length
+      ) : null} */}
+      {/* {firstHeaderContent && firstHeaderContent.length
         ? firstHeaderContent
             .sort((a, b) => (a.i > b.i && 1) || -1)
             .map((item, index) => {
@@ -1016,168 +867,21 @@ const Thirty = (props, componentId) => {
                 />
               );
             })
-        : []}
+        : []} */}
       {content && content.length
         ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardContent
-                  key={index}
-                  style={{marginTop: '20px'}}
-                  content={ReactHtmlParser(item.content)}
-                />
-              );
-            })
-        : []}
-      <div onClick={() => setCommentModal(true)}>
-        <p>Click here..</p>
-      </div>
-      {commentModal && (
-        <Modal
-          animationType="slide"
-          visible={commentModal}
-          onRequestClose={() => {
-            setCommentModal(false);
-          }}
-          style={{
-            backgroundColor: 'white',
-            border: '1px solid red',
-          }}>
-          <div style={{position: 'relative'}}>
-            <img src={week1} style={{width: '100%'}} />
-            <TouchableOpacity
-              style={styles.menuIcon}
-              onPress={() => {
-                dispatch(AppActions.dashboardModalAction(true));
-                setCommentModal(false);
-              }}>
-              <img src={menu} />
-            </TouchableOpacity>
-          </div>
-          <div
-            style={{
-              width: '80%',
-              marginLeft: 'auto',
-              marginRight: 'auto',
-            }}
-            onClick={() => setCommentModal(false)}>
-            <img src={leftArrow} style={styles.backButton} />
-            Back
-          </div>
-          <div
-            style={{
-              overflowY: 'scroll',
-              paddingBottom: '500%',
-              width: '80%',
-              marginLeft: 'auto',
-              marginRight: 'auto',
-            }}>
-            {getCardsInputs && getCardsInputs.length
-              ? getCardsInputs.map((item, idx) => {
-                  //  console.log('item get cards', item);
-                  return (
-                    <div>
-                      {item
-                        .sort((a, b) => (a.order > b.order && 1) || -1)
-                        .map((ele, i) => {
-                          let firstOrder = ele.order === 0;
-                          let visibleData = showData === idx;
-                          return (
-                            <div style={{position: 'relative'}}>
-                              {i === 0 && (
-                                <div
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    if (idx === showData) {
-                                      setShowData('');
-                                    } else {
-                                      setShowData(idx);
-                                    }
-                                  }}
-                                  style={styles.iconDiv}>
-                                  <div style={styles.circleWrapper}>
-                                    <img
-                                      src={visibleData ? upArrow : arrowDown}
-                                      color={'#fff'}
-                                      style={styles.img}
-                                    />
-                                  </div>
-                                </div>
-                              )}
-                              {visibleData ? (
-                                <InputBoxWithContent
-                                  key={idx}
-                                  title={ReactHtmlParser(ele.name)}
-                                  name={ele.name}
-                                  placeholder={ele.placeholder}
-                                  value={ele.value}
-                                  onChange={(e) => {
-                                    onHandleChangeData(e, ele, idx, i);
-                                  }}
-                                  style={{
-                                    backgroundColor: headerColor(ele.order),
-                                    width: DEVICE_WIDTH > 767 ? '20%' : '30%',
-                                  }}
-                                  disable={ele.order === 0 ? true : false}
-                                />
-                              ) : (
-                                i === 0 && (
-                                  <InputBoxWithContent
-                                    boxWrapper={
-                                      {
-                                        // border: '1px solid blue',
-                                      }
-                                    }
-                                    key={idx}
-                                    title={ReactHtmlParser(ele.name)}
-                                    name={ele.name}
-                                    placeholder={ele.placeholder}
-                                    value={ele.value}
-                                    // onChange={(e) => onHandleChange(e, ele)}
-                                    style={{
-                                      backgroundColor: headerColor(ele.order),
-                                      width: DEVICE_WIDTH > 767 ? '20%' : '30%',
-                                    }}
-                                    disable={true}
-                                  />
-                                )
-                              )}
-                              {visibleData && i === 2 ? (
-                                <div style={commonStyles.buttonWrapper}>
-                                  <button
-                                    className="btn-orange"
-                                    onClick={(e) => onUpdateData(e)}>
-                                    {ts('SAVE')}
-                                  </button>
-                                </div>
-                              ) : null}
-                            </div>
-                          );
-                        })}
-                    </div>
-                  );
-                })
-              : null}
-          </div>
-          {/*********************************MODAL POPUP FOR MENU START*************** */}
-          {isDashboardModal && (
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={isDashboardModal}
-              onRequestClose={() => {
-                dispatch(AppActions.dashboardModalAction(false));
-              }}>
-              <Menu
-                modalVisible={() =>
-                  dispatch(AppActions.dashboardModalAction(false))
-                }
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardContent
+                key={index}
+                style={{ marginTop: '20px' }}
+                content={ReactHtmlParser(item.content)}
               />
-            </Modal>
-          )}
-        </Modal>
-      )}
+            );
+          })
+        : []}
+
       {showExercises && <ExerciseBox week={week} />}
     </div>
   );
@@ -1205,7 +909,7 @@ const styles = {
     color: WHITE,
     paddingTop: '30px',
   },
-  inputBox: {width: DEVICE_WIDTH > 767 ? '78%' : '68%'},
+  inputBox: { width: DEVICE_WIDTH > 767 ? '78%' : '68%' },
   inputStyle: {
     backgroundColor: LIGHT_GRAY,
     fontStyle: 'italic',
@@ -1219,10 +923,7 @@ const styles = {
     color: WHITE,
     textAlign: 'center',
     padding: '10px',
-    // paddingTop: '10px',
-    // paddingBottom: '10px',
     borderRadius: '5px',
-    // marginTop: '10px',
   },
 
   circleDiv: {
@@ -1257,7 +958,6 @@ const styles = {
     top: '0px',
   },
   crossIconWrapper: {
-    //  border: '1px solid red',
     display: 'flex',
     marginBottom: '15px',
     position: 'relative',
@@ -1265,38 +965,5 @@ const styles = {
   selectedText: {
     backgroundColor: '#F1F3FA',
     width: '100%',
-    // marginBottom: '3%',
-  },
-  iconDiv: {
-    display: 'flex',
-    justifyContent: 'end',
-    // marginTop: '20px',
-    //  border: '1px solid red',
-    position: 'absolute',
-    right: 10,
-    top: -15,
-  },
-  circleWrapper: {
-    // border: '1px solid red',
-    width: '30px',
-    height: '30px',
-    borderRadius: '30px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: COLORS.BUTTON_ORANGE,
-  },
-  img: {
-    width: '20px',
-    height: '20px',
-    alignItems: 'center',
-  },
-  menuIcon: {
-    position: 'absolute',
-    top: '30%',
-    right: '5%',
-  },
-  backButton: {
-    padding: '20px',
   },
 };

@@ -9,13 +9,12 @@ import {
   Platform,
   FlatList,
 } from 'react-native';
-//import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-//import NoData from '@components/common/NoData';
+
 
 const isiOS = Platform.OS == 'ios';
-const {FONTS, COLORS, STRINGS} = GLOBALS;
-const {GREY, PRIMARY, DARK_GREEN} = COLORS;
-const {LIGHT, REGULAR} = FONTS;
+const { FONTS, COLORS, STRINGS } = GLOBALS;
+const { GREY, PRIMARY, DARK_GREEN } = COLORS;
+const { LIGHT, REGULAR } = FONTS;
 function ScheduleTab(props) {
   let {
     setActiveTab,
@@ -23,11 +22,11 @@ function ScheduleTab(props) {
     badgeCount = '',
     tabList,
     customStyle = {},
-    onPressTab = () => {},
+    onPressTab = () => { },
   } = props;
   return (
     <View
-      style={{borderBottomWidth: 0.3, borderBottomColor: COLORS.BOREDER_GRAY}}>
+      style={{ borderBottomWidth: 0.3, borderBottomColor: COLORS.BOREDER_GRAY }}>
       <FlatList
         horizontal
         contentContainerStyle={[styles.tabContainer, customStyle]}
@@ -36,17 +35,16 @@ function ScheduleTab(props) {
         keyExtractor={(item) => `${item.id}`}
         showsVerticalScrollIndicator={true}
         showsHorizontalScrollIndicator={false}
-        renderItem={({item, index}) => (
+        renderItem={({ item, index }) => (
           <TouchableOpacity
             key={index}
             onPress={() => setActiveTab(item.title)}>
-            <View style={{marginRight: 8}}>
+            <View style={{ marginRight: 8 }}>
               <View style={styles.tab}>
                 <Text
                   style={[
                     styles.tabTitle,
                     {
-                      // color: activeTab == item.title ? TEXT_ORANGE : GREY,
                       color: activeTab == item.title ? GREY : GREY,
                     },
                   ]}>
@@ -68,7 +66,6 @@ function ScheduleTab(props) {
             </View>
           </TouchableOpacity>
         )}
-        // ListEmptyComponent={<NoData />}
       />
     </View>
   );
@@ -78,9 +75,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'flex-start',
-    //marginBottom: RFPercentage(3),
     marginTop: 1,
-    // paddingLeft: 5
   },
   tab: {
     borderBottomWidth: 0,
@@ -92,13 +87,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontFamily: LIGHT,
     fontSize: 15,
-    //  paddingLeft: 15,
     fontFamily: FONTS.MEDIUM,
   },
   horizontalRule: {
     borderBottomColor: 'transparent',
     borderBottomWidth: 1,
-    //marginHorizontal: RFPercentage(0),
     marginTop: 1,
   },
 });

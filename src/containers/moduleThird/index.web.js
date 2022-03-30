@@ -20,12 +20,9 @@ import {navigatorPush} from '../../config/navigationOptions.web';
 import Menu from '../../components/Menu';
 import ModuleFourTemplate from './moduleFourTemplate';
 import TemplateNineteen from '../moduleSecond/templateNineteen';
-//import TemplateFour from '../dailyLearningWeeks/template/templateFour';
-//import TemplateThirteen from '../dailyLearningWeeks/template/templateVideo';
-import TemplateTen from '../dailyLearningWeeks/template/templateTen';
+ import TemplateTen from '../dailyLearningWeeks/template/templateTen';
 import MSevenTemplate from './mSevenTemplate';
-//import TemplateEight from '../dailyLearningWeeks/template/templateEight';
-import TemplateNine from '../dailyLearningWeeks/template/templateEight';
+ import TemplateNine from '../dailyLearningWeeks/template/templateEight';
 import TemplateEleven from './template11';
 const {COLORS} = GLOBALS;
 const ModuleSecond = (componentId) => {
@@ -38,15 +35,11 @@ const ModuleSecond = (componentId) => {
     switch (status) {
       case 0:
         return <TemplateOne data={uiProps} />;
-      // case 1:
-      //   return <TemplateFour data={uiProps} />;
-      case 2:
+       case 2:
         return <TemplateNineteen data={uiProps} />;
       case 3:
         return <ModuleFourTemplate data={uiProps} />;
-      // case 4:
-      //   return <TemplateThirteen data={uiProps} />;
-      case 5:
+       case 5:
         return (
           <TemplateTen
             data={uiProps}
@@ -79,19 +72,7 @@ const ModuleSecond = (componentId) => {
     <>
       <MasterLayout>
         <div className="wrapper">
-          {/* <div style={{position: 'relative'}}>
-            <img src={header} style={{width: '100%'}} />
-
-            <TouchableOpacity
-              style={{
-                position: 'absolute',
-                top: '30%',
-                right: '5%',
-              }}
-              onPress={() => setModalVisible(true)}>
-              <img src={menu} />
-            </TouchableOpacity>
-          </div> */}
+          
           <div className="dashboard-body">
             <div className="container">
               <div className="dashboard-body-inner">

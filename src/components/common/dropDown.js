@@ -6,12 +6,10 @@ import { screenHeight, screenWidth } from "../../utils/dimension";
 const { COLORS, FONTS } = GLOBALS;
 const { BLUR, WHITE, HEADING_BLACK, BLACK, DARK_GREEN } = COLORS;
 import Button from "./button"
-//const data = [{ id: 1, name: "ll" }, { id: 11, name: "ll" }]
 const DropDown = (props) => {
     let { title, data, textColor, onItemSelection } = props;
     const [selectedItem, setSelectedData] = useState("");
     const onItemSelected = (item) => {
-        console.log(item, "l")
         setSelectedData(item.name);
         onItemSelection("selected_gender", item.name)
     }

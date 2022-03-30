@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -16,9 +16,9 @@ import key from '../assets/images/subscription/key.png';
 import cards from '../assets/images/subscription/cards.png';
 import downArrow from '../assets/images/subscription/dropdown.png';
 import GLOBALS from '../constants';
-const {COLORS, FONTS} = GLOBALS;
+const { COLORS, FONTS } = GLOBALS;
 
-const {BORDER_COLOR, SHADOW_COLOR, DARK_GREEN, SOFT_GRAY, WHITE, ERROR} =
+const { BORDER_COLOR, SHADOW_COLOR, DARK_GREEN, SOFT_GRAY, WHITE, ERROR } =
   COLORS;
 const Input1 = (props) => {
   let {
@@ -37,7 +37,7 @@ const Input1 = (props) => {
     secureTextEntry = false,
   } = props;
   return (
-    <View style={[containerStyle, {marginBottom: 15}]}>
+    <View style={[containerStyle, { marginBottom: 15 }]}>
       <Text style={[styles.label, labelStyle]}>{label}</Text>
       <View>
         {isDropdown ? (
@@ -61,12 +61,12 @@ const Input1 = (props) => {
                 type == 'user'
                   ? icon03
                   : type == 'email'
-                  ? icon01
-                  : type == 'phone'
-                  ? icon04
-                  : type == 'dropdown'
-                  ? downArrow
-                  : icon02
+                    ? icon01
+                    : type == 'phone'
+                      ? icon04
+                      : type == 'dropdown'
+                        ? downArrow
+                        : icon02
               }
             />
           </Pressable>
@@ -75,7 +75,7 @@ const Input1 = (props) => {
             style={[
               styles.inputContainer,
               inputStyle,
-              {backgroundColor: editable ? 'transparent' : COLORS.GRAY2},
+              { backgroundColor: editable ? 'transparent' : COLORS.GRAY2 },
             ]}>
             <TextInput
               secureTextEntry={secureTextEntry}
@@ -147,7 +147,6 @@ const styles = StyleSheet.create({
     color: SOFT_GRAY,
     outlineStyle: 'none',
     overflow: 'hidden',
-    //flexWrap: 'wrap',
   },
   logo: {
     width: 50,
@@ -163,7 +162,6 @@ const styles = StyleSheet.create({
   dropDownContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    //   alignItems: 'center',
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 15,
@@ -177,6 +175,5 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     flex: 1,
     width: '200%',
-    //  padding: 15
   },
 });

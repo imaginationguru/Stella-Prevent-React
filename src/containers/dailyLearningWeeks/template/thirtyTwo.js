@@ -63,8 +63,6 @@ const ThirtyTwo = (props) => {
 
   useEffect(() => {
     dispatch(AppActions.getAssessmentDataSecond(assessment_id2));
-    /// dispatch(AppActions.getUserAssessment(props._id, assessment_id2));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessment_id2]);
   useEffect(() => {
     if (props.submit_messages.length) {
@@ -106,9 +104,7 @@ const ThirtyTwo = (props) => {
       ? selectUserInputs.filter((ele) => ele.assessment_id[0] === assessment_id)
       : [];
     setSelected(selectedFormat);
-    console.log(firstAssessmentContent, "firstAssessmentContent....", assessmentData.headers);
     let dummyInput = assessmentData?.headers?.map(header => {
-      console.log(firstAssessmentContent.filter((e) => e.assessment_header_id === header._id).sort((a, b) => (a.order > b.order ? 1 : -1)), "count...");
       let arrayToSearchIn = firstAssessmentContent.filter((e) => e.assessment_header_id === header._id).sort((a, b) => (a.order > b.order ? 1 : -1));
       let maxOrder = Math.max(...arrayToSearchIn.map(o => o.order), 0);
       return {
@@ -118,10 +114,7 @@ const ThirtyTwo = (props) => {
         is_added: false
       }
     })
-    console.log(dummyInput, "dummyInput...")
     setUserInputs([...firstAssessmentContent, ...dummyInput]);
-    // setUserInputs(firstAssessmentContent, ...dummyInput);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
   useEffect(() => {
     let headers =
@@ -139,24 +132,13 @@ const ThirtyTwo = (props) => {
             order: item.order,
             value: '',
             _id: item._id,
-            // order: idx,
           };
         }),
       );
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData]);
   const onHandleChange = (e, item, inner) => {
-    console.log(e, item, "inputs.....", userInputs)
-    // const updateInputs = inputs.length
-    //   ? inputs.map((val) => {
-    //     return {
-    //       ...val,
-    //       value: val.name === e.target.name ? e.target.value : val.value,
-    //     };
-    //   })
-    //   : [];
-    // setInputs(updateInputs);
+
 
     const temp = userInputs.map((val) => {
       return {
@@ -165,13 +147,11 @@ const ThirtyTwo = (props) => {
       };
     }
     );
-    console.log(temp, "temp....");
     setUserInputs(temp);
 
   };
 
   const addHandler = (header, innnerItem) => {
-    console.log(header, innnerItem, "header,innnerItem.....", userInputs);
     const temp = userInputs.map((val) => {
       return {
         ...val,
@@ -179,11 +159,6 @@ const ThirtyTwo = (props) => {
       };
     }
     );
-    console.log(temp, "temp....");
-    //  return;
-    // return;
-    // setUserInputs(temp);
-    // return;
     let dummyInput = {
       assessment_header_id: header._id,
       content: "",
@@ -191,7 +166,6 @@ const ThirtyTwo = (props) => {
       is_added: false
 
     }
-    //  setUserInputs([...userInputs, dummyInput]);
     setUserInputs([...temp, dummyInput]);
   };
 
@@ -203,7 +177,6 @@ const ThirtyTwo = (props) => {
     inputs.map((item, i) => {
       indexArray.push({ index: i, id: item?._id });
     });
-    console.log(indexArray, "inputs......", userInputs)
     let modifyData = userInputs.length
       ? userInputs.filter(m => (m.content != '' && m.is_added == true)).map((item) => {
         indexArray.map((data, index) => {
@@ -225,8 +198,6 @@ const ThirtyTwo = (props) => {
       })
       : [];
 
-    console.log(modifyData, "modifyData...");
-    // return;
 
     let firstParams = {
       user_id: userId,
@@ -242,10 +213,6 @@ const ThirtyTwo = (props) => {
       }
     } else {
       customAlert("Please perform your exercise", 'error');
-      // dispatch({
-      //   type: ACTION_TYPE.ERROR,
-      //   payload: 'Please perform your exercise',
-      // });
     }
   };
   const updateYESNO = (data = {}, arr = []) => {
@@ -302,13 +269,7 @@ const ThirtyTwo = (props) => {
     if (temp.length) {
       isValid = temp.some((item) => item === 'NO');
     }
-    console.log(
-      'user submit message',
 
-      temp,
-      'isValid',
-      isValid,
-    );
 
     let params = {
       user_id: userId,
@@ -318,7 +279,6 @@ const ThirtyTwo = (props) => {
     };
     if (userAssessment.length) {
       if (userAssessmentData && userAssessmentData.length) {
-        // dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
         if (isValid) {
           dispatch(AppActions.rearrangeAssessments(params, negativeMessage));
         } else {
@@ -333,10 +293,6 @@ const ThirtyTwo = (props) => {
       }
     } else {
       customAlert("Please perform your exercise", 'error');
-      // dispatch({
-      //   type: ACTION_TYPE.ERROR,
-      //   payload: 'Please perform your exercise',
-      // });
     }
   };
   const generateDynamicColor = (order) => {
@@ -350,7 +306,6 @@ const ThirtyTwo = (props) => {
       return CIRCLE_GRAY;
     }
   };
-  console.log('header in 32', headers, userInputs);
   return (
     <>
       {/**********************quotes************** */}
@@ -462,9 +417,7 @@ const ThirtyTwo = (props) => {
                           name={name}
                           onChange={(e) => {
                             onHandleChange(e, item, val);
-                            console.log('--->', inputs);
                           }}
-                          // disabled={'true'}
                           style={styles.selectedText}
                           value={val.content}
                         />
@@ -487,14 +440,6 @@ const ThirtyTwo = (props) => {
                                 }
                               });
 
-                              // console.log("new data", filter_data);
-                              // setUserInputs([...other_header, ...filter_data]);
-                              // return;
-                              // setUserInputs(
-                              //   userInputs.filter(
-                              //     (ele) => ele.content !== val.content,
-                              //   ),
-                              // );
                               if (val.content_id) {
                                 dispatch(
                                   AppActions.deleteUserAssessmentData(
@@ -521,42 +466,11 @@ const ThirtyTwo = (props) => {
                               backgroundColor: val.content.length ? GREEN_TEXT : GRAY,
                             }}
                             onClick={() => {
-                              console.log(val, "val...");
                               if (val.content != "") {
                                 addHandler(item, val)
                               }
 
-                              // const userInputsOrder =
-                              //   userInputs && userInputs.length
-                              //     ? userInputs.filter(
-                              //       (ele) => ele.assessment_header_id === item._id,
-                              //     ).length
-                              //     : 0;
-                              // if (item.value.length) {
-                              //   setUserInputs([
-                              //     ...userInputs,
-                              //     {
-                              //       assessment_header_id: item._id,
-                              //       content: item.value,
-                              //       order: userInputsOrder + 1,
-                              //     },
-                              //   ]);
-                              // }
 
-                              // headers &&
-                              //   headers.length &&
-                              //   setInputs(
-                              //     headers.map((val) => {
-                              //       return {
-                              //         content: [],
-                              //         name: val.header,
-                              //         placeholder: val.description,
-                              //         order: val.order,
-                              //         value: "",
-                              //         _id: val._id,
-                              //       };
-                              //     }),
-                              //   );
                             }}>
                             <span style={styles.plusIcon}>+</span>
                           </div>
@@ -566,59 +480,7 @@ const ThirtyTwo = (props) => {
                     );
                   })
                 : null}
-              {/* <div style={styles.plusIconWrapper} className="v-p-field">
-                <input
-                  type="text"
-                  className="f-field"
-                  name={item.name}
-                  placeholder={item.placeholder}
-                  style={styles.selectedText}
-                  value={item.value}
-                  onChange={(e) => {
-                    onHandleChange(e, item);
-                  }}
-                />
-                <div
-                  style={{
-                    ...styles.circleDiv,
-                    backgroundColor: item.value.length ? GREEN_TEXT : GRAY,
-                  }}
-                  onClick={() => {
-                    const userInputsOrder =
-                      userInputs && userInputs.length
-                        ? userInputs.filter(
-                          (ele) => ele.assessment_header_id === item._id,
-                        ).length
-                        : 0;
-                    if (item.value.length) {
-                      setUserInputs([
-                        ...userInputs,
-                        {
-                          assessment_header_id: item._id,
-                          content: item.value,
-                          order: userInputsOrder + 1,
-                        },
-                      ]);
-                    }
 
-                    headers &&
-                      headers.length &&
-                      setInputs(
-                        headers.map((val) => {
-                          return {
-                            content: [],
-                            name: val.header,
-                            placeholder: val.description,
-                            order: val.order,
-                            value: "",
-                            _id: val._id,
-                          };
-                        }),
-                      );
-                  }}>
-                  <span style={styles.plusIcon}>+</span>
-                </div>
-              </div> */}
             </div>
           );
         })
@@ -784,7 +646,6 @@ const styles = {
   selectedText: {
     backgroundColor: '#F1F3FA',
     width: '100%',
-    // marginBottom: '3%',
   },
   circleDiv: {
     backgroundColor: GRAY,

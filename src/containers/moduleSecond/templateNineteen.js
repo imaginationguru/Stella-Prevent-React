@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import shelja from '../../assets/images/shelja.svg';
 const TemplateNineteen = (props) => {
-  const {isInput} = props;
+  const { isInput } = props;
   const [strategies, setStrategies] = useState('');
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(strategies);
     setStrategies('');
   };
   return (
@@ -15,7 +14,7 @@ const TemplateNineteen = (props) => {
         <h6 className="dash-time m-b-30">{props.data.template_time}</h6>
         <p
           className="dash-text-color"
-          style={{textAlign: 'center', fontSize: '20px', marginBottom: '20px'}}>
+          style={{ textAlign: 'center', fontSize: '20px', marginBottom: '20px' }}>
           {props.data.template_description_one}
         </p>
         <p className="dash-text-italic">
@@ -46,8 +45,8 @@ const TemplateNineteen = (props) => {
         </div>
         {isInput && (
           <>
-            <div style={{marginTop: '30px'}}>
-              <form noValidate style={{marginTop: '70px'}}>
+            <div style={{ marginTop: '30px' }}>
+              <form noValidate style={{ marginTop: '70px' }}>
                 <div className="formRow">
                   <div className="w100">
                     <div className="formField has-icon">
@@ -72,7 +71,7 @@ const TemplateNineteen = (props) => {
                 </div>
               </form>
             </div>
-            <div style={{width: '20%'}}>
+            <div style={{ width: '20%' }}>
               <button className="btn-orange" onClick={(e) => onSubmit(e)}>
                 SEND
               </button>

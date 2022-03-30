@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -16,11 +16,9 @@ import key from '../assets/images/subscription/key.png';
 import cards from '../assets/images/subscription/cards.png';
 import downArrow from '../assets/images/subscription/dropdown.png';
 import GLOBALS from '../constants';
-const {COLORS, FONTS} = GLOBALS;
-//import Icon from 'react-native-vector-icons/dist/FontAwesome';
-//import Icon from 'react-native-vector-icons/FontAwesome';
-//const myIcon = (<Icon name="rocket" size={30} color="#900" />)
-const {BORDER_COLOR, SHADOW_COLOR, HEADING_BLACK, WHITE, ERROR} = COLORS;
+const { COLORS, FONTS } = GLOBALS;
+
+const { BORDER_COLOR, SHADOW_COLOR, HEADING_BLACK, WHITE, ERROR } = COLORS;
 const Input = (props) => {
   let {
     label,
@@ -36,7 +34,7 @@ const Input = (props) => {
     labelStyle = {},
   } = props;
   return (
-    <View style={[containerStyle, {marginBottom: 15}]}>
+    <View style={[containerStyle, { marginBottom: 15 }]}>
       <Text style={[styles.label, labelStyle]}>{label}</Text>
       <View>
         {isDropdown ? (
@@ -60,12 +58,12 @@ const Input = (props) => {
                 type == 'user'
                   ? icon03
                   : type == 'email'
-                  ? icon01
-                  : type == 'phone'
-                  ? icon04
-                  : type == 'dropdown'
-                  ? downArrow
-                  : icon02
+                    ? icon01
+                    : type == 'phone'
+                      ? icon04
+                      : type == 'dropdown'
+                        ? downArrow
+                        : icon02
               }
             />
           </Pressable>
@@ -87,14 +85,14 @@ const Input = (props) => {
                 type == 'user'
                   ? icon03
                   : type == 'email'
-                  ? icon01
-                  : type == 'phone'
-                  ? icon04
-                  : type == 'cards'
-                  ? cards
-                  : type == 'key'
-                  ? key
-                  : ''
+                    ? icon01
+                    : type == 'phone'
+                      ? icon04
+                      : type == 'cards'
+                        ? cards
+                        : type == 'key'
+                          ? key
+                          : ''
               }
             />
           </View>
@@ -156,7 +154,6 @@ const styles = StyleSheet.create({
   dropDownContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    //   alignItems: 'center',
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 15,
@@ -170,6 +167,5 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     flex: 1,
     width: '200%',
-    //  padding: 15
   },
 });

@@ -84,21 +84,10 @@ const ActivityView = ({
           })
         }
         style={styles.activityBox}>
-        {/* <p
-          style={{
-            width: '30%',
-            border: '1px solid #1B82D4',
-            textAlign: 'center',
-            borderRadius: '70%',
-            borderWidth: '5%',
-            color: COLORS.PRIMARY,
-          }}>
-          {'+'}
-        </p> */}
+
         <div
           style={{
             textAlign: 'center',
-            // border: '1px solid blue',
           }}>
           <img src={plusIcon} style={{ width: '70px' }} />
         </div>
@@ -114,7 +103,6 @@ const ActivityView = ({
       <div
         style={{
           textAlign: 'center',
-          // border: '1px solid blue',
           width: '80px',
           height: '80px',
           borderRadius: '50%',
@@ -184,8 +172,6 @@ const ActivityTracker = ({ location }) => {
   }, []);
 
   useEffect(() => {
-    console.log('activity data>>>>>>>', getActivityData);
-    console.log('selected activity data>>>>>>>', getSelectedActivityData);
     const getActivityTrackerData = [],
       getDailtActivityData = [],
       getAddNewActivity = [],
@@ -227,9 +213,7 @@ const ActivityTracker = ({ location }) => {
         (x) => x.category == 'Pleasant',
       );
 
-      // pleasentArray.map((item) => {
-      //   getActivityTrackerData.push(item);
-      // });
+
       dailyArray.map((item) => {
         getDailtActivityData.push(item);
       });
@@ -246,7 +230,6 @@ const ActivityTracker = ({ location }) => {
 
       pleasentActivityArray = pleasentArray.concat(newSelectedActivity);
       pleasentActivityArray = pleasentArray.concat(newPlasentActivity);
-      console.log('pleasentActivityArray>>>>', pleasentActivityArray);
 
       pleasentActivityArray.map((item) => {
         getActivityTrackerData.push(item);
@@ -286,7 +269,6 @@ const ActivityTracker = ({ location }) => {
   }
 
   const onProceedClick = () => {
-    console.log('on process click 1');
     if (selectedListArray.length > 0) {
       let patientActivity = [];
       let id = '';
@@ -310,7 +292,6 @@ const ActivityTracker = ({ location }) => {
         patientactivity: patientActivity,
         _id: id,
       };
-      console.log('on process click 2');
       dispatch(AppActions.saveActivityTracker(postData));
     } else {
       dispatch({
@@ -320,10 +301,8 @@ const ActivityTracker = ({ location }) => {
     }
   };
 
-  // console.log('plasentActivityArray>>>>', plasentActivityArray)
   return (
     <MasterLayout>
-      {/* <BackBtn title = {isFromCard ? 'Back to Card' : 'Back to Dashboard'} /> */}
       {isFromCard ? <BackBtn title="Back to Card " /> : <BackToDashboard />}
       <div style={styles.wrapper}>
         <ActivityTab
@@ -339,7 +318,6 @@ const ActivityTracker = ({ location }) => {
               <FlatList
                 data={[...plasentActivityArray, { plusImage: true }]}
                 contentContainerStyle={styles.contentContainerStyle}
-                // style={{border: '2px solid blue', width: '100%'}}
                 numColumns={DEVICE_WIDTH > 767 ? 4 : 2}
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
@@ -416,7 +394,6 @@ const styles = {
   activityBox: {
     padding: '2%',
     width: DEVICE_WIDTH > 767 ? '25%' : '50%',
-    // border: '1px solid pink',
     alignItems: 'center',
     justifyContent: 'center',
   },

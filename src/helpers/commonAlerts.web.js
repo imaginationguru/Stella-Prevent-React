@@ -20,8 +20,7 @@ export const customAlert = (
     confirmButtonText: confirmButtonTitle ? confirmButtonTitle : 'OK',
 
     ...custom,
-    // timer: 2000
-  }).then((result) => {
+   }).then((result) => {
     if (result.isConfirmed) {
       onPress ? onPress() : null;
     }

@@ -6,17 +6,17 @@
  * @flow strict-local
  */
 
-import React, {useState} from 'react';
-import {useParams} from 'react-router-dom';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import brand from '../../../assets/images/brand.svg';
 import graphic01 from '../../../assets/images/graphic01.svg';
 import icon02 from '../../../assets/images/icon02.svg';
 import successTick from '../../../assets/images/successTick.svg';
 import logoWhite from '../../../assets/images/logoWhite.png';
 import MasterLayout from '../../../components/MasterLayout';
-import {translate as ts} from '../../../i18n/translate';
-import {passwordRegex} from '../../../utils/RegexUtils';
-import {useDispatch, useSelector} from 'react-redux';
+import { translate as ts } from '../../../i18n/translate';
+import { passwordRegex } from '../../../utils/RegexUtils';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '../../../actions';
 import history from '../../../helpers/history';
 
@@ -26,13 +26,13 @@ const RecoverPassword = () => {
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const dispatch = useDispatch();
-  const {resetData = {}} = useSelector((state) => state.authReducer);
+  const { resetData = {} } = useSelector((state) => state.authReducer);
 
   /** Function for password and confirm password value set*********  */
 
   const onHandleChange = (e) => {
     e.preventDefault();
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     if (name === 'password') {
       setPassword(value);
       setPasswordError('');
@@ -46,7 +46,7 @@ const RecoverPassword = () => {
   const copyPasteHandler = (e) => {
     e.preventDefault();
     e.nativeEvent.stopImmediatePropagation();
-    const {name} = e.target;
+    const { name } = e.target;
     if (name === 'password') {
       setPassword('');
       setPasswordError('');
@@ -61,8 +61,6 @@ const RecoverPassword = () => {
    validation Reset Password and API hit for changed Password* */
 
   const _id = useParams();
-  // const resetToken = useParams();
-  console.log('reset toekn>>>>>>>>>>', _id.resetToken);
   const onRecoverPassword = (e) => {
     e.preventDefault();
     if (password.length === 0) {
@@ -107,14 +105,11 @@ const RecoverPassword = () => {
                 <h3 className="success-text">
                   {ts('PASSWORD_RESET_SUCCESSFULLY')}
                 </h3>
-                {/* <p className="success-desc">
-                  Please check your email to reset the password
-                </p> */}
+
                 <p
                   className="link"
                   onClick={() => {
                     dispatch(AppActions.resetPasswordDataClear());
-                    // dispatch(AppActions.userDataClear());
                     history.push('/');
                   }}>
                   {ts('LOGIN_TO_YOUR_ACCOUNT')}
@@ -205,5 +200,5 @@ const RecoverPassword = () => {
 export default RecoverPassword;
 
 const styles = {
-  error: {color: 'red', paddingLeft: '5px'},
+  error: { color: 'red', paddingLeft: '5px' },
 };

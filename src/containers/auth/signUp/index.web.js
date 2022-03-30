@@ -159,13 +159,13 @@ const SignUp = () => {
     console.log('language>>>>data>>>>>>', params);
     if (firstName.length === 0) {
       setFirstNameError('please fill first name');
-    } 
+    }
     /* 
     else if (middleName.length === 0) {
       setMiddleNameError('please fill middle name');
     }
     */
-     else if (lastName.length === 0) {
+    else if (lastName.length === 0) {
       setLastNameError('please fill last name');
     } else if (email.length === 0) {
       setEmailError('please fill email');
@@ -181,7 +181,7 @@ const SignUp = () => {
       setConfirmPasswordError('Please fill Confirm Password');
     } else if (password !== confirmPassword) {
       setConfirmPasswordError("Passwords don't match");
-    } 
+    }
     /* 
     else if (zipCode.length === 0) {
       setZipCodeError('please fill zip ');
@@ -194,13 +194,13 @@ const SignUp = () => {
       setDobError('please fill dob');
     } else if (gender.length === 0) {
       setGenderError('please fill gender');
-    } 
+    }
     /*
      else if (language.length === 0) {
       setLanguageError('please fill language');
     }
     */
-     dispatch(AppActions.register(params));
+    dispatch(AppActions.register(params));
   };
 
   console.log('dial_code>>>>>>>>>>>', country);
@@ -210,10 +210,10 @@ const SignUp = () => {
         <div className="login">
           <div className="signup-left">
             <div className="b-name">
-              <img src={brand} className= "b1-name" />
+              <img src={brand} className="b1-name" />
             </div>
             <div className="graphics">
-              <img src={graphic01} className ="b1-name" />
+              <img src={graphic01} className="b1-name" />
             </div>
           </div>
           <div className="login-right">
@@ -256,7 +256,7 @@ const SignUp = () => {
                       </div>
                       <span style={commonStyles.error}>{middleNameError}</span>
                        */}
-                       <label className="formLabel">{ts('LAST_NAME')}</label>
+                      <label className="formLabel">{ts('LAST_NAME')}</label>
                       <div className="formField has-icon">
                         <input
                           type="text"
@@ -272,7 +272,7 @@ const SignUp = () => {
                       <span style={commonStyles.error}>{lastNameError}</span>
                     </div>
                   </div>
-                  
+
                   <div className="formRow">
                     <div className="w50" style={commonStyles.w501}>
                       {/*
@@ -305,10 +305,10 @@ const SignUp = () => {
                         </span>
                       </div>
                       <span style={commonStyles.error}>{emailError}</span>
-                      
+
                     </div>
                     <div className="w50" style={commonStyles.w501}>
-                    <label className="formLabel">{ts('PHONE_NUMBER')}</label>
+                      <label className="formLabel">{ts('PHONE_NUMBER')}</label>
                       <div className="formField has-icon">
                         <input
                           type="number"
@@ -345,7 +345,7 @@ const SignUp = () => {
                       <span style={commonStyles.error}>{countryError}</span>
                     </div>
                     <div className="w50" style={commonStyles.w501}>
-                      
+
                     </div>
                   </div>
                   <div className="formRow">
@@ -450,7 +450,7 @@ const SignUp = () => {
                       <span style={commonStyles.error}>{languageError}</span>
                     </div>
                   </div>
-                  */}     
+                  */}
                   <div className="formRow">
                     <div className="w100">
                       <div className="formSubmit">

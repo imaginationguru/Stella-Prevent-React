@@ -11,12 +11,12 @@ import Angry from '../assets/images/angry/angry.png';
 import AngryActive from '../assets/images/angryActive/angryActive.png';
 const isLive = false;
 export default {
-  // BASE_URL: isLive
-  //   ? 'http://172.24.0.157:4001/api/'
-  //   : 'http://52.170.117.197/api/', //1.5 stella
-  // IMAGE_BASE_URL: isLive
-  //   ? 'http://172.24.0.157:4001/' //UAT
-  //   : 'http://52.170.117.197/', //dev
+  BASE_URL: isLive
+    ? 'http://172.24.0.157:4001/api/'
+    : 'http://52.170.117.197/api/', //1.5 stella
+  IMAGE_BASE_URL: isLive
+    ? 'http://172.24.0.157:4001/' //UAT
+    : 'http://52.170.117.197/', //dev
   BASE_URL: isLive
     ? 'https://mamalift.curiodigitaltx.com/api/'
     : 'http://52.170.117.197/api/', //1.5 stella
@@ -24,8 +24,15 @@ export default {
     ? 'https://mamalift.curiodigitaltx.com/' //UAT
     : 'http://52.170.117.197/', //dev
 
+  WEB_BASE_URL: 'https://mamalift-web.curiodigitaltx.com/',
+
   // BASE_URL: 'https://mamalift-qa.curio-dtx.com/api/',
   // IMAGE_BASE_URL: 'https://mamalift-qa.curio-dtx.com/', //QA
+  // WEB_BASE_URL: 'https://mamalift-qa-web.curio-dtx.com/',
+
+  // BASE_URL: 'https://mamalift-uat.curio-dtx.com/api/',
+  // IMAGE_BASE_URL: 'https://mamalift-uat.curio-dtx.com/', //UAT
+  // WEB_BASE_URL: 'https://mamalift-uat-web.curio-dtx.com/',
   /********************************** * URL ***********************************/
   URL: {
     LOGIN: 'login',
@@ -94,7 +101,6 @@ export default {
     CIRCULAR_BOLD: 'CircularStd-Bold',
     SF_DISPLAY_REGULAR: 'SFUIDisplay-Regular',
     NEW_REGULAR: 'HKGrotesk-Regular',
-    // NEW_REGULAR: 'HKGrotesk-Medium',
   },
 
   /******************************STRINGS************************* */
@@ -112,8 +118,6 @@ export default {
   MOODS_ARRAY: [
     {
       id: 5,
-      // image: VeryHappy,
-      // activeImage: Images.VeryHappyActive,
       image: VeryHappy,
       activeImage: VeryHappyActive,
       isClickTrue: false,
@@ -123,8 +127,6 @@ export default {
       id: 4,
       image: Happy,
       activeImage: HappyActive,
-      // image: '../assets/images/happy/happy.png',
-      // activeImage: '../assets/images/happyActive/happyActive.png',
       isClickTrue: false,
       moodValue: 1,
     },
@@ -132,8 +134,6 @@ export default {
       id: 3,
       image: Confused,
       activeImage: ConfusedActive,
-      // image: '../assets/images/confused/confused.png',
-      // activeImage: '../assets/images/confusedActive/confusedActive.png',
       isClickTrue: false,
       moodValue: 2,
     },
@@ -141,8 +141,6 @@ export default {
       id: 2,
       image: Sad,
       activeImage: SadActive,
-      // image: '../assets/images/sad/sad.png',
-      // activeImage: '../assets/images/sadActive/sadActive.png',
       isClickTrue: false,
       moodValue: 1,
     },
@@ -150,8 +148,6 @@ export default {
       id: 1,
       image: Angry,
       activeImage: AngryActive,
-      // image: '../assets/images/angry/angry.png',
-      // activeImage: '../assets/images/angryActive/angryActive.png',
       isClickTrue: false,
       moodValue: 1,
     },
@@ -362,5 +358,6 @@ export default {
     LIGHT_SHADOW_GREEN: '#C9E2DE',
     GREY: '#676767' /* Font Regular */,
     GreenForSlider: '#6FCF97',
+    LightYellow: '#CBCBCB',
   },
 };
