@@ -183,7 +183,7 @@ const Payment = (props) => {
                 <TouchableOpacity
                   onPress={() =>
                     window.open(
-                      `${IMAGE_BASE_URL}upload/acknowldgement.pdf`,
+                      `${IMAGE_BASE_URL}upload/MamaLift_Terms_of_Use.pdf`,
                       '_blank',
                     )
                   }

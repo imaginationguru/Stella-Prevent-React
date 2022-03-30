@@ -9,14 +9,8 @@ import Sad from '../assets/images/sad/sad.png';
 import SadActive from '../assets/images/sadActive/sadActive.png';
 import Angry from '../assets/images/angry/angry.png';
 import AngryActive from '../assets/images/angryActive/angryActive.png';
-const isLive = false;
+const isLive = true;
 export default {
-  BASE_URL: isLive
-    ? 'http://172.24.0.157:4001/api/'
-    : 'http://52.170.117.197/api/', //1.5 stella
-  IMAGE_BASE_URL: isLive
-    ? 'http://172.24.0.157:4001/' //UAT
-    : 'http://52.170.117.197/', //dev
   BASE_URL: isLive
     ? 'https://mamalift.curiodigitaltx.com/api/'
     : 'http://52.170.117.197/api/', //1.5 stella

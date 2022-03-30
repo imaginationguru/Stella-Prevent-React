@@ -11,14 +11,14 @@ const Footer = () => {
       <div className="footer-container">
         <div className="f-col-row">
           <div className="f-col f-col-fixed">
-            <p class="footer-text">© 2022 Curio. All rights reserved.</p>
+            <p className="footer-text">© 2022 Curio. All rights reserved.</p>
           </div>
           <div className="f-col f-col-auto">
             <div className="footer-links">
               <div className="footer-link-item">
                 <a
                   target="_blank"
-                  href={`${IMAGE_BASE_URL}upload/acknowldgement.pdf`}>
+                  href={`${IMAGE_BASE_URL}upload/MamaLift_Terms_of_Use.pdf`}>
                   Terms of Use
                 </a>
               </div>
@@ -51,7 +51,7 @@ const Footer = () => {
                 <Link to="#">{ts('HELP')}</Link>
               </div> */}
             </div>
-            <p class="footer-text text-center">
+            <p className="footer-text text-center">
               <b>Contact us at contact@mymamalift.com</b>
               <br />
               If you are in a crisis or in danger of harming yourself, please call the National Suicide Prevention Lifeline at 1-800-273-TALK (8255).

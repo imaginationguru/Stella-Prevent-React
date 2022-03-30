@@ -104,7 +104,9 @@ const ThirtyTwo = (props) => {
       ? selectUserInputs.filter((ele) => ele.assessment_id[0] === assessment_id)
       : [];
     setSelected(selectedFormat);
-    let dummyInput = assessmentData?.headers?.map(header => {
+    console.log(assessmentData, "assessmentData");
+    let dummyInput = []
+    dummyInput = assessmentData?.headers?.map(header => {
       let arrayToSearchIn = firstAssessmentContent.filter((e) => e.assessment_header_id === header._id).sort((a, b) => (a.order > b.order ? 1 : -1));
       let maxOrder = Math.max(...arrayToSearchIn.map(o => o.order), 0);
       return {
@@ -114,7 +116,12 @@ const ThirtyTwo = (props) => {
         is_added: false
       }
     })
-    setUserInputs([...firstAssessmentContent, ...dummyInput]);
+    console.log(dummyInput, "dummyInput")
+    if (dummyInput) {
+      setUserInputs([...firstAssessmentContent, ...dummyInput]);
+    }
+
+
   }, [userAssessmentData]);
   useEffect(() => {
     let headers =
@@ -171,7 +178,7 @@ const ThirtyTwo = (props) => {
 
   /**********************FIRST ASSESSMENT****************** */
   const onSaveFirstAssessment = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     let indexArray = [];
     let contexIndex;
     inputs.map((item, i) => {
@@ -198,7 +205,8 @@ const ThirtyTwo = (props) => {
       })
       : [];
 
-
+    return modifyData;
+    return;
     let firstParams = {
       user_id: userId,
       user_card_id: props._id,
@@ -226,8 +234,9 @@ const ThirtyTwo = (props) => {
         )
           ? true
           : false;
+        console.log(isSameContent, "isSameContent....")
         if (isSameContent) {
-          setSelected(arr.filter((item) => item._id !== data._id));
+          //  setSelected(arr.filter((item) => item._id !== data._id));
         } else {
           setSelected(
             arr.map((item) => {
@@ -245,40 +254,46 @@ const ThirtyTwo = (props) => {
       setSelected([data]);
     }
   };
+
+
   /**********************SECOND ASSESSMENT****************** */
   const onSaveMyths = (e) => {
-
-    customAlert("Row 14 In progress", 'error');
-    return;
-
-    e.preventDefault();
-    let userAssessment = selected.map((item) => {
+    /**Get first assesmet content....  */
+    let first_assessment = onSaveFirstAssessment();
+    /**Check second assement content and handle its validation starts.....*/
+    let selectedYesNO = selected.filter(i => assessmentData2.headers.some(e => e._id == i._id)).map((item) => {
       return {
         assessment_header_id: item._id,
         content: [{ content: item.content }],
       };
-    });
+    });;
+    if (selectedYesNO.length != assessmentData2.headers.length || first_assessment.length == 0) {
+      customAlert("Please perform your exercise", 'error');
+      return;
+    }
+    let final_data = [...first_assessment, ...selectedYesNO];
+    // return;
+    /**Check second assement content and handle its validation ends.....*/
+    e.preventDefault();
     let temp = [];
     let isValid = '';
-    if (userAssessment.length) {
-      userAssessment.forEach((item) => {
+    if (final_data.length) {
+      final_data.forEach((item) => {
         temp.push(item.content[0] && item.content[0].content);
       });
     }
-
     if (temp.length) {
       isValid = temp.some((item) => item === 'NO');
     }
-
-
+    console.log(isValid, positiveMessage, "lllll")
     let params = {
       user_id: userId,
       user_card_id: props._id,
       assessment_id: assessment_id2,
-      assessment: userAssessment,
+      assessment: final_data,
     };
-    if (userAssessment.length) {
-      if (userAssessmentData && userAssessmentData.length) {
+    if (final_data.length) {
+      if (final_data && final_data.length) {
         if (isValid) {
           dispatch(AppActions.rearrangeAssessments(params, negativeMessage));
         } else {
@@ -485,13 +500,13 @@ const ThirtyTwo = (props) => {
           );
         })
         : null}
-      <div style={commonStyles.buttonWrapper}>
+      {/* <div style={commonStyles.buttonWrapper}>
         <button
           className="btn-orange"
           onClick={(e) => onSaveFirstAssessment(e)}>
           {ts('SAVE')}
         </button>
-      </div>
+      </div> */}
 
       {/***************************ASSESSMENTS DESCRIPTION SECOND************* */}
       <div style={{ ...commonStyles.assessmentWrapper, marginBottom: '70px' }}>
