@@ -91,8 +91,7 @@ const TemplateSix = (props) => {
       setDefault(rightLength - leftLength + 1);
       setIsLeftBalance(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [changes, initial]);
+   }, [changes, initial]);
 
   useEffect(() => {
     const onlyCardData = [];
@@ -102,8 +101,7 @@ const TemplateSix = (props) => {
       });
     }
     setChanges([...onlyCardData]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userAssessmentData]);
+   }, [userAssessmentData]);
 
   const imageRenderHandler = () => {
     if (initial === 1) {
@@ -262,8 +260,7 @@ const TemplateSix = (props) => {
                 <CustomImage
                   src={`${IMAGE_BASE_URL}${item.image}`}
                   style={{
-                    // ...commonStyles.assessImage,
-                    display: item.image !== '' ? 'flex' : 'none',
+                     display: item.image !== '' ? 'flex' : 'none',
                     width: '120px',
                     flex: '0 0 auto',
                   }}
@@ -312,15 +309,7 @@ const TemplateSix = (props) => {
                         setChanges(
                           changes.filter((val) => val.content !== item.content),
                         );
-                        // setDeleteItemID(item._id);
-                        // if (item._id) {
-                        //   dispatch(
-                        //     AppActions.deleteUserAssessmentData(
-                        //       item._id,
-                        //       props._id,
-                        //     ),
-                        //   );
-                        // }
+                        
                       }}>
                       x
                     </span>
@@ -395,8 +384,7 @@ const TemplateSix = (props) => {
             <span style={styles.leftPlusIcon}>+</span>
           </div>
           <textarea
-            // type="text"
-            className="f-field height-auto"
+             className="f-field height-auto"
             name="leftInput"
             placeholder={headers && headers.length ? headers[0].header : ''}
             style={{
@@ -438,8 +426,7 @@ const TemplateSix = (props) => {
             <span style={styles.plusIcon}>+</span>
           </div>
           <textarea
-            // type="textare"
-            className="f-field height-auto"
+             className="f-field height-auto"
             placeholder={headers && headers.length ? headers[1].header : ''}
             style={{
               backgroundColor: '#F1F3FA',
@@ -505,8 +492,7 @@ const styles = {
   innerWrapper: {
     width: '48%',
     paddingRight: '10px',
-    //position: 'relative',
-  },
+   },
   selectedText: {
     backgroundColor: '#F1F3FA',
     width: '100%',

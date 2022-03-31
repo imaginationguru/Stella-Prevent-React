@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -17,17 +17,14 @@ import Header from '../../../components/Header';
 import Loader from '../../../components/Loader';
 import Button from '../../../components/common/button';
 import DropDown from '../../../components/common/dropDown';
-import {countryData} from '../../../utils/CountryCode';
+import { countryData } from '../../../utils/CountryCode';
 
 import ProfileHeader from '../../../components/common/profileHeader';
-//import {screenHeight, screenWidth} from '../../utils/dimension';
 import back from '../../../assets/images/subscription/back.png';
 import logo from '../../../assets/images/subscription/logoTm.png';
 import book from '../../../assets/images/subscription/book.png';
 import paypal from '../../../assets/images/subscription/paypal.png';
 import apple from '../../../assets/images/subscription/apple.png';
-//import key from '../../../assets/images/subscription/key.png';
-//import cards from '../../../assets/images/subscription/cards.png';
 import Input from '../../../components/Input';
 import {
   navigatorPush,
@@ -37,8 +34,8 @@ import {
   SquarePaymentsForm,
   CreditCardInput,
 } from 'react-square-web-payments-sdk';
-import {getItem} from '../../../utils/AsyncUtils';
-const {COLORS, FONTS, IMAGE_BASE_URL} = GLOBALS;
+import { getItem } from '../../../utils/AsyncUtils';
+const { COLORS, FONTS, IMAGE_BASE_URL } = GLOBALS;
 const {
   BLUR,
   WHITE,
@@ -50,12 +47,11 @@ const {
 } = COLORS;
 
 import BackBtn from '../../../components/common/backbtn';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as AppActions from '../../../actions';
-import {validateEmail, validateIsEmpty} from '../../../utils/validations';
+import { validateEmail, validateIsEmpty } from '../../../utils/validations';
 const Payment = (props) => {
-  console.log('payment module props', props);
-  const {loginData = {}} = useSelector((state) => state.authReducer);
+  const { loginData = {} } = useSelector((state) => state.authReducer);
   let premiumPrice = props.location.state.price;
   const [price, setPrice] = useState(premiumPrice);
   const [email, setEmail] = useState(loginData?.user?.email);
@@ -78,9 +74,8 @@ const Payment = (props) => {
   const [zipError, setZipError] = useState('');
 
   const dispatch = useDispatch();
-  const {isLoading} = useSelector((state) => state.common);
+  const { isLoading } = useSelector((state) => state.common);
   useEffect(() => {
-    console.log(loginData, 'loginData........');
     setName(loginData?.user?.firstName + ' ' + loginData?.user?.lastName);
     setEmail(loginData?.user?.email);
   }, [loginData]);
@@ -97,12 +92,10 @@ const Payment = (props) => {
       if (validateIsEmpty(country)) setCountryError('please select country');
       if (validateIsEmpty(zipCode)) setZipError('please enter zipcode');
     } else {
-      // dispatch(AppActions.payment);
     }
   };
 
   const purchasePlan = (token, buyer) => {
-    console.log(token, buyer, 'Finaly data');
     if (validateIsEmpty(name) || validateIsEmpty(email)) {
       if (validateIsEmpty(name)) setNameError('Please enter name');
       if (validateIsEmpty(email)) setEmailError('Please enter email');
@@ -130,7 +123,6 @@ const Payment = (props) => {
         setModalVisibility(true);
         break;
       case 'selected_gender':
-        console.log(data);
         setCountry(data);
         setCountryError('');
         setModalVisibility(false);
@@ -144,15 +136,15 @@ const Payment = (props) => {
   return (
     <View style={styles.container}>
       <ProfileHeader
-        onProfileClick={() => navigatorPush({screenName: 'Profile'})}
+        onProfileClick={() => navigatorPush({ screenName: 'Profile' })}
         showProfileBtn={true}
         showEditIcon={false}
       />
       {isLoading ? <Loader /> : null}
-      <BackBtn title={'Back'} btnStyle={{paddingLeft: '20px'}} />
+      <BackBtn title={'Back'} btnStyle={{ paddingLeft: '20px' }} />
       <View style={styles.innerContainer}>
         <View style={styles.innerLeft}>
-          <View style={{marginTop: '20px', marginHorizontal: '80px'}}>
+          <View style={{ marginTop: '20px', marginHorizontal: '80px' }}>
             <View
               style={{
                 alignItems: 'center',
@@ -181,12 +173,11 @@ const Payment = (props) => {
             </View>
             <View
               style={{
-                //  marginLeft: '5vw',
                 marginTop: '3vw',
                 alignItems: 'center',
               }}>
-              <Image source={book} style={{height: '100px', width: '100px'}} />
-              <View style={{flexDirection: 'row', marginTop: '30px'}}>
+              <Image source={book} style={{ height: '100px', width: '100px' }} />
+              <View style={{ flexDirection: 'row', marginTop: '30px' }}>
                 <View style={styles.verticalLine} />
 
                 <TouchableOpacity
@@ -196,7 +187,7 @@ const Payment = (props) => {
                       '_blank',
                     )
                   }
-                  style={{marginHorizontal: '10px'}}>
+                  style={{ marginHorizontal: '10px' }}>
                   <Text style={styles.terms}>Terms</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -220,7 +211,7 @@ const Payment = (props) => {
               fontSize: '12px',
               paddingBottom: '5px',
             }}
-            inputStyle={{padding: 10, height: 40}}
+            inputStyle={{ padding: 10, height: 40 }}
             setCode={(text) => setEmail(text)}
             value={email}
             error={emailError}
@@ -234,7 +225,7 @@ const Payment = (props) => {
             }}
             type=""
             maxLength={30}
-            inputStyle={{padding: 10, height: 40}}
+            inputStyle={{ padding: 10, height: 40 }}
             setCode={(text) => setName(text)}
             value={name}
             error={nameError}
@@ -251,8 +242,7 @@ const Payment = (props) => {
              * The result will be a valid credit card or wallet token, or an error.
              */
             cardTokenizeResponseReceived={(token, buyer) => {
-              console.log('response...');
-              console.info({token, buyer});
+              console.info({ token, buyer });
               purchasePlan(token, buyer);
             }}
             /**
@@ -263,7 +253,6 @@ const Payment = (props) => {
              */
             createVerificationDetails={() => ({
               amount: '40.00',
-              // amount: {price},
               /* collected from the buyer */
               billingContact: {
                 addressLines: ['123 Main Street', 'Apartment 1'],

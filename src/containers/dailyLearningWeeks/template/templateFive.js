@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import commonStyles from '../commonStyles';
 import ReactHtmlParser from 'react-html-parser';
 import GLOBALS from '../../../constants';
-import {useDispatch, useSelector} from 'react-redux';
-import {getItem} from '../../../utils/AsyncUtils';
+import { useDispatch, useSelector } from 'react-redux';
+import { getItem } from '../../../utils/AsyncUtils';
 import * as AppActions from '../../../actions';
-import {translate as ts} from '../../../i18n/translate';
+import { translate as ts } from '../../../i18n/translate';
 import ExerciseBox from '../../../components/ExerciseBox';
 import {
   CardQuote,
@@ -16,7 +16,7 @@ import {
   CustomImage,
 } from '../../../components/Cards';
 import tickWhite from '../../../assets/images/right.svg';
-const {IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
+const { IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
 
 const unique = (arr, keyProps) => {
   const kvArray = arr.map((entry) => {
@@ -42,7 +42,7 @@ const onlySingleId = (arr = []) => {
           q.push(...cn);
         });
       }
-      temp.push({assessment_header_id: item, content: q});
+      temp.push({ assessment_header_id: item, content: q });
     });
     return temp;
   }
@@ -50,7 +50,7 @@ const onlySingleId = (arr = []) => {
 const TemplateFive = (props) => {
   const [optionDataContent, setOptionDataContent] = useState([]);
   const [headerParams, setHeaderParams] = useState([]);
-  const {assessmentData = {}, userAssessmentData = []} = useSelector(
+  const { assessmentData = {}, userAssessmentData = [] } = useSelector(
     (state) => state.moduleOne,
   );
   const [dragCardData, setDragCardData] = useState([]);
@@ -69,23 +69,22 @@ const TemplateFive = (props) => {
     showExercises,
     week,
   } = props.card;
-  const {assessments} = props;
-  const {headers} = assessmentData;
+  const { assessments } = props;
+  const { headers } = assessmentData;
 
   useEffect(() => {
     let optionData =
       assessmentData && assessmentData.content && assessmentData.content.length
         ? assessmentData.content
-            .filter((item) => {
-              return item.assessment_header_id === null;
-            })
-            .map((item) => {
-              return {...item, content: item.data};
-            })
+          .filter((item) => {
+            return item.assessment_header_id === null;
+          })
+          .map((item) => {
+            return { ...item, content: item.data };
+          })
         : [];
     setOptionDataContent(optionData);
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData]);
 
   useEffect(() => {
@@ -94,9 +93,6 @@ const TemplateFive = (props) => {
       let tempHeaderParams = [];
       userAssessmentData.forEach((item, i) => {
         temp.push(...item.cards);
-        // if(Object.keys(item).length === 0){
-
-        // }
         let zz = item.cards.map((item) => {
           return {
             assessment_header_id: item.assessment_header_id,
@@ -109,14 +105,8 @@ const TemplateFive = (props) => {
           };
         });
         tempHeaderParams.push(...zz);
-        // setHeaderParams(onlySingleId(tempHeaderParams));
-        // console.log(
-        //   tempHeaderParams,
-        //   'tempHeaderParams',
-        //   tempHeaderParams.filter(
-        //     (item) => item.assessment_header_id != undefined,
-        //   ),
-        // );
+
+
         setHeaderParams(
           onlySingleId(
             tempHeaderParams.filter(
@@ -144,15 +134,13 @@ const TemplateFive = (props) => {
                 item.assessment_header[0].order,
             };
           } else {
-            return {...item};
+            return { ...item };
           }
         });
         const data1 = data.filter((item) => item.content !== null);
         setOptionDataContent(data1);
       }
-      // setOptionDataContent(uniqueOptionDataContent);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
 
   /*
@@ -188,7 +176,7 @@ const TemplateFive = (props) => {
       ...x,
       {
         assessment_header_id: header_id,
-        content: [{assessment_header_id: header_id, content: id}],
+        content: [{ assessment_header_id: header_id, content: id }],
       },
     ];
     setHeaderParams(onlySingleId(y));
@@ -201,7 +189,6 @@ const TemplateFive = (props) => {
     setOptionDataContent([...optionDataContent, tasks]);
   };
   let customMsg = '';
-  //}, [headerParams]);
 
   const onSave = (e) => {
     e.preventDefault();
@@ -214,7 +201,6 @@ const TemplateFive = (props) => {
     if (props.card.week == 1 && props.card.day == 2) {
       let selectedIntemsofHeader = [];
       if (headerParams.length > 0 && assessmentData.headers.length == 4) {
-        // return;
         assessmentData.headers.map((head, index) => {
           selectedIntemsofHeader[index] = headerParams.filter(
             (e) => e.assessment_header_id === head._id,
@@ -238,7 +224,6 @@ const TemplateFive = (props) => {
             : selectedIntemsofHeader[3][0].content.length;
         let X1 = yellowCount + orangeCount + purpleCount;
         let X2 = yellowCount + orangeCount;
-        console.log('x1 x2 ??? mobile view', X1, X2, yellowCount, orangeCount);
         customMsg = `After the birth of your new born, you consider that changes have occurred in ${X1} areas of your life and that, in ${X2} of these areas, these changes were different from what you initially thought.​  Many mothers describe differences between what they imagined their life would be like during pregnancy, and the reality of the changes after the baby arrives! In fact, it is normal for the experience of taking care of our baby to be different from what we imagined or expected, even when it is not our first child.​
 Every pregnancy and every baby are different and unique!​`;
       }
@@ -332,9 +317,9 @@ Every pregnancy and every baby are different and unique!​`;
     if (optionDataContent.length) {
       const data = optionDataContent.map((item, i) => {
         if (item._id === contentId) {
-          return {...item, assessment_header_id: headerId, headerOrder};
+          return { ...item, assessment_header_id: headerId, headerOrder };
         } else {
-          return {...item};
+          return { ...item };
         }
       });
       setOptionDataContent(data);
@@ -363,7 +348,6 @@ Every pregnancy and every baby are different and unique!​`;
     if (props.card.week == 1 && props.card.day == 2) {
       let selectedIntemsofHeader = [];
       if (y.length > 0 && assessmentData.headers.length == 4) {
-        // return;
         assessmentData.headers.map((head, index) => {
           selectedIntemsofHeader[index] = y.filter(
             (e) => e.assessment_header_id === head._id,
@@ -385,10 +369,8 @@ Every pregnancy and every baby are different and unique!​`;
           selectedIntemsofHeader[3] && selectedIntemsofHeader[3].length == 0
             ? 0
             : selectedIntemsofHeader[3][0].content.length;
-        console.log('selected in terms of header', selectedIntemsofHeader);
         let X1 = yellowCount + orangeCount + purpleCount;
         let X2 = yellowCount + orangeCount;
-        console.log('x1 x2 ??? mobile view', X1, X2);
         customMsg = `After the birth of your new born, you consider that changes have occurred in ${X1} areas of your life and that, in ${X2} of these areas, these changes were different from what you initially thought.​  Many mothers describe differences between what they imagined their life would be like during pregnancy, and the reality of the changes after the baby arrives! In fact, it is normal for the experience of taking care of our baby to be different from what we imagined or expected, even when it is not our first child.​
 Every pregnancy and every baby are different and unique!​`;
       }
@@ -422,15 +404,15 @@ Every pregnancy and every baby are different and unique!​`;
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -442,42 +424,42 @@ Every pregnancy and every baby are different and unique!​`;
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
       {/*****************assessment description***************** */}
       <div style={commonStyles.assessmentWrapper}>
         {images && images.length
           ? images.map((item, i) => {
-              return (
-                <CustomImage
-                  key={i}
-                  src={`${IMAGE_BASE_URL}${item.image}`}
-                  style={{
-                    ...commonStyles.assessImage,
-                    display: item.image !== '' ? 'flex' : 'none',
-                  }}
-                />
-              );
-            })
+            return (
+              <CustomImage
+                key={i}
+                src={`${IMAGE_BASE_URL}${item.image}`}
+                style={{
+                  ...commonStyles.assessImage,
+                  display: item.image !== '' ? 'flex' : 'none',
+                }}
+              />
+            );
+          })
           : []}
         {assessments && assessments.length
           ? assessments.map((item, i) => {
-              return (
-                <CardDescription
-                  key={i}
-                  style={commonStyles.assessDesc}
-                  description={ReactHtmlParser(item.description)}
-                />
-              );
-            })
+            return (
+              <CardDescription
+                key={i}
+                style={commonStyles.assessDesc}
+                description={ReactHtmlParser(item.description)}
+              />
+            );
+          })
           : []}
       </div>
 
@@ -487,53 +469,53 @@ Every pregnancy and every baby are different and unique!​`;
           <div style={styles.fourBoxContainer}>
             {headers && headers.length
               ? headers.map((item, index) => {
-                  const header_id = item._id;
-                  const order = item.order;
-                  return (
-                    <div
-                      key={index}
+                const header_id = item._id;
+                const order = item.order;
+                return (
+                  <div
+                    key={index}
+                    style={{
+                      ...commonStyles.droppableDivDrag,
+                      display: 'block',
+                    }}
+                    className="wip"
+                    onDragOver={(e) => onDragOver(e, item._id)}
+                    onDrop={(e) => {
+                      onDrop(e, item._id, item.order);
+                    }}>
+                    <p
+                      className="task-header"
                       style={{
-                        ...commonStyles.droppableDivDrag,
-                        display: 'block',
-                      }}
-                      className="wip"
-                      onDragOver={(e) => onDragOver(e, item._id)}
-                      onDrop={(e) => {
-                        onDrop(e, item._id, item.order);
+                        ...commonStyles.dropTitle,
+                        backgroundColor: boxBackgroundColor(item.order),
                       }}>
-                      <p
-                        className="task-header"
-                        style={{
-                          ...commonStyles.dropTitle,
-                          backgroundColor: boxBackgroundColor(item.order),
-                        }}>
-                        {ReactHtmlParser(item.header)}
-                      </p>
-                      {optionDataContent && optionDataContent.length
-                        ? optionDataContent
-                            .filter((item) => {
-                              return item.assessment_header_id === header_id;
-                            })
-                            .map((item) => {
-                              return (
-                                <p
-                                  style={{
-                                    ...commonStyles.dragItem,
-                                    borderColor: boxBackgroundColor(order),
-                                  }}
-                                  onDragStart={(e) =>
-                                    onDragStart(e, item.content)
-                                  }
-                                  draggable
-                                  className="draggable p-draggable">
-                                  {item.content}
-                                </p>
-                              );
-                            })
-                        : []}
-                    </div>
-                  );
-                })
+                      {ReactHtmlParser(item.header)}
+                    </p>
+                    {optionDataContent && optionDataContent.length
+                      ? optionDataContent
+                        .filter((item) => {
+                          return item.assessment_header_id === header_id;
+                        })
+                        .map((item) => {
+                          return (
+                            <p
+                              style={{
+                                ...commonStyles.dragItem,
+                                borderColor: boxBackgroundColor(order),
+                              }}
+                              onDragStart={(e) =>
+                                onDragStart(e, item.content)
+                              }
+                              draggable
+                              className="draggable p-draggable">
+                              {item.content}
+                            </p>
+                          );
+                        })
+                      : []}
+                  </div>
+                );
+              })
               : []}
           </div>
           {/****************************OPTIONS CONTAINER with gray box******************** */}
@@ -541,26 +523,26 @@ Every pregnancy and every baby are different and unique!​`;
           <div style={styles.optionsDiv}>
             {optionDataContent && optionDataContent.length
               ? optionDataContent
-                  .filter((item, i) => {
-                    const exist = dragCardDataContent.find(
-                      (val) => val === item.content,
-                    )
-                      ? true
-                      : false;
-                    return item.assessment_header_id === null && !exist;
-                  })
-                  .map((item, index) => {
-                    return (
-                      <div
-                        key={index}
-                        onDragStart={(e) => onDragStart(e, item.content)}
-                        draggable
-                        className="draggable"
-                        style={styles.draggableContent}>
-                        {item.content}
-                      </div>
-                    );
-                  })
+                .filter((item, i) => {
+                  const exist = dragCardDataContent.find(
+                    (val) => val === item.content,
+                  )
+                    ? true
+                    : false;
+                  return item.assessment_header_id === null && !exist;
+                })
+                .map((item, index) => {
+                  return (
+                    <div
+                      key={index}
+                      onDragStart={(e) => onDragStart(e, item.content)}
+                      draggable
+                      className="draggable"
+                      style={styles.draggableContent}>
+                      {item.content}
+                    </div>
+                  );
+                })
               : []}
           </div>
         </div>
@@ -572,18 +554,18 @@ Every pregnancy and every baby are different and unique!​`;
           </div>
         ) : null}
         {/*************Content************ */}
-        <div style={{...commonStyles.contentLeftBorder, marginBottom: '20px'}}>
+        <div style={{ ...commonStyles.contentLeftBorder, marginBottom: '20px' }}>
           {content && content.length
             ? content
-                .sort((a, b) => (a.order > b.order && 1) || -1)
-                .map((item, i) => {
-                  return (
-                    <CardContent
-                      key={i}
-                      content={ReactHtmlParser(item.content)}
-                    />
-                  );
-                })
+              .sort((a, b) => (a.order > b.order && 1) || -1)
+              .map((item, i) => {
+                return (
+                  <CardContent
+                    key={i}
+                    content={ReactHtmlParser(item.content)}
+                  />
+                );
+              })
             : []}
         </div>
         {showExercises && <ExerciseBox week={week} />}
@@ -612,13 +594,11 @@ Every pregnancy and every baby are different and unique!​`;
             optionDataContent.map((item, index) => {
               return (
                 <div
-                  className={`colored-question  ${
-                    activeId === index ? 'active-menu' : ''
-                  }  ${
-                    item.headerOrder !== null && item.headerOrder !== undefined
+                  className={`colored-question  ${activeId === index ? 'active-menu' : ''
+                    }  ${item.headerOrder !== null && item.headerOrder !== undefined
                       ? selectedBorderColor(item.headerOrder)
                       : '#ffff'
-                  }`}
+                    }`}
                   onClick={() => {
                     onSetActiveMenu(index);
                   }}>
@@ -652,7 +632,7 @@ Every pregnancy and every baby are different and unique!​`;
                               <span>
                                 <img
                                   src={tickWhite}
-                                  style={{width: '15px', height: '15px'}}
+                                  style={{ width: '15px', height: '15px' }}
                                 />
                               </span>
                             </label>
@@ -670,18 +650,18 @@ Every pregnancy and every baby are different and unique!​`;
             {ts('SAVE')}
           </button>
         </div>
-        <div style={{...commonStyles.contentLeftBorder, marginBottom: '20px'}}>
+        <div style={{ ...commonStyles.contentLeftBorder, marginBottom: '20px' }}>
           {content && content.length
             ? content
-                .sort((a, b) => (a.order > b.order && 1) || -1)
-                .map((item, i) => {
-                  return (
-                    <CardContent
-                      key={i}
-                      content={ReactHtmlParser(item.content)}
-                    />
-                  );
-                })
+              .sort((a, b) => (a.order > b.order && 1) || -1)
+              .map((item, i) => {
+                return (
+                  <CardContent
+                    key={i}
+                    content={ReactHtmlParser(item.content)}
+                  />
+                );
+              })
             : []}
         </div>
         {showExercises && <ExerciseBox week={week} />}
@@ -716,5 +696,5 @@ const styles = {
     backgroundColor: '#F1F3FA',
     paddingLeft: '20px',
   },
-  wrapper: {marginTop: '40px'},
+  wrapper: { marginTop: '40px' },
 };

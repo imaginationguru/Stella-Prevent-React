@@ -2,11 +2,11 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
-import {TouchableOpacity, View, Text, FlatList, Dimensions} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { TouchableOpacity, View, Text, FlatList, Dimensions } from 'react-native';
 import MasterLayout from '../../components/MasterLayout';
 import BackBtn from '../../components/common/backbtn';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import GLOBALS from '../../constants';
 import * as AppActions from '../../actions';
@@ -14,12 +14,12 @@ import hoursJson from './HoursJson';
 import minutesJson from './MinutesJson';
 import momentZone from 'moment-timezone';
 import BackToDashboard from '../../components/common/backToDashboard';
-import {Line} from 'react-chartjs-2';
-const {STRINGS, COLORS} = GLOBALS;
+import { Line } from 'react-chartjs-2';
+const { STRINGS, COLORS } = GLOBALS;
 import ReactSlider from 'react-slider';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
-const LineGraphUI = ({xAxis, yAxis, lable}) => {
+const LineGraphUI = ({ xAxis, yAxis, lable }) => {
   const graphOptions = {
     scales: {
       yAxes: [
@@ -52,7 +52,7 @@ const LineGraphUI = ({xAxis, yAxis, lable}) => {
   );
 };
 
-const SliderUI = ({setScale, getScale, isEditUI}) => {
+const SliderUI = ({ setScale, getScale, isEditUI }) => {
   const onSliderChange = (value) => {
     setScale(value);
   };
@@ -73,11 +73,11 @@ const SliderUI = ({setScale, getScale, isEditUI}) => {
   );
 };
 
-const SleepTracker = ({location}) => {
+const SleepTracker = ({ location }) => {
   let isFromCard = location?.state?.isFromCard;
 
   const dispatch = useDispatch();
-  const {getSleepTrackerData} = useSelector((state) => state.tracker);
+  const { getSleepTrackerData } = useSelector((state) => state.tracker);
   const [sleepHoursXaxis, setSleepHoursXaxis] = useState([]);
   const [sleepHoursYaxis, setSleepHoursYaxis] = useState([]);
   const [sleeQualityYaxis, setSleepQualityYaxis] = useState([]);
@@ -96,7 +96,6 @@ const SleepTracker = ({location}) => {
   const [isEditUI, setIsEditUI] = useState(false);
   let currentTimeZone = momentZone.tz.guess();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   var dateArrayList = [];
   useEffect(() => {
     for (var i = 6; i >= 0; i--) {
@@ -131,7 +130,6 @@ const SleepTracker = ({location}) => {
   }, []);
 
   useEffect(() => {
-    //   getSleepTrackerAPI(moment(new Date()).format(STRINGS.DATE_FORMATE));
   }, []);
 
   useEffect(() => {
@@ -161,45 +159,43 @@ const SleepTracker = ({location}) => {
 
     let sleepDataArray =
       getSleepTrackerData &&
-      getSleepTrackerData.last7DaysData &&
-      getSleepTrackerData.last7DaysData.length
+        getSleepTrackerData.last7DaysData &&
+        getSleepTrackerData.last7DaysData.length
         ? daysCheck(getSleepTrackerData.last7DaysData)
         : [];
 
     //set all sleep XAxis
     let sleepHoursXAxis = sleepDataArray.length
       ? sleepDataArray.map((item) => {
-          return moment(item.sleepdate).format('MM/DD');
-        })
+        return moment(item.sleepdate).format('MM/DD');
+      })
       : [];
     setSleepHoursXaxis(sleepHoursXAxis.reverse());
 
     // Sleep Hours
     let sleepHoursYAxis = sleepDataArray.length
       ? sleepDataArray.map((item) => {
-          // return (Number(item.hours) + Number(item.minute) / 60).toFixed(2);
-          return Number(item.hours) + '.' + Number(item.minute);
-        })
+        return Number(item.hours) + '.' + Number(item.minute);
+      })
       : [];
     setSleepHoursYaxis(sleepHoursYAxis.reverse());
 
     //Sleep Quality
     let sleepQualityYAxis = sleepDataArray.length
       ? sleepDataArray.map((item) => {
-          return item.sleepRate;
-        })
+        return item.sleepRate;
+      })
       : [];
     setSleepQualityYaxis(sleepQualityYAxis.reverse());
 
     //Sleep Energy
     let sleepEnergyYAxis = sleepDataArray.length
       ? sleepDataArray.map((item) => {
-          return item.feelingRate;
-        })
+        return item.feelingRate;
+      })
       : [];
     setSleepEnergyYaxis(sleepEnergyYAxis.reverse());
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getSleepTrackerData]);
 
   const daysCheck = (arr = []) => {
@@ -259,7 +255,6 @@ const SleepTracker = ({location}) => {
       };
 
       dispatch(AppActions.saveSleepTracker(postData, postDataGetAPI));
-      // getSleepTrackerAPI(selectedDate);
     }
   };
 
@@ -310,9 +305,7 @@ const SleepTracker = ({location}) => {
       } else {
         ele.selectedItem = false;
       }
-      console.log('ele On date click', ele);
       if (ele.dates === item.dates) {
-        console.log('ele_priyanka', ele);
         if (ele.isEditTracker) {
           setIsEditUI(false);
         } else {
@@ -340,48 +333,46 @@ const SleepTracker = ({location}) => {
               flexWrap: 'wrap',
               width: '100%',
             }}>
-            <View style={{padding: '10px'}}>
+            <View style={{ padding: '10px' }}>
               <h2 className="dashboard-heading">{'Sleep Tracker'}</h2>
-              {/* <h6 className="dash-time m-b-30"> {'3 Minute'} </h6> */}
             </View>
             {/* Date strip UI */}
             <View
               style={{
                 flexDirection: 'row',
-                //  border: '1px solid blue',
                 padding: '10px',
                 width: '100%',
                 maxWidth: '520px',
               }}>
               {dateArray.length
                 ? dateArray.map((item) => {
-                    return (
-                      <TouchableOpacity
-                        onPress={() => onDateClick(item)}
-                        style={[styles.dateView]}>
-                        <View
-                          style={[
-                            {
-                              backgroundColor: item.selectedItem
-                                ? 'white'
-                                : COLORS.BOX_GRAY,
-                            },
-                            styles.dateViewStyle,
-                          ]}>
-                          <Text style={styles.dayText}>
-                            {moment(item.dates).format('DD')}
-                          </Text>
-                          <Text style={styles.monthText}>
-                            {moment(item.dates).format('MMM')}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                    );
-                  })
+                  return (
+                    <TouchableOpacity
+                      onPress={() => onDateClick(item)}
+                      style={[styles.dateView]}>
+                      <View
+                        style={[
+                          {
+                            backgroundColor: item.selectedItem
+                              ? 'white'
+                              : COLORS.BOX_GRAY,
+                          },
+                          styles.dateViewStyle,
+                        ]}>
+                        <Text style={styles.dayText}>
+                          {moment(item.dates).format('DD')}
+                        </Text>
+                        <Text style={styles.monthText}>
+                          {moment(item.dates).format('MMM')}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                })
                 : null}
             </View>
           </View>
-          <View style={{padding: '10px'}}>
+          <View style={{ padding: '10px' }}>
             <View style={styles.outerBox}>
               {/* sleep hours UI */}
               <View style={styles.innerBox}>
@@ -392,39 +383,39 @@ const SleepTracker = ({location}) => {
                 <View style={styles.sleepHoursOuterView}>
                   <View style={styles.sleepHrsView}>
                     {!showHoursArray ? (
-                      <View style={{alignItems: 'center'}}>
+                      <View style={{ alignItems: 'center' }}>
                         <TouchableOpacity
                           onPress={() => (!isEditUI ? onHoursPlus() : null)}>
-                          <Text style={{color: COLORS.GRAY}}>▲</Text>
+                          <Text style={{ color: COLORS.GRAY }}>▲</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                           onPress={() =>
                             !isEditUI ? setShowHoursArray(true) : null
                           }>
-                          <Text style={{marginTop: 10, marginBottom: 10}}>
+                          <Text style={{ marginTop: 10, marginBottom: 10 }}>
                             {hoursValue !== undefined ? hoursValue : '00'} {'h'}
                           </Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
                           onPress={() => (!isEditUI ? onHoursMinus() : null)}>
-                          <Text style={{color: COLORS.GRAY}}>▼</Text>
+                          <Text style={{ color: COLORS.GRAY }}>▼</Text>
                         </TouchableOpacity>
                       </View>
                     ) : !isEditUI ? (
-                      <View style={{width: '50px', height: '350px'}}>
+                      <View style={{ width: '50px', height: '350px' }}>
                         <FlatList
                           data={hoursJson}
                           contentContainerStyle={styles.flStyles}
                           showsVerticalScrollIndicator={false}
-                          renderItem={({item}) => (
+                          renderItem={({ item }) => (
                             <TouchableOpacity
                               onPress={() => {
                                 setHoursValue(item.hours);
                                 setShowHoursArray(false);
                               }}
                               style={styles.timeTbStyle}>
-                              <Text style={{color: COLORS.GRAY}}>
+                              <Text style={{ color: COLORS.GRAY }}>
                                 {item.hours}
                               </Text>
                             </TouchableOpacity>
@@ -440,10 +431,10 @@ const SleepTracker = ({location}) => {
 
                   <View style={styles.sleepHrsView}>
                     {!showMinutesArray ? (
-                      <View style={{alignItems: 'center'}}>
+                      <View style={{ alignItems: 'center' }}>
                         <TouchableOpacity
                           onPress={() => (!isEditUI ? onMinutePlus() : null)}>
-                          <Text style={{color: COLORS.GRAY}}>▲</Text>
+                          <Text style={{ color: COLORS.GRAY }}>▲</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                           onPress={() =>
@@ -453,7 +444,7 @@ const SleepTracker = ({location}) => {
                                 : setShowMinutesArray(true)
                               : null
                           }>
-                          <Text style={{marginTop: 10, marginBottom: 10}}>
+                          <Text style={{ marginTop: 10, marginBottom: 10 }}>
                             {minutesValue !== undefined
                               ? hoursValue === 24
                                 ? '00'
@@ -464,7 +455,7 @@ const SleepTracker = ({location}) => {
                         </TouchableOpacity>
                         <TouchableOpacity
                           onPress={() => (!isEditUI ? onMinuteMinus() : null)}>
-                          <Text style={{color: COLORS.GRAY}}>▼</Text>
+                          <Text style={{ color: COLORS.GRAY }}>▼</Text>
                         </TouchableOpacity>
                       </View>
                     ) : (
@@ -477,14 +468,14 @@ const SleepTracker = ({location}) => {
                           data={minutesJson}
                           contentContainerStyle={styles.flStyles}
                           showsVerticalScrollIndicator={false}
-                          renderItem={({item}) => (
+                          renderItem={({ item }) => (
                             <TouchableOpacity
                               style={styles.timeTbStyle}
                               onPress={() => {
                                 setShowMinutesArray(false);
                                 setMinutesValue(item.minutes);
                               }}>
-                              <Text style={{color: COLORS.GRAY}}>
+                              <Text style={{ color: COLORS.GRAY }}>
                                 {item.minutes}
                               </Text>
                             </TouchableOpacity>
@@ -501,7 +492,7 @@ const SleepTracker = ({location}) => {
                 <Text style={styles.boxText}>
                   How well did you sleep on a scale of 1-10?
                 </Text>
-                <View style={{marginTop: 40, maxWidth: '350px', width: '100%'}}>
+                <View style={{ marginTop: 40, maxWidth: '350px', width: '100%' }}>
                   <SliderUI
                     setScale={setSleepScale}
                     getScale={sleepScale}
@@ -515,7 +506,7 @@ const SleepTracker = ({location}) => {
                 <Text style={styles.boxText}>
                   How energetic do you feel on a scale of 1-10?
                 </Text>
-                <View style={{marginTop: 40, maxWidth: '350px', width: '100%'}}>
+                <View style={{ marginTop: 40, maxWidth: '350px', width: '100%' }}>
                   <SliderUI
                     setScale={setEnergeticScale}
                     getScale={energeticScale}
@@ -527,23 +518,23 @@ const SleepTracker = ({location}) => {
               {/* Button UI */}
               {selectedDate ===
                 moment().subtract(0, 'days').format('YYYY-MM-DD') ||
-              selectedDate ===
+                selectedDate ===
                 moment().subtract(1, 'days').format('YYYY-MM-DD') ||
-              selectedDate ===
+                selectedDate ===
                 moment().subtract(2, 'days').format('YYYY-MM-DD') ? (
                 <TouchableOpacity
                   onPress={() => onSaveSleepTracker()}
                   style={styles.btnStyle}>
-                  <Text style={{color: 'white'}}>ADD TRACKING</Text>
+                  <Text style={{ color: 'white' }}>ADD TRACKING</Text>
                 </TouchableOpacity>
               ) : null}
             </View>
 
             {/* Graph UI */}
-            <Text style={{marginTop: 20, marginBottom: 10}}>
+            <Text style={{ marginTop: 20, marginBottom: 10 }}>
               Last 7 days history
             </Text>
-            <View style={[styles.outerBox, {marginBottom: 40, padding: 0}]}>
+            <View style={[styles.outerBox, { marginBottom: 40, padding: 0 }]}>
               <View style={styles.graphOuterView}>
                 <View style={styles.lineGraphWrapper}>
                   <LineGraphUI
@@ -602,7 +593,7 @@ const styles = {
     borderRadius: 10,
     alignItems: 'center',
   },
-  boxText: {color: COLORS.CIRCLE_GRAY, fontWeight: 'bold'},
+  boxText: { color: COLORS.CIRCLE_GRAY, fontWeight: 'bold' },
   dateView: {
     backgroundColor: COLORS.BOX_GRAY,
     paddingLeft: '5px',
@@ -611,31 +602,24 @@ const styles = {
     paddingBottom: '5px',
     width: '14%',
   },
-  dayText: {fontSize: '16px', fontWeight: 'bold'},
-  monthText: {fontSize: '16px', color: '#1C2037'},
+  dayText: { fontSize: '16px', fontWeight: 'bold' },
+  monthText: { fontSize: '16px', color: '#1C2037' },
   dateViewStyle: {
     padding: 5,
     alignItems: 'center',
-    // border: '1px solid red',
   },
   sleepHoursOuterView: {
     flexDirection: 'row',
     marginTop: 10,
     alignItems: 'center',
-    // flex: 1,
-    // width: '200px',
-    // backgroundColor: 'red',
     padding: 20,
   },
   sleepHrsView: {
-    // flex: 0.4,
     backgroundColor: 'white',
-    // width: '10%',
     paddingTop: '10px',
     paddingBottom: '10px',
     paddingLeft: '40px',
     paddingRight: '40px',
-    // alignItems: 'center',
   },
   flStyles: {
     backgroundColor: 'white',
@@ -646,7 +630,6 @@ const styles = {
     paddingBottom: 10,
   },
   colonStyle: {
-    // flex: 0.2,
     marginLeft: 20,
     marginRight: 20,
     alignItems: 'center',
@@ -661,7 +644,6 @@ const styles = {
     marginTop: 20,
   },
   graphOuterView: {
-    //width: '350px',
     width: '100%',
     minHeight: '300px',
     flexDirection: 'row',

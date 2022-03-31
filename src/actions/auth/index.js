@@ -1,22 +1,22 @@
 import GLOBALS from '../../constants';
 import RestClient from '../../helpers/RestClient';
-import { navigatorPush, navigatortoStart } from '../../config/navigationOptions';
-import { storeItem, getItem } from '../../utils/AsyncUtils';
-import { loadingAction } from '../common';
-const { ACTION_TYPE, URL, STRINGS } = GLOBALS;
-const { TRY_AGAIN, CHECK_NETWORK } = STRINGS;
-import { Linking, Platform } from 'react-native';
-import { getWeek } from '../moduleOne';
+import {navigatorPush, navigatortoStart} from '../../config/navigationOptions';
+import {storeItem, getItem} from '../../utils/AsyncUtils';
+import {loadingAction} from '../common';
+const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
+const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
+import {Linking, Platform} from 'react-native';
+import {getWeek} from '../moduleOne';
 import Swal from 'sweetalert2';
-import { Dimensions } from 'react-native-web';
+import {Dimensions} from 'react-native-web';
 import moment from 'moment';
+import {sessionExpire} from '../tracker';
+import packageJson from '../../../package.json';
 
-import packageJson from '../../../package.json'
+const {COLORS, FONTS, IMAGE_BASE_URL} = GLOBALS;
+import {detectBrowser} from '../../helpers/common.web';
 
-const { COLORS, FONTS, IMAGE_BASE_URL } = GLOBALS;
-import { detectBrowser } from '../../helpers/common.web';
-
-import { customAlert } from '../../helpers/commonAlerts.web';
+import {customAlert} from '../../helpers/commonAlerts.web';
 
 //******************************Login******************* */
 
@@ -37,8 +37,8 @@ export function updateTrackerStatus(user) {
 
 export function login(email, password, componentId) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.LOGIN_RESET });
-    dispatch({ type: ACTION_TYPE.LOGIN_REQUEST });
+    dispatch({type: ACTION_TYPE.LOGIN_RESET});
+    dispatch({type: ACTION_TYPE.LOGIN_REQUEST});
     try {
       let user_platform =
         navigator?.userAgentData?.platform || navigator?.platform || 'unknown';
@@ -54,7 +54,6 @@ export function login(email, password, componentId) {
         },
         timeZone: moment.tz.guess(),
       });
-      console.log('codeLogin', json, componentId);
       if (json.code === 200) {
         dispatch({
           type: ACTION_TYPE.LOGIN_SUCCESS,
@@ -76,10 +75,10 @@ export function login(email, password, componentId) {
           storeItem('token', json.data.token);
           dispatch(bindProgram());
           dispatch(getProgramById());
-          navigatorPush({ componentId, screenName: 'Dashboard' });
+          navigatorPush({componentId, screenName: 'Dashboard'});
         } else {
           dispatch(loadingAction(false));
-          navigatorPush({ componentId, screenName: 'VerifyUserOTP' });
+          navigatorPush({componentId, screenName: 'VerifyUserOTP'});
         }
       } else {
         if (json.code === 400) {
@@ -89,17 +88,12 @@ export function login(email, password, componentId) {
             allowEscapeKey: false,
             confirmButtonColor: COLORS.DARK_RED,
             width: DEVICE_WIDTH > 1000 ? '' : '60vw',
-            // width: DEVICE_WIDTH > 1000 ? '25vw' : '60vw',
           });
-          // dispatch({
-          //  type: ACTION_TYPE.ERROR,
-          // payload: json.message,
-          // });
+
           dispatch(loadingAction(false));
         }
       }
     } catch (error) {
-      console.log('error>>>>>>>>>>>', error);
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -116,7 +110,7 @@ export function login(email, password, componentId) {
 
 export function register(params, componentId) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.SIGNUP_REQUEST });
+    dispatch({type: ACTION_TYPE.SIGNUP_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.REGISTER, params);
@@ -127,12 +121,11 @@ export function register(params, componentId) {
         });
         if (json.data.user.isInterest) {
         } else {
-          navigatorPush({ componentId, screenName: 'DailyLearningWeeks' });
+          navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
         }
       } else {
         if (json.code === 400) {
           toast(json.message);
-          console.log(json.message);
         }
         dispatch({
           type: ACTION_TYPE.SIGNUP_FAIL,
@@ -155,27 +148,19 @@ export function bindProgram(cb) {
   let programId = getItem('programId');
   let userId = getItem('userId');
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.BIND_PROGRAM_USER_REQUEST });
+    dispatch({type: ACTION_TYPE.BIND_PROGRAM_USER_REQUEST});
     try {
-      console.log('bind program....');
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.BIND_PROGRAM_USER, {
         program_id: programId,
         user_id: userId,
       });
       if (json.code === 200) {
-        console.log('bind progrma>>>>>>>>>>>', json.data);
         dispatch({
           type: ACTION_TYPE.BIND_PROGRAM_USER_SUCCESS,
           payload: json.data,
         });
       } else {
-        // if (json.code === 400) {
-        //   dispatch({
-        //     type: ACTION_TYPE.ERROR,
-        //     payload: json.message,
-        //   });
-        // }
         dispatch({
           type: ACTION_TYPE.BIND_PROGRAM_USER_FAIL,
         });
@@ -203,7 +188,7 @@ export function getProgramById(isLoading = true, cb) {
   let userId = getItem('userId');
 
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_PROGRAM_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_PROGRAM_REQUEST});
     try {
       if (isLoading) {
         dispatch(loadingAction(true));
@@ -228,6 +213,14 @@ export function getProgramById(isLoading = true, cb) {
             type: ACTION_TYPE.ERROR,
             payload: json.message,
           });
+        }
+        if (json.code === 417) {
+          dispatch(sessionExpire(json.message));
+          dispatch({
+            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+            payload: json.message,
+          });
+          dispatch(loadingAction(false));
         } else {
           dispatch({
             type: ACTION_TYPE.GET_PROGRAM_FAIL,
@@ -252,10 +245,10 @@ export function getProgramById(isLoading = true, cb) {
 
 export function emailExists(email) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.USER_EMAIL_EXISTS_REQUEST });
+    dispatch({type: ACTION_TYPE.USER_EMAIL_EXISTS_REQUEST});
     try {
       dispatch(loadingAction(true));
-      let json = await RestClient.postCall(URL.USER_EMAIL_EXISTS, { email });
+      let json = await RestClient.postCall(URL.USER_EMAIL_EXISTS, {email});
       if (json.code === 200) {
         dispatch({
           type: ACTION_TYPE.USER_EMAIL_EXISTS_SUCCESS,
@@ -266,18 +259,18 @@ export function emailExists(email) {
         if (json.code === 400) {
           dispatch(loadingAction(false));
           customAlert(json.message, 'error');
-          // dispatch({
-          //   type: ACTION_TYPE.ERROR,
-          //   payload: json.message,
-          // });
         }
         if (json.code === 401) {
           dispatch(loadingAction(false));
           customAlert(json.message, 'error');
-          // dispatch({
-          //   type: ACTION_TYPE.ERROR,
-          //   payload: json.message,
-          // });
+        }
+        if (json.code === 417) {
+          dispatch(sessionExpire(json.message));
+          dispatch({
+            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+            payload: json.message,
+          });
+          dispatch(loadingAction(false));
         }
         dispatch({
           type: ACTION_TYPE.USER_EMAIL_EXISTS_FAIL,
@@ -300,7 +293,7 @@ export function emailExists(email) {
 
 export function changePassword(_id, password, forgot_password_token) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.CHANGE_PASSWORD_REQUEST });
+    dispatch({type: ACTION_TYPE.CHANGE_PASSWORD_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.CHANGE_PASSWORD, {
@@ -321,6 +314,14 @@ export function changePassword(_id, password, forgot_password_token) {
             type: ACTION_TYPE.ERROR,
             payload: json.message,
           });
+        }
+        if (json.code === 417) {
+          dispatch(sessionExpire(json.message));
+          dispatch({
+            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+            payload: json.message,
+          });
+          dispatch(loadingAction(false));
         }
         dispatch({
           type: ACTION_TYPE.CHANGE_PASSWORD_FAIL,
@@ -344,12 +345,11 @@ export function changePassword(_id, password, forgot_password_token) {
 export function logout() {
   let userId = getItem('userId');
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.LOGOUT_USER_REQUEST });
+    dispatch({type: ACTION_TYPE.LOGOUT_USER_REQUEST});
     try {
       let json = await RestClient.postCall(URL.LOGOUT, {
         user_id: userId,
       });
-      console.log(json, userId, 'on logout');
       setTimeout(() => {
         navigatortoStart();
       }, localStorage.clear());
@@ -393,10 +393,6 @@ export function getQuoteData(cb) {
     try {
       let json = await RestClient.getCall(`${URL.GET_QUOTE_DATA}`);
       if (json.code === 200) {
-        // dispatch({
-        //   type: ACTION_TYPE.GET_QUOTE_DATA_SUCCESS,
-        //   payload: json.data,
-        // });
         const result = json.data.map((e) => {
           dispatch({
             type: ACTION_TYPE.SET_QUOTES_DATA,
@@ -438,7 +434,6 @@ export function verifySocialUser(params, componentId, cb) {
     try {
       let json = await RestClient.postCall(`${URL.VERIFY_SOCIAL_USER}`, params);
       if (json.code === 200) {
-        console.log('jsoonnnn verify social usser api', json);
         if (!json.data.is_user_exist) {
           if (Platform.OS == 'web') {
             Swal.fire({
@@ -467,30 +462,19 @@ export function verifySocialUser(params, componentId, cb) {
             payload: json.data.user.image_path,
           });
           dispatch(getWeek(1));
-          console.log('token>>>>>>>>>>>>>>>>>', json.data.token);
-          // storeItem('token', json.data.token);
           storeItem('programId', json.data.user.programId); // '608aa90eb9a5442de2e81673';
           storeItem('userId', json.data.user._id);
           storeItem('firstName', json.data.user.firstName);
           storeItem('lastName', json.data.user.lastName);
           storeItem('hospitalId', json.data.user.hospital_id);
-          // if (json.data.user.isProgramBind !== true) {
-          //   console.log('bind PAI hit');
-          //dispatch(bindProgram());
-          // }
-          // dispatch(getProgramById());
+
           if (json.data.user.isInterest === true) {
-            console.log('heloooo1111');
-            // navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
             storeItem('token', json.data.token);
             dispatch(bindProgram());
             dispatch(getProgramById());
-            navigatorPush({ componentId, screenName: 'Dashboard' });
+            navigatorPush({componentId, screenName: 'Dashboard'});
           } else {
-            console.log('heloooo11111222222');
-            navigatorPush({ componentId, screenName: 'VerifyUserOTP' });
-            // navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
-            //navigatorPush({componentId, screenName: 'Dashboard'});
+            navigatorPush({componentId, screenName: 'VerifyUserOTP'});
           }
         }
         // cb(json.data);
@@ -511,29 +495,18 @@ export function verifySocialUser(params, componentId, cb) {
           dispatch({
             type: ACTION_TYPE.VERIFY_USER_DATA_FAIL,
           });
-          // toast(STRINGS.SOMETHING_WENT_WRONG);
         }
       }
-    } catch (error) {
-      // dispatch({
-      //   type: ACTION_TYPE.ERROR,
-      //   payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
-      // });
-      // dispatch({
-      //   type: ACTION_TYPE.VERIFY_USER_DATA_FAIL,
-      //   payload: error,
-      // });
-    }
+    } catch (error) {}
   };
 }
 
 export function getUser(params, componentId, isRedirect = true) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_USER_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_USER_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.GET_USER, params);
-      console.log('get user???????', json, componentId);
       if (json.code === 200) {
         dispatch({
           type: ACTION_TYPE.GET_USER_SUCCESS,
@@ -545,28 +518,24 @@ export function getUser(params, componentId, isRedirect = true) {
         });
 
         dispatch(getWeek(1));
-        console.log('token>>>>>>>>>>>>>>>>>', json.data.token);
-        storeItem('token', json.data.token);
         storeItem('programId', json.data.user.programId); // '608aa90eb9a5442de2e81673';
         storeItem('userId', json.data.user._id);
         storeItem('firstName', json.data.user.firstName);
         storeItem('lastName', json.data.user.lastName);
         storeItem('hospitalId', json.data.user.hospital_id);
-        // if (json.data.user.isProgramBind !== true) {
-        //   console.log('bind PAI hit');
-        dispatch(bindProgram());
-        // }
+
         dispatch({
           type: ACTION_TYPE.SET_PROFILE_IMAGE,
           payload: json.data.user.image_path,
         });
-        dispatch(getProgramById());
-        if (isRedirect) {
-          if (json.data.user.isInterest === true) {
-            navigatorPush({ componentId, screenName: 'Dashboard' });
-          } else {
-            navigatorPush({ componentId, screenName: 'Dashboard' });
-          }
+        if (json.data.user.isInterest === true) {
+          storeItem('token', json.data.token);
+          dispatch(bindProgram());
+          dispatch(getProgramById());
+          navigatorPush({componentId, screenName: 'Dashboard'});
+        } else {
+          dispatch(loadingAction(false));
+          navigatorPush({componentId, screenName: 'VerifyUserOTP'});
         }
       } else {
         if (json.code === 400) {
@@ -578,7 +547,6 @@ export function getUser(params, componentId, isRedirect = true) {
         }
       }
     } catch (error) {
-      console.log('error>>>>get user>>>>>>>', error);
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -593,10 +561,9 @@ export function getUser(params, componentId, isRedirect = true) {
 
 export function updateUserData(params) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_USER_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_USER_REQUEST});
     try {
       let json = await RestClient.postCall(URL.GET_USER, params);
-      console.log('get user???????', json);
       if (json.code === 200) {
         dispatch({
           type: ACTION_TYPE.GET_USER_SUCCESS,
@@ -625,7 +592,6 @@ export function updateUserData(params) {
         }
       }
     } catch (error) {
-      console.log('error>>>>get user>>>>>>>', error);
       dispatch({
         type: ACTION_TYPE.ERROR,
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
@@ -650,7 +616,7 @@ export function acceptWelcomeScreen(params, componentId, cb) {
         storeItem('token', loginToken);
         dispatch(bindProgram());
         dispatch(getProgramById());
-        navigatorPush({ componentId, screenName: 'Dashboard' });
+        navigatorPush({componentId, screenName: 'Dashboard'});
       } else {
         customAlert(json.message, 'error');
       }
@@ -667,7 +633,6 @@ export function acceptWelcomeScreen(params, componentId, cb) {
 
 export function resendRegistrationCode(params, cb) {
   return async (dispatch) => {
-    console.log('resend otp', params);
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(
@@ -675,12 +640,10 @@ export function resendRegistrationCode(params, cb) {
         params,
       );
       if (json.code === 200) {
-        console.log('jsoonnnn verify social usser api', json);
         customAlert(json.message);
         cb(json.data);
       } else {
         customAlert(json.message, 'error');
-        // navigatorPush({screenName: 'Dashboard'});
       }
       dispatch(loadingAction(false));
     } catch (error) {

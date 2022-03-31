@@ -41,7 +41,7 @@ const Congratulation = (props) => {
           .map((item, index) => {
             return (
               <CustomImage
-                //  imageSize={item.imageSize}
+
                 key={index}
                 src={`${IMAGE_BASE_URL}${item.image}`}
                 style={{
@@ -108,7 +108,7 @@ const Congratulation = (props) => {
               <CardContent
                 key={i}
                 content={ReactHtmlParser(item.content)}
-              // style={{textAlign: 'center'}}
+
               />
             );
           })

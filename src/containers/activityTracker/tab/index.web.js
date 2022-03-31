@@ -1,8 +1,8 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import GLOBALS from '../../../constants';
-const {COLORS, FONTS} = GLOBALS;
-const {DARK_GREEN, BLACK, WHITE, GRAY, HEADING_BLACK} = COLORS;
+const { COLORS, FONTS } = GLOBALS;
+const { DARK_GREEN, BLACK, WHITE, GRAY, HEADING_BLACK } = COLORS;
 const Tab = (props) => {
   return (
     <div>
@@ -12,15 +12,15 @@ const Tab = (props) => {
             style={[
               styles.menuIcon,
               item.title === props.activeTab
-                ? {backgroundColor: 'rgb(0, 111, 89)'}
-                : {backgroundColor: GRAY},
+                ? { backgroundColor: 'rgb(0, 111, 89)' }
+                : { backgroundColor: GRAY },
             ]}
             onPress={() => props.setActiveTabClick(item.title)}>
             {item.title === props.activeTab ? (
-              <p style={{...styles.title, color: WHITE}}>{item.title}</p>
+              <p style={{ ...styles.title, color: WHITE }}>{item.title}</p>
             ) : null}
             {item.title !== props.activeTab ? (
-              <p style={{...styles.title, color: HEADING_BLACK}}>
+              <p style={{ ...styles.title, color: HEADING_BLACK }}>
                 {item.title}
               </p>
             ) : null}
@@ -48,7 +48,6 @@ const styles = {
     fontSize: '15px',
     fontWeight: 'bold',
     fontSize: FONTS.REGULAR,
-    //  paddingRight: '30px',
   },
   /**
    *

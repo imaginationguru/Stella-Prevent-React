@@ -124,7 +124,4 @@ const ThirtyNine = (props) => {
 
 export default ThirtyNine;
 const styles = {
-  // contentText: {
-  //   alignItems: 'flex-end',
-  // },
-};
+ };

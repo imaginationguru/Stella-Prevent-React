@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -11,27 +11,27 @@ import {
   Image,
 } from 'react-native';
 import GLOBALS from '../../constants';
-import {screenHeight, screenWidth} from '../../utils/dimension';
+import { screenHeight, screenWidth } from '../../utils/dimension';
 import reloadImg from '../../assets/images/screener/restart.png';
 import leftArrow from '../../assets/images/leftArrow.svg';
 import cancel from '../../assets/images/cancel.png';
-const {COLORS, FONTS, ACTION_TYPE} = GLOBALS;
-const {BLUR, WHITE, HEADING_BLACK, BLACK, DARK_GREEN} = COLORS;
+const { COLORS, FONTS, ACTION_TYPE } = GLOBALS;
+const { BLUR, WHITE, HEADING_BLACK, BLACK, DARK_GREEN } = COLORS;
 import Button from './button';
 import RadioButton from '../RadioButton';
-import {useSelector, useDispatch} from 'react-redux';
-import {getItem} from '../../utils/AsyncUtils';
+import { useSelector, useDispatch } from 'react-redux';
+import { getItem } from '../../utils/AsyncUtils';
 import * as AppActions from '../../actions';
 const EpdsScreener = (props) => {
-  let {saveEPDSAssememt, onClose, startIndex} = props;
+  let { saveEPDSAssememt, onClose, startIndex } = props;
   const [currentQus, setCurrentQus] = useState(1);
   const [selectedQues, setSelectedQues] = useState([]);
   const [assessmentId, setAssessmentId] = useState();
-  const {userQuestion = []} = useSelector((state) => state.moduleOne);
+  const { userQuestion = [] } = useSelector((state) => state.moduleOne);
   const [currentIndex, setCurrentIndex] = useState(startIndex);
   const [allQuestions, updateQuestion] = useState(userQuestion);
   const [hover, setHover] = useState(false);
-  
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (userQuestion.length) {
@@ -43,14 +43,14 @@ const EpdsScreener = (props) => {
           question_id: item._id,
           options: item.options.length
             ? item.options.map((val) => {
-                let obj2 = {...val};
-                if (val.status) {
-                  obj2.status = val.status;
-                } else {
-                  obj2.status = false;
-                }
-                return obj2;
-              })
+              let obj2 = { ...val };
+              if (val.status) {
+                obj2.status = val.status;
+              } else {
+                obj2.status = false;
+              }
+              return obj2;
+            })
             : [],
         };
       });
@@ -70,14 +70,14 @@ const EpdsScreener = (props) => {
           question_id: item._id,
           options: item.options.length
             ? item.options.map((val) => {
-                let obj2 = {...val};
-                if (val.status) {
-                  obj2.status = val.status;
-                } else {
-                  obj2.status = false;
-                }
-                return obj2;
-              })
+              let obj2 = { ...val };
+              if (val.status) {
+                obj2.status = val.status;
+              } else {
+                obj2.status = false;
+              }
+              return obj2;
+            })
             : [],
         };
       });
@@ -160,9 +160,9 @@ const EpdsScreener = (props) => {
               questions.{' '}
             </Text>
           ) : (
-            <View style={{flexDirection: 'row', flex: 1}}>
+            <View style={{ flexDirection: 'row', flex: 1 }}>
               {currentIndex > 0 ? (
-                <TouchableOpacity 
+                <TouchableOpacity
                   onPress={handlePrevQus}
                   style={styles.backStyling}>
                   <Image source={leftArrow} style={styles.back} />
@@ -180,34 +180,33 @@ const EpdsScreener = (props) => {
           <View style={styles.optionContainer}>
             {currentIndex > -1 && allQuestions[currentIndex] !== undefined
               ? allQuestions[currentIndex].options.map((item, index) => {
-                  return (
-                    <View style={styles.optionInnerContainer}>
-                      <RadioButton
-                        selectedOption={item.status}
-                        outerStyle={styles.outerCheckbox}
-                        innerStyle={[
-                          styles.outerCheckbox,
-                          {borderWidth: 17, borderRadius: '4vw'},
-                        ]}
-                        label={item.optionValue}
-                        onPress={() =>
-                          onItemSelected(
-                            item.optionValue,
-                            item,
-                            userQuestion[currentQus],
-                            index,
-                          )
-                        }
-                      />
-                    </View>
-                  );
-                })
+                return (
+                  <View style={styles.optionInnerContainer}>
+                    <RadioButton
+                      selectedOption={item.status}
+                      outerStyle={styles.outerCheckbox}
+                      innerStyle={[
+                        styles.outerCheckbox,
+                        { borderWidth: 17, borderRadius: '4vw' },
+                      ]}
+                      label={item.optionValue}
+                      onPress={() =>
+                        onItemSelected(
+                          item.optionValue,
+                          item,
+                          userQuestion[currentQus],
+                          index,
+                        )
+                      }
+                    />
+                  </View>
+                );
+              })
               : null}
           </View>
           {currentIndex == -1 ? (
             <Button
-              btnStyle={{width: '15%', alignSelf: 'center'}}
-              //  onVerifyPress={()=>setCurrentIndex(0)}
+              btnStyle={{ width: '15%', alignSelf: 'center' }}
               onVerifyPress={() => setCurrentIndex(0)}
               title="Get Started"
               bgColor={DARK_GREEN}
@@ -219,10 +218,8 @@ const EpdsScreener = (props) => {
               style={{
                 marginTop: '5vw',
                 marginLeft: '2.5vw',
-                // paddingHorizontal: '6vw',
                 width: '4vw',
                 height: '3vw',
-                // backgroundColor:"red"
               }}>
               {hover ? (
                 <View
@@ -234,7 +231,7 @@ const EpdsScreener = (props) => {
                     top: -20,
                     width: '8vw',
                     height: '2vw',
-                    borderRadius:5,
+                    borderRadius: 5,
                     backgroundColor: COLORS.CIRCLE_GRAY,
                   }}>
                   <Text
@@ -242,7 +239,7 @@ const EpdsScreener = (props) => {
                       fontStyle: FONTS.NEW_REGULAR,
                       fontSize: '1vw',
                       color: COLORS.WHITE,
-                      alignSelf:"center"
+                      alignSelf: "center"
                     }}>
                     Reset answers
                   </Text>
@@ -419,7 +416,6 @@ const styles = StyleSheet.create({
     fontSize: '1.8vw',
     color: WHITE,
     paddingBottom: 12,
-    // marginLeft: '4vw',
     alignSelf: 'center',
     fontWeight: '400',
     textAlign: 'center',

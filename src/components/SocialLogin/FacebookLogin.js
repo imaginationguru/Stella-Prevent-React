@@ -5,7 +5,6 @@ const FacebookLogIn = (props) => {
   let {onSocialLogin = () => {}} = props;
   const fbAppId = '416468470173904';
   const resFblogin = (res) => {
-    console.log('facebook login res', res);
     if (res.status == 'unknown') {
       customAlert('Facebook login cancelled.', 'error');
     } else {
@@ -14,8 +13,14 @@ const FacebookLogIn = (props) => {
   };
 
   const verifyUser = (profile_data) => {
-    console.log(window.FB, 'window');
-
+    console.log(profile_data, 'profile_data.......');
+    if (profile_data.email == '' || profile_data.email == undefined) {
+      customAlert(
+        "Facebook Login fails! Unable to access user's email",
+        'error',
+      );
+      return;
+    }
     let params = {
       firstName: profile_data.name,
       email: profile_data.email,

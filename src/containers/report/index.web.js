@@ -3,7 +3,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
-//import StyleSheet from 'react-native-media-query';
 import {
   TouchableOpacity,
   View,
@@ -18,9 +17,7 @@ import BackBtn from '../../components/common/backbtn';
 import {useDispatch, useSelector} from 'react-redux';
 import moment from 'moment';
 import GLOBALS from '../../constants';
-
 import * as AppActions from '../../actions';
-
 import momentZone from 'moment-timezone';
 import BackToDashboard from '../../components/common/backToDashboard';
 import {Line} from 'react-chartjs-2';
@@ -34,6 +31,8 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
 let currentTimeZone = momentZone.tz.guess();
 
 const LineGraphUI = ({xAxis, yAxis, lable}) => {
+  console.log('here====>' + lable, xAxis);
+  console.log('hereYY====>' + lable, yAxis);
   const graphOptions = {
     scales: {
       x: {
@@ -43,6 +42,58 @@ const LineGraphUI = ({xAxis, yAxis, lable}) => {
       },
       y: {
         ticks: {
+          color: COLORS.WHITE,
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        // position: 'left',
+        align: 'start',
+        labels: {
+          fontSize: 10,
+          color: COLORS.WHITE,
+        },
+      },
+    },
+  };
+  const graphOptionsForMood = {
+    scales: {
+      maintainAspectRatio: false,
+      x: {
+        ticks: {
+          color: COLORS.WHITE,
+        },
+      },
+      y: {
+        ticks: {
+          color: COLORS.WHITE,
+          precision: 0,
+          callback: function (label, index, labels) {
+            if (label == 1) {
+              return label + ' (Terrible)';
+            } else if (label >= 2 && label < 3) {
+              return label + ' (Bad)';
+            } else if (label >= 3 && label < 4) {
+              return label + ' (Ok)';
+            } else if (label >= 4 && label < 5) {
+              return label + ' (Good)';
+            } else if (label >= 5) {
+              return label + ' (Awesome)';
+            } else {
+              return label;
+            }
+          },
+        },
+      },
+    },
+
+    plugins: {
+      legend: {
+        // position: 'left',
+        align: 'start',
+        labels: {
+          fontSize: 10,
           color: COLORS.WHITE,
         },
       },
@@ -60,20 +111,16 @@ const LineGraphUI = ({xAxis, yAxis, lable}) => {
             radius: 5,
             data: yAxis,
 
-            // backgroundColor: 'rgba(0, 128, 0, 0.5)',
-            //  backgroundColor: 'linear-gradient(to right, #20f08b, #07dfb1)',
             hoverBackgroundColor: COLORS.WHITE,
-            // backgroundColor: 'red',
             borderColor: COLORS.WHITE,
-            fill: 'start',
           },
         ],
       }}
-      //  bezier
-      // pointHoverBorderColor="red"
-      //  bezier,
-      // type={'doughnut'}
-      options={graphOptions}
+      options={
+        lable == 'Average Daily Mood Report'
+          ? graphOptionsForMood
+          : graphOptions
+      }
       style={{
         marginBottom: '2vw',
         marginTop: 0,
@@ -81,11 +128,7 @@ const LineGraphUI = ({xAxis, yAxis, lable}) => {
         background:
           'linear-gradient(40deg, rgba(69,136,198,0.9) 30%, #49A694 70%)',
         backgroundColor: '#49A694',
-        // width: '100%',
-        // height: '150px',
       }}
-      // height={'200vw'}
-      // width={'1vw'}
     />
   );
 };
@@ -93,14 +136,12 @@ const Report = ({location}) => {
   let isFromCard = location?.state?.isFromCard;
   const {getWeeklySummaryReportData} = useSelector((state) => state.tracker);
   const dispatch = useDispatch();
-  console.log('get weekly summary report data', getWeeklySummaryReportData);
   useEffect(() => {
     let postData = {
       user_id: getItem('userId'),
       patientDate: moment().format('YYYY - MM - DD'),
       timeZone: currentTimeZone,
     };
-    console.log('post data?????', postData);
     dispatch(AppActions.getWeeklySummaryReport(postData));
   }, []);
   let moodYAxis = [];
@@ -113,7 +154,6 @@ const Report = ({location}) => {
   let pointsXAxis = [];
 
   let moodData = MOODS_ARRAY;
-  console.log('mood data?????????', moodData);
   const daysCheckWithSleep = (arr = []) => {
     let minDate = new Date();
     let temp = [];
@@ -222,14 +262,9 @@ const Report = ({location}) => {
 
   let sleepHoursArray = sleepData?.length
     ? sleepData?.map((item) => {
-        //  if(item.total_hours){
         return (
           parseFloat(item.total_hours) + parseFloat(item.total_minutes) / 60
         );
-        // }
-        // else{
-        //   return 0;
-        // }
       })
     : [];
   let sleepXAxis = sleepData?.length
@@ -346,7 +381,10 @@ const Report = ({location}) => {
               lable={'Average Daily Mood Report'}
             />
           ) : (
-            <LineGraphUI lable={'Average Daily Mood  Report'} />
+            <LineGraphUI
+              yAxis={[0, 1, 2, 3, 4, 5]}
+              lable={'Average Daily Mood Report'}
+            />
           )}
 
           <Text style={styles.labelText}>Weekly Mood Report</Text>
@@ -366,7 +404,6 @@ const Report = ({location}) => {
               showsHorizontalScrollIndicator={false}
               keyExtractor={(item) => `${item._id}`}
               renderItem={({item, index}) => {
-                console.log('item??????', moodData);
                 return (
                   <View
                     key={index}
@@ -430,15 +467,10 @@ const Report = ({location}) => {
             ListEmptyComponent={<Text>No record for this Week</Text>}
             numColumns={4}
             renderItem={({item, index}) => {
-              console.log(item.image, 'item.image......');
               return (
                 <View
                   style={{
                     paddingHorizontal: 5,
-                    // width: '100%',
-                    // margin: 15,
-                    // marginTop: 5,
-                    // justifyContent: 'space-between'
                   }}
                   key={index}>
                   <div style={{display: 'flex'}}>
@@ -522,10 +554,5 @@ const styles = StyleSheet.create({
   imageContainer: {
     height: 30,
     width: 30,
-
-    // '@media (max-width: 800px)': {
-    //   backgroundColor: 'red',
-    //   width: 140,
-    // },
   },
 });

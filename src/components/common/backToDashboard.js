@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -19,7 +19,7 @@ import GLOBALS from '../../constants';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
-const {COLORS, FONTS} = GLOBALS;
+const { COLORS, FONTS } = GLOBALS;
 const BackToDashboard = (props) => {
   let {
     title = 'Back to Dashboard',
@@ -34,19 +34,16 @@ const BackToDashboard = (props) => {
   return (
     <View style={[styles.backBtn, btnStyle]}>
       <TouchableOpacity
-        style={{flexDirection: 'row', alignItems: 'center'}}
+        style={{ flexDirection: 'row', alignItems: 'center' }}
         onPress={
           () => navigatortoStart()
-          // navigatorPush({
-          //   screenName: 'Dashboard',
-          // })
+
         }>
         <Image
           resizeMode={'contain'}
           source={back}
           style={{
-            // width: DEVICE_WIDTH > 767 ? '1.3vw' : '15px',
-            // height: DEVICE_WIDTH > 767 ? '1.3vw' : '15px',
+
             width: '15px',
             height: '15px',
           }}
@@ -55,7 +52,6 @@ const BackToDashboard = (props) => {
           style={{
             marginLeft: '1vw',
             fontFamily: FONTS.SEMI_BOLD,
-            // fontSize: DEVICE_WIDTH > 767 ? '1.3vw' : '16px',
             fontSize: '17px',
             fontStyle: 'normal',
             fontWeight: '800',

@@ -4,10 +4,7 @@ const {COLORS} = GLOBALS;
 const styles = {
   subTitle: {
     paddingTop: '5px',
-    // width: '100%',
-    //textAlign: 'center',
-    // border: '1px solid red',
-  },
+   },
   imageWidth: {
     width: '25%',
     textAlign: 'center',
