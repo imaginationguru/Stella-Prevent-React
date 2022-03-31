@@ -454,7 +454,8 @@ const ThirtyTwo = (props) => {
                                   order: index + 1
                                 }
                               });
-
+                              console.log([...other_header, ...filter_data])
+                              setUserInputs([...other_header, ...filter_data]);
                               if (val.content_id) {
                                 dispatch(
                                   AppActions.deleteUserAssessmentData(
