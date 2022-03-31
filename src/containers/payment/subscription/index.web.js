@@ -143,13 +143,13 @@ const Subscription = (props) => {
                       <Text
                         style={[
                           styles.planText,
-                          { marginLeft: 0, marginTop: '6.4vw' },
+                          { marginLeft: 0, marginTop: '30px', fontSize: '25px' },
                           { color: getTextColor(index) },
                         ]}>
-                        {item.price}
-                        <Text style={styles.planInnerText}>
+                        ${item.price}
+                        {/* <Text style={styles.planInnerText}>
                           {item.planDuration}
-                        </Text>
+                        </Text> */}
                       </Text>
                       {item.numericPrice > 0 && (
                         <Button
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     padding: '15px',
-
+    justifyContent: 'center'
   },
   middleInnerLeft: {
     flex: 0.5,
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontStyle: 'normal',
     color: '#A9A9AA',
-    marginVertical: '1.2vw',
+    marginVertical: '10px',
     fontFamily: FONTS.REGULAR,
   },
   itemText: {
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.5,
     shadowRadius: '3vw',
-    maxWidth: DEVICE_WIDTH > 1000 ? '25vw' : '100%',
+    maxWidth: DEVICE_WIDTH > 1000 ? '47%' : '100%',
   },
   backBtn: {
     alignItems: 'flex-start',

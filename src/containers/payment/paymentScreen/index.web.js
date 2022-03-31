@@ -35,7 +35,7 @@ import {
   CreditCardInput,
 } from 'react-square-web-payments-sdk';
 import { getItem } from '../../../utils/AsyncUtils';
-const { COLORS, FONTS, IMAGE_BASE_URL } = GLOBALS;
+const { COLORS, FONTS, IMAGE_BASE_URL, squareAppId } = GLOBALS;
 const {
   BLUR,
   WHITE,
@@ -236,7 +236,8 @@ const Payment = (props) => {
              * Identifies the calling form with a verified application ID
              * generated from the Square Application Dashboard.
              */
-            applicationId="sandbox-sq0idb-WPw6oJXhJty7VgI9HN3Edw"
+            // applicationId="sandbox-sq0idb-WPw6oJXhJty7VgI9HN3Edw"
+            applicationId={squareAppId}
             /**
              * Invoked when payment form receives the result of a tokenize generation request.
              * The result will be a valid credit card or wallet token, or an error.
@@ -252,16 +253,17 @@ const Payment = (props) => {
              * reduce the chance of fraudulent transactions.
              */
             createVerificationDetails={() => ({
-              amount: '40.00',
+              // amount: '40.00',
+              amount: price,
               /* collected from the buyer */
               billingContact: {
-                addressLines: ['123 Main Street', 'Apartment 1'],
-                familyName: 'Doe',
-                givenName: 'John',
-                countryCode: 'GB',
-                city: 'London',
+                // addressLines: ['123 Main Street', 'Apartment 1'],
+                familyName: name,
+                givenName: name,
+                // countryCode: 'GB',
+                // city: 'London',
               },
-              currencyCode: 'GBP',
+              currencyCode: 'USD',
               intent: 'CHARGE',
             })}
             /**
