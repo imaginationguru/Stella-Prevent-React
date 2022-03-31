@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import GLOBALS from '../../../constants';
 import ReactHtmlParser from 'react-html-parser';
 import {useSelector, useDispatch} from 'react-redux';
@@ -6,7 +6,6 @@ import * as AppActions from '../../../actions';
 import {getItem} from '../../../utils/AsyncUtils';
 import ExerciseBox from '../../../components/ExerciseBox';
 import {translate as ts} from '../../../i18n/translate';
-
 import {
   CardQuote,
   CardTitle,
@@ -16,11 +15,9 @@ import {
   CustomImage,
 } from '../../../components/Cards';
 import commonStyles from '../commonStyles';
-
 import {Dimensions} from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 const {YELLOW, WHITE, CIRCLE_GRAY, LIGHT_GRAY, GREEN_TEXT} = COLORS;
@@ -35,6 +32,7 @@ const dataMapperAss = (arr = []) => {
       };
     });
   }
+
   return temp;
 };
 
@@ -69,8 +67,9 @@ const Seventeen = (props) => {
   const [inputs, setInputs] = useState([]);
   const [allCards, setAllCards] = useState([]);
   const [getCardsData, setGetCardsData] = useState([]);
-  const [displayContent, setDisplayContent] = useState('false');
+
   const [show, setShow] = useState([]);
+
   const {
     card_title,
     descriptions,
@@ -93,6 +92,7 @@ const Seventeen = (props) => {
       assessmentData.headers && assessmentData.headers.length
         ? assessmentData.headers
         : [];
+
     headers &&
       headers.length &&
       setInputs(
@@ -107,6 +107,8 @@ const Seventeen = (props) => {
           };
         }),
       );
+
+    console.log('inputs', inputs);
     //dispatch(AppActions.getUserAssessment(props._id, assessment_id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData, assessment_id]);
@@ -191,13 +193,29 @@ const Seventeen = (props) => {
 
   const onSaveMyths = (e) => {
     e.preventDefault();
+    let x =
+      assessmentData.heading && assessmentData.heading.length
+        ? assessmentData.heading
+            .filter((item) => item.order === 2)
+            .map((val) => {
+              return {
+                assessment_header_id: val._id,
+                content: [{content: val.heading, order: val.order}],
+              };
+            })
+        : [];
+    let y = dataMapperAss(inputs);
+
+    let z = [...x, ...y];
+
     let params = {
       user_id: userId,
       user_card_id: props._id,
       assessment_id: assessment_id,
-      assessment: dataMapperAss(inputs),
+      assessment: z,
+      // assessment: dataMapperAss(inputs),
     };
-
+    console.log('params', params);
     if (userAssessmentData && userAssessmentData.length) {
       console.log('if block');
       //dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
@@ -207,19 +225,18 @@ const Seventeen = (props) => {
       if (inputs && inputs.length) {
         let temp = [];
         let disabledInputs = inputs.filter((item) => item.isDisabled === false);
-        console.log('disabled inputs', disabledInputs);
+
         disabledInputs.forEach((item) => {
           temp.push(item.value);
         });
-        console.log('temp >>>>>>', temp);
+
         if (temp.length) {
           isValid = temp.filter((item) => item === '').length === 0; //fill all inputs
           //isValid = temp.some((item) => item !== 0) ? true : false;
         }
       }
-      console.log('is valid ', isValid);
+
       if (isValid) {
-        console.log('gjhfjhf');
         dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
       } else {
         dispatch({
