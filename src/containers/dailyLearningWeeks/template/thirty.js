@@ -29,25 +29,12 @@ import header1 from '../../../assets/images/BANNER-1.gif';
 import menu from '../../../assets/images/menu.svg';
 import Menu from '../../../components/Menu';
 import week1 from '../../../assets/images/Week1.svg';
+import _ from 'lodash';
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 const {YELLOW, WHITE, CIRCLE_GRAY, LIGHT_GRAY, GRAY, RED, GREEN_TEXT} = COLORS;
 let userId = getItem('userId');
-
-const dataMapperAss = (arr = []) => {
-  let temp = [];
-  if (arr.length) {
-    temp = arr.map((item) => {
-      return {
-        assessment_header_id: item._id,
-        content: [{content: item.value, order: item.order}],
-      };
-    });
-  }
-  return temp;
-};
 
 const InputBoxWithContent = (props) => {
   const {
@@ -107,6 +94,13 @@ const Thirty = (props, componentId) => {
   const [showData, setShowData] = useState(false);
   const [updateInputData, setUpdateInputData] = useState([]);
   const [commentModal, setCommentModal] = useState(false);
+  // const [secondIdFilledData, setSecondIdFilledData] = useState([]);
+  const [secondIdAllCards, setSecondIdAllCards] = useState([]);
+  const [getSecondAssessment, setGetSecondAssessment] = useState([]);
+  const [secondAssessmentData, setSecondAssessmentData] = useState([]);
+  const [finalUpdateData, setFinalUpdateData] = useState([]);
+  const [getInputCardsIndex, setGetInputCardsIndex] = useState('');
+  const [objContentIndex, setObjContentIndex] = useState('');
   const {
     card_title,
     descriptions,
@@ -124,13 +118,44 @@ const Thirty = (props, componentId) => {
   const {
     assessmentData = {},
     assessmentData2 = {},
-    userAssessmentData = [],
+    //  userAssessmentData = [],
+    multiAssessmentData = [],
   } = useSelector((state) => state.moduleOne);
-  //console.log('user assessmnet????????? template 30', userAssessmentData);
+  // console.log(
+  //   'user assessmnet????????? template 30',
+
+  //   'getUserMultiAssessment',
+  //   JSON.stringify(multiAssessmentData),
+  // );
+
+  const dataMapperAss = (arr = []) => {
+    let contentLength = multiAssessmentData && multiAssessmentData.length;
+    let temp = [];
+    if (arr.length) {
+      temp = arr.map((item) => {
+        return {
+          assessment_header_id: item._id,
+          content: [
+            {
+              content: item.value,
+              order: item.order,
+              contentIndex: contentLength,
+            },
+          ],
+        };
+      });
+    }
+    return temp;
+  };
   useEffect(() => {
     dispatch(AppActions.getAssessmentDataSecond(assessment_id2));
+    dispatch(AppActions.getUserMultiAssessment(props._id, assessment_id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessment_id2]);
+
+  useEffect(() => {
+    dispatch(AppActions.getUserMultiAssessment(props._id, assessment_id));
+  }, []);
   const {isDashboardModal} = useSelector((state) => state.common);
   useEffect(() => {
     let headers =
@@ -166,7 +191,6 @@ const Thirty = (props, componentId) => {
       getCardsData.forEach((item) =>
         cardsInputs.push(
           item.data.map((val) => {
-            // console.log('val??????get cards inputs', val);
             return {
               name: val.assessment_header && val.assessment_header[0].header,
               placeholder: val.description ? val.description : '',
@@ -174,6 +198,7 @@ const Thirty = (props, componentId) => {
               value: val.content,
               _id: val._id,
               assessment_header_id: val.assessment_header_id,
+              assessment_id: val.assessment_id,
             };
           }),
         ),
@@ -181,6 +206,155 @@ const Thirty = (props, componentId) => {
     setGetCardsInputs(cardsInputs);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getCardsData]);
+
+  useEffect(() => {
+    let firstAssessmentCards = [];
+    let secondAssessmentCards = [];
+    multiAssessmentData &&
+      multiAssessmentData.length &&
+      multiAssessmentData.forEach((item) =>
+        firstAssessmentCards.push(
+          item.cards
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .filter((item) => item.assessment_id === assessment_id)
+            .map((val) => {
+              //  console.log('val??????get cards inputs', val);
+              return {
+                name: val.assessment_header && val.assessment_header[0].header,
+                placeholder: val.description ? val.description : '',
+                order: val.order,
+                value: val.content,
+                _id: val._id,
+                assessment_header_id: val.assessment_header_id,
+                assessment_id: val.assessment_id,
+                contentIndex: val.contentIndex,
+              };
+            }),
+        ),
+      );
+
+    multiAssessmentData &&
+      multiAssessmentData.length &&
+      multiAssessmentData.forEach((item, i) =>
+        secondAssessmentCards.push(
+          item.cards
+            //  .sort((a, b) => (a.order > b.order && 1) || -1)
+            // .filter((item) => item.assessment_id === assessment_id)
+            .map((val) => {
+              //  console.log('val??????get cards inputs', val);
+              if (val.assessment_id === assessment_id) {
+                return {
+                  name:
+                    val.assessment_header && val.assessment_header[0].header,
+                  placeholder: val.description ? val.description : '',
+                  order: val.order,
+                  value: val.content,
+                  _id: val._id,
+                  assessment_header_id: val.assessment_header_id,
+                  assessment_id: val.assessment_id,
+                  contentIndex: val.contentIndex,
+                };
+              } else {
+                return {
+                  secondAssessment: {
+                    name:
+                      val.assessment_header && val.assessment_header[0].header,
+                    placeholder: val.description ? val.description : '',
+                    order: val.order,
+                    value: val.content,
+                    _id: val._id,
+                    assessment_header_id: val.assessment_header_id,
+                    assessment_id: val.assessment_id,
+                    assessment_header_order:
+                      val.assessment_header[0] &&
+                      val.assessment_header[0].order,
+                    contentIndex: val.contentIndex,
+                    content: [],
+                  },
+                };
+              }
+            }),
+        ),
+      );
+    let secondIdData = [];
+    let y =
+      secondAssessmentCards &&
+      secondAssessmentCards.length &&
+      secondAssessmentCards.map((val) => {
+        console.log('val??', val.secondAssessment);
+        return val.filter((item) => item.secondAssessment !== undefined);
+      });
+    y.length &&
+      y.forEach((item) =>
+        secondIdData.push(
+          item
+            .sort(
+              (a, b) =>
+                (a.assessment_header_order > b.assessment_header_order && 1) ||
+                -1,
+            )
+            .map((val) => {
+              return {...val.secondAssessment};
+            }),
+        ),
+      );
+
+    setSecondAssessmentData(secondIdData);
+
+    let modifyArray = [];
+    if (secondAssessmentData.length) {
+      secondAssessmentData.forEach((item) => {
+        modifyArray.push(...item);
+      });
+    }
+    console.log(
+      'modify aarray',
+      modifyArray,
+      'objContentIndex',
+      objContentIndex,
+    );
+    let hash = Object.create(null),
+      result = secondAssessmentData.map((item) =>
+        item.reduce(function (r, o) {
+          if (!hash[o.assessment_header_id]) {
+            hash[o.assessment_header_id] = {
+              assessment_header_id: o.assessment_header_id,
+              content: [],
+              name: o.name,
+              placeholder: o.description,
+              order: o.order,
+              value: o.value,
+              _id: o._id,
+              assessment_id: o.assessment_id,
+              assessment_header_order: o.assessment_header_order,
+              contentIndex: o.contentIndex,
+            };
+            r.push(hash[o.assessment_header_id]);
+          }
+          hash[o.assessment_header_id].content.push({
+            content: o.value,
+            contentIndex: o.contentIndex,
+          });
+          return r;
+        }, []),
+      );
+
+    console.log('result', result);
+
+    let newArray = firstAssessmentCards.map((obj, index) => ({
+      obj,
+      secondAssessment: [result[index]],
+    }));
+
+    let newArray1 = firstAssessmentCards.map((obj, index) => ({
+      obj,
+      secondAssessment: result,
+    }));
+    console.log('new array', newArray1, newArray);
+    setGetCardsInputs(newArray1);
+    console.log('new array', getCardsInputs);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [multiAssessmentData]);
 
   useEffect(() => {
     let temp = [];
@@ -206,93 +380,116 @@ const Thirty = (props, componentId) => {
       setGetCardsData(temp);
     }
   }, [allCards]);
-  console.log(
-    'get cards data',
-    getCardsData,
-    allCards,
-    'get cards data',
-    getCardsData,
-    'get Cards data input',
-    getCardsInputs,
-  );
-  useEffect(() => {
-    let cardData = [];
-    let cardsData = [];
-    const assessmentCards = [];
-    const assessmentCardsCopy = [];
-    console.log('user assessment data', JSON.stringify(userAssessmentData));
-    if (userAssessmentData.length) {
-      userAssessmentData
-        .filter((item) => item._id.assessment_header_id === firstHeaderId)
-        .forEach((val) => cardData.push(...val.cards));
-      setFirstHeaderContent(cardData);
-      userAssessmentData.forEach((val) => cardsData.push(...val.cards));
-      setAllCards(cardsData);
+  // console.log(
+  //   'get cards data filtered by unique update time ',
+  //   getCardsData,
+  //   'all cards data array',
+  //   allCards,
+  //   'get Cards data input',
+  //   getCardsInputs,
+  // );
+  // useEffect(() => {
+  //   let cardData = [];
+  //   let cardsData = [];
+  //   let secondCardsData = [];
+  //   const assessmentCards = [];
+  //   const assessmentCardsCopy = [];
+  //   // console.log('user assessment data', JSON.stringify(userAssessmentData));
+  //   if (userAssessmentData.length) {
+  //     /*first header content data set */
+  //     userAssessmentData
+  //       .filter((item) => item._id.assessment_header_id === firstHeaderId)
+  //       .forEach((val) => cardData.push(...val.cards));
+  //     setFirstHeaderContent(cardData);
 
-      console.log('cards data????all cards????', allCards);
-      // {second assessment logic}
-      let secondAssmentData = userAssessmentData.map((item) => {
-        return item.cards.filter((fil) => fil.assessment_id === assessment_id2);
-      });
+  //     /*cards data */
+  //     //userAssessmentData.forEach((val) => cardsData.push(...val.cards));
+  //     userAssessmentData.forEach((val) =>
+  //       val.cards
+  //         .filter((item) => item.assessment_id === assessment_id)
+  //         .map((ele) => cardsData.push(ele)),
+  //     );
+  //     setAllCards(cardsData);
 
-      var assessmentTwoArray = secondAssmentData.filter(
-        (value) => Object.keys(value).length !== 0,
-      );
+  //     userAssessmentData.forEach((val) =>
+  //       val.cards
+  //         .filter((item) => item.assessment_id === assessment_id2)
+  //         .map((ele) => secondCardsData.push(ele)),
+  //     );
+  //     setSecondIdAllCards(secondCardsData);
 
-      assessmentTwoArray.forEach((item) => {
-        assessmentCards.push(...item);
-        assessmentCardsCopy.push(...item);
-      });
-      setSecondAssessmentArray(assessmentCards);
+  //     console.log(
+  //       'cards data????all cards????',
+  //       allCards,
+  //       'xxx',
+  //       cardsData,
+  //       'secondIdAllCards',
+  //       secondIdAllCards,
+  //     );
+  //     // {second assessment logic}
+  //     let secondAssmentData = userAssessmentData.map((item) => {
+  //       return item.cards.filter((fil) => fil.assessment_id === assessment_id2);
+  //     });
 
-      let sortedArray = assessmentCards.map((element) => {
-        let selectedFormat = [];
-        let header_id, assessmentId, orderValue;
+  //     var assessmentTwoArray = secondAssmentData.filter(
+  //       (value) => Object.keys(value).length !== 0,
+  //     );
 
-        assessmentCardsCopy.forEach((item) => {
-          if (
-            element.assessment_header_id === item.assessment_header_id &&
-            element.order === item.order
-          ) {
-            orderValue = item.order;
-            header_id = item.assessment_header_id;
-            assessmentId =
-              item.assessment_header !== undefined &&
-              item.assessment_header.length
-                ? item.assessment_header.map((val) => {
-                    return val.assessment_id;
-                  })
-                : null;
+  //     assessmentTwoArray.forEach((item) => {
+  //       assessmentCards.push(...item);
+  //       assessmentCardsCopy.push(...item);
+  //     });
+  //     setSecondAssessmentArray(assessmentCards);
 
-            selectedFormat.push({
-              content: item.content,
-              order: item.order,
-              type: item.type,
-              assessment_content_id: item.assessment_header_id,
-              content_id: item._id,
-            });
-          }
-        });
+  //     let sortedArray = assessmentCards.map((element) => {
+  //       let selectedFormat = [];
+  //       let header_id, assessmentId, orderValue;
 
-        let finalValue = {
-          content: selectedFormat,
-          assessment_header_id: header_id,
-          assessment_id: assessmentId,
-          order: orderValue,
-        };
-        return finalValue;
-      });
+  //       assessmentCardsCopy.forEach((item) => {
+  //         if (
+  //           element.assessment_header_id === item.assessment_header_id &&
+  //           element.order === item.order
+  //         ) {
+  //           orderValue = item.order;
+  //           header_id = item.assessment_header_id;
+  //           assessmentId =
+  //             item.assessment_header !== undefined &&
+  //             item.assessment_header.length
+  //               ? item.assessment_header.map((val) => {
+  //                   return val.assessment_id;
+  //                 })
+  //               : null;
 
-      let jsonObject = sortedArray.map(JSON.stringify);
-      let uniqueSet = new Set(jsonObject);
-      let uniqueArray = Array.from(uniqueSet).map(JSON.parse);
+  //           selectedFormat.push({
+  //             content: item.content,
+  //             order: item.order,
+  //             type: item.type,
+  //             assessment_content_id: item.assessment_header_id,
+  //             content_id: item._id,
+  //           });
+  //         }
+  //       });
 
-      setUserInputs(uniqueArray);
-    } else {
-      console.log('else ');
-    }
-  }, [userAssessmentData]);
+  //       let finalValue = {
+  //         content: selectedFormat,
+  //         assessment_header_id: header_id,
+  //         assessment_id: assessmentId,
+  //         order: orderValue,
+  //       };
+  //       return finalValue;
+  //     });
+
+  //     let jsonObject = sortedArray.map(JSON.stringify);
+  //     let uniqueSet = new Set(jsonObject);
+  //     let uniqueArray = Array.from(uniqueSet).map(JSON.parse);
+
+  //     setUserInputs(uniqueArray);
+  //   } else {
+  //     console.log('else ');
+  //   }
+  // }, [userAssessmentData]);
   /******************First assessment data save************** */
+
   const onSaveMyths = () => {
     //e.preventDefault();
     console.log('inputs??????', inputs);
@@ -318,7 +515,7 @@ const Thirty = (props, componentId) => {
     console.log('inputs???? first assessment???', JSON.stringify(params));
     if (isValid) {
       console.log('is valid', isValid);
-      dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+      //  dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
       assessmentData.headers &&
         assessmentData.headers.length &&
         setInputs(
@@ -370,9 +567,10 @@ const Thirty = (props, componentId) => {
     console.log('content array ', contentArray.length, userInputs);
 
     if (userInputs.length) {
+      let contentLength = multiAssessmentData && multiAssessmentData.length;
       let modifyArray = contentArray.map((element, index) => {
         let dummyArray = element.map((ele) => {
-          return ele.content;
+          return {...ele.content, contentIndex: contentLength};
         });
         return {
           assessment_header_id: element[0].assessment_header_id,
@@ -385,38 +583,30 @@ const Thirty = (props, componentId) => {
         assessment_id: assessment_id2,
         assessment: modifyArray,
       };
+      let params = {
+        user_id: userId,
+        firstAssessment: {
+          user_card_id: props._id,
+          assessment_id: assessment_id,
+          assessment: dataMapperAss(inputs),
+        },
+        secondAssessment: {
+          user_card_id: props._id,
+          assessment_id: assessment_id2,
+          assessment: modifyArray,
+        },
+      };
       console.log('modify array?????????', modifyArray);
       console.log('second params', JSON.stringify(firstParams));
-      if (true) {
-        dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
-      } else {
-        console.log('no save');
-      }
-      // if (userInputs.length) {
-      //   if (
-      //     userAssessmentData &&
-      //     userAssessmentData.length &&
-      //     secondAssemssmentArray.length
-      //   ) {
-      //     console.log('params ???????', firstParams);
-      //     // dispatch(AppActions.rearrangeAssessments(firstParams, onSubmitMessage));
-      //     dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
-      //   } else {
-      //     dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
-      //   }
-      // } else {
-      //   dispatch({
-      //     type: ACTION_TYPE.ERROR,
-      //     payload: 'Please perform your exercise',
-      //   });
-      // }
+      console.log('final params?????', JSON.stringify(params));
+      dispatch(AppActions.saveMultiAssessment(params, onSubmitMessage));
+      setUserInputs([]);
+    } else {
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: 'Please perform your exercise',
+      });
     }
-    // else {
-    //   dispatch({
-    //     type: ACTION_TYPE.ERROR,
-    //     payload: 'Please perform your exercise',
-    //   });
-    // }
   };
 
   const setInputValue = (val) => {
@@ -537,7 +727,7 @@ const Thirty = (props, componentId) => {
     }
   };
 
-  const onDayChange = (date, item) => {
+  const onDayChange = (date, item, index) => {
     let lastOrderObj = userInputs[userInputs.length - 1];
     let lastOrder;
     if (lastOrderObj !== undefined && lastOrderObj.order !== undefined) {
@@ -555,6 +745,7 @@ const Thirty = (props, componentId) => {
           content: moment(date).format('YYYY-MM-DD'),
           content_id: item.content.length ? item.content.content_id : null,
           order: lastOrder + 1,
+          // contentIndex: index,
         },
       ],
       new_user_input: true,
@@ -611,8 +802,9 @@ const Thirty = (props, componentId) => {
       );
     }
   };
-  const onPlusBtnClick = (item) => {
-    console.log('new user inputs?????', newUserInputs);
+  const onPlusBtnClick = (item, i) => {
+    setGetInputCardsIndex(i);
+    console.log('new user inputs?????', newUserInputs, userDate, i);
     if (userDate.length && newUserInputs.length) {
       Array.prototype.push.apply(newUserInputs, userDate);
       let concatArray = userInputs;
@@ -642,59 +834,195 @@ const Thirty = (props, componentId) => {
     }
   };
 
-  const onHandleChangeData = (e, ele, idx, secondIndex) => {
-    console.log('ee????????', ele, idx, secondIndex);
+  const onHandleChangeData = (e, ele, itemIndex, eleIndex) => {
+    console.log('ee????????', ele, eleIndex, itemIndex, e.target.value);
+
     let x =
       getCardsInputs &&
       getCardsInputs.length &&
       getCardsInputs.map((item, i) => {
-        if (i === idx) {
-          console.log('map first', i, idx, item);
-          let y = item.map((val, id) => {
-            console.log(
-              'id === secondIndex ? e.target.value : val.value,',
-              id === secondIndex ? e.target.value : val.value,
-            );
-            if (id === secondIndex) {
-              console.log('val??????', val, e.target.value);
+        console.log('item index 0', itemIndex, i, eleIndex);
+        if (itemIndex === i) {
+          console.log('item index');
+          let y = item.obj.map((val, index) => {
+            console.log('val 1067', val);
+            if (eleIndex === index) {
+              console.log('1071', e.target.value, val);
               return {
                 ...val,
                 value: e.target.value,
               };
             } else {
-              console.log('else in second llopp', val);
               return {...val};
             }
           });
-          console.log('y???????', y);
-          setUpdateInputData(y);
-          return y;
+          let xx = item.secondAssessment.map((item) => {
+            return item;
+          });
+          let combineArray = {obj: y, secondAssessment: xx};
+          setFinalUpdateData(combineArray);
+          console.log('y???', y, xx, combineArray);
+          return combineArray;
         } else {
-          console.log('else in first condition', item);
           return item;
         }
       });
-    console.log('on handel change', getCardsInputs, 'x????', x);
+
+    console.log(
+      'on handel change',
+      getCardsInputs,
+      'x????',
+      x,
+      'update input data',
+      updateInputData,
+    );
     setGetCardsInputs(x);
   };
   const onUpdateData = () => {
-    let assessment = updateInputData.map((item) => {
-      console.log('item update data', item);
-      return {
-        assessment_header_id: item.assessment_header_id,
-        content: [{content: item.value, order: item.order}],
+    console.log(
+      'user inputs',
+      userInputs,
+      getCardsInputs,
+      'finalUpdateData',
+      finalUpdateData,
+    );
+
+    let firstAssessment =
+      finalUpdateData.obj &&
+      finalUpdateData.obj.map((item) => {
+        console.log('item?????', item);
+        return {
+          assessment_header_id: item.assessment_header_id,
+          content: [
+            {
+              content: item.value,
+              _id: item._id,
+              order: item.order,
+              contentIndex: item.contentIndex,
+            },
+          ],
+        };
+      });
+
+    let updateSecondAssessment =
+      userInputs.length &&
+      userInputs.map((item) => {
+        console.log(
+          'item second assessment',
+          item.content[0].contentIndex,
+          item,
+        );
+        return {
+          assessment_header_id: item.assessment_header_id,
+          content: [
+            {
+              content: item.content[0].content,
+              assessment_content_id: item.content[0].content_id,
+              order: item.content[0].order,
+              assessment_header_id: item.assessment_header_id,
+              contentIndex: getInputCardsIndex,
+            },
+          ],
+        };
+      });
+
+    if (
+      updateSecondAssessment.length &&
+      updateSecondAssessment !== undefined &&
+      firstAssessment === undefined
+    ) {
+      console.log('only second assessment');
+      let updateParams = {
+        user_id: userId,
+        firstAssessment: {},
+        secondAssessment: {
+          user_card_id: props._id,
+          assessment_id: assessment_id2,
+          assessment: updateSecondAssessment,
+        },
       };
-    });
-    let params = {
-      user_id: userId,
-      user_card_id: props._id,
-      assessment_id: assessment_id,
-      assessment: assessment,
-    };
-    console.log('params???update??', JSON.stringify(params));
-    dispatch(AppActions.rearrangeAssessments(params));
+      console.log(' second params???', JSON.stringify(updateParams));
+      dispatch(
+        AppActions.rearrangeMultiAssessments(
+          updateParams,
+          onSubmitMessage,
+          props._id,
+          assessment_id2,
+        ),
+      );
+    } else if (
+      firstAssessment.length !== 0 &&
+      updateSecondAssessment.length !== 0 &&
+      updateSecondAssessment !== undefined &&
+      firstAssessment !== undefined &&
+      userInputs.length
+    ) {
+      console.log('params both update');
+      let updateParams = {
+        user_id: userId,
+        firstAssessment: {
+          user_card_id: props._id,
+          assessment_id: assessment_id,
+          assessment: firstAssessment,
+        },
+        secondAssessment: {
+          user_card_id: props._id,
+          assessment_id: assessment_id2,
+          assessment: updateSecondAssessment,
+        },
+      };
+      console.log('both params???', JSON.stringify(updateParams));
+      dispatch(
+        AppActions.rearrangeMultiAssessments(
+          updateParams,
+          onSubmitMessage,
+          props._id,
+          assessment_id,
+        ),
+      );
+    } else if (firstAssessment.length && firstAssessment !== undefined) {
+      console.log('only first assessment');
+      let updateParams = {
+        user_id: userId,
+        firstAssessment: {
+          user_card_id: props._id,
+          assessment_id: assessment_id,
+          assessment: firstAssessment,
+        },
+      };
+      console.log('first params???', updateParams);
+      dispatch(
+        AppActions.rearrangeMultiAssessments(
+          updateParams,
+          onSubmitMessage,
+          props._id,
+          assessment_id,
+        ),
+      );
+    } else {
+      console.log('else');
+    }
   };
-  console.log('update input Data', updateInputData, 'gt cards', getCardsInputs);
+
+  const onCrossGetData = (ele) => {
+    console.log('ele>>>>', ele);
+    let x =
+      ele.length &&
+      ele.map((item) => {
+        return item._id;
+      });
+    console.log('x delete', x[0], x[1], x[2]);
+    dispatch(
+      AppActions.deleteUserAssessmentDataNew(
+        x[0],
+        props._id,
+        assessment_id2,
+        x[1],
+        x[2],
+        true,
+      ),
+    );
+  };
   return (
     <div>
       {/**********************quotes************** */}
@@ -784,13 +1112,13 @@ const Thirty = (props, componentId) => {
               );
             })
         : null}
-      {inputs.length ? (
+      {/* {inputs.length ? (
         <div style={commonStyles.buttonWrapper}>
           <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
             {ts('SAVE')}
           </button>
         </div>
-      ) : null}
+      ) : null} */}
       {headingOne && headingOne.length ? (
         <CardContent
           content={ReactHtmlParser(headingOne)}
@@ -798,9 +1126,11 @@ const Thirty = (props, componentId) => {
             ...styles.contentHeading,
             backgroundColor: CIRCLE_GRAY,
             paddingBottom: '3px',
+            marginTop: '50px',
           }}
         />
       ) : null}
+      {/* <div onClick={() => updateData()}>updat</div> */}
       <div style={styles.secondAssessment}>
         {assessmentSecond.length
           ? assessmentSecond.map((item, i) => {
@@ -835,6 +1165,7 @@ const Thirty = (props, componentId) => {
                                           height: '50px',
                                           paddingLeft: 10,
                                           paddingTop: 10,
+                                          // border: '1px solid red',
                                         },
                                       ]}
                                       underlineColorAndroid="transparent"
@@ -845,6 +1176,7 @@ const Thirty = (props, componentId) => {
                                           ? setInputValue(val.content)
                                           : null
                                       }
+                                      // value={setInputValue(val.content)}
                                     />
                                   </View>
                                 </div>
@@ -870,7 +1202,6 @@ const Thirty = (props, componentId) => {
                         }
                         onChange={(e) => onChangeDropDown(e, item._id, item)}
                         onSelect={(e) => onChangeDropDown(e, item._id, item)}>
-                        {/* {selectedValue ? '' : <option>select</option>} */}
                         <option>select</option>
                         {item.content &&
                           item.content.length &&
@@ -962,7 +1293,7 @@ const Thirty = (props, componentId) => {
                               value={value}
                               maxDate={new Date()}
                               onClickDay={(date) => {
-                                onDayChange(date, item);
+                                onDayChange(date, item, i);
                               }}
                             />
                           ) : null}
@@ -1033,6 +1364,8 @@ const Thirty = (props, componentId) => {
       <div onClick={() => setCommentModal(true)}>
         <p>Click here..</p>
       </div>
+
+      {/*//commentModal*/}
       {commentModal && (
         <Modal
           animationType="slide"
@@ -1042,7 +1375,6 @@ const Thirty = (props, componentId) => {
           }}
           style={{
             backgroundColor: 'white',
-            border: '1px solid red',
           }}>
           <div style={{position: 'relative'}}>
             <img src={week1} style={{width: '100%'}} />
@@ -1069,97 +1401,501 @@ const Thirty = (props, componentId) => {
             style={{
               overflowY: 'scroll',
               paddingBottom: '500%',
-              width: '80%',
+              width: '100%',
               marginLeft: 'auto',
               marginRight: 'auto',
             }}>
             {getCardsInputs && getCardsInputs.length
-              ? getCardsInputs.map((item, idx) => {
-                  //  console.log('item get cards', item);
+              ? getCardsInputs.map((item, i) => {
+                  let visibleData = showData === i;
                   return (
-                    <div>
-                      {item
-                        .sort((a, b) => (a.order > b.order && 1) || -1)
-                        .map((ele, i) => {
-                          let firstOrder = ele.order === 0;
-                          let visibleData = showData === idx;
-                          return (
-                            <div style={{position: 'relative'}}>
-                              {i === 0 && (
-                                <div
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    if (idx === showData) {
-                                      setShowData('');
-                                    } else {
-                                      setShowData(idx);
-                                    }
-                                  }}
-                                  style={styles.iconDiv}>
-                                  <div style={styles.circleWrapper}>
-                                    <img
-                                      src={visibleData ? upArrow : arrowDown}
-                                      color={'#fff'}
-                                      style={styles.img}
-                                    />
-                                  </div>
-                                </div>
-                              )}
-                              {visibleData ? (
-                                <InputBoxWithContent
-                                  key={idx}
-                                  title={ReactHtmlParser(ele.name)}
-                                  name={ele.name}
-                                  placeholder={ele.placeholder}
-                                  value={ele.value}
-                                  onChange={(e) => {
-                                    onHandleChangeData(e, ele, idx, i);
-                                  }}
-                                  style={{
-                                    backgroundColor: headerColor(ele.order),
-                                    width: DEVICE_WIDTH > 767 ? '20%' : '30%',
-                                  }}
-                                  disable={ele.order === 0 ? true : false}
-                                />
-                              ) : (
-                                i === 0 && (
+                    <div
+                      style={{
+                        width: '80%',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                      }}>
+                      {visibleData ? (
+                        <div onClick={() => setShowData(i)}>
+                          {item.obj.length &&
+                            item.obj.map((val, idx) => {
+                              return (
+                                <div>
+                                  {idx === 0 && (
+                                    <div style={{position: 'relative'}}>
+                                      <div
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          if (i === showData) {
+                                            setShowData('');
+                                          } else {
+                                            setShowData(i);
+                                          }
+                                        }}
+                                        style={styles.iconDiv}>
+                                        <div style={styles.circleWrapper}>
+                                          <img
+                                            src={
+                                              visibleData ? upArrow : arrowDown
+                                            }
+                                            color={'#fff'}
+                                            style={styles.img}
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )}
                                   <InputBoxWithContent
-                                    boxWrapper={
-                                      {
-                                        // border: '1px solid blue',
-                                      }
-                                    }
                                     key={idx}
-                                    title={ReactHtmlParser(ele.name)}
-                                    name={ele.name}
-                                    placeholder={ele.placeholder}
-                                    value={ele.value}
-                                    // onChange={(e) => onHandleChange(e, ele)}
+                                    title={ReactHtmlParser(val.name)}
+                                    name={val.name}
+                                    placeholder={val.placeholder}
+                                    value={val.value}
+                                    onChange={(e) => {
+                                      onHandleChangeData(e, val, i, idx);
+                                    }}
                                     style={{
-                                      backgroundColor: headerColor(ele.order),
+                                      backgroundColor: headerColor(val.order),
                                       width: DEVICE_WIDTH > 767 ? '20%' : '30%',
                                     }}
-                                    disable={true}
+                                    disable={val.order === 0 ? true : false}
                                   />
-                                )
-                              )}
-                              {visibleData && i === 2 ? (
-                                <div style={commonStyles.buttonWrapper}>
-                                  <button
-                                    className="btn-orange"
-                                    onClick={(e) => onUpdateData(e)}>
-                                    {ts('SAVE')}
-                                  </button>
                                 </div>
-                              ) : null}
+                              );
+                            })}
+
+                          <div>
+                            {headingOne && headingOne.length ? (
+                              <CardContent
+                                content={ReactHtmlParser(headingOne)}
+                                style={{
+                                  ...styles.contentHeading,
+                                  backgroundColor: CIRCLE_GRAY,
+                                  paddingBottom: '3px',
+                                  marginTop: '50px',
+                                }}
+                              />
+                            ) : null}
+                            <div
+                              style={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                              }}>
+                              {item.secondAssessment.length &&
+                                item.secondAssessment.map((ele) => {
+                                  console.log('second ele', ele);
+                                  return ele
+                                    .sort(
+                                      (a, b) =>
+                                        (a.assessment_header_order >
+                                          b.assessment_header_order &&
+                                          1) ||
+                                        -1,
+                                    )
+                                    .map((element, secondIndex) => {
+                                      console.log('element ', element);
+                                      return (
+                                        <div style={{width: '33%'}}>
+                                          <CardContent
+                                            //  key={i}
+                                            content={ReactHtmlParser(
+                                              element.name,
+                                            )}
+                                            style={{
+                                              ...styles.contentHeading,
+                                            }}
+                                          />
+
+                                          {element.content &&
+                                          element.content.length
+                                            ? element.content
+                                                .filter(
+                                                  (conIndex) =>
+                                                    conIndex.contentIndex ===
+                                                    objContentIndex,
+                                                )
+                                                .map((con, conI) => {
+                                                  return (
+                                                    <div>
+                                                      {secondIndex === 2 && (
+                                                        <div
+                                                          style={{
+                                                            display: 'flex',
+                                                            alignItems: 'end',
+                                                            justifyContent:
+                                                              'end',
+                                                            position:
+                                                              'relative',
+                                                          }}
+                                                          onClick={() =>
+                                                            onCrossGetData(ele)
+                                                          }>
+                                                          <div
+                                                            style={{
+                                                              backgroundColor:
+                                                                RED,
+                                                              width: '25px',
+                                                              height: '25px',
+                                                              position:
+                                                                'absolute',
+                                                              borderRadius:
+                                                                '100%',
+                                                              top: 20,
+                                                              right: -11,
+                                                            }}>
+                                                            <p
+                                                              style={{
+                                                                alignItems:
+                                                                  'center',
+                                                                justifyContent:
+                                                                  'center',
+                                                                display: 'flex',
+                                                                color: '#ffff',
+                                                              }}>
+                                                              x
+                                                            </p>
+                                                          </div>
+                                                        </div>
+                                                      )}
+                                                      <TextInput
+                                                        style={[
+                                                          styles.selectedText,
+                                                          {
+                                                            height: '50px',
+                                                            paddingLeft: 10,
+                                                            paddingTop: 10,
+                                                            // border: '1px solid red',
+                                                            marginTop:
+                                                              secondIndex ===
+                                                                2 && conI === 0
+                                                                ? 21
+                                                                : 0,
+                                                          },
+                                                        ]}
+                                                        underlineColorAndroid="transparent"
+                                                        multiline={true}
+                                                        disable={true}
+                                                        value={con.content}
+                                                        // value={setInputValue(val.content)}
+                                                      />
+                                                    </div>
+                                                  );
+                                                })
+                                            : null}
+                                        </div>
+                                      );
+                                    });
+                                })}
+                            </div>
+                            <div style={styles.secondAssessment}>
+                              {assessmentSecond.length
+                                ? assessmentSecond.map((item) => {
+                                    // console.log('item i', i);
+                                    return (
+                                      <div
+                                        style={{
+                                          width: '33%',
+                                        }}>
+                                        {item.content && item.content.length ? (
+                                          <View>
+                                            {userInputs && userInputs.length
+                                              ? userInputs
+                                                  .sort(
+                                                    (a, b) =>
+                                                      (a.order > b.order &&
+                                                        1) ||
+                                                      -1,
+                                                  )
+                                                  .filter((ele) => {
+                                                    return (
+                                                      ele.assessment_header_id ===
+                                                      item._id
+                                                    );
+                                                  })
+                                                  .map((val, index) => {
+                                                    return (
+                                                      <div
+                                                        style={
+                                                          styles.crossIconWrapper
+                                                        }>
+                                                        <View
+                                                          style={{
+                                                            margin: 0,
+                                                            width: '100%',
+                                                          }}>
+                                                          <TextInput
+                                                            style={[
+                                                              styles.selectedText,
+                                                              {
+                                                                height: '50px',
+                                                                paddingLeft: 10,
+                                                                paddingTop: 10,
+                                                                // border: '1px solid red',
+                                                              },
+                                                            ]}
+                                                            underlineColorAndroid="transparent"
+                                                            multiline={true}
+                                                            disable={true}
+                                                            value={
+                                                              val.content &&
+                                                              val.content.length
+                                                                ? setInputValue(
+                                                                    val.content,
+                                                                  )
+                                                                : null
+                                                            }
+                                                            // value={setInputValue(val.content)}
+                                                          />
+                                                        </View>
+                                                      </div>
+                                                    );
+                                                  })
+                                              : null}
+                                            <select
+                                              style={{
+                                                width: '100%',
+                                                paddingTop: '12px',
+                                                paddingBottom: '12px',
+                                                paddingLeft: '10px',
+                                                backgroundColor: '#F1F3FA',
+                                                borderRadius: '5px',
+                                                border: `1px solid ${LIGHT_GRAY}`,
+                                              }}
+                                              value={
+                                                item.order === 0
+                                                  ? selectedValue
+                                                  : item.order === 1
+                                                  ? selectedValueSecond
+                                                  : ''
+                                              }
+                                              onChange={(e) =>
+                                                onChangeDropDown(
+                                                  e,
+                                                  item._id,
+                                                  item,
+                                                )
+                                              }
+                                              onSelect={(e) =>
+                                                onChangeDropDown(
+                                                  e,
+                                                  item._id,
+                                                  item,
+                                                )
+                                              }>
+                                              <option>select</option>
+                                              {item.content &&
+                                                item.content.length &&
+                                                item.content.map(
+                                                  (option, idx) => {
+                                                    return (
+                                                      <option
+                                                        value={option._id}>
+                                                        {`${option.content}`}
+                                                      </option>
+                                                    );
+                                                  },
+                                                )}
+                                            </select>
+                                          </View>
+                                        ) : (
+                                          <View>
+                                            {userInputs && userInputs.length
+                                              ? userInputs
+                                                  .sort(
+                                                    (a, b) =>
+                                                      (a.order > b.order &&
+                                                        1) ||
+                                                      -1,
+                                                  )
+                                                  .filter((ele) => {
+                                                    return (
+                                                      ele.assessment_header_id ===
+                                                      item._id
+                                                    );
+                                                  })
+                                                  .map((val, index) => {
+                                                    return (
+                                                      <div
+                                                        style={
+                                                          styles.crossIconWrapper
+                                                        }>
+                                                        <View
+                                                          style={{
+                                                            margin: 0,
+                                                            width: '100%',
+                                                          }}>
+                                                          <TextInput
+                                                            style={[
+                                                              styles.selectedText,
+                                                              {
+                                                                height: '50px',
+                                                                paddingLeft: 10,
+                                                                paddingTop: 10,
+                                                              },
+                                                            ]}
+                                                            underlineColorAndroid="transparent"
+                                                            multiline={true}
+                                                            disable={true}
+                                                            value={
+                                                              val.content &&
+                                                              val.content.length
+                                                                ? setInputValue(
+                                                                    val.content,
+                                                                  )
+                                                                : null
+                                                            }
+                                                          />
+                                                        </View>
+                                                        <div
+                                                          style={
+                                                            styles.circleCrossDiv
+                                                          }
+                                                          onClick={() =>
+                                                            onCrossBtnClick(val)
+                                                          }>
+                                                          <span
+                                                            style={{
+                                                              ...styles.plusIcon,
+                                                              fontSize: '15px',
+                                                            }}>
+                                                            x
+                                                          </span>
+                                                        </div>
+                                                      </div>
+                                                    );
+                                                  })
+                                              : null}
+
+                                            {item.order === 2 ? (
+                                              <div
+                                                style={{
+                                                  marginBottom: '2%',
+                                                  position: 'relative',
+                                                }}>
+                                                <TextInput
+                                                  style={{
+                                                    backgroundColor: '#F1F3FA',
+                                                    width: '100%',
+                                                    height: 50,
+                                                    paddingLeft: 5,
+                                                  }}
+                                                  placeholder={'yyyy-mm-dd'}
+                                                  underlineColorAndroid="transparent"
+                                                  value={
+                                                    selectedDate !== ''
+                                                      ? moment(
+                                                          selectedDate,
+                                                        ).format('YYYY-MM-DD')
+                                                      : 'YYYY-MM-DD'
+                                                  }
+                                                  type="number"
+                                                  editable={false}
+                                                  onClick={() => {
+                                                    setShowCalendar(true);
+                                                  }}
+                                                />
+                                                {showCalendar ? (
+                                                  <Calendar
+                                                    onChange={onChange}
+                                                    value={value}
+                                                    maxDate={new Date()}
+                                                    onClickDay={(date) => {
+                                                      onDayChange(
+                                                        date,
+                                                        item,
+                                                        i,
+                                                      );
+                                                    }}
+                                                  />
+                                                ) : null}
+                                                <div
+                                                  onClick={() =>
+                                                    onPlusBtnClick(item, i)
+                                                  }
+                                                  style={{
+                                                    ...styles.circleDiv,
+                                                    backgroundColor:
+                                                      selectedDate !== ''
+                                                        ? GREEN_TEXT
+                                                        : GRAY,
+                                                  }}>
+                                                  <span style={styles.plusIcon}>
+                                                    +
+                                                  </span>
+                                                </div>
+                                              </div>
+                                            ) : null}
+                                          </View>
+                                        )}
+                                      </div>
+                                    );
+                                  })
+                                : []}
+                            </div>
+
+                            <div style={commonStyles.buttonWrapper}>
+                              <button
+                                className="btn-orange"
+                                onClick={(e) => onUpdateData(e)}>
+                                {ts('SAVE')}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        item.obj &&
+                        item.obj.length &&
+                        item.obj.map((val, idx) => {
+                          console.log('idx', idx, objContentIndex);
+                          return (
+                            <div
+                              onClick={() =>
+                                setObjContentIndex(val.contentIndex)
+                              }>
+                              {idx === 0 && (
+                                <div style={{position: 'relative'}}>
+                                  <div
+                                    onClick={() => {
+                                      setShowData(i);
+                                    }}
+                                    style={styles.iconDiv}>
+                                    <div style={styles.circleWrapper}>
+                                      <img
+                                        src={visibleData ? upArrow : arrowDown}
+                                        color={'#fff'}
+                                        style={styles.img}
+                                      />
+                                    </div>
+                                  </div>
+
+                                  <InputBoxWithContent
+                                    key={idx}
+                                    title={ReactHtmlParser(val.name)}
+                                    name={val.name}
+                                    placeholder={val.placeholder}
+                                    value={val.value}
+                                    onChange={(e) => {
+                                      onHandleChangeData(e, val, idx, i);
+                                    }}
+                                    style={{
+                                      backgroundColor: headerColor(val.order),
+                                      width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+                                    }}
+                                    disable={val.order === 0 ? true : false}
+                                  />
+                                </div>
+                              )}
                             </div>
                           );
-                        })}
+                        })
+                      )}
                     </div>
                   );
                 })
               : null}
           </div>
+
           {/*********************************MODAL POPUP FOR MENU START*************** */}
           {isDashboardModal && (
             <Modal
@@ -1196,6 +1932,7 @@ const styles = {
     justifyContent: 'space-between',
     width: '100%',
     marginBottom: '50px',
+    // border: '1px solid blue',
   },
   header: {
     alignContent: 'center',
