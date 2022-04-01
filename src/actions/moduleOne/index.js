@@ -144,10 +144,10 @@ export function getTemplateData(week, isLoading = true) {
         }
         if (json.code === 417) {
           dispatch(sessionExpire(json.message));
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
@@ -449,6 +449,63 @@ export function saveUserAssessment(params, onSubmitMessage, customMsg = '') {
   };
 }
 
+/********************SAVE MULTI ASSESSMENT ************** */
+export function saveMultiAssessment(params, onSubmitMessage, customMsg = '') {
+  let userCardId = params.firstAssessment.user_card_id;
+  let assessmentId = params.firstAssessment.assessment_id;
+  console.log('parms>>>>>>>>>>>>>>params', params, userCardId, assessmentId);
+  return async (dispatch) => {
+    dispatch({type: ACTION_TYPE.SAVE_USER_MULTI_ASSESSMENT_REQUEST});
+    try {
+      dispatch(loadingAction(true));
+      let json = await RestClient.postCall(
+        URL.SAVE_USER_MULTI_ASSESSMENT,
+        params,
+      );
+      console.log('json in save assessment MULTI read', json);
+      if (json.code === 200) {
+        console.log('JSON data SAVE USER ASSESSMENT >>>>MULTI>>>>>', json);
+        const submitMsg = customMsg == '' ? h2p(onSubmitMessage) : customMsg;
+        if (submitMsg !== undefined && submitMsg !== null && submitMsg !== '') {
+          customAlert(submitMsg, 'success');
+        } else {
+          customAlert(json.message, 'success');
+        }
+
+        dispatch(getUserMultiAssessment(userCardId, assessmentId));
+        dispatch(loadingAction(false));
+      } else {
+        if (json.code === 400) {
+          dispatch({
+            type: ACTION_TYPE.ERROR,
+            payload: json.message,
+          });
+        }
+        if (json.code === 417) {
+          console.log('Session expierd>>>>>>>save user assessment');
+          dispatch(sessionExpire(json.message));
+
+          dispatch(loadingAction(false));
+        } else {
+          dispatch({
+            type: ACTION_TYPE.SAVE_USER_MULTIPLE_ASSESSMENT_FAIL,
+          });
+        }
+      }
+    } catch (error) {
+      console.log('erroe>> csave USER ASSESSMENT>>>>>>>>>>>>>>', error);
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+      });
+      dispatch({
+        type: ACTION_TYPE.SAVE_USER_MULTIPLE_ASSESSMENT_FAIL,
+        payload: error,
+      });
+    }
+  };
+}
+
 /********************GET USER ASSESSMENT ************** */
 export function getUserAssessment(userCardId, assessmentId) {
   return async (dispatch, getState) => {
@@ -496,6 +553,59 @@ export function getUserAssessment(userCardId, assessmentId) {
   };
 }
 
+/********************GET  USER MULTI ASSESSMENT ************** */
+export function getUserMultiAssessment(userCardId, assessmentId) {
+  return async (dispatch, getState) => {
+    console.log(getState().authReducer.loginData.user._id, 'nbmbmbmb');
+    //  let user_id = getState().authReducer.loginData.user._id;
+    let user_id = getItem('userId');
+    dispatch({type: ACTION_TYPE.GET_USER_MULTI_ASSESSMENT_REQUEST});
+    try {
+      dispatch(loadingAction(true));
+      let json = await RestClient.getCall(
+        `${URL.GET_USER_MULTI_ASSESSMENT}/${userCardId}/${assessmentId}/${user_id}`,
+      );
+      if (json.code === 200) {
+        console.log('JSON data gUSER  multi ASSESSMENT>>>>>>>>>', json);
+        dispatch({
+          type: ACTION_TYPE.GET_USER_MULTI_ASSESSMENT_SUCCESS,
+          payload: json.data,
+        });
+        dispatch(loadingAction(false));
+      } else {
+        if (json.code === 400) {
+          dispatch({
+            type: ACTION_TYPE.ERROR,
+            payload: json.message,
+          });
+        }
+        if (json.code === 417) {
+          console.log('Session expierd>>>>>>>>>>get user assessment');
+          dispatch(sessionExpire(json.message));
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
+          dispatch(loadingAction(false));
+        } else {
+          dispatch({
+            type: ACTION_TYPE.GET_USER_MULTI_ASSESSMENT_FAIL,
+          });
+        }
+      }
+    } catch (error) {
+      console.log('erroe>>gGET USER ASSESSMENT>>>>>>>>>>>>>>', error);
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+      });
+      dispatch({
+        type: ACTION_TYPE.GET_USER_MULTI_ASSESSMENT_FAIL,
+        payload: error,
+      });
+    }
+  };
+}
 // /********************DELETE USER ASSESSMENT DATA ************** */
 export function deleteUserAssessmentDataNew(
   content_id,
@@ -647,6 +757,66 @@ export function rearrangeAssessments(params, onSubmitMessage, customMsg = '') {
       });
       dispatch({
         type: ACTION_TYPE.REARRANGE_ASSESSMENT_FAIL,
+        payload: error,
+      });
+    }
+  };
+}
+
+/********************REARRANGE ASSESSMENT ************** */
+export function rearrangeMultiAssessments(
+  params,
+  onSubmitMessage,
+  customMsg = '',
+) {
+  let userCardId = params.user_card_id;
+  let assessmentId = params.assessment_id;
+  console.log('parms>>>>>>>>>REAARNAGE>>MULTI>>>params', params);
+  return async (dispatch) => {
+    dispatch({type: ACTION_TYPE.REARRANGE_MULTI_ASSESSMENT_REQUEST});
+    try {
+      dispatch(loadingAction(true));
+      let json = await RestClient.postCall(
+        URL.REARRANGE_MULTI_ASSESSMENT,
+        params,
+      );
+      if (json.code === 200) {
+        console.log('JSON dataREARRANGE multi USER ASSESSMENT >>>>>>>>>', json);
+        const submitMsg = customMsg == '' ? h2p(onSubmitMessage) : customMsg;
+        if (submitMsg !== undefined && submitMsg !== null && submitMsg !== '') {
+          customAlert(submitMsg, 'success');
+        } else {
+          customAlert(json.message, 'success');
+        }
+
+        dispatch(getUserMultiAssessment(userCardId, assessmentId));
+        dispatch(loadingAction(false));
+      } else {
+        if (json.code === 400) {
+          console.log('eREARRANGE ASSESSMENTS>>>>400>>>>>>>>>', json.message);
+          dispatch({
+            type: ACTION_TYPE.ERROR,
+            payload: json.message,
+          });
+        }
+        if (json.code === 417) {
+          console.log('Session expierd>>>>>>>>>>rearrange assessment');
+          dispatch(sessionExpire(json.message));
+          dispatch(loadingAction(false));
+        } else {
+          dispatch({
+            type: ACTION_TYPE.REARRANGE_MULTI_ASSESSMENT_FAIL,
+          });
+        }
+      }
+    } catch (error) {
+      console.log('erroeREAARANGE ASSEMENMENT>>>>>>>>>>>>>>', error);
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+      });
+      dispatch({
+        type: ACTION_TYPE.REARRANGE_MULTI_ASSESSMENT_FAIL,
         payload: error,
       });
     }

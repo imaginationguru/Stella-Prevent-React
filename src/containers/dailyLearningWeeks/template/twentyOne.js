@@ -57,6 +57,7 @@ const TwentyOne = (props) => {
 
   useEffect(() => {
     const cardData = [];
+    console.log(userAssessmentData, "userAssessmentData.....")
     if (userAssessmentData && userAssessmentData.length) {
       userAssessmentData.forEach((item) => {
         cardData.push(...item.cards);
@@ -69,6 +70,7 @@ const TwentyOne = (props) => {
       };
     });
     setParamAssessment([...modifyCardData]);
+    console.log(modifyCardData, "modifyCardData....")
   }, [userAssessmentData]);
   const clickOnCheck = (item) => {
     if (paramAssessment && paramAssessment.length) {
@@ -123,7 +125,7 @@ const TwentyOne = (props) => {
   const onSave = (e) => {
     e.preventDefault();
     let params = {
-      user_id: userId,
+      user_id: getItem('userId'),
       user_card_id: props._id,
       assessment_id: assessment_id,
       assessment: paramAssessment,
@@ -219,12 +221,12 @@ const TwentyOne = (props) => {
                     data = checkData.content[0].content;
                   }
                 }
-
+                console.log(data, "datadatadatadatadata")
                 return (
                   <div
                     onClick={() => clickOnCheck(item)}
                     style={styles.checkWithQues}>
-                    {data ? (
+                    {(data == "true" || data == true) ? (
                       <img
                         src={tickBox}
                         style={{

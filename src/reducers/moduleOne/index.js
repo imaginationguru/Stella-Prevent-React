@@ -30,6 +30,8 @@ const INITIAL_STATE = {
     moodChecked: false,
     activityChecked: false,
   },
+  saveMultiAssessmentData: {},
+  multiAssessmentData: [],
 };
 
 const {ACTION_TYPE} = GLOBALS;
@@ -89,6 +91,16 @@ function moduleOne(state = INITIAL_STATE, action) {
       };
     case ACTION_TYPE.SAVE_USER_ASSESSMENT_FAIL:
       return {...state, templateLoader: false};
+    case ACTION_TYPE.SAVE_USER_MULTI_ASSESSMENT_REQUEST:
+      return {...state, templateLoader: true};
+    case ACTION_TYPE.SAVE_USER_MULTI_ASSESSMENT_SUCCESS:
+      return {
+        ...state,
+        templateLoader: false,
+        saveMultiAssessmentData: action.payload,
+      };
+    case ACTION_TYPE.SAVE_USER_MULTI_ASSESSMENT_FAIL:
+      return {...state, templateLoader: false};
     case ACTION_TYPE.GET_USER_ASSESSMENT_REQUEST:
       return {...state, templateLoader: true};
     case ACTION_TYPE.GET_USER_ASSESSMENT_SUCCESS:
@@ -98,6 +110,16 @@ function moduleOne(state = INITIAL_STATE, action) {
         userAssessmentData: action.payload,
       };
     case ACTION_TYPE.GET_USER_ASSESSMENT_FAIL:
+      return {...state, templateLoader: false};
+    case ACTION_TYPE.GET_USER_MULTI_ASSESSMENT_REQUEST:
+      return {...state, templateLoader: true};
+    case ACTION_TYPE.GET_USER_MULTI_ASSESSMENT_SUCCESS:
+      return {
+        ...state,
+        templateLoader: false,
+        multiAssessmentData: action.payload,
+      };
+    case ACTION_TYPE.GET_USER_MULTI_ASSESSMENT_FAIL:
       return {...state, templateLoader: false};
     case ACTION_TYPE.GET_CURRENT_ACTIVE_CARD_REQUEST:
       return {...state, templateLoader: true};

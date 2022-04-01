@@ -19,21 +19,23 @@ const store = setup();
 
 
 const caching = () => {
-  let version = localStorage.getItem('version');
-  if (version != packageJson.version) {
+  let version = localStorage.getItem('version') ? localStorage.getItem('version') : '';
+  let package_version = packageJson.version;
+  if (!version.includes(package_version)) {
+    console.log("no match....")
     if ('caches' in window) {
       caches.keys().then((names) => {
-        // Delete all the cache files
+        // xDelete all the cache files
         names.forEach(name => {
           caches.delete(name);
         })
       });
+      localStorage.clear()
       window.location.reload(true);
       localStorage.setItem('version', packageJson.version);
     }
-
-    // localStorage.clear();
-    // localStorage.setItem('version',packageJson.version);
+  } else {
+    console.log("match..")
   }
 };
 
