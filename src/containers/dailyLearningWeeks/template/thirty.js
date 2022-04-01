@@ -30,6 +30,7 @@ import menu from '../../../assets/images/menu.svg';
 import Menu from '../../../components/Menu';
 import week1 from '../../../assets/images/Week1.svg';
 import _ from 'lodash';
+import { customAlert } from '../../../helpers/commonAlerts.web';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
 const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
@@ -523,10 +524,7 @@ const Thirty = (props, componentId) => {
           }),
         );
     } else {
-      dispatch({
-        type: ACTION_TYPE.ERROR,
-        payload: 'Please fill all fields',
-      });
+      customAlert("Please fill all fields", 'error');
     }
   };
   /******************Second assessment data save************** */
@@ -617,12 +615,10 @@ const Thirty = (props, componentId) => {
         }),
       );
     } else {
-      dispatch({
-        type: ACTION_TYPE.ERROR,
-        payload: 'Please perform your exercise',
-      });
+      customAlert("Please perform your exercise", 'error');
     }
   };
+
 
   const setInputValue = (val) => {
     if (val !== undefined) {
@@ -833,11 +829,7 @@ const Thirty = (props, componentId) => {
       setSelectedValueSecond('');
       setSelectedDate('');
     } else {
-      // alert('Please select value.');
-      dispatch({
-        type: ACTION_TYPE.ERROR,
-        payload: 'Please select value.',
-      });
+      customAlert("Please select value.", 'error');
     }
   };
 
