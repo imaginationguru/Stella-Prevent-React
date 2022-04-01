@@ -613,6 +613,7 @@ export function deleteUserAssessmentDataNew(
   assessment_id,
   content_id2,
   content_id3,
+  multi = '',
 ) {
   let content_ID2 = content_id2 !== undefined ? '?id2=' + content_id2 : '';
   let content_ID3 = content_id3 !== undefined ? '&id3=' + content_id3 : '';
@@ -627,7 +628,13 @@ export function deleteUserAssessmentDataNew(
           content_ID3,
       );
       if (json.code === 200) {
-        dispatch(getUserAssessment(userCardId, assessment_id));
+        //  dispatch(getUserAssessment(userCardId, assessment_id));
+        if (multi) {
+          console.log('multi???');
+          dispatch(getUserMultiAssessment(userCardId, assessment_id));
+        } else {
+          dispatch(getUserAssessment(userCardId, assessment_id));
+        }
         dispatch(loadingAction(false));
       } else {
         if (json.code === 400) {
@@ -767,10 +774,12 @@ export function rearrangeAssessments(params, onSubmitMessage, customMsg = '') {
 export function rearrangeMultiAssessments(
   params,
   onSubmitMessage,
+  userCardId,
+  assessmentId,
   customMsg = '',
 ) {
-  let userCardId = params.user_card_id;
-  let assessmentId = params.assessment_id;
+  // let userCardId = userCardId;
+  // let assessmentId = assessmentId;
   console.log('parms>>>>>>>>>REAARNAGE>>MULTI>>>params', params);
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.REARRANGE_MULTI_ASSESSMENT_REQUEST});
@@ -783,12 +792,12 @@ export function rearrangeMultiAssessments(
       if (json.code === 200) {
         console.log('JSON dataREARRANGE multi USER ASSESSMENT >>>>>>>>>', json);
         const submitMsg = customMsg == '' ? h2p(onSubmitMessage) : customMsg;
-        if (submitMsg !== undefined && submitMsg !== null && submitMsg !== '') {
-          customAlert(submitMsg, 'success');
-        } else {
-          customAlert(json.message, 'success');
-        }
-
+        // if (submitMsg !== undefined && submitMsg !== null && submitMsg !== '') {
+        //   customAlert(submitMsg, 'success');
+        // } else {
+        //   customAlert(json.message, 'success');
+        // }
+        customAlert(json.message, 'success');
         dispatch(getUserMultiAssessment(userCardId, assessmentId));
         dispatch(loadingAction(false));
       } else {
