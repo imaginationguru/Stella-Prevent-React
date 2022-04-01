@@ -143,13 +143,13 @@ const Subscription = (props) => {
                       <Text
                         style={[
                           styles.planText,
-                          { marginLeft: 0, marginTop: '30px', fontSize: '25px' },
+                          { marginLeft: 0, marginTop: '30px', fontSize: '28px' },
                           { color: getTextColor(index) },
                         ]}>
-                        ${item.price}
-                        {/* <Text style={styles.planInnerText}>
+                        ${item.numericPrice}{' '}
+                        <Text style={styles.planInnerText}>
                           {item.planDuration}
-                        </Text> */}
+                        </Text>
                       </Text>
                       {item.numericPrice > 0 && (
                         <Button

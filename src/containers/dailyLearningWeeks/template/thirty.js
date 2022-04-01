@@ -1,14 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import GLOBALS from '../../../constants';
 import ReactHtmlParser from 'react-html-parser';
-import {TextInput, View, Text} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import { TextInput, View, Text } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import * as AppActions from '../../../actions';
-import {getItem} from '../../../utils/AsyncUtils';
+import { getItem } from '../../../utils/AsyncUtils';
 import ExerciseBox from '../../../components/ExerciseBox';
-import {translate as ts} from '../../../i18n/translate';
+import { translate as ts } from '../../../i18n/translate';
 import Calendar from 'react-calendar';
 import {
   CardQuote,
@@ -22,19 +22,19 @@ import commonStyles from '../commonStyles';
 import moment from 'moment';
 import arrowDown from '../../../assets/images/arrowDown.png';
 import upArrow from '../../../assets/images/upArrow.png';
-import {Dimensions, Modal, TouchableOpacity} from 'react-native';
-import {navigatorPush} from '../../../config/navigationOptions';
+import { Dimensions, Modal, TouchableOpacity } from 'react-native';
+import { navigatorPush } from '../../../config/navigationOptions';
 import leftArrow from '../../../assets/images/leftArrow.svg';
 import header1 from '../../../assets/images/BANNER-1.gif';
 import menu from '../../../assets/images/menu.svg';
 import Menu from '../../../components/Menu';
 import week1 from '../../../assets/images/Week1.svg';
 import _ from 'lodash';
-import {customAlert} from '../../../helpers/commonAlerts.web';
+import { customAlert } from '../../../helpers/commonAlerts.web';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
-const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
-const {YELLOW, WHITE, CIRCLE_GRAY, LIGHT_GRAY, GRAY, RED, GREEN_TEXT} = COLORS;
+const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
+const { YELLOW, WHITE, CIRCLE_GRAY, LIGHT_GRAY, GRAY, RED, GREEN_TEXT } = COLORS;
 let userId = getItem('userId');
 
 const InputBoxWithContent = (props) => {
@@ -49,7 +49,7 @@ const InputBoxWithContent = (props) => {
     disable,
   } = props;
   return (
-    <div style={{...styles.inputBoxWrapper, ...boxWrapper}}>
+    <div style={{ ...styles.inputBoxWrapper, ...boxWrapper }}>
       <div style={style}>
         <p style={styles.header}>{title}</p>
       </div>
@@ -157,7 +157,7 @@ const Thirty = (props, componentId) => {
   useEffect(() => {
     dispatch(AppActions.getUserMultiAssessment(props._id, assessment_id));
   }, []);
-  const {isDashboardModal} = useSelector((state) => state.common);
+  const { isDashboardModal } = useSelector((state) => state.common);
   useEffect(() => {
     let headers =
       assessmentData.headers && assessmentData.headers.length
@@ -295,7 +295,7 @@ const Thirty = (props, componentId) => {
                 -1,
             )
             .map((val) => {
-              return {...val.secondAssessment};
+              return { ...val.secondAssessment };
             }),
         ),
       );
@@ -571,7 +571,7 @@ const Thirty = (props, componentId) => {
       let contentLength = multiAssessmentData && multiAssessmentData.length;
       let modifyArray = contentArray.map((element, index) => {
         let dummyArray = element.map((ele) => {
-          return {...ele.content, contentIndex: contentLength};
+          return { ...ele.content, contentIndex: contentLength };
         });
         return {
           assessment_header_id: element[0].assessment_header_id,
@@ -632,11 +632,11 @@ const Thirty = (props, componentId) => {
     console.log('inputs???????', inputs);
     const updateInputs = inputs.length
       ? inputs.map((val) => {
-          return {
-            ...val,
-            value: val.name === e.target.name ? e.target.value : val.value,
-          };
-        })
+        return {
+          ...val,
+          value: val.name === e.target.name ? e.target.value : val.value,
+        };
+      })
       : [];
 
     setInputs(updateInputs);
@@ -651,13 +651,13 @@ const Thirty = (props, componentId) => {
           order: item.order,
           content: item.content.length
             ? item.content.map((ele) => {
-                return {
-                  content: ele.content,
-                  order: ele.order,
-                  assessment_header_id: ele.assessment_header_id,
-                  _id: ele._id,
-                };
-              })
+              return {
+                content: ele.content,
+                order: ele.order,
+                assessment_header_id: ele.assessment_header_id,
+                _id: ele._id,
+              };
+            })
             : [],
         };
       });
@@ -771,14 +771,14 @@ const Thirty = (props, componentId) => {
 
   const headingOne =
     assessmentData.heading &&
-    assessmentData.heading.length &&
-    assessmentData.heading[0]
+      assessmentData.heading.length &&
+      assessmentData.heading[0]
       ? assessmentData.heading[0].heading
       : null;
   const headingSecond =
     assessmentData.heading &&
-    assessmentData.heading.length &&
-    assessmentData.heading[1]
+      assessmentData.heading.length &&
+      assessmentData.heading[1]
       ? assessmentData.heading[1].heading
       : null;
 
@@ -858,13 +858,13 @@ const Thirty = (props, componentId) => {
                 value: e.target.value,
               };
             } else {
-              return {...val};
+              return { ...val };
             }
           });
           let xx = item.secondAssessment.map((item) => {
             return item;
           });
-          let combineArray = {obj: y, secondAssessment: xx};
+          let combineArray = { obj: y, secondAssessment: xx };
           setFinalUpdateData(combineArray);
           console.log('y???', y, xx, combineArray);
           return combineArray;
@@ -1034,15 +1034,15 @@ const Thirty = (props, componentId) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -1053,70 +1053,70 @@ const Thirty = (props, componentId) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
       {/*******************************ASSESSMENT DESCRIPTION*********************** */}
       <div style={commonStyles.assessmentWrapper}>
         {images && images.length
           ? images
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, i) => {
-                return (
-                  <CustomImage
-                    key={i}
-                    src={
-                      item.image !== ''
-                        ? `${IMAGE_BASE_URL}${item.image}`
-                        : null
-                    }
-                    style={{
-                      ...commonStyles.assessImage,
-                      display: item.image !== '' ? 'flex' : 'none',
-                    }}
-                  />
-                );
-              })
-          : []}
-
-        {props.assessments && props.assessments.length
-          ? props.assessments.map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  style={commonStyles.assessDesc}
-                  description={ReactHtmlParser(item.description)}
-                />
-              );
-            })
-          : []}
-      </div>
-      {inputs.length
-        ? inputs
             .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, idx) => {
+            .map((item, i) => {
               return (
-                <InputBoxWithContent
-                  key={idx}
-                  title={ReactHtmlParser(item.name)}
-                  name={item.name}
-                  placeholder={item.placeholder}
-                  value={item.value}
-                  onChange={(e) => onHandleChange(e, item)}
+                <CustomImage
+                  key={i}
+                  src={
+                    item.image !== ''
+                      ? `${IMAGE_BASE_URL}${item.image}`
+                      : null
+                  }
                   style={{
-                    backgroundColor: headerColor(item.order),
-                    width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+                    ...commonStyles.assessImage,
+                    display: item.image !== '' ? 'flex' : 'none',
                   }}
                 />
               );
             })
+          : []}
+
+        {props.assessments && props.assessments.length
+          ? props.assessments.map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                style={commonStyles.assessDesc}
+                description={ReactHtmlParser(item.description)}
+              />
+            );
+          })
+          : []}
+      </div>
+      {inputs.length
+        ? inputs
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, idx) => {
+            return (
+              <InputBoxWithContent
+                key={idx}
+                title={ReactHtmlParser(item.name)}
+                name={item.name}
+                placeholder={item.placeholder}
+                value={item.value}
+                onChange={(e) => onHandleChange(e, item)}
+                style={{
+                  backgroundColor: headerColor(item.order),
+                  width: DEVICE_WIDTH > 767 ? '20%' : '30%',
+                }}
+              />
+            );
+          })
         : null}
       {/* {inputs.length ? (
         <div style={commonStyles.buttonWrapper}>
@@ -1140,186 +1140,186 @@ const Thirty = (props, componentId) => {
       <div style={styles.secondAssessment}>
         {assessmentSecond.length
           ? assessmentSecond.map((item, i) => {
-              return (
-                <div
+            return (
+              <div
+                style={{
+                  width: '33%',
+                }}>
+                <CardContent
+                  key={i}
+                  content={ReactHtmlParser(item.header)}
                   style={{
-                    width: '33%',
-                  }}>
-                  <CardContent
-                    key={i}
-                    content={ReactHtmlParser(item.header)}
-                    style={{
-                      ...styles.contentHeading,
-                      minHeight: DEVICE_WIDTH < 750 ? '70px' : '100px',
-                    }}
-                  />
-                  {item.content && item.content.length ? (
-                    <View style={{}}>
-                      {userInputs && userInputs.length
-                        ? userInputs
-                            .sort((a, b) => (a.order > b.order && 1) || -1)
-                            .filter((ele) => {
-                              return ele.assessment_header_id === item._id;
-                            })
-                            .map((val, index) => {
-                              return (
-                                <div style={styles.crossIconWrapper}>
-                                  <View style={{margin: 0, width: '100%'}}>
-                                    <TextInput
-                                      style={[
-                                        styles.selectedText,
-                                        {
-                                          height: '50px',
-                                          paddingLeft: 10,
-                                          paddingTop: 10,
-                                          // border: '1px solid red',
-                                        },
-                                      ]}
-                                      underlineColorAndroid="transparent"
-                                      multiline={true}
-                                      disable={true}
-                                      value={
-                                        val.content && val.content.length
-                                          ? setInputValue(val.content)
-                                          : null
-                                      }
-                                      // value={setInputValue(val.content)}
-                                    />
-                                  </View>
-                                </div>
-                              );
-                            })
-                        : null}
-                      <select
-                        style={{
-                          width: '100%',
-                          paddingTop: '12px',
-                          paddingBottom: '12px',
-                          paddingLeft: '10px',
-                          backgroundColor: '#F1F3FA',
-                          borderRadius: '5px',
-                          border: `1px solid ${LIGHT_GRAY}`,
-                        }}
-                        value={
-                          item.order === 0
-                            ? selectedValue
-                            : item.order === 1
+                    ...styles.contentHeading,
+                    minHeight: DEVICE_WIDTH < 750 ? '70px' : '100px',
+                  }}
+                />
+                {item.content && item.content.length ? (
+                  <View style={{}}>
+                    {userInputs && userInputs.length
+                      ? userInputs
+                        .sort((a, b) => (a.order > b.order && 1) || -1)
+                        .filter((ele) => {
+                          return ele.assessment_header_id === item._id;
+                        })
+                        .map((val, index) => {
+                          return (
+                            <div style={styles.crossIconWrapper}>
+                              <View style={{ margin: 0, width: '100%' }}>
+                                <TextInput
+                                  style={[
+                                    styles.selectedText,
+                                    {
+                                      height: '50px',
+                                      paddingLeft: 10,
+                                      paddingTop: 10,
+                                      // border: '1px solid red',
+                                    },
+                                  ]}
+                                  underlineColorAndroid="transparent"
+                                  multiline={true}
+                                  disable={true}
+                                  value={
+                                    val.content && val.content.length
+                                      ? setInputValue(val.content)
+                                      : null
+                                  }
+                                // value={setInputValue(val.content)}
+                                />
+                              </View>
+                            </div>
+                          );
+                        })
+                      : null}
+                    <select
+                      style={{
+                        width: '100%',
+                        paddingTop: '12px',
+                        paddingBottom: '12px',
+                        paddingLeft: '10px',
+                        backgroundColor: '#F1F3FA',
+                        borderRadius: '5px',
+                        border: `1px solid ${LIGHT_GRAY}`,
+                      }}
+                      value={
+                        item.order === 0
+                          ? selectedValue
+                          : item.order === 1
                             ? selectedValueSecond
                             : ''
-                        }
-                        onChange={(e) => onChangeDropDown(e, item._id, item)}
-                        onSelect={(e) => onChangeDropDown(e, item._id, item)}>
-                        <option>select</option>
-                        {item.content &&
-                          item.content.length &&
-                          item.content.map((option, idx) => {
-                            return (
-                              <option value={option._id}>
-                                {`${option.content}`}
-                              </option>
-                            );
-                          })}
-                      </select>
-                    </View>
-                  ) : (
-                    <View style={{marginTop: 0}}>
-                      {userInputs && userInputs.length
-                        ? userInputs
-                            .sort((a, b) => (a.order > b.order && 1) || -1)
-                            .filter((ele) => {
-                              return ele.assessment_header_id === item._id;
-                            })
-                            .map((val, index) => {
-                              return (
-                                <div style={styles.crossIconWrapper}>
-                                  <View style={{margin: 0, width: '100%'}}>
-                                    <TextInput
-                                      style={[
-                                        styles.selectedText,
-                                        {
-                                          height: '50px',
-                                          paddingLeft: 10,
-                                          paddingTop: 10,
-                                        },
-                                      ]}
-                                      underlineColorAndroid="transparent"
-                                      multiline={true}
-                                      disable={true}
-                                      value={
-                                        val.content && val.content.length
-                                          ? setInputValue(val.content)
-                                          : null
-                                      }
-                                    />
-                                  </View>
-                                  <div
-                                    style={styles.circleCrossDiv}
-                                    onClick={() => onCrossBtnClick(val)}>
-                                    <span
-                                      style={{
-                                        ...styles.plusIcon,
-                                        fontSize: '15px',
-                                      }}>
-                                      x
-                                    </span>
-                                  </div>
-                                </div>
-                              );
-                            })
-                        : null}
+                      }
+                      onChange={(e) => onChangeDropDown(e, item._id, item)}
+                      onSelect={(e) => onChangeDropDown(e, item._id, item)}>
+                      <option>select</option>
+                      {item.content &&
+                        item.content.length &&
+                        item.content.map((option, idx) => {
+                          return (
+                            <option value={option._id}>
+                              {`${option.content}`}
+                            </option>
+                          );
+                        })}
+                    </select>
+                  </View>
+                ) : (
+                  <View style={{ marginTop: 0 }}>
+                    {userInputs && userInputs.length
+                      ? userInputs
+                        .sort((a, b) => (a.order > b.order && 1) || -1)
+                        .filter((ele) => {
+                          return ele.assessment_header_id === item._id;
+                        })
+                        .map((val, index) => {
+                          return (
+                            <div style={styles.crossIconWrapper}>
+                              <View style={{ margin: 0, width: '100%' }}>
+                                <TextInput
+                                  style={[
+                                    styles.selectedText,
+                                    {
+                                      height: '50px',
+                                      paddingLeft: 10,
+                                      paddingTop: 10,
+                                    },
+                                  ]}
+                                  underlineColorAndroid="transparent"
+                                  multiline={true}
+                                  disable={true}
+                                  value={
+                                    val.content && val.content.length
+                                      ? setInputValue(val.content)
+                                      : null
+                                  }
+                                />
+                              </View>
+                              <div
+                                style={styles.circleCrossDiv}
+                                onClick={() => onCrossBtnClick(val)}>
+                                <span
+                                  style={{
+                                    ...styles.plusIcon,
+                                    fontSize: '15px',
+                                  }}>
+                                  x
+                                </span>
+                              </div>
+                            </div>
+                          );
+                        })
+                      : null}
 
-                      {item.order === 2 ? (
-                        <div
+                    {item.order === 2 ? (
+                      <div
+                        style={{
+                          marginBottom: '2%',
+                          position: 'relative',
+                        }}>
+                        <TextInput
                           style={{
-                            marginBottom: '2%',
-                            position: 'relative',
-                          }}>
-                          <TextInput
-                            style={{
-                              backgroundColor: '#F1F3FA',
-                              width: '100%',
-                              height: 50,
-                              paddingLeft: 5,
-                            }}
-                            placeholder={'yyyy-mm-dd'}
-                            underlineColorAndroid="transparent"
-                            value={
-                              selectedDate !== ''
-                                ? moment(selectedDate).format('YYYY-MM-DD')
-                                : 'YYYY-MM-DD'
-                            }
-                            type="number"
-                            editable={false}
-                            onClick={() => {
-                              setShowCalendar(true);
+                            backgroundColor: '#F1F3FA',
+                            width: '100%',
+                            height: 50,
+                            paddingLeft: 5,
+                          }}
+                          placeholder={'yyyy-mm-dd'}
+                          underlineColorAndroid="transparent"
+                          value={
+                            selectedDate !== ''
+                              ? moment(selectedDate).format('YYYY-MM-DD')
+                              : 'YYYY-MM-DD'
+                          }
+                          type="number"
+                          editable={false}
+                          onClick={() => {
+                            setShowCalendar(true);
+                          }}
+                        />
+                        {showCalendar ? (
+                          <Calendar
+                            onChange={onChange}
+                            value={value}
+                            maxDate={new Date()}
+                            onClickDay={(date) => {
+                              onDayChange(date, item, i);
                             }}
                           />
-                          {showCalendar ? (
-                            <Calendar
-                              onChange={onChange}
-                              value={value}
-                              maxDate={new Date()}
-                              onClickDay={(date) => {
-                                onDayChange(date, item, i);
-                              }}
-                            />
-                          ) : null}
-                          <div
-                            onClick={() => onPlusBtnClick(item)}
-                            style={{
-                              ...styles.circleDiv,
-                              backgroundColor:
-                                selectedDate !== '' ? GREEN_TEXT : GRAY,
-                            }}>
-                            <span style={styles.plusIcon}>+</span>
-                          </div>
+                        ) : null}
+                        <div
+                          onClick={() => onPlusBtnClick(item)}
+                          style={{
+                            ...styles.circleDiv,
+                            backgroundColor:
+                              selectedDate !== '' ? GREEN_TEXT : GRAY,
+                          }}>
+                          <span style={styles.plusIcon}>+</span>
                         </div>
-                      ) : null}
-                    </View>
-                  )}
-                </div>
-              );
-            })
+                      </div>
+                    ) : null}
+                  </View>
+                )}
+              </div>
+            );
+          })
           : []}
       </div>
       <div style={commonStyles.buttonWrapper}>
@@ -1360,19 +1360,19 @@ const Thirty = (props, componentId) => {
 
       {content && content.length
         ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardContent
-                  onClick={() => {
-                    openModal();
-                  }}
-                  key={index}
-                  style={{marginTop: '20px', cursor: 'pointer'}}
-                  content={ReactHtmlParser(item.content)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardContent
+                onClick={() => {
+                  openModal();
+                }}
+                key={index}
+                style={{ marginTop: '20px', cursor: 'pointer' }}
+                content={ReactHtmlParser(item.content)}
+              />
+            );
+          })
         : []}
       {/* <div onClick={() => openModal()}>
         <p>Click here..</p>
@@ -1389,8 +1389,8 @@ const Thirty = (props, componentId) => {
           style={{
             backgroundColor: 'white',
           }}>
-          <div style={{position: 'relative'}}>
-            <img src={week1} style={{width: '100%'}} />
+          <div style={{ position: 'relative' }}>
+            <img src={week1} style={{ width: '100%' }} />
             <TouchableOpacity
               style={styles.menuIcon}
               onPress={() => {
@@ -1405,6 +1405,7 @@ const Thirty = (props, componentId) => {
               width: '80%',
               marginLeft: 'auto',
               marginRight: 'auto',
+              cursor: 'pointer'
             }}
             onClick={() => {
               setCommentModal(false);
@@ -1442,7 +1443,7 @@ const Thirty = (props, componentId) => {
                             return (
                               <div>
                                 {idx === 0 && (
-                                  <div style={{position: 'relative'}}>
+                                  <div style={{ position: 'relative' }}>
                                     <div
                                       onClick={(e) => {
                                         e.stopPropagation();
@@ -1516,7 +1517,7 @@ const Thirty = (props, componentId) => {
                                   .map((element, secondIndex) => {
                                     console.log('element ', element);
                                     return (
-                                      <div style={{width: '33%'}}>
+                                      <div style={{ width: '33%' }}>
                                         <CardContent
                                           //  key={i}
                                           content={ReactHtmlParser(
@@ -1532,81 +1533,81 @@ const Thirty = (props, componentId) => {
                                         />
 
                                         {element.content &&
-                                        element.content.length
+                                          element.content.length
                                           ? element.content
-                                              .filter(
-                                                (conIndex) =>
-                                                  conIndex.contentIndex ===
-                                                  objContentIndex,
-                                              )
-                                              .map((con, conI) => {
-                                                return (
-                                                  <div>
-                                                    {secondIndex === 2 && (
+                                            .filter(
+                                              (conIndex) =>
+                                                conIndex.contentIndex ===
+                                                objContentIndex,
+                                            )
+                                            .map((con, conI) => {
+                                              return (
+                                                <div>
+                                                  {secondIndex === 2 && (
+                                                    <div
+                                                      style={{
+                                                        display: 'flex',
+                                                        alignItems: 'end',
+                                                        justifyContent: 'end',
+                                                        position: 'relative',
+                                                      }}
+                                                      onClick={() =>
+                                                        onCrossGetData(ele)
+                                                      }>
                                                       <div
                                                         style={{
-                                                          display: 'flex',
-                                                          alignItems: 'end',
-                                                          justifyContent: 'end',
-                                                          position: 'relative',
-                                                        }}
-                                                        onClick={() =>
-                                                          onCrossGetData(ele)
-                                                        }>
-                                                        <div
-                                                          style={{
-                                                            backgroundColor:
-                                                              RED,
-                                                            width: '25px',
-                                                            height: '25px',
-                                                            position:
-                                                              'absolute',
-                                                            borderRadius:
-                                                              '100%',
-                                                            top:
-                                                              conI === 0
-                                                                ? 0
-                                                                : 0,
-                                                            right: -11,
-                                                          }}>
-                                                          <p
-                                                            style={{
-                                                              alignItems:
-                                                                'center',
-                                                              justifyContent:
-                                                                'center',
-                                                              display: 'flex',
-                                                              color: '#ffff',
-                                                            }}>
-                                                            x
-                                                          </p>
-                                                        </div>
-                                                      </div>
-                                                    )}
-                                                    <TextInput
-                                                      style={[
-                                                        styles.selectedText,
-                                                        {
-                                                          height: '50px',
-                                                          paddingLeft: 10,
-                                                          paddingTop: 10,
-                                                          // border: '1px solid red',
-                                                          marginTop:
-                                                            secondIndex === 2 &&
+                                                          backgroundColor:
+                                                            RED,
+                                                          width: '25px',
+                                                          height: '25px',
+                                                          position:
+                                                            'absolute',
+                                                          borderRadius:
+                                                            '100%',
+                                                          top:
                                                             conI === 0
                                                               ? 0
                                                               : 0,
-                                                        },
-                                                      ]}
-                                                      underlineColorAndroid="transparent"
-                                                      multiline={true}
-                                                      disable={true}
-                                                      value={con.content}
-                                                      // value={setInputValue(val.content)}
-                                                    />
-                                                  </div>
-                                                );
-                                              })
+                                                          right: -11,
+                                                        }}>
+                                                        <p
+                                                          style={{
+                                                            alignItems:
+                                                              'center',
+                                                            justifyContent:
+                                                              'center',
+                                                            display: 'flex',
+                                                            color: '#ffff',
+                                                          }}>
+                                                          x
+                                                        </p>
+                                                      </div>
+                                                    </div>
+                                                  )}
+                                                  <TextInput
+                                                    style={[
+                                                      styles.selectedText,
+                                                      {
+                                                        height: '50px',
+                                                        paddingLeft: 10,
+                                                        paddingTop: 10,
+                                                        // border: '1px solid red',
+                                                        marginTop:
+                                                          secondIndex === 2 &&
+                                                            conI === 0
+                                                            ? 0
+                                                            : 0,
+                                                      },
+                                                    ]}
+                                                    underlineColorAndroid="transparent"
+                                                    multiline={true}
+                                                    disable={true}
+                                                    value={con.content}
+                                                  // value={setInputValue(val.content)}
+                                                  />
+                                                </div>
+                                              );
+                                            })
                                           : null}
                                       </div>
                                     );
@@ -1616,239 +1617,239 @@ const Thirty = (props, componentId) => {
                           <div style={styles.secondAssessment}>
                             {assessmentSecond.length
                               ? assessmentSecond.map((item) => {
-                                  // console.log('item i', i);
-                                  return (
-                                    <div
-                                      style={{
-                                        width: '33%',
-                                      }}>
-                                      {item.content && item.content.length ? (
-                                        <View>
-                                          {userInputs && userInputs.length
-                                            ? userInputs
-                                                .sort(
-                                                  (a, b) =>
-                                                    (a.order > b.order && 1) ||
-                                                    -1,
-                                                )
-                                                .filter((ele) => {
-                                                  return (
-                                                    ele.assessment_header_id ===
-                                                    item._id
-                                                  );
-                                                })
-                                                .map((val, index) => {
-                                                  return (
-                                                    <div
-                                                      style={
-                                                        styles.crossIconWrapper
-                                                      }>
-                                                      <View
-                                                        style={{
-                                                          margin: 0,
-                                                          width: '100%',
-                                                        }}>
-                                                        <TextInput
-                                                          style={[
-                                                            styles.selectedText,
-                                                            {
-                                                              height: '50px',
-                                                              paddingLeft: 10,
-                                                              paddingTop: 10,
-                                                              // border: '1px solid red',
-                                                            },
-                                                          ]}
-                                                          underlineColorAndroid="transparent"
-                                                          multiline={true}
-                                                          disable={true}
-                                                          value={
-                                                            val.content &&
-                                                            val.content.length
-                                                              ? setInputValue(
-                                                                  val.content,
-                                                                )
-                                                              : null
-                                                          }
-                                                          // value={setInputValue(val.content)}
-                                                        />
-                                                      </View>
-                                                    </div>
-                                                  );
-                                                })
-                                            : null}
-                                          <select
-                                            style={{
-                                              width: '100%',
-                                              paddingTop: '12px',
-                                              paddingBottom: '12px',
-                                              paddingLeft: '10px',
-                                              backgroundColor: '#F1F3FA',
-                                              borderRadius: '5px',
-                                              border: `1px solid ${LIGHT_GRAY}`,
-                                            }}
-                                            value={
-                                              item.order === 0
-                                                ? selectedValue
-                                                : item.order === 1
+                                // console.log('item i', i);
+                                return (
+                                  <div
+                                    style={{
+                                      width: '33%',
+                                    }}>
+                                    {item.content && item.content.length ? (
+                                      <View>
+                                        {userInputs && userInputs.length
+                                          ? userInputs
+                                            .sort(
+                                              (a, b) =>
+                                                (a.order > b.order && 1) ||
+                                                -1,
+                                            )
+                                            .filter((ele) => {
+                                              return (
+                                                ele.assessment_header_id ===
+                                                item._id
+                                              );
+                                            })
+                                            .map((val, index) => {
+                                              return (
+                                                <div
+                                                  style={
+                                                    styles.crossIconWrapper
+                                                  }>
+                                                  <View
+                                                    style={{
+                                                      margin: 0,
+                                                      width: '100%',
+                                                    }}>
+                                                    <TextInput
+                                                      style={[
+                                                        styles.selectedText,
+                                                        {
+                                                          height: '50px',
+                                                          paddingLeft: 10,
+                                                          paddingTop: 10,
+                                                          // border: '1px solid red',
+                                                        },
+                                                      ]}
+                                                      underlineColorAndroid="transparent"
+                                                      multiline={true}
+                                                      disable={true}
+                                                      value={
+                                                        val.content &&
+                                                          val.content.length
+                                                          ? setInputValue(
+                                                            val.content,
+                                                          )
+                                                          : null
+                                                      }
+                                                    // value={setInputValue(val.content)}
+                                                    />
+                                                  </View>
+                                                </div>
+                                              );
+                                            })
+                                          : null}
+                                        <select
+                                          style={{
+                                            width: '100%',
+                                            paddingTop: '12px',
+                                            paddingBottom: '12px',
+                                            paddingLeft: '10px',
+                                            backgroundColor: '#F1F3FA',
+                                            borderRadius: '5px',
+                                            border: `1px solid ${LIGHT_GRAY}`,
+                                          }}
+                                          value={
+                                            item.order === 0
+                                              ? selectedValue
+                                              : item.order === 1
                                                 ? selectedValueSecond
                                                 : ''
-                                            }
-                                            onChange={(e) =>
-                                              onChangeDropDown(
-                                                e,
-                                                item._id,
-                                                item,
-                                              )
-                                            }
-                                            onSelect={(e) =>
-                                              onChangeDropDown(
-                                                e,
-                                                item._id,
-                                                item,
-                                              )
-                                            }>
-                                            <option>select</option>
-                                            {item.content &&
-                                              item.content.length &&
-                                              item.content.map(
-                                                (option, idx) => {
-                                                  return (
-                                                    <option value={option._id}>
-                                                      {`${option.content}`}
-                                                    </option>
-                                                  );
-                                                },
-                                              )}
-                                          </select>
-                                        </View>
-                                      ) : (
-                                        <View>
-                                          {userInputs && userInputs.length
-                                            ? userInputs
-                                                .sort(
-                                                  (a, b) =>
-                                                    (a.order > b.order && 1) ||
-                                                    -1,
-                                                )
-                                                .filter((ele) => {
-                                                  return (
-                                                    ele.assessment_header_id ===
-                                                    item._id
-                                                  );
-                                                })
-                                                .map((val, index) => {
-                                                  return (
-                                                    <div
-                                                      style={
-                                                        styles.crossIconWrapper
-                                                      }>
-                                                      <View
-                                                        style={{
-                                                          margin: 0,
-                                                          width: '100%',
-                                                        }}>
-                                                        <TextInput
-                                                          style={[
-                                                            styles.selectedText,
-                                                            {
-                                                              height: '50px',
-                                                              paddingLeft: 10,
-                                                              paddingTop: 10,
-                                                            },
-                                                          ]}
-                                                          underlineColorAndroid="transparent"
-                                                          multiline={true}
-                                                          disable={true}
-                                                          value={
-                                                            val.content &&
-                                                            val.content.length
-                                                              ? setInputValue(
-                                                                  val.content,
-                                                                )
-                                                              : null
-                                                          }
-                                                        />
-                                                      </View>
-                                                      <div
-                                                        style={
-                                                          styles.circleCrossDiv
-                                                        }
-                                                        onClick={() =>
-                                                          onCrossBtnClick(val)
-                                                        }>
-                                                        <span
-                                                          style={{
-                                                            ...styles.plusIcon,
-                                                            fontSize: '15px',
-                                                          }}>
-                                                          x
-                                                        </span>
-                                                      </div>
-                                                    </div>
-                                                  );
-                                                })
-                                            : null}
+                                          }
+                                          onChange={(e) =>
+                                            onChangeDropDown(
+                                              e,
+                                              item._id,
+                                              item,
+                                            )
+                                          }
+                                          onSelect={(e) =>
+                                            onChangeDropDown(
+                                              e,
+                                              item._id,
+                                              item,
+                                            )
+                                          }>
+                                          <option>select</option>
+                                          {item.content &&
+                                            item.content.length &&
+                                            item.content.map(
+                                              (option, idx) => {
+                                                return (
+                                                  <option value={option._id}>
+                                                    {`${option.content}`}
+                                                  </option>
+                                                );
+                                              },
+                                            )}
+                                        </select>
+                                      </View>
+                                    ) : (
+                                      <View>
+                                        {userInputs && userInputs.length
+                                          ? userInputs
+                                            .sort(
+                                              (a, b) =>
+                                                (a.order > b.order && 1) ||
+                                                -1,
+                                            )
+                                            .filter((ele) => {
+                                              return (
+                                                ele.assessment_header_id ===
+                                                item._id
+                                              );
+                                            })
+                                            .map((val, index) => {
+                                              return (
+                                                <div
+                                                  style={
+                                                    styles.crossIconWrapper
+                                                  }>
+                                                  <View
+                                                    style={{
+                                                      margin: 0,
+                                                      width: '100%',
+                                                    }}>
+                                                    <TextInput
+                                                      style={[
+                                                        styles.selectedText,
+                                                        {
+                                                          height: '50px',
+                                                          paddingLeft: 10,
+                                                          paddingTop: 10,
+                                                        },
+                                                      ]}
+                                                      underlineColorAndroid="transparent"
+                                                      multiline={true}
+                                                      disable={true}
+                                                      value={
+                                                        val.content &&
+                                                          val.content.length
+                                                          ? setInputValue(
+                                                            val.content,
+                                                          )
+                                                          : null
+                                                      }
+                                                    />
+                                                  </View>
+                                                  <div
+                                                    style={
+                                                      styles.circleCrossDiv
+                                                    }
+                                                    onClick={() =>
+                                                      onCrossBtnClick(val)
+                                                    }>
+                                                    <span
+                                                      style={{
+                                                        ...styles.plusIcon,
+                                                        fontSize: '15px',
+                                                      }}>
+                                                      x
+                                                    </span>
+                                                  </div>
+                                                </div>
+                                              );
+                                            })
+                                          : null}
 
-                                          {item.order === 2 ? (
-                                            <div
+                                        {item.order === 2 ? (
+                                          <div
+                                            style={{
+                                              marginBottom: '2%',
+                                              position: 'relative',
+                                            }}>
+                                            <TextInput
                                               style={{
-                                                marginBottom: '2%',
-                                                position: 'relative',
-                                              }}>
-                                              <TextInput
-                                                style={{
-                                                  backgroundColor: '#F1F3FA',
-                                                  width: '100%',
-                                                  height: 50,
-                                                  paddingLeft: 5,
-                                                }}
-                                                placeholder={'yyyy-mm-dd'}
-                                                underlineColorAndroid="transparent"
-                                                value={
-                                                  selectedDate !== ''
-                                                    ? moment(
-                                                        selectedDate,
-                                                      ).format('YYYY-MM-DD')
-                                                    : 'YYYY-MM-DD'
-                                                }
-                                                type="number"
-                                                editable={false}
-                                                onClick={() => {
-                                                  setShowCalendar(true);
+                                                backgroundColor: '#F1F3FA',
+                                                width: '100%',
+                                                height: 50,
+                                                paddingLeft: 5,
+                                              }}
+                                              placeholder={'yyyy-mm-dd'}
+                                              underlineColorAndroid="transparent"
+                                              value={
+                                                selectedDate !== ''
+                                                  ? moment(
+                                                    selectedDate,
+                                                  ).format('YYYY-MM-DD')
+                                                  : 'YYYY-MM-DD'
+                                              }
+                                              type="number"
+                                              editable={false}
+                                              onClick={() => {
+                                                setShowCalendar(true);
+                                              }}
+                                            />
+                                            {showCalendar ? (
+                                              <Calendar
+                                                onChange={onChange}
+                                                value={value}
+                                                maxDate={new Date()}
+                                                onClickDay={(date) => {
+                                                  onDayChange(date, item, i);
                                                 }}
                                               />
-                                              {showCalendar ? (
-                                                <Calendar
-                                                  onChange={onChange}
-                                                  value={value}
-                                                  maxDate={new Date()}
-                                                  onClickDay={(date) => {
-                                                    onDayChange(date, item, i);
-                                                  }}
-                                                />
-                                              ) : null}
-                                              <div
-                                                onClick={() =>
-                                                  onPlusBtnClick(item, i)
-                                                }
-                                                style={{
-                                                  ...styles.circleDiv,
-                                                  backgroundColor:
-                                                    selectedDate !== ''
-                                                      ? GREEN_TEXT
-                                                      : GRAY,
-                                                }}>
-                                                <span style={styles.plusIcon}>
-                                                  +
-                                                </span>
-                                              </div>
+                                            ) : null}
+                                            <div
+                                              onClick={() =>
+                                                onPlusBtnClick(item, i)
+                                              }
+                                              style={{
+                                                ...styles.circleDiv,
+                                                backgroundColor:
+                                                  selectedDate !== ''
+                                                    ? GREEN_TEXT
+                                                    : GRAY,
+                                              }}>
+                                              <span style={styles.plusIcon}>
+                                                +
+                                              </span>
                                             </div>
-                                          ) : null}
-                                        </View>
-                                      )}
-                                    </div>
-                                  );
-                                })
+                                          </div>
+                                        ) : null}
+                                      </View>
+                                    )}
+                                  </div>
+                                );
+                              })
                               : []}
                           </div>
 
@@ -1872,7 +1873,7 @@ const Thirty = (props, componentId) => {
                               setObjContentIndex(val.contentIndex)
                             }>
                             {idx === 0 && (
-                              <div style={{position: 'relative'}}>
+                              <div style={{ position: 'relative' }}>
                                 <div
                                   onClick={() => {
                                     setShowData(i);
@@ -1977,7 +1978,7 @@ const styles = {
     color: WHITE,
     paddingTop: '30px',
   },
-  inputBox: {width: DEVICE_WIDTH > 767 ? '78%' : '68%'},
+  inputBox: { width: DEVICE_WIDTH > 767 ? '78%' : '68%' },
   inputStyle: {
     backgroundColor: LIGHT_GRAY,
     fontStyle: 'italic',
