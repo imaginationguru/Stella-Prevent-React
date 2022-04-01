@@ -631,6 +631,7 @@ export function deleteUserAssessmentDataNew(
         //  dispatch(getUserAssessment(userCardId, assessment_id));
         if (multi) {
           console.log('multi???');
+          customAlert(json.message, 'success');
           dispatch(getUserMultiAssessment(userCardId, assessment_id));
         } else {
           dispatch(getUserAssessment(userCardId, assessment_id));

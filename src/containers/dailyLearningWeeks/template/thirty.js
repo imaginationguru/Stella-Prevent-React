@@ -950,6 +950,8 @@ const Thirty = (props, componentId) => {
           assessment_id2,
         ),
       );
+      setShowData('');
+      setCommentModal(false);
     } else if (
       firstAssessment.length !== 0 &&
       updateSecondAssessment.length !== 0 &&
@@ -979,6 +981,8 @@ const Thirty = (props, componentId) => {
           assessment_id,
         ),
       );
+      setShowData('');
+      setCommentModal(false);
     } else if (firstAssessment.length && firstAssessment !== undefined) {
       console.log('only first assessment');
       let updateParams = {
@@ -998,6 +1002,8 @@ const Thirty = (props, componentId) => {
           assessment_id,
         ),
       );
+      setShowData('');
+      setCommentModal(false);
     } else {
       console.log('else');
     }
@@ -1021,13 +1027,16 @@ const Thirty = (props, componentId) => {
         true,
       ),
     );
+    setShowData('');
+    setCommentModal(false);
   };
   const openModal = () => {
     setCommentModal(true);
+    setShowData('');
     dispatch(AppActions.getUserMultiAssessment(props._id, assessment_id));
   };
 
-  //  console.log('first assessment cards', firstAssessmentCards);
+  console.log('userInputs', userInputs);
   return (
     <div>
       {/**********************quotes************** */}
@@ -1417,6 +1426,10 @@ const Thirty = (props, componentId) => {
             onClick={() => {
               setCommentModal(false);
               setShowData('');
+              setUserInputs([]);
+              setSelectedValue('');
+              setSelectedValueSecond('');
+              setSelectedDate('');
             }}>
             <img src={leftArrow} style={styles.backButton} />
             Back
