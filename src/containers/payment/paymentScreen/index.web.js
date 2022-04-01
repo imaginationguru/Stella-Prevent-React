@@ -35,7 +35,7 @@ import {
   CreditCardInput,
 } from 'react-square-web-payments-sdk';
 import { getItem } from '../../../utils/AsyncUtils';
-const { COLORS, FONTS, IMAGE_BASE_URL, squareAppId } = GLOBALS;
+const { COLORS, FONTS, IMAGE_BASE_URL, squareAppId, LOCATION_ID } = GLOBALS;
 const {
   BLUR,
   WHITE,
@@ -270,7 +270,7 @@ const Payment = (props) => {
              * Identifies the location of the merchant that is taking the payment.
              * Obtained from the Square Application Dashboard - Locations tab.
              */
-            locationId="L726CAXF29YB8">
+            locationId={LOCATION_ID}>
             <CreditCardInput />
           </SquarePaymentsForm>
         </View>

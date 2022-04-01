@@ -47,6 +47,7 @@ const CardContent = ({
   animationIn,
   animationOut,
   animationInDelay,
+  onClick
 }) => {
   return (
     <Animated
@@ -54,7 +55,7 @@ const CardContent = ({
       animationOut={animationOut}
       isVisible={isVisible}
       animationInDelay={animationInDelay}>
-      <p className="dash-text" style={{ ...styles.content, ...style }}>
+      <p onClick={() => { onClick ? onClick() : null }} className="dash-text" style={{ ...styles.content, ...style }}>
         {content}
       </p>
     </Animated>
