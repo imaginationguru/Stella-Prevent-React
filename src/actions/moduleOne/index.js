@@ -144,10 +144,10 @@ export function getTemplateData(week, isLoading = true) {
         }
         if (json.code === 417) {
           dispatch(sessionExpire(json.message));
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
