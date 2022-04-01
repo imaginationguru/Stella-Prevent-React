@@ -396,94 +396,86 @@ const Thirty = (props, componentId) => {
   //   const assessmentCardsCopy = [];
   //   // console.log('user assessment data', JSON.stringify(userAssessmentData));
   //   if (userAssessmentData.length) {
-  //     /*first header content data set */
+
   //     userAssessmentData
   //       .filter((item) => item._id.assessment_header_id === firstHeaderId)
   //       .forEach((val) => cardData.push(...val.cards));
   //     setFirstHeaderContent(cardData);
 
-  //     /*cards data */
-  //     //userAssessmentData.forEach((val) => cardsData.push(...val.cards));
-  //     userAssessmentData.forEach((val) =>
-  //       val.cards
-  //         .filter((item) => item.assessment_id === assessment_id)
-  //         .map((ele) => cardsData.push(ele)),
-  //     );
-  //     setAllCards(cardsData);
+  /*cards data */
+  //userAssessmentData.forEach((val) => cardsData.push(...val.cards));
+  // userAssessmentData.forEach((val) =>
+  //   val.cards
+  //     .filter((item) => item.assessment_id === assessment_id)
+  //     .map((ele) => cardsData.push(ele)),
+  // );
+  // setAllCards(cardsData);
 
-  //     userAssessmentData.forEach((val) =>
-  //       val.cards
-  //         .filter((item) => item.assessment_id === assessment_id2)
-  //         .map((ele) => secondCardsData.push(ele)),
-  //     );
-  //     setSecondIdAllCards(secondCardsData);
+  // userAssessmentData.forEach((val) =>
+  //   val.cards
+  //     .filter((item) => item.assessment_id === assessment_id2)
+  //     .map((ele) => secondCardsData.push(ele)),
+  // );
+  // setSecondIdAllCards(secondCardsData);
 
-  //     console.log(
-  //       'cards data????all cards????',
-  //       allCards,
-  //       'xxx',
-  //       cardsData,
-  //       'secondIdAllCards',
-  //       secondIdAllCards,
-  //     );
-  //     // {second assessment logic}
-  //     let secondAssmentData = userAssessmentData.map((item) => {
-  //       return item.cards.filter((fil) => fil.assessment_id === assessment_id2);
-  //     });
+  // // {second assessment logic}
+  // let secondAssmentData = userAssessmentData.map((item) => {
+  //   return item.cards.filter((fil) => fil.assessment_id === assessment_id2);
+  // });
 
-  //     var assessmentTwoArray = secondAssmentData.filter(
-  //       (value) => Object.keys(value).length !== 0,
-  //     );
+  // var assessmentTwoArray = secondAssmentData.filter(
+  //   (value) => Object.keys(value).length !== 0,
+  // );
 
-  //     assessmentTwoArray.forEach((item) => {
-  //       assessmentCards.push(...item);
-  //       assessmentCardsCopy.push(...item);
-  //     });
-  //     setSecondAssessmentArray(assessmentCards);
+  // assessmentTwoArray.forEach((item) => {
+  //   assessmentCards.push(...item);
+  //   assessmentCardsCopy.push(...item);
+  // });
+  // setSecondAssessmentArray(assessmentCards);
 
-  //     let sortedArray = assessmentCards.map((element) => {
-  //       let selectedFormat = [];
-  //       let header_id, assessmentId, orderValue;
+  // let sortedArray = assessmentCards.map((element) => {
+  //   let selectedFormat = [];
+  //   let header_id, assessmentId, orderValue;
 
-  //       assessmentCardsCopy.forEach((item) => {
-  //         if (
-  //           element.assessment_header_id === item.assessment_header_id &&
-  //           element.order === item.order
-  //         ) {
-  //           orderValue = item.order;
-  //           header_id = item.assessment_header_id;
-  //           assessmentId =
-  //             item.assessment_header !== undefined &&
-  //             item.assessment_header.length
-  //               ? item.assessment_header.map((val) => {
-  //                   return val.assessment_id;
-  //                 })
-  //               : null;
+  //   assessmentCardsCopy.forEach((item) => {
+  //     if (
+  //       element.assessment_header_id === item.assessment_header_id &&
+  //       element.order === item.order
+  //     ) {
+  //       orderValue = item.order;
+  //       header_id = item.assessment_header_id;
+  //       assessmentId =
+  //         item.assessment_header !== undefined &&
+  //         item.assessment_header.length
+  //           ? item.assessment_header.map((val) => {
+  //               return val.assessment_id;
+  //             })
+  //           : null;
 
-  //           selectedFormat.push({
-  //             content: item.content,
-  //             order: item.order,
-  //             type: item.type,
-  //             assessment_content_id: item.assessment_header_id,
-  //             content_id: item._id,
-  //           });
-  //         }
+  //       selectedFormat.push({
+  //         content: item.content,
+  //         order: item.order,
+  //         type: item.type,
+  //         assessment_content_id: item.assessment_header_id,
+  //         content_id: item._id,
   //       });
+  //     }
+  //   });
 
-  //       let finalValue = {
-  //         content: selectedFormat,
-  //         assessment_header_id: header_id,
-  //         assessment_id: assessmentId,
-  //         order: orderValue,
-  //       };
-  //       return finalValue;
-  //     });
+  //   let finalValue = {
+  //     content: selectedFormat,
+  //     assessment_header_id: header_id,
+  //     assessment_id: assessmentId,
+  //     order: orderValue,
+  //   };
+  //   return finalValue;
+  // });
 
-  //     let jsonObject = sortedArray.map(JSON.stringify);
-  //     let uniqueSet = new Set(jsonObject);
-  //     let uniqueArray = Array.from(uniqueSet).map(JSON.parse);
+  // let jsonObject = sortedArray.map(JSON.stringify);
+  // let uniqueSet = new Set(jsonObject);
+  // let uniqueArray = Array.from(uniqueSet).map(JSON.parse);
 
-  //     setUserInputs(uniqueArray);
+  // setUserInputs(uniqueArray);
   //   } else {
   //     console.log('else ');
   //   }
@@ -540,7 +532,7 @@ const Thirty = (props, componentId) => {
   /******************Second assessment data save************** */
   const onSaveSecondAssessment = (e) => {
     e.preventDefault();
-    onSaveMyths();
+    //  onSaveMyths();
     let contentArray = [];
 
     let modifyUserInput = userInputs.map((item) => {
@@ -565,8 +557,19 @@ const Thirty = (props, componentId) => {
       contentArray.push(filterValue);
     });
     console.log('content array ', contentArray.length, userInputs);
-
-    if (userInputs.length) {
+    let isValid = false;
+    if (inputs && inputs.length) {
+      let temp = [];
+      inputs.forEach((item) => {
+        temp.push(item.value);
+      });
+      console.log('temp??????', temp);
+      if (temp.length) {
+        isValid = temp.filter((item) => item === '').length === 0;
+        // isValid = temp.some((item) => item !== '') ? true : false;
+      }
+    }
+    if (userInputs.length && isValid) {
       let contentLength = multiAssessmentData && multiAssessmentData.length;
       let modifyArray = contentArray.map((element, index) => {
         let dummyArray = element.map((ele) => {
@@ -601,6 +604,18 @@ const Thirty = (props, componentId) => {
       console.log('final params?????', JSON.stringify(params));
       dispatch(AppActions.saveMultiAssessment(params, onSubmitMessage));
       setUserInputs([]);
+      setInputs(
+        assessmentData.headers.map((item) => {
+          return {
+            name: item.header,
+            placeholder: item.description,
+            order: item.order,
+            //  value: '',
+            value: item.value,
+            _id: item._id,
+          };
+        }),
+      );
     } else {
       dispatch({
         type: ACTION_TYPE.ERROR,
@@ -879,18 +894,9 @@ const Thirty = (props, componentId) => {
     setGetCardsInputs(x);
   };
   const onUpdateData = () => {
-    console.log(
-      'user inputs',
-      userInputs,
-      getCardsInputs,
-      'finalUpdateData',
-      finalUpdateData,
-    );
-
     let firstAssessment =
       finalUpdateData.obj &&
       finalUpdateData.obj.map((item) => {
-        console.log('item?????', item);
         return {
           assessment_header_id: item.assessment_header_id,
           content: [
@@ -907,11 +913,6 @@ const Thirty = (props, componentId) => {
     let updateSecondAssessment =
       userInputs.length &&
       userInputs.map((item) => {
-        console.log(
-          'item second assessment',
-          item.content[0].contentIndex,
-          item,
-        );
         return {
           assessment_header_id: item.assessment_header_id,
           content: [
@@ -931,7 +932,6 @@ const Thirty = (props, componentId) => {
       updateSecondAssessment !== undefined &&
       firstAssessment === undefined
     ) {
-      console.log('only second assessment');
       let updateParams = {
         user_id: userId,
         firstAssessment: {},
@@ -941,7 +941,7 @@ const Thirty = (props, componentId) => {
           assessment: updateSecondAssessment,
         },
       };
-      console.log(' second params???', JSON.stringify(updateParams));
+
       dispatch(
         AppActions.rearrangeMultiAssessments(
           updateParams,
@@ -957,7 +957,6 @@ const Thirty = (props, componentId) => {
       firstAssessment !== undefined &&
       userInputs.length
     ) {
-      console.log('params both update');
       let updateParams = {
         user_id: userId,
         firstAssessment: {
@@ -971,7 +970,7 @@ const Thirty = (props, componentId) => {
           assessment: updateSecondAssessment,
         },
       };
-      console.log('both params???', JSON.stringify(updateParams));
+
       dispatch(
         AppActions.rearrangeMultiAssessments(
           updateParams,
@@ -1023,6 +1022,12 @@ const Thirty = (props, componentId) => {
       ),
     );
   };
+  const openModal = () => {
+    setCommentModal(true);
+    dispatch(AppActions.getUserMultiAssessment(props._id, assessment_id));
+  };
+
+  //  console.log('first assessment cards', firstAssessmentCards);
   return (
     <div>
       {/**********************quotes************** */}
@@ -1332,7 +1337,7 @@ const Thirty = (props, componentId) => {
           }}
         />
       ) : null}
-      {firstHeaderContent && firstHeaderContent.length
+      {/* {firstHeaderContent && firstHeaderContent.length
         ? firstHeaderContent
             .sort((a, b) => (a.i > b.i && 1) || -1)
             .map((item, index) => {
@@ -1347,7 +1352,23 @@ const Thirty = (props, componentId) => {
                 />
               );
             })
-        : []}
+        : []} */}
+      {/* {firstAssessmentCards && firstAssessmentCards.length
+        ? firstAssessmentCards
+            .sort((a, b) => (a.i > b.i && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardContent
+                  key={index}
+                  content={ReactHtmlParser(item.content)}
+                  style={{
+                    padding: '10px',
+                    backgroundColor: LIGHT_GRAY,
+                  }}
+                />
+              );
+            })
+        : []} */}
       {content && content.length
         ? content
             .sort((a, b) => (a.order > b.order && 1) || -1)
@@ -1361,7 +1382,7 @@ const Thirty = (props, componentId) => {
               );
             })
         : []}
-      <div onClick={() => setCommentModal(true)}>
+      <div onClick={() => openModal()}>
         <p>Click here..</p>
       </div>
 
@@ -1393,7 +1414,10 @@ const Thirty = (props, componentId) => {
               marginLeft: 'auto',
               marginRight: 'auto',
             }}
-            onClick={() => setCommentModal(false)}>
+            onClick={() => {
+              setCommentModal(false);
+              setShowData('');
+            }}>
             <img src={leftArrow} style={styles.backButton} />
             Back
           </div>
@@ -1541,7 +1565,10 @@ const Thirty = (props, componentId) => {
                                                                 'absolute',
                                                               borderRadius:
                                                                 '100%',
-                                                              top: 20,
+                                                              top:
+                                                                conI === 0
+                                                                  ? 20
+                                                                  : 0,
                                                               right: -11,
                                                             }}>
                                                             <p
