@@ -9,13 +9,17 @@ import Sad from '../assets/images/sad/sad.png';
 import SadActive from '../assets/images/sadActive/sadActive.png';
 import Angry from '../assets/images/angry/angry.png';
 import AngryActive from '../assets/images/angryActive/angryActive.png';
+//import { BASE_URL, IMAGE_BASE_URL } from 'react-native-dotenv';
+
 const isLive = true;
+console.log(process.env, "BASE_URL....")
 export default {
+
   BASE_URL: isLive
     ? 'https://mamalift.curiodigitaltx.com/api/'
-    : 'http://52.170.117.197/api/', //1.5 stella
+    : 'http://52.170.117.197/api/', //DEV
   IMAGE_BASE_URL: isLive
-    ? 'https://mamalift.curiodigitaltx.com/' //UAT
+    ? 'https://mamalift.curiodigitaltx.com/' //Prod
     : 'http://52.170.117.197/', //dev
 
   WEB_BASE_URL: 'https://mamalift-web.curiodigitaltx.com/',
@@ -88,7 +92,6 @@ export default {
     GET_USER_MULTI_ASSESSMENT: 'get-user-multiple-assessments',
     REARRANGE_MULTI_ASSESSMENT: 'rearrange-multiple-assessment',
   },
-
   /*************************FONTS************************** */
   FONTS: {
     EXTRA_LIGHT: 'Oswald-ExtraLight',

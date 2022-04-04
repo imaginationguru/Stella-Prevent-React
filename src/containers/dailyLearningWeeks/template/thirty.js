@@ -1,11 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import GLOBALS from '../../../constants';
 import ReactHtmlParser from 'react-html-parser';
-import {TextInput, View} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import { TextInput, View } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 
 import * as AppActions from '../../../actions';
 import { getItem } from '../../../utils/AsyncUtils';
@@ -25,7 +25,7 @@ import moment from 'moment';
 import arrowDown from '../../../assets/images/arrowDown.png';
 import upArrow from '../../../assets/images/upArrow.png';
 
-import {Dimensions, Modal, TouchableOpacity} from 'react-native';
+import { Dimensions, Modal, TouchableOpacity } from 'react-native';
 
 
 import leftArrow from '../../../assets/images/leftArrow.svg';
@@ -508,7 +508,7 @@ const Thirty = (props, componentId) => {
       });
 
       let params = {
-        user_id: userId,
+        user_id: getItem('userId'),
         firstAssessment: {
           user_card_id: props._id,
           assessment_id: assessment_id,
@@ -828,7 +828,7 @@ const Thirty = (props, componentId) => {
       firstAssessment === undefined
     ) {
       let updateParams = {
-        user_id: userId,
+        user_id: getItem('userId'),
         firstAssessment: {},
         secondAssessment: {
           user_card_id: props._id,
@@ -856,7 +856,7 @@ const Thirty = (props, componentId) => {
       userInputs.length
     ) {
       let updateParams = {
-        user_id: userId,
+        user_id: getItem('userId'),
         firstAssessment: {
           user_card_id: props._id,
           assessment_id: assessment_id,
@@ -882,7 +882,7 @@ const Thirty = (props, componentId) => {
       setCommentModal(false);
     } else if (firstAssessment.length && firstAssessment !== undefined) {
       let updateParams = {
-        user_id: userId,
+        user_id: getItem('userId'),
         firstAssessment: {
           user_card_id: props._id,
           assessment_id: assessment_id,

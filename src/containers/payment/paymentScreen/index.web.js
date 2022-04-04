@@ -168,7 +168,7 @@ const Payment = (props) => {
                   fontWeight: '600',
                   color: '#1A1F36',
                 }}>
-                {price}
+                ${price}
               </Text>
             </View>
             <View
@@ -260,8 +260,8 @@ const Payment = (props) => {
                 // addressLines: ['123 Main Street', 'Apartment 1'],
                 familyName: name,
                 givenName: name,
-                // countryCode: 'GB',
-                // city: 'London',
+                countryCode: 'GB',
+                city: 'London',
               },
               currencyCode: 'USD',
               intent: 'CHARGE',
