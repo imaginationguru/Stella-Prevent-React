@@ -488,7 +488,7 @@ export function saveMultiAssessment(params, onSubmitMessage, customMsg = '') {
           dispatch(loadingAction(false));
         } else {
           dispatch({
-            type: ACTION_TYPE.SAVE_USER_MULTIPLE_ASSESSMENT_FAIL,
+            type: ACTION_TYPE.SAVE_USER_MULTI_ASSESSMENT_FAIL,
           });
         }
       }
@@ -499,7 +499,7 @@ export function saveMultiAssessment(params, onSubmitMessage, customMsg = '') {
         payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
       });
       dispatch({
-        type: ACTION_TYPE.SAVE_USER_MULTIPLE_ASSESSMENT_FAIL,
+        type: ACTION_TYPE.SAVE_USER_MULTI_ASSESSMENT_FAIL,
         payload: error,
       });
     }
