@@ -1,10 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect } from 'react';
+
+import {useState, useEffect} from 'react';
 import GLOBALS from '../../../constants';
 import ReactHtmlParser from 'react-html-parser';
-import { TextInput, View, Text } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import {TextInput, View} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+
 import * as AppActions from '../../../actions';
 import { getItem } from '../../../utils/AsyncUtils';
 import ExerciseBox from '../../../components/ExerciseBox';
@@ -22,10 +24,12 @@ import commonStyles from '../commonStyles';
 import moment from 'moment';
 import arrowDown from '../../../assets/images/arrowDown.png';
 import upArrow from '../../../assets/images/upArrow.png';
-import { Dimensions, Modal, TouchableOpacity } from 'react-native';
-import { navigatorPush } from '../../../config/navigationOptions';
+
+import {Dimensions, Modal, TouchableOpacity} from 'react-native';
+
+
 import leftArrow from '../../../assets/images/leftArrow.svg';
-import header1 from '../../../assets/images/BANNER-1.gif';
+
 import menu from '../../../assets/images/menu.svg';
 import Menu from '../../../components/Menu';
 import week1 from '../../../assets/images/Week1.svg';
@@ -119,15 +123,8 @@ const Thirty = (props, componentId) => {
   const {
     assessmentData = {},
     assessmentData2 = {},
-    //  userAssessmentData = [],
     multiAssessmentData = [],
   } = useSelector((state) => state.moduleOne);
-  // console.log(
-  //   'user assessmnet????????? template 30',
-
-  //   'getUserMultiAssessment',
-  //   JSON.stringify(multiAssessmentData),
-  // );
 
   const dataMapperAss = (arr = []) => {
     let contentLength = multiAssessmentData && multiAssessmentData.length;
@@ -219,7 +216,6 @@ const Thirty = (props, componentId) => {
             .sort((a, b) => (a.order > b.order && 1) || -1)
             .filter((item) => item.assessment_id === assessment_id)
             .map((val) => {
-              //  console.log('val??????get cards inputs', val);
               return {
                 name: val.assessment_header && val.assessment_header[0].header,
                 placeholder: val.description ? val.description : '',
@@ -238,13 +234,21 @@ const Thirty = (props, componentId) => {
       multiAssessmentData.length &&
       multiAssessmentData.forEach((item, i) =>
         secondAssessmentCards.push(
-          item.cards
-            //  .sort((a, b) => (a.order > b.order && 1) || -1)
-            // .filter((item) => item.assessment_id === assessment_id)
-            .map((val) => {
-              //  console.log('val??????get cards inputs', val);
-              if (val.assessment_id === assessment_id) {
-                return {
+          item.cards.map((val) => {
+            if (val.assessment_id === assessment_id) {
+              return {
+                name: val.assessment_header && val.assessment_header[0].header,
+                placeholder: val.description ? val.description : '',
+                order: val.order,
+                value: val.content,
+                _id: val._id,
+                assessment_header_id: val.assessment_header_id,
+                assessment_id: val.assessment_id,
+                contentIndex: val.contentIndex,
+              };
+            } else {
+              return {
+                secondAssessment: {
                   name:
                     val.assessment_header && val.assessment_header[0].header,
                   placeholder: val.description ? val.description : '',
@@ -253,28 +257,14 @@ const Thirty = (props, componentId) => {
                   _id: val._id,
                   assessment_header_id: val.assessment_header_id,
                   assessment_id: val.assessment_id,
+                  assessment_header_order:
+                    val.assessment_header[0] && val.assessment_header[0].order,
                   contentIndex: val.contentIndex,
-                };
-              } else {
-                return {
-                  secondAssessment: {
-                    name:
-                      val.assessment_header && val.assessment_header[0].header,
-                    placeholder: val.description ? val.description : '',
-                    order: val.order,
-                    value: val.content,
-                    _id: val._id,
-                    assessment_header_id: val.assessment_header_id,
-                    assessment_id: val.assessment_id,
-                    assessment_header_order:
-                      val.assessment_header[0] &&
-                      val.assessment_header[0].order,
-                    contentIndex: val.contentIndex,
-                    content: [],
-                  },
-                };
-              }
-            }),
+                  content: [],
+                },
+              };
+            }
+          }),
         ),
       );
     let secondIdData = [];
@@ -285,6 +275,7 @@ const Thirty = (props, componentId) => {
         console.log('val??', val.secondAssessment);
         return val.filter((item) => item.secondAssessment !== undefined);
       });
+
     y.length &&
       y.forEach((item) =>
         secondIdData.push(
@@ -308,12 +299,6 @@ const Thirty = (props, componentId) => {
         modifyArray.push(...item);
       });
     }
-    console.log(
-      'modify aarray',
-      modifyArray,
-      'objContentIndex',
-      objContentIndex,
-    );
     let hash = Object.create(null),
       result = secondAssessmentData.map((item) =>
         item.reduce(function (r, o) {
@@ -340,20 +325,18 @@ const Thirty = (props, componentId) => {
         }, []),
       );
 
-    console.log('result', result);
-
-    let newArray = firstAssessmentCards.map((obj, index) => ({
-      obj,
-      secondAssessment: [result[index]],
-    }));
+    // let newArray = firstAssessmentCards.map((obj, index) => ({
+    //   obj,
+    //   secondAssessment: [result[index]],
+    // }));
 
     let newArray1 = firstAssessmentCards.map((obj, index) => ({
       obj,
       secondAssessment: result,
     }));
-    console.log('new array', newArray1, newArray);
+
     setGetCardsInputs(newArray1);
-    console.log('new array', getCardsInputs);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [multiAssessmentData]);
 
@@ -381,14 +364,7 @@ const Thirty = (props, componentId) => {
       setGetCardsData(temp);
     }
   }, [allCards]);
-  // console.log(
-  //   'get cards data filtered by unique update time ',
-  //   getCardsData,
-  //   'all cards data array',
-  //   allCards,
-  //   'get Cards data input',
-  //   getCardsInputs,
-  // );
+
   // useEffect(() => {
   //   let cardData = [];
   //   let cardsData = [];
@@ -481,58 +457,11 @@ const Thirty = (props, componentId) => {
   //     console.log('else ');
   //   }
   // }, [userAssessmentData]);
-  /******************First assessment data save************** */
 
-  const onSaveMyths = () => {
-    //e.preventDefault();
-    console.log('inputs??????', inputs);
-    let params = {
-      user_id: userId,
-      user_card_id: props._id,
-      assessment_id: assessment_id,
-      assessment: dataMapperAss(inputs),
-    };
-
-    let isValid = false;
-    if (inputs && inputs.length) {
-      let temp = [];
-      inputs.forEach((item) => {
-        temp.push(item.value);
-      });
-      console.log('temp??????', temp);
-      if (temp.length) {
-        isValid = temp.filter((item) => item === '').length === 0;
-        // isValid = temp.some((item) => item !== '') ? true : false;
-      }
-    }
-    console.log('inputs???? first assessment???', JSON.stringify(params));
-    if (isValid) {
-      console.log('is valid', isValid);
-      //  dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
-      assessmentData.headers &&
-        assessmentData.headers.length &&
-        setInputs(
-          assessmentData.headers.map((item) => {
-            return {
-              name: item.header,
-              placeholder: item.description,
-              order: item.order,
-              //  value: '',
-              value: item.value,
-              _id: item._id,
-            };
-          }),
-        );
-    } else {
-      customAlert('Please fill all fields', 'error');
-    }
-  };
   /******************Second assessment data save************** */
   const onSaveSecondAssessment = (e) => {
     e.preventDefault();
-    //  onSaveMyths();
     let contentArray = [];
-
     let modifyUserInput = userInputs.map((item) => {
       let dummyArray = item.content.map((ele) => {
         return {
@@ -554,17 +483,16 @@ const Thirty = (props, componentId) => {
         .filter((ele) => ele.content !== '');
       contentArray.push(filterValue);
     });
-    console.log('content array ', contentArray.length, userInputs);
+
     let isValid = false;
     if (inputs && inputs.length) {
       let temp = [];
       inputs.forEach((item) => {
         temp.push(item.value);
       });
-      console.log('temp??????', temp);
+
       if (temp.length) {
         isValid = temp.filter((item) => item === '').length === 0;
-        // isValid = temp.some((item) => item !== '') ? true : false;
       }
     }
     if (userInputs.length && isValid) {
@@ -578,12 +506,7 @@ const Thirty = (props, componentId) => {
           content: dummyArray,
         };
       });
-      let firstParams = {
-        user_id: userId,
-        user_card_id: props._id,
-        assessment_id: assessment_id2,
-        assessment: modifyArray,
-      };
+
       let params = {
         user_id: userId,
         firstAssessment: {
@@ -597,8 +520,7 @@ const Thirty = (props, componentId) => {
           assessment: modifyArray,
         },
       };
-      console.log('modify array?????????', modifyArray);
-      console.log('second params', JSON.stringify(firstParams));
+
       console.log('final params?????', JSON.stringify(params));
       dispatch(AppActions.saveMultiAssessment(params, onSubmitMessage));
       setUserInputs([]);
@@ -629,7 +551,6 @@ const Thirty = (props, componentId) => {
   };
 
   const onHandleChange = (e, item) => {
-    console.log('inputs???????', inputs);
     const updateInputs = inputs.length
       ? inputs.map((val) => {
         return {
@@ -813,7 +734,6 @@ const Thirty = (props, componentId) => {
     }
   };
   const onPlusBtnClick = (item, i) => {
-    console.log('new user inputs?????', newUserInputs, userDate, i);
     if (userDate.length && newUserInputs.length) {
       Array.prototype.push.apply(newUserInputs, userDate);
       let concatArray = userInputs;
@@ -840,19 +760,13 @@ const Thirty = (props, componentId) => {
   };
 
   const onHandleChangeData = (e, ele, itemIndex, eleIndex) => {
-    console.log('ee????????', ele, eleIndex, itemIndex, e.target.value);
-
     let x =
       getCardsInputs &&
       getCardsInputs.length &&
       getCardsInputs.map((item, i) => {
-        console.log('item index 0', itemIndex, i, eleIndex);
         if (itemIndex === i) {
-          console.log('item index');
           let y = item.obj.map((val, index) => {
-            console.log('val 1067', val);
             if (eleIndex === index) {
-              console.log('1071', e.target.value, val);
               return {
                 ...val,
                 value: e.target.value,
@@ -866,21 +780,12 @@ const Thirty = (props, componentId) => {
           });
           let combineArray = { obj: y, secondAssessment: xx };
           setFinalUpdateData(combineArray);
-          console.log('y???', y, xx, combineArray);
+
           return combineArray;
         } else {
           return item;
         }
       });
-
-    console.log(
-      'on handel change',
-      getCardsInputs,
-      'x????',
-      x,
-      'update input data',
-      updateInputData,
-    );
     setGetCardsInputs(x);
   };
   const onUpdateData = () => {
@@ -976,7 +881,6 @@ const Thirty = (props, componentId) => {
       setShowData('');
       setCommentModal(false);
     } else if (firstAssessment.length && firstAssessment !== undefined) {
-      console.log('only first assessment');
       let updateParams = {
         user_id: userId,
         firstAssessment: {
@@ -985,7 +889,7 @@ const Thirty = (props, componentId) => {
           assessment: firstAssessment,
         },
       };
-      console.log('first params???', updateParams);
+
       dispatch(
         AppActions.rearrangeMultiAssessments(
           updateParams,
@@ -1002,13 +906,12 @@ const Thirty = (props, componentId) => {
   };
 
   const onCrossGetData = (ele) => {
-    console.log('ele>>>>', ele);
     let x =
       ele.length &&
       ele.map((item) => {
         return item._id;
       });
-    console.log('x delete', x[0], x[1], x[2]);
+
     dispatch(
       AppActions.deleteUserAssessmentDataNew(
         x[0],
@@ -1027,8 +930,7 @@ const Thirty = (props, componentId) => {
     setShowData('');
     dispatch(AppActions.getUserMultiAssessment(props._id, assessment_id));
   };
-  console.log('getInput cards Index', getInputCardsIndex);
-  console.log('userInputs', userInputs);
+
   return (
     <div>
       {/**********************quotes************** */}
@@ -1374,9 +1276,6 @@ const Thirty = (props, componentId) => {
             );
           })
         : []}
-      {/* <div onClick={() => openModal()}>
-        <p>Click here..</p>
-      </div> */}
 
       {/*//commentModal*/}
       {commentModal && (
@@ -1866,7 +1765,7 @@ const Thirty = (props, componentId) => {
                       item.obj &&
                       item.obj.length &&
                       item.obj.map((val, idx) => {
-                        console.log('idx', idx, objContentIndex);
+                        //   console.log('idx', idx, objContentIndex);
                         return (
                           <div
                             onClick={() =>
