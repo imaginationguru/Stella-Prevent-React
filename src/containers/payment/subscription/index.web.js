@@ -42,7 +42,7 @@ const Subscription = (props) => {
   useEffect(() => {
     dispatch(AppActions.getPlans());
     if (props.location && props.location.state) {
-      setPrice(props.location.state.currentPlan.numericPrice);
+      setPrice(props.location.state.currentPlan.price);
     }
   }, []);
 
@@ -146,15 +146,15 @@ const Subscription = (props) => {
                           { marginLeft: 0, marginTop: '30px', fontSize: '28px' },
                           { color: getTextColor(index) },
                         ]}>
-                        ${item.numericPrice}{' '}
+                        ${item.price}{' '}
                         <Text style={styles.planInnerText}>
                           {item.planDuration}
                         </Text>
                       </Text>
-                      {item.numericPrice > 0 && (
+                      {item.price > 0 && (
                         <Button
                           isDisabled={
-                            current_numericPrice == item.numericPrice
+                            current_numericPrice == item.price
                               ? true
                               : false
                           }
@@ -165,7 +165,7 @@ const Subscription = (props) => {
                             alignSelf: 'center',
                             fontSize: "18px",
                             opacity:
-                              current_numericPrice == item.numericPrice
+                              current_numericPrice == item.price
                                 ? 0.3
                                 : 1,
                           }}
