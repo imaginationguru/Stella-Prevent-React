@@ -12,7 +12,6 @@ import AngryActive from '../assets/images/angryActive/angryActive.png';
 //import { BASE_URL, IMAGE_BASE_URL } from 'react-native-dotenv';
 
 const isLive = true;
-console.log(process.env, "BASE_URL....")
 export default {
 
   BASE_URL: isLive

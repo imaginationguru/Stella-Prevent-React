@@ -1,12 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-
 import { useState, useEffect } from 'react';
 import GLOBALS from '../../../constants';
 import ReactHtmlParser from 'react-html-parser';
 import { TextInput, View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-
 import * as AppActions from '../../../actions';
 import { getItem } from '../../../utils/AsyncUtils';
 import ExerciseBox from '../../../components/ExerciseBox';
@@ -24,9 +22,7 @@ import commonStyles from '../commonStyles';
 import moment from 'moment';
 import arrowDown from '../../../assets/images/arrowDown.png';
 import upArrow from '../../../assets/images/upArrow.png';
-
 import { Dimensions, Modal, TouchableOpacity } from 'react-native';
-
 
 import leftArrow from '../../../assets/images/leftArrow.svg';
 
@@ -125,6 +121,10 @@ const Thirty = (props, componentId) => {
     assessmentData2 = {},
     multiAssessmentData = [],
   } = useSelector((state) => state.moduleOne);
+  const {
+    loginData = {}
+  } = useSelector((state) => state.authReducer);
+
 
   const dataMapperAss = (arr = []) => {
     let contentLength = multiAssessmentData && multiAssessmentData.length;
@@ -152,6 +152,7 @@ const Thirty = (props, componentId) => {
   }, [assessment_id2]);
 
   useEffect(() => {
+    console.log(loginData.user._id, "id.......")
     dispatch(AppActions.getUserMultiAssessment(props._id, assessment_id));
   }, []);
   const { isDashboardModal } = useSelector((state) => state.common);
@@ -299,6 +300,7 @@ const Thirty = (props, componentId) => {
         modifyArray.push(...item);
       });
     }
+    console.log('second assessment data', secondAssessmentData);
     let hash = Object.create(null),
       result = secondAssessmentData.map((item) =>
         item.reduce(function (r, o) {
@@ -308,9 +310,9 @@ const Thirty = (props, componentId) => {
               content: [],
               name: o.name,
               placeholder: o.description,
-              order: o.order,
+              // order: o.order,
               value: o.value,
-              _id: o._id,
+              //  _id: o._id,
               assessment_id: o.assessment_id,
               assessment_header_order: o.assessment_header_order,
               contentIndex: o.contentIndex,
@@ -320,6 +322,8 @@ const Thirty = (props, componentId) => {
           hash[o.assessment_header_id].content.push({
             content: o.value,
             contentIndex: o.contentIndex,
+            _id: o._id,
+            order: o.order,
           });
           return r;
         }, []),
@@ -329,7 +333,7 @@ const Thirty = (props, componentId) => {
     //   obj,
     //   secondAssessment: [result[index]],
     // }));
-
+    console.log('result', result);
     let newArray1 = firstAssessmentCards.map((obj, index) => ({
       obj,
       secondAssessment: result,
@@ -508,7 +512,7 @@ const Thirty = (props, componentId) => {
       });
 
       let params = {
-        user_id: getItem('userId'),
+        user_id: loginData.user._id,
         firstAssessment: {
           user_card_id: props._id,
           assessment_id: assessment_id,
@@ -734,6 +738,7 @@ const Thirty = (props, componentId) => {
     }
   };
   const onPlusBtnClick = (item, i) => {
+    console.log('item>>...', item, newUserInputs);
     if (userDate.length && newUserInputs.length) {
       Array.prototype.push.apply(newUserInputs, userDate);
       let concatArray = userInputs;
@@ -804,7 +809,19 @@ const Thirty = (props, componentId) => {
           ],
         };
       });
+    let secondContent =
+      getCardsInputs.length &&
+      getCardsInputs[0].secondAssessment &&
+      getCardsInputs[0].secondAssessment.length &&
+      getCardsInputs[0].secondAssessment[0].map(
+        (item) =>
+          item.content &&
+          item.content.length &&
+          item.content.filter((val) => val.contentIndex === objContentIndex),
+      );
 
+    let lengthExtract = secondContent.length && secondContent[0].length;
+    console.log('y on submit', secondContent, lengthExtract);
     let updateSecondAssessment =
       userInputs.length &&
       userInputs.map((item) => {
@@ -814,21 +831,22 @@ const Thirty = (props, componentId) => {
             {
               content: item.content[0].content,
               assessment_content_id: item.content[0].content_id,
-              order: item.content[0].order,
+              // order: item.content[0].order,
+              order: lengthExtract + 1,
               assessment_header_id: item.assessment_header_id,
               contentIndex: objContentIndex,
             },
           ],
         };
       });
-
+    console.log('update second assessment', updateSecondAssessment);
     if (
       updateSecondAssessment.length &&
       updateSecondAssessment !== undefined &&
       firstAssessment === undefined
     ) {
       let updateParams = {
-        user_id: getItem('userId'),
+        user_id: loginData.user._id,
         firstAssessment: {},
         secondAssessment: {
           user_card_id: props._id,
@@ -856,7 +874,7 @@ const Thirty = (props, componentId) => {
       userInputs.length
     ) {
       let updateParams = {
-        user_id: getItem('userId'),
+        user_id: loginData.user._id,
         firstAssessment: {
           user_card_id: props._id,
           assessment_id: assessment_id,
@@ -882,7 +900,7 @@ const Thirty = (props, componentId) => {
       setCommentModal(false);
     } else if (firstAssessment.length && firstAssessment !== undefined) {
       let updateParams = {
-        user_id: getItem('userId'),
+        user_id: loginData.user._id,
         firstAssessment: {
           user_card_id: props._id,
           assessment_id: assessment_id,
@@ -905,25 +923,31 @@ const Thirty = (props, componentId) => {
     }
   };
 
-  const onCrossGetData = (ele) => {
-    let x =
-      ele.length &&
-      ele.map((item) => {
-        return item._id;
-      });
+  const onCrossGetData = (ele, objIndex, order) => {
+    console.log('ele??delete?', ele, objIndex, 'order', order);
+    if (ele.length) {
+      let y = ele.map((item) =>
+        item.content.filter(
+          (conI) => conI.contentIndex === objIndex && conI.order === order,
+        ),
+      );
+      console.log('y', y);
+      let x = y.map((val) => val.map((ele) => ele._id));
+      console.log('extractId', x);
 
-    dispatch(
-      AppActions.deleteUserAssessmentDataNew(
-        x[0],
-        props._id,
-        assessment_id2,
-        x[1],
-        x[2],
-        true,
-      ),
-    );
-    setShowData('');
-    setCommentModal(false);
+      dispatch(
+        AppActions.deleteUserAssessmentDataNew(
+          x[0],
+          props._id,
+          assessment_id2,
+          x[1],
+          x[2],
+          true,
+        ),
+      );
+      setShowData('');
+      setCommentModal(false);
+    }
   };
   const openModal = () => {
     setCommentModal(true);
@@ -1211,7 +1235,11 @@ const Thirty = (props, componentId) => {
                           style={{
                             ...styles.circleDiv,
                             backgroundColor:
-                              selectedDate !== '' ? GREEN_TEXT : GRAY,
+                              selectedDate !== '' &&
+                                selectedValue !== '' &&
+                                selectedValueSecond !== ''
+                                ? GREEN_TEXT
+                                : GRAY,
                           }}>
                           <span style={styles.plusIcon}>+</span>
                         </div>
@@ -1304,7 +1332,6 @@ const Thirty = (props, componentId) => {
               width: '80%',
               marginLeft: 'auto',
               marginRight: 'auto',
-              cursor: 'pointer'
             }}
             onClick={() => {
               setCommentModal(false);
@@ -1451,7 +1478,11 @@ const Thirty = (props, componentId) => {
                                                         position: 'relative',
                                                       }}
                                                       onClick={() =>
-                                                        onCrossGetData(ele)
+                                                        onCrossGetData(
+                                                          ele,
+                                                          objContentIndex,
+                                                          con.order,
+                                                        )
                                                       }>
                                                       <div
                                                         style={{
@@ -1734,7 +1765,9 @@ const Thirty = (props, componentId) => {
                                               style={{
                                                 ...styles.circleDiv,
                                                 backgroundColor:
-                                                  selectedDate !== ''
+                                                  selectedDate !== '' &&
+                                                    selectedValue !== '' &&
+                                                    selectedValueSecond !== ''
                                                     ? GREEN_TEXT
                                                     : GRAY,
                                               }}>
