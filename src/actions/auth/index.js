@@ -1,22 +1,22 @@
 import GLOBALS from '../../constants';
 import RestClient from '../../helpers/RestClient';
-import { navigatorPush, navigatortoStart } from '../../config/navigationOptions';
-import { storeItem, getItem } from '../../utils/AsyncUtils';
-import { loadingAction } from '../common';
-const { ACTION_TYPE, URL, STRINGS } = GLOBALS;
-const { TRY_AGAIN, CHECK_NETWORK } = STRINGS;
-import { Linking, Platform } from 'react-native';
-import { getWeek } from '../moduleOne';
+import {navigatorPush, navigatortoStart} from '../../config/navigationOptions';
+import {storeItem, getItem} from '../../utils/AsyncUtils';
+import {loadingAction} from '../common';
+const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
+const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
+import {Linking, Platform} from 'react-native';
+import {getWeek} from '../moduleOne';
 import Swal from 'sweetalert2';
-import { Dimensions } from 'react-native-web';
+import {Dimensions} from 'react-native-web';
 import moment from 'moment';
-import { sessionExpire } from '../tracker';
+import {sessionExpire} from '../tracker';
 import packageJson from '../../../package.json';
 
-const { COLORS, FONTS, IMAGE_BASE_URL } = GLOBALS;
-import { detectBrowser } from '../../helpers/common.web';
+const {COLORS, FONTS, IMAGE_BASE_URL} = GLOBALS;
+import {detectBrowser} from '../../helpers/common.web';
 
-import { customAlert } from '../../helpers/commonAlerts.web';
+import {customAlert} from '../../helpers/commonAlerts.web';
 
 //******************************Login******************* */
 
@@ -37,13 +37,12 @@ export function updateTrackerStatus(user) {
 
 export function login(email, password, componentId) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.LOGIN_RESET });
-    dispatch({ type: ACTION_TYPE.LOGIN_REQUEST });
+    dispatch({type: ACTION_TYPE.LOGIN_RESET});
+    dispatch({type: ACTION_TYPE.LOGIN_REQUEST});
     try {
       let user_platform =
         navigator?.userAgentData?.platform || navigator?.platform || 'unknown';
-      dispatch(loadingAction(true));
-      let json = await RestClient.postCall(URL.LOGIN, {
+      let params = {
         email: email,
         password: password,
         product: 1.5,
@@ -53,7 +52,9 @@ export function login(email, password, componentId) {
           systemInfo: navigator.userAgent,
         },
         timeZone: moment.tz.guess(),
-      });
+      };
+      dispatch(loadingAction(true));
+      let json = await RestClient.postCall(URL.LOGIN, params);
       if (json.code === 200) {
         dispatch({
           type: ACTION_TYPE.LOGIN_SUCCESS,
@@ -75,10 +76,10 @@ export function login(email, password, componentId) {
           storeItem('token', json.data.token);
           dispatch(bindProgram());
           dispatch(getProgramById());
-          navigatorPush({ componentId, screenName: 'Dashboard' });
+          navigatorPush({componentId, screenName: 'Dashboard'});
         } else {
           dispatch(loadingAction(false));
-          navigatorPush({ componentId, screenName: 'VerifyUserOTP' });
+          navigatorPush({componentId, screenName: 'VerifyUserOTP'});
         }
       } else {
         if (json.code === 400) {
@@ -110,7 +111,7 @@ export function login(email, password, componentId) {
 
 export function register(params, componentId) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.SIGNUP_REQUEST });
+    dispatch({type: ACTION_TYPE.SIGNUP_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.REGISTER, params);
@@ -121,7 +122,7 @@ export function register(params, componentId) {
         });
         if (json.data.user.isInterest) {
         } else {
-          navigatorPush({ componentId, screenName: 'DailyLearningWeeks' });
+          navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
         }
       } else {
         if (json.code === 400) {
@@ -148,7 +149,7 @@ export function bindProgram(cb) {
   let programId = getItem('programId');
   let userId = getItem('userId');
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.BIND_PROGRAM_USER_REQUEST });
+    dispatch({type: ACTION_TYPE.BIND_PROGRAM_USER_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.BIND_PROGRAM_USER, {
@@ -188,7 +189,7 @@ export function getProgramById(isLoading = true, cb) {
   let userId = getItem('userId');
 
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_PROGRAM_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_PROGRAM_REQUEST});
     try {
       if (isLoading) {
         dispatch(loadingAction(true));
@@ -245,10 +246,10 @@ export function getProgramById(isLoading = true, cb) {
 
 export function emailExists(email) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.USER_EMAIL_EXISTS_REQUEST });
+    dispatch({type: ACTION_TYPE.USER_EMAIL_EXISTS_REQUEST});
     try {
       dispatch(loadingAction(true));
-      let json = await RestClient.postCall(URL.USER_EMAIL_EXISTS, { email });
+      let json = await RestClient.postCall(URL.USER_EMAIL_EXISTS, {email});
       if (json.code === 200) {
         dispatch({
           type: ACTION_TYPE.USER_EMAIL_EXISTS_SUCCESS,
@@ -293,7 +294,7 @@ export function emailExists(email) {
 
 export function changePassword(_id, password, forgot_password_token) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.CHANGE_PASSWORD_REQUEST });
+    dispatch({type: ACTION_TYPE.CHANGE_PASSWORD_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.CHANGE_PASSWORD, {
@@ -345,7 +346,7 @@ export function changePassword(_id, password, forgot_password_token) {
 export function logout() {
   let userId = getItem('userId');
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.LOGOUT_USER_REQUEST });
+    dispatch({type: ACTION_TYPE.LOGOUT_USER_REQUEST});
     try {
       let json = await RestClient.postCall(URL.LOGOUT, {
         user_id: userId,
@@ -472,9 +473,9 @@ export function verifySocialUser(params, componentId, cb) {
             storeItem('token', json.data.token);
             dispatch(bindProgram());
             dispatch(getProgramById());
-            navigatorPush({ componentId, screenName: 'Dashboard' });
+            navigatorPush({componentId, screenName: 'Dashboard'});
           } else {
-            navigatorPush({ componentId, screenName: 'VerifyUserOTP' });
+            navigatorPush({componentId, screenName: 'VerifyUserOTP'});
           }
         }
         // cb(json.data);
@@ -497,13 +498,13 @@ export function verifySocialUser(params, componentId, cb) {
           });
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 }
 
 export function getUser(params, componentId, isRedirect = true) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_USER_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_USER_REQUEST});
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.GET_USER, params);
@@ -532,10 +533,10 @@ export function getUser(params, componentId, isRedirect = true) {
           storeItem('token', json.data.token);
           dispatch(bindProgram());
           dispatch(getProgramById());
-          navigatorPush({ componentId, screenName: 'Dashboard' });
+          navigatorPush({componentId, screenName: 'Dashboard'});
         } else {
           dispatch(loadingAction(false));
-          navigatorPush({ componentId, screenName: 'VerifyUserOTP' });
+          navigatorPush({componentId, screenName: 'VerifyUserOTP'});
         }
       } else {
         if (json.code === 400) {
@@ -561,7 +562,7 @@ export function getUser(params, componentId, isRedirect = true) {
 
 export function updateUserData(params) {
   return async (dispatch) => {
-    dispatch({ type: ACTION_TYPE.GET_USER_REQUEST });
+    dispatch({type: ACTION_TYPE.GET_USER_REQUEST});
     try {
       let json = await RestClient.postCall(URL.GET_USER, params);
       if (json.code === 200) {
@@ -616,7 +617,7 @@ export function acceptWelcomeScreen(params, componentId, cb) {
         storeItem('token', loginToken);
         dispatch(bindProgram());
         dispatch(getProgramById());
-        navigatorPush({ componentId, screenName: 'Dashboard' });
+        navigatorPush({componentId, screenName: 'Dashboard'});
       } else {
         customAlert(json.message, 'error');
       }
