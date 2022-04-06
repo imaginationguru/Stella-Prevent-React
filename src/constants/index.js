@@ -10,18 +10,44 @@ import SadActive from '../assets/images/sadActive/sadActive.png';
 import Angry from '../assets/images/angry/angry.png';
 import AngryActive from '../assets/images/angryActive/angryActive.png';
 //import { BASE_URL, IMAGE_BASE_URL } from 'react-native-dotenv';
-
+import {ENV} from './env';
 const isLive = true;
+const getEnvBasedUrl = () => {
+  console.log('ENV>>>>', ENV);
+  let BASE_URL = '';
+  let IMAGE_BASE_URL = '';
+  let WEB_BASE_URL = '';
+  if (ENV === 'DEV') {
+    BASE_URL = 'http://52.170.117.197/api/';
+    IMAGE_BASE_URL = 'http://52.170.117.197/';
+  }
+  if (ENV === 'PROD') {
+    BASE_URL = 'https://mamalift.curiodigitaltx.com/api/';
+    IMAGE_BASE_URL = 'https://mamalift.curiodigitaltx.com/';
+  }
+  if (ENV === 'QA') {
+    BASE_URL = 'https://mamalift-qa.curio-dtx.com/api/';
+    IMAGE_BASE_URL = 'https://mamalift-qa.curio-dtx.com/';
+    WEB_BASE_URL = 'https://mamalift-qa-web.curio-dtx.com/';
+  }
+  if (ENV === 'UAT') {
+    BASE_URL = 'https://mamalift-uat.curio-dtx.com/api/';
+    IMAGE_BASE_URL = 'https://mamalift-uat.curio-dtx.com/';
+    WEB_BASE_URL = 'https://mamalift-uat-web.curio-dtx.com/';
+  }
+  return {BASE_URL, IMAGE_BASE_URL, WEB_BASE_URL};
+};
+console.log('get BASE URL', getEnvBasedUrl());
 export default {
+  BASE_URL: getEnvBasedUrl().BASE_URL,
+  // BASE_URL: isLive
+  //   ? 'https://mamalift.curiodigitaltx.com/api/' //prod
+  //   : 'http://52.170.117.197/api/', //DEV
+  // IMAGE_BASE_URL: isLive
+  //   ? 'https://mamalift.curiodigitaltx.com/' //Prod
+  //   : 'http://52.170.117.197/', //dev
 
-  BASE_URL: isLive
-    ? 'https://mamalift.curiodigitaltx.com/api/'
-    : 'http://52.170.117.197/api/', //DEV
-  IMAGE_BASE_URL: isLive
-    ? 'https://mamalift.curiodigitaltx.com/' //Prod
-    : 'http://52.170.117.197/', //dev
-
-  WEB_BASE_URL: 'https://mamalift-web.curiodigitaltx.com/',
+  // WEB_BASE_URL: 'https://mamalift-web.curiodigitaltx.com/',
 
   // BASE_URL: 'https://mamalift-qa.curio-dtx.com/api/',
   // IMAGE_BASE_URL: 'https://mamalift-qa.curio-dtx.com/', //QA
@@ -35,9 +61,7 @@ export default {
     ? 'sq0idp-EresRbLbMTgKRAuhD5ScNEA'
     : 'sandbox-sq0idb-WPw6oJXhJty7VgI9HN3Edw', //1.5 stella
 
-  LOCATION_ID: isLive
-    ? 'LR3OMWYVRCMX8'
-    : 'L726CAXF29YB8', //1.5 stella
+  LOCATION_ID: isLive ? 'LR3OMWYVRCMX8' : 'L726CAXF29YB8', //1.5 stella
   URL: {
     LOGIN: 'login',
     REGISTER: 'register',
@@ -116,6 +140,7 @@ export default {
     DATE_FORMATE: 'YYYY-MM-DD',
     ACTIVITY: 'Pleasant Activities',
     DAILY_ACTIVITY: 'Daily Activities',
+    HIPPA_KEY: 'ThWmZq4t7w!z%C*F)J@NcRfUjXn2r5u8CURIO',
   },
 
   MOODS_ARRAY: [
