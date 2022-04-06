@@ -40,6 +40,8 @@ const getEnvBasedUrl = () => {
 console.log('get BASE URL', getEnvBasedUrl());
 export default {
   BASE_URL: getEnvBasedUrl().BASE_URL,
+  IMAGE_BASE_URL: getEnvBasedUrl().IMAGE_BASE_URL,
+  WEB_BASE_URL: getEnvBasedUrl().WEB_BASE_URL,
   // BASE_URL: isLive
   //   ? 'https://mamalift.curiodigitaltx.com/api/' //prod
   //   : 'http://52.170.117.197/api/', //DEV
