@@ -35,7 +35,7 @@ import {
   CreditCardInput,
 } from 'react-square-web-payments-sdk';
 import { getItem } from '../../../utils/AsyncUtils';
-const { COLORS, FONTS, IMAGE_BASE_URL, squareAppId } = GLOBALS;
+const { COLORS, FONTS, IMAGE_BASE_URL, squareAppId, LOCATION_ID } = GLOBALS;
 const {
   BLUR,
   WHITE,
@@ -51,6 +51,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as AppActions from '../../../actions';
 import { validateEmail, validateIsEmpty } from '../../../utils/validations';
 const Payment = (props) => {
+  console.log(props.location.state, "bbbbb")
   const { loginData = {} } = useSelector((state) => state.authReducer);
   let premiumPrice = props.location.state.price;
   const [price, setPrice] = useState(premiumPrice);
@@ -104,7 +105,7 @@ const Payment = (props) => {
     } else {
       let param = {
         name_on_card: name,
-        amount: props.location.state.numericPrice.toString(),
+        amount: price.toString(),
         currency: 'USD',
         user_id: getItem('userId'),
         card_nonce: token.token,
@@ -168,7 +169,7 @@ const Payment = (props) => {
                   fontWeight: '600',
                   color: '#1A1F36',
                 }}>
-                {price}
+                ${price}
               </Text>
             </View>
             <View
@@ -254,7 +255,7 @@ const Payment = (props) => {
              */
             createVerificationDetails={() => ({
               // amount: '40.00',
-              amount: price,
+              amount: price.toString(),
               /* collected from the buyer */
               billingContact: {
                 // addressLines: ['123 Main Street', 'Apartment 1'],
@@ -270,7 +271,7 @@ const Payment = (props) => {
              * Identifies the location of the merchant that is taking the payment.
              * Obtained from the Square Application Dashboard - Locations tab.
              */
-            locationId="L726CAXF29YB8">
+            locationId={LOCATION_ID}>
             <CreditCardInput />
           </SquarePaymentsForm>
         </View>
