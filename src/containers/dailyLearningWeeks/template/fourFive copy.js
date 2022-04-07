@@ -1,14 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import commonStyles from '../commonStyles';
 import GLOBALS from '../../../constants';
-import { TextInput, View, Text } from 'react-native';
+import {TextInput, View, Text} from 'react-native';
 import ReactHtmlParser from 'react-html-parser';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import * as AppActions from '../../../actions';
-import { getItem } from '../../../utils/AsyncUtils';
-import { translate as ts } from '../../../i18n/translate';
+import {getItem} from '../../../utils/AsyncUtils';
+import {translate as ts} from '../../../i18n/translate';
 import ExerciseBox from '../../../components/ExerciseBox';
 import {
   CardQuote,
@@ -18,19 +18,8 @@ import {
   CardContent,
   CustomImage,
 } from '../../../components/Cards';
-import { customAlert } from '../../../helpers/commonAlerts.web';
-const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
-const { BOX_GRAY, GREEN_TEXT, WHITE, GRAY, RED } = COLORS;
-
-const emptyTextInputMapper = (type, order = 0) => {
-  // TODO : FOR NEW empty data
-  let temp = {
-    type: type,
-    content: '',
-    order: order + 1,
-  };
-  return temp;
-};
+const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
+const {BOX_GRAY, GREEN_TEXT, WHITE, GRAY, RED} = COLORS;
 
 const FourFive = (props) => {
   const {
@@ -64,10 +53,10 @@ const FourFive = (props) => {
   const [userName, setUserName] = useState('');
   const [userContact, setUserContact] = useState('');
 
-  const { assessmentData = {}, userAssessmentData = [] } = useSelector(
+  const {assessmentData = {}, userAssessmentData = []} = useSelector(
     (state) => state.moduleOne,
   );
-  const { headers } = assessmentData;
+  const {headers} = assessmentData;
   const dispatch = useDispatch();
   let userId = getItem('userId');
 
@@ -94,8 +83,8 @@ const FourFive = (props) => {
           header_id = item.assessment_header_id;
           assessmentId = item.assessment_header.length
             ? item.assessment_header.map((val) => {
-              return val.assessment_id;
-            })
+                return val.assessment_id;
+              })
             : null;
 
           selectedFormat.push({
@@ -122,53 +111,12 @@ const FourFive = (props) => {
     let uniqueArray = Array.from(uniqueSet).map(JSON.parse);
     let firstAssessmentContent = uniqueArray.length
       ? uniqueArray.filter((ele) =>
-        ele.assessment_id !== undefined && ele.assessment_id !== null
-          ? ele.assessment_id[0] === assessment_id
-          : null,
-      )
+          ele.assessment_id !== undefined && ele.assessment_id !== null
+            ? ele.assessment_id[0] === assessment_id
+            : null,
+        )
       : [];
     setUserInputs(firstAssessmentContent);
-
-    /**Add saved value in array */
-    if (inputs.length > 0) {
-      let modInput = inputs.map((item, index) => {
-        return {
-          ...item,
-          content: userInputs.filter(ele => ele.assessment_header_id == item._id).length > 0 ?
-            userInputs.filter(ele => ele.assessment_header_id == item._id)[0].content : []
-        }
-      });
-      let new_modInput = modInput.map(item => {
-        if (item.content.length == 0) {
-          let newItem = [];
-          newItem.push(emptyTextInputMapper("first"))
-          newItem.push(emptyTextInputMapper("second"))
-          return {
-            ...item,
-            content: newItem
-          }
-        } else {
-          let newItem = [];
-          let leftOrder = 0;
-          let rightOrder = 0;
-          let leftItem = item.content.filter(item => item.type == "first");
-          let rightItem = item.content.filter(item => item.type == "second");
-          if (leftItem.length > 0)
-            leftOrder = Math.max.apply(Math, leftItem.map(function (o) { return o.order; }));
-          if (rightItem.length > 0)
-            rightOrder = Math.max.apply(Math, rightItem.map(function (o) { return o.order; }));
-
-          newItem.push(...item.content)
-          newItem.push(emptyTextInputMapper("first", leftOrder))
-          newItem.push(emptyTextInputMapper("second", rightOrder))
-          return {
-            ...item,
-            content: newItem
-          }
-        }
-      })
-      setInputs(new_modInput);
-    }
   }, [userAssessmentData]);
 
   useEffect(() => {
@@ -187,7 +135,6 @@ const FourFive = (props) => {
             order: item.order,
             value: '',
             _id: item._id,
-
           };
         }),
       );
@@ -202,44 +149,44 @@ const FourFive = (props) => {
     setInputVisible(false);
     const updatedInputs = inputs.length
       ? inputs.map((val) => {
-        if (val.name === item.name) {
-          if (type === 'first') {
-            setFirstValue({
-              content:
-                val.name === item.name
-                  ? text
-                  : val.value !== ''
+          if (val.name === item.name) {
+            if (type === 'first') {
+              setFirstValue({
+                content:
+                  val.name === item.name
+                    ? text
+                    : val.value !== ''
                     ? val.value
                     : null,
-              type: type,
-            });
-          } else if (type === 'second') {
-            setSecondValue({
-              content:
-                val.name === item.name
-                  ? text
-                  : val.value !== ''
-                    ? val.value
-                    : null,
-              type: type,
-            });
-          }
-          return {
-            ...val,
-            content: [
-              type === 'second' ? firstValue : secondValue,
-              {
-                content: val.name === item.name ? text : val.value,
                 type: type,
-                assessment_content_id: '',
-                order: '',
-              },
-            ],
-          };
-        } else {
-          return { ...val };
-        }
-      })
+              });
+            } else if (type === 'second') {
+              setSecondValue({
+                content:
+                  val.name === item.name
+                    ? text
+                    : val.value !== ''
+                    ? val.value
+                    : null,
+                type: type,
+              });
+            }
+            return {
+              ...val,
+              content: [
+                type === 'second' ? firstValue : secondValue,
+                {
+                  content: val.name === item.name ? text : val.value,
+                  type: type,
+                  assessment_content_id: '',
+                  order: '',
+                },
+              ],
+            };
+          } else {
+            return {...val};
+          }
+        })
       : [];
     setInputs(updatedInputs);
   };
@@ -248,12 +195,11 @@ const FourFive = (props) => {
     e.preventDefault();
     let modifyData = modifyUserInputs.length
       ? modifyUserInputs.map((item) => {
-        return {
-          assessment_header_id: item.assessment_header_id,
-          content: item.content,
-
-        };
-      })
+          return {
+            assessment_header_id: item.assessment_header_id,
+            content: item.content,
+          };
+        })
       : [];
     let firstParams = {
       user_id: userId,
@@ -261,8 +207,6 @@ const FourFive = (props) => {
       assessment_id: assessment_id,
       assessment: modifyData,
     };
-    console.log(firstParams, "firstParams");
-    // return;
     if (userInputs.length) {
       if (userAssessmentData && userAssessmentData.length) {
         dispatch(AppActions.rearrangeAssessments(firstParams, onSubmitMessage));
@@ -270,13 +214,14 @@ const FourFive = (props) => {
         dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
       }
     } else {
-      customAlert("Please perform your exercise", 'error');
-
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: 'Please perform your exercise',
+      });
     }
   };
 
   const onPlusBtnClick = (item) => {
-    console.log(userInputs, "vv");
     setInputVisible(true);
     if (userName !== '' && userContact !== '') {
       setUserContact('');
@@ -284,8 +229,8 @@ const FourFive = (props) => {
       const userInputsOrder =
         userInputs && userInputs.length
           ? userInputs
-            .filter((ele) => ele.assessment_header_id === item._id)
-            .map((val) => val.order)
+              .filter((ele) => ele.assessment_header_id === item._id)
+              .map((val) => val.order)
           : 0;
       let maxOrder = userInputsOrder.length ? Math.max(...userInputsOrder) : 0;
 
@@ -363,8 +308,8 @@ const FourFive = (props) => {
     let contentIds =
       val.content && val.content.length
         ? val.content.map((item) => {
-          return item.content_id !== undefined ? item.content_id : {};
-        })
+            return item.content_id !== undefined ? item.content_id : {};
+          })
         : null;
     var emptyObjectCheck = contentIds.filter(
       (value) => Object.keys(value).length !== 0,
@@ -382,7 +327,6 @@ const FourFive = (props) => {
   };
 
   const setInputValue = (val, type) => {
-    console.log(val, "val.....")
     let filterValue;
     if (val !== undefined) {
       if (type === 'first') {
@@ -393,28 +337,27 @@ const FourFive = (props) => {
       let input =
         filterValue && filterValue.length
           ? filterValue.map((e) => {
-            return e.content;
-          })
+              return e.content;
+            })
           : null;
       return input;
     }
   };
 
   return (
-
     <>
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardQuote
-                key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardQuote
+                  key={index}
+                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                />
+              );
+            })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -426,46 +369,46 @@ const FourFive = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardDescription
-                key={index}
-                description={ReactHtmlParser(item.desc)}
-              />
-            );
-          })
-        : []}
-
-      {/***************************ASSESSMENTS DESCRIPTION ONE ************* */}
-      <div style={{ ...commonStyles.assessmentWrapper, marginBottom: '50px' }}>
-        {images && images.length
-          ? images
-            .filter((img) => img.image_type === 'first')
-            .map((item, i) => {
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
               return (
-                <CustomImage
-                  key={i}
-                  src={`${IMAGE_BASE_URL}${item.image}`}
-                  style={{
-                    ...commonStyles.assessImage,
-                    display: item.image !== '' ? 'flex' : 'none',
-                  }}
+                <CardDescription
+                  key={index}
+                  description={ReactHtmlParser(item.desc)}
                 />
               );
             })
+        : []}
+
+      {/***************************ASSESSMENTS DESCRIPTION ONE ************* */}
+      <div style={{...commonStyles.assessmentWrapper, marginBottom: '50px'}}>
+        {images && images.length
+          ? images
+              .filter((img) => img.image_type === 'first')
+              .map((item, i) => {
+                return (
+                  <CustomImage
+                    key={i}
+                    src={`${IMAGE_BASE_URL}${item.image}`}
+                    style={{
+                      ...commonStyles.assessImage,
+                      display: item.image !== '' ? 'flex' : 'none',
+                    }}
+                  />
+                );
+              })
           : []}
 
         {props.assessments && props.assessments.length
           ? props.assessments.map((item, i) => {
-            return (
-              <CardDescription
-                key={i}
-                style={commonStyles.assessDesc}
-                description={ReactHtmlParser(item.description)}
-              />
-            );
-          })
+              return (
+                <CardDescription
+                  key={i}
+                  style={commonStyles.assessDesc}
+                  description={ReactHtmlParser(item.description)}
+                />
+              );
+            })
           : []}
       </div>
       {/******************************************************************* */}
@@ -473,98 +416,38 @@ const FourFive = (props) => {
       {/* assessment heading */}
       {assessmentData.heading && assessmentData.heading.length
         ? assessmentData.heading.map((element) => {
-          return (
-            <View
-              style={{
-                padding: 20,
-                backgroundColor: COLORS.DARK_GREEN,
-                marginBottom: 10,
-              }}>
-              <Text style={{ color: COLORS.WHITE }}>{element.heading}</Text>
-            </View>
-          );
-        })
+            return (
+              <View
+                style={{
+                  padding: 20,
+                  backgroundColor: COLORS.DARK_GREEN,
+                  marginBottom: 10,
+                }}>
+                <Text style={{color: COLORS.WHITE}}>{element.heading}</Text>
+              </View>
+            );
+          })
         : null}
-      {console.log(inputs, "match...", userInputs)}
+
       {inputs.length
         ? inputs.map((item) => {
-          return (
-            <div>
-              <div style={{ backgroundColor: COLORS.CIRCLE_GRAY }}>
-                <p style={{ padding: '15px', color: WHITE }}>
-                  {ReactHtmlParser(item.name)}
-                </p>
-              </div>
-
-              <View style={{ flexDirection: 'row', }}>
-                <View style={{ width: '49%', }}>
-                  {item.content
-                    .sort((a, b) => (a.order > b.order && 1) || -1).map((val) => {
-                      return (
-                        <>
-                          {
-                            val.type == "first" && (
-                              <div style={styles.crossIconWrapper}>
-                                <TextInput
-                                  style={[
-                                    styles.selectedText,
-                                    {
-                                      height: '50px',
-                                      paddingLeft: 10,
-                                      paddingTop: 10,
-                                    },
-                                  ]}
-                                  placeholder={'Name'}
-                                  underlineColorAndroid="transparent"
-                                  multiline={true}
-                                  value={val.content}
-                                />
-                              </div>
-                            )}
-                        </>
-                      )
-
-                    })
-                  }
-                </View>
-                <View style={{ marginLeft: '2%', width: '49%' }}>
-                  {item.content
-                    .sort((a, b) => (a.order > b.order && 1) || -1).map((val) => {
-                      return (
-                        <>
-                          {
-                            val.type == "second" && (
-                              <div style={styles.crossIconWrapper}>
-                                <TextInput
-                                  style={[
-                                    styles.selectedText,
-                                    {
-                                      height: '50px',
-                                      paddingLeft: 10,
-                                      paddingTop: 10,
-                                    },
-                                  ]}
-                                  placeholder={'Contact'}
-                                  underlineColorAndroid="transparent"
-                                  multiline={true}
-                                  value={val.content}
-                                />
-                              </div>
-                            )}
-                        </>
-                      )
-                    })
-                  }
-                </View>
-              </View>
-              {/* <div style={styles.crossIconWrapper}>
-                {item.content
-                  .sort((a, b) => (a.order > b.order && 1) || -1).map((val) => {
-                    return (
-                      <>
-                        {
-                          val.type == "first" && (
-                            <View style={{ width: '49%' }}>
+            return (
+              <div>
+                <div style={{backgroundColor: COLORS.CIRCLE_GRAY}}>
+                  <p style={{padding: '15px', color: WHITE}}>
+                    {ReactHtmlParser(item.name)}
+                  </p>
+                </div>
+                {userInputs && userInputs.length
+                  ? userInputs
+                      .sort((a, b) => (a.order > b.order && 1) || -1)
+                      .filter((ele) => {
+                        return ele.assessment_header_id === item._id;
+                      })
+                      .map((val) => {
+                        return (
+                          <div style={styles.crossIconWrapper}>
+                            <View style={{width: '49%'}}>
                               <TextInput
                                 style={[
                                   styles.selectedText,
@@ -580,14 +463,14 @@ const FourFive = (props) => {
                                 onChangeText={(term) =>
                                   onTextChange(term, item, 'second')
                                 }
-                                value={val.content}
+                                value={
+                                  val.content && val.content.length
+                                    ? setInputValue(val.content, 'first')
+                                    : null
+                                }
                               />
-                            </View>)
-                        }
-                        {
-                          val.type == "second" && (
-                            <View style={{ marginLeft: '0%', width: '49%' }}>
-
+                            </View>
+                            <View style={{marginLeft: '2%', width: '49%'}}>
                               <TextInput
                                 style={[
                                   styles.selectedText,
@@ -603,139 +486,78 @@ const FourFive = (props) => {
                                 onChangeText={(term) =>
                                   onTextChange(term, item, 'second')
                                 }
-                                value={val.content}
-
+                                value={
+                                  val.content && val.content.length
+                                    ? setInputValue(val.content, 'second')
+                                    : null
+                                }
                                 keyboardType="numeric"
                               />
-                            </View>)}
-
-                      </>
-                    )
-                  })
-
-                } 
-              </div>*/}
-              {/* {userInputs && userInputs.length
-                ? userInputs
-                  .sort((a, b) => (a.order > b.order && 1) || -1)
-                  .filter((ele) => {
-                    return ele.assessment_header_id === item._id;
-                  })
-                  .map((val) => {
-                    return (
-                      <div style={styles.crossIconWrapper}>
-                        <View style={{ width: '49%' }}>
-                          <TextInput
-                            style={[
-                              styles.selectedText,
-                              {
-                                height: '50px',
-                                paddingLeft: 10,
-                                paddingTop: 10,
-                              },
-                            ]}
-                            placeholder={'Name'}
-                            underlineColorAndroid="transparent"
-                            multiline={true}
-                            onChangeText={(term) =>
-                              onTextChange(term, item, 'second')
-                            }
-                            value={
-                              val.content && val.content.length
-                                ? setInputValue(val.content, 'first')
-                                : null
-                            }
-                          />
-                        </View>
-                        <View style={{ marginLeft: '2%', width: '49%' }}>
-                          <TextInput
-                            style={[
-                              styles.selectedText,
-                              {
-                                height: '50px',
-                                paddingLeft: 10,
-                                paddingTop: 10,
-                              },
-                            ]}
-                            placeholder={'Contact'}
-                            underlineColorAndroid="transparent"
-                            maxLength={10}
-                            onChangeText={(term) =>
-                              onTextChange(term, item, 'second')
-                            }
-                            value={
-                              val.content && val.content.length
-                                ? setInputValue(val.content, 'second')
-                                : null
-                            }
-                            keyboardType="numeric"
-                          />
-                        </View>
-                        <div
-                          style={styles.circleCrossDiv}
-                          onClick={() => onCrossBtnClick(val)}>
-                          <span
-                            style={{
-                              ...styles.plusIcon,
-                              fontSize: '15px',
-                            }}>
-                            x
-                          </span>
-                        </div>
-                      </div>
-                    );
-                  })
-                : null} */}
-              {/* <div style={styles.plusIconWrapper} className="v-p-field">
-                <View style={{ width: '49%' }}>
-                  <TextInput
-                    style={[
-                      styles.selectedText,
-                      { height: '50px', paddingLeft: 10, paddingTop: 10 },
-                    ]}
-                    placeholder={'Name'}
-                    underlineColorAndroid="transparent"
-                    multiline={true}
-                    onChangeText={(term) => onTextChange(term, item, 'first')}
-                    value={isInputVisible ? '' : null}
-                  />
-                </View>
-                <View style={{ width: '49%', marginLeft: '2%' }}>
-                  <TextInput
-                    style={[
-                      styles.selectedText,
-                      { height: '50px', paddingLeft: 10, paddingTop: 10 },
-                    ]}
-                    placeholder={'Contact'}
-                    maxLength={10}
-                    underlineColorAndroid="transparent"
-                    onChangeText={(term) =>
-                      onTextChange(term, item, 'second')
-                    }
-                    value={isInputVisible ? '' : null}
-                    type="numeric"
-
-                  />
-                </View>
-                <div
-                  style={{
-                    ...styles.circleDiv,
-                    backgroundColor:
+                            </View>
+                            <div
+                              style={styles.circleCrossDiv}
+                              onClick={() => onCrossBtnClick(val)}>
+                              <span
+                                style={{
+                                  ...styles.plusIcon,
+                                  fontSize: '15px',
+                                }}>
+                                x
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      })
+                  : null}
+                <div style={styles.plusIconWrapper} className="v-p-field">
+                  <View style={{width: '49%'}}>
+                    <TextInput
+                      style={[
+                        styles.selectedText,
+                        {height: '50px', paddingLeft: 10, paddingTop: 10},
+                      ]}
+                      placeholder={'Name'}
+                      underlineColorAndroid="transparent"
+                      multiline={true}
+                      onChangeText={(term) => onTextChange(term, item, 'first')}
+                      value={isInputVisible ? '' : null}
+                    />
+                  </View>
+                  <View style={{width: '49%', marginLeft: '2%'}}>
+                    <TextInput
+                      style={[
+                        styles.selectedText,
+                        {height: '50px', paddingLeft: 10, paddingTop: 10},
+                      ]}
+                      placeholder={'Contact'}
+                      maxLength={10}
+                      underlineColorAndroid="transparent"
+                      onChangeText={(term) =>
+                        onTextChange(term, item, 'second')
+                      }
+                      value={isInputVisible ? '' : null}
+                      type="numeric"
+                    />
+                  </View>
+                  <div
+                    style={{
+                      ...styles.circleDiv,
+                      backgroundColor:
+                        userName !== '' && userContact !== ''
+                          ? GREEN_TEXT
+                          : GRAY,
+                    }}
+                    onClick={() => {
                       userName !== '' && userContact !== ''
-                        ? GREEN_TEXT
-                        : GRAY,
-                  }}
-                  onClick={() => {
-                    userName !== '' && userContact !== ''
-                      ? onPlusBtnClick(item)
-                      : null;
-                  }}>
-                  <span style={styles.plusIcon}>+</span>
+                        ? onPlusBtnClick(item)
+                        : null;
+                    }}>
+                    <span style={styles.plusIcon}>+</span>
+                  </div>
                 </div>
-              </div> */}
-            </div>
-          );
-        })
+              </div>
+            );
+          })
         : null}
       {inputs.length ? (
         <div style={commonStyles.buttonWrapper}>
@@ -752,12 +574,12 @@ const FourFive = (props) => {
 
       {content && content.length
         ? content
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, i) => {
-            return (
-              <CardContent key={i} content={ReactHtmlParser(item.content)} />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, i) => {
+              return (
+                <CardContent key={i} content={ReactHtmlParser(item.content)} />
+              );
+            })
         : []}
 
       {showExercises && <ExerciseBox week={week} />}
@@ -806,8 +628,8 @@ const styles = {
     justifyContent: 'center',
     marginLeft: '25px',
   },
-  button: { width: '20%', marginTop: '30px' },
-  image: { width: '100%', height: '100%' },
+  button: {width: '20%', marginTop: '30px'},
+  image: {width: '100%', height: '100%'},
   imageWrapper: {
     width: '120px',
     height: '100px',
@@ -815,7 +637,6 @@ const styles = {
   selectedText: {
     backgroundColor: '#F1F3FA',
     width: '100%',
-
   },
   circleDiv: {
     backgroundColor: GRAY,
@@ -844,11 +665,9 @@ const styles = {
     fontSize: '25px',
   },
   crossIconWrapper: {
-
     display: 'flex',
     marginBottom: '15px',
     position: 'relative',
-    flexWrap: 'wrap'
   },
   plusIconWrapper: {
     display: 'flex',
