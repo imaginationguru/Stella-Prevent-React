@@ -18,8 +18,19 @@ import {
   CardContent,
   CustomImage,
 } from '../../../components/Cards';
+import { customAlert } from '../../../helpers/commonAlerts.web';
 const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
 const { BOX_GRAY, GREEN_TEXT, WHITE, GRAY, RED } = COLORS;
+
+const emptyTextInputMapper = (type, order = 0) => {
+  // TODO : FOR NEW empty data
+  let temp = {
+    type: type,
+    content: '',
+    order: order + 1,
+  };
+  return temp;
+};
 
 const FourFive = (props) => {
   const {
@@ -118,6 +129,46 @@ const FourFive = (props) => {
       : [];
     setUserInputs(firstAssessmentContent);
 
+    /**Add saved value in array */
+    if (inputs.length > 0) {
+      let modInput = inputs.map((item, index) => {
+        return {
+          ...item,
+          content: userInputs.filter(ele => ele.assessment_header_id == item._id).length > 0 ?
+            userInputs.filter(ele => ele.assessment_header_id == item._id)[0].content : []
+        }
+      });
+      let new_modInput = modInput.map(item => {
+        if (item.content.length == 0) {
+          let newItem = [];
+          newItem.push(emptyTextInputMapper("first"))
+          newItem.push(emptyTextInputMapper("second"))
+          return {
+            ...item,
+            content: newItem
+          }
+        } else {
+          let newItem = [];
+          let leftOrder = 0;
+          let rightOrder = 0;
+          let leftItem = item.content.filter(item => item.type == "first");
+          let rightItem = item.content.filter(item => item.type == "second");
+          if (leftItem.length > 0)
+            leftOrder = Math.max.apply(Math, leftItem.map(function (o) { return o.order; }));
+          if (rightItem.length > 0)
+            rightOrder = Math.max.apply(Math, rightItem.map(function (o) { return o.order; }));
+
+          newItem.push(...item.content)
+          newItem.push(emptyTextInputMapper("first", leftOrder))
+          newItem.push(emptyTextInputMapper("second", rightOrder))
+          return {
+            ...item,
+            content: newItem
+          }
+        }
+      })
+      setInputs(new_modInput);
+    }
   }, [userAssessmentData]);
 
   useEffect(() => {
@@ -140,7 +191,6 @@ const FourFive = (props) => {
           };
         }),
       );
-
   }, [assessmentData]);
 
   const onTextChange = (text, item, type) => {
@@ -211,6 +261,8 @@ const FourFive = (props) => {
       assessment_id: assessment_id,
       assessment: modifyData,
     };
+    console.log(firstParams, "firstParams");
+    // return;
     if (userInputs.length) {
       if (userAssessmentData && userAssessmentData.length) {
         dispatch(AppActions.rearrangeAssessments(firstParams, onSubmitMessage));
@@ -218,14 +270,13 @@ const FourFive = (props) => {
         dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
       }
     } else {
-      dispatch({
-        type: ACTION_TYPE.ERROR,
-        payload: 'Please perform your exercise',
-      });
+      customAlert("Please perform your exercise", 'error');
+
     }
   };
 
   const onPlusBtnClick = (item) => {
+    console.log(userInputs, "vv");
     setInputVisible(true);
     if (userName !== '' && userContact !== '') {
       setUserContact('');
@@ -331,6 +382,7 @@ const FourFive = (props) => {
   };
 
   const setInputValue = (val, type) => {
+    console.log(val, "val.....")
     let filterValue;
     if (val !== undefined) {
       if (type === 'first') {
@@ -349,6 +401,7 @@ const FourFive = (props) => {
   };
 
   return (
+
     <>
       {/**********************quotes************** */}
       {quotes && quotes.length
@@ -432,7 +485,7 @@ const FourFive = (props) => {
           );
         })
         : null}
-
+      {console.log(inputs, "match...", userInputs)}
       {inputs.length
         ? inputs.map((item) => {
           return (
@@ -442,7 +495,127 @@ const FourFive = (props) => {
                   {ReactHtmlParser(item.name)}
                 </p>
               </div>
-              {userInputs && userInputs.length
+
+              <View style={{ flexDirection: 'row', }}>
+                <View style={{ width: '49%', }}>
+                  {item.content
+                    .sort((a, b) => (a.order > b.order && 1) || -1).map((val) => {
+                      return (
+                        <>
+                          {
+                            val.type == "first" && (
+                              <div style={styles.crossIconWrapper}>
+                                <TextInput
+                                  style={[
+                                    styles.selectedText,
+                                    {
+                                      height: '50px',
+                                      paddingLeft: 10,
+                                      paddingTop: 10,
+                                    },
+                                  ]}
+                                  placeholder={'Name'}
+                                  underlineColorAndroid="transparent"
+                                  multiline={true}
+                                  value={val.content}
+                                />
+                              </div>
+                            )}
+                        </>
+                      )
+
+                    })
+                  }
+                </View>
+                <View style={{ marginLeft: '2%', width: '49%' }}>
+                  {item.content
+                    .sort((a, b) => (a.order > b.order && 1) || -1).map((val) => {
+                      return (
+                        <>
+                          {
+                            val.type == "second" && (
+                              <div style={styles.crossIconWrapper}>
+                                <TextInput
+                                  style={[
+                                    styles.selectedText,
+                                    {
+                                      height: '50px',
+                                      paddingLeft: 10,
+                                      paddingTop: 10,
+                                    },
+                                  ]}
+                                  placeholder={'Contact'}
+                                  underlineColorAndroid="transparent"
+                                  multiline={true}
+                                  value={val.content}
+                                />
+                              </div>
+                            )}
+                        </>
+                      )
+                    })
+                  }
+                </View>
+              </View>
+              {/* <div style={styles.crossIconWrapper}>
+                {item.content
+                  .sort((a, b) => (a.order > b.order && 1) || -1).map((val) => {
+                    return (
+                      <>
+                        {
+                          val.type == "first" && (
+                            <View style={{ width: '49%' }}>
+                              <TextInput
+                                style={[
+                                  styles.selectedText,
+                                  {
+                                    height: '50px',
+                                    paddingLeft: 10,
+                                    paddingTop: 10,
+                                  },
+                                ]}
+                                placeholder={'Name'}
+                                underlineColorAndroid="transparent"
+                                multiline={true}
+                                onChangeText={(term) =>
+                                  onTextChange(term, item, 'second')
+                                }
+                                value={val.content}
+                              />
+                            </View>)
+                        }
+                        {
+                          val.type == "second" && (
+                            <View style={{ marginLeft: '0%', width: '49%' }}>
+
+                              <TextInput
+                                style={[
+                                  styles.selectedText,
+                                  {
+                                    height: '50px',
+                                    paddingLeft: 10,
+                                    paddingTop: 10,
+                                  },
+                                ]}
+                                placeholder={'Contact'}
+                                underlineColorAndroid="transparent"
+                                maxLength={10}
+                                onChangeText={(term) =>
+                                  onTextChange(term, item, 'second')
+                                }
+                                value={val.content}
+
+                                keyboardType="numeric"
+                              />
+                            </View>)}
+
+                      </>
+                    )
+                  })
+
+                } 
+              </div>*/}
+              {/* {userInputs && userInputs.length
                 ? userInputs
                   .sort((a, b) => (a.order > b.order && 1) || -1)
                   .filter((ele) => {
@@ -512,8 +685,8 @@ const FourFive = (props) => {
                       </div>
                     );
                   })
-                : null}
-              <div style={styles.plusIconWrapper} className="v-p-field">
+                : null} */}
+              {/* <div style={styles.plusIconWrapper} className="v-p-field">
                 <View style={{ width: '49%' }}>
                   <TextInput
                     style={[
@@ -559,7 +732,7 @@ const FourFive = (props) => {
                   }}>
                   <span style={styles.plusIcon}>+</span>
                 </div>
-              </div>
+              </div> */}
             </div>
           );
         })
@@ -675,6 +848,7 @@ const styles = {
     display: 'flex',
     marginBottom: '15px',
     position: 'relative',
+    flexWrap: 'wrap'
   },
   plusIconWrapper: {
     display: 'flex',

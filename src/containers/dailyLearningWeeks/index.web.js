@@ -97,7 +97,7 @@ const DailyLearningWeeks = (props) => {
         });
         if (data && data._id) {
           setScrollerLoad(false);
-          cardDataHandler(data);
+          cardDataHandler(data, false);
         }
       }
     }
@@ -146,17 +146,21 @@ const DailyLearningWeeks = (props) => {
     .filter((item) => item.week === selectedWeek && item.day === selectedDay)
     .map((item) => item._id);
 
-  const cardDataHandler = (data) => {
+  const cardDataHandler = (data, clear_assesment = true) => {
+
     if (isScrollerLoad) {
       window.scrollTo(0, 200);
       setScrollerLoad(false);
     }
-    dispatch({
-      type: GLOBALS.ACTION_TYPE.GET_USER_ASSESSMENT_SUCCESS,
-      payload: [],
-    });
+    if (clear_assesment) {
+      dispatch({
+        type: GLOBALS.ACTION_TYPE.GET_USER_ASSESSMENT_SUCCESS,
+        payload: [],
+      });
+    }
+
     setCurrentData(data);
-    console.log('set current data', cIds);
+    console.log('set current data', cIds, data);
     if (cIds.length) {
       const currentIndex = cIds.findIndex((item) => item === data._id);
       let nextId = '';
@@ -273,7 +277,7 @@ const DailyLearningWeeks = (props) => {
   const onNextDayClick = () => {
     completeCardAPI(true);
     if (
-      loginData?.planInfo?.numericPrice == 0 &&
+      loginData?.planInfo?.price == 0 &&
       currentData.day === 2 &&
       lastDay
     ) {
@@ -337,9 +341,9 @@ const DailyLearningWeeks = (props) => {
               <div className="n-content">
                 {/* ***********************************Navbar Start********************** */}
                 <div>
-                  <p style={{color: COLORS.GREEN_TEXT, fontWeight: 'bold'}}>
+                  <p style={{ color: COLORS.GREEN_TEXT, fontWeight: 'bold' }}>
                     Home /
-                    <span style={{color: COLORS.GRAY1, fontWeight: 'bold'}}>
+                    <span style={{ color: COLORS.GRAY1, fontWeight: 'bold' }}>
                       {''}
                       Module{' '}
                       {/* {weeksCount === undefined
@@ -352,51 +356,11 @@ const DailyLearningWeeks = (props) => {
 
                 {templateData.length ? (
                   <>
-                    {/* <Header
-                      data={templateData}
-                      currentDay={selectedDay}
-                      isDisabled={applicableDay()}
-                      onDayChange={(val) => {
-                        console.log(val, 'val....');
-                        const isClickable = applicableDay().length
-                          ? applicableDay().some((e) => {
-                            return e.day === val && e.isDisabled === false;
-                          })
-                          : false;
-                        if (isClickable) {
-                          dispatch({
-                            type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
-                            payload: val,
-                          });
-                          dispatch({
-                            type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                            payload: '',
-                          });
-                        } else if (
-                          loginData?.planInfo?.numericPrice == 0 &&
-                          val > 2
-                        ) {
-                          customAlert(
-                            "You've reached your free content limit. Please upgrade your plan.",
-                            'error',
-                            { showCloseButton: true },
-                            'Upgrade',
-                            _onPressUpgrade,
-                          );
-                          return;
-                        } else {
-                          customAlert(`Content not unlocked`, 'error');
-                        
-                        }
-                      }}
-                    /> */}
                     <SubHeader
                       data={templateData.filter(
                         (item) => item.day === selectedDay,
                       )}
                       isDisabled={cardsColorDisable()}
-                      // isDisabled={applicableCards(currentData._id)}
-                      // onCardChange={(id) => setCurrentCardId(id)}
                       onCardChange={(id, i) => {
                         const isClickable = id ? applicableCards(id) : false;
 
@@ -411,21 +375,7 @@ const DailyLearningWeeks = (props) => {
                             payload: id,
                           });
                         }
-                        // if (
-                        //   currentData.is_disabled == false &&
-                        //   currentData.is_read == true &&
-                        //   currentData.is_completed == true
-                        // ) {
-                        //   dispatch({
-                        //     type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                        //     payload: id,
-                        //   });
-                        // } else {
-                        //   customAlert(
-                        //     'Please complete the previous card',
-                        //     'error',
-                        //   );
-                        // }
+
                         else if (
                           currentData.is_disabled == false &&
                           currentData.is_read == true &&
@@ -440,10 +390,6 @@ const DailyLearningWeeks = (props) => {
                         } else {
                           console.log('else??????');
                           customAlert('Please read previous card', 'error');
-                          // dispatch({
-                          //   type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
-                          //   payload: id,
-                          // });
                         }
                       }}
                       cardNumber={currentData.card_number || ''}

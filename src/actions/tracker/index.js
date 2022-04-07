@@ -7,18 +7,18 @@ import {
   clearSuccessAction,
   clearSessionExpiredAction,
 } from '../common';
-import {getItem} from '../../utils/AsyncUtils';
+import { getItem } from '../../utils/AsyncUtils';
 import {
   navigatorPush,
   navigatorPop,
   navigatortoStart,
-} from '../../config/navigationOptions';
+} from '../../config/navigationOptions.web';
 import moment from 'moment';
-import {customAlert} from '../../helpers/commonAlerts.web';
+import { customAlert } from '../../helpers/commonAlerts.web';
 import history from '../../helpers/history';
 
-const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
-const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
+const { ACTION_TYPE, URL, STRINGS } = GLOBALS;
+const { TRY_AGAIN, CHECK_NETWORK } = STRINGS;
 
 export const sessionExpire = (message) => {
   return async (dispatch) => {
@@ -44,7 +44,7 @@ export const sessionExpire = (message) => {
 export function getMoodData(date) {
   let userId = getItem('userId');
   return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.GET_MOOD_REQUEST});
+    dispatch({ type: ACTION_TYPE.GET_MOOD_REQUEST });
     try {
       dispatch(loadingAction(true));
       let params = {
@@ -98,13 +98,13 @@ export function saveUserMood(params) {
       ...params,
       user_id: userId,
     };
-    dispatch({type: ACTION_TYPE.SAVE_MOOD_REQUEST});
+    dispatch({ type: ACTION_TYPE.SAVE_MOOD_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.SAVE_MOOD_API, postData);
       if (json.code === 200) {
         customAlert(json.message, 'success', {}, null, (onPress) => {
-          dispatch(navigatorPop());
+          navigatorPop()
         });
         dispatch({
           type: ACTION_TYPE.SAVE_MOOD_SUCCESS,
@@ -146,7 +146,7 @@ export function saveUserMood(params) {
 export function getActivityTracker(params) {
   let userId = getItem('userId');
   return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.GET_ACTIVITY_TRACKER_REQUEST});
+    dispatch({ type: ACTION_TYPE.GET_ACTIVITY_TRACKER_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(
@@ -193,7 +193,7 @@ export function getActivityTracker(params) {
 export function getSelectedActivityTracker(params) {
   let userId = getItem('userId');
   return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.GET_SELECTED_ACTIVITY_TRACKER_REQUEST});
+    dispatch({ type: ACTION_TYPE.GET_SELECTED_ACTIVITY_TRACKER_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(
@@ -245,7 +245,7 @@ export function saveActivityTracker(params) {
     patientDate: moment().format(STRINGS.DATE_FORMATE),
   };
   return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.SAVE_OTHER_ACTIVITY_REQUEST});
+    dispatch({ type: ACTION_TYPE.SAVE_OTHER_ACTIVITY_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.SAVE_ACTIVITY_API, params);
@@ -255,7 +255,7 @@ export function saveActivityTracker(params) {
           payload: json.data,
         });
         customAlert(json.message, 'success', {}, null, (onPress) => {
-          dispatch(navigatorPop());
+          navigatorPop();
         });
 
         dispatch(loadingAction(false));
@@ -297,7 +297,7 @@ export function saveSleepTracker(params, postDataGetAPI) {
       ...params,
       user_id: userId,
     };
-    dispatch({type: ACTION_TYPE.SAVE_SLEEP_TRACKER_REQUEST});
+    dispatch({ type: ACTION_TYPE.SAVE_SLEEP_TRACKER_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.SAVE_SLEEP_API, postData);
@@ -310,7 +310,7 @@ export function saveSleepTracker(params, postDataGetAPI) {
         dispatch(getSleepData(postDataGetAPI));
         dispatch(loadingAction(false));
         customAlert(json.message, 'success', {}, null, (onPress) => {
-          dispatch(navigatorPop());
+          navigatorPop();
         });
       } else {
         if (json.code === 400) {
@@ -351,7 +351,7 @@ export function getSleepData(params) {
     user_id: userId,
   };
   return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.GET_SLEEP_TRACKER_REQUEST});
+    dispatch({ type: ACTION_TYPE.GET_SLEEP_TRACKER_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.GET_SLEEP_TRACKER_API, postData);
@@ -396,7 +396,7 @@ export function getSleepData(params) {
 
 export function getWeeklySummaryReport(params) {
   return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_REQUEST});
+    dispatch({ type: ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.GET_WEEKLY_SUMMARY_API, params);

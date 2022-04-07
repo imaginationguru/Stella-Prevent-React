@@ -1,7 +1,7 @@
 import Swal from 'sweetalert2';
 import GLOBALS from '../constants';
-import {Dimensions} from 'react-native-web';
-const {COLORS, FONTS} = GLOBALS;
+import { Dimensions } from 'react-native-web';
+const { COLORS, FONTS } = GLOBALS;
 const DEVICE_WIDTH = Dimensions.get('window').width;
 export const customAlert = (
   text,
@@ -20,7 +20,9 @@ export const customAlert = (
     confirmButtonText: confirmButtonTitle ? confirmButtonTitle : 'OK',
 
     ...custom,
-   }).then((result) => {
+  }
+  ).then(function (result) {
+    console.log(result, "result", onPress)
     if (result.isConfirmed) {
       onPress ? onPress() : null;
     }

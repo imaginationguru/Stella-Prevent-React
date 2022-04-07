@@ -102,7 +102,7 @@ function ProfileDetails(props) {
       setCountry(loginData.user.countryName);
       setZipcode(loginData.user.zipcode);
       setCity(loginData.user.city ? loginData.user.city : '');
-      setAge(loginData.user.ageYear + 'Y');
+      setAge(loginData.user.ageYear ? loginData.user.ageYear + 'Y' : '');
       let temp_language = language.map((el) =>
         el.value === loginData.user.language
           ? { ...el, isSelected: true }
@@ -295,7 +295,7 @@ function ProfileDetails(props) {
                 fontSize: '16px',
               }}
               title={
-                loginData?.planInfo?.numericPrice == 0
+                loginData?.planInfo?.price == 0
                   ? 'Upgrade'
                   : 'View Plans'
               }

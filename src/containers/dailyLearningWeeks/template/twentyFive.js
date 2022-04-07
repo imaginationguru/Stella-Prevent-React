@@ -16,6 +16,7 @@ import {
   CardContent,
 } from '../../../components/Cards';
 import { Dimensions } from 'react-native-web';
+import { customAlert } from '../../../helpers/commonAlerts.web';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const { COLORS } = GLOBALS;
 const { WHITE } = COLORS;

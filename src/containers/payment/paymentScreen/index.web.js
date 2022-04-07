@@ -194,7 +194,7 @@ const Payment = (props) => {
                 <TouchableOpacity
                   onPress={() =>
                     window.open(
-                      `${IMAGE_BASE_URL}upload/PRIVACY_POLICY0203_stella.pdf`,
+                      `${IMAGE_BASE_URL}upload/PRIVACY_POLICY0203.pdf`,
                       '_blank',
                     )
                   }>
@@ -271,7 +271,12 @@ const Payment = (props) => {
              * Identifies the location of the merchant that is taking the payment.
              * Obtained from the Square Application Dashboard - Locations tab.
              */
-            locationId={LOCATION_ID}>
+            locationId={LOCATION_ID}
+
+          // overrides={({
+          //   scriptSrc: "https://web.squarecdn.com/v1/square.js"
+          // })}
+          >
             <CreditCardInput />
           </SquarePaymentsForm>
         </View>
