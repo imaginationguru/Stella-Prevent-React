@@ -11,20 +11,20 @@ import Angry from '../assets/images/angry/angry.png';
 import AngryActive from '../assets/images/angryActive/angryActive.png';
 //import { BASE_URL, IMAGE_BASE_URL } from 'react-native-dotenv';
 
-const isLive = true;
+const isLive = false;
 export default {
-  BASE_URL: isLive
-    ? 'https://mamalift.curiodigitaltx.com/api/'
-    : 'http://52.170.117.197/api/', //DEV
-  IMAGE_BASE_URL: isLive
-    ? 'https://mamalift.curiodigitaltx.com/' //Prod
-    : 'http://52.170.117.197/', //dev
+  // BASE_URL: isLive
+  //   ? 'https://mamalift.curiodigitaltx.com/api/'
+  //   : 'http://52.170.117.197/api/', //DEV
+  // IMAGE_BASE_URL: isLive
+  //   ? 'https://mamalift.curiodigitaltx.com/' //Prod
+  //   : 'http://52.170.117.197/', //dev
 
-  WEB_BASE_URL: 'https://mamalift-web.curiodigitaltx.com/',
+  // WEB_BASE_URL: 'https://mamalift-web.curiodigitaltx.com/',
 
-  // BASE_URL: 'https://mamalift-qa.curio-dtx.com/api/',
-  // IMAGE_BASE_URL: 'https://mamalift-qa.curio-dtx.com/', //QA
-  // WEB_BASE_URL: 'https://mamalift-qa-web.curio-dtx.com/',
+  BASE_URL: 'https://mamalift-qa.curio-dtx.com/api/',
+  IMAGE_BASE_URL: 'https://mamalift-qa.curio-dtx.com/', //QA
+  WEB_BASE_URL: 'https://mamalift-qa-web.curio-dtx.com/',
 
   // BASE_URL: 'https://mamalift-uat.curio-dtx.com/api/',
   // IMAGE_BASE_URL: 'https://mamalift-uat.curio-dtx.com/', //UAT
@@ -34,7 +34,7 @@ export default {
     ? 'sq0idp-EresRbLbMTgKRAuhD5ScNEA'
     : 'sandbox-sq0idb-WPw6oJXhJty7VgI9HN3Edw', //1.5 stella
 
-  LOCATION_ID: isLive ? 'LR3OMWYVRCMX8' : 'L726CAXF29YB8', //1.5 stella
+  LOCATION_ID: isLive ? 'LR30MWYVRCMX8' : 'L726CAXF29YB8', //1.5 stella
   URL: {
     LOGIN: 'login',
     REGISTER: 'register',
