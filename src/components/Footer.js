@@ -1,9 +1,6 @@
-import React from 'react';
-import {translate as ts} from '../i18n/translate';
 import {Link} from 'react-router-dom';
-import {navigatorPush} from '../config/navigationOptions.web';
-import footerlogo from '../assets/images/footerlogo.svg';
-import GLOBALS from '../constants';
+import footerlogo from '@assets/images/footerlogo.svg';
+import GLOBALS from '@constants';
 const {IMAGE_BASE_URL} = GLOBALS;
 const Footer = () => {
   return (
