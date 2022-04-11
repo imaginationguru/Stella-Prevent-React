@@ -1,15 +1,14 @@
-import * as Images from '../assets/images/index.js';
-import VeryHappy from '../assets/images/veryHappy/veryHappy.png';
-import VeryHappyActive from '../assets/images/veryHappyActive/veryHappyActive.png';
-import Happy from '../assets/images/happy/happy.png';
-import HappyActive from '../assets/images/happyActive/happyActive.png';
-import Confused from '../assets/images/confused/confused.png';
-import ConfusedActive from '../assets/images/confusedActive/confusedActive.png';
-import Sad from '../assets/images/sad/sad.png';
-import SadActive from '../assets/images/sadActive/sadActive.png';
-import Angry from '../assets/images/angry/angry.png';
-import AngryActive from '../assets/images/angryActive/angryActive.png';
-//import { BASE_URL, IMAGE_BASE_URL } from 'react-native-dotenv';
+import VeryHappy from '@assets/images/veryHappy/veryHappy.png';
+import VeryHappyActive from '@assets/images/veryHappyActive/veryHappyActive.png';
+import Happy from '@assets/images/happy/happy.png';
+import HappyActive from '@assets/images/happyActive/happyActive.png';
+import Confused from '@assets/images/confused/confused.png';
+import ConfusedActive from '@assets/images/confusedActive/confusedActive.png';
+import Sad from '@assets/images/sad/sad.png';
+import SadActive from '@assets/images/sadActive/sadActive.png';
+import Angry from '@assets/images/angry/angry.png';
+import AngryActive from '@assets/images/angryActive/angryActive.png';
+
 import {ENV} from './env';
 const isLive = true;
 const getEnvBasedUrl = () => {
@@ -17,13 +16,19 @@ const getEnvBasedUrl = () => {
   let BASE_URL = '';
   let IMAGE_BASE_URL = '';
   let WEB_BASE_URL = '';
+  let squareAppId = '';
+  let LOCATION_ID = '';
   if (ENV === 'DEV') {
     BASE_URL = 'http://52.170.117.197/api/';
     IMAGE_BASE_URL = 'http://52.170.117.197/';
+    squareAppId = 'sandbox-sq0idb-WPw6oJXhJty7VgI9HN3Edw';
+    LOCATION_ID = 'L726CAXF29YB8';
   }
   if (ENV === 'PROD') {
     BASE_URL = 'https://mamalift.curiodigitaltx.com/api/';
     IMAGE_BASE_URL = 'https://mamalift.curiodigitaltx.com/';
+    squareAppId = 'sq0idp-EresRbLbMTgKRAuhD5ScNEA';
+    LOCATION_ID = 'LR3OMWYVRCMX8';
   }
   if (ENV === 'QA') {
     BASE_URL = 'https://mamalift-qa.curio-dtx.com/api/';
@@ -35,13 +40,15 @@ const getEnvBasedUrl = () => {
     IMAGE_BASE_URL = 'https://mamalift-uat.curio-dtx.com/';
     WEB_BASE_URL = 'https://mamalift-uat-web.curio-dtx.com/';
   }
-  return {BASE_URL, IMAGE_BASE_URL, WEB_BASE_URL};
+  return {BASE_URL, IMAGE_BASE_URL, WEB_BASE_URL, squareAppId, LOCATION_ID};
 };
 console.log('get BASE URL', getEnvBasedUrl());
 export default {
   BASE_URL: getEnvBasedUrl().BASE_URL,
   IMAGE_BASE_URL: getEnvBasedUrl().IMAGE_BASE_URL,
   WEB_BASE_URL: getEnvBasedUrl().WEB_BASE_URL,
+  squareAppId: getEnvBasedUrl().squareAppId,
+  LOCATION_ID: getEnvBasedUrl().LOCATION_ID,
   // BASE_URL: isLive
   //   ? 'https://mamalift.curiodigitaltx.com/api/' //prod
   //   : 'http://52.170.117.197/api/', //DEV
@@ -59,11 +66,11 @@ export default {
   // IMAGE_BASE_URL: 'https://mamalift-uat.curio-dtx.com/', //UAT
   // WEB_BASE_URL: 'https://mamalift-uat-web.curio-dtx.com/',
   /********************************** * URL ***********************************/
-  squareAppId: isLive
-    ? 'sq0idp-EresRbLbMTgKRAuhD5ScNEA'
-    : 'sandbox-sq0idb-WPw6oJXhJty7VgI9HN3Edw', //1.5 stella
+  // squareAppId: isLive
+  //   ? 'sq0idp-EresRbLbMTgKRAuhD5ScNEA'
+  //   : 'sandbox-sq0idb-WPw6oJXhJty7VgI9HN3Edw', //1.5 stella
 
-  LOCATION_ID: isLive ? 'LR3OMWYVRCMX8' : 'L726CAXF29YB8', //1.5 stella
+  // LOCATION_ID: isLive ? 'LR3OMWYVRCMX8' : 'L726CAXF29YB8', //1.5 stella
   URL: {
     LOGIN: 'login',
     REGISTER: 'register',
