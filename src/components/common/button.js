@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, Pressable, StyleSheet} from 'react-native';
-import GLOBALS from '../../constants';
-const {COLORS, FONTS} = GLOBALS;
+import {Text, Pressable, StyleSheet} from 'react-native';
+import GLOBALS from '@constants';
+const {FONTS} = GLOBALS;
 const Button = (props) => {
   let {
     title,

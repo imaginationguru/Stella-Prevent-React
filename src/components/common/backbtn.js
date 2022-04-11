@@ -1,39 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {navigatorPop, goToPastModule} from '@config/navigationOptions.web';
+import back from '@assets/images/subscription/back.png';
+import GLOBALS from '@constants';
 
-import {
-  navigatorPush,
-  navigatorPop,
-  goToPastModule,
-} from '../../config/navigationOptions.web';
-import back from '../../assets/images/subscription/back.png';
-import GLOBALS from '../../constants';
-const DEVICE_WIDTH = Dimensions.get('window').width;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
-const { COLORS, FONTS } = GLOBALS;
+const {COLORS, FONTS} = GLOBALS;
 const BackBtn = (props) => {
-  let {
-    title = 'Back to Dashboard',
-    bgColor,
-    textColor,
-    onVerifyPress,
-    btnStyle,
-    textStyle,
-    isDisabled = false,
-    goBack = true,
-  } = props;
+  let {title = 'Back to Dashboard', btnStyle, goBack = true} = props;
   return (
     <View style={[styles.backBtn, btnStyle]}>
       <TouchableOpacity
-        style={{ flexDirection: 'row', alignItems: 'center' }}
+        style={{flexDirection: 'row', alignItems: 'center'}}
         onPress={() => {
           goBack ? navigatorPop() : goToPastModule();
         }}>
@@ -41,7 +17,6 @@ const BackBtn = (props) => {
           resizeMode={'contain'}
           source={back}
           style={{
-
             width: 14,
             height: 14,
           }}

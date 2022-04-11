@@ -1,33 +1,30 @@
-import React, { useState, useRef, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import {
   View,
   Text,
-  Animated,
-  Pressable,
   StyleSheet,
   FlatList,
   ScrollView,
   TouchableOpacity,
   Image,
 } from 'react-native';
-import GLOBALS from '../../constants';
-import { screenHeight, screenWidth } from '../../utils/dimension';
-import reloadImg from '../../assets/images/screener/restart.png';
-import leftArrow from '../../assets/images/leftArrow.svg';
-import cancel from '../../assets/images/cancel.png';
-const { COLORS, FONTS, ACTION_TYPE } = GLOBALS;
-const { BLUR, WHITE, HEADING_BLACK, BLACK, DARK_GREEN } = COLORS;
+import GLOBALS from '@constants';
+import {screenWidth} from '@utils/dimension';
+import reloadImg from '@assets/images/screener/restart.png';
+import leftArrow from '@assets/images/leftArrow.svg';
+import cancel from '@assets/images/cancel.png';
 import Button from './button';
 import RadioButton from '../RadioButton';
-import { useSelector, useDispatch } from 'react-redux';
-import { getItem } from '../../utils/AsyncUtils';
-import * as AppActions from '../../actions';
+import {useSelector, useDispatch} from 'react-redux';
+import {getItem} from '@utils/AsyncUtils';
+const {COLORS, FONTS} = GLOBALS;
+const {BLUR, WHITE, BLACK, DARK_GREEN} = COLORS;
 const EpdsScreener = (props) => {
-  let { saveEPDSAssememt, onClose, startIndex } = props;
+  let {saveEPDSAssememt, onClose, startIndex} = props;
   const [currentQus, setCurrentQus] = useState(1);
   const [selectedQues, setSelectedQues] = useState([]);
   const [assessmentId, setAssessmentId] = useState();
-  const { userQuestion = [] } = useSelector((state) => state.moduleOne);
+  const {userQuestion = []} = useSelector((state) => state.moduleOne);
   const [currentIndex, setCurrentIndex] = useState(startIndex);
   const [allQuestions, updateQuestion] = useState(userQuestion);
   const [hover, setHover] = useState(false);
@@ -43,14 +40,14 @@ const EpdsScreener = (props) => {
           question_id: item._id,
           options: item.options.length
             ? item.options.map((val) => {
-              let obj2 = { ...val };
-              if (val.status) {
-                obj2.status = val.status;
-              } else {
-                obj2.status = false;
-              }
-              return obj2;
-            })
+                let obj2 = {...val};
+                if (val.status) {
+                  obj2.status = val.status;
+                } else {
+                  obj2.status = false;
+                }
+                return obj2;
+              })
             : [],
         };
       });
@@ -70,14 +67,14 @@ const EpdsScreener = (props) => {
           question_id: item._id,
           options: item.options.length
             ? item.options.map((val) => {
-              let obj2 = { ...val };
-              if (val.status) {
-                obj2.status = val.status;
-              } else {
-                obj2.status = false;
-              }
-              return obj2;
-            })
+                let obj2 = {...val};
+                if (val.status) {
+                  obj2.status = val.status;
+                } else {
+                  obj2.status = false;
+                }
+                return obj2;
+              })
             : [],
         };
       });
@@ -143,7 +140,6 @@ const EpdsScreener = (props) => {
     setHover(false);
   };
 
-
   return (
     <View style={styles.outerContainer}>
       <TouchableOpacity style={styles.closeContainer} onPress={() => onClose()}>
@@ -160,7 +156,7 @@ const EpdsScreener = (props) => {
               questions.{' '}
             </Text>
           ) : (
-            <View style={{ flexDirection: 'row', flex: 1 }}>
+            <View style={{flexDirection: 'row', flex: 1}}>
               {currentIndex > 0 ? (
                 <TouchableOpacity
                   onPress={handlePrevQus}
@@ -180,33 +176,33 @@ const EpdsScreener = (props) => {
           <View style={styles.optionContainer}>
             {currentIndex > -1 && allQuestions[currentIndex] !== undefined
               ? allQuestions[currentIndex].options.map((item, index) => {
-                return (
-                  <View style={styles.optionInnerContainer}>
-                    <RadioButton
-                      selectedOption={item.status}
-                      outerStyle={styles.outerCheckbox}
-                      innerStyle={[
-                        styles.outerCheckbox,
-                        { borderWidth: 17, borderRadius: '4vw' },
-                      ]}
-                      label={item.optionValue}
-                      onPress={() =>
-                        onItemSelected(
-                          item.optionValue,
-                          item,
-                          userQuestion[currentQus],
-                          index,
-                        )
-                      }
-                    />
-                  </View>
-                );
-              })
+                  return (
+                    <View style={styles.optionInnerContainer}>
+                      <RadioButton
+                        selectedOption={item.status}
+                        outerStyle={styles.outerCheckbox}
+                        innerStyle={[
+                          styles.outerCheckbox,
+                          {borderWidth: 17, borderRadius: '4vw'},
+                        ]}
+                        label={item.optionValue}
+                        onPress={() =>
+                          onItemSelected(
+                            item.optionValue,
+                            item,
+                            userQuestion[currentQus],
+                            index,
+                          )
+                        }
+                      />
+                    </View>
+                  );
+                })
               : null}
           </View>
           {currentIndex == -1 ? (
             <Button
-              btnStyle={{ width: '15%', alignSelf: 'center' }}
+              btnStyle={{width: '15%', alignSelf: 'center'}}
               onVerifyPress={() => setCurrentIndex(0)}
               title="Get Started"
               bgColor={DARK_GREEN}
@@ -239,7 +235,7 @@ const EpdsScreener = (props) => {
                       fontStyle: FONTS.NEW_REGULAR,
                       fontSize: '1vw',
                       color: COLORS.WHITE,
-                      alignSelf: "center"
+                      alignSelf: 'center',
                     }}>
                     Reset answers
                   </Text>
