@@ -1,7 +1,7 @@
-import store from '../store/setup';
+import store from '@store/setup';
 import CryptoJS from 'crypto-js';
 import {useDispatch, useSelector} from 'react-redux';
-import GLOBALS from '../constants';
+import GLOBALS from '@constants';
 const {STRINGS} = GLOBALS;
 const isInternet = () => window.navigator.onLine;
 let accessToken = () => store.getState().authReducer.loginToken;
