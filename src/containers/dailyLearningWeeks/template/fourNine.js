@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import commonStyles from '../commonStyles';
 import ReactHtmlParser from 'react-html-parser';
-import GLOBALS from '../../../constants';
-import { useDispatch, useSelector } from 'react-redux';
-import { getItem } from '../../../utils/AsyncUtils';
-import * as AppActions from '../../../actions';
-import { translate as ts } from '../../../i18n/translate';
-import ExerciseBox from '../../../components/ExerciseBox';
+import GLOBALS from '@constants';
+import {useDispatch, useSelector} from 'react-redux';
+import {getItem} from '@utils/AsyncUtils';
+import * as AppActions from '@actions';
+import {translate as ts} from '@i18n/translate';
+import ExerciseBox from '@components/ExerciseBox';
 import {
   CardQuote,
   CardTitle,
@@ -14,10 +14,10 @@ import {
   CardDescription,
   CardContent,
   CustomImage,
-} from '../../../components/Cards';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-const { IMAGE_BASE_URL, ACTION_TYPE, COLORS } = GLOBALS;
-const { BOX_GRAY, WHITE } = COLORS;
+} from '@components/Cards';
+import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
+const {IMAGE_BASE_URL, ACTION_TYPE, COLORS} = GLOBALS;
+const {BOX_GRAY, WHITE} = COLORS;
 const unique = (arr, keyProps) => {
   const kvArray = arr
     .sort((a, b) => (a.order > b.order && 1) || -1)
@@ -45,7 +45,7 @@ const onlySingleId = (arr = []) => {
           q.push(...cn);
         });
       }
-      temp.push({ assessment_header_id: item, content: q });
+      temp.push({assessment_header_id: item, content: q});
     });
     return temp;
   }
@@ -79,7 +79,7 @@ const getListStyle = (isDraggingOver) => ({
 const FourNine = (props) => {
   const [optionDataContent, setOptionDataContent] = useState([]);
   const [headerParams, setHeaderParams] = useState([]);
-  const { assessmentData = {}, userAssessmentData = [] } = useSelector(
+  const {assessmentData = {}, userAssessmentData = []} = useSelector(
     (state) => state.moduleOne,
   );
   const [dragCardData, setDragCardData] = useState([]);
@@ -97,22 +97,22 @@ const FourNine = (props) => {
     );
     const matchData = item.length
       ? item.filter((val, index) => {
-        return val.order === index;
-      })
+          return val.order === index;
+        })
       : [];
     const formatData = matchData.length
       ? matchData.map((val) => {
-        return {
-          assessment_header_id: val.assessment_header_id,
-          content: [
-            {
-              assessment_content_id: val._id,
-              content: val.content,
-              order: val.order,
-            },
-          ],
-        };
-      })
+          return {
+            assessment_header_id: val.assessment_header_id,
+            content: [
+              {
+                assessment_content_id: val._id,
+                content: val.content,
+                order: val.order,
+              },
+            ],
+          };
+        })
       : [];
     setSubmitData(formatData);
     setOptionDataContent(item);
@@ -133,16 +133,16 @@ const FourNine = (props) => {
     showExercises,
     week,
   } = props.card;
-  const { assessments } = props;
-  const { headers = [] } = assessmentData;
+  const {assessments} = props;
+  const {headers = []} = assessmentData;
   const [isSave, setSaved] = useState(false);
 
   useEffect(() => {
     let optionData =
       assessmentData && assessmentData.content && assessmentData.content.length
         ? assessmentData.content.map((item) => {
-          return { ...item, content: item.data };
-        })
+            return {...item, content: item.data};
+          })
         : [];
 
     setOptionDataContent(optionData.reverse());
@@ -215,15 +215,15 @@ const FourNine = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardQuote
-                key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardQuote
+                  key={index}
+                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                />
+              );
+            })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -235,49 +235,48 @@ const FourNine = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardDescription
-                key={index}
-                description={ReactHtmlParser(item.desc)}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardDescription
+                  key={index}
+                  description={ReactHtmlParser(item.desc)}
+                />
+              );
+            })
         : []}
       {/*****************assessment description***************** */}
       {assessments &&
-        assessments.length &&
-        assessments[0].description !== '' ? (
+      assessments.length &&
+      assessments[0].description !== '' ? (
         <div style={commonStyles.assessmentWrapper}>
           {images && images.length
             ? images.map((item, i) => {
-              return (
-                <CustomImage
-                  key={i}
-                  src={`${IMAGE_BASE_URL}${item.image}`}
-                  style={{
-                    ...commonStyles.assessImage,
-                    display: item.image !== '' ? 'flex' : 'none',
-                    width: '100%',
-                  }}
-                />
-              );
-            })
+                return (
+                  <CustomImage
+                    key={i}
+                    src={`${IMAGE_BASE_URL}${item.image}`}
+                    style={{
+                      ...commonStyles.assessImage,
+                      display: item.image !== '' ? 'flex' : 'none',
+                      width: '100%',
+                    }}
+                  />
+                );
+              })
             : []}
           {assessments && assessments.length
             ? assessments.map((item, i) => {
-              return (
-                <CardDescription
-                  key={i}
-                  style={{
-                    ...commonStyles.assessDesc,
-
-                  }}
-                  description={ReactHtmlParser(item.description)}
-                />
-              );
-            })
+                return (
+                  <CardDescription
+                    key={i}
+                    style={{
+                      ...commonStyles.assessDesc,
+                    }}
+                    description={ReactHtmlParser(item.description)}
+                  />
+                );
+              })
             : []}
         </div>
       ) : null}
@@ -287,24 +286,24 @@ const FourNine = (props) => {
         <div style={styles.fourBoxContainer}>
           {headers && headers.length
             ? headers.map((item, index) => {
-              return (
-                <div key={index}>
-                  <p
-                    className="task-header"
-                    style={{
-                      ...styles.dropTitle,
-                      backgroundColor: BOX_GRAY,
-                    }}>
-                    {ReactHtmlParser(item.header)}
-                  </p>
-                </div>
-              );
-            })
+                return (
+                  <div key={index}>
+                    <p
+                      className="task-header"
+                      style={{
+                        ...styles.dropTitle,
+                        backgroundColor: BOX_GRAY,
+                      }}>
+                      {ReactHtmlParser(item.header)}
+                    </p>
+                  </div>
+                );
+              })
             : []}
         </div>
 
         {/****************************OPTIONS CONTAINER with gray box******************** */}
-        <div style={{ width: '50%' }}>
+        <div style={{width: '50%'}}>
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="droppable">
               {(provided, snapshot) => (
@@ -338,12 +337,13 @@ const FourNine = (props) => {
                                 snapshot.isDragging,
                                 provided.draggableProps.style,
                               ),
-                              border: `1px solid ${isSave
-                                ? isMatched
-                                  ? BOX_GRAY
-                                  : 'red'
-                                : BOX_GRAY
-                                }`,
+                              border: `1px solid ${
+                                isSave
+                                  ? isMatched
+                                    ? BOX_GRAY
+                                    : 'red'
+                                  : BOX_GRAY
+                              }`,
                               borderRadius: '5px',
                             }}>
                             {item.content}
@@ -367,18 +367,18 @@ const FourNine = (props) => {
         </div>
       ) : null}
       {/*************Content************ */}
-      <div style={{ ...commonStyles.contentLeftBorder, marginBottom: '20px' }}>
+      <div style={{...commonStyles.contentLeftBorder, marginBottom: '20px'}}>
         {content && content.length
           ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, i) => {
-              return (
-                <CardContent
-                  key={i}
-                  content={ReactHtmlParser(item.content)}
-                />
-              );
-            })
+              .sort((a, b) => (a.order > b.order && 1) || -1)
+              .map((item, i) => {
+                return (
+                  <CardContent
+                    key={i}
+                    content={ReactHtmlParser(item.content)}
+                  />
+                );
+              })
           : []}
       </div>
       {showExercises && <ExerciseBox week={week} />}
@@ -396,14 +396,12 @@ const styles = {
     justifyContent: 'space-between',
   },
   draggableContent: {
-
     marginTop: '10px',
     marginBottom: '10px',
     paddingTop: '10px',
     paddingBottom: '10px',
     borderRadius: '5px',
     backgroundColor: '#F1F3FA',
-
   },
   wrapper: {
     marginTop: '40px',
@@ -423,5 +421,4 @@ const styles = {
     textAlign: 'center',
     border: '1px solid',
   },
-
 };

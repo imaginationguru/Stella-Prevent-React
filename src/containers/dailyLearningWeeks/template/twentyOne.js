@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactHtmlParser from 'react-html-parser';
-import GLOBALS from '../../../constants';
-import { useSelector, useDispatch } from 'react-redux';
-import * as AppActions from '../../../actions';
+import GLOBALS from '@constants';
+import {useSelector, useDispatch} from 'react-redux';
+import * as AppActions from '@actions';
 import commonStyles from '../commonStyles';
-import { translate as ts } from '../../../i18n/translate';
-import tickBox from '../../../assets/images/tickBox.png';
-import { getItem } from '../../../utils/AsyncUtils';
-import ExerciseBox from '../../../components/ExerciseBox';
+import {translate as ts} from '@i18n/translate';
+import tickBox from '@assets/images/tickBox.png';
+import {getItem} from '@utils/AsyncUtils';
+import ExerciseBox from '@components/ExerciseBox';
 import {
   CardQuote,
   CardTitle,
@@ -15,13 +15,13 @@ import {
   CardDescription,
   CardContent,
   CustomImage,
-} from '../../../components/Cards';
-import { Dimensions } from 'react-native';
+} from '@components/Cards';
+import {Dimensions} from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
-const { IMAGE_BASE_URL, COLORS, ACTION_TYPE } = GLOBALS;
-const { BUTTON_ORANGE } = COLORS;
+const {IMAGE_BASE_URL, COLORS, ACTION_TYPE} = GLOBALS;
+const {BUTTON_ORANGE} = COLORS;
 const userId = getItem('userId');
 const TwentyOne = (props) => {
   const [headerData, setHeaderData] = useState([]);
@@ -39,7 +39,7 @@ const TwentyOne = (props) => {
   } = props.card;
   const dispatch = useDispatch();
   const [paramAssessment, setParamAssessment] = useState([]);
-  const { assessmentData = {}, userAssessmentData = [] } = useSelector(
+  const {assessmentData = {}, userAssessmentData = []} = useSelector(
     (state) => state.moduleOne,
   );
 
@@ -57,7 +57,7 @@ const TwentyOne = (props) => {
 
   useEffect(() => {
     const cardData = [];
-    console.log(userAssessmentData, "userAssessmentData.....")
+    console.log(userAssessmentData, 'userAssessmentData.....');
     if (userAssessmentData && userAssessmentData.length) {
       userAssessmentData.forEach((item) => {
         cardData.push(...item.cards);
@@ -66,11 +66,11 @@ const TwentyOne = (props) => {
     let modifyCardData = cardData.map((item) => {
       return {
         assessment_header_id: item.assessment_header_id,
-        content: [{ content: item.content }],
+        content: [{content: item.content}],
       };
     });
     setParamAssessment([...modifyCardData]);
-    console.log(modifyCardData, "modifyCardData....")
+    console.log(modifyCardData, 'modifyCardData....');
   }, [userAssessmentData]);
   const clickOnCheck = (item) => {
     if (paramAssessment && paramAssessment.length) {
@@ -85,12 +85,12 @@ const TwentyOne = (props) => {
             content:
               val.assessment_header_id === item._id
                 ? [
-                  {
-                    content: !val.content[0].content,
-                    order: item.order,
-                    assessment_content_id: item._id,
-                  },
-                ]
+                    {
+                      content: !val.content[0].content,
+                      order: item.order,
+                      assessment_content_id: item._id,
+                    },
+                  ]
                 : val.content,
           };
         });
@@ -115,7 +115,7 @@ const TwentyOne = (props) => {
         {
           assessment_header_id: item._id,
           content: [
-            { content: true, order: item.order, assessment_content_id: item._id },
+            {content: true, order: item.order, assessment_content_id: item._id},
           ],
         },
       ]);
@@ -149,15 +149,15 @@ const TwentyOne = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardQuote
-                key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardQuote
+                  key={index}
+                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                />
+              );
+            })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -169,87 +169,87 @@ const TwentyOne = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardDescription
-                key={index}
-                description={ReactHtmlParser(item.desc)}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardDescription
+                  key={index}
+                  description={ReactHtmlParser(item.desc)}
+                />
+              );
+            })
         : []}
       {/**********************Images************** */}
       {images && images.length
         ? images.map((item) => {
-          return (
-            <CustomImage
-              src={`${IMAGE_BASE_URL}${item.image}`}
-              style={{ display: item.image !== '' ? 'flex' : 'none' }}
-            />
-          );
-        })
+            return (
+              <CustomImage
+                src={`${IMAGE_BASE_URL}${item.image}`}
+                style={{display: item.image !== '' ? 'flex' : 'none'}}
+              />
+            );
+          })
         : null}
       <div style={commonStyles.contentLeftBorder}>
         {/**********Assessment descriptions**************** */}
         {props.assessments && props.assessments.length
           ? props.assessments.map((item, index) => {
-            return (
-              <CardDescription
-                key={index}
-                style={styles.assessmentDescription}
-                description={ReactHtmlParser(item.description)}
-              />
-            );
-          })
+              return (
+                <CardDescription
+                  key={index}
+                  style={styles.assessmentDescription}
+                  description={ReactHtmlParser(item.description)}
+                />
+              );
+            })
           : []}
 
-        <div style={{ marginTop: '30px' }}>
+        <div style={{marginTop: '30px'}}>
           {headerData && headerData.length
             ? headerData
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item) => {
-                let data = false;
+                .sort((a, b) => (a.order > b.order && 1) || -1)
+                .map((item) => {
+                  let data = false;
 
-                const checkData =
-                  paramAssessment.length &&
-                  paramAssessment.find(
-                    (val) => val.assessment_header_id === item._id,
-                  );
-                if (checkData) {
-                  if (checkData.content && checkData.content.length) {
-                    data = checkData.content[0].content;
+                  const checkData =
+                    paramAssessment.length &&
+                    paramAssessment.find(
+                      (val) => val.assessment_header_id === item._id,
+                    );
+                  if (checkData) {
+                    if (checkData.content && checkData.content.length) {
+                      data = checkData.content[0].content;
+                    }
                   }
-                }
-                console.log(data, "datadatadatadatadata")
-                return (
-                  <div
-                    onClick={() => clickOnCheck(item)}
-                    style={styles.checkWithQues}>
-                    {(data == "true" || data == true) ? (
-                      <img
-                        src={tickBox}
-                        style={{
-                          width: '18px',
-                          height: '18px',
-                          position: 'relative',
-                          top: '3px',
-                          left: '-2px',
-                        }}
-                      />
-                    ) : (
-                      <div
-                        style={{
-                          ...styles.checkBox,
-                        }}
-                      />
-                    )}
-                    <p style={{ paddingLeft: '20px' }}>
-                      {ReactHtmlParser(item.header)}
-                    </p>
-                  </div>
-                );
-              })
+                  console.log(data, 'datadatadatadatadata');
+                  return (
+                    <div
+                      onClick={() => clickOnCheck(item)}
+                      style={styles.checkWithQues}>
+                      {data == 'true' || data == true ? (
+                        <img
+                          src={tickBox}
+                          style={{
+                            width: '18px',
+                            height: '18px',
+                            position: 'relative',
+                            top: '3px',
+                            left: '-2px',
+                          }}
+                        />
+                      ) : (
+                        <div
+                          style={{
+                            ...styles.checkBox,
+                          }}
+                        />
+                      )}
+                      <p style={{paddingLeft: '20px'}}>
+                        {ReactHtmlParser(item.header)}
+                      </p>
+                    </div>
+                  );
+                })
             : []}
         </div>
       </div>
@@ -263,16 +263,16 @@ const TwentyOne = (props) => {
       {/**********************content************** */}
       {content && content.length
         ? content
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardContent
-                key={index}
-                content={ReactHtmlParser(item.content)}
-                style={{ paddingTop: '10px' }}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardContent
+                  key={index}
+                  content={ReactHtmlParser(item.content)}
+                  style={{paddingTop: '10px'}}
+                />
+              );
+            })
         : []}
       {showExercises && <ExerciseBox week={week} />}
     </>

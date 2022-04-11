@@ -1,8 +1,8 @@
 import React from 'react';
-import GLOBALS from '../../../constants';
+import GLOBALS from '@constants';
 import ReactHtmlParser from 'react-html-parser';
-import ExerciseBox from '../../../components/ExerciseBox';
-import {CardQuote, CardTitle, CardContent} from '../../../components/Cards';
+import ExerciseBox from '@components/ExerciseBox';
+import {CardQuote, CardTitle, CardContent} from '@components/Cards';
 const {COLORS} = GLOBALS;
 const {RED, GRAY1} = COLORS;
 const TemplateThree = (props) => {

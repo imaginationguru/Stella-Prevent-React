@@ -1,30 +1,30 @@
 import {useState, useEffect} from 'react';
 import ReactHtmlParser from 'react-html-parser';
-import GLOBALS from '../../../constants';
-import whiteHeart from '../../../assets/images/whiteHeart@3x.png';
-import heart from '../../../assets/images/heart@3x.png';
-import commentImg from '../../../assets/images/comment@3x.png';
+import GLOBALS from '@constants';
+import whiteHeart from '@assets/images/whiteHeart@3x.png';
+import heart from '@assets/images/heart@3x.png';
+import commentImg from '@assets/images/comment@3x.png';
 import Rating from 'react-rating';
 import {Modal, TouchableOpacity, Dimensions} from 'react-native';
 import commonStyles from '../commonStyles';
-import {translate as ts} from '../../../i18n/translate';
-import blackStar from '../../../assets/images/blackStar.png';
-import yellowStar from '../../../assets/images/yellowStar.png';
-import {getItem} from '../../../utils/AsyncUtils';
-import * as AppActions from '../../../actions';
+import {translate as ts} from '@i18n/translate';
+import blackStar from '@assets/images/blackStar.png';
+import yellowStar from '@assets/images/yellowStar.png';
+import {getItem} from '@utils/AsyncUtils';
+import * as AppActions from '@actions';
 import {useDispatch, useSelector} from 'react-redux';
-import leftArrow from '../../../assets/images/leftArrow.svg';
-import menu from '../../../assets/images/menu.svg';
-import Menu from '../../../components/Menu';
-import week1 from '../../../assets/images/Week1.svg';
-import ExerciseBox from '../../../components/ExerciseBox';
+import leftArrow from '@assets/images/leftArrow.svg';
+import menu from '@assets/images/menu.svg';
+import Menu from '@components/Menu';
+import week1 from '@assets/images/Week1.svg';
+import ExerciseBox from '@components/ExerciseBox';
 import {
   CardQuote,
   CardTitle,
   CardTime,
   CardDescription,
   CardContent,
-} from '../../../components/Cards';
+} from '@components/Cards';
 const {COLORS, FONTS} = GLOBALS;
 const {LIGHT_GRAY} = COLORS;
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -60,7 +60,7 @@ const TwentyTwo = (props) => {
     let userId = getItem('userId');
     let programId = getItem('programId');
     dispatch(AppActions.getUserRating(userId, programId, week));
-   }, []);
+  }, []);
 
   const getDataSet = (data, type) => {
     if (type === 'LIKE') {
@@ -91,8 +91,7 @@ const TwentyTwo = (props) => {
         getDataSet([], 'COMMENT');
       }
     }
-
-   }, [userRatingData]);
+  }, [userRatingData]);
   /***********************set input value function************* */
 
   const onHandleChange = (e, item) => {
@@ -127,7 +126,7 @@ const TwentyTwo = (props) => {
         userRatingData &&
         userRatingData.filter((data) => data.week == props.week).length > 0
       ) {
-         let updateParams = {
+        let updateParams = {
           id: updateId,
         };
         if (mode === 'LIKE') {
@@ -321,12 +320,11 @@ const TwentyTwo = (props) => {
                   className="btn-orange"
                   style={{
                     ...styles.rightText,
-                     textAlign: 'center',
+                    textAlign: 'center',
                   }}>
                   {ts('SAVE')}
                 </p>
               </div>
-              
             </div>
           </div>
           {/*********************************MODAL POPUP FOR MENU START*************** */}

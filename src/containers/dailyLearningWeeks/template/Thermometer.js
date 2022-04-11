@@ -1,7 +1,7 @@
 import React from 'react';
-import GLOBALS from '../../../constants';
-import emptyMeter from '../../../assets/images/emptyMeter.png';
-import greenbottm from '../../../assets/images/greenbottom.png';
+import GLOBALS from '@constants';
+import emptyMeter from '@assets/images/emptyMeter.png';
+import greenbottm from '@assets/images/greenbottom.png';
 import {TouchableOpacity} from 'react-native';
 
 import {Dimensions} from 'react-native';

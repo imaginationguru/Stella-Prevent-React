@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import right from '../../../assets/images/right.svg';
-import cross from '../../../assets/images/cross.svg';
+import right from '@assets/images/right.svg';
+import cross from '@assets/images/cross.svg';
 import commonStyles from '../commonStyles';
-import GLOBALS from '../../../constants';
+import GLOBALS from '@constants';
 import ReactHtmlParser from 'react-html-parser';
 import { useDispatch, useSelector } from 'react-redux';
-import * as AppActions from '../../../actions';
-import { getItem } from '../../../utils/AsyncUtils';
-import { translate as ts } from '../../../i18n/translate';
-import ExerciseBox from '../../../components/ExerciseBox';
+import * as AppActions from '@actions';
+import { getItem } from '@utils/AsyncUtils';
+import { translate as ts } from '@i18n/translate';
+import ExerciseBox from '@components/ExerciseBox';
 import {
   CardQuote,
   CardTitle,
@@ -17,8 +17,8 @@ import {
   CardContent,
   CardAudio,
   CustomImage,
-} from '../../../components/Cards';
-import { customAlert } from '../../../helpers/commonAlerts.web';
+} from '@components/Cards';
+import { customAlert } from '@helpers/commonAlerts.web';
 import { inputClasses } from '@mui/material';
 const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
 const {

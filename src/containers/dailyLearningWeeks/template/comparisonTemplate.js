@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import ReactHtmlParser from 'react-html-parser';
-import { useDispatch, useSelector } from 'react-redux';
-import GLOBALS from '../../../constants';
-import * as AppActions from '../../../actions';
-import { getItem } from '../../../utils/AsyncUtils';
-import ExerciseBox from '../../../components/ExerciseBox';
+import {useDispatch, useSelector} from 'react-redux';
+import GLOBALS from '@constants';
+import * as AppActions from '@actions';
+import {getItem} from '@utils/AsyncUtils';
+import ExerciseBox from '@components/ExerciseBox';
 import {
   CardQuote,
   CardTitle,
@@ -12,14 +12,14 @@ import {
   CardDescription,
   CardContent,
   CustomImage,
-} from '../../../components/Cards';
+} from '@components/Cards';
 import commonStyles from '../commonStyles';
-import { Dimensions } from 'react-native';
+import {Dimensions} from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
-const { IMAGE_BASE_URL, COLORS, ACTION_TYPE } = GLOBALS;
-const { DARK_GREEN, YELLOW, WHITE } = COLORS;
+const {IMAGE_BASE_URL, COLORS, ACTION_TYPE} = GLOBALS;
+const {DARK_GREEN, YELLOW, WHITE} = COLORS;
 
 const onlySingleId = (arr = []) => {
   let temp = [];
@@ -27,7 +27,7 @@ const onlySingleId = (arr = []) => {
     const assIds = [...new Set(arr.map((item) => item.assessment_header_id))];
     assIds.forEach((item) => {
       let p = arr.filter((val) => val.assessment_header_id === item);
-      temp.push({ assessment_header_id: item, content: p });
+      temp.push({assessment_header_id: item, content: p});
     });
     return temp;
   }
@@ -60,10 +60,10 @@ const ComparisonTemplate = (props) => {
   const [activeState, setActiveState] = useState(1);
   const [isDuplicates, isSetDuplicates] = useState([]);
   const [paramsAssessment, setParamsAssessment] = useState([]);
-  const { assessmentData = {}, userAssessmentData = [] } = useSelector(
+  const {assessmentData = {}, userAssessmentData = []} = useSelector(
     (state) => state.moduleOne,
   );
-  const { headers = [], content = [] } = assessmentData;
+  const {headers = [], content = []} = assessmentData;
   const headerIdDuringPregnancy = headers.length
     ? headers[0] && headers[0]._id
     : null;
@@ -84,7 +84,6 @@ const ComparisonTemplate = (props) => {
 
   useEffect(() => {
     dispatch(AppActions.getAssessmentData(assessment_id, props._id));
-
   }, [assessment_id]);
 
   useEffect(() => {
@@ -205,62 +204,62 @@ const ComparisonTemplate = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardQuote
-                key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardQuote
+                  key={index}
+                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                />
+              );
+            })
         : []}
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardDescription
-                key={index}
-                description={ReactHtmlParser(item.desc)}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardDescription
+                  key={index}
+                  description={ReactHtmlParser(item.desc)}
+                />
+              );
+            })
         : []}
       {/*************************ASSESSMENT DESCRIPTION******************* */}
       <div
-        style={{ ...commonStyles.assessmentWrapper, justifyContent: 'center' }}
+        style={{...commonStyles.assessmentWrapper, justifyContent: 'center'}}
         className="wrap-2line">
         {images && images.length
           ? images.map((item, index) => {
-            return (
-              <CustomImage
-                key={index}
-                src={
-                  item.image !== '' ? `${IMAGE_BASE_URL}${item.image}` : null
-                }
-                style={{
-                  ...commonStyles.assessImage,
-                  display: item.image !== '' ? 'flex' : 'none',
-                }}
-              />
-            );
-          })
+              return (
+                <CustomImage
+                  key={index}
+                  src={
+                    item.image !== '' ? `${IMAGE_BASE_URL}${item.image}` : null
+                  }
+                  style={{
+                    ...commonStyles.assessImage,
+                    display: item.image !== '' ? 'flex' : 'none',
+                  }}
+                />
+              );
+            })
           : []}
 
         {props.assessments && props.assessments.length
           ? props.assessments
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, i) => {
-              return (
-                <CardDescription
-                  key={i}
-                  style={commonStyles.assessDesc}
-                  description={ReactHtmlParser(item.description)}
-                />
-              );
-            })
+              .sort((a, b) => (a.order > b.order && 1) || -1)
+              .map((item, i) => {
+                return (
+                  <CardDescription
+                    key={i}
+                    style={commonStyles.assessDesc}
+                    description={ReactHtmlParser(item.description)}
+                  />
+                );
+              })
           : []}
       </div>
       {/*********************Comparison During and after pregnancy******** */}
@@ -269,7 +268,7 @@ const ComparisonTemplate = (props) => {
           <>
             <p>Comparison</p>
             <div style={styles.compareTitleDiv}>
-              <div style={{ display: 'flex' }}>
+              <div style={{display: 'flex'}}>
                 <div
                   style={{
                     ...styles.indicationColor,
@@ -277,7 +276,7 @@ const ComparisonTemplate = (props) => {
                   }}></div>
                 <p style={styles.compareTitle}> During the Pregnancy</p>
               </div>
-              <div style={{ display: 'flex' }}>
+              <div style={{display: 'flex'}}>
                 <div
                   style={{
                     ...styles.indicationColor,
@@ -285,7 +284,7 @@ const ComparisonTemplate = (props) => {
                   }}></div>
                 <p style={styles.compareTitle}> After Birth</p>
               </div>
-              <div style={{ display: 'flex' }}>
+              <div style={{display: 'flex'}}>
                 <div
                   style={{
                     ...styles.indicationColor,
@@ -365,7 +364,7 @@ const ComparisonTemplate = (props) => {
                         ...styles.contentTitle,
                         background:
                           isDuringSelected &&
-                            isDuringSelected.data === item.data
+                          isDuringSelected.data === item.data
                             ? DARK_GREEN
                             : WHITE,
                       }}>
@@ -389,8 +388,8 @@ const ComparisonTemplate = (props) => {
                   const isAfterSelected =
                     afterPregnancy && afterPregnancy.length
                       ? afterPregnancy.find((val) => {
-                        return val.data === item.data;
-                      })
+                          return val.data === item.data;
+                        })
                       : null;
                   return (
                     <div
@@ -417,19 +416,18 @@ const ComparisonTemplate = (props) => {
         <div style={styles.buttonDiv}>
           <button
             className="btn-solid"
-
             onClick={(e) => {
               activeState === 3
                 ? onSave(e)
                 : activeState === 1
-                  ? setActiveState(activeState + 1)
-                  : setActiveState(activeState + 1);
+                ? setActiveState(activeState + 1)
+                : setActiveState(activeState + 1);
             }}>
             {activeState === 3
               ? 'SAVE'
               : activeState === 1
-                ? 'Next Step'
-                : 'Compare'}
+              ? 'Next Step'
+              : 'Compare'}
           </button>
         </div>
         {activeState === 3 ? (
@@ -444,21 +442,21 @@ const ComparisonTemplate = (props) => {
         ) : null}
       </div>
       {/*************Content************ */}
-      <div style={{ marginTop: '35px' }}>
+      <div style={{marginTop: '35px'}}>
         {props.card.content && props.card.content.length
           ? props.card.content
-            .filter((item) => {
-              return item.type === 'first';
-            })
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, i) => {
-              return (
-                <CardContent
-                  key={i}
-                  content={ReactHtmlParser(item.content)}
-                />
-              );
-            })
+              .filter((item) => {
+                return item.type === 'first';
+              })
+              .sort((a, b) => (a.order > b.order && 1) || -1)
+              .map((item, i) => {
+                return (
+                  <CardContent
+                    key={i}
+                    content={ReactHtmlParser(item.content)}
+                  />
+                );
+              })
           : []}
       </div>
       {showExercises && <ExerciseBox week={week} />}
@@ -486,7 +484,7 @@ const styles = {
 
     borderRadius: '2px',
   },
-  compareTitle: { paddingLeft: '5px' },
+  compareTitle: {paddingLeft: '5px'},
   contentDiv: {
     display: 'flex',
     flexDirection: 'row',
