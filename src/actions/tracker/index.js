@@ -1,21 +1,10 @@
-import GLOBALS from '../../constants';
-import RestClient from '../../helpers/RestClient';
-
-import {
-  loadingAction,
-  clearErrorAction,
-  clearSuccessAction,
-  clearSessionExpiredAction,
-} from '../common';
-import {getItem} from '../../utils/AsyncUtils';
-import {
-  navigatorPush,
-  navigatorPop,
-  navigatortoStart,
-} from '../../config/navigationOptions';
+import GLOBALS from '@constants';
+import RestClient from '@helpers/RestClient';
+import {loadingAction, clearSessionExpiredAction} from '@actions/common';
+import {getItem} from '@utils/AsyncUtils';
+import {navigatorPop, navigatortoStart} from '@config/navigationOptions';
 import moment from 'moment';
-import {customAlert} from '../../helpers/commonAlerts.web';
-import history from '../../helpers/history';
+import {customAlert} from '@helpers/commonAlerts.web';
 
 const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
 const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
