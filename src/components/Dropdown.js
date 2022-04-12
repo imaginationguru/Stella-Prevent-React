@@ -1,5 +1,4 @@
-import React from 'react';
-import {translate as ts} from '../i18n/translate';
+import {translate as ts} from '@i18n/translate';
 const DropDown = ({data = [], value, handleChange, name}) => {
   const optionJsx = data.length
     ? data.map((item) => <option value={item.id}>{item.label}</option>)

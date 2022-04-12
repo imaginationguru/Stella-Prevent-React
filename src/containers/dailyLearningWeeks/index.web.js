@@ -1,25 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import MasterLayout from '../../components/MasterLayout';
-import Footer from '../../components/Footer';
-import GLOBALS from '../../constants';
-import * as AppActions from '../../actions';
-import { Header, SubHeader } from './Navbar';
-import GenerateUI from './GenerateUI';
-import BackToDashboard from '../../components/common/backToDashboard';
-import {
-  getSelectedWeekDayCards,
-  canProceedNextDay,
-} from '../../helpers/common.web';
-import { customAlert } from '../../helpers/commonAlerts.web';
-import { navigatorPush } from '../../config/navigationOptions.web';
-import BackBtn from '../../components/common/backbtn';
-const { COLORS } = GLOBALS;
+import {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import MasterLayout from '@components/MasterLayout';
+import Footer from '@components/Footer';
+import GLOBALS from '@constants';
+import * as AppActions from '@actions';
+import {Header, SubHeader} from '@containers/dailyLearningWeeks/Navbar';
+import GenerateUI from '@containers/dailyLearningWeeks/GenerateUI';
+import BackToDashboard from '@components/common/backToDashboard';
+import {canProceedNextDay} from '@helpers/common.web';
+import {customAlert} from '@helpers/commonAlerts.web';
+import {navigatorPush} from '@config/navigationOptions.web';
+import BackBtn from '@components/common/backbtn';
+const {COLORS} = GLOBALS;
 const DailyLearningWeeks = (props) => {
   let isFromDashboard = props.location?.state?.isFromDashboard;
   let backTitle = props.location?.state?.backTitle;
   const dispatch = useDispatch();
-  const { userAssessmentData = [], userRatingData = [] } = useSelector(
+  const {userAssessmentData = [], userRatingData = []} = useSelector(
     (state) => state.moduleOne,
   );
   const {
@@ -32,22 +29,20 @@ const DailyLearningWeeks = (props) => {
     currentActiveCard = [],
     selectedCardId = '',
   } = useSelector((state) => state.moduleOne);
-  let { selectedDay, selectedWeek } = useSelector((state) => state.moduleOne);
+  let {selectedDay, selectedWeek} = useSelector((state) => state.moduleOne);
   let [weeksCount, setWeeksCount] = useState(
     props.location?.state?.isFromDashboard
       ? currentActiveCard.current_week
       : props.location?.state?.weeksCount
-        ? props.location?.state?.weeksCount
-        : 1,
+      ? props.location?.state?.weeksCount
+      : 1,
   );
-  const { loginData = [] } = useSelector((state) => state.authReducer);
-  const { week, day } = currentActiveCard.length ? currentActiveCard[0] : {};
+  const {loginData = []} = useSelector((state) => state.authReducer);
+  const {week, day} = currentActiveCard.length ? currentActiveCard[0] : {};
   const [currentData, setCurrentData] = useState({});
   const [isScrollerLoad, setScrollerLoad] = useState(false);
   const [nextData, setNextData] = useState({});
   const [prevData, setPrevData] = useState({});
-
-
 
   useEffect(() => {
     applicableCards(selectedCardId);
@@ -59,7 +54,7 @@ const DailyLearningWeeks = (props) => {
   useEffect(() => {
     console.log(currentData, 'currentData........');
     if (currentData._id) {
-      const { card: { assessment_id } = {} } = currentData;
+      const {card: {assessment_id} = {}} = currentData;
       if (assessment_id !== null) {
         dispatch(
           AppActions.getAssessmentData(
@@ -119,7 +114,7 @@ const DailyLearningWeeks = (props) => {
     let temp = [];
     if (data.length) {
       data.forEach((item) => {
-        const { cards = [] } = item;
+        const {cards = []} = item;
         if (cards.length) {
           temp.push(
             ...cards.sort(
@@ -284,7 +279,7 @@ const DailyLearningWeeks = (props) => {
       customAlert(
         "You've reached your free content limit. Please upgrade your plan.",
         'error',
-        { showCloseButton: true },
+        {showCloseButton: true},
         'Upgrade',
         _onPressUpgrade,
       );
@@ -337,7 +332,6 @@ const DailyLearningWeeks = (props) => {
         <div className="dashboard-body">
           <div className="container">
             <div className="dashboard-body-inner">
-
               <div className="n-content">
                 {/* ***********************************Navbar Start********************** */}
                 <div>
@@ -366,7 +360,8 @@ const DailyLearningWeeks = (props) => {
 
                         if (isClickable) {
                           dispatch({
-                            type: GLOBALS.ACTION_TYPE.GET_USER_ASSESSMENT_SUCCESS,
+                            type: GLOBALS.ACTION_TYPE
+                              .GET_USER_ASSESSMENT_SUCCESS,
                             payload: [],
                           });
                           console.log('is clickable??????');
@@ -407,7 +402,8 @@ const DailyLearningWeeks = (props) => {
                       ...currentData,
                       is_last_day: !nextData._id,
                       is_last_week: isLastDay,
-                      status: currentData.card?.template_data[0]?.template_number,
+                      status:
+                        currentData.card?.template_data[0]?.template_number,
                       weeksCount: weeksCount,
                     }}
                   />
@@ -421,7 +417,7 @@ const DailyLearningWeeks = (props) => {
                 <div className="footer-nav-inner">
                   {/*****************************************BOTTOM PREVIOUS BUTTON************* */}
 
-                  <div style={{ alignItems: 'flex-end' }}>
+                  <div style={{alignItems: 'flex-end'}}>
                     {prevData._id ? (
                       <div className="footer-nav-left">
                         <div
@@ -449,7 +445,7 @@ const DailyLearningWeeks = (props) => {
                     ) : !isFirstDay ? (
                       <div
                         className="footer-nav-left"
-                        style={{ alignItems: 'flex-end' }}>
+                        style={{alignItems: 'flex-end'}}>
                         <div
                           onClick={() => {
                             dispatch({
@@ -482,7 +478,6 @@ const DailyLearningWeeks = (props) => {
                             currentData.card?.template_data[0]
                               ?.template_number == 27
                           ) {
-
                             if (!userQuestion[0]?.saved) {
                               //debugger;
                               customAlert(
@@ -502,7 +497,6 @@ const DailyLearningWeeks = (props) => {
                             currentData.card?.template_data[0]
                               ?.template_number == 22
                           ) {
-
                             if (userRatingData.length === 0) {
                               //debugger;
                               customAlert(
@@ -596,7 +590,6 @@ const DailyLearningWeeks = (props) => {
                         onClick={() => {
                           onNextDayClick();
                           return;
-
                         }}
                         className="f-nav-link">
                         <h3>Next Day </h3>
@@ -608,9 +601,7 @@ const DailyLearningWeeks = (props) => {
                     <div className="footer-nav-right">
                       <div
                         onClick={() => {
-
                           if (selectedWeek <= 4) {
-
                             dispatch({
                               type: GLOBALS.ACTION_TYPE
                                 .GET_USER_ASSESSMENT_SUCCESS,

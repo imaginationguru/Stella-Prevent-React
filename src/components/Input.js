@@ -1,24 +1,22 @@
-import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   Image,
-  ImageBackground,
   StyleSheet,
   TextInput,
   Pressable,
 } from 'react-native';
-import icon01 from '../assets/images/icon01.svg';
-import icon02 from '../assets/images/icon02.svg';
-import icon03 from '../assets/images/icon03.svg';
-import icon04 from '../assets/images/icon04.svg';
-import key from '../assets/images/subscription/key.png';
-import cards from '../assets/images/subscription/cards.png';
-import downArrow from '../assets/images/subscription/dropdown.png';
-import GLOBALS from '../constants';
-const { COLORS, FONTS } = GLOBALS;
+import icon01 from '@assets/images/icon01.svg';
+import icon02 from '@assets/images/icon02.svg';
+import icon03 from '@assets/images/icon03.svg';
+import icon04 from '@assets/images/icon04.svg';
+import key from '@assets/images/subscription/key.png';
+import cards from '@assets/images/subscription/cards.png';
+import downArrow from '@assets/images/subscription/dropdown.png';
+import GLOBALS from '@constants';
+const {COLORS, FONTS} = GLOBALS;
 
-const { BORDER_COLOR, SHADOW_COLOR, HEADING_BLACK, WHITE, ERROR } = COLORS;
+const {BORDER_COLOR, SHADOW_COLOR, HEADING_BLACK, WHITE, ERROR} = COLORS;
 const Input = (props) => {
   let {
     label,
@@ -34,7 +32,7 @@ const Input = (props) => {
     labelStyle = {},
   } = props;
   return (
-    <View style={[containerStyle, { marginBottom: 15 }]}>
+    <View style={[containerStyle, {marginBottom: 15}]}>
       <Text style={[styles.label, labelStyle]}>{label}</Text>
       <View>
         {isDropdown ? (
@@ -58,12 +56,12 @@ const Input = (props) => {
                 type == 'user'
                   ? icon03
                   : type == 'email'
-                    ? icon01
-                    : type == 'phone'
-                      ? icon04
-                      : type == 'dropdown'
-                        ? downArrow
-                        : icon02
+                  ? icon01
+                  : type == 'phone'
+                  ? icon04
+                  : type == 'dropdown'
+                  ? downArrow
+                  : icon02
               }
             />
           </Pressable>
@@ -85,14 +83,14 @@ const Input = (props) => {
                 type == 'user'
                   ? icon03
                   : type == 'email'
-                    ? icon01
-                    : type == 'phone'
-                      ? icon04
-                      : type == 'cards'
-                        ? cards
-                        : type == 'key'
-                          ? key
-                          : ''
+                  ? icon01
+                  : type == 'phone'
+                  ? icon04
+                  : type == 'cards'
+                  ? cards
+                  : type == 'key'
+                  ? key
+                  : ''
               }
             />
           </View>

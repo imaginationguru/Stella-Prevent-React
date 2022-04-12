@@ -1,27 +1,27 @@
 import React, {useEffect, useState} from 'react';
-import balance0 from '../../../assets/images/balance/balance0.svg';
-import balanceR1 from '../../../assets/images/balance/balanceR1.svg';
-import balanceR2 from '../../../assets/images/balance/balanceR2.svg';
-import balanceR3 from '../../../assets/images/balance/balanceR3.svg';
-import balanceR4 from '../../../assets/images/balance/balanceR4.svg';
-import balanceR5 from '../../../assets/images/balance/balanceR5.svg';
-import balanceR6 from '../../../assets/images/balance/balanceR6.svg';
-import balanceR7 from '../../../assets/images/balance/balanceR7.svg';
-import balanceL1 from '../../../assets/images/balance/balanceL1.svg';
-import balanceL2 from '../../../assets/images/balance/balanceL2.svg';
-import balanceL3 from '../../../assets/images/balance/balanceL3.svg';
-import balanceL4 from '../../../assets/images/balance/balanceL4.svg';
-import balanceL5 from '../../../assets/images/balance/balanceL5.svg';
-import balanceL6 from '../../../assets/images/balance/balanceL6.svg';
-import balanceL7 from '../../../assets/images/balance/balanceL7.svg';
+import balance0 from '@assets/images/balance/balance0.svg';
+import balanceR1 from '@assets/images/balance/balanceR1.svg';
+import balanceR2 from '@assets/images/balance/balanceR2.svg';
+import balanceR3 from '@assets/images/balance/balanceR3.svg';
+import balanceR4 from '@assets/images/balance/balanceR4.svg';
+import balanceR5 from '@assets/images/balance/balanceR5.svg';
+import balanceR6 from '@assets/images/balance/balanceR6.svg';
+import balanceR7 from '@assets/images/balance/balanceR7.svg';
+import balanceL1 from '@assets/images/balance/balanceL1.svg';
+import balanceL2 from '@assets/images/balance/balanceL2.svg';
+import balanceL3 from '@assets/images/balance/balanceL3.svg';
+import balanceL4 from '@assets/images/balance/balanceL4.svg';
+import balanceL5 from '@assets/images/balance/balanceL5.svg';
+import balanceL6 from '@assets/images/balance/balanceL6.svg';
+import balanceL7 from '@assets/images/balance/balanceL7.svg';
 import ReactHtmlParser from 'react-html-parser';
-import GLOBALS from '../../../constants';
+import GLOBALS from '@constants';
 import {useDispatch, useSelector} from 'react-redux';
-import * as AppActions from '../../../actions';
-import {getItem} from '../../../utils/AsyncUtils';
-import {translate as ts} from '../../../i18n/translate';
-import ExerciseBox from '../../../components/ExerciseBox';
-import commonStyles from '../commonStyles';
+import * as AppActions from '@actions';
+import {getItem} from '@utils/AsyncUtils';
+import {translate as ts} from '@i18n/translate';
+import ExerciseBox from '@components/ExerciseBox';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import {
   CardQuote,
   CardTitle,
@@ -29,7 +29,7 @@ import {
   CardDescription,
   CardContent,
   CustomImage,
-} from '../../../components/Cards';
+} from '@components/Cards';
 
 import {Dimensions} from 'react-native';
 
@@ -91,7 +91,7 @@ const TemplateSix = (props) => {
       setDefault(rightLength - leftLength + 1);
       setIsLeftBalance(false);
     }
-   }, [changes, initial]);
+  }, [changes, initial]);
 
   useEffect(() => {
     const onlyCardData = [];
@@ -101,7 +101,7 @@ const TemplateSix = (props) => {
       });
     }
     setChanges([...onlyCardData]);
-   }, [userAssessmentData]);
+  }, [userAssessmentData]);
 
   const imageRenderHandler = () => {
     if (initial === 1) {
@@ -260,7 +260,7 @@ const TemplateSix = (props) => {
                 <CustomImage
                   src={`${IMAGE_BASE_URL}${item.image}`}
                   style={{
-                     display: item.image !== '' ? 'flex' : 'none',
+                    display: item.image !== '' ? 'flex' : 'none',
                     width: '120px',
                     flex: '0 0 auto',
                   }}
@@ -309,7 +309,6 @@ const TemplateSix = (props) => {
                         setChanges(
                           changes.filter((val) => val.content !== item.content),
                         );
-                        
                       }}>
                       x
                     </span>
@@ -384,7 +383,7 @@ const TemplateSix = (props) => {
             <span style={styles.leftPlusIcon}>+</span>
           </div>
           <textarea
-             className="f-field height-auto"
+            className="f-field height-auto"
             name="leftInput"
             placeholder={headers && headers.length ? headers[0].header : ''}
             style={{
@@ -426,7 +425,7 @@ const TemplateSix = (props) => {
             <span style={styles.plusIcon}>+</span>
           </div>
           <textarea
-             className="f-field height-auto"
+            className="f-field height-auto"
             placeholder={headers && headers.length ? headers[1].header : ''}
             style={{
               backgroundColor: '#F1F3FA',
@@ -492,7 +491,7 @@ const styles = {
   innerWrapper: {
     width: '48%',
     paddingRight: '10px',
-   },
+  },
   selectedText: {
     backgroundColor: '#F1F3FA',
     width: '100%',

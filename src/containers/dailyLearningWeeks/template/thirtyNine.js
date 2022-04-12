@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
-import GLOBALS from '../../../constants';
-import ExerciseBox from '../../../components/ExerciseBox';
+import GLOBALS from '@constants';
+import ExerciseBox from '@components/ExerciseBox';
 import {
   CardQuote,
   CardTitle,
@@ -9,7 +9,7 @@ import {
   CardDescription,
   CardContent,
   CustomImage,
-} from '../../../components/Cards';
+} from '@components/Cards';
 import {Dimensions} from 'react-native';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const {IMAGE_BASE_URL} = GLOBALS;
@@ -123,5 +123,4 @@ const ThirtyNine = (props) => {
 };
 
 export default ThirtyNine;
-const styles = {
- };
+const styles = {};

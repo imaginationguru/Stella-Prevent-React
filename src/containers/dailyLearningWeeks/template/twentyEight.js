@@ -1,8 +1,8 @@
 import React from 'react';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import ReactHtmlParser from 'react-html-parser';
-import ExerciseBox from '../../../components/ExerciseBox';
-import GLOBALS from '../../../constants';
+import ExerciseBox from '@components/ExerciseBox';
+import GLOBALS from '@constants';
 import {
   CardQuote,
   CardTitle,
@@ -10,7 +10,7 @@ import {
   CardDescription,
   CardContent,
   CustomImage,
-} from '../../../components/Cards';
+} from '@components/Cards';
 const {IMAGE_BASE_URL} = GLOBALS;
 const TwentyEight = (props) => {
   const {

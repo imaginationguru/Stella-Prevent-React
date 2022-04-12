@@ -1,11 +1,18 @@
 'use strict';
 
-import { create } from 'apisauce';
-import GLOBALS from '../constants';
-import { accessToken, isInternet } from '../helpers/common';
-import { getItem } from '../utils/AsyncUtils';
-const { BASE_URL } = GLOBALS;
-import store, { storeObj } from '../store/setup.web';
+import {create} from 'apisauce';
+import GLOBALS from '@constants';
+import {
+  accessToken,
+  isInternet,
+  encryptRequest,
+  decryptRequest,
+} from '@helpers/common';
+import {getItem} from '../utils/AsyncUtils';
+const {BASE_URL} = GLOBALS;
+import store, {storeObj} from '@store/setup.web';
+
+
 //let Token = getItem('token');
 
 const api = create({
@@ -17,9 +24,7 @@ const api = create({
   },
 });
 const setToken = () => {
-  //let Token = storeObj.store.getState().authReducer.loginToken;
   let Token = getItem('token');
-  console.log(Token, 'accessToken.......');
   if (Token) {
     console.log(Token, 'Token......');
     api.setHeader('Authorization', Token);
@@ -34,7 +39,13 @@ class RestClient {
         api.get(BASE_URL + url, params).then((response) => {
           console.log('response GET API Rest Client>>>>>>>', response);
           if (response.status === 200) {
-            fulfill(response.data);
+            console.log(
+              'get call',
+              decryptRequest(response.data),
+              response.data,
+            );
+            fulfill(decryptRequest(response.data));
+            //fulfill(response.data);
           }
           reject(response);
         });
@@ -48,18 +59,30 @@ class RestClient {
   }
 
   static postCall(url, params) {
-    console.log(
-      'url post URL>>>>>>>>>>rest client>>>>>>',
-      BASE_URL + url,
-      params,
-    );
+    // console.log(
+    //   'url post URL>>>>>>>>>>rest client>>>>>>',
+    //   BASE_URL + url,
+    //   encryptRequest(params),
+    // );
     setToken();
     return new Promise(function (fulfill, reject) {
       if (isInternet()) {
-        api.post(BASE_URL + url, params).then((response) => {
-          console.log('response Post API Rest Client>>>>>>>', url, response);
+        api.post(BASE_URL + url, encryptRequest(params)).then((response) => {
+          console.log(
+            'API call for ' + BASE_URL + url,
+            encryptRequest(params),
+            JSON.stringify(params),
+            response,
+          );
+
           if (response.status === 200) {
-            fulfill(response.data);
+            //fulfill(response.data);
+            console.log('response data post call', response.data);
+            console.log(
+              'response data post call1',
+              decryptRequest(response.data),
+            );
+            fulfill(decryptRequest(response.data));
           }
           reject(response);
         });

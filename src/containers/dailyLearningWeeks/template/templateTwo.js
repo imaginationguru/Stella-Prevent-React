@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import ReactHtmlParser from 'react-html-parser';
-import GLOBALS from '../../../constants';
-import commonStyles from '../commonStyles';
-import {getItem} from '../../../utils/AsyncUtils';
+import GLOBALS from '@constants';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
+import {getItem} from '@utils/AsyncUtils';
 import {useDispatch, useSelector} from 'react-redux';
-import * as AppActions from '../../../actions';
-import {translate as ts} from '../../../i18n/translate';
-import ExerciseBox from '../../../components/ExerciseBox';
+import * as AppActions from '@actions';
+import {translate as ts} from '@i18n/translate';
+import ExerciseBox from '@components/ExerciseBox';
 import {
   CardQuote,
   CardTitle,
@@ -14,7 +14,7 @@ import {
   CardDescription,
   CardContent,
   CustomImage,
-} from '../../../components/Cards';
+} from '@components/Cards';
 
 const {IMAGE_BASE_URL} = GLOBALS;
 const TemplateTwo = (props) => {
@@ -40,7 +40,7 @@ const TemplateTwo = (props) => {
 
   useEffect(() => {
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-   }, []);
+  }, []);
 
   useEffect(() => {
     let cardsData = [];
@@ -48,7 +48,7 @@ const TemplateTwo = (props) => {
       userAssessmentData.forEach((item) => cardsData.push(...item.cards));
     }
     setInputCardData(cardsData);
-   }, [userAssessmentData]);
+  }, [userAssessmentData]);
 
   /*****************************function for fetch input value, id and set   */
 
@@ -61,7 +61,7 @@ const TemplateTwo = (props) => {
       inputCardData.map((item) => {
         return setUpdateId(item._id);
       });
-   }, [inputCardData]);
+  }, [inputCardData]);
 
   /***********************set input value function************* */
 

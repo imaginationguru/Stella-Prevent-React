@@ -6,29 +6,28 @@
  * @flow strict-local
  */
 
-import React, { useState, useEffect } from 'react';
-import powerBy from '../../../assets/images/powerby.png';
-import logo from '../../../assets/images/stella_logo.png';
-import logoWhite from '../../../assets/images/logoWhite.png';
-import rightCover from '../../../assets/images/candle.png';
-import icon01 from '../../../assets/images/icon01.svg';
-import icon02 from '../../../assets/images/icon02.svg';
-import { Link, useParams, useLocation } from 'react-router-dom';
-import { navigatorPush } from '../../../config/navigationOptions.web';
-import { useDispatch, useSelector } from 'react-redux';
-import * as AppActions from '../../../actions';
-import MasterLayout from '../../../components/MasterLayout';
-import GoogleLoginComponent from '../../../components/SocialLogin/GoogleLogIn';
-import FacebookLoginComponent from '../../../components/SocialLogin/FacebookLogin';
-import AppleLoginComponent from '../../../components/SocialLogin/AppleLogin';
-import { translate as ts } from '../../../i18n/translate';
-import commonStyles from '../../dailyLearningWeeks/commonStyles';
-import { emailRegex } from '../../../utils/RegexUtils';
-import GLOBALS from '../../../constants';
-import Footer from '../../../components/Footer';
+import {useState, useEffect} from 'react';
 
-const { IMAGE_BASE_URL } = GLOBALS;
-import { Linking, Platform } from 'react-native';
+import logoWhite from '@assets/images/logoWhite.png';
+import rightCover from '@assets/images/candle.png';
+import icon01 from '@assets/images/icon01.svg';
+import icon02 from '@assets/images/icon02.svg';
+import {Link, useLocation} from 'react-router-dom';
+
+import {useDispatch, useSelector} from 'react-redux';
+import * as AppActions from '@actions';
+import MasterLayout from '@components/MasterLayout';
+import GoogleLoginComponent from '@components/SocialLogin/GoogleLogIn';
+import FacebookLoginComponent from '@components/SocialLogin/FacebookLogin';
+import AppleLoginComponent from '@components/SocialLogin/AppleLogin';
+import {translate as ts} from '@i18n/translate';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
+import {emailRegex} from '@utils/RegexUtils';
+import GLOBALS from '@constants';
+import Footer from '@components/Footer';
+
+const {IMAGE_BASE_URL} = GLOBALS;
+
 const SignIn = (componentId) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -39,10 +38,10 @@ const SignIn = (componentId) => {
   const [quoteImg, setQuoteImage] = useState('');
   const [getId, setGetId] = useState('');
   const dispatch = useDispatch();
-  const { quotes = {} } = useSelector((state) => state.moduleOne);
+  const {quotes = {}} = useSelector((state) => state.moduleOne);
 
   const onHandleChange = (e) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     if (name === 'email') {
       setEmail(value);
       setEmailError('');
@@ -56,7 +55,7 @@ const SignIn = (componentId) => {
   const copyPasteHandler = (e) => {
     e.preventDefault();
     e.nativeEvent.stopImmediatePropagation();
-    const { name } = e.target;
+    const {name} = e.target;
     if (name === 'email') {
       setEmail('');
       setEmailError('');
@@ -88,7 +87,6 @@ const SignIn = (componentId) => {
     dispatch(
       AppActions.verifySocialUser(params, undefined, (res) => {
         if (res && !res.is_user_exist) {
-
         }
       }),
     );
@@ -177,7 +175,6 @@ const SignIn = (componentId) => {
                           onChange={onHandleChange}
                           required
                           maxLength={320}
-
                         />
                         <span className="f-icon">
                           <img src={icon01} />
@@ -198,7 +195,6 @@ const SignIn = (componentId) => {
                           onChange={onHandleChange}
                           maxLength={16}
                           required
-
                         />
                         <span className="f-icon">
                           <img src={icon02} />
@@ -211,11 +207,11 @@ const SignIn = (componentId) => {
                     <div className="w100">
                       <div
                         className="formField text-right"
-                        style={{ paddingTop: '10px' }}>
+                        style={{paddingTop: '10px'}}>
                         <Link
                           to="/EmailCheck"
                           className="link"
-                          style={{ textDecorationLine: 'underline' }}>
+                          style={{textDecorationLine: 'underline'}}>
                           {ts('FORGOT_PASSWORD')}
                         </Link>
                       </div>
@@ -232,7 +228,7 @@ const SignIn = (componentId) => {
                       </div>
                     </div>
                   </div>
-                  <div style={{ marginTop: 15 }}>
+                  <div style={{marginTop: 15}}>
                     {/* <div className="signup-text-view">
                       <span className="signup-text">Don’t have an account? </span>
                       <Link

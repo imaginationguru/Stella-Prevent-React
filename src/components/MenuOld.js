@@ -1,29 +1,29 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import ModuleBox from './ModuleBox';
-import user from '../assets/images/user.png';
-import maternity from '../assets/images/maternity.svg';
-import thoughts from '../assets/images/thoughts.svg';
-import all from '../assets/images/all.svg';
-import warnings from '../assets/images/warnings.svg';
-import exercise from '../assets/images/exercise.svg';
-import couple from '../assets/images/couple.svg';
-import GLOBALS from '../constants';
-import { TouchableOpacity } from 'react-native';
-import { navigatorPush } from '../config/navigationOptions.web';
-import { useDispatch, useSelector } from 'react-redux';
-import * as AppActions from '../actions';
-import { translate as ts } from '../i18n/translate';
-import { getItem } from '../utils/AsyncUtils';
+import user from '@assets/images/user.png';
+import maternity from '@assets/images/maternity.svg';
+import thoughts from '@assets/images/thoughts.svg';
+import all from '@assets/images/all.svg';
+import warnings from '@assets/images/warnings.svg';
+import exercise from '@assets/images/exercise.svg';
+import couple from '@assets/images/couple.svg';
+import GLOBALS from '@constants';
+import {TouchableOpacity} from 'react-native';
+import {navigatorPush} from '@config/navigationOptions.web';
+import {useDispatch, useSelector} from 'react-redux';
+import * as AppActions from '@actions';
+import {translate as ts} from '@i18n/translate';
+import {getItem} from '@utils/AsyncUtils';
 
-const { COLORS } = GLOBALS;
-const { GRAY } = COLORS;
+const {COLORS} = GLOBALS;
+const {GRAY} = COLORS;
 const Menu = (props) => {
-  const { modalVisible } = props;
+  const {modalVisible} = props;
 
   const dispatch = useDispatch();
-  const { currentActiveCard = [] } = useSelector((state) => state.moduleOne);
-  const { programData = [] } = useSelector((state) => state.authReducer);
-  const { week, day } = currentActiveCard.length ? currentActiveCard[0] : {};
+  const {currentActiveCard = []} = useSelector((state) => state.moduleOne);
+  const {programData = []} = useSelector((state) => state.authReducer);
+  const {week, day} = currentActiveCard.length ? currentActiveCard[0] : {};
   let duration = getItem('duration');
   let firstName = getItem('firstName');
   let lastName = getItem('lastName');
@@ -89,7 +89,6 @@ const Menu = (props) => {
         </TouchableOpacity>
       </div>
       <div className="row" style={styles.weekBox}>
-
         {lengthToArray(duration).map((item, index) => {
           return (
             <div className="col-md-4">
@@ -99,7 +98,7 @@ const Menu = (props) => {
                 moduleText={`Week ${item}`}
                 onNavigate={() => {
                   dispatch(AppActions.getWeek(item));
-                  dispatch({ type: 'GET_SELECTED_WEEK', payload: item });
+                  dispatch({type: 'GET_SELECTED_WEEK', payload: item});
                   dispatch({
                     type: GLOBALS.ACTION_TYPE.GET_SELECTED_DAY,
                     payload: item === week ? day : 1,
@@ -125,7 +124,7 @@ const Menu = (props) => {
             moduleText="Mood Tracker"
             onNavigate={() => {
               dispatch(AppActions.dashboardModalAction(false));
-              navigatorPush({ screenName: 'MoodTracker' });
+              navigatorPush({screenName: 'MoodTracker'});
             }}
           />
         </div>
@@ -136,7 +135,7 @@ const Menu = (props) => {
             moduleText="Activity Tracker"
             onNavigate={() => {
               dispatch(AppActions.dashboardModalAction(false));
-              navigatorPush({ screenName: 'ActivityTracker' });
+              navigatorPush({screenName: 'ActivityTracker'});
             }}
           />
         </div>
@@ -147,7 +146,7 @@ const Menu = (props) => {
             moduleText="Sleep Tracker"
             onNavigate={() => {
               dispatch(AppActions.dashboardModalAction(false));
-              navigatorPush({ screenName: 'SleepTracker' });
+              navigatorPush({screenName: 'SleepTracker'});
             }}
           />
         </div>
@@ -212,7 +211,7 @@ const styles = {
     paddingLeft: '10px',
     paddingTop: '5px',
   },
-  userName: { fontSize: 20, fontWeight: 'bold' },
+  userName: {fontSize: 20, fontWeight: 'bold'},
   buttonStyle: {
     marginTop: '25px',
     width: '170px',

@@ -1,37 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react';
-import {
-  View,
-  Text,
-  Animated,
-  Pressable,
-  StyleSheet,
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-  Switch,
-  Platform,
-  useWindowDimensions,
-  Dimensions,
-} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, StyleSheet} from 'react-native';
 
-import GLOBALS from '../../constants';
-const DEVICE_WIDTH = Dimensions.get('window').width;
+import {useSelector, useDispatch} from 'react-redux';
 
-const { COLORS, FONTS } = GLOBALS;
-const { LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN } = COLORS;
-import Header from '../../components/Header';
-import { useSelector, useDispatch } from 'react-redux';
-import MasterLayout from '../../components/MasterLayout';
-import BackToDashboard from '../../components/common/backToDashboard';
-import Footer from '../../components/Footer';
-import BackBtn from '../../components/common/backbtn';
-import ProfileHeader from '../../components/common/profileHeader';
-import commonStyles from '../dailyLearningWeeks/commonStyles';
-import { emailRegex } from '../../utils/RegexUtils';
-import * as AppActions from '../../actions';
+import BackToDashboard from '@components/common/backToDashboard';
+import Footer from '@components/Footer';
+
+import ProfileHeader from '@components/common/profileHeader';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
+import {emailRegex} from '@utils/RegexUtils';
+import * as AppActions from '@actions';
 function Contact(props) {
-  const { loginData } = useSelector((state) => state.authReducer);
+  const {loginData} = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -86,7 +66,7 @@ function Contact(props) {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     if (name === 'firstName') {
       setFirstName(value);
       setFirstNameError('');
@@ -129,14 +109,11 @@ function Contact(props) {
     } else {
       dispatch(AppActions.contactUs(params));
 
-
       setMesage('');
-
     }
   };
 
   return (
-
     <div className="main-dashboard">
       <View style={[styles.container, {}]}>
         {loginData?.user?._id ? (

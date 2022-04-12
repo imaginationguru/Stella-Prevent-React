@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
-import GLOBALS from '../../../constants';
-import ExerciseBox from '../../../components/ExerciseBox';
+import GLOBALS from '@constants';
+import ExerciseBox from '@components/ExerciseBox';
 import {
   CardQuote,
   CardTitle,
@@ -10,7 +10,7 @@ import {
   CardContent,
   CustomImage,
   OldCustomImage,
-} from '../../../components/Cards';
+} from '@components/Cards';
 import {Animated} from 'react-animated-css';
 import {Dimensions} from 'react-native';
 
@@ -216,20 +216,20 @@ const styles = {
   wrapper: {
     display: 'flex',
     marginTop: '10px',
-     width: '100%',
+    width: '100%',
   },
   contentStyle: {
     width: DEVICE_WIDTH > 767 ? '80%' : '100%',
-     fontFamily: FONTS.SEMI_BOLD,
+    fontFamily: FONTS.SEMI_BOLD,
     marginBottom: '-15px',
     width: 180,
     textAlign: 'center',
     paddingTop: 20,
-   },
+  },
   customImageStyle: {
     width: '180px',
     height: '180px',
-     flexDirection: 'column',
+    flexDirection: 'column',
   },
   descStyle: {width: '100%', paddingLeft: '35px', marginTop: '25px'},
 };

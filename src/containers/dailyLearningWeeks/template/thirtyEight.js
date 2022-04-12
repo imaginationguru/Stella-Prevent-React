@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
-import GLOBALS from '../../../constants';
-import commonStyles from '../commonStyles';
-import ExerciseBox from '../../../components/ExerciseBox';
+import GLOBALS from '@constants';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
+import ExerciseBox from '@components/ExerciseBox';
 import {
   CardQuote,
   CardTitle,
@@ -11,7 +11,7 @@ import {
   CardContent,
   CustomImage,
   OldCustomImage,
-} from '../../../components/Cards';
+} from '@components/Cards';
 import {Animated} from 'react-animated-css';
 const {IMAGE_BASE_URL, COLORS} = GLOBALS;
 const {BUTTON_ORANGE} = COLORS;
@@ -122,9 +122,7 @@ const ThirtyEight = (props) => {
                 <>
                   {isLeft ? (
                     <Animated isVisible={true} animationIn={'fadeInLeft'}>
-                      <div
-                        style={styles.imgContentWrapper}
-                      >
+                      <div style={styles.imgContentWrapper}>
                         <OldCustomImage
                           src={`${IMAGE_BASE_URL}${image}`}
                           style={{
@@ -142,9 +140,7 @@ const ThirtyEight = (props) => {
                     </Animated>
                   ) : (
                     <Animated isVisible={true} animationIn={'fadeInRight'}>
-                      <div
-                        style={styles.imgContentWrapper}
-                      >
+                      <div style={styles.imgContentWrapper}>
                         <CardDescription
                           key={index}
                           style={styles.descStyle}

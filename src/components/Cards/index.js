@@ -1,9 +1,7 @@
-import React from 'react';
 import styles from './styles';
-import { Animated } from 'react-animated-css';
-import { Text } from 'react-native';
+import {Animated} from 'react-animated-css';
 
-const CardTitle = ({ title, style }) => {
+const CardTitle = ({title, style}) => {
   return (
     <h2 className="dashboard-heading" style={style}>
       {title}
@@ -11,11 +9,11 @@ const CardTitle = ({ title, style }) => {
   );
 };
 
-const CardQuote = ({ quote }) => {
+const CardQuote = ({quote}) => {
   return <p className="dash-text">{quote}</p>;
 };
 
-const CardTime = ({ time }) => {
+const CardTime = ({time}) => {
   return <h6 className="dash-time m-b-30">{time}</h6>;
 };
 
@@ -47,7 +45,7 @@ const CardContent = ({
   animationIn,
   animationOut,
   animationInDelay,
-  onClick
+  onClick,
 }) => {
   return (
     <Animated
@@ -55,15 +53,20 @@ const CardContent = ({
       animationOut={animationOut}
       isVisible={isVisible}
       animationInDelay={animationInDelay}>
-      <p onClick={() => { onClick ? onClick() : null }} className="dash-text" style={{ ...styles.content, ...style }}>
+      <p
+        onClick={() => {
+          onClick ? onClick() : null;
+        }}
+        className="dash-text"
+        style={{...styles.content, ...style}}>
         {content}
       </p>
     </Animated>
   );
 };
-const CardAudio = ({ src, style }) => {
+const CardAudio = ({src, style}) => {
   return (
-    <div style={{ ...styles.audioWrapper, ...style }}>
+    <div style={{...styles.audioWrapper, ...style}}>
       <audio controls="controls" preload="none" onclick="this.play()">
         <source type="audio/mp3" src={src} />
       </audio>
@@ -71,12 +74,11 @@ const CardAudio = ({ src, style }) => {
   );
 };
 
-const CardVideo = ({ src, style }) => {
-
+const CardVideo = ({src, style}) => {
   return (
     <div
       className="dash-icon text-center"
-      oncontextmenu={e => e.preventDefault()}
+      oncontextmenu={(e) => e.preventDefault()}
       style={{
         ...styles.videoDiv,
         ...style,
@@ -88,9 +90,7 @@ const CardVideo = ({ src, style }) => {
         onclick="this.play()"
         controlsList="nodownload"
         // Disable right click
-        onContextMenu={e => e.preventDefault()}
-
-      >
+        onContextMenu={(e) => e.preventDefault()}>
         <source type="video/mp4" src={src} />
       </video>
     </div>
@@ -109,12 +109,12 @@ const CustomImage = ({
   return (
     <div
       style={
-        ({ ...styles.imageWrapper, ...style },
-          imageSize == 'medium'
-            ? { ...styles.mediumimageWrapper, ...style }
-            : imageSize == 'large'
-              ? { ...styles.largeimageWrapper, ...style }
-              : { ...styles.imageWrapper, ...style })
+        ({...styles.imageWrapper, ...style},
+        imageSize == 'medium'
+          ? {...styles.mediumimageWrapper, ...style}
+          : imageSize == 'large'
+          ? {...styles.largeimageWrapper, ...style}
+          : {...styles.imageWrapper, ...style})
       }>
       <Animated
         animationIn={animationIn}
@@ -124,13 +124,13 @@ const CustomImage = ({
           <img
             className="nav-hover"
             src={src}
-            style={{ ...styles.imageTag, ...imageStyle }}
+            style={{...styles.imageTag, ...imageStyle}}
           />
         </div>
         {/* <p style={{textAlign: 'center'}}>
         {title.toString().replace(/\xA0/g, ' ')}
       </p> */}
-        <p style={{ textAlign: 'center' }}>{title}</p>
+        <p style={{textAlign: 'center'}}>{title}</p>
       </Animated>
     </div>
   );
@@ -155,23 +155,23 @@ const OldCustomImage = ({
         <div
           className="dash-icon"
           style={
-            ({ ...styles.imageWrapper, ...style },
-              imageSize == 'medium'
-                ? { ...styles.mediumimageWrapper, ...style }
-                : imageSize == 'large'
-                  ? { ...styles.largeimageWrapper, ...style }
-                  : { ...styles.imageWrapper, ...style })
+            ({...styles.imageWrapper, ...style},
+            imageSize == 'medium'
+              ? {...styles.mediumimageWrapper, ...style}
+              : imageSize == 'large'
+              ? {...styles.largeimageWrapper, ...style}
+              : {...styles.imageWrapper, ...style})
           }>
           <img
             className="nav-hover"
             src={src}
-            style={{ ...styles.imageTag, ...imageStyle }}
+            style={{...styles.imageTag, ...imageStyle}}
           />
         </div>
         {/* <p style={{textAlign: 'center'}}>
         {title.toString().replace(/\xA0/g, ' ')}
       </p> */}
-        <p style={{ textAlign: 'center' }}>{title}</p>
+        <p style={{textAlign: 'center'}}>{title}</p>
       </Animated>
     </div>
   );

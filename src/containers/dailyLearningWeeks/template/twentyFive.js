@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import ReactHtmlParser from 'react-html-parser';
-import GLOBALS from '../../../constants';
-import ExerciseBox from '../../../components/ExerciseBox';
-import commonStyles from '../commonStyles';
-import { translate as ts } from '../../../i18n/translate';
-import { getItem } from '../../../utils/AsyncUtils';
-import { useSelector, useDispatch } from 'react-redux';
-import * as AppActions from '../../../actions';
-import slide from '../../../assets/images/slide.png';
+import GLOBALS from '@constants';
+import ExerciseBox from '@components/ExerciseBox';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
+import {translate as ts} from '@i18n/translate';
+import {getItem} from '@utils/AsyncUtils';
+import {useSelector, useDispatch} from 'react-redux';
+import * as AppActions from '@actions';
+import slide from '@assets/images/slide.png';
 import {
   CardQuote,
   CardTitle,
   CardTime,
   CardDescription,
   CardContent,
-} from '../../../components/Cards';
-import { Dimensions } from 'react-native-web';
-import { customAlert } from '../../../helpers/commonAlerts.web';
+} from '@components/Cards';
+import {Dimensions} from 'react-native-web';
+
+
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const { COLORS } = GLOBALS;
-const { WHITE } = COLORS;
+const {COLORS} = GLOBALS;
+const {WHITE} = COLORS;
 const TwentyFive = (props) => {
   const {
     card_title,
@@ -31,7 +32,7 @@ const TwentyFive = (props) => {
     week,
     assessment_id,
   } = props.card;
-  const { inputs } = props;
+  const {inputs} = props;
   const [firstInput, setFirstInput] = useState('');
   const [secondInput, setSecondInput] = useState('');
   const [thirdInput, setThirdInput] = useState('');
@@ -48,10 +49,10 @@ const TwentyFive = (props) => {
   const [secondUpdateId, setSecondUpdateId] = useState('');
   const [thirdUpdateId, setThirdUpdateId] = useState('');
   const [fourthUpdateId, setFourthUpdateId] = useState('');
-  const { userAssessmentData = [] } = useSelector((state) => state.moduleOne);
+  const {userAssessmentData = []} = useSelector((state) => state.moduleOne);
   const dispatch = useDispatch();
   const onHandleChange = (e, item) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     if (name === 'firstInput') {
       setFirstInput(value);
       setFirstInputError('');
@@ -85,12 +86,12 @@ const TwentyFive = (props) => {
     }
     let firstInput = cardsData.length
       ? cardsData
-        .filter((item) => {
-          return item.input_box_id === firstInputId;
-        })
-        .map((val) => {
-          return { _id: val._id, content: val.input_content, order: val.order };
-        })
+          .filter((item) => {
+            return item.input_box_id === firstInputId;
+          })
+          .map((val) => {
+            return {_id: val._id, content: val.input_content, order: val.order};
+          })
       : [];
     if (firstInput.length) {
       setFirstInput(firstInput[0].content || '');
@@ -99,12 +100,12 @@ const TwentyFive = (props) => {
 
     let secondInput = cardsData.length
       ? cardsData
-        .filter((item) => {
-          return item.input_box_id === secondInputId;
-        })
-        .map((val) => {
-          return { _id: val._id, content: val.input_content, order: val.order };
-        })
+          .filter((item) => {
+            return item.input_box_id === secondInputId;
+          })
+          .map((val) => {
+            return {_id: val._id, content: val.input_content, order: val.order};
+          })
       : [];
     if (secondInput.length) {
       setSecondInput(secondInput[0].content || '');
@@ -112,12 +113,12 @@ const TwentyFive = (props) => {
     }
     let thirdInput = cardsData.length
       ? cardsData
-        .filter((item) => {
-          return item.input_box_id === thirdInputId;
-        })
-        .map((val) => {
-          return { _id: val._id, content: val.input_content, order: val.order };
-        })
+          .filter((item) => {
+            return item.input_box_id === thirdInputId;
+          })
+          .map((val) => {
+            return {_id: val._id, content: val.input_content, order: val.order};
+          })
       : [];
     if (thirdInput.length) {
       setThirdInput(thirdInput[0].content || '');
@@ -125,12 +126,12 @@ const TwentyFive = (props) => {
     }
     let fourthInput = cardsData.length
       ? cardsData
-        .filter((item) => {
-          return item.input_box_id === fourthInputId;
-        })
-        .map((val) => {
-          return { _id: val._id, content: val.input_content, order: val.order };
-        })
+          .filter((item) => {
+            return item.input_box_id === fourthInputId;
+          })
+          .map((val) => {
+            return {_id: val._id, content: val.input_content, order: val.order};
+          })
       : [];
     if (fourthInput.length) {
       setFourthInput(fourthInput[0].content || '');
@@ -239,15 +240,15 @@ const TwentyFive = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardQuote
-                key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardQuote
+                  key={index}
+                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                />
+              );
+            })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -259,15 +260,15 @@ const TwentyFive = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardDescription
-                key={index}
-                description={ReactHtmlParser(item.desc)}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardDescription
+                  key={index}
+                  description={ReactHtmlParser(item.desc)}
+                />
+              );
+            })
         : []}
       {/**********************Images************** */}
       <div
@@ -285,36 +286,36 @@ const TwentyFive = (props) => {
             marginRight: 'auto',
             position: 'relative',
           }}>
-          <img src={slide} style={{ width: '100%', height: '100%' }} />
+          <img src={slide} style={{width: '100%', height: '100%'}} />
           <div
-            style={{ position: 'absolute', right: '80px', top: '20px' }}
+            style={{position: 'absolute', right: '80px', top: '20px'}}
             className="t-area1">
             {inputs.length
               ? inputs
-                .filter((item) => item.order === 0)
-                .map((item) => {
-                  return (
-                    <div className="formRow">
-                      <div className="w100">
-                        <div className="formField has-icon">
-                          <textarea
-                            type="textarea"
-                            className="f-field t-area"
-                            value={firstInput}
-                            name="firstInput"
-                            onChange={(e) => onHandleChange(e, item)}
-                            required
-                            placeholder={item.placeholder}
-                            style={styles.inputField}
-                          />
+                  .filter((item) => item.order === 0)
+                  .map((item) => {
+                    return (
+                      <div className="formRow">
+                        <div className="w100">
+                          <div className="formField has-icon">
+                            <textarea
+                              type="textarea"
+                              className="f-field t-area"
+                              value={firstInput}
+                              name="firstInput"
+                              onChange={(e) => onHandleChange(e, item)}
+                              required
+                              placeholder={item.placeholder}
+                              style={styles.inputField}
+                            />
+                          </div>
                         </div>
+                        <span style={commonStyles.error}>
+                          {firstInputError}
+                        </span>
                       </div>
-                      <span style={commonStyles.error}>
-                        {firstInputError}
-                      </span>
-                    </div>
-                  );
-                })
+                    );
+                  })
               : null}
           </div>
           <div
@@ -326,92 +327,92 @@ const TwentyFive = (props) => {
             className="t-area2">
             {inputs.length
               ? inputs
-                .filter((item) => item.order === 1)
-                .map((item) => {
-                  return (
-                    <div className="formRow">
-                      <div className="w100">
-                        <div className="formField has-icon">
-                          <textarea
-                            type="textarea"
-                            className="f-field t-area"
-                            value={secondInput}
-                            name="secondInput"
-                            onChange={(e) => onHandleChange(e, item)}
-                            required
-                            placeholder={item.placeholder}
-                            style={styles.inputField}
-                          />
+                  .filter((item) => item.order === 1)
+                  .map((item) => {
+                    return (
+                      <div className="formRow">
+                        <div className="w100">
+                          <div className="formField has-icon">
+                            <textarea
+                              type="textarea"
+                              className="f-field t-area"
+                              value={secondInput}
+                              name="secondInput"
+                              onChange={(e) => onHandleChange(e, item)}
+                              required
+                              placeholder={item.placeholder}
+                              style={styles.inputField}
+                            />
+                          </div>
                         </div>
+                        <span style={commonStyles.error}>
+                          {secondInputError}
+                        </span>
                       </div>
-                      <span style={commonStyles.error}>
-                        {secondInputError}
-                      </span>
-                    </div>
-                  );
-                })
+                    );
+                  })
               : null}
           </div>
           <div
-            style={{ position: 'absolute', left: '40px', bottom: '10px' }}
+            style={{position: 'absolute', left: '40px', bottom: '10px'}}
             className="t-area3">
             {inputs.length
               ? inputs
-                .filter((item) => item.order === 2)
-                .map((item) => {
-                  return (
-                    <div className="formRow">
-                      <div className="w100">
-                        <div className="formField has-icon">
-                          <textarea
-                            type="textarea"
-                            className="f-field t-area"
-                            value={thirdInput}
-                            name="thirdInput"
-                            onChange={(e) => onHandleChange(e, item)}
-                            required
-                            placeholder={item.placeholder}
-                            style={styles.inputField}
-                          />
+                  .filter((item) => item.order === 2)
+                  .map((item) => {
+                    return (
+                      <div className="formRow">
+                        <div className="w100">
+                          <div className="formField has-icon">
+                            <textarea
+                              type="textarea"
+                              className="f-field t-area"
+                              value={thirdInput}
+                              name="thirdInput"
+                              onChange={(e) => onHandleChange(e, item)}
+                              required
+                              placeholder={item.placeholder}
+                              style={styles.inputField}
+                            />
+                          </div>
                         </div>
+                        <span style={commonStyles.error}>
+                          {thirdInputError}
+                        </span>
                       </div>
-                      <span style={commonStyles.error}>
-                        {thirdInputError}
-                      </span>
-                    </div>
-                  );
-                })
+                    );
+                  })
               : null}
           </div>
           <div
-            style={{ position: 'absolute', right: '10px', bottom: '10px' }}
+            style={{position: 'absolute', right: '10px', bottom: '10px'}}
             className="t-area4">
             {inputs.length
               ? inputs
-                .filter((item) => item.order === 3)
-                .map((item) => {
-                  return (
-                    <div>
-                      <div className="w100">
-                        <div className="formField has-icon">
-                          <textarea
-                            type="textarea"
-                            className="f-field t-area"
-                            value={fourthInput}
-                            name="fourthInput"
-                            onChange={(e) => onHandleChange(e, item)}
-                            required
-                            placeholder={item.placeholder}
-                            style={styles.inputField}
-                          />
+                  .filter((item) => item.order === 3)
+                  .map((item) => {
+                    return (
+                      <div>
+                        <div className="w100">
+                          <div className="formField has-icon">
+                            <textarea
+                              type="textarea"
+                              className="f-field t-area"
+                              value={fourthInput}
+                              name="fourthInput"
+                              onChange={(e) => onHandleChange(e, item)}
+                              required
+                              placeholder={item.placeholder}
+                              style={styles.inputField}
+                            />
+                          </div>
                         </div>
+                        <span style={commonStyles.error}>
+                          {fourthInputError}
+                        </span>
                       </div>
-                      <span style={commonStyles.error}>
-                        {fourthInputError}
-                      </span>
-                    </div>
-                  );
-                })
+                    );
+                  })
               : null}
           </div>
         </div>
@@ -424,18 +425,18 @@ const TwentyFive = (props) => {
         </div>
       ) : null}
       {/**********************content************** */}
-      <div style={{ ...commonStyles.contentLeftBorder }}>
+      <div style={{...commonStyles.contentLeftBorder}}>
         {content && content.length
           ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardContent
-                  key={index}
-                  content={ReactHtmlParser(item.content)}
-                />
-              );
-            })
+              .sort((a, b) => (a.order > b.order && 1) || -1)
+              .map((item, index) => {
+                return (
+                  <CardContent
+                    key={index}
+                    content={ReactHtmlParser(item.content)}
+                  />
+                );
+              })
           : []}
       </div>
 
