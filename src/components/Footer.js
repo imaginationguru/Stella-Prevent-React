@@ -1,7 +1,10 @@
-import {Link} from 'react-router-dom';
-import footerlogo from '@assets/images/footerlogo.svg';
-import GLOBALS from '@constants';
-const {IMAGE_BASE_URL} = GLOBALS;
+import React from 'react';
+import { translate as ts } from '../i18n/translate';
+import { Link } from 'react-router-dom';
+import { navigatorPush } from '../config/navigationOptions.web';
+import footerlogo from '../assets/images/footerlogo.svg';
+import GLOBALS from '../constants';
+const { IMAGE_BASE_URL } = GLOBALS;
 const Footer = () => {
   return (
     <footer className="dashboard-footer">
@@ -22,7 +25,7 @@ const Footer = () => {
               <div className="footer-link-item">
                 <a
                   target="_blank"
-                  href={`${IMAGE_BASE_URL}upload/PRIVACY_POLICY0203_stella.pdf`}>
+                  href={`${IMAGE_BASE_URL}upload/PRIVACY_POLICY0203.pdf`}>
                   Privacy Policy
                 </a>
               </div>
@@ -53,7 +56,7 @@ const Footer = () => {
               <b>
                 Contact us at{' '}
                 <a
-                  style={{color: 'white'}}
+                  style={{ color: 'white' }}
                   href="mailto:contact@mymamalift.com">
                   <b>contact@mymamalift.com</b>
                 </a>

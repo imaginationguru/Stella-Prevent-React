@@ -303,7 +303,7 @@ const TwentySeven = (props) => {
         setGlobalAPICall(false);
         if (last_answer && last_answer.optionPoint > 1) {
           let message =
-            'Based on your response to Question 10, it is critical that you discuss your situation or feelings with a healthcare professional such as your doctor or mental health provider as soon as possible. They can help you get the care you need. If you are in crisis and need immediate help, you can call your doctor, 911 for emergency services, go to the nearest hospital emergency room, or call the toll-free hotline of the National Suicide Prevention Hotline at 1-800-273-TALK. Find a family member or a friend to stay with you until you get help. ';
+            'Based on your response to Question 10, it is critical that you discuss your situation or feelings with a healthcare professional such as your doctor or mental health provider as soon as possible. They can help you get the care you need.  If you are in crisis and need immediate help, call 911, go to the nearest hospital emergency room, text HOME to 741741 or call the toll-free hotline of the National Suicide Prevention Hotline at 1-800-273-TALK (8255). Find a family member or a friend to stay with you until you get help.';
           dispatch(
             AppActions.savePatientAssessment(
               modifyData,

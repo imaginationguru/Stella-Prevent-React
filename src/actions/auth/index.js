@@ -574,7 +574,7 @@ export function updateUserData(params) {
           type: ACTION_TYPE.SET_PROFILE_IMAGE,
           payload: json.data.user.image_path,
         });
-        storeItem('token', json.data.token);
+        //  storeItem('token', json.data.token);
         storeItem('programId', json.data.user.programId); // '608aa90eb9a5442de2e81673';
         storeItem('userId', json.data.user._id);
         storeItem('firstName', json.data.user.firstName);

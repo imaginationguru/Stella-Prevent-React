@@ -9,6 +9,7 @@ import SadActive from '@assets/images/sadActive/sadActive.png';
 import Angry from '@assets/images/angry/angry.png';
 import AngryActive from '@assets/images/angryActive/angryActive.png';
 
+
 import {ENV} from './env';
 const isLive = true;
 const getEnvBasedUrl = () => {
@@ -51,6 +52,8 @@ export default {
   LOCATION_ID: getEnvBasedUrl().LOCATION_ID,
   // BASE_URL: isLive
   //   ? 'https://mamalift.curiodigitaltx.com/api/' //prod
+
+
   //   : 'http://52.170.117.197/api/', //DEV
   // IMAGE_BASE_URL: isLive
   //   ? 'https://mamalift.curiodigitaltx.com/' //Prod
@@ -58,9 +61,11 @@ export default {
 
   // WEB_BASE_URL: 'https://mamalift-web.curiodigitaltx.com/',
 
+
   // BASE_URL: 'https://mamalift-qa.curio-dtx.com/api/',
   // IMAGE_BASE_URL: 'https://mamalift-qa.curio-dtx.com/', //QA
   // WEB_BASE_URL: 'https://mamalift-qa-web.curio-dtx.com/',
+
 
   // BASE_URL: 'https://mamalift-uat.curio-dtx.com/api/',
   // IMAGE_BASE_URL: 'https://mamalift-uat.curio-dtx.com/', //UAT
@@ -70,7 +75,9 @@ export default {
   //   ? 'sq0idp-EresRbLbMTgKRAuhD5ScNEA'
   //   : 'sandbox-sq0idb-WPw6oJXhJty7VgI9HN3Edw', //1.5 stella
 
+
   // LOCATION_ID: isLive ? 'LR3OMWYVRCMX8' : 'L726CAXF29YB8', //1.5 stella
+
   URL: {
     LOGIN: 'login',
     REGISTER: 'register',

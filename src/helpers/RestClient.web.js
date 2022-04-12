@@ -11,6 +11,8 @@ import {
 import {getItem} from '../utils/AsyncUtils';
 const {BASE_URL} = GLOBALS;
 import store, {storeObj} from '@store/setup.web';
+
+
 //let Token = getItem('token');
 
 const api = create({
@@ -22,8 +24,7 @@ const api = create({
   },
 });
 const setToken = () => {
-  let Token = storeObj.store.getState().authReducer.loginToken;
-  //console.log(Token, 'accessToken.......');
+  let Token = getItem('token');
   if (Token) {
     console.log(Token, 'Token......');
     api.setHeader('Authorization', Token);
@@ -118,6 +119,9 @@ class RestClient {
       }
     });
   }
+
+
+
 }
 
 export default RestClient;
