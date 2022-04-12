@@ -1,9 +1,9 @@
 
 import store from '@store/setup';
 import CryptoJS from 'crypto-js';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import GLOBALS from '@constants';
-const {STRINGS} = GLOBALS;
+const { STRINGS } = GLOBALS;
 
 const isInternet = () => window.navigator.onLine;
 let accessToken = () => store.getState().authReducer.loginToken;
@@ -66,6 +66,7 @@ const checkNextDayUnlocked = (curr_week, curr_day, total_week, total_day) => {
   }
 };
 const encryptRequest = (data) => {
+  return data
   return {
     data: CryptoJS.AES.encrypt(
       JSON.stringify(data),
@@ -75,6 +76,7 @@ const encryptRequest = (data) => {
 };
 
 const decryptRequest = (data) => {
+  return data
   let bytes = CryptoJS.AES.decrypt(data, STRINGS.HIPPA_KEY);
   let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
   return decryptedData;

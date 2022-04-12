@@ -10,7 +10,7 @@ import Angry from '@assets/images/angry/angry.png';
 import AngryActive from '@assets/images/angryActive/angryActive.png';
 
 
-import {ENV} from './env';
+import { ENV } from './env';
 const isLive = true;
 const getEnvBasedUrl = () => {
   console.log('ENV>>>>', ENV);
@@ -35,13 +35,17 @@ const getEnvBasedUrl = () => {
     BASE_URL = 'https://mamalift-qa.curio-dtx.com/api/';
     IMAGE_BASE_URL = 'https://mamalift-qa.curio-dtx.com/';
     WEB_BASE_URL = 'https://mamalift-qa-web.curio-dtx.com/';
+    squareAppId = 'sandbox-sq0idb-WPw6oJXhJty7VgI9HN3Edw';
+    LOCATION_ID = 'L726CAXF29YB8';
   }
   if (ENV === 'UAT') {
     BASE_URL = 'https://mamalift-uat.curio-dtx.com/api/';
     IMAGE_BASE_URL = 'https://mamalift-uat.curio-dtx.com/';
     WEB_BASE_URL = 'https://mamalift-uat-web.curio-dtx.com/';
+    squareAppId = 'sandbox-sq0idb-WPw6oJXhJty7VgI9HN3Edw';
+    LOCATION_ID = 'L726CAXF29YB8';
   }
-  return {BASE_URL, IMAGE_BASE_URL, WEB_BASE_URL, squareAppId, LOCATION_ID};
+  return { BASE_URL, IMAGE_BASE_URL, WEB_BASE_URL, squareAppId, LOCATION_ID };
 };
 console.log('get BASE URL', getEnvBasedUrl());
 export default {
@@ -50,26 +54,7 @@ export default {
   WEB_BASE_URL: getEnvBasedUrl().WEB_BASE_URL,
   squareAppId: getEnvBasedUrl().squareAppId,
   LOCATION_ID: getEnvBasedUrl().LOCATION_ID,
-  // BASE_URL: isLive
-  //   ? 'https://mamalift.curiodigitaltx.com/api/' //prod
 
-
-  //   : 'http://52.170.117.197/api/', //DEV
-  // IMAGE_BASE_URL: isLive
-  //   ? 'https://mamalift.curiodigitaltx.com/' //Prod
-  //   : 'http://52.170.117.197/', //dev
-
-  // WEB_BASE_URL: 'https://mamalift-web.curiodigitaltx.com/',
-
-
-  // BASE_URL: 'https://mamalift-qa.curio-dtx.com/api/',
-  // IMAGE_BASE_URL: 'https://mamalift-qa.curio-dtx.com/', //QA
-  // WEB_BASE_URL: 'https://mamalift-qa-web.curio-dtx.com/',
-
-
-  // BASE_URL: 'https://mamalift-uat.curio-dtx.com/api/',
-  // IMAGE_BASE_URL: 'https://mamalift-uat.curio-dtx.com/', //UAT
-  // WEB_BASE_URL: 'https://mamalift-uat-web.curio-dtx.com/',
   /********************************** * URL ***********************************/
   // squareAppId: isLive
   //   ? 'sq0idp-EresRbLbMTgKRAuhD5ScNEA'
