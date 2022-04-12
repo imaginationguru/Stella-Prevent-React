@@ -1,13 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import MasterLayout from '@components/MasterLayout';
 import Footer from '@components/Footer';
 import GLOBALS from '@constants';
 import * as AppActions from '@actions';
-import {Header, SubHeader} from './Navbar';
-import GenerateUI from './GenerateUI';
+import {Header, SubHeader} from '@containers/dailyLearningWeeks/Navbar';
+import GenerateUI from '@containers/dailyLearningWeeks/GenerateUI';
 import BackToDashboard from '@components/common/backToDashboard';
-import {getSelectedWeekDayCards, canProceedNextDay} from '@helpers/common.web';
+import {canProceedNextDay} from '@helpers/common.web';
 import {customAlert} from '@helpers/commonAlerts.web';
 import {navigatorPush} from '@config/navigationOptions.web';
 import BackBtn from '@components/common/backbtn';

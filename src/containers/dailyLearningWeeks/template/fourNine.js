@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import commonStyles from '../commonStyles';
+import {useState, useEffect} from 'react';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import ReactHtmlParser from 'react-html-parser';
 import GLOBALS from '@constants';
 import {useDispatch, useSelector} from 'react-redux';

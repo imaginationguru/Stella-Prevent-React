@@ -14,7 +14,7 @@ import {
   CardContent,
   CustomImage,
 } from '@components/Cards';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import {Dimensions} from 'react-native';
 import GreenCheck from '@assets/images/tick.svg';
 import cancel from '@assets/images/cancel.svg';

@@ -1,9 +1,8 @@
-import React, {useState} from 'react';
 import AppleLogin from 'react-apple-login';
-import {customAlert} from '../../helpers/commonAlerts.web';
+import {customAlert} from '@helpers/commonAlerts.web';
 import jwt_decode from 'jwt-decode';
-import GLOBALS from '../../constants';
-const {IMAGE_BASE_URL, WEB_BASE_URL} = GLOBALS;
+import GLOBALS from '@constants';
+const {WEB_BASE_URL} = GLOBALS;
 const AppleLogIn = (props) => {
   let {onSocialLogin = () => {}} = props;
   const appleId = 'com.stellaPreventWeb';

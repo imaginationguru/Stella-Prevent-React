@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import commonStyles from '../commonStyles';
+import {useEffect, useState} from 'react';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import ReactHtmlParser from 'react-html-parser';
 import {
   CardQuote,
@@ -15,8 +15,8 @@ import * as AppActions from '@actions';
 import GLOBALS from '@constants';
 import ExerciseBox from '@components/ExerciseBox';
 import {getItem} from '@utils/AsyncUtils';
-const {IMAGE_BASE_URL, ACTION_TYPE, COLORS} = GLOBALS;
-const {GRAY, WHITE, BOX_GRAY, LIGHT_PINK} = COLORS;
+const {IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
+
 const FourEight = (props) => {
   const {
     card_title,

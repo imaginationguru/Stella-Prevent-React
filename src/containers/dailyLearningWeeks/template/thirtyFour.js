@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect, useCallback} from 'react';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import ReactHtmlParser from 'react-html-parser';
 import GLOBALS from '@constants';
 import {useDispatch, useSelector} from 'react-redux';

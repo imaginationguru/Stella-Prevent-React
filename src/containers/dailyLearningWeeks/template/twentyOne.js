@@ -3,7 +3,7 @@ import ReactHtmlParser from 'react-html-parser';
 import GLOBALS from '@constants';
 import {useSelector, useDispatch} from 'react-redux';
 import * as AppActions from '@actions';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import {translate as ts} from '@i18n/translate';
 import tickBox from '@assets/images/tickBox.png';
 import {getItem} from '@utils/AsyncUtils';

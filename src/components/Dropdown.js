@@ -1,4 +1,3 @@
-import React from 'react';
 import {translate as ts} from '@i18n/translate';
 const DropDown = ({data = [], value, handleChange, name}) => {
   const optionJsx = data.length

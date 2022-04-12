@@ -21,7 +21,7 @@ import GoogleLoginComponent from '@components/SocialLogin/GoogleLogIn';
 import FacebookLoginComponent from '@components/SocialLogin/FacebookLogin';
 import AppleLoginComponent from '@components/SocialLogin/AppleLogin';
 import {translate as ts} from '@i18n/translate';
-import commonStyles from '../../dailyLearningWeeks/commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import {emailRegex} from '@utils/RegexUtils';
 import GLOBALS from '@constants';
 import Footer from '@components/Footer';

@@ -1,8 +1,8 @@
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
-import {navigatortoStart} from '../../config/navigationOptions.web';
-import back from '../../assets/images/subscription/back.png';
-import GLOBALS from '../../constants';
+import {navigatortoStart} from '@config/navigationOptions.web';
+import back from '@assets/images/subscription/back.png';
+import GLOBALS from '@constants';
 
 const {COLORS, FONTS} = GLOBALS;
 const BackToDashboard = (props) => {

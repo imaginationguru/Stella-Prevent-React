@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import GLOBALS from '@constants';
 import ReactHtmlParser from 'react-html-parser';
 import {useSelector, useDispatch} from 'react-redux';
@@ -14,7 +14,7 @@ import {
   CardContent,
   CustomImage,
 } from '@components/Cards';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 const {YELLOW, WHITE, CIRCLE_GRAY, LIGHT_GRAY} = COLORS;
 let userId = getItem('userId');

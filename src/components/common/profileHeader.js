@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import GLOBALS from '@constants';
 import profile from '@assets/images/profile.png';
-import cancel from '../../assets/images/cancel.png';
+import cancel from '@assets/images/cancel.png';
 import edit from '@assets/images/edit.png';
 const {COLORS, FONTS, IMAGE_BASE_URL} = GLOBALS;
 const {DARK_GREEN, WHITE, GreenForSlider} = COLORS;
@@ -19,7 +19,7 @@ import {getItem} from '@utils/AsyncUtils';
 import {useDispatch, useSelector} from 'react-redux';
 import * as AppActions from '@actions';
 import Dropzone from 'react-dropzone';
-import {normalize} from '../../utils/Helper';
+import {normalize} from '@utils/Helper';
 import Slider from '@mui/material/Slider';
 import {styled} from '@mui/material/styles';
 

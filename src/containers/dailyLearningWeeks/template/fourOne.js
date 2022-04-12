@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
-import React, {useState, useEffect} from 'react';
-import {TextInput, FlatList, View} from 'react-native';
+import {useState, useEffect} from 'react';
+import {TextInput} from 'react-native';
 import right from '@assets/images/right.svg';
 import cross from '@assets/images/cross.svg';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import GLOBALS from '@constants';
 import ReactHtmlParser from 'react-html-parser';
 import {useDispatch, useSelector} from 'react-redux';
@@ -20,7 +20,7 @@ import {
   CustomImage,
 } from '@components/Cards';
 const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
-const {BOX_GRAY, GRAY2, BUTTON_ORANGE} = COLORS;
+const {GRAY2, BUTTON_ORANGE} = COLORS;
 
 const FourOne = (props) => {
   const {

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import right from '@assets/images/right.svg';
 import cross from '@assets/images/cross.svg';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import GLOBALS from '@constants';
 import ReactHtmlParser from 'react-html-parser';
 import {useDispatch, useSelector} from 'react-redux';

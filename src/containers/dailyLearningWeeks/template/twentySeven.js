@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import GLOBALS from '@constants';
 import ExerciseBox from '@components/ExerciseBox';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import {useSelector, useDispatch} from 'react-redux';
 import * as AppActions from '@actions';
 import {getItem} from '@utils/AsyncUtils';

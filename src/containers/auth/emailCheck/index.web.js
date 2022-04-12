@@ -8,7 +8,7 @@
 
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-import brand from '../../../assets/images/brand.svg';
+import brand from '@assets/images/brand.svg';
 import graphic01 from '@assets/images/graphic01.svg';
 import icon01 from '@assets/images/icon01.svg';
 import successTick from '@assets/images/successTick.svg';

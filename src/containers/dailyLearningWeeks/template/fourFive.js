@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useState, useEffect} from 'react';
-import commonStyles from '../commonStyles';
+import {useState, useEffect} from 'react';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import GLOBALS from '@constants';
 import {TextInput, View, Text} from 'react-native';
 import ReactHtmlParser from 'react-html-parser';

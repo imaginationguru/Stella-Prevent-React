@@ -7,7 +7,7 @@ import BackToDashboard from '@components/common/backToDashboard';
 import Footer from '@components/Footer';
 
 import ProfileHeader from '@components/common/profileHeader';
-import commonStyles from '../dailyLearningWeeks/commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import {emailRegex} from '@utils/RegexUtils';
 import * as AppActions from '@actions';
 function Contact(props) {

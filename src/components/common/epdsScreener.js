@@ -14,7 +14,7 @@ import reloadImg from '@assets/images/screener/restart.png';
 import leftArrow from '@assets/images/leftArrow.svg';
 import cancel from '@assets/images/cancel.png';
 import Button from './button';
-import RadioButton from '../RadioButton';
+import RadioButton from '@components/RadioButton';
 import {useSelector, useDispatch} from 'react-redux';
 import {getItem} from '@utils/AsyncUtils';
 const {COLORS, FONTS} = GLOBALS;

@@ -8,9 +8,7 @@
 
 import React from 'react';
 
-
-
-import user from '../../../assets/images/user.svg';
+import user from '@assets/images/user.svg';
 import {
   SafeAreaView,
   StyleSheet,
@@ -20,12 +18,12 @@ import {
   StatusBar,
   Platform,
 } from 'react-native';
-import GLOBALS from '../../../constants'
+import GLOBALS from '@constants';
 const isIOS = Platform.OS === 'ios' ? true : false;
 console.log('is IOS>>>>>>', isIOS);
 const Dashboard = () => {
-  const { IMAGE_BASE_URL, ACTION_TYPE, COLORS } = GLOBALS;
-  const { LightYellow } = COLORS;
+  const {IMAGE_BASE_URL, ACTION_TYPE, COLORS} = GLOBALS;
+  const {LightYellow} = COLORS;
 
   return (
     <>

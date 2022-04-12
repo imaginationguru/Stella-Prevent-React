@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import GLOBALS from '@constants';
 import Thermometer from './Thermometer';
 import ReactHtmlParser from 'react-html-parser';

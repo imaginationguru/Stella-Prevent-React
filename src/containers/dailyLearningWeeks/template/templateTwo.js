@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import GLOBALS from '@constants';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import {getItem} from '@utils/AsyncUtils';
 import {useDispatch, useSelector} from 'react-redux';
 import * as AppActions from '@actions';

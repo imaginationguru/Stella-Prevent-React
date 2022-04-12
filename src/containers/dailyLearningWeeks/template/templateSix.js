@@ -21,7 +21,7 @@ import * as AppActions from '@actions';
 import {getItem} from '@utils/AsyncUtils';
 import {translate as ts} from '@i18n/translate';
 import ExerciseBox from '@components/ExerciseBox';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import {
   CardQuote,
   CardTitle,

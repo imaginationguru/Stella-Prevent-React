@@ -1,8 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useState, useEffect} from 'react';
-import {TextInput, View, Text, FlatList, Dimensions} from 'react-native';
-import commonStyles from '../commonStyles';
+import {useState, useEffect} from 'react';
+import {View, Text, FlatList, Dimensions} from 'react-native';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import GLOBALS from '@constants';
 import ReactHtmlParser from 'react-html-parser';
 import {useDispatch, useSelector} from 'react-redux';
@@ -19,9 +19,9 @@ import {
   CardContent,
   CustomImage,
 } from '@components/Cards';
-import {wrap} from 'lodash';
+
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
+
 const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 const {BOX_GRAY, GREEN_TEXT, CIRCLE_GRAY, WHITE, GRAY, RED} = COLORS;
 

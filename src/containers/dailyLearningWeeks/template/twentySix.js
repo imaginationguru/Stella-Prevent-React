@@ -7,7 +7,7 @@ import right from '@assets/images/right.svg';
 import {getItem} from '@utils/AsyncUtils';
 import * as AppActions from '@actions';
 import {translate as ts} from '@i18n/translate';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import {
   CardQuote,
   CardTitle,

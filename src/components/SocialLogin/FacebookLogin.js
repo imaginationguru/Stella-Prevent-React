@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import {customAlert} from '../../helpers/commonAlerts.web';
+import {customAlert} from '@helpers/commonAlerts.web';
 const FacebookLogIn = (props) => {
   let {onSocialLogin = () => {}} = props;
   const fbAppId = '416468470173904';

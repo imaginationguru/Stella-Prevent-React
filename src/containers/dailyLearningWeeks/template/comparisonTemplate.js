@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import {useDispatch, useSelector} from 'react-redux';
 import GLOBALS from '@constants';
@@ -13,11 +13,11 @@ import {
   CardContent,
   CustomImage,
 } from '@components/Cards';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import {Dimensions} from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
+
 const {IMAGE_BASE_URL, COLORS, ACTION_TYPE} = GLOBALS;
 const {DARK_GREEN, YELLOW, WHITE} = COLORS;
 

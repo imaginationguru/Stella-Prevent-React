@@ -1,5 +1,5 @@
 import React from 'react';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import GLOBALS from '@constants';
 import ReactHtmlParser from 'react-html-parser';
 import ExerciseBox from '@components/ExerciseBox';

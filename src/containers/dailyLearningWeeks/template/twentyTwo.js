@@ -6,7 +6,7 @@ import heart from '@assets/images/heart@3x.png';
 import commentImg from '@assets/images/comment@3x.png';
 import Rating from 'react-rating';
 import {Modal, TouchableOpacity, Dimensions} from 'react-native';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import {translate as ts} from '@i18n/translate';
 import blackStar from '@assets/images/blackStar.png';
 import yellowStar from '@assets/images/yellowStar.png';

@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import GLOBALS from '@constants';
 import ExerciseBox from '@components/ExerciseBox';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import {
   CardQuote,
   CardTitle,

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import GLOBALS from '@constants';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import ExerciseBox from '@components/ExerciseBox';
 import {
   CardQuote,

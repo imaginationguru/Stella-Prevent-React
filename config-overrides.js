@@ -14,5 +14,6 @@ module.exports = override(
     ['@assets']: path.resolve(__dirname, './src/assets'),
     ['@i18n']: path.resolve(__dirname, './src/i18n'),
     ['@reducers']: path.resolve(__dirname, './src/reducers'),
+    ['@package']: path.resolve(__dirname, './package.json'),
   }),
 );

@@ -4,7 +4,7 @@ import ReactHtmlParser from 'react-html-parser';
 import {getItem} from '@utils/AsyncUtils';
 import {useDispatch, useSelector} from 'react-redux';
 import * as AppActions from '@actions';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import {translate as ts} from '@i18n/translate';
 import ExerciseBox from '@components/ExerciseBox';
 import {

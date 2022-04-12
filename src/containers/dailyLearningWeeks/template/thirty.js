@@ -18,7 +18,7 @@ import {
   CardContent,
   CustomImage,
 } from '@components/Cards';
-import commonStyles from '../commonStyles';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import moment from 'moment';
 import arrowDown from '@assets/images/arrowDown.png';
 import upArrow from '@assets/images/upArrow.png';
