@@ -514,7 +514,7 @@ const styles = StyleSheet.create({
     color: DARK_GREEN,
     fontSize: 18,
     fontFamily: FONTS.SEMI_BOLD,
-    fontWeight: '700',
+    // fontWeight: '700',
     paddingVertical: 5,
   },
   labelText: {

@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   },
   tabTitle: {
     alignSelf: 'center',
-    fontFamily: LIGHT,
+    // fontFamily: LIGHT,
     fontSize: 15,
     fontFamily: FONTS.MEDIUM,
   },
