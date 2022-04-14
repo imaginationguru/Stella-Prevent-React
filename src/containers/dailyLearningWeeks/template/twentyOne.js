@@ -45,6 +45,7 @@ const TwentyOne = (props) => {
 
   useEffect(() => {
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessment_id]);
 
   useEffect(() => {

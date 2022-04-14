@@ -124,6 +124,7 @@ const FourTwo = (props) => {
   useEffect(() => {
     dispatch(AppActions.getAssessmentData(assessment_id));
     dispatch(AppActions.getAssessmentDataSecond(assessment_id2));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessment_id2]);
   useEffect(() => {
     let optionData =
@@ -144,6 +145,7 @@ const FourTwo = (props) => {
         : [];
     setOptionDataContent(optionData);
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData2]);
   useEffect(() => {
     if (userAssessmentData && userAssessmentData.length) {
@@ -198,6 +200,7 @@ const FourTwo = (props) => {
         setOptionDataContent(data1);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
 
   /*
@@ -343,6 +346,7 @@ const FourTwo = (props) => {
         }),
       );
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData, assessment_id]);
   useEffect(() => {
     const getDataMapper = (arr = []) => {
@@ -381,6 +385,7 @@ const FourTwo = (props) => {
         );
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
   const onSaveMyths = (e) => {
     e.preventDefault();

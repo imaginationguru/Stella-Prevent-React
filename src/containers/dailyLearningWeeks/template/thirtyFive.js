@@ -93,6 +93,7 @@ const ThirtyFive = (props) => {
 
     setOptionDataContent(optionData);
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData]);
   useEffect(() => {
     setCorrectAns(false);
@@ -151,6 +152,7 @@ const ThirtyFive = (props) => {
         setOptionDataContent(data1);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
 
   /*

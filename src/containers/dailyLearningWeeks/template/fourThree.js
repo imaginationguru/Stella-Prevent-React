@@ -101,6 +101,7 @@ const FourThree = (props) => {
         }),
       );
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData, assessment_id]);
   useEffect(() => {
     let cardData = [];
@@ -110,6 +111,7 @@ const FourThree = (props) => {
         .forEach((val) => cardData.push(...val.cards));
     }
     setFirstHeaderContent(cardData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
   const onSaveMyths = (e) => {
     e.preventDefault();

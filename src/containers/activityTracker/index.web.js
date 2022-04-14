@@ -169,6 +169,7 @@ const ActivityTracker = ({ location }) => {
     };
     dispatch(AppActions.getActivityTracker(postData));
     dispatch(AppActions.getSelectedActivityTracker(postData));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -251,7 +252,7 @@ const ActivityTracker = ({ location }) => {
     setPlasentActivityArray([...getActivityTrackerData]);
     setDailyActivityArray([...getDailtActivityData]);
     setNewActivity([...getAddNewActivity]);
-  }, [getActivityData]);
+  }, [getActivityData, getSelectedActivityData]);
 
   const _setActiveAppointmentTab = (tabName) => {
     if (activeTab != tabName) {

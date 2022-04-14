@@ -117,10 +117,12 @@ function ProfileDetails(props) {
       );
       setNotification(temp_notification);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginData]);
 
   useEffect(() => {
     dispatch(AppActions.updateUserData({user_id: getItem('userId')}));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /**CHandle submit click of profile button */
@@ -268,7 +270,7 @@ function ProfileDetails(props) {
               />
               <Text
                 style={{
-                  fontFamily: 'Inter',
+                  /// fontFamily: 'Inter',
                   fontSize: '24px',
                   color: '#0B0914',
                   marginLeft: '16px',
@@ -294,11 +296,7 @@ function ProfileDetails(props) {
               textStyle={{
                 fontSize: '16px',
               }}
-              title={
-                loginData?.planInfo?.price == 0
-                  ? 'Upgrade'
-                  : 'View Plans'
-              }
+              title={loginData?.planInfo?.price == 0 ? 'Upgrade' : 'View Plans'}
               bgColor={DARK_GREEN}
               textColor={WHITE}></Button>
             <View style={styles.hrLine} />
@@ -515,7 +513,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   heading: {
-    fontSize: '24px',
+    // fontSize: '24px',
 
     fontWeight: '700',
     fontStyle: 'normal',

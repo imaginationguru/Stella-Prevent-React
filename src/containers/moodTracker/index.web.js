@@ -77,6 +77,7 @@ const MoodTracker = ({location}) => {
 
   useEffect(() => {
     dispatch(AppActions.getMoodData(moment().format(STRINGS.DATE_FORMATE)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -96,6 +97,7 @@ const MoodTracker = ({location}) => {
       });
       setMoodList([...moodList]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [moodTrackerData]);
 
   const onMoodClick = (id) => {

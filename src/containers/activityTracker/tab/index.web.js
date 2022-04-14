@@ -45,7 +45,7 @@ const styles = {
   },
   title: {
     marginBottom: '0px',
-    fontSize: '15px',
+    //  fontSize: '15px',
     fontWeight: 'bold',
     fontSize: FONTS.REGULAR,
   },

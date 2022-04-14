@@ -90,6 +90,7 @@ const ThirtyThree = (props) => {
       };
     });
     setUserInputs([...firstAssessmentContent, ...dummyInput]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
   useEffect(() => {
     headers &&

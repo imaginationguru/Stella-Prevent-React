@@ -130,6 +130,7 @@ const FourSix = (props) => {
     }
 
     setUserInputs(firstAssessmentContent);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
 
   /**********************SAVE ASSESSMENT****************** */

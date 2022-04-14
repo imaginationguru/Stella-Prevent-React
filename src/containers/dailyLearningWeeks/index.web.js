@@ -49,6 +49,7 @@ const DailyLearningWeeks = (props) => {
     if (isFromDashboard) {
       applicableCards(selectedCardId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFromDashboard]);
 
   useEffect(() => {
@@ -96,12 +97,14 @@ const DailyLearningWeeks = (props) => {
         }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCardId, selectedDay, selectedWeek, templateData, dispatch]);
 
   useEffect(() => {
     if (templateData.length == 0) {
       dispatch(AppActions.getCurrentActiveCard());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   useEffect(() => {
@@ -142,7 +145,6 @@ const DailyLearningWeeks = (props) => {
     .map((item) => item._id);
 
   const cardDataHandler = (data, clear_assesment = true) => {
-
     if (isScrollerLoad) {
       window.scrollTo(0, 200);
       setScrollerLoad(false);
@@ -271,11 +273,7 @@ const DailyLearningWeeks = (props) => {
 
   const onNextDayClick = () => {
     completeCardAPI(true);
-    if (
-      loginData?.planInfo?.price == 0 &&
-      currentData.day === 2 &&
-      lastDay
-    ) {
+    if (loginData?.planInfo?.price == 0 && currentData.day === 2 && lastDay) {
       customAlert(
         "You've reached your free content limit. Please upgrade your plan.",
         'error',
@@ -335,9 +333,9 @@ const DailyLearningWeeks = (props) => {
               <div className="n-content">
                 {/* ***********************************Navbar Start********************** */}
                 <div>
-                  <p style={{ color: COLORS.GREEN_TEXT, fontWeight: 'bold' }}>
+                  <p style={{color: COLORS.GREEN_TEXT, fontWeight: 'bold'}}>
                     Home /
-                    <span style={{ color: COLORS.GRAY1, fontWeight: 'bold' }}>
+                    <span style={{color: COLORS.GRAY1, fontWeight: 'bold'}}>
                       {''}
                       Module{' '}
                       {/* {weeksCount === undefined
@@ -369,9 +367,7 @@ const DailyLearningWeeks = (props) => {
                             type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                             payload: id,
                           });
-                        }
-
-                        else if (
+                        } else if (
                           currentData.is_disabled == false &&
                           currentData.is_read == true &&
                           currentData.is_completed == false &&

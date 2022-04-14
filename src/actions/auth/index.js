@@ -105,39 +105,39 @@ export function login(email, password, componentId) {
 
 //*****************************Register*************************** */
 
-export function register(params, componentId) {
-  return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.SIGNUP_REQUEST});
-    try {
-      dispatch(loadingAction(true));
-      let json = await RestClient.postCall(URL.REGISTER, params);
-      if (json.code === 200) {
-        dispatch({
-          type: ACTION_TYPE.SIGNUP_SUCCESS,
-          payload: json.data,
-        });
-        if (json.data.user.isInterest) {
-        } else {
-          navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
-        }
-      } else {
-        if (json.code === 400) {
-          toast(json.message);
-        }
-        dispatch({
-          type: ACTION_TYPE.SIGNUP_FAIL,
-        });
-      }
-    } catch (error) {
-      dispatch({
-        type: ACTION_TYPE.SIGNUP_FAIL,
-        payload: error,
-      });
-    } finally {
-      dispatch(loadingAction(false));
-    }
-  };
-}
+// export function register(params, componentId) {
+//   return async (dispatch) => {
+//     dispatch({type: ACTION_TYPE.SIGNUP_REQUEST});
+//     try {
+//       dispatch(loadingAction(true));
+//       let json = await RestClient.postCall(URL.REGISTER, params);
+//       if (json.code === 200) {
+//         dispatch({
+//           type: ACTION_TYPE.SIGNUP_SUCCESS,
+//           payload: json.data,
+//         });
+//         if (json.data.user.isInterest) {
+//         } else {
+//           navigatorPush({componentId, screenName: 'DailyLearningWeeks'});
+//         }
+//       } else {
+//         if (json.code === 400) {
+//           toast(json.message);
+//         }
+//         dispatch({
+//           type: ACTION_TYPE.SIGNUP_FAIL,
+//         });
+//       }
+//     } catch (error) {
+//       dispatch({
+//         type: ACTION_TYPE.SIGNUP_FAIL,
+//         payload: error,
+//       });
+//     } finally {
+//       dispatch(loadingAction(false));
+//     }
+//   };
+// }
 
 //********************************Bind user cards************************ */
 

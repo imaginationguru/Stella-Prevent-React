@@ -164,6 +164,7 @@ function SelectWeek(props) {
 
   useEffect(() => {
     dispatch(AppActions.getProgramById(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /**Create week array for select box */

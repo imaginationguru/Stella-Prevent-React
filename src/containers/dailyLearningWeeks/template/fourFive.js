@@ -1,14 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import commonStyles from '../commonStyles';
 import GLOBALS from '../../../constants';
-import { TextInput, View, Text } from 'react-native';
+import {TextInput, View, Text} from 'react-native';
 import ReactHtmlParser from 'react-html-parser';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import * as AppActions from '../../../actions';
-import { getItem } from '../../../utils/AsyncUtils';
-import { translate as ts } from '../../../i18n/translate';
+import {getItem} from '../../../utils/AsyncUtils';
+import {translate as ts} from '../../../i18n/translate';
 import ExerciseBox from '../../../components/ExerciseBox';
 import {
   CardQuote,
@@ -18,9 +18,9 @@ import {
   CardContent,
   CustomImage,
 } from '../../../components/Cards';
-import { customAlert } from '../../../helpers/commonAlerts.web';
-const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
-const { BOX_GRAY, GREEN_TEXT, WHITE, GRAY, RED } = COLORS;
+import {customAlert} from '../../../helpers/commonAlerts.web';
+const {COLORS, IMAGE_BASE_URL} = GLOBALS;
+const {BOX_GRAY, GREEN_TEXT, WHITE, GRAY, RED} = COLORS;
 
 const emptyTextInputMapper = (type, order = 0) => {
   // TODO : FOR NEW empty data
@@ -47,64 +47,51 @@ const FourFive = (props) => {
     week,
   } = props.card;
   const [userInputs, setUserInputs] = useState([]);
-  const [modifyUserInputs, setModifyUserInputs] = useState([]);
-  const [inputs, setInputs] = useState([]);
-  const [firstValue, setFirstValue] = useState({
-    content: '',
-    type: '',
-    assessment_content_id: '',
-    order: '',
-  });
-  const [secondValue, setSecondValue] = useState({
-    content: '',
-    type: '',
-    assessment_content_id: '',
-    order: '',
-  });
-  const [isInputVisible, setInputVisible] = useState(false);
-  const [userName, setUserName] = useState('');
-  const [userContact, setUserContact] = useState('');
 
-  const { assessmentData = {}, userAssessmentData = [] } = useSelector(
+  const [inputs, setInputs] = useState([]);
+
+  const {assessmentData = {}, userAssessmentData = []} = useSelector(
     (state) => state.moduleOne,
   );
-  const { headers } = assessmentData;
+
   const dispatch = useDispatch();
   let userId = getItem('userId');
 
   useEffect(() => {
-    console.log("Again call.....");
+    console.log('Again call.....');
     dispatch(AppActions.getAssessmentData(assessment_id, props._id));
-  }, [assessment_id]);
+  }, [assessment_id, dispatch, props._id]);
 
   useEffect(() => {
-    let header_input = inputs.map(item => {
+    let header_input = inputs.map((item) => {
       return {
         ...item,
-        content: userAssessmentData.filter(ele => ele._id.assessment_header_id == item._id)
-      }
-    })
-    header_input = header_input.map(item => {
+        content: userAssessmentData.filter(
+          (ele) => ele._id.assessment_header_id == item._id,
+        ),
+      };
+    });
+    header_input = header_input.map((item) => {
       return {
         ...item,
-        content: item.content.length > 0 ? item.content[0].cards : []
-      }
-    })
-    header_input = header_input.map(item => {
+        content: item.content.length > 0 ? item.content[0].cards : [],
+      };
+    });
+    header_input = header_input.map((item) => {
       return {
         ...item,
-        content: item.content.map(item => {
+        content: item.content.map((item) => {
           return {
             content: item.content,
             order: item.order,
             type: item.type,
             assessment_content_id: item.assessment_header_id,
             content_id: item._id,
-          }
-        })
-      }
-    })
-    console.log(header_input, "header_input.........")
+          };
+        }),
+      };
+    });
+    console.log(header_input, 'header_input.........');
     /**Add saved value in array */
     if (inputs.length > 0) {
       let new_modInput = header_input.map((item) => {
@@ -148,7 +135,7 @@ const FourFive = (props) => {
       });
       setInputs(new_modInput);
     }
-  }, [userAssessmentData]);
+  }, [userAssessmentData, inputs]);
 
   useEffect(() => {
     let headers =
@@ -233,13 +220,12 @@ const FourFive = (props) => {
 
   const checkRowFilled = (outer_index, inner) => {
     let all_filled = false;
-    let curr_row = inputs[outer_index].content.filter(item => item.order == inner.order);
-    all_filled = curr_row.every(
-      (val) =>
-        val.content != "",
+    let curr_row = inputs[outer_index].content.filter(
+      (item) => item.order == inner.order,
     );
+    all_filled = curr_row.every((val) => val.content != '');
     return all_filled;
-  }
+  };
   const onPlusBtnClick = (outer_index, inner) => {
     if (checkRowFilled(outer_index, inner)) {
       let all_heading = inputs;
@@ -249,7 +235,7 @@ const FourFive = (props) => {
         return {
           ...item,
           is_last: false,
-          assessment_content_id: inputs[outer_index]._id
+          assessment_content_id: inputs[outer_index]._id,
         };
       });
 
@@ -322,8 +308,8 @@ const FourFive = (props) => {
       let input =
         filterValue && filterValue.length
           ? filterValue.map((e) => {
-            return e.content;
-          })
+              return e.content;
+            })
           : null;
       return input;
     }
@@ -334,15 +320,15 @@ const FourFive = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardQuote
-                key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardQuote
+                  key={index}
+                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                />
+              );
+            })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -354,46 +340,46 @@ const FourFive = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardDescription
-                key={index}
-                description={ReactHtmlParser(item.desc)}
-              />
-            );
-          })
-        : []}
-
-      {/***************************ASSESSMENTS DESCRIPTION ONE ************* */}
-      <div style={{ ...commonStyles.assessmentWrapper, marginBottom: '50px' }}>
-        {images && images.length
-          ? images
-            .filter((img) => img.image_type === 'first')
-            .map((item, i) => {
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
               return (
-                <CustomImage
-                  key={i}
-                  src={`${IMAGE_BASE_URL}${item.image}`}
-                  style={{
-                    ...commonStyles.assessImage,
-                    display: item.image !== '' ? 'flex' : 'none',
-                  }}
+                <CardDescription
+                  key={index}
+                  description={ReactHtmlParser(item.desc)}
                 />
               );
             })
+        : []}
+
+      {/***************************ASSESSMENTS DESCRIPTION ONE ************* */}
+      <div style={{...commonStyles.assessmentWrapper, marginBottom: '50px'}}>
+        {images && images.length
+          ? images
+              .filter((img) => img.image_type === 'first')
+              .map((item, i) => {
+                return (
+                  <CustomImage
+                    key={i}
+                    src={`${IMAGE_BASE_URL}${item.image}`}
+                    style={{
+                      ...commonStyles.assessImage,
+                      display: item.image !== '' ? 'flex' : 'none',
+                    }}
+                  />
+                );
+              })
           : []}
 
         {props.assessments && props.assessments.length
           ? props.assessments.map((item, i) => {
-            return (
-              <CardDescription
-                key={i}
-                style={commonStyles.assessDesc}
-                description={ReactHtmlParser(item.description)}
-              />
-            );
-          })
+              return (
+                <CardDescription
+                  key={i}
+                  style={commonStyles.assessDesc}
+                  description={ReactHtmlParser(item.description)}
+                />
+              );
+            })
           : []}
       </div>
       {/******************************************************************* */}
@@ -401,130 +387,132 @@ const FourFive = (props) => {
       {/* assessment heading */}
       {assessmentData.heading && assessmentData.heading.length
         ? assessmentData.heading.map((element) => {
-          return (
-            <View
-              style={{
-                padding: 20,
-                backgroundColor: COLORS.DARK_GREEN,
-                marginBottom: 10,
-              }}>
-              <Text style={{ color: COLORS.WHITE }}>{element.heading}</Text>
-            </View>
-          );
-        })
+            return (
+              <View
+                style={{
+                  padding: 20,
+                  backgroundColor: COLORS.DARK_GREEN,
+                  marginBottom: 10,
+                }}>
+                <Text style={{color: COLORS.WHITE}}>{element.heading}</Text>
+              </View>
+            );
+          })
         : null}
       {console.log(inputs, 'match...', userInputs)}
       {inputs.length
         ? inputs.map((item, index) => {
-          return (
-            <div>
-              <div style={{ backgroundColor: COLORS.CIRCLE_GRAY }}>
-                <p style={{ padding: '15px', color: WHITE }}>
-                  {ReactHtmlParser(item.name)}
-                </p>
-              </div>
+            return (
+              <div>
+                <div style={{backgroundColor: COLORS.CIRCLE_GRAY}}>
+                  <p style={{padding: '15px', color: WHITE}}>
+                    {ReactHtmlParser(item.name)}
+                  </p>
+                </div>
 
-              <View style={{ flexDirection: 'row' }}>
-                <View style={{ width: '49%' }}>
-                  {item.content
-                    .sort((a, b) => (a.order > b.order && 1) || -1)
-                    .map((val, inner) => {
-                      return (
-                        <>
-                          {val.type == 'first' && (
-                            <div style={styles.crossIconWrapper}>
-                              <TextInput
-                                style={[
-                                  styles.selectedText,
-                                  {
-                                    height: '50px',
-                                    paddingLeft: 10,
-                                    paddingTop: 10,
-                                  },
-                                ]}
-                                editable={val.is_last ? true : false}
-                                placeholder={'Name'}
-                                underlineColorAndroid="transparent"
-                                multiline={true}
-                                value={val.content}
-                                onChangeText={(term) =>
-                                  onTextChange(index, term, val)
-                                }
-                              />
-                            </div>
-                          )}
-                        </>
-                      );
-                    })}
-                </View>
-                <View style={{ marginLeft: '2%', width: '47%' }}>
-                  {item.content
-                    .sort((a, b) => (a.order > b.order && 1) || -1)
-                    .map((val, ind) => {
-                      return (
-                        <>
-                          {val.type == 'second' && (
-                            <div style={styles.crossIconWrapper}>
-                              <TextInput
-                                style={[
-                                  styles.selectedText,
-                                  {
-                                    height: '50px',
-                                    paddingLeft: 10,
-                                    paddingTop: 10,
-                                  },
-                                ]}
-                                keyboardType={'numeric'}
-                                editable={val.is_last ? true : false}
-                                placeholder={'Contact'}
-                                underlineColorAndroid="transparent"
-                                multiline={true}
-                                value={val.content}
-                                onChangeText={(term) =>
-                                  onTextChange(index, term, val)
-                                }
-                              />
-                              {val.is_last ? (
-                                <div
-                                  style={{
-                                    ...styles.circleDiv,
+                <View style={{flexDirection: 'row'}}>
+                  <View style={{width: '49%'}}>
+                    {item.content
+                      .sort((a, b) => (a.order > b.order && 1) || -1)
+                      .map((val, inner) => {
+                        return (
+                          <>
+                            {val.type == 'first' && (
+                              <div style={styles.crossIconWrapper}>
+                                <TextInput
+                                  style={[
+                                    styles.selectedText,
+                                    {
+                                      height: '50px',
+                                      paddingLeft: 10,
+                                      paddingTop: 10,
+                                    },
+                                  ]}
+                                  editable={val.is_last ? true : false}
+                                  placeholder={'Name'}
+                                  underlineColorAndroid="transparent"
+                                  multiline={true}
+                                  value={val.content}
+                                  onChangeText={(term) =>
+                                    onTextChange(index, term, val)
+                                  }
+                                />
+                              </div>
+                            )}
+                          </>
+                        );
+                      })}
+                  </View>
+                  <View style={{marginLeft: '2%', width: '47%'}}>
+                    {item.content
+                      .sort((a, b) => (a.order > b.order && 1) || -1)
+                      .map((val, ind) => {
+                        return (
+                          <>
+                            {val.type == 'second' && (
+                              <div style={styles.crossIconWrapper}>
+                                <TextInput
+                                  style={[
+                                    styles.selectedText,
+                                    {
+                                      height: '50px',
+                                      paddingLeft: 10,
+                                      paddingTop: 10,
+                                    },
+                                  ]}
+                                  keyboardType={'numeric'}
+                                  editable={val.is_last ? true : false}
+                                  placeholder={'Contact'}
+                                  underlineColorAndroid="transparent"
+                                  multiline={true}
+                                  value={val.content}
+                                  onChangeText={(term) =>
+                                    onTextChange(index, term, val)
+                                  }
+                                />
+                                {val.is_last ? (
+                                  <div
+                                    style={{
+                                      ...styles.circleDiv,
 
-                                    backgroundColor:
-                                      checkRowFilled(index, val)
+                                      backgroundColor: checkRowFilled(
+                                        index,
+                                        val,
+                                      )
                                         ? GREEN_TEXT
                                         : GRAY,
-                                  }}
-                                  onClick={() => {
-                                    onPlusBtnClick(index, val);
-                                    // userName !== '' && userContact !== ''
-                                    //   ? onPlusBtnClick(item)
-                                    //   : null;
-                                  }}>
-                                  <span style={styles.plusIcon}>+</span>
-                                </div>
-                              ) : (
-                                <div
-                                  style={styles.circleCrossDiv}
-                                  onClick={() => onCrossBtnClick(index, val)}>
-                                  <span
-                                    style={{
-                                      ...styles.plusIcon,
-                                      fontSize: '15px',
+                                    }}
+                                    onClick={() => {
+                                      onPlusBtnClick(index, val);
+                                      // userName !== '' && userContact !== ''
+                                      //   ? onPlusBtnClick(item)
+                                      //   : null;
                                     }}>
-                                    x
-                                  </span>
-                                </div>
-                              )}
-                            </div>
-                          )}
-                        </>
-                      );
-                    })}
+                                    <span style={styles.plusIcon}>+</span>
+                                  </div>
+                                ) : (
+                                  <div
+                                    style={styles.circleCrossDiv}
+                                    onClick={() => onCrossBtnClick(index, val)}>
+                                    <span
+                                      style={{
+                                        ...styles.plusIcon,
+                                        fontSize: '15px',
+                                      }}>
+                                      x
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </>
+                        );
+                      })}
+                  </View>
                 </View>
-              </View>
-            </div>
-          );
-        })
+              </div>
+            );
+          })
         : null}
       {inputs.length ? (
         <div style={commonStyles.buttonWrapper}>
@@ -541,12 +529,12 @@ const FourFive = (props) => {
 
       {content && content.length
         ? content
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, i) => {
-            return (
-              <CardContent key={i} content={ReactHtmlParser(item.content)} />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, i) => {
+              return (
+                <CardContent key={i} content={ReactHtmlParser(item.content)} />
+              );
+            })
         : []}
 
       {showExercises && <ExerciseBox week={week} />}
@@ -595,8 +583,8 @@ const styles = {
     justifyContent: 'center',
     marginLeft: '25px',
   },
-  button: { width: '20%', marginTop: '30px' },
-  image: { width: '100%', height: '100%' },
+  button: {width: '20%', marginTop: '30px'},
+  image: {width: '100%', height: '100%'},
   imageWrapper: {
     width: '120px',
     height: '100px',

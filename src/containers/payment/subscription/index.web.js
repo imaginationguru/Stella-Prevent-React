@@ -1,28 +1,17 @@
 import {useState, useEffect} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import GLOBALS from '@constants';
-import {navigatorPush, navigatorPop} from '@config/navigationOptions.web';
+import {navigatorPush} from '@config/navigationOptions.web';
 import Footer from '@components/Footer';
 import checkBlack from '@assets/images/subscription/check_b.png';
 import checkWhite from '@assets/images/subscription/check_w.png';
 import Button from '@components/common/button';
-
 import BackBtn from '@components/common/backbtn';
 import ProfileHeader from '@components/common/profileHeader';
 const {COLORS, FONTS} = GLOBALS;
-const {LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN} = COLORS;
-import Header from '@components/Header';
+const {LIGHT_BLACK, WHITE, DARK_GREEN} = COLORS;
 import {useSelector, useDispatch} from 'react-redux';
 import * as AppActions from '@actions';
-import back from '@assets/images/subscription/back.png';
 import {Dimensions} from 'react-native-web';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const {IMAGE_BASE_URL} = GLOBALS;
@@ -39,6 +28,7 @@ const Subscription = (props) => {
     if (props.location && props.location.state) {
       setPrice(props.location.state.currentPlan.price);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getPlanbg = (index) => {
@@ -70,6 +60,7 @@ const Subscription = (props) => {
     }
   };
   const getBtnColor = (index) => {
+    console.log('index', index, 0 % 2);
     if (index % 2 == 0) {
       return DARK_GREEN;
     } else {
@@ -212,7 +203,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   planText: {
-    fontFamily: 'Inter',
+    // fontFamily: 'Inter',
     fontSize: DEVICE_WIDTH > 1000 ? '1.7vw' : '18px',
     color: '#0B0914',
     marginLeft: DEVICE_WIDTH > 1000 ? '1vw' : '15px',
@@ -223,7 +214,7 @@ const styles = StyleSheet.create({
     fontSize: DEVICE_WIDTH > 1000 ? '1.5vw' : '21px',
   },
   getText: {
-    fontFamily: 'Inter',
+    // fontFamily: 'Inter',
     fontSize: DEVICE_WIDTH > 1000 ? '1.1vw' : '14px',
     fontWeight: '400',
     fontStyle: 'normal',
@@ -232,7 +223,7 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.REGULAR,
   },
   itemText: {
-    fontFamily: 'Inter',
+    // fontFamily: 'Inter',
     fontSize: DEVICE_WIDTH > 1000 ? '1.2vw' : '16px',
     fontWeight: 'normal',
     color: '#35353F',

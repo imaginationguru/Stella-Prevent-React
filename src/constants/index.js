@@ -9,8 +9,7 @@ import SadActive from '@assets/images/sadActive/sadActive.png';
 import Angry from '@assets/images/angry/angry.png';
 import AngryActive from '@assets/images/angryActive/angryActive.png';
 
-
-import { ENV } from './env';
+import {ENV} from './env';
 const isLive = true;
 const getEnvBasedUrl = () => {
   console.log('ENV>>>>', ENV);
@@ -45,7 +44,7 @@ const getEnvBasedUrl = () => {
     squareAppId = 'sandbox-sq0idb-WPw6oJXhJty7VgI9HN3Edw';
     LOCATION_ID = 'L726CAXF29YB8';
   }
-  return { BASE_URL, IMAGE_BASE_URL, WEB_BASE_URL, squareAppId, LOCATION_ID };
+  return {BASE_URL, IMAGE_BASE_URL, WEB_BASE_URL, squareAppId, LOCATION_ID};
 };
 console.log('get BASE URL', getEnvBasedUrl());
 export default {
@@ -59,7 +58,6 @@ export default {
   // squareAppId: isLive
   //   ? 'sq0idp-EresRbLbMTgKRAuhD5ScNEA'
   //   : 'sandbox-sq0idb-WPw6oJXhJty7VgI9HN3Edw', //1.5 stella
-
 
   // LOCATION_ID: isLive ? 'LR3OMWYVRCMX8' : 'L726CAXF29YB8', //1.5 stella
 
@@ -360,7 +358,7 @@ export default {
     LIGHT_YELLOW: '#FCF2D4',
     LIGHT_GREEN: '#D9EFEA',
     DARK_RED: '#D85454',
-    DARK_GREEN: '#5BB7A4',
+    // DARK_GREEN: '#5BB7A4',
     RED: '#F05A28',
     GRAY2: '#D8D8D8',
     GRAY1: '#CCCCCC',

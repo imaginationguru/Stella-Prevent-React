@@ -67,7 +67,7 @@ const FourOne = (props) => {
     });
 
     setSelected(selectedFormat);
-  }, [userAssessmentData]);
+  }, [userAssessmentData, props.inputs]);
 
   const updateYESNO = (data = {}, arr = []) => {
     if (arr.length) {

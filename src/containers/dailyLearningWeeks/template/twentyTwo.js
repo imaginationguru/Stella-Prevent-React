@@ -60,6 +60,7 @@ const TwentyTwo = (props) => {
     let userId = getItem('userId');
     let programId = getItem('programId');
     dispatch(AppActions.getUserRating(userId, programId, week));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getDataSet = (data, type) => {
@@ -91,6 +92,7 @@ const TwentyTwo = (props) => {
         getDataSet([], 'COMMENT');
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userRatingData]);
   /***********************set input value function************* */
 

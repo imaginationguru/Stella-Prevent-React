@@ -66,6 +66,7 @@ const TemplateThermometer = (props) => {
       });
     setHeaderData(x);
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData]);
 
   /***********user assessment data set in header content***** */

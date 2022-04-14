@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     fontSize: 15,
-    color: 'black',
+    // color: 'black',
     height: '100%',
     flex: 0.8,
     fontStyle: FONTS.NEW_REGULAR,

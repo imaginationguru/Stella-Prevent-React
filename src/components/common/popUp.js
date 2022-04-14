@@ -25,6 +25,7 @@ const PopUp = (props) => {
       setTimeout(() => dispatch(AppActions.clearSuccessAction()), 3000);
       setTimeout(() => dispatch(AppActions.clearErrorAction()), 3000);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
   return (
     <>

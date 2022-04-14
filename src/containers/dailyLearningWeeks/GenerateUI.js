@@ -65,6 +65,7 @@ const GenerateUI = ({status, data = {}}) => {
         dispatch(AppActions.markRead(readParams, data.week));
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data._id]);
 
   //return <FourSeven {...data} />

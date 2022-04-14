@@ -134,7 +134,7 @@ const Template44 = (props) => {
     if (cardsData.length) {
       setInputs(tempFour);
     }
-  }, [userAssessmentData]);
+  }, [userAssessmentData, inputs]);
 
   const onHandleChange = (e, id, idx) => {
     setInputs(

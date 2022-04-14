@@ -237,6 +237,7 @@ const ThirtyFour = (props) => {
       };
     });
     setInputs(addEmtpyRow);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
 
   const onChangeHandler = (hId, sId, i, e) => {

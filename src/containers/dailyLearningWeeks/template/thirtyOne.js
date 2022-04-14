@@ -222,7 +222,7 @@ const styles = {
     width: DEVICE_WIDTH > 767 ? '80%' : '100%',
     fontFamily: FONTS.SEMI_BOLD,
     marginBottom: '-15px',
-    width: 180,
+    //  width: 180,
     textAlign: 'center',
     paddingTop: 20,
   },
