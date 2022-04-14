@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   TouchableOpacity,
   View,
@@ -14,23 +14,23 @@ import {
 } from 'react-native';
 import MasterLayout from '@components/MasterLayout';
 import BackBtn from '@components/common/backbtn';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import GLOBALS from '@constants';
 import * as AppActions from '@actions';
 import momentZone from 'moment-timezone';
 import BackToDashboard from '@components/common/backToDashboard';
-import {Line} from 'react-chartjs-2';
-const {STRINGS, FONTS, COLORS, MOODS_ARRAY, IMAGE_BASE_URL} = GLOBALS;
+import { Line } from 'react-chartjs-2';
+const { STRINGS, FONTS, COLORS, MOODS_ARRAY, IMAGE_BASE_URL } = GLOBALS;
 
-const {LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN} = COLORS;
+const { LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN } = COLORS;
 
-import {getItem} from '@utils/AsyncUtils';
+import { getItem } from '@utils/AsyncUtils';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 let currentTimeZone = momentZone.tz.guess();
 
-const LineGraphUI = ({xAxis, yAxis, lable}) => {
+const LineGraphUI = ({ xAxis, yAxis, lable }) => {
   console.log('here====>' + lable, xAxis);
   console.log('hereYY====>' + lable, yAxis);
   const graphOptions = {
@@ -132,9 +132,9 @@ const LineGraphUI = ({xAxis, yAxis, lable}) => {
     />
   );
 };
-const Report = ({location}) => {
+const Report = ({ location }) => {
   let isFromCard = location?.state?.isFromCard;
-  const {getWeeklySummaryReportData} = useSelector((state) => state.tracker);
+  const { getWeeklySummaryReportData } = useSelector((state) => state.tracker);
   const dispatch = useDispatch();
   useEffect(() => {
     let postData = {
@@ -161,6 +161,7 @@ const Report = ({location}) => {
     for (let i = 0; i < 7; i++) {
       temp.push(`${moment(minDate).subtract(i, 'day').format('YYYY-MM-DD')}`);
     }
+
     let finalArray = temp.map((item, i) => {
       return (
         arr.find(
@@ -175,6 +176,7 @@ const Report = ({location}) => {
         }
       );
     });
+
     return finalArray;
   };
 
@@ -204,11 +206,11 @@ const Report = ({location}) => {
   const daysCheckWithActivity = (arr = []) => {
     let minDate = new Date();
     let temp = [];
-
+    console.log("days check...")
     for (let i = 0; i < 7; i++) {
       temp.push(`${moment(minDate).subtract(i, 'days').format('YYYY-MM-DD')}`);
     }
-
+    console.log(temp, arr, "checking...")
     let finalArray = temp.map((item, i) => {
       return (
         arr.find((data) => {
@@ -224,6 +226,7 @@ const Report = ({location}) => {
         }
       );
     });
+    console.log(finalArray, "checking...")
     return finalArray;
   };
 
@@ -255,29 +258,29 @@ const Report = ({location}) => {
   //sleep
   let sleepData =
     getWeeklySummaryReportData !== undefined &&
-    getWeeklySummaryReportData?.newSleepTrackerData &&
-    getWeeklySummaryReportData?.newSleepTrackerData?.length
+      getWeeklySummaryReportData?.newSleepTrackerData &&
+      getWeeklySummaryReportData?.newSleepTrackerData?.length
       ? daysCheckWithSleep(getWeeklySummaryReportData?.newSleepTrackerData)
       : [];
 
   let sleepHoursArray = sleepData?.length
     ? sleepData?.map((item) => {
-        return (
-          parseFloat(item.total_hours) + parseFloat(item.total_minutes) / 60
-        );
-      })
+      return (
+        parseFloat(item.total_hours) + parseFloat(item.total_minutes) / 60
+      );
+    })
     : [];
   let sleepXAxis = sleepData?.length
     ? sleepData?.map((item) => {
-        return moment(item.date).format('MM/DD');
-      })
+      return moment(item.date).format('MM/DD');
+    })
     : [];
 
   if (getWeeklySummaryReportData !== undefined) {
     //mood count
     let newArrayList = [];
     moodData.forEach((element, i) => {
-      newArrayList.push({...element});
+      newArrayList.push({ ...element });
     });
     getWeeklySummaryReportData?.moodcount?.forEach((element, index) => {
       newArrayList.forEach((e, i) => {
@@ -295,7 +298,7 @@ const Report = ({location}) => {
     //mood graph
     let res =
       getWeeklySummaryReportData?.newMooddataavg &&
-      getWeeklySummaryReportData?.newMooddataavg.length
+        getWeeklySummaryReportData?.newMooddataavg.length
         ? daysCheckWithMood(getWeeklySummaryReportData?.newMooddataavg)
         : [];
 
@@ -307,10 +310,10 @@ const Report = ({location}) => {
     //activity
     let activityData =
       getWeeklySummaryReportData?.newactivitytackercount &&
-      getWeeklySummaryReportData?.newactivitytackercount.length
+        getWeeklySummaryReportData?.newactivitytackercount.length
         ? daysCheckWithActivity(
-            getWeeklySummaryReportData?.newactivitytackercount,
-          )
+          getWeeklySummaryReportData?.newactivitytackercount,
+        )
         : [];
 
     activityData.forEach((element) => {
@@ -318,11 +321,12 @@ const Report = ({location}) => {
       activityXAxis.push(moment(element.createdAt).format('MM/DD'));
     });
 
+    console.log(activityYAxis, activityXAxis, "Activity report....X, Y")
     //points
 
     let pointsData =
       getWeeklySummaryReportData?.newPointsdata &&
-      getWeeklySummaryReportData?.newPointsdata.length
+        getWeeklySummaryReportData?.newPointsdata.length
         ? daysCheckWithPoints(getWeeklySummaryReportData.newPointsdata)
         : [];
     pointsData.forEach((element) => {
@@ -332,17 +336,17 @@ const Report = ({location}) => {
   }
   let activityData =
     getWeeklySummaryReportData !== undefined &&
-    getWeeklySummaryReportData.newGetactvityresponselistdata &&
-    getWeeklySummaryReportData.newGetactvityresponselistdata.length
+      getWeeklySummaryReportData.newGetactvityresponselistdata &&
+      getWeeklySummaryReportData.newGetactvityresponselistdata.length
       ? getWeeklySummaryReportData.newGetactvityresponselistdata
-          .filter((item) => item.activityName && item.image && item.totalcount)
-          .map((item) => {
-            return {
-              activityName: item.activityName || '',
-              image: item.image,
-              totalcount: item.totalcount,
-            };
-          })
+        .filter((item) => item.activityName && item.image && item.totalcount)
+        .map((item) => {
+          return {
+            activityName: item.activityName || '',
+            image: item.image,
+            totalcount: item.totalcount,
+          };
+        })
       : null;
 
   return (
@@ -362,9 +366,9 @@ const Report = ({location}) => {
           </Text>
           <Text style={styles.labelText}>Daily Sleep Tracker: hours/day</Text>
           {sleepXAxis &&
-          sleepXAxis.length &&
-          sleepHoursArray &&
-          sleepHoursArray.length ? (
+            sleepXAxis.length &&
+            sleepHoursArray &&
+            sleepHoursArray.length ? (
             <LineGraphUI
               xAxis={sleepXAxis.reverse()}
               yAxis={sleepHoursArray.reverse()}
@@ -389,8 +393,8 @@ const Report = ({location}) => {
 
           <Text style={styles.labelText}>Weekly Mood Report</Text>
           {getWeeklySummaryReportData !== undefined &&
-          getWeeklySummaryReportData.newMooddataavg &&
-          getWeeklySummaryReportData.newMooddataavg.length ? (
+            getWeeklySummaryReportData.newMooddataavg &&
+            getWeeklySummaryReportData.newMooddataavg.length ? (
             <FlatList
               contentContainerStyle={{
                 alignItems: 'flex-start',
@@ -403,7 +407,7 @@ const Report = ({location}) => {
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
               keyExtractor={(item) => `${item._id}`}
-              renderItem={({item, index}) => {
+              renderItem={({ item, index }) => {
                 return (
                   <View
                     key={index}
@@ -411,7 +415,7 @@ const Report = ({location}) => {
                       paddingBottom: 10,
                     }}>
                     {item.moodCountValue ? (
-                      <div style={{display: 'flex', marginVertical: 10}}>
+                      <div style={{ display: 'flex', marginVertical: 10 }}>
                         <img
                           style={{
                             height: 40,
@@ -438,9 +442,9 @@ const Report = ({location}) => {
           </Text>
 
           {activityXAxis &&
-          activityXAxis.length &&
-          activityYAxis &&
-          activityYAxis.length ? (
+            activityXAxis.length &&
+            activityYAxis &&
+            activityYAxis.length ? (
             <LineGraphUI
               xAxis={activityXAxis.reverse()}
               yAxis={activityYAxis.reverse()}
@@ -466,14 +470,14 @@ const Report = ({location}) => {
             keyExtractor={(item) => `${item._id}`}
             ListEmptyComponent={<Text>No record for this Week</Text>}
             numColumns={4}
-            renderItem={({item, index}) => {
+            renderItem={({ item, index }) => {
               return (
                 <View
                   style={{
                     paddingHorizontal: 5,
                   }}
                   key={index}>
-                  <div style={{display: 'flex'}}>
+                  <div style={{ display: 'flex' }}>
                     <Image
                       style={[styles.imageContainer]}
                       source={`${item.image}`}
@@ -491,9 +495,9 @@ const Report = ({location}) => {
           />
           <Text style={styles.labelText}>Your total Points for the week</Text>
           {pointsXAxis &&
-          pointsXAxis.length &&
-          pointsYAxis &&
-          pointsYAxis.length ? (
+            pointsXAxis.length &&
+            pointsYAxis &&
+            pointsYAxis.length ? (
             <LineGraphUI
               xAxis={pointsXAxis.reverse()}
               yAxis={pointsYAxis.reverse()}
