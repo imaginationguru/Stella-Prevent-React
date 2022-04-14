@@ -63,6 +63,7 @@ const ThirtyTwo = (props) => {
 
   useEffect(() => {
     dispatch(AppActions.getAssessmentDataSecond(assessment_id2));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessment_id2]);
   useEffect(() => {
     if (props.submit_messages.length) {
@@ -122,6 +123,7 @@ const ThirtyTwo = (props) => {
     if (dummyInput) {
       setUserInputs([...firstAssessmentContent, ...dummyInput]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
   useEffect(() => {
     let headers =
@@ -208,22 +210,22 @@ const ThirtyTwo = (props) => {
       : [];
 
     return modifyData;
-    return;
-    let firstParams = {
-      user_id: userId,
-      user_card_id: props._id,
-      assessment_id: assessment_id,
-      assessment: modifyData,
-    };
-    if (modifyData.length) {
-      if (userAssessmentData && userAssessmentData.length) {
-        dispatch(AppActions.rearrangeAssessments(firstParams, onSubmitMessage));
-      } else {
-        dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
-      }
-    } else {
-      customAlert('Please perform your exercise', 'error');
-    }
+    // return;
+    // let firstParams = {
+    //   user_id: userId,
+    //   user_card_id: props._id,
+    //   assessment_id: assessment_id,
+    //   assessment: modifyData,
+    // };
+    // if (modifyData.length) {
+    //   if (userAssessmentData && userAssessmentData.length) {
+    //     dispatch(AppActions.rearrangeAssessments(firstParams, onSubmitMessage));
+    //   } else {
+    //     dispatch(AppActions.saveUserAssessment(firstParams, onSubmitMessage));
+    //   }
+    // } else {
+    //   customAlert('Please perform your exercise', 'error');
+    // }
   };
   const updateYESNO = (data = {}, arr = []) => {
     if (arr.length) {

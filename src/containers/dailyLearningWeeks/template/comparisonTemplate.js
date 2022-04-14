@@ -84,7 +84,7 @@ const ComparisonTemplate = (props) => {
 
   useEffect(() => {
     dispatch(AppActions.getAssessmentData(assessment_id, props._id));
-  }, [assessment_id]);
+  }, [assessment_id, props._id, dispatch]);
 
   useEffect(() => {
     if (userAssessmentData.length) {
@@ -99,12 +99,12 @@ const ComparisonTemplate = (props) => {
       duplicatesHandler(finalPData);
       userAssessmentData.length && setActiveState(3);
     }
-  }, [userAssessmentData]);
+  }, [userAssessmentData, headerIdDuringPregnancy, headerIdAfterPregnancy]);
 
   useEffect(() => {
     duplicatesHandler([...duringPregnancy, ...afterPregnancy]);
     setParamsAssessment([...duringPregnancy, ...afterPregnancy]);
-  }, [activeState]);
+  }, [activeState, duringPregnancy, afterPregnancy]);
 
   const localDataManage = (after = [], during = [], final = []) => {
     setDuringPregnancy(during);

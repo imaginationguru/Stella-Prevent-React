@@ -25,6 +25,7 @@ const Exercises = () => {
   ];
   useEffect(() => {
     dispatch(AppActions.getProgramFiles());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     if (programFiles.length) {

@@ -151,6 +151,7 @@ const Thirty = (props, componentId) => {
   useEffect(() => {
     console.log(loginData.user._id, 'id.......');
     dispatch(AppActions.getUserMultiAssessment(props._id, assessment_id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const {isDashboardModal} = useSelector((state) => state.common);
   useEffect(() => {

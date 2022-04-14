@@ -91,6 +91,7 @@ const TemplateSix = (props) => {
       setDefault(rightLength - leftLength + 1);
       setIsLeftBalance(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [changes, initial]);
 
   useEffect(() => {

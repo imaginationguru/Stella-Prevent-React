@@ -52,12 +52,12 @@ const MasterLayout = (props) => {
     if (isSuccess) {
       setTimeout(() => dispatch(clearSuccessAction()), 3000);
     }
-  }, [isSuccess]);
+  }, [isSuccess, dispatch]);
   useEffect(() => {
     if (isError) {
       setTimeout(() => dispatch(dispatch(clearErrorAction())), 3000);
     }
-  }, [isError]);
+  }, [isError, dispatch]);
   return (
     <>
       {/*********************Header Image****************************** */}

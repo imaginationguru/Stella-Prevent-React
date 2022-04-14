@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, StyleSheet} from 'react-native';
 
-import { useSelector, useDispatch } from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import BackToDashboard from '@components/common/backToDashboard';
 import Footer from '@components/Footer';
 
 import ProfileHeader from '@components/common/profileHeader';
 import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
-import { emailRegex } from '@utils/RegexUtils';
+import {emailRegex} from '@utils/RegexUtils';
 import * as AppActions from '@actions';
 function Contact(props) {
-  const { loginData } = useSelector((state) => state.authReducer);
+  const {loginData} = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -51,6 +51,7 @@ function Contact(props) {
         setValue(res[0]);
       }),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -66,7 +67,7 @@ function Contact(props) {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     if (name === 'firstName') {
       setFirstName(value);
       setFirstNameError('');
@@ -98,18 +99,26 @@ function Contact(props) {
 
     if (firstName.length === 0) {
       setFirstNameError('Please fill first name');
-    } if (lastName.length === 0) {
-      setLastNameError('Please fill last name');
-    } if (email.length === 0) {
-      setEmailError('Please fill email');
-    } if (email.length && !emailRegex.test(email)) {
-      setEmailError('Please fill  valid email');
-    } if (message.length === 0) {
-      setMesageError('Please fill message');
     }
-
-    else if (firstName.length != 0 && lastName.length != 0 && email.length != 0 &&
-      message.length != 0 && email.length && emailRegex.test(email)) {
+    if (lastName.length === 0) {
+      setLastNameError('Please fill last name');
+    }
+    if (email.length === 0) {
+      setEmailError('Please fill email');
+    }
+    if (email.length && !emailRegex.test(email)) {
+      setEmailError('Please fill  valid email');
+    }
+    if (message.length === 0) {
+      setMesageError('Please fill message');
+    } else if (
+      firstName.length != 0 &&
+      lastName.length != 0 &&
+      email.length != 0 &&
+      message.length != 0 &&
+      email.length &&
+      emailRegex.test(email)
+    ) {
       dispatch(AppActions.contactUs(params));
       setMesage('');
     }
@@ -123,7 +132,7 @@ function Contact(props) {
             {...props}
             showProfileBtn={false}
             showEditIcon={true}
-            onEditClick={(file) => selectImage(file)}
+            // onEditClick={(file) => selectImage(file)}
           />
         ) : null}
         <div className="v-container m-tb-30">

@@ -51,6 +51,7 @@ const VerifyUserOTP = () => {
     return () => {
       window.removeEventListener('popstate', onBackButtonEvent);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     setRegisterCode(loginData?.user?.registration_code);

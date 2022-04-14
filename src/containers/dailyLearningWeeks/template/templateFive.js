@@ -85,6 +85,7 @@ const TemplateFive = (props) => {
         : [];
     setOptionDataContent(optionData);
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData]);
 
   useEffect(() => {
@@ -140,6 +141,7 @@ const TemplateFive = (props) => {
         setOptionDataContent(data1);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
 
   /*

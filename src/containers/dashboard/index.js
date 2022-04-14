@@ -45,6 +45,7 @@ const Dashboard = () => {
       dispatch(AppActions.getProgramById(false));
       dispatch(AppActions.getCurrentActiveCard(false));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {}, [trackerStatus]);
   const TrackersUI = ({title, src, onClick, isComplete}) => {
@@ -171,7 +172,6 @@ const Dashboard = () => {
               className="display-board">
               <div
                 style={{
-                  backgroundColor: '#fff',
                   position: 'absolute',
                   bottom: 0,
                   width: '100%',

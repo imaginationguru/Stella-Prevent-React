@@ -17,7 +17,6 @@ import {
 } from '@components/Cards';
 import {Dimensions} from 'react-native-web';
 
-
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const {COLORS} = GLOBALS;
 const {WHITE} = COLORS;
@@ -76,6 +75,7 @@ const TwentyFive = (props) => {
   };
   useEffect(() => {
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /****************Set input value************** */
@@ -137,6 +137,7 @@ const TwentyFive = (props) => {
       setFourthInput(fourthInput[0].content || '');
       setFourthUpdateId(fourthInput[0]._id || '');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
   useEffect(() => {
     const firstInputId = inputs.length
