@@ -9,7 +9,7 @@
     "test": "jest",
     "web": "react-app-rewired start",
     "lint": "eslint .",
-    "web-build": "react-scripts build",
+    "web-build": "react-app-rewired build",
     "web-local-build": "serve -s build"
   },
   "dependencies": {
