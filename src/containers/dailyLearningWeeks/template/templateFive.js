@@ -610,7 +610,8 @@ Every pregnancy and every baby are different and unique!​`;
                     <span>+</span>
                   </button>
                   <ul className="colored-options-list">
-                    {headers.length &&
+                    {headers &&
+                      headers.length &&
                       headers.map((val) => {
                         return (
                           <li
