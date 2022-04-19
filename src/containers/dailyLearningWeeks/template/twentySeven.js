@@ -438,28 +438,33 @@ const TwentySeven = (props) => {
                 {item.assessmentType === 'radio' ? (
                   <div style={styles.quesOption}>
                     {item.options.length
-                      ? item.options.map((val, index) => {
-                          const isSelected = val.status === true;
-                          return (
-                            <p
-                              onClick={() => {
-                                onSaveHandler(item.question_id, val._id);
-                              }}
-                              key={index}
-                              style={{
-                                ...styles.optionStyle,
-                                backgroundColor: isSelected
-                                  ? alternateColor[index % 4]
-                                  : '#fff',
-                                border: `1px solid ${
-                                  alternateColor[index % 4]
-                                }`,
-                              }}
-                              className="v-option-item">
-                              {val.optionValue}
-                            </p>
-                          );
-                        })
+                      ? item.options
+                          .sort(
+                            (a, b) =>
+                              (a.optionPoint < b.optionPoint && 1) || -1,
+                          )
+                          .map((val, index) => {
+                            const isSelected = val.status === true;
+                            return (
+                              <p
+                                onClick={() => {
+                                  onSaveHandler(item.question_id, val._id);
+                                }}
+                                key={index}
+                                style={{
+                                  ...styles.optionStyle,
+                                  backgroundColor: isSelected
+                                    ? alternateColor[index % 4]
+                                    : '#fff',
+                                  border: `1px solid ${
+                                    alternateColor[index % 4]
+                                  }`,
+                                }}
+                                className="v-option-item">
+                                {val.optionValue}
+                              </p>
+                            );
+                          })
                       : null}
                   </div>
                 ) : item.assessmentType === 'text' ? (
