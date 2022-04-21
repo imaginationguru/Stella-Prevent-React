@@ -16,7 +16,7 @@ import {
 } from '@components/Cards';
 import {Dimensions} from 'react-native';
 import {customAlert} from '@helpers/commonAlerts.web';
-
+import moment from 'moment';
 const {COLORS, ACTION_TYPE} = GLOBALS;
 const {LIGHT_GRAY, GREEN_TEXT, BUTTON_ORANGE, YELLOW, CIRCLE_GRAY} = COLORS;
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -58,7 +58,9 @@ const TwentySeven = (props) => {
   const [resultText, setResultText] = useState('');
   const [globalAPICall, setGlobalAPICall] = useState(true);
   const dispatch = useDispatch();
-  const {userQuestion = []} = useSelector((state) => state.moduleOne);
+  const {userQuestion = [], getScreenStartTime = ''} = useSelector(
+    (state) => state.moduleOne,
+  );
   const {loginData = {}} = useSelector((state) => state.authReducer);
   const [totalQ, setTotalQ] = useState(0);
   const [selectQ, setSelectQ] = useState(0);
@@ -395,6 +397,11 @@ const TwentySeven = (props) => {
       customAlert('Please perform your exercise', 'error');
     }
   };
+  useEffect(() => {
+    dispatch(AppActions.getScreenStartTime(moment().format()));
+  }, [dispatch]);
+
+  console.log('get screen start time', getScreenStartTime);
   return (
     <>
       {/**********************quotes************** */}

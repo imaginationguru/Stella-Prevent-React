@@ -11,6 +11,7 @@ import GLOBALS from '@constants';
 import BackBtn from '@components/common/backbtn';
 import {getItem} from '@utils/AsyncUtils';
 import {translate as ts} from '@i18n/translate';
+import {navigatorPop} from '../../../config/navigationOptions.web';
 const {STRINGS, COLORS} = GLOBALS;
 
 const AddActivityTracker = (props) => {
@@ -117,7 +118,12 @@ const AddActivityTracker = (props) => {
 
   return (
     <MasterLayout>
-      <BackBtn title="Back to Activities" />
+      <BackBtn
+        title="Back to Activities"
+        onPress={() => {
+          navigatorPop();
+        }}
+      />
       <div className="container">
         <div style={styles.wrapper}>
           <p style={styles.ques}>Search Pleasant Activity</p>

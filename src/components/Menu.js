@@ -1,3 +1,4 @@
+import {useEffect, useState} from 'react';
 import GLOBALS from '@constants';
 import history from '@helpers/history';
 import {navigatorPush} from '@config/navigationOptions.web';
@@ -10,14 +11,18 @@ import daily from '@assets/images/sleep/daily.png';
 import face from '@assets/images/sleep/face.png';
 import logout from '@assets/images/logout.png';
 import logoWhite from '@assets/images/logoWhite.png';
+import moment from 'moment';
+import {getItem} from '../utils/AsyncUtils';
 const {COLORS} = GLOBALS;
 const {GRAY, PLAN_GRAY, WHITE, GreenForSlider, DARK_RED} = COLORS;
 const Menu = (props) => {
   const {modalVisible, menuStyle} = props;
+  const [screenName, setScreenName] = useState('');
   const {
     currentActiveCard = [],
     selectedWeek = 1,
     selectedCardId = '',
+    getScreenStartTime = '',
   } = useSelector((state) => state.moduleOne);
   const dispatch = useDispatch();
   const current_screen = history.location.pathname;
@@ -77,6 +82,32 @@ const Menu = (props) => {
     }
     return false;
   };
+  // useEffect(() => {
+  //   dispatch(AppActions.getScreenStartTime(moment().format()));
+  // }, [dispatch]);
+  const addTimeTrackerAPICall = () => {
+    let postData = {
+      userId: getItem('userId'),
+      //  group: 'Daily Learning',
+      screen: current_screen.substring(1),
+      startTime: getScreenStartTime,
+      endTime: moment().format(),
+      date: moment().format(),
+    };
+    if (current_screen === '/DailyLearningModule') {
+      postData['group'] = 'Daily Learning';
+    } else if (
+      current_screen === '/Report' ||
+      current_screen === '/PastModules'
+    ) {
+      postData['group'] = 'Engagement';
+    } else {
+      postData['group'] = 'Patient reported outcomes';
+    }
+
+    dispatch(AppActions.addTimeTracker(postData));
+  };
+  console.log('screen name', current_screen.substring(1));
   return (
     <div
       style={{...styles.container, ...menuStyle}}
@@ -114,6 +145,7 @@ const Menu = (props) => {
               imgWrap={{backgroundColor: '#FFD789'}}
               onClick={(e) => {
                 e.stopPropagation();
+                addTimeTrackerAPICall();
                 if (!checkMenuDisable('sleep')) {
                   dispatch(AppActions.dashboardModalAction(false));
                   navigatorPush({screenName: 'SleepTracker'});
@@ -126,6 +158,7 @@ const Menu = (props) => {
               title={'Daily Learning'}
               imgWrap={{backgroundColor: GreenForSlider}}
               onClick={() => {
+                addTimeTrackerAPICall();
                 if (!checkMenuDisable('module')) {
                   dispatch(AppActions.dashboardModalAction(false));
                   dispatch(
@@ -163,6 +196,7 @@ const Menu = (props) => {
               imgSize={{width: 15, height: 13}}
               img={{marginLeft: '45%'}}
               onClick={() => {
+                addTimeTrackerAPICall();
                 if (!checkMenuDisable('mood')) {
                   dispatch(AppActions.dashboardModalAction(false));
                   navigatorPush({screenName: 'MoodTracker'});
@@ -177,6 +211,7 @@ const Menu = (props) => {
               imgSize={{width: 13, height: 10}}
               img={{marginLeft: '59%'}}
               onClick={() => {
+                addTimeTrackerAPICall();
                 if (!checkMenuDisable('activity')) {
                   dispatch(AppActions.dashboardModalAction(false));
                   navigatorPush({screenName: 'ActivityTracker'});
@@ -191,6 +226,7 @@ const Menu = (props) => {
               imgSize={{width: 15, height: 13}}
               img={{marginLeft: '59%'}}
               onClick={() => {
+                addTimeTrackerAPICall();
                 if (!checkMenuDisable('dashboard')) {
                   dispatch(AppActions.dashboardModalAction(false));
                   navigatorPush({screenName: 'Dashboard'});

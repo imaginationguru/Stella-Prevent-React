@@ -7,18 +7,11 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import brand from '@assets/images/brand.svg';
-import {screenHeight, screenWidth} from '@utils/dimension';
-import graphic01 from '@assets/images/graphic01.svg';
-import {
-  navigatorPush,
-  navigatorPop,
-  navigatortoStart,
-} from '@config/navigationOptions.web';
+
+import {navigatorPop} from '@config/navigationOptions.web';
 import rightCover from '@assets/images/candle.png';
 import Input from '@components/Input';
 import Button from '@components/common/button';
-import history from '@helpers/history';
 import Loader from '@components/Loader';
 import GLOBALS from '@constants';
 import {Dimensions} from 'react-native-web';
@@ -36,7 +29,7 @@ const VerifyUserOTP = () => {
   const {quotes = {}} = useSelector((state) => state.moduleOne);
   const {loginData = []} = useSelector((state) => state.authReducer);
   const {isLoading} = useSelector((state) => state.common);
-  const [finishStatus, setfinishStatus] = useState(false);
+
   const dispatch = useDispatch();
   const onBackButtonEvent = (e) => {
     if (loginData) {
