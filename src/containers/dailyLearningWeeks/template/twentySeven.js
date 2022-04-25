@@ -147,6 +147,7 @@ const TwentySeven = (props) => {
           question: item.question,
           question_id: item._id,
           textAns: item.textAns,
+          typeOfAssessment: item.typeOfAssessment,
           options: item.options.length
             ? item.options.map((val) => {
                 let obj2 = {...val};
@@ -435,11 +436,12 @@ const TwentySeven = (props) => {
         : []}
       {assessmentQues.length
         ? assessmentQues.map((item, index) => {
+            console.log('data==>', item);
             return (
               <div key={index} style={{marginBottom: '20px'}}>
                 <p style={styles.ques}>{item.question}</p>
                 {item.assessmentType === 'radio' ? (
-                  item.typeOfAssessment === 'Screening' ? (
+                  item.typeOfAssessment == 'Screening' ? (
                     <div style={styles.quesOption}>
                       {item.options.length
                         ? item.options
@@ -448,6 +450,7 @@ const TwentySeven = (props) => {
                                 (a.optionPoint < b.optionPoint && 1) || -1,
                             )
                             .map((val, index) => {
+                              console.log('here i am ===>');
                               const isSelected = val.status === true;
                               return (
                                 <p
