@@ -1,5 +1,5 @@
 {
-  "name": "StellaliteWeb",
+  "name": "Mamalift",
   "version": "0.0.11",
   "private": true,
   "scripts": {
@@ -10,10 +10,16 @@
     "web": "react-app-rewired start",
     "lint": "eslint .",
     "web-build": "react-app-rewired build",
-    "web-local-build": "serve -s build"
+    "web-local-build": "serve -s build",
+    "ionic_-android":"ionic capacitor add android",
+    "ionic-ios":"ionic capacitor add ios"
   },
   "dependencies": {
     "@babel/preset-react": "^7.12.13",
+    "@capacitor/android": "3.5.0",
+    "@capacitor/cli": "^3.5.0",
+    "@capacitor/core": "^3.5.0",
+    "@capacitor/ios": "3.5.0",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
     "@mui/material": "^5.4.4",
