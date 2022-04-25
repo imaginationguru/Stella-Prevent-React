@@ -1,10 +1,10 @@
 import GLOBALS from '@constants';
 import RestClient from '@helpers/RestClient';
-import {customAlert} from '@helpers/commonAlerts.web';
-import {sessionExpire} from '@actions/tracker';
-import {loadingAction} from '@actions/common';
-const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
-const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
+import { customAlert } from '@helpers/commonAlerts.web';
+import { sessionExpire } from '@actions/tracker';
+import { loadingAction } from '../common';
+const { ACTION_TYPE, URL, STRINGS } = GLOBALS;
+const { TRY_AGAIN, CHECK_NETWORK } = STRINGS;
 
 //******************************Login******************* */
 

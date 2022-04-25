@@ -1,8 +1,8 @@
 {
-    "appId": "io.ionic.Mamalift",
-    "appName": "Mamalift",
-    "bundledWebRuntime": false,
-    "npmClient": "npm",
-    "webDir": "build",
-    "cordova": {}
-  }
+  "appId": "com.mamalift",
+  "appName": "Mamalift",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {}
+}

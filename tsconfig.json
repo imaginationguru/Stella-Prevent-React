@@ -18,7 +18,61 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "./src",
+    "paths": {
+      "@src/*": [
+        "./src/*"
+      ],
+      "@api/*": [
+        "./src/API/*"
+      ],
+      "@assets/*": [
+        "./src/assets/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@containers/*": [
+        "./src/containers/*"
+      ],
+      "@css/*": [
+        "./src/css/*"
+      ],
+      "@customHooks/*": [
+        "./src/CustomHooks/*"
+      ],
+      "@helperFuncs/*": [
+        "./src/HelperFuncs/*"
+      ],
+      "@hoc/*": [
+        "./src/hoc/*"
+      ],
+      "@middlewares/*": [
+        "./src/middlewares/*"
+      ],
+      "@models/*": [
+        "./src/models/*"
+      ],
+      "@store/*": [
+        "./src/store/*"
+      ],
+      "@actions/*": [
+        "./src/store/actions*"
+      ],
+      "@reducers/*": [
+        "./src/store/reducers/*"
+      ],
+      "@sagas/*": [
+        "./src/store/sagas/*"
+      ],
+      "@typings/*": [
+        "./src/Typings/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ]
+    }
   },
   "include": [
     "src"

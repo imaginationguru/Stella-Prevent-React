@@ -1,4 +1,5 @@
-const {override, addWebpackAlias} = require('customize-cra');
+const { override, addWebpackAlias } = require('customize-cra');
+const env = process.env.IONIC_ENV;
 const path = require('path');
 module.exports = override(
   addWebpackAlias({
@@ -15,5 +16,7 @@ module.exports = override(
     ['@i18n']: path.resolve(__dirname, './src/i18n'),
     ['@reducers']: path.resolve(__dirname, './src/reducers'),
     ['@package']: path.resolve(__dirname, './package.json'),
-  }),
+  })
 );
+
+

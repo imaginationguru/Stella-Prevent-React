@@ -1,6 +1,6 @@
 {
-	"appId": "io.ionic.Mamalift",
-	"appName": "Mamalife",
+	"appId": "com.mamalift",
+	"appName": "Mamalift",
 	"bundledWebRuntime": false,
 	"npmClient": "npm",
 	"webDir": "build",

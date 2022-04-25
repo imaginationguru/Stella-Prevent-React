@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Mamalife</string>
-    <string name="title_activity_main">Mamalife</string>
-    <string name="package_name">io.ionic.Mamalift</string>
-    <string name="custom_url_scheme">io.ionic.Mamalift</string>
+    <string name="app_name">Mamalift</string>
+    <string name="title_activity_main">Mamalift</string>
+    <string name="package_name">com.mamalift</string>
+    <string name="custom_url_scheme">com.mamalift</string>
 </resources>

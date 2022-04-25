@@ -11,7 +11,7 @@ import WebRouter from './config/webRouter';
 import style from './assets/scss/global.scss';
 import { Provider } from 'react-redux';
 //import store from './store/setup';
-import * as AppActions from '../src/actions';
+import * as AppActions from "../src/actions";
 import setup from './store/setup.web';
 import packageJson from "../package.json"
 
