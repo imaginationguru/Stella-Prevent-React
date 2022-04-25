@@ -3,7 +3,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
-import {TouchableOpacity, View, Text, FlatList, Dimensions} from 'react-native';
+import {TouchableOpacity, View, Text, FlatList, Dimensions, AppState} from 'react-native';
 import MasterLayout from '@components/MasterLayout';
 import BackBtn from '@components/common/backbtn';
 import {useDispatch, useSelector} from 'react-redux';
@@ -94,7 +94,59 @@ const SleepTracker = ({location}) => {
   const [sleepScale, setSleepScale] = useState();
   const [energeticScale, setEnergeticScale] = useState();
   const [isEditUI, setIsEditUI] = useState(false);
+  const [appState, setAppState] = useState(AppState.currentState);
   let currentTimeZone = momentZone.tz.guess();
+
+  useEffect(() => {
+  
+    document.addEventListener('visibilitychange', () => {
+      console.log('document visible',document.visibilityState);
+    });
+
+    AppState.addEventListener('change', _handleAppStateChange);
+  })
+
+  useEffect(() => {
+    return()=>{
+      AppState.removeEventListener('change', _handleAppStateChange);
+    }
+  })
+
+
+  const _handleAppStateChange = (nextAppState) => {
+    // let data  = []
+    // let { loginData } = this.props;
+    console.log('_handleAppStateChange_fun')
+    if (
+      appState.match(/inactive|background/) &&
+      nextAppState === "active"
+    ) {
+      console.log('PRIYANKA_NEXT_APP_STATE_IF=>',nextAppState)
+      // data  = {
+      //   user_id: loginData["user"]["_id"],
+      //   appStatus: "open",
+      // };
+      // this.props.AppActions.updateUserLastSeen(data);
+    } else {
+      console.log('PRIYANKA_NEXT_APP_STATE_ELSE=>',nextAppState)
+
+      //  data = {
+      //   user_id: loginData["user"]["_id"],
+      //   appStatus: "close",
+      // };
+      // if (Platform.OS == "android") {
+      //   this.props.AppActions.updateUserLastSeen(data);
+      // } else if (
+      //   Platform.OS == "ios" &&
+      //   this.state.appState.match(/inactive|background/) !== null
+      // ) {
+      // //  debugger
+      //   this.props.AppActions.updateUserLastSeen(data);
+      // }
+    }
+    console.log('PRIYANKA_NEXT_APP_STATE_FINAL=>',nextAppState)
+    setAppState(nextAppState)
+   };
 
   var dateArrayList = [];
   useEffect(() => {
