@@ -11,8 +11,8 @@
     "lint": "eslint .",
     "web-build": "react-app-rewired build",
     "web-local-build": "serve -s build",
-    "ionic_-android":"ionic capacitor add android",
-    "ionic-ios":"ionic capacitor add ios"
+    "ionic_-android": "ionic capacitor add android",
+    "ionic-ios": "ionic capacitor add ios"
   },
   "dependencies": {
     "@babel/preset-react": "^7.12.13",
