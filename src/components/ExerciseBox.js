@@ -1,9 +1,8 @@
-import React from 'react';
-import GLOBALS from '../constants';
-const { COLORS } = GLOBALS;
-const { BUTTON_ORANGE, WHITE } = COLORS;
+import GLOBALS from '@constants';
+const {COLORS} = GLOBALS;
+const {BUTTON_ORANGE, WHITE} = COLORS;
 const ExerciseBox = (props) => {
-  const { week } = props;
+  const {week} = props;
   return (
     <div style={styles.wrapper}>
       <p style={styles.title}>Exercises & Reading</p>

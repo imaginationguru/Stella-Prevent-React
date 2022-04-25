@@ -1,4 +1,4 @@
-import GLOBALS from '../../constants';
+import GLOBALS from '@constants';
 
 const INITIAL_STATE = {
   moodLoader: false,
@@ -77,7 +77,7 @@ function trackerReducer(state = INITIAL_STATE, action) {
     case ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_SUCCESS:
       return {
         ...state,
-         getWeeklySummaryReportData: action.payload,
+        getWeeklySummaryReportData: action.payload,
       };
 
     default:

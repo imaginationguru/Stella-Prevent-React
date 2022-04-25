@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import ReactHtmlParser from 'react-html-parser';
-import GLOBALS from '../../../constants';
-import ExerciseBox from '../../../components/ExerciseBox';
-import commonStyles from '../commonStyles';
+import GLOBALS from '@constants';
+import ExerciseBox from '@components/ExerciseBox';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import {
   CardQuote,
   CardTitle,
@@ -10,13 +10,13 @@ import {
   CardDescription,
   CardContent,
   CustomImage,
-} from '../../../components/Cards';
-import { useSelector, useDispatch } from 'react-redux';
-import * as AppActions from '../../../actions';
-import { translate as ts } from '../../../i18n/translate';
-import { getItem } from '../../../utils/AsyncUtils';
-const { IMAGE_BASE_URL, COLORS, ACTION_TYPE } = GLOBALS;
-const { YELLOW, GRAY, GREEN_TEXT, BG_RED, RED } = COLORS;
+} from '@components/Cards';
+import {useSelector, useDispatch} from 'react-redux';
+import * as AppActions from '@actions';
+import {translate as ts} from '@i18n/translate';
+import {getItem} from '@utils/AsyncUtils';
+const {IMAGE_BASE_URL, COLORS, ACTION_TYPE} = GLOBALS;
+const {YELLOW, GRAY, GREEN_TEXT, BG_RED, RED} = COLORS;
 const Template44 = (props) => {
   const {
     card_title,
@@ -30,9 +30,9 @@ const Template44 = (props) => {
     onSubmitMessage,
     week,
   } = props.card;
-  const { assessments } = props;
+  const {assessments} = props;
   const dispatch = useDispatch();
-  const { assessmentData = {}, userAssessmentData = [] } = useSelector(
+  const {assessmentData = {}, userAssessmentData = []} = useSelector(
     (state) => state.moduleOne,
   );
   const [inputs, setInputs] = useState([]);
@@ -47,7 +47,7 @@ const Template44 = (props) => {
       setInputs(
         headers.map((item) => {
           return {
-            content: [{ id: '', content: '', order: '' }],
+            content: [{id: '', content: '', order: ''}],
             name: item.header,
             placeholder: item.description,
             order: item.order,
@@ -55,7 +55,6 @@ const Template44 = (props) => {
           };
         }),
       );
-
   }, [assessmentData]);
 
   useEffect(() => {
@@ -76,7 +75,7 @@ const Template44 = (props) => {
           ? val.assessment_header[0]
           : '';
         return {
-          content: [{ id: val._id, content: val.content, order: val.order }],
+          content: [{id: val._id, content: val.content, order: val.order}],
           name: assessmentHeaderData.header,
           placeholder: assessmentHeaderData.description,
           order: assessmentHeaderData.order,
@@ -90,7 +89,7 @@ const Template44 = (props) => {
     let tempOne = [];
     if (uniqueHeadingId.length) {
       uniqueHeadingId.forEach((val) => {
-        tempOne.push({ _id: val });
+        tempOne.push({_id: val});
       });
     }
     let tempTwo = [];
@@ -115,68 +114,66 @@ const Template44 = (props) => {
     }
     let tempThree = tempTwo.length
       ? tempTwo.map((item) => {
-        return {
-          ...item,
-          content: item.content.length
-            ? item.content.sort((a, b) => (a.order > b.order && 1) || -1)
-            : [],
-        };
-      })
+          return {
+            ...item,
+            content: item.content.length
+              ? item.content.sort((a, b) => (a.order > b.order && 1) || -1)
+              : [],
+          };
+        })
       : [];
 
     let tempFour = tempThree.length
       ? tempThree.map((item) => {
-        return {
-          ...item,
-          content: item.content.length ? item.content : [],
-        };
-      })
+          return {
+            ...item,
+            content: item.content.length ? item.content : [],
+          };
+        })
       : [];
     if (cardsData.length) {
       setInputs(tempFour);
     }
-
-
-  }, [userAssessmentData]);
+  }, [userAssessmentData, inputs]);
 
   const onHandleChange = (e, id, idx) => {
     setInputs(
       inputs.length
         ? inputs.map((val) => {
-          if (val._id === id && val.name === e.target.name) {
-            return {
-              ...val,
-              content: val.content.length
-                ? val.content.map((ele, index) => {
-                  if (index === idx) {
-                    return {
-                      ...ele,
-                      content: e.target.value,
-                      id: idx,
-                      order: idx,
-                    };
-                  } else {
-                    return ele;
-                  }
-                })
-                : [],
-            };
-          } else {
-            return val;
-          }
-        })
+            if (val._id === id && val.name === e.target.name) {
+              return {
+                ...val,
+                content: val.content.length
+                  ? val.content.map((ele, index) => {
+                      if (index === idx) {
+                        return {
+                          ...ele,
+                          content: e.target.value,
+                          id: idx,
+                          order: idx,
+                        };
+                      } else {
+                        return ele;
+                      }
+                    })
+                  : [],
+              };
+            } else {
+              return val;
+            }
+          })
         : [],
     );
   };
   const addHandler = () => {
-    const initial = { content: '', order: '' };
+    const initial = {content: '', order: ''};
     const temp = inputs.length
       ? inputs.map((item) => {
-        return {
-          ...item,
-          content: item.content.length ? [...item.content, initial] : [],
-        };
-      })
+          return {
+            ...item,
+            content: item.content.length ? [...item.content, initial] : [],
+          };
+        })
       : [];
     setInputs(temp);
   };
@@ -185,19 +182,19 @@ const Template44 = (props) => {
     const deleteDataTemp = [];
     const temp = inputs.length
       ? inputs.map((item) => {
-        const deleteData1 = item.content
-          .filter((e, i) => i === index)
-          .map((val) => {
-            return val.id;
-          });
-        if (deleteData1.length) {
-          deleteDataTemp.push(...deleteData1);
-        }
-        return {
-          ...item,
-          content: item.content.filter((e, i) => i !== index),
-        };
-      })
+          const deleteData1 = item.content
+            .filter((e, i) => i === index)
+            .map((val) => {
+              return val.id;
+            });
+          if (deleteData1.length) {
+            deleteDataTemp.push(...deleteData1);
+          }
+          return {
+            ...item,
+            content: item.content.filter((e, i) => i !== index),
+          };
+        })
       : [];
 
     let isAPICall = false;
@@ -223,24 +220,24 @@ const Template44 = (props) => {
     val.preventDefault();
     let modifyData = inputs.length
       ? inputs.map((item) => {
-        return {
-          assessment_header_id: item._id,
-          content: item.content.length
-            ? item.content
-              .map((el, i, arr) => {
-                const tempOrder = arr[i - 1] ? arr[i - 1].order + 1 : 0;
-                return {
-                  ...el,
-                  id: el.id || 0,
-                  order: el.order || tempOrder,
-                };
-              })
-              .filter((e) =>
-                e.id === 0 || e.id || e.id === '' ? true : false,
-              )
-            : [],
-        };
-      })
+          return {
+            assessment_header_id: item._id,
+            content: item.content.length
+              ? item.content
+                  .map((el, i, arr) => {
+                    const tempOrder = arr[i - 1] ? arr[i - 1].order + 1 : 0;
+                    return {
+                      ...el,
+                      id: el.id || 0,
+                      order: el.order || tempOrder,
+                    };
+                  })
+                  .filter((e) =>
+                    e.id === 0 || e.id || e.id === '' ? true : false,
+                  )
+              : [],
+          };
+        })
       : [];
     let params = {
       user_id: userId,
@@ -297,15 +294,15 @@ const Template44 = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardQuote
-                key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardQuote
+                  key={index}
+                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                />
+              );
+            })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -317,160 +314,162 @@ const Template44 = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardDescription
-                key={index}
-                description={ReactHtmlParser(item.desc)}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardDescription
+                  key={index}
+                  description={ReactHtmlParser(item.desc)}
+                />
+              );
+            })
         : []}
 
       {/**********************Images************** */}
 
       {images && images.length
         ? images
-          .filter((item) => item.image_type === 'first')
-          .map((item) => {
-            return (
-              <CustomImage
-                src={`${IMAGE_BASE_URL}${item.image}`}
-                style={{ display: item.image !== '' ? 'flex' : 'none' }}
-              />
-            );
-          })
+            .filter((item) => item.image_type === 'first')
+            .map((item) => {
+              return (
+                <CustomImage
+                  src={`${IMAGE_BASE_URL}${item.image}`}
+                  style={{display: item.image !== '' ? 'flex' : 'none'}}
+                />
+              );
+            })
         : null}
 
       {/**********************content************** */}
       <div style={commonStyles.contentLeftBorder}>
         {content && content.length
           ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .filter((item) => item.type === 'first')
-            .map((item, index) => {
-              return (
-                <CardContent
-                  key={index}
-                  content={ReactHtmlParser(item.content)}
-                />
-              );
-            })
+              .sort((a, b) => (a.order > b.order && 1) || -1)
+              .filter((item) => item.type === 'first')
+              .map((item, index) => {
+                return (
+                  <CardContent
+                    key={index}
+                    content={ReactHtmlParser(item.content)}
+                  />
+                );
+              })
           : []}
       </div>
       {/*****************assessment description***************** */}
-      <div style={{ ...commonStyles.assessmentWrapper, marginTop: '40px' }}>
+      <div style={{...commonStyles.assessmentWrapper, marginTop: '40px'}}>
         {images && images.length
           ? images
-            .filter((item) => item.image_type === 'second')
-            .map((item, i) => {
-              return (
-                <CustomImage
-                  key={i}
-                  src={`${IMAGE_BASE_URL}${item.image}`}
-                  style={{
-                    ...commonStyles.assessImage,
-                    display: item.image !== '' ? 'flex' : 'none',
-                  }}
-                />
-              );
-            })
+              .filter((item) => item.image_type === 'second')
+              .map((item, i) => {
+                return (
+                  <CustomImage
+                    key={i}
+                    src={`${IMAGE_BASE_URL}${item.image}`}
+                    style={{
+                      ...commonStyles.assessImage,
+                      display: item.image !== '' ? 'flex' : 'none',
+                    }}
+                  />
+                );
+              })
           : []}
         {assessments && assessments.length
           ? assessments.map((item, i) => {
-            return (
-              <CardDescription
-                key={i}
-                style={commonStyles.assessDesc}
-                description={ReactHtmlParser(item.description)}
-              />
-            );
-          })
+              return (
+                <CardDescription
+                  key={i}
+                  style={commonStyles.assessDesc}
+                  description={ReactHtmlParser(item.description)}
+                />
+              );
+            })
           : []}
       </div>
 
       <div className="row">
         {inputs.length
           ? inputs
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, i) => {
-              let isAdd = false;
-              if (item.content.length) {
-                isAdd = item.content.find((e) => {
-                  return e.content.length;
-                })
-                  ? true
-                  : false;
-              }
+              .sort((a, b) => (a.order > b.order && 1) || -1)
+              .map((item, i) => {
+                let isAdd = false;
+                if (item.content.length) {
+                  isAdd = item.content.find((e) => {
+                    return e.content.length;
+                  })
+                    ? true
+                    : false;
+                }
 
-              return (
-                <div
-                  className="col-4"
-                  style={{ marginTop: '30px', marginBottom: '60px' }}>
+                return (
                   <div
-                    style={{
-                      padding: '1px',
-                      borderRadius: '5px',
-                      backgroundColor: YELLOW,
-                    }}>
-                    <CardContent content={ReactHtmlParser(item.name)} />
-                  </div>
+                    className="col-4"
+                    style={{marginTop: '30px', marginBottom: '60px'}}>
+                    <div
+                      style={{
+                        padding: '1px',
+                        borderRadius: '5px',
+                        backgroundColor: YELLOW,
+                      }}>
+                      <CardContent content={ReactHtmlParser(item.name)} />
+                    </div>
 
-                  {item.content.length
-                    ? item.content.map((val, idx, arr) => {
-                      const showPlus = i === 2 && idx === arr.length - 1;
-                      const isDelete = i === 2 && idx < arr.length - 1;
-                      return (
-                        <div style={styles.plusIconWrapper} className="v-p-field">
-                          <div
-                            style={{
-                              flexDirection: 'column',
-                              width: '100%',
-                            }}>
-                            <input
-                              type="text"
-                              className="f-field"
-                              name={item.name}
-                              placeholder={item.placeholder}
-                              style={styles.selectedText}
-                              value={val.content}
-                              onChange={(e) =>
-                                onHandleChange(e, item._id, idx)
-                              }
-                            />
-                            {showPlus ? (
+                    {item.content.length
+                      ? item.content.map((val, idx, arr) => {
+                          const showPlus = i === 2 && idx === arr.length - 1;
+                          const isDelete = i === 2 && idx < arr.length - 1;
+                          return (
+                            <div
+                              style={styles.plusIconWrapper}
+                              className="v-p-field">
                               <div
-                                onClick={() => {
-                                  addHandler();
-                                }}
                                 style={{
-                                  ...styles.circleDiv,
-                                  backgroundColor: val.content.length
-                                    ? GREEN_TEXT
-                                    : GRAY,
+                                  flexDirection: 'column',
+                                  width: '100%',
                                 }}>
-                                <span style={styles.plusIcon}>+</span>
+                                <input
+                                  type="text"
+                                  className="f-field"
+                                  name={item.name}
+                                  placeholder={item.placeholder}
+                                  style={styles.selectedText}
+                                  value={val.content}
+                                  onChange={(e) =>
+                                    onHandleChange(e, item._id, idx)
+                                  }
+                                />
+                                {showPlus ? (
+                                  <div
+                                    onClick={() => {
+                                      addHandler();
+                                    }}
+                                    style={{
+                                      ...styles.circleDiv,
+                                      backgroundColor: val.content.length
+                                        ? GREEN_TEXT
+                                        : GRAY,
+                                    }}>
+                                    <span style={styles.plusIcon}>+</span>
+                                  </div>
+                                ) : null}
+                                {isDelete ? (
+                                  <div
+                                    onClick={() => deleteHandler(idx)}
+                                    style={{
+                                      ...styles.circleCrossDiv,
+                                      backgroundColor: BG_RED,
+                                    }}>
+                                    <span style={styles.plusIcon}>x</span>
+                                  </div>
+                                ) : null}
                               </div>
-                            ) : null}
-                            {isDelete ? (
-                              <div
-                                onClick={() => deleteHandler(idx)}
-                                style={{
-                                  ...styles.circleCrossDiv,
-                                  backgroundColor: BG_RED,
-                                }}>
-                                <span style={styles.plusIcon}>x</span>
-                              </div>
-                            ) : null}
-                          </div>
-                        </div>
-                      );
-                    })
-                    : null}
-                </div>
-              );
-            })
+                            </div>
+                          );
+                        })
+                      : null}
+                  </div>
+                );
+              })
           : null}
         {inputs.length ? (
           <div style={commonStyles.buttonWrapper}>
@@ -488,16 +487,16 @@ const Template44 = (props) => {
       <div style={commonStyles.contentLeftBorder}>
         {content && content.length
           ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .filter((item) => item.type === 'second')
-            .map((item, index) => {
-              return (
-                <CardContent
-                  key={index}
-                  content={ReactHtmlParser(item.content)}
-                />
-              );
-            })
+              .sort((a, b) => (a.order > b.order && 1) || -1)
+              .filter((item) => item.type === 'second')
+              .map((item, index) => {
+                return (
+                  <CardContent
+                    key={index}
+                    content={ReactHtmlParser(item.content)}
+                  />
+                );
+              })
           : []}
       </div>
       {showExercises && <ExerciseBox week={week} />}

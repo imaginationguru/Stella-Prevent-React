@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import GLOBALS from '../../../constants';
+import React, {useState, useEffect} from 'react';
+import GLOBALS from '@constants';
 import ReactHtmlParser from 'react-html-parser';
-import { useSelector, useDispatch } from 'react-redux';
-import * as AppActions from '../../../actions';
-import { getItem } from '../../../utils/AsyncUtils';
-import ExerciseBox from '../../../components/ExerciseBox';
-import { translate as ts } from '../../../i18n/translate';
+import {useSelector, useDispatch} from 'react-redux';
+import * as AppActions from '@actions';
+import {getItem} from '@utils/AsyncUtils';
+import ExerciseBox from '@components/ExerciseBox';
+import {translate as ts} from '@i18n/translate';
 import {
   CardQuote,
   CardTitle,
@@ -13,16 +13,16 @@ import {
   CardDescription,
   CardContent,
   CustomImage,
-} from '../../../components/Cards';
-import commonStyles from '../commonStyles';
-import { Dimensions } from 'react-native';
-import GreenCheck from '../../../assets/images/tick.svg';
-import cancel from '../../../assets/images/cancel.svg';
-import tickWhite from '../../../assets/images/right.svg';
+} from '@components/Cards';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
+import {Dimensions} from 'react-native';
+import GreenCheck from '@assets/images/tick.svg';
+import cancel from '@assets/images/cancel.svg';
+import tickWhite from '@assets/images/right.svg';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
-const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
-const { YELLOW, WHITE, CIRCLE_GRAY } = COLORS;
+const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
+const {YELLOW, WHITE, CIRCLE_GRAY} = COLORS;
 let userId = getItem('userId');
 const dataMapperAss = (arr = []) => {
   let temp = [];
@@ -30,7 +30,7 @@ const dataMapperAss = (arr = []) => {
     temp = arr.map((item) => {
       return {
         assessment_header_id: item._id,
-        content: [{ content: item.value, order: item.order }],
+        content: [{content: item.value, order: item.order}],
       };
     });
   }
@@ -38,7 +38,7 @@ const dataMapperAss = (arr = []) => {
 };
 
 const InputBoxWithContent = (props) => {
-  const { title, placeholder, value, onChange, style, name, disable } = props;
+  const {title, placeholder, value, onChange, style, name, disable} = props;
   return (
     <div style={styles.inputBoxWrapper}>
       <div style={style}>
@@ -87,7 +87,7 @@ const onlySingleId = (arr = []) => {
           q.push(...cn);
         });
       }
-      temp.push({ assessment_header_id: item, content: q });
+      temp.push({assessment_header_id: item, content: q});
     });
     return temp;
   }
@@ -114,7 +114,7 @@ const FourTwo = (props) => {
   } = props.card;
   const dispatch = useDispatch();
   const {
-    assessmentData = { heading: [] },
+    assessmentData = {heading: []},
     assessmentData2 = {},
     userAssessmentData = [],
   } = useSelector((state) => state.moduleOne);
@@ -124,26 +124,28 @@ const FourTwo = (props) => {
   useEffect(() => {
     dispatch(AppActions.getAssessmentData(assessment_id));
     dispatch(AppActions.getAssessmentDataSecond(assessment_id2));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessment_id2]);
   useEffect(() => {
     let optionData =
       assessmentData2 &&
-        assessmentData2.content &&
-        assessmentData2.content.length
+      assessmentData2.content &&
+      assessmentData2.content.length
         ? assessmentData2.content
-          .filter((item) => {
-            return item.assessment_header_id === null;
-          })
-          .map((item) => {
-            return {
-              ...item,
-              content: item.data,
-              correct_assessment_header_id: item.correct_assessment_header_id,
-            };
-          })
+            .filter((item) => {
+              return item.assessment_header_id === null;
+            })
+            .map((item) => {
+              return {
+                ...item,
+                content: item.data,
+                correct_assessment_header_id: item.correct_assessment_header_id,
+              };
+            })
         : [];
     setOptionDataContent(optionData);
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData2]);
   useEffect(() => {
     if (userAssessmentData && userAssessmentData.length) {
@@ -191,13 +193,14 @@ const FourTwo = (props) => {
                 item.assessment_header[0].order,
             };
           } else {
-            return { ...item };
+            return {...item};
           }
         });
         const data1 = data.filter((item) => item.content !== null);
         setOptionDataContent(data1);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
 
   /*
@@ -343,6 +346,7 @@ const FourTwo = (props) => {
         }),
       );
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData, assessment_id]);
   useEffect(() => {
     const getDataMapper = (arr = []) => {
@@ -354,12 +358,12 @@ const FourTwo = (props) => {
         });
         temp = pTemp.length
           ? pTemp.map((item) => {
-            return {
-              placeholder: item.content ? item.content : 'enter value',
-              value: item.content,
-              _id: item.assessment_header_id,
-            };
-          })
+              return {
+                placeholder: item.content ? item.content : 'enter value',
+                value: item.content,
+                _id: item.assessment_header_id,
+              };
+            })
           : [];
       }
       return temp;
@@ -376,11 +380,12 @@ const FourTwo = (props) => {
                 val = data.value;
               }
             }
-            return { ...item, value: val };
+            return {...item, value: val};
           }),
         );
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
   const onSaveMyths = (e) => {
     e.preventDefault();
@@ -418,18 +423,18 @@ const FourTwo = (props) => {
   const onHandleChange = (e, item) => {
     const updateInputs = inputs.length
       ? inputs.map((val) => {
-        return {
-          ...val,
-          value: val.name === e.target.name ? e.target.value : val.value,
-        };
-      })
+          return {
+            ...val,
+            value: val.name === e.target.name ? e.target.value : val.value,
+          };
+        })
       : [];
     setInputs(updateInputs);
   };
   const headingOne =
     assessmentData.heading &&
-      assessmentData.heading.length &&
-      assessmentData.heading[0]
+    assessmentData.heading.length &&
+    assessmentData.heading[0]
       ? assessmentData.heading[0].heading
       : null;
 
@@ -460,10 +465,10 @@ const FourTwo = (props) => {
             assessment_header_id: headerId,
             headerOrder,
             correct_assessment_header_id: correctHeaderId,
-            assessment_header: [{ header: headerName }],
+            assessment_header: [{header: headerName}],
           };
         } else {
-          return { ...item };
+          return {...item};
         }
       });
       setOptionDataContent(data);
@@ -518,15 +523,15 @@ const FourTwo = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardQuote
-                key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardQuote
+                  key={index}
+                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                />
+              );
+            })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -537,99 +542,99 @@ const FourTwo = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardDescription
-                key={index}
-                description={ReactHtmlParser(item.desc)}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardDescription
+                  key={index}
+                  description={ReactHtmlParser(item.desc)}
+                />
+              );
+            })
         : []}
       {/**********************Images************** */}
 
       {images && images.length
         ? images
-          .filter((item) => item.image_type === 'first')
-          .map((item) => {
-            return (
-              <CustomImage
-                src={`${IMAGE_BASE_URL}${item.image}`}
-                style={{
-                  display: item.image !== '' ? 'flex' : 'none',
-                }}
-              />
-            );
-          })
+            .filter((item) => item.image_type === 'first')
+            .map((item) => {
+              return (
+                <CustomImage
+                  src={`${IMAGE_BASE_URL}${item.image}`}
+                  style={{
+                    display: item.image !== '' ? 'flex' : 'none',
+                  }}
+                />
+              );
+            })
         : null}
 
       {assessmentData.heading && assessmentData.heading.length ? (
         <div style={styles.inputBoxWrapper}>
-          <p style={{ ...styles.heading, width: '100%' }}>
+          <p style={{...styles.heading, width: '100%'}}>
             {ReactHtmlParser(headingOne)}
           </p>
         </div>
       ) : null}
       {inputs.length
         ? inputs
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, idx) => {
-            return (
-              <InputBoxWithContent
-                key={idx}
-                title={ReactHtmlParser(item.name)}
-                name={item.name}
-                placeholder={item.placeholder}
-                value={item.value}
-                onChange={(e) => onHandleChange(e, item)}
-                style={{
-                  backgroundColor:
-                    assessmentData.heading && assessmentData.heading.length
-                      ? CIRCLE_GRAY
-                      : YELLOW,
-                  width: '33%',
-                  marginBottom: '35px',
-                }}
-                disable={true}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, idx) => {
+              return (
+                <InputBoxWithContent
+                  key={idx}
+                  title={ReactHtmlParser(item.name)}
+                  name={item.name}
+                  placeholder={item.placeholder}
+                  value={item.value}
+                  onChange={(e) => onHandleChange(e, item)}
+                  style={{
+                    backgroundColor:
+                      assessmentData.heading && assessmentData.heading.length
+                        ? CIRCLE_GRAY
+                        : YELLOW,
+                    width: '33%',
+                    marginBottom: '35px',
+                  }}
+                  disable={true}
+                />
+              );
+            })
         : null}
 
       {/*******************************ASSESSMENT DESCRIPTION*********************** */}
       <div style={commonStyles.assessmentWrapper}>
         {images && images.length
           ? images
-            .filter((item) => item.image_type === 'second')
-            .map((item, i) => {
-              return (
-                <CustomImage
-                  key={i}
-                  src={
-                    item.image !== ''
-                      ? `${IMAGE_BASE_URL}${item.image}`
-                      : null
-                  }
-                  style={{
-                    ...commonStyles.assessImage,
-                    display: item.image !== '' ? 'flex' : 'none',
-                  }}
-                />
-              );
-            })
+              .filter((item) => item.image_type === 'second')
+              .map((item, i) => {
+                return (
+                  <CustomImage
+                    key={i}
+                    src={
+                      item.image !== ''
+                        ? `${IMAGE_BASE_URL}${item.image}`
+                        : null
+                    }
+                    style={{
+                      ...commonStyles.assessImage,
+                      display: item.image !== '' ? 'flex' : 'none',
+                    }}
+                  />
+                );
+              })
           : []}
 
         {assessmentData2.assessment && assessmentData2.assessment.length
           ? assessmentData2.assessment.map((item, index) => {
-            return (
-              <CardDescription
-                key={index}
-                style={commonStyles.assessDesc}
-                description={ReactHtmlParser(item.description)}
-              />
-            );
-          })
+              return (
+                <CardDescription
+                  key={index}
+                  style={commonStyles.assessDesc}
+                  description={ReactHtmlParser(item.description)}
+                />
+              );
+            })
           : []}
       </div>
       {/*******************DRAG AND DROP ************************ */}
@@ -640,74 +645,74 @@ const FourTwo = (props) => {
           <div style={styles.fourBoxContainer}>
             {assessmentData2.headers && assessmentData2.headers.length
               ? assessmentData2.headers.map((item, index) => {
-                const header_id = item._id;
-                const order = item.order;
-                return (
-                  <div
-                    key={index}
-                    style={{
-                      ...styles.droppableDiv,
-                    }}
-                    className="wip"
-                    onDragOver={(e) => onDragOver(e, item._id)}
-                    onDrop={(e) => {
-                      onDrop(e, item._id, item.order);
-                    }}>
-                    <p
-                      className="task-header"
+                  const header_id = item._id;
+                  const order = item.order;
+                  return (
+                    <div
+                      key={index}
                       style={{
-                        ...commonStyles.dropTitle,
-                        backgroundColor: boxBackgroundColor(item.order),
+                        ...styles.droppableDiv,
+                      }}
+                      className="wip"
+                      onDragOver={(e) => onDragOver(e, item._id)}
+                      onDrop={(e) => {
+                        onDrop(e, item._id, item.order);
                       }}>
-                      {ReactHtmlParser(item.header)}
-                    </p>
-                    {optionDataContent && optionDataContent.length
-                      ? optionDataContent
-                        .filter((item) => {
-                          return item.assessment_header_id === header_id;
-                        })
-                        .map((item) => {
-                          return (
-                            <div style={{ position: 'relative' }}>
-                              {correctAns ? (
-                                <div style={styles.iconWrapper}>
-                                  {item.correct_assessment_header_id ===
-                                    header_id ? (
-                                    <img
-                                      src={GreenCheck}
-                                      style={styles.icon}
-                                    />
+                      <p
+                        className="task-header"
+                        style={{
+                          ...commonStyles.dropTitle,
+                          backgroundColor: boxBackgroundColor(item.order),
+                        }}>
+                        {ReactHtmlParser(item.header)}
+                      </p>
+                      {optionDataContent && optionDataContent.length
+                        ? optionDataContent
+                            .filter((item) => {
+                              return item.assessment_header_id === header_id;
+                            })
+                            .map((item) => {
+                              return (
+                                <div style={{position: 'relative'}}>
+                                  {correctAns ? (
+                                    <div style={styles.iconWrapper}>
+                                      {item.correct_assessment_header_id ===
+                                      header_id ? (
+                                        <img
+                                          src={GreenCheck}
+                                          style={styles.icon}
+                                        />
+                                      ) : (
+                                        <img src={cancel} style={styles.icon} />
+                                      )}
+                                    </div>
                                   ) : (
-                                    <img src={cancel} style={styles.icon} />
+                                    ''
                                   )}
-                                </div>
-                              ) : (
-                                ''
-                              )}
 
-                              <p
-                                style={{
-                                  ...commonStyles.dragItem,
-                                  borderColor: boxBackgroundColor(order),
-                                }}
-                                onDragStart={(e) =>
-                                  onDragStart(
-                                    e,
-                                    item.content,
-                                    item.correct_assessment_header_id,
-                                  )
-                                }
-                                draggable
-                                className="draggable">
-                                {item.content}
-                              </p>
-                            </div>
-                          );
-                        })
-                      : []}
-                  </div>
-                );
-              })
+                                  <p
+                                    style={{
+                                      ...commonStyles.dragItem,
+                                      borderColor: boxBackgroundColor(order),
+                                    }}
+                                    onDragStart={(e) =>
+                                      onDragStart(
+                                        e,
+                                        item.content,
+                                        item.correct_assessment_header_id,
+                                      )
+                                    }
+                                    draggable
+                                    className="draggable">
+                                    {item.content}
+                                  </p>
+                                </div>
+                              );
+                            })
+                        : []}
+                    </div>
+                  );
+                })
               : []}
           </div>
           {/****************************OPTIONS CONTAINER with gray box******************** */}
@@ -715,32 +720,32 @@ const FourTwo = (props) => {
           <div style={styles.optionsDiv}>
             {optionDataContent && optionDataContent.length
               ? optionDataContent
-                .filter((item, i) => {
-                  const exist = dragCardDataContent.find(
-                    (val) => val === item.content,
-                  )
-                    ? true
-                    : false;
-                  return item.assessment_header_id === null && !exist;
-                })
-                .map((item, index) => {
-                  return (
-                    <div
-                      key={index}
-                      onDragStart={(e) =>
-                        onDragStart(
-                          e,
-                          item.content,
-                          item.correct_assessment_header_id,
-                        )
-                      }
-                      draggable
-                      className="draggable"
-                      style={styles.draggableContent}>
-                      {item.content}
-                    </div>
-                  );
-                })
+                  .filter((item, i) => {
+                    const exist = dragCardDataContent.find(
+                      (val) => val === item.content,
+                    )
+                      ? true
+                      : false;
+                    return item.assessment_header_id === null && !exist;
+                  })
+                  .map((item, index) => {
+                    return (
+                      <div
+                        key={index}
+                        onDragStart={(e) =>
+                          onDragStart(
+                            e,
+                            item.content,
+                            item.correct_assessment_header_id,
+                          )
+                        }
+                        draggable
+                        className="draggable"
+                        style={styles.draggableContent}>
+                        {item.content}
+                      </div>
+                    );
+                  })
               : []}
           </div>
         </div>
@@ -754,15 +759,15 @@ const FourTwo = (props) => {
         {/******************DRAG N DROP ******************/}
         {content && content.length
           ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardContent
-                  key={index}
-                  content={ReactHtmlParser(item.content)}
-                />
-              );
-            })
+              .sort((a, b) => (a.order > b.order && 1) || -1)
+              .map((item, index) => {
+                return (
+                  <CardContent
+                    key={index}
+                    content={ReactHtmlParser(item.content)}
+                  />
+                );
+              })
           : []}
         {showExercises && <ExerciseBox week={week} />}
       </div>
@@ -804,11 +809,13 @@ const FourTwo = (props) => {
               }
               return (
                 <div
-                  className={`colored-question  ${activeId === index ? 'active-menu1' : ''
-                    }  ${item.headerOrder !== null && item.headerOrder !== undefined
+                  className={`colored-question  ${
+                    activeId === index ? 'active-menu1' : ''
+                  }  ${
+                    item.headerOrder !== null && item.headerOrder !== undefined
                       ? selectedBorderColor(item.headerOrder)
                       : '#ffff'
-                    }`}
+                  }`}
                   onClick={() => {
                     onSetActiveMenu(index);
                   }}>
@@ -881,18 +888,18 @@ const FourTwo = (props) => {
             {ts('SAVE')}
           </button>
         </div>
-        <div style={{ ...commonStyles.contentLeftBorder, marginBottom: '20px' }}>
+        <div style={{...commonStyles.contentLeftBorder, marginBottom: '20px'}}>
           {content && content.length
             ? content
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, i) => {
-                return (
-                  <CardContent
-                    key={i}
-                    content={ReactHtmlParser(item.content)}
-                  />
-                );
-              })
+                .sort((a, b) => (a.order > b.order && 1) || -1)
+                .map((item, i) => {
+                  return (
+                    <CardContent
+                      key={i}
+                      content={ReactHtmlParser(item.content)}
+                    />
+                  );
+                })
             : []}
         </div>
         {showExercises && <ExerciseBox week={week} />}
@@ -917,7 +924,7 @@ const styles = {
     color: COLORS.WHITE,
     paddingTop: '30px',
   },
-  inputBox: { width: '65%' },
+  inputBox: {width: '65%'},
   inputStyle: {
     backgroundColor: COLORS.LIGHT_GRAY,
     fontStyle: 'italic',
@@ -956,8 +963,8 @@ const styles = {
     backgroundColor: '#F1F3FA',
     paddingLeft: '20px',
   },
-  wrapper: { marginTop: '40px' },
-  droppableDiv: { width: '48%', paddingBottom: '15px' },
+  wrapper: {marginTop: '40px'},
+  droppableDiv: {width: '48%', paddingBottom: '15px'},
   iconWrapper: {
     display: 'flex',
     position: 'absolute',

@@ -1,4 +1,4 @@
-import GLOBALS from '../../constants';
+import GLOBALS from '@constants';
 
 const INITIAL_STATE = {
   isLoggedIn: false,

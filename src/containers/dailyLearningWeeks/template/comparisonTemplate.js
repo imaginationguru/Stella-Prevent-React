@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import { useDispatch, useSelector } from 'react-redux';
-import GLOBALS from '../../../constants';
-import * as AppActions from '../../../actions';
-import { getItem } from '../../../utils/AsyncUtils';
-import ExerciseBox from '../../../components/ExerciseBox';
+import GLOBALS from '@constants';
+import * as AppActions from '@actions';
+import { getItem } from '@utils/AsyncUtils';
+import ExerciseBox from '@components/ExerciseBox';
 import {
   CardQuote,
   CardTitle,
@@ -12,12 +12,12 @@ import {
   CardDescription,
   CardContent,
   CustomImage,
-} from '../../../components/Cards';
-import commonStyles from '../commonStyles';
+} from '@components/Cards';
+import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import { Dimensions } from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
+
 const { IMAGE_BASE_URL, COLORS, ACTION_TYPE } = GLOBALS;
 const { DARK_GREEN, YELLOW, WHITE } = COLORS;
 
@@ -84,8 +84,7 @@ const ComparisonTemplate = (props) => {
 
   useEffect(() => {
     dispatch(AppActions.getAssessmentData(assessment_id, props._id));
-
-  }, [assessment_id]);
+  }, [assessment_id, props._id, dispatch]);
 
   useEffect(() => {
     if (userAssessmentData.length) {
@@ -100,12 +99,12 @@ const ComparisonTemplate = (props) => {
       duplicatesHandler(finalPData);
       userAssessmentData.length && setActiveState(3);
     }
-  }, [userAssessmentData]);
+  }, [userAssessmentData, headerIdDuringPregnancy, headerIdAfterPregnancy]);
 
   useEffect(() => {
     duplicatesHandler([...duringPregnancy, ...afterPregnancy]);
     setParamsAssessment([...duringPregnancy, ...afterPregnancy]);
-  }, [activeState]);
+  }, [activeState, duringPregnancy, afterPregnancy]);
 
   const localDataManage = (after = [], during = [], final = []) => {
     setDuringPregnancy(during);
@@ -417,7 +416,6 @@ const ComparisonTemplate = (props) => {
         <div style={styles.buttonDiv}>
           <button
             className="btn-solid"
-
             onClick={(e) => {
               activeState === 3
                 ? onSave(e)

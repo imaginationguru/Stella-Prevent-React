@@ -1,5 +1,5 @@
 // @ts-nocheck
-import GLOBALS from '../../constants';
+import GLOBALS from '@constants';
 import React from 'react';
 import {
   StyleSheet,
@@ -10,11 +10,10 @@ import {
   FlatList,
 } from 'react-native';
 
-
 const isiOS = Platform.OS == 'ios';
-const { FONTS, COLORS, STRINGS } = GLOBALS;
-const { GREY, PRIMARY, DARK_GREEN } = COLORS;
-const { LIGHT, REGULAR } = FONTS;
+const {FONTS, COLORS, STRINGS} = GLOBALS;
+const {GREY, PRIMARY, DARK_GREEN} = COLORS;
+const {LIGHT, REGULAR} = FONTS;
 function ScheduleTab(props) {
   let {
     setActiveTab,
@@ -22,11 +21,11 @@ function ScheduleTab(props) {
     badgeCount = '',
     tabList,
     customStyle = {},
-    onPressTab = () => { },
+    onPressTab = () => {},
   } = props;
   return (
     <View
-      style={{ borderBottomWidth: 0.3, borderBottomColor: COLORS.BOREDER_GRAY }}>
+      style={{borderBottomWidth: 0.3, borderBottomColor: COLORS.BOREDER_GRAY}}>
       <FlatList
         horizontal
         contentContainerStyle={[styles.tabContainer, customStyle]}
@@ -35,11 +34,11 @@ function ScheduleTab(props) {
         keyExtractor={(item) => `${item.id}`}
         showsVerticalScrollIndicator={true}
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item, index }) => (
+        renderItem={({item, index}) => (
           <TouchableOpacity
             key={index}
             onPress={() => setActiveTab(item.title)}>
-            <View style={{ marginRight: 8 }}>
+            <View style={{marginRight: 8}}>
               <View style={styles.tab}>
                 <Text
                   style={[
@@ -85,7 +84,7 @@ const styles = StyleSheet.create({
   },
   tabTitle: {
     alignSelf: 'center',
-    fontFamily: LIGHT,
+    // fontFamily: LIGHT,
     fontSize: 15,
     fontFamily: FONTS.MEDIUM,
   },

@@ -1,14 +1,11 @@
-import GLOBALS from '../../constants';
-import RestClient from '../../helpers/RestClient';
-import {navigatorPush} from '../../config/navigationOptions';
-import {storeItem, getItem} from '../../utils/AsyncUtils';
-import {loadingAction} from '../common';
+import GLOBALS from '@constants';
+import RestClient from '@helpers/RestClient';
+import {customAlert} from '@helpers/commonAlerts.web';
+import {sessionExpire} from '@actions/tracker';
+import {loadingAction} from '@actions/common';
 const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
 const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
-import {Linking, Platform} from 'react-native';
-import {getWeek} from '../moduleOne';
-import {customAlert} from '../../helpers/commonAlerts.web';
-import {sessionExpire} from '../tracker';
+
 //******************************Login******************* */
 
 export function changeLanguage(param) {

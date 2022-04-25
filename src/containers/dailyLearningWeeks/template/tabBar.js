@@ -1,12 +1,12 @@
-import balanceIcon from '../../../assets/images/balanceIcon.svg';
-import expectIcon from '../../../assets/images/expectIcon.svg';
-import PiggyIcon from '../../../assets/images/PiggyIcon.svg';
-import flag from '../../../assets/images/flag.svg';
-import pen from '../../../assets/images/pen.svg';
-import starIcon from '../../../assets/images/startIcon.svg';
-import diversity from '../../../assets/images/diversity.svg';
-import thermometer from '../../../assets/images/thermometer.svg';
-import trophy from '../../../assets/images/trophy.svg';
+import balanceIcon from '@assets/images/balanceIcon.svg';
+import expectIcon from '@assets/images/expectIcon.svg';
+import PiggyIcon from '@assets/images/PiggyIcon.svg';
+import flag from '@assets/images/flag.svg';
+import pen from '@assets/images/pen.svg';
+import starIcon from '@assets/images/startIcon.svg';
+import diversity from '@assets/images/diversity.svg';
+import thermometer from '@assets/images/thermometer.svg';
+import trophy from '@assets/images/trophy.svg';
 const tabBar = [
   {
     id: 1,

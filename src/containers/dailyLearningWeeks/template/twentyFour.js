@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
-import GLOBALS from '../../../constants';
-import ExerciseBox from '../../../components/ExerciseBox';
+import GLOBALS from '@constants';
+import ExerciseBox from '@components/ExerciseBox';
 import {
   CardQuote,
   CardTitle,
@@ -9,7 +9,7 @@ import {
   CardDescription,
   CardContent,
   CustomImage,
-} from '../../../components/Cards';
+} from '@components/Cards';
 
 import {Dimensions} from 'react-native';
 
@@ -77,7 +77,7 @@ const TwentyFour = (props) => {
                 <div
                   style={{
                     height: DEVICE_WIDTH > 767 ? '400px' : '230px',
-                     marginBottom: '60px',
+                    marginBottom: '60px',
                   }}>
                   <CustomImage
                     imageSize={item.imageSize}
@@ -85,7 +85,7 @@ const TwentyFour = (props) => {
                     style={{
                       ...styles.bigImage,
                       display: item.image !== '' ? 'flex' : 'none',
-                     }}
+                    }}
                     isVisible={true}
                     animationIn={'fadeInUp'}
                   />
@@ -93,7 +93,7 @@ const TwentyFour = (props) => {
                     style={{
                       textAlign: 'center',
                       marginBottom: '60px',
-                     }}>
+                    }}>
                     {item.description}
                   </p>
                 </div>
@@ -146,9 +146,9 @@ const TwentyFour = (props) => {
 export default TwentyFour;
 const styles = {
   bigImage: {
-     width: DEVICE_WIDTH > 767 ? '60%' : '100%',
+    width: DEVICE_WIDTH > 767 ? '60%' : '100%',
     height: DEVICE_WIDTH > 767 ? '400px' : '230px',
-     margin: '0 auto',
-     marginBottom: '40px',
-   },
+    margin: '0 auto',
+    marginBottom: '40px',
+  },
 };

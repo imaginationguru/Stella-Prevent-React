@@ -6,21 +6,22 @@ import {
   Alert,
   Dimensions,
 } from 'react-native';
-import MasterLayout from '../../components/MasterLayout';
+import MasterLayout from '@components/MasterLayout';
 import { useDispatch, useSelector } from 'react-redux';
-import * as AppActions from '../../actions';
-import { navigatorPush } from '../../config/navigationOptions.web';
-import GLOBALS from '../../constants';
+import * as AppActions from '@actions';
+import { navigatorPush } from '@config/navigationOptions.web';
+import GLOBALS from '@constants';
 const { STRINGS, COLORS, ACTION_TYPE } = GLOBALS;
 const { GREEN_TEXT } = COLORS;
 import ActivityTab from './tab';
-import { getItem } from '../../utils/AsyncUtils';
-import plusIcon from '../../assets/images/plusIcon.png';
-import { translate as ts } from '../../i18n/translate';
-import BackToDashboard from '../../components/common/backToDashboard';
-import BackBtn from '../../components/common/backbtn';
+import { getItem } from '@utils/AsyncUtils';
+import plusIcon from '@assets/images/plusIcon.png';
+import { translate as ts } from '@i18n/translate';
+import BackToDashboard from '@components/common/backToDashboard';
+import BackBtn from '@components/common/backbtn';
 import moment from 'moment';
 import momentZone from 'moment-timezone';
+import { customAlert } from '@helpers/commonAlerts.web';
 let currentTimeZone = momentZone.tz.guess();
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
@@ -84,7 +85,6 @@ const ActivityView = ({
           })
         }
         style={styles.activityBox}>
-
         <div
           style={{
             textAlign: 'center',
@@ -169,6 +169,7 @@ const ActivityTracker = ({ location }) => {
     };
     dispatch(AppActions.getActivityTracker(postData));
     dispatch(AppActions.getSelectedActivityTracker(postData));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -198,6 +199,7 @@ const ActivityTracker = ({ location }) => {
           getSelectedActivityData.activitypatchdata.forEach((x) => {
             if (element._id == x.activity_id) {
               element.isChecked = true;
+              element.fromDB = true
             }
           });
         }
@@ -212,7 +214,6 @@ const ActivityTracker = ({ location }) => {
       let addNewActivityArray = getActivityData.iconlistdata.filter(
         (x) => x.category == 'Pleasant',
       );
-
 
       dailyArray.map((item) => {
         getDailtActivityData.push(item);
@@ -251,7 +252,7 @@ const ActivityTracker = ({ location }) => {
     setPlasentActivityArray([...getActivityTrackerData]);
     setDailyActivityArray([...getDailtActivityData]);
     setNewActivity([...getAddNewActivity]);
-  }, [getActivityData]);
+  }, [getActivityData, getSelectedActivityData]);
 
   const _setActiveAppointmentTab = (tabName) => {
     if (activeTab != tabName) {
@@ -269,6 +270,11 @@ const ActivityTracker = ({ location }) => {
   }
 
   const onProceedClick = () => {
+    console.log(selectedListArray, "selectedListArray");
+    selectedListArray = selectedListArray.filter(item => item.isChecked || item.fromDB);
+    console.log(selectedListArray, "selectedListArray");
+
+    //  return;
     if (selectedListArray.length > 0) {
       let patientActivity = [];
       let id = '';
@@ -294,10 +300,7 @@ const ActivityTracker = ({ location }) => {
       };
       dispatch(AppActions.saveActivityTracker(postData));
     } else {
-      dispatch({
-        type: ACTION_TYPE.ERROR,
-        payload: 'Please perform your exercise',
-      });
+      customAlert('Please perform your exercise', 'error');
     }
   };
 

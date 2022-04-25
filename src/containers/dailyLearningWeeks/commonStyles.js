@@ -1,7 +1,7 @@
-import GLOBALS from '../../constants';
-import { Dimensions } from 'react-native';
-const { COLORS } = GLOBALS;
-const { BUTTON_ORANGE, LIGHT_GRAY } = COLORS;
+import GLOBALS from '@constants';
+import {Dimensions} from 'react-native';
+const {COLORS} = GLOBALS;
+const {BUTTON_ORANGE, LIGHT_GRAY} = COLORS;
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const commonStyles = {
@@ -19,7 +19,7 @@ const commonStyles = {
     marginBottom: '3%',
     justifyContent: 'space-between',
   },
-  name: { textAlign: 'center', fontStyle: 'italic', fontSize: '14px' },
+  name: {textAlign: 'center', fontStyle: 'italic', fontSize: '14px'},
   droppableDiv: {
     width: DEVICE_WIDTH > 767 ? '23%' : '48%',
     paddingBottom: DEVICE_WIDTH > 767 ? '60px' : '30px',
@@ -48,7 +48,7 @@ const commonStyles = {
     border: '1px solid',
   },
 
-  subContent: { textAlign: 'left', padding: '10px', fontSize: 15 },
+  subContent: {textAlign: 'left', padding: '10px', fontSize: 15},
   subContent1: {
     textAlign: 'left',
     padding: '10px',
@@ -75,7 +75,7 @@ const commonStyles = {
     paddingLeft: '20px',
     borderRadius: '5px',
   },
-  imageContent: { width: '48%' },
+  imageContent: {width: '48%'},
   question: {
     flexDirection: 'row',
     display: 'flex',
@@ -99,7 +99,7 @@ const commonStyles = {
     justifyContent: 'center',
     backgroundColor: '#57576D',
   },
-  thermoTitle: { textAlign: 'center', color: '#ffff', paddingTop: '12px' },
+  thermoTitle: {textAlign: 'center', color: '#ffff', paddingTop: '12px'},
   thermoImage: {
     backgroundColor: '#57576D',
     width: '140px',
@@ -111,8 +111,8 @@ const commonStyles = {
     alignItems: 'center',
     justifyContent: 'center',
   },
-  w501: { marginBottom: '21px' },
-  error: { color: 'red', paddingLeft: '10px' },
+  w501: {marginBottom: '21px'},
+  error: {color: 'red', paddingLeft: '10px'},
   socialError: {
     textAlign: 'center',
     align: 'center',
@@ -135,7 +135,7 @@ const commonStyles = {
     width: '100%',
     flexWrap: 'wrap',
   },
-  imageSize: { width: '150px', height: '150px', margin: '7px' },
+  imageSize: {width: '150px', height: '150px', margin: '7px'},
   //********template Four styles end  */
   descFive: {
     marginLeft: DEVICE_WIDTH > 767 ? '200px' : '0',

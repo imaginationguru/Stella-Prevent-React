@@ -1,40 +1,24 @@
-import React, { useState, useRef, useEffect } from 'react';
-import {
-  View,
-  Text,
-  Animated,
-  Pressable,
-  StyleSheet,
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
-import GLOBALS from '../../../constants';
-import {
-  navigatorPush,
-  navigatorPop,
-} from '../../../config/navigationOptions.web';
-import Footer from '../../../components/Footer';
-import checkBlack from '../../../assets/images/subscription/check_b.png';
-import checkWhite from '../../../assets/images/subscription/check_w.png';
-import Button from '../../../components/common/button';
-
-import BackBtn from '../../../components/common/backbtn';
-import ProfileHeader from '../../../components/common/profileHeader';
-const { COLORS, FONTS } = GLOBALS;
-const { LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN } = COLORS;
-import Header from '../../../components/Header';
-import { useSelector, useDispatch } from 'react-redux';
-import * as AppActions from '../../../actions';
-import back from '../../../assets/images/subscription/back.png';
-import { Dimensions } from 'react-native-web';
+import {useState, useEffect} from 'react';
+import {View, Text, StyleSheet, Image} from 'react-native';
+import GLOBALS from '@constants';
+import {navigatorPush} from '@config/navigationOptions.web';
+import Footer from '@components/Footer';
+import checkBlack from '@assets/images/subscription/check_b.png';
+import checkWhite from '@assets/images/subscription/check_w.png';
+import Button from '@components/common/button';
+import BackBtn from '@components/common/backbtn';
+import ProfileHeader from '@components/common/profileHeader';
+const {COLORS, FONTS} = GLOBALS;
+const {LIGHT_BLACK, WHITE, DARK_GREEN} = COLORS;
+import {useSelector, useDispatch} from 'react-redux';
+import * as AppActions from '@actions';
+import {Dimensions} from 'react-native-web';
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const { IMAGE_BASE_URL } = GLOBALS;
+const {IMAGE_BASE_URL} = GLOBALS;
 const Subscription = (props) => {
   const [current_numericPrice, setPrice] = useState(0);
   const dispatch = useDispatch();
-  const { plansData = [] } = useSelector((state) => state.moduleOne);
+  const {plansData = []} = useSelector((state) => state.moduleOne);
 
   const backButtonTitle = props.location.state?.fromScreenDailyLearing
     ? 'Back to Card'
@@ -44,6 +28,7 @@ const Subscription = (props) => {
     if (props.location && props.location.state) {
       setPrice(props.location.state.currentPlan.price);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getPlanbg = (index) => {
@@ -75,6 +60,7 @@ const Subscription = (props) => {
     }
   };
   const getBtnColor = (index) => {
+    console.log('index', index, 0 % 2);
     if (index % 2 == 0) {
       return DARK_GREEN;
     } else {
@@ -86,12 +72,12 @@ const Subscription = (props) => {
     <>
       <View style={styles.container}>
         <ProfileHeader
-          onProfileClick={() => navigatorPush({ screenName: 'Profile' })}
+          onProfileClick={() => navigatorPush({screenName: 'Profile'})}
           showProfileBtn={true}
           showEditIcon={false}
         />
         <BackBtn title={backButtonTitle} />
-        <View style={{ alignItems: 'center' }}>
+        <View style={{alignItems: 'center'}}>
           <View style={styles.middleContainer}>
             {plansData.length != 0 &&
               plansData.map((item, index) => {
@@ -104,20 +90,20 @@ const Subscription = (props) => {
                         backgroundColor: getPlanbg(index),
                       },
                     ]}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
                       <Image
                         source={`${IMAGE_BASE_URL}${item.image}`}
-                        style={{ width: 30, height: 30 }}
+                        style={{width: 30, height: 30}}
                       />
                       <Text
-                        style={[styles.planText, { color: getTextColor(index) }]}>
+                        style={[styles.planText, {color: getTextColor(index)}]}>
                         {item.title}
                       </Text>
                     </View>
                     <Text
                       style={[
                         styles.getText,
-                        { color: getSubTitleColor(index) },
+                        {color: getSubTitleColor(index)},
                       ]}>
                       {item.subtitle}
                     </Text>
@@ -126,12 +112,12 @@ const Subscription = (props) => {
                         <View style={styles.listView}>
                           <Image
                             source={getCheckboxImage(index)}
-                            style={{ width: 18, height: 18 }}
+                            style={{width: 18, height: 18}}
                           />
                           <Text
                             style={[
                               styles.itemText,
-                              { color: getTextColor(index) },
+                              {color: getTextColor(index)},
                             ]}>
                             {content.content}
                           </Text>
@@ -143,8 +129,8 @@ const Subscription = (props) => {
                       <Text
                         style={[
                           styles.planText,
-                          { marginLeft: 0, marginTop: '30px', fontSize: '28px' },
-                          { color: getTextColor(index) },
+                          {marginLeft: 0, marginTop: '30px', fontSize: '28px'},
+                          {color: getTextColor(index)},
                         ]}>
                         ${item.price}{' '}
                         <Text style={styles.planInnerText}>
@@ -154,20 +140,16 @@ const Subscription = (props) => {
                       {item.price > 0 && (
                         <Button
                           isDisabled={
-                            current_numericPrice == item.price
-                              ? true
-                              : false
+                            current_numericPrice == item.price ? true : false
                           }
                           btnStyle={{
                             height: 40,
                             width: '100%',
                             marginTop: '1.1vw',
                             alignSelf: 'center',
-                            fontSize: "18px",
+                            fontSize: '18px',
                             opacity:
-                              current_numericPrice == item.price
-                                ? 0.3
-                                : 1,
+                              current_numericPrice == item.price ? 0.3 : 1,
                           }}
                           onVerifyPress={() =>
                             navigatorPush({
@@ -178,7 +160,7 @@ const Subscription = (props) => {
                           title="Choose"
                           bgColor={getBtnColor(index)}
                           textColor={getPlanbg(index)}
-                          textStyle={{ fontSize: 20 }}
+                          textStyle={{fontSize: 20}}
                         />
                       )}
                     </View>
@@ -204,7 +186,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     padding: '15px',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   middleInnerLeft: {
     flex: 0.5,
@@ -221,7 +203,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   planText: {
-    fontFamily: 'Inter',
+    // fontFamily: 'Inter',
     fontSize: DEVICE_WIDTH > 1000 ? '1.7vw' : '18px',
     color: '#0B0914',
     marginLeft: DEVICE_WIDTH > 1000 ? '1vw' : '15px',
@@ -232,7 +214,7 @@ const styles = StyleSheet.create({
     fontSize: DEVICE_WIDTH > 1000 ? '1.5vw' : '21px',
   },
   getText: {
-    fontFamily: 'Inter',
+    // fontFamily: 'Inter',
     fontSize: DEVICE_WIDTH > 1000 ? '1.1vw' : '14px',
     fontWeight: '400',
     fontStyle: 'normal',
@@ -241,7 +223,7 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.REGULAR,
   },
   itemText: {
-    fontFamily: 'Inter',
+    // fontFamily: 'Inter',
     fontSize: DEVICE_WIDTH > 1000 ? '1.2vw' : '16px',
     fontWeight: 'normal',
     color: '#35353F',
@@ -264,10 +246,8 @@ const styles = StyleSheet.create({
   },
 
   planContainer: {
-
     borderRadius: DEVICE_WIDTH > 1000 ? '0.5vw' : '12px',
     padding: DEVICE_WIDTH > 1000 ? '1vw' : '15px',
-
 
     elevation: 15,
     marginTop: DEVICE_WIDTH > 1000 ? '3vw' : '20px',
@@ -276,7 +256,7 @@ const styles = StyleSheet.create({
     marginRight: DEVICE_WIDTH > 1000 ? '0.5vw' : '0',
 
     shadowColor: COLORS.PLAN_GRAY,
-    shadowOffset: { width: -2, height: 4 },
+    shadowOffset: {width: -2, height: 4},
     shadowOpacity: 0.5,
     shadowRadius: '3vw',
     maxWidth: DEVICE_WIDTH > 1000 ? '47%' : '100%',

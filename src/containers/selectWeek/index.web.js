@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   View,
   Text,
@@ -8,31 +8,31 @@ import {
   Dimensions,
 } from 'react-native';
 
-import ScheduleTab from '../../components/common/tabs';
-import * as AppActions from '../../actions';
-import GLOBALS from '../../constants';
-import { navigatorPush, navigatorPop } from '../../config/navigationOptions.web';
-import Footer from '../../components/Footer';
-import Button from '../../components/common/button';
-import BackBtn from '../../components/common/backbtn';
-import BackToDashboard from '../../components/common/backToDashboard';
-import ProfileHeader from '../../components/common/profileHeader';
-const { COLORS, FONTS } = GLOBALS;
-const { LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN } = COLORS;
-import { useSelector, useDispatch } from 'react-redux';
-import stellaWave from '../../assets/images/stellaNurse/stellaWave.png';
+import ScheduleTab from '@components/common/tabs';
+import * as AppActions from '@actions';
+import GLOBALS from '@constants';
+import {navigatorPush, navigatorPop} from '@config/navigationOptions.web';
+import Footer from '@components/Footer';
+import Button from '@components/common/button';
+import BackBtn from '@components/common/backbtn';
+import BackToDashboard from '@components/common/backToDashboard';
+import ProfileHeader from '@components/common/profileHeader';
+const {COLORS, FONTS} = GLOBALS;
+const {LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN} = COLORS;
+import {useSelector, useDispatch} from 'react-redux';
+import stellaWave from '@assets/images/stellaNurse/stellaWave.png';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
-const { IMAGE_BASE_URL } = GLOBALS;
+const {IMAGE_BASE_URL} = GLOBALS;
 let dayData = [
-  { index: '1' },
-  { index: '2' },
-  { index: '3' },
-  { index: '4' },
-  { index: '5' },
+  {index: '1'},
+  {index: '2'},
+  {index: '3'},
+  {index: '4'},
+  {index: '5'},
 ];
-const tabsLearingType = [{ title: 'By Date', id: 1 }];
+const tabsLearingType = [{title: 'By Date', id: 1}];
 
 const DayView = ({
   item,
@@ -51,13 +51,13 @@ const DayView = ({
       <View
         style={[
           styles.dayTouchable,
-          { backgroundColor: COLORS.LIGHT_SHADOW_GREEN },
+          {backgroundColor: COLORS.LIGHT_SHADOW_GREEN},
         ]}>
-        <Text style={[styles.dayText, { color: COLORS.DARK_GREEN }]}>Day</Text>
+        <Text style={[styles.dayText, {color: COLORS.DARK_GREEN}]}>Day</Text>
         <View
           style={[
             styles.dayViewStyle,
-            { backgroundColor: COLORS.LIGHT_SHADOW_GREEN },
+            {backgroundColor: COLORS.LIGHT_SHADOW_GREEN},
           ]}>
           <Text style={styles.dayText}>{item}</Text>
         </View>
@@ -68,13 +68,13 @@ const DayView = ({
       <View
         style={[
           styles.dayTouchable,
-          { backgroundColor: COLORS.LIGHT_SHADOW_GREEN },
+          {backgroundColor: COLORS.LIGHT_SHADOW_GREEN},
         ]}>
-        <Text style={[styles.dayText, { color: COLORS.DARK_GREEN }]}>Day</Text>
+        <Text style={[styles.dayText, {color: COLORS.DARK_GREEN}]}>Day</Text>
         <View
           style={[
             styles.dayViewStyle,
-            { backgroundColor: COLORS.LIGHT_SHADOW_GREEN },
+            {backgroundColor: COLORS.LIGHT_SHADOW_GREEN},
           ]}>
           <Text style={styles.dayText}>{item}</Text>
         </View>
@@ -85,13 +85,13 @@ const DayView = ({
       <TouchableOpacity
         style={[
           styles.dayTouchable,
-          { backgroundColor: selectedDay == item ? COLORS.DARK_GREEN : 'white' },
+          {backgroundColor: selectedDay == item ? COLORS.DARK_GREEN : 'white'},
         ]}
         onPress={() => onClick(item)}>
         <Text
           style={[
             styles.dayText,
-            { color: selectedDay == item ? 'white' : COLORS.DARK_GREEN },
+            {color: selectedDay == item ? 'white' : COLORS.DARK_GREEN},
           ]}>
           Day
         </Text>
@@ -103,7 +103,6 @@ const DayView = ({
               backgroundColor:
                 selectedDay == item ? COLORS.WHITE : COLORS.WHITE,
             },
-
           ]}>
           <Text style={[styles.dayText, {}]}>{item}</Text>
         </View>
@@ -132,7 +131,7 @@ const useSessionStorage = (keyName, defaultValue) => {
   const setValue = (newValue) => {
     try {
       window.sessionStorage.setItem(keyName, JSON.stringify(newValue));
-    } catch (err) { }
+    } catch (err) {}
     setStoredValue(newValue);
   };
 
@@ -141,7 +140,7 @@ const useSessionStorage = (keyName, defaultValue) => {
 
 function SelectWeek(props) {
   const dispatch = useDispatch();
-  const { currentActiveCard = {} } = useSelector((state) => state.moduleOne);
+  const {currentActiveCard = {}} = useSelector((state) => state.moduleOne);
   const [value, setValue] = useSessionStorage(
     'value',
     `Module ${currentActiveCard.current_week}`,
@@ -155,9 +154,7 @@ function SelectWeek(props) {
     parseInt(currentActiveCard.current_week),
   );
 
-
   const [weekDataDynamic, setweekDataDynamic] = useState([]);
-
 
   useEffect(() => {
     setweekDataDynamic([]);
@@ -167,6 +164,7 @@ function SelectWeek(props) {
 
   useEffect(() => {
     dispatch(AppActions.getProgramById(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /**Create week array for select box */
@@ -233,16 +231,16 @@ function SelectWeek(props) {
         <div className="v-container m-tb-30 sl-week">
           <div className="blob-container">
             {/* <BackBtn btnStyle={{padding: 0}} /> */}
-            <BackToDashboard btnStyle={{ padding: 0 }} />
+            <BackToDashboard btnStyle={{padding: 0}} />
             <View style={styles.backBtn} />
-            <View style={{ marginTop: 10 }}>
+            <View style={{marginTop: 10}}>
               <ScheduleTab
                 customStyle={{
                   marginTop: 10,
                 }}
                 tabList={tabsLearingType}
                 activeTab={'By Date'}
-                tabTitleStyle={{ fontSize: 16 }}
+                tabTitleStyle={{fontSize: 16}}
               />
             </View>
             <View
@@ -290,7 +288,6 @@ function SelectWeek(props) {
                     <DayView
                       item={element.index}
                       onClick={daySelected}
-
                       selectedDay={selectedDay}
                       selectedWeek={selectedWeek}
                       currentWeekDay={{
@@ -309,7 +306,7 @@ function SelectWeek(props) {
                     marginTop: '1.1vw',
                   }}
                   onVerifyPress={_onProceedClick}
-                  textStyle={{ fontSize: 12 }}
+                  textStyle={{fontSize: 12}}
                   title={'Proceed'}
                   bgColor={DARK_GREEN}
                   textColor={WHITE}
@@ -385,7 +382,7 @@ const styles = StyleSheet.create({
   dropDownStyleNew: {
     backgroundColor: COLORS.WHITE,
     shadowColor: COLORS.DARK_GREEN,
-    shadowOffset: { width: 0.5, height: 5 },
+    shadowOffset: {width: 0.5, height: 5},
     shadowOpacity: 0.2,
     shadowRadius: 5,
     padding: 5,
