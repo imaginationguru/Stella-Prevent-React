@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -11,20 +11,18 @@ import {
 import ScheduleTab from '@components/common/tabs';
 import * as AppActions from '@actions';
 import GLOBALS from '@constants';
-import {navigatorPush, navigatorPop} from '@config/navigationOptions.web';
+import {navigatorPush} from '@config/navigationOptions.web';
 import Footer from '@components/Footer';
 import Button from '@components/common/button';
-import BackBtn from '@components/common/backbtn';
+
 import BackToDashboard from '@components/common/backToDashboard';
 import ProfileHeader from '@components/common/profileHeader';
 const {COLORS, FONTS} = GLOBALS;
-const {LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN} = COLORS;
+const {WHITE, DARK_GREEN} = COLORS;
 import {useSelector, useDispatch} from 'react-redux';
 import stellaWave from '@assets/images/stellaNurse/stellaWave.png';
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
 
-const {IMAGE_BASE_URL} = GLOBALS;
 let dayData = [
   {index: '1'},
   {index: '2'},
@@ -231,7 +229,7 @@ function SelectWeek(props) {
         <div className="v-container m-tb-30 sl-week">
           <div className="blob-container">
             {/* <BackBtn btnStyle={{padding: 0}} /> */}
-            <BackToDashboard btnStyle={{padding: 0}} />
+            <BackToDashboard btnStyle={{padding: 0}} onBack={() => {}} />
             <View style={styles.backBtn} />
             <View style={{marginTop: 10}}>
               <ScheduleTab

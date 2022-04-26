@@ -23,6 +23,9 @@ import SadActive from '@assets/images/sadActive/sadActive@3x.png';
 
 import Angry from '@assets/images/angry/angry@3x.png';
 import AngryActive from '@assets/images/angryActive/angryActive@3x.png';
+import {getItem} from '../../utils/AsyncUtils';
+import {navigatorPop} from '../../config/navigationOptions.web';
+
 let currentTimeZone = momentZone.tz.guess();
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
@@ -36,6 +39,7 @@ const MoodTracker = ({location}) => {
   const currentDate = moment(timeStamp).format(STRINGS.DATE_FORMATE);
   const [selectedDate, setSelectedDate] = useState(currentDate);
   const [getMoodTracker, setMoodTracker] = useState([]);
+  const {getScreenStartTime = ''} = useSelector((state) => state.moduleOne);
   const moodListArray = [
     {
       id: 5,
@@ -111,11 +115,34 @@ const MoodTracker = ({location}) => {
     });
     setMoodList([...moodList]);
   };
-
+  useEffect(() => {
+    dispatch(AppActions.getScreenStartTime(moment().format()));
+  }, [dispatch]);
+  const addTimeTrackerAPICall = () => {
+    let postData = {
+      userId: getItem('userId'),
+      group: 'Patient reported outcomes',
+      screen: 'MoodTracker',
+      startTime: getScreenStartTime,
+      endTime: moment().format(),
+      date: moment().format(),
+    };
+    dispatch(AppActions.addTimeTracker(postData));
+  };
   return (
     <MasterLayout>
       {/* <BackBtn title = {isFromCard ? 'Back to Card' : 'Back to Dashboard'} /> */}
-      {isFromCard ? <BackBtn title="Back to Card" /> : <BackToDashboard />}
+      {isFromCard ? (
+        <BackBtn
+          title="Back to Card"
+          onPress={() => {
+            addTimeTrackerAPICall();
+            navigatorPop();
+          }}
+        />
+      ) : (
+        <BackToDashboard onBack={() => addTimeTrackerAPICall()} />
+      )}
       <div style={styles.wrapper}>
         <p style={styles.ques} className="res-100">
           <strong>How is your mood today?</strong>
@@ -155,7 +182,15 @@ const MoodTracker = ({location}) => {
                   date: selectedDate,
                   mood: selectedMoodId,
                 };
-                dispatch(AppActions.saveUserMood(postData));
+                let timePostData = {
+                  userId: getItem('userId'),
+                  group: 'Patient reported outcomes',
+                  screen: 'MoodTracker',
+                  startTime: getScreenStartTime,
+                  endTime: moment().format(),
+                  date: moment().format(),
+                };
+                dispatch(AppActions.saveUserMood(postData, timePostData));
               } else {
                 dispatch({
                   type: ACTION_TYPE.ERROR,

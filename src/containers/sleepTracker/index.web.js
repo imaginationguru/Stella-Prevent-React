@@ -17,8 +17,10 @@ import BackToDashboard from '@components/common/backToDashboard';
 import {Line} from 'react-chartjs-2';
 const {STRINGS, COLORS} = GLOBALS;
 import ReactSlider from 'react-slider';
+import {getItem} from '../../utils/AsyncUtils';
+import {navigatorPop} from '../../config/navigationOptions.web';
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
+
 const LineGraphUI = ({xAxis, yAxis, lable}) => {
   const graphOptions = {
     scales: {
@@ -73,8 +75,9 @@ const SliderUI = ({setScale, getScale, isEditUI}) => {
   );
 };
 
-const SleepTracker = ({location}) => {
+const SleepTracker = ({location, props}) => {
   let isFromCard = location?.state?.isFromCard;
+  console.log('location????', location);
 
   const dispatch = useDispatch();
   const {getSleepTrackerData} = useSelector((state) => state.tracker);
@@ -95,8 +98,10 @@ const SleepTracker = ({location}) => {
   const [energeticScale, setEnergeticScale] = useState();
   const [isEditUI, setIsEditUI] = useState(false);
   let currentTimeZone = momentZone.tz.guess();
-
+  const {getScreenStartTime = ''} = useSelector((state) => state.moduleOne);
   var dateArrayList = [];
+  console.log('getscreen start time', getScreenStartTime);
+
   useEffect(() => {
     for (var i = 6; i >= 0; i--) {
       dateArrayList.push({
@@ -129,9 +134,8 @@ const SleepTracker = ({location}) => {
     }, 500);
   }, []);
 
-  useEffect(() => {}, []);
-
   useEffect(() => {
+    console.log('sleep tracker');
     if (getSleepTrackerData && getSleepTrackerData.sleepData) {
       let data = getSleepTrackerData.sleepData;
       if (data.hours !== undefined) {
@@ -251,8 +255,18 @@ const SleepTracker = ({location}) => {
         patientDate: moment().format(STRINGS.DATE_FORMATE),
         timeZone: currentTimeZone,
       };
+      let timePostData = {
+        userId: getItem('userId'),
+        group: 'Patient reported outcomes',
+        screen: 'SleepTracker',
+        startTime: getScreenStartTime,
+        endTime: moment().format(),
+        date: moment().format(),
+      };
 
-      dispatch(AppActions.saveSleepTracker(postData, postDataGetAPI));
+      dispatch(
+        AppActions.saveSleepTracker(postData, postDataGetAPI, timePostData),
+      );
     }
   };
 
@@ -315,12 +329,35 @@ const SleepTracker = ({location}) => {
     setSelectedDate(item.dates);
     setRefresh(!refresh);
   };
-
+  useEffect(() => {
+    dispatch(AppActions.getScreenStartTime(moment().format()));
+  }, []);
+  const addTimeTrackerAPICall = () => {
+    let postData = {
+      userId: getItem('userId'),
+      group: 'Patient reported outcomes',
+      screen: 'SleepTracker',
+      startTime: getScreenStartTime,
+      endTime: moment().format(),
+      date: moment().format(),
+    };
+    dispatch(AppActions.addTimeTracker(postData));
+  };
   return (
     <View>
       <MasterLayout>
         {/* <BackBtn title = {isFromCard ? 'Back to Card' : 'Back to Dashboard'} /> */}
-        {isFromCard ? <BackBtn title="Back to Card" /> : <BackToDashboard />}
+        {isFromCard ? (
+          <BackBtn
+            title="Back to Card"
+            onPress={() => {
+              addTimeTrackerAPICall();
+              navigatorPop();
+            }}
+          />
+        ) : (
+          <BackToDashboard onBack={() => addTimeTrackerAPICall()} />
+        )}
         <View style={styles.wrapper}>
           <View
             style={{

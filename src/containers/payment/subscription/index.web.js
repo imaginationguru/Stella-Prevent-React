@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import GLOBALS from '@constants';
-import {navigatorPush} from '@config/navigationOptions.web';
+import {navigatorPush, navigatorPop} from '@config/navigationOptions.web';
 import Footer from '@components/Footer';
 import checkBlack from '@assets/images/subscription/check_b.png';
 import checkWhite from '@assets/images/subscription/check_w.png';
@@ -13,6 +13,7 @@ const {LIGHT_BLACK, WHITE, DARK_GREEN} = COLORS;
 import {useSelector, useDispatch} from 'react-redux';
 import * as AppActions from '@actions';
 import {Dimensions} from 'react-native-web';
+
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const {IMAGE_BASE_URL} = GLOBALS;
 const Subscription = (props) => {
@@ -76,7 +77,12 @@ const Subscription = (props) => {
           showProfileBtn={true}
           showEditIcon={false}
         />
-        <BackBtn title={backButtonTitle} />
+        <BackBtn
+          title={backButtonTitle}
+          onPress={() => {
+            navigatorPop();
+          }}
+        />
         <View style={{alignItems: 'center'}}>
           <View style={styles.middleContainer}>
             {plansData.length != 0 &&

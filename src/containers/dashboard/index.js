@@ -19,6 +19,7 @@ import * as AppActions from '@actions';
 import {navigatorPush} from '@config/navigationOptions.web';
 import {checkIfWeekCanAccess} from '@helpers/common.web';
 import {customAlert} from '@helpers/commonAlerts.web';
+import moment from 'moment';
 const {COLORS, ACTION_TYPE, FONTS} = GLOBALS;
 const {DARK_GREEN} = COLORS;
 
@@ -210,7 +211,9 @@ const Dashboard = () => {
               src={sleep}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({screenName: 'SleepTracker'});
+                navigatorPush({
+                  screenName: 'SleepTracker',
+                });
               }}
               isComplete={trackerStatus.sleepChecked}
             />

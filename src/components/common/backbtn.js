@@ -5,14 +5,23 @@ import GLOBALS from '@constants';
 
 const {COLORS, FONTS} = GLOBALS;
 const BackBtn = (props) => {
-  let {title = 'Back to Dashboard', btnStyle, goBack = true} = props;
+  let {title = 'Back to Dashboard', btnStyle, goBack = true, onPress} = props;
   return (
     <View style={[styles.backBtn, btnStyle]}>
       <TouchableOpacity
         style={{flexDirection: 'row', alignItems: 'center'}}
-        onPress={() => {
-          goBack ? navigatorPop() : goToPastModule();
-        }}>
+        // onPress={() => {
+        //   goBack ? navigatorPop() : goToPastModule();
+        // }}
+        // onPress={() => {
+        //   if (goBack) {
+        //     alert('ello');
+        //     navigatorPop();
+        //   } else {
+        //     goToPastModule();
+        //   }
+        // }}
+        onPress={onPress}>
         <Image
           resizeMode={'contain'}
           source={back}
