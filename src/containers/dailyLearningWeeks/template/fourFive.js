@@ -49,6 +49,7 @@ const FourFive = (props) => {
   const [userInputs, setUserInputs] = useState([]);
 
   const [inputs, setInputs] = useState([]);
+  const [inputsBox, setInputsBox] = useState([]);
 
   const {assessmentData = {}, userAssessmentData = []} = useSelector(
     (state) => state.moduleOne,
@@ -63,7 +64,7 @@ const FourFive = (props) => {
   }, [assessment_id, dispatch, props._id]);
 
   useEffect(() => {
-    let header_input = inputs.map((item) => {
+    let header_input = inputsBox.map((item) => {
       return {
         ...item,
         content: userAssessmentData.filter(
@@ -93,7 +94,7 @@ const FourFive = (props) => {
     });
     console.log(header_input, 'header_input.........');
     /**Add saved value in array */
-    if (inputs.length > 0) {
+    if (inputsBox.length > 0) {
       let new_modInput = header_input.map((item) => {
         if (item.content.length == 0) {
           let newItem = [];
@@ -135,7 +136,7 @@ const FourFive = (props) => {
       });
       setInputs(new_modInput);
     }
-  }, [userAssessmentData, inputs]);
+  }, [userAssessmentData, inputsBox]);
 
   useEffect(() => {
     let headers =
@@ -156,6 +157,18 @@ const FourFive = (props) => {
           };
         }),
       );
+    setInputsBox(
+      headers.map((item) => {
+        return {
+          content: [],
+          name: item.header,
+          placeholder: item.description,
+          order: item.order,
+          value: '',
+          _id: item._id,
+        };
+      }),
+    );
   }, [assessmentData]);
 
   const onTextChange = (outer_index, text, val) => {

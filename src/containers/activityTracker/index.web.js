@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Modal,
   TouchableOpacity,
@@ -7,20 +7,23 @@ import {
   Dimensions,
 } from 'react-native';
 import MasterLayout from '@components/MasterLayout';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '@actions';
+
 import {navigatorPush, navigatorPop} from '@config/navigationOptions.web';
+
 import GLOBALS from '@constants';
-const {STRINGS, COLORS, ACTION_TYPE} = GLOBALS;
-const {GREEN_TEXT} = COLORS;
+const { STRINGS, COLORS, ACTION_TYPE } = GLOBALS;
+const { GREEN_TEXT } = COLORS;
 import ActivityTab from './tab';
-import {getItem} from '@utils/AsyncUtils';
+import { getItem } from '@utils/AsyncUtils';
 import plusIcon from '@assets/images/plusIcon.png';
-import {translate as ts} from '@i18n/translate';
+import { translate as ts } from '@i18n/translate';
 import BackToDashboard from '@components/common/backToDashboard';
 import BackBtn from '@components/common/backbtn';
 import moment from 'moment';
 import momentZone from 'moment-timezone';
+import { customAlert } from '@helpers/commonAlerts.web';
 let currentTimeZone = momentZone.tz.guess();
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
@@ -88,7 +91,7 @@ const ActivityView = ({
           style={{
             textAlign: 'center',
           }}>
-          <img src={plusIcon} style={{width: '70px'}} />
+          <img src={plusIcon} style={{ width: '70px' }} />
         </div>
 
         <p style={styles.activityTitle}>{'Add Activity'}</p>
@@ -130,12 +133,12 @@ const ActivityView = ({
   );
 };
 
-const ActivityTracker = ({location}) => {
+const ActivityTracker = ({ location }) => {
   let isFromCard = location?.state?.isFromCard;
 
   const dispatch = useDispatch();
-  const {loginData} = useSelector((state) => state.authReducer);
-  const {getActivityData, getSelectedActivityData} = useSelector(
+  const { loginData } = useSelector((state) => state.authReducer);
+  const { getActivityData, getSelectedActivityData } = useSelector(
     (state) => state.tracker,
   );
 
@@ -212,6 +215,7 @@ const ActivityTracker = ({location}) => {
           getSelectedActivityData.activitypatchdata.forEach((x) => {
             if (element._id == x.activity_id) {
               element.isChecked = true;
+              element.fromDB = true
             }
           });
         }
@@ -282,6 +286,11 @@ const ActivityTracker = ({location}) => {
   }
 
   const onProceedClick = () => {
+    console.log(selectedListArray, "selectedListArray");
+    selectedListArray = selectedListArray.filter(item => item.isChecked || item.fromDB);
+    console.log(selectedListArray, "selectedListArray");
+
+    //  return;
     if (selectedListArray.length > 0) {
       let patientActivity = [];
       let id = '';
@@ -315,10 +324,7 @@ const ActivityTracker = ({location}) => {
       };
       dispatch(AppActions.saveActivityTracker(postData, timePostData));
     } else {
-      dispatch({
-        type: ACTION_TYPE.ERROR,
-        payload: 'Please perform your exercise',
-      });
+      customAlert('Please perform your exercise', 'error');
     }
   };
 
@@ -347,13 +353,13 @@ const ActivityTracker = ({location}) => {
             <div>
               <p style={styles.ques}>{'What have you been up to?'}</p>
               <FlatList
-                data={[...plasentActivityArray, {plusImage: true}]}
+                data={[...plasentActivityArray, { plusImage: true }]}
                 contentContainerStyle={styles.contentContainerStyle}
                 numColumns={DEVICE_WIDTH > 767 ? 4 : 2}
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={(item) => item.id}
-                renderItem={({item, index}) => (
+                renderItem={({ item, index }) => (
                   <ActivityView
                     item={item}
                     addNewActivity={addNewActivity}
@@ -377,7 +383,7 @@ const ActivityTracker = ({location}) => {
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={(item) => item.id}
-                renderItem={({item, index}) => (
+                renderItem={({ item, index }) => (
                   <ActivityView
                     item={item}
                     setSelectedActivity={setSelectedActivity}
@@ -410,9 +416,9 @@ const styles = {
     marginRight: 'auto',
     marginTop: '4%',
   },
-  saveButton: {width: '20%', marginTop: '50px', marginBottom: '50px'},
-  ques: {fontWeight: 'bold', fontSize: '18px'},
-  contentContainerStyle: {width: '100%'},
+  saveButton: { width: '20%', marginTop: '50px', marginBottom: '50px' },
+  ques: { fontWeight: 'bold', fontSize: '18px' },
+  contentContainerStyle: { width: '100%' },
   activityTitle: {
     color: '#747878',
     paddingTop: '10px',

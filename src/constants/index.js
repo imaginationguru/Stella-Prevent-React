@@ -27,8 +27,8 @@ const getEnvBasedUrl = () => {
   if (ENV === 'PROD') {
     BASE_URL = 'https://mamalift.curiodigitaltx.com/api/';
     IMAGE_BASE_URL = 'https://mamalift.curiodigitaltx.com/';
-    squareAppId = 'sq0idp-EresRbLbMTgKRAuhD5ScNEA';
-    LOCATION_ID = 'LR3OMWYVRCMX8';
+    squareAppId = 'sq0idp-EresRbLbMTgKRAuhD5cNEA';
+    LOCATION_ID = 'LR30MWYVRCMX8';
   }
   if (ENV === 'QA') {
     BASE_URL = 'https://mamalift-qa.curio-dtx.com/api/';
