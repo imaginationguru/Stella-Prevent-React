@@ -131,7 +131,18 @@ const TwentyOne = (props) => {
       assessment_id: assessment_id,
       assessment: paramAssessment,
     };
-    if (paramAssessment && paramAssessment.length) {
+    let temp = [];
+    let isValid = '';
+    if (paramAssessment.length) {
+      paramAssessment.forEach((item) => {
+        temp.push(item.content[0] && item.content[0].content);
+      });
+    }
+    if (temp.length) {
+      isValid = temp.some((item) => item === true || item === 'true');
+    }
+    console.log('temp???', temp, isValid);
+    if (paramAssessment && paramAssessment.length && isValid) {
       if (userAssessmentData && userAssessmentData.length) {
         dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
       } else {
