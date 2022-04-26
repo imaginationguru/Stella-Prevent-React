@@ -147,7 +147,6 @@ const TwentySeven = (props) => {
           question: item.question,
           question_id: item._id,
           textAns: item.textAns,
-          typeOfAssessment: item.typeOfAssessment,
           options: item.options.length
             ? item.options.map((val) => {
                 let obj2 = {...val};
@@ -398,7 +397,11 @@ const TwentySeven = (props) => {
       customAlert('Please perform your exercise', 'error');
     }
   };
+  useEffect(() => {
+    dispatch(AppActions.getScreenStartTime(moment().format()));
+  }, [dispatch]);
 
+  console.log('get screen start time', getScreenStartTime);
   return (
     <>
       {/**********************quotes************** */}
@@ -436,48 +439,18 @@ const TwentySeven = (props) => {
         : []}
       {assessmentQues.length
         ? assessmentQues.map((item, index) => {
-            console.log('data==>', item);
             return (
               <div key={index} style={{marginBottom: '20px'}}>
                 <p style={styles.ques}>{item.question}</p>
                 {item.assessmentType === 'radio' ? (
-                  item.typeOfAssessment == 'Screening' ? (
-                    <div style={styles.quesOption}>
-                      {item.options.length
-                        ? item.options
-                            .sort(
-                              (a, b) =>
-                                (a.optionPoint < b.optionPoint && 1) || -1,
-                            )
-                            .map((val, index) => {
-                              console.log('here i am ===>');
-                              const isSelected = val.status === true;
-                              return (
-                                <p
-                                  onClick={() => {
-                                    onSaveHandler(item.question_id, val._id);
-                                  }}
-                                  key={index}
-                                  style={{
-                                    ...styles.optionStyle,
-                                    backgroundColor: isSelected
-                                      ? alternateColor[index % 4]
-                                      : '#fff',
-                                    border: `1px solid ${
-                                      alternateColor[index % 4]
-                                    }`,
-                                  }}
-                                  className="v-option-item">
-                                  {val.optionValue}
-                                </p>
-                              );
-                            })
-                        : null}
-                    </div>
-                  ) : (
-                    <div style={styles.quesOption}>
-                      {item.options.length
-                        ? item.options.map((val, index) => {
+                  <div style={styles.quesOption}>
+                    {item.options.length
+                      ? item.options
+                          .sort(
+                            (a, b) =>
+                              (a.optionPoint < b.optionPoint && 1) || -1,
+                          )
+                          .map((val, index) => {
                             const isSelected = val.status === true;
                             return (
                               <p
@@ -499,9 +472,8 @@ const TwentySeven = (props) => {
                               </p>
                             );
                           })
-                        : null}
-                    </div>
-                  )
+                      : null}
+                  </div>
                 ) : item.assessmentType === 'text' ? (
                   <div>
                     {item.options.length

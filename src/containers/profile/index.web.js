@@ -248,7 +248,11 @@ function ProfileDetails(props) {
       <PopUp />
       {isLoading && <Loader />}
       {/* */}
-      <BackBtn></BackBtn>
+      <BackBtn
+        onPress={() => {
+          navigatorPop();
+        }}
+      />
       <View style={styles.backBtn}></View>
       <View
         style={{

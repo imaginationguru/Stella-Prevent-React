@@ -15,12 +15,21 @@ const BackToDashboard = (props) => {
     textStyle,
     isDisabled = false,
     isLoginPage = false,
+    onBack,
   } = props;
   return (
     <View style={[styles.backBtn, btnStyle]}>
       <TouchableOpacity
         style={{flexDirection: 'row', alignItems: 'center'}}
-        onPress={() => navigatortoStart()}>
+        onPress={() => {
+          onBack();
+          navigatortoStart();
+        }}
+        // onPress={() => {
+        //   alert('hello');
+        //   console.log('hello');
+        // }}
+      >
         <Image
           resizeMode={'contain'}
           source={back}

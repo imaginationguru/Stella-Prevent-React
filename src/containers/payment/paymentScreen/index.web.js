@@ -139,7 +139,13 @@ const Payment = (props) => {
         showEditIcon={false}
       />
       {isLoading ? <Loader /> : null}
-      <BackBtn title={'Back'} btnStyle={{paddingLeft: '20px'}} />
+      <BackBtn
+        title={'Back'}
+        btnStyle={{paddingLeft: '20px'}}
+        onPress={() => {
+          navigatorPop();
+        }}
+      />
       <View style={styles.innerContainer}>
         <View style={styles.innerLeft}>
           <View style={{marginTop: '20px', marginHorizontal: '80px'}}>
@@ -270,9 +276,9 @@ const Payment = (props) => {
              */
             locationId={LOCATION_ID}
 
-          // overrides={({
-          //   scriptSrc: "https://web.squarecdn.com/v1/square.js"
-          // })}
+            // overrides={({
+            //   scriptSrc: "https://web.squarecdn.com/v1/square.js"
+            // })}
           >
             <CreditCardInput />
           </SquarePaymentsForm>

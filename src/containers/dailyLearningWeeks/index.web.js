@@ -4,13 +4,16 @@ import MasterLayout from '@components/MasterLayout';
 import Footer from '@components/Footer';
 import GLOBALS from '@constants';
 import * as AppActions from '@actions';
-import {Header, SubHeader} from '@containers/dailyLearningWeeks/Navbar';
+import {SubHeader} from '@containers/dailyLearningWeeks/Navbar';
 import GenerateUI from '@containers/dailyLearningWeeks/GenerateUI';
 import BackToDashboard from '@components/common/backToDashboard';
 import {canProceedNextDay} from '@helpers/common.web';
 import {customAlert} from '@helpers/commonAlerts.web';
 import {navigatorPush} from '@config/navigationOptions.web';
 import BackBtn from '@components/common/backbtn';
+import moment from 'moment';
+import {getItem} from '../../utils/AsyncUtils';
+import {goToPastModule} from '../../config/navigationOptions.web';
 const {COLORS} = GLOBALS;
 const DailyLearningWeeks = (props) => {
   let isFromDashboard = props.location?.state?.isFromDashboard;
@@ -29,7 +32,11 @@ const DailyLearningWeeks = (props) => {
     currentActiveCard = [],
     selectedCardId = '',
   } = useSelector((state) => state.moduleOne);
-  let {selectedDay, selectedWeek} = useSelector((state) => state.moduleOne);
+  let {
+    selectedDay,
+    selectedWeek,
+    getScreenStartTime = '',
+  } = useSelector((state) => state.moduleOne);
   let [weeksCount, setWeeksCount] = useState(
     props.location?.state?.isFromDashboard
       ? currentActiveCard.current_week
@@ -44,6 +51,31 @@ const DailyLearningWeeks = (props) => {
   const [nextData, setNextData] = useState({});
   const [prevData, setPrevData] = useState({});
 
+  useEffect(() => {
+    dispatch(AppActions.getScreenStartTime(moment().format()));
+  }, [dispatch]);
+  const addTimeTrackerAPICall = () => {
+    let postData = {
+      userId: getItem('userId'),
+      group: 'Daily Learning',
+      screen: 'DailyLearningModule',
+      startTime: getScreenStartTime,
+      endTime: moment().format(),
+      date: moment().format(),
+    };
+    dispatch(AppActions.addTimeTracker(postData));
+  };
+  const addTimeTrackerAPICallOnPast = () => {
+    let postData = {
+      userId: getItem('userId'),
+      group: 'Engagement',
+      screen: 'PastModules',
+      startTime: getScreenStartTime,
+      endTime: moment().format(),
+      date: moment().format(),
+    };
+    dispatch(AppActions.addTimeTracker(postData));
+  };
   useEffect(() => {
     applicableCards(selectedCardId);
     if (isFromDashboard) {
@@ -74,13 +106,6 @@ const DailyLearningWeeks = (props) => {
 
   // api response handling
   useEffect(() => {
-    console.log(
-      templateData,
-      'currentData........1111',
-      selectedCardId,
-      'selectedCardId',
-      mData,
-    );
     if (templateData.length) {
       if (mData.length) {
         let data = {};
@@ -157,7 +182,7 @@ const DailyLearningWeeks = (props) => {
     }
 
     setCurrentData(data);
-    console.log('set current data', cIds, data);
+
     if (cIds.length) {
       const currentIndex = cIds.findIndex((item) => item === data._id);
       let nextId = '';
@@ -242,8 +267,7 @@ const DailyLearningWeeks = (props) => {
     });
     return selectedObject.length > 0 ? selectedObject[0].isCompleted : false;
   };
-  console.log('current data>>>>>>>>', currentData);
-  console.log('current active cards', currentActiveCard);
+
   const completeCardAPI = (nextday = '') => {
     if (currentData._id) {
       let completeParams = {
@@ -317,14 +341,20 @@ const DailyLearningWeeks = (props) => {
       }),
     );
   };
-
+  console.log('current dta', currentData);
   return (
     <div className="m-main">
       <MasterLayout>
         {backTitle ? (
-          <BackBtn title={backTitle} goBack={false} />
+          <BackBtn
+            title={backTitle}
+            onPress={() => {
+              addTimeTrackerAPICallOnPast();
+              goToPastModule();
+            }}
+          />
         ) : (
-          <BackToDashboard />
+          <BackToDashboard onBack={() => addTimeTrackerAPICall()} />
         )}
 
         <div className="dashboard-body">
@@ -418,6 +448,21 @@ const DailyLearningWeeks = (props) => {
                       <div className="footer-nav-left">
                         <div
                           onClick={() => {
+                            if (
+                              currentData.card?.template_data[0]
+                                ?.template_number == 27
+                            ) {
+                              let postData = {
+                                userId: getItem('userId'),
+                                group: 'Patient reported outcomes',
+                                screen: 'EPDS',
+                                startTime: getScreenStartTime,
+                                endTime: moment().format(),
+                                date: moment().format(),
+                              };
+                              dispatch(AppActions.addTimeTracker(postData));
+                            }
+
                             cardDataHandler(prevData);
                             setScrollerLoad(true);
                             dispatch({
@@ -476,18 +521,31 @@ const DailyLearningWeeks = (props) => {
                           ) {
                             if (!userQuestion[0]?.saved) {
                               //debugger;
+
                               customAlert(
                                 'Please perform your exercise',
                                 'error',
                               );
                               return;
                             }
+
                             dispatch({
                               type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                               payload: nextData._id,
                             });
                             completeCardAPI(true);
                             setScrollerLoad(true);
+
+                            let postData = {
+                              userId: getItem('userId'),
+                              group: 'Patient reported outcomes',
+                              screen: 'EPDS',
+                              startTime: getScreenStartTime,
+                              endTime: moment().format(),
+                              date: moment().format(),
+                            };
+                            dispatch(AppActions.addTimeTracker(postData));
+
                             cardDataHandler(nextData);
                           } else if (
                             currentData.card?.template_data[0]
