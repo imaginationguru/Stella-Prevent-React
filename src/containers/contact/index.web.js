@@ -1,17 +1,17 @@
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
 
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import BackToDashboard from '@components/common/backToDashboard';
-import Footer from '@components/Footer';
+import BackToDashboard from '../../components/common/backToDashboard';
+import Footer from '../../components/Footer';
 
-import ProfileHeader from '@components/common/profileHeader';
-import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
-import {emailRegex} from '@utils/RegexUtils';
-import * as AppActions from '@actions';
+import ProfileHeader from '../../components/common/profileHeader';
+import commonStyles from '../../containers/dailyLearningWeeks/commonStyles';
+import { emailRegex } from '../../utils/RegexUtils';
+import * as AppActions from '../../actions';
 function Contact(props) {
-  const {loginData} = useSelector((state) => state.authReducer);
+  const { loginData } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -67,7 +67,7 @@ function Contact(props) {
   };
 
   const handleChange = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     if (name === 'firstName') {
       setFirstName(value);
       setFirstNameError('');
@@ -125,14 +125,14 @@ function Contact(props) {
   };
 
   return (
-    <div className="main-dashboard">
+    <div className="main-dashboard safeHeight ">
       <View style={[styles.container, {}]}>
         {loginData?.user?._id ? (
           <ProfileHeader
             {...props}
             showProfileBtn={false}
             showEditIcon={true}
-            // onEditClick={(file) => selectImage(file)}
+          // onEditClick={(file) => selectImage(file)}
           />
         ) : null}
         <div className="v-container m-tb-30">

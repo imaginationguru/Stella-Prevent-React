@@ -1,8 +1,8 @@
 import React from 'react';
-import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
+import commonStyles from '../../../containers/dailyLearningWeeks/commonStyles';
 import ReactHtmlParser from 'react-html-parser';
-import ExerciseBox from '@components/ExerciseBox';
-import GLOBALS from '@constants';
+import ExerciseBox from '../../../components/ExerciseBox';
+import GLOBALS from '../../../constants';
 import {
   CardQuote,
   CardTitle,
@@ -10,8 +10,8 @@ import {
   CardDescription,
   CardContent,
   CustomImage,
-} from '@components/Cards';
-const {IMAGE_BASE_URL} = GLOBALS;
+} from '../../../components/Cards';
+const { IMAGE_BASE_URL } = GLOBALS;
 const ThirtySix = (props) => {
   const {
     card_title,
@@ -29,15 +29,15 @@ const ThirtySix = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -49,54 +49,54 @@ const ThirtySix = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
       <div style={styles.topContent}>
         {/**********************first type content************ */}
         {content && content.length
           ? content
-              .filter((item) => {
-                return item.type === 'first';
-              })
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, index) => {
-                return (
-                  <CardContent
-                    key={index}
-                    content={ReactHtmlParser(item.content)}
-                  />
-                );
-              })
+            .filter((item) => {
+              return item.type === 'first';
+            })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardContent
+                  key={index}
+                  content={ReactHtmlParser(item.content)}
+                />
+              );
+            })
           : []}
         {/**********************Top Image************ */}
         <div className="row" style={styles.bottomImages}>
           {images && images.length
             ? images
-                .filter((item) => {
-                  return item.image_type === 'first';
-                })
-                .sort((a, b) => (a.order > b.order && 1) || -1)
-                .map((imgItem, index) => {
-                  return (
-                    <div className="col-md-4">
-                      <CustomImage
-                        src={`${IMAGE_BASE_URL}${imgItem.image}`}
-                        style={{
-                          display: imgItem.image !== '' ? 'flex' : 'none',
-                        }}
-                        title={ReactHtmlParser(imgItem.description)}
-                      />
-                    </div>
-                  );
-                })
+              .filter((item) => {
+                return item.image_type === 'first';
+              })
+              .sort((a, b) => (a.order > b.order && 1) || -1)
+              .map((imgItem, index) => {
+                return (
+                  <div className="col-md-4">
+                    <CustomImage
+                      src={`${IMAGE_BASE_URL}${imgItem.image}`}
+                      style={{
+                        display: imgItem.image !== '' ? 'flex' : 'none',
+                      }}
+                      title={ReactHtmlParser(imgItem.description)}
+                    />
+                  </div>
+                );
+              })
             : []}
         </div>
 
@@ -104,48 +104,8 @@ const ThirtySix = (props) => {
         <div style={styles.middleContent}>
           {content && content.length
             ? content
-                .filter((item) => {
-                  return item.type === 'second';
-                })
-                .sort((a, b) => (a.order > b.order && 1) || -1)
-                .map((item, index) => {
-                  return (
-                    <CardContent
-                      key={index}
-                      content={ReactHtmlParser(item.content)}
-                    />
-                  );
-                })
-            : []}
-        </div>
-        {/**********************Bottom image type content************ */}
-        <div style={styles.bottomImages}>
-          {images && images.length
-            ? images
-                .filter((item) => {
-                  return item.image_type === 'second';
-                })
-                .sort((a, b) => (a.order > b.order && 1) || -1)
-                .map((imgItem, index) => {
-                  return (
-                    <div style={styles.twoImageDiv} key={index}>
-                      <CustomImage
-                        src={`${IMAGE_BASE_URL}${imgItem.image}`}
-                        style={{
-                          display: imgItem.image !== '' ? 'flex' : 'none',
-                        }}
-                        title={ReactHtmlParser(imgItem.description)}
-                      />
-                    </div>
-                  );
-                })
-            : []}
-        </div>
-        {/**********************third type content************ */}
-        {content && content.length
-          ? content
               .filter((item) => {
-                return item.type === 'third';
+                return item.type === 'second';
               })
               .sort((a, b) => (a.order > b.order && 1) || -1)
               .map((item, index) => {
@@ -156,6 +116,46 @@ const ThirtySix = (props) => {
                   />
                 );
               })
+            : []}
+        </div>
+        {/**********************Bottom image type content************ */}
+        <div style={styles.bottomImages}>
+          {images && images.length
+            ? images
+              .filter((item) => {
+                return item.image_type === 'second';
+              })
+              .sort((a, b) => (a.order > b.order && 1) || -1)
+              .map((imgItem, index) => {
+                return (
+                  <div style={styles.twoImageDiv} key={index}>
+                    <CustomImage
+                      src={`${IMAGE_BASE_URL}${imgItem.image}`}
+                      style={{
+                        display: imgItem.image !== '' ? 'flex' : 'none',
+                      }}
+                      title={ReactHtmlParser(imgItem.description)}
+                    />
+                  </div>
+                );
+              })
+            : []}
+        </div>
+        {/**********************third type content************ */}
+        {content && content.length
+          ? content
+            .filter((item) => {
+              return item.type === 'third';
+            })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardContent
+                  key={index}
+                  content={ReactHtmlParser(item.content)}
+                />
+              );
+            })
           : []}
       </div>
       {showExercises && <ExerciseBox week={week} />}
@@ -169,7 +169,7 @@ const styles = {
   topContent: {
     marginBottom: '200px',
   },
-  middleContent: {marginTop: '4%'},
+  middleContent: { marginTop: '4%' },
   bottomImages: {
     marginTop: '30px',
     marginBottom: '40px',
@@ -179,5 +179,5 @@ const styles = {
     width: '35%',
     margin: '0 auto',
   },
-  contentStyle: {marginTop: '20px'},
+  contentStyle: { marginTop: '20px' },
 };

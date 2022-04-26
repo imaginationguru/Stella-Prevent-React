@@ -1,6 +1,6 @@
-import {Text, Pressable, StyleSheet} from 'react-native';
-import GLOBALS from '@constants';
-const {FONTS} = GLOBALS;
+import { Text, Pressable, StyleSheet } from 'react-native';
+import GLOBALS from '../../constants';
+const { FONTS } = GLOBALS;
 const Button = (props) => {
   let {
     title,
@@ -22,7 +22,7 @@ const Button = (props) => {
         },
         btnStyle,
       ]}>
-      <Text style={[{color: textColor}, styles.titleStyle, textStyle]}>
+      <Text style={[{ color: textColor }, styles.titleStyle, textStyle]}>
         {title}
       </Text>
     </Pressable>

@@ -1,17 +1,14 @@
-
-import GLOBALS from '@constants';
-import RestClient from '@helpers/RestClient';
-import {loadingAction, clearSessionExpiredAction} from '@actions/common';
-import {getItem} from '@utils/AsyncUtils';
-import {navigatorPop, navigatortoStart} from '@config/navigationOptions';
+import GLOBALS from '../../constants';
+import RestClient from '../../helpers/RestClient';
+import { loadingAction, clearSessionExpiredAction } from '../common';
+import { getItem } from '../../utils/AsyncUtils';
+import { navigatorPop, navigatortoStart } from '../../config/navigationOptions.web';
 import moment from 'moment';
-import {customAlert} from '@helpers/commonAlerts.web';
-
+import { customAlert } from '../../helpers/commonAlerts.web';
 
 
 const { ACTION_TYPE, URL, STRINGS } = GLOBALS;
 const { TRY_AGAIN, CHECK_NETWORK } = STRINGS;
-
 export const sessionExpire = (message) => {
   return async (dispatch) => {
     customAlert(message, 'success', {}, null, (onPress) => {

@@ -1,19 +1,19 @@
-import GLOBALS from '@constants';
-import history from '@helpers/history';
-import {navigatorPush} from '@config/navigationOptions.web';
-import {useDispatch, useSelector} from 'react-redux';
-import * as AppActions from '@actions';
-import sleep from '@assets/images/sleep/sleep.png';
-import dashboard from '@assets/images/sleep/dashboard.png';
-import activity from '@assets/images/sleep/activity.png';
-import daily from '@assets/images/sleep/daily.png';
-import face from '@assets/images/sleep/face.png';
-import logout from '@assets/images/logout.png';
-import logoWhite from '@assets/images/logoWhite.png';
-const {COLORS} = GLOBALS;
-const {GRAY, PLAN_GRAY, WHITE, GreenForSlider, DARK_RED} = COLORS;
+import GLOBALS from '../constants';
+import history from '../helpers/history';
+import { navigatorPush } from '../config/navigationOptions.web';
+import { useDispatch, useSelector } from 'react-redux';
+import * as AppActions from '../actions';
+import sleep from '../assets/images/sleep/sleep.png';
+import dashboard from '../assets/images/sleep/dashboard.png';
+import activity from '../assets/images/sleep/activity.png';
+import daily from '../assets/images/sleep/daily.png';
+import face from '../assets/images/sleep/face.png';
+import logout from '../assets/images/logout.png';
+import logoWhite from '../assets/images/logoWhite.png';
+const { COLORS } = GLOBALS;
+const { GRAY, PLAN_GRAY, WHITE, GreenForSlider, DARK_RED } = COLORS;
 const Menu = (props) => {
-  const {modalVisible, menuStyle} = props;
+  const { modalVisible, menuStyle } = props;
   const {
     currentActiveCard = [],
     selectedWeek = 1,
@@ -41,9 +41,9 @@ const Menu = (props) => {
           ${'#BDBDBD'}`,
         }}
         onClick={onClick}>
-        <div style={{...styles.imageWrap, ...imgWrap}}>
-          <div style={{...styles.imgDiv, ...imgSize}}>
-            <img src={src} style={{...styles.imgStyle, ...img}} />
+        <div style={{ ...styles.imageWrap, ...imgWrap }}>
+          <div style={{ ...styles.imgDiv, ...imgSize }}>
+            <img src={src} style={{ ...styles.imgStyle, ...img }} />
           </div>
         </div>
         <p
@@ -79,7 +79,7 @@ const Menu = (props) => {
   };
   return (
     <div
-      style={{...styles.container, ...menuStyle}}
+      style={{ ...styles.container, ...menuStyle }}
       onClick={() => dispatch(AppActions.dashboardModalAction(false))}>
       <div
         style={{
@@ -96,8 +96,8 @@ const Menu = (props) => {
           style={{
             padding: 10,
           }}>
-          <div style={{width: '70%', margin: '0 auto'}}>
-            <img src={logoWhite} style={{width: '100%', height: '100%'}} />
+          <div style={{ width: '70%', margin: '0 auto' }}>
+            <img src={logoWhite} style={{ width: '100%', height: '100%' }} />
           </div>
 
           <div
@@ -106,25 +106,25 @@ const Menu = (props) => {
               marginRight: 15,
               marginTop: 15,
             }}>
-            <p style={{fontWeight: 'bold'}}>Daily Playlist</p>
+            <p style={{ fontWeight: 'bold' }}>Daily Playlist</p>
 
             <TabUI
               src={sleep}
               title={'Sleep Tracker'}
-              imgWrap={{backgroundColor: '#FFD789'}}
+              imgWrap={{ backgroundColor: '#FFD789' }}
               onClick={(e) => {
                 e.stopPropagation();
                 if (!checkMenuDisable('sleep')) {
                   dispatch(AppActions.dashboardModalAction(false));
-                  navigatorPush({screenName: 'SleepTracker'});
+                  navigatorPush({ screenName: 'SleepTracker' });
                 }
               }}
-              txtColor={checkMenuDisable('sleep') ? {color: PLAN_GRAY} : {}}
+              txtColor={checkMenuDisable('sleep') ? { color: PLAN_GRAY } : {}}
             />
             <TabUI
               src={daily}
               title={'Daily Learning'}
-              imgWrap={{backgroundColor: GreenForSlider}}
+              imgWrap={{ backgroundColor: GreenForSlider }}
               onClick={() => {
                 if (!checkMenuDisable('module')) {
                   dispatch(AppActions.dashboardModalAction(false));
@@ -150,60 +150,60 @@ const Menu = (props) => {
                   });
                   navigatorPush({
                     screenName: 'DailyLearningModule',
-                    passProps: {isFromDashboard: true},
+                    passProps: { isFromDashboard: true },
                   });
                 }
               }}
-              txtColor={checkMenuDisable('module') ? {color: PLAN_GRAY} : {}}
+              txtColor={checkMenuDisable('module') ? { color: PLAN_GRAY } : {}}
             />
             <TabUI
               src={face}
               title={'Mood Check In'}
-              imgWrap={{backgroundColor: '#FFCEFF'}}
-              imgSize={{width: 15, height: 13}}
-              img={{marginLeft: '45%'}}
+              imgWrap={{ backgroundColor: '#FFCEFF' }}
+              imgSize={{ width: 15, height: 13 }}
+              img={{ marginLeft: '45%' }}
               onClick={() => {
                 if (!checkMenuDisable('mood')) {
                   dispatch(AppActions.dashboardModalAction(false));
-                  navigatorPush({screenName: 'MoodTracker'});
+                  navigatorPush({ screenName: 'MoodTracker' });
                 }
               }}
-              txtColor={checkMenuDisable('mood') ? {color: PLAN_GRAY} : {}}
+              txtColor={checkMenuDisable('mood') ? { color: PLAN_GRAY } : {}}
             />
             <TabUI
               src={activity}
               title={'Activity Tracker'}
-              imgWrap={{backgroundColor: '#87DEFF'}}
-              imgSize={{width: 13, height: 10}}
-              img={{marginLeft: '59%'}}
+              imgWrap={{ backgroundColor: '#87DEFF' }}
+              imgSize={{ width: 13, height: 10 }}
+              img={{ marginLeft: '59%' }}
               onClick={() => {
                 if (!checkMenuDisable('activity')) {
                   dispatch(AppActions.dashboardModalAction(false));
-                  navigatorPush({screenName: 'ActivityTracker'});
+                  navigatorPush({ screenName: 'ActivityTracker' });
                 }
               }}
-              txtColor={checkMenuDisable('activity') ? {color: PLAN_GRAY} : {}}
+              txtColor={checkMenuDisable('activity') ? { color: PLAN_GRAY } : {}}
             />
             <TabUI
               src={dashboard}
               title={'Dashboard'}
-              imgWrap={{backgroundColor: '#DADADA'}}
-              imgSize={{width: 15, height: 13}}
-              img={{marginLeft: '59%'}}
+              imgWrap={{ backgroundColor: '#DADADA' }}
+              imgSize={{ width: 15, height: 13 }}
+              img={{ marginLeft: '59%' }}
               onClick={() => {
                 if (!checkMenuDisable('dashboard')) {
                   dispatch(AppActions.dashboardModalAction(false));
-                  navigatorPush({screenName: 'Dashboard'});
+                  navigatorPush({ screenName: 'Dashboard' });
                 }
               }}
-              txtColor={checkMenuDisable('dashboard') ? {color: PLAN_GRAY} : {}}
+              txtColor={checkMenuDisable('dashboard') ? { color: PLAN_GRAY } : {}}
             />
             <TabUI
               src={logout}
               title={'Logout'}
-              imgWrap={{backgroundColor: DARK_RED}}
-              imgSize={{width: 13, height: 10}}
-              img={{marginLeft: '70%'}}
+              imgWrap={{ backgroundColor: DARK_RED }}
+              imgSize={{ width: 13, height: 10 }}
+              img={{ marginLeft: '70%' }}
               onClick={() => {
                 dispatch(AppActions.logout());
                 dispatch(AppActions.dashboardModalAction(false));

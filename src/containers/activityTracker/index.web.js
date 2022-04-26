@@ -6,22 +6,22 @@ import {
   Alert,
   Dimensions,
 } from 'react-native';
-import MasterLayout from '@components/MasterLayout';
+import MasterLayout from '../../components/MasterLayout';
 import { useDispatch, useSelector } from 'react-redux';
-import * as AppActions from '@actions';
-import { navigatorPush } from '@config/navigationOptions.web';
-import GLOBALS from '@constants';
+import * as AppActions from '../../actions';
+import { navigatorPush } from '../../config/navigationOptions.web';
+import GLOBALS from '../../constants';
 const { STRINGS, COLORS, ACTION_TYPE } = GLOBALS;
 const { GREEN_TEXT } = COLORS;
 import ActivityTab from './tab';
-import { getItem } from '@utils/AsyncUtils';
-import plusIcon from '@assets/images/plusIcon.png';
-import { translate as ts } from '@i18n/translate';
-import BackToDashboard from '@components/common/backToDashboard';
-import BackBtn from '@components/common/backbtn';
+import { getItem } from '../../utils/AsyncUtils';
+import plusIcon from '../../assets/images/plusIcon.png';
+import { translate as ts } from '../../i18n/translate';
+import BackToDashboard from '../../components/common/backToDashboard';
+import BackBtn from '../../components/common/backbtn';
 import moment from 'moment';
 import momentZone from 'moment-timezone';
-import { customAlert } from '@helpers/commonAlerts.web';
+import { customAlert } from '../../helpers/commonAlerts.web';
 let currentTimeZone = momentZone.tz.guess();
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;

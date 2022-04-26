@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
-import GLOBALS from '@constants';
-import ExerciseBox from '@components/ExerciseBox';
+import GLOBALS from '../../../constants';
+import ExerciseBox from '../../../components/ExerciseBox';
 import {
   CardQuote,
   CardTitle,
@@ -10,15 +10,15 @@ import {
   CardContent,
   CustomImage,
   OldCustomImage,
-} from '@components/Cards';
-import {Animated} from 'react-animated-css';
+} from '../../../components/Cards';
+import { Animated } from 'react-animated-css';
 
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
-const {COLORS, IMAGE_BASE_URL} = GLOBALS;
+const { COLORS, IMAGE_BASE_URL } = GLOBALS;
 const FourSeven = (props) => {
   const {
     card_time,
@@ -92,15 +92,15 @@ const FourSeven = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions.map((item, index) => {
-            return (
-              <CardDescription
-                key={index}
-                description={ReactHtmlParser(item.desc)}
-                isVisible={true}
-                animationIn={'fadeInUp'}
-              />
-            );
-          })
+          return (
+            <CardDescription
+              key={index}
+              description={ReactHtmlParser(item.desc)}
+              isVisible={true}
+              animationIn={'fadeInUp'}
+            />
+          );
+        })
         : []}
 
       {/**********************Show Images********************** */}
@@ -108,34 +108,33 @@ const FourSeven = (props) => {
         <div style={styles.bottomImages} className="f-r">
           {images && images.length
             ? images
-                .filter((item) => item.image_type != 'footer')
-                .map((item, index) => {
-                  return (
-                    <div className="f-3" key={index}>
-                      <OldCustomImage
-                        key={index}
-                        src={`${IMAGE_BASE_URL}${item.image}`}
-                        style={{
-                          display: item.image !== '' ? 'flex' : 'none',
-                          height: '120px',
-                          width: '120px',
-                        }}
-                        isVisible={true}
-                        animationIn={'fadeInLeft'}
-                        title={ReactHtmlParser(item.description)}
-                      />
-                    </div>
-                  );
-                })
+              .filter((item) => item.image_type != 'footer')
+              .map((item, index) => {
+                return (
+                  <div className="f-3" key={index}>
+                    <OldCustomImage
+                      key={index}
+                      src={`${IMAGE_BASE_URL}${item.image}`}
+                      style={{
+                        display: item.image !== '' ? 'flex' : 'none',
+                        height: '120px',
+                        width: '120px',
+                      }}
+                      isVisible={true}
+                      animationIn={'fadeInLeft'}
+                      title={ReactHtmlParser(item.description)}
+                    />
+                  </div>
+                );
+              })
             : []}
         </div>
       </div>
 
       {images && images.length ? (
         <CustomImage
-          src={`${IMAGE_BASE_URL}${
-            images.filter((item) => item.image_type == 'footer')[0].image
-          }`}
+          src={`${IMAGE_BASE_URL}${images.filter((item) => item.image_type == 'footer')[0].image
+            }`}
           style={{
             display: image[0].image !== '' ? 'flex' : 'none',
             height: '100px',
@@ -151,15 +150,15 @@ const FourSeven = (props) => {
         <div style={styles.contentView}>
           {images && images.length
             ? images
-                .filter((item) => item.image_type == 'footer')
-                .map((item, i) => {
-                  return (
-                    <CardContent
-                      key={i}
-                      content={ReactHtmlParser(item.description)}
-                    />
-                  );
-                })
+              .filter((item) => item.image_type == 'footer')
+              .map((item, i) => {
+                return (
+                  <CardContent
+                    key={i}
+                    content={ReactHtmlParser(item.description)}
+                  />
+                );
+              })
             : []}
         </div>
       </Animated>

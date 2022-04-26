@@ -1,35 +1,36 @@
-import {useEffect} from 'react';
-import sleep from '@assets/images/sleep/sleep.png';
-import activity from '@assets/images/sleep/activity.png';
-import face from '@assets/images/sleep/face.png';
-import rightArrow from '@assets/images/sleep/rightArrow.png';
-import stellaGirlGif from '@assets/images/stellaGirlGif.gif';
-import successTick from '@assets/images/successTick.svg';
-import past_module from '@assets/images/dashboardHeader/past_module.png';
-import report from '@assets/images/dashboardHeader/report.png';
-import logoWhite from '@assets/images/logoWhite.png';
-import GLOBALS from '@constants';
-import PopUp from '@components/common/popUp';
-import ProfileHeader from '@components/common/profileHeader';
-import Footer from '@components/Footer';
-import Loader from '@components/Loader';
-import {getItem} from '@utils/AsyncUtils';
-import {useDispatch, useSelector} from 'react-redux';
-import * as AppActions from '@actions';
-import {navigatorPush} from '@config/navigationOptions.web';
-import {checkIfWeekCanAccess} from '@helpers/common.web';
-import {customAlert} from '@helpers/commonAlerts.web';
-const {COLORS, ACTION_TYPE, FONTS} = GLOBALS;
-const {DARK_GREEN} = COLORS;
+import { useEffect } from 'react';
+import sleep from '../../assets/images/sleep/sleep.png';
+import activity from '../../assets/images/sleep/activity.png';
+import face from '../../assets/images/sleep/face.png';
+import rightArrow from '../../assets/images/sleep/rightArrow.png';
+import stellaGirlGif from '../../assets/images/stellaGirlGif.gif';
+import successTick from '../../assets/images/successTick.svg';
+import past_module from '../../assets/images/dashboardHeader/past_module.png';
+import report from '../../assets/images/dashboardHeader/report.png';
+import logoWhite from '../../assets/images/logoWhite.png';
+import GLOBALS from '../../constants';
+import PopUp from '../../components/common/popUp';
+import ProfileHeader from '../../components/common/profileHeader';
+import Footer from '../../components/Footer';
+import Loader from '../../components/Loader';
+import { getItem } from '../../utils/AsyncUtils';
+import { useDispatch, useSelector } from 'react-redux';
+import * as AppActions from '../../actions';
+import { navigatorPush } from '../../config/navigationOptions.web';
+import { checkIfWeekCanAccess } from '../../helpers/common.web';
+import { customAlert } from '../../helpers/commonAlerts.web';
+const { COLORS, ACTION_TYPE, FONTS } = GLOBALS;
+const { DARK_GREEN } = COLORS;
+import { Text, View, StyleSheet, StatusBar, SafeAreaView } from 'react-native';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
 
-  const {currentActiveCard = []} = useSelector((state) => state.moduleOne);
-  const {isLoading} = useSelector((state) => state.common);
-  const {loginData = []} = useSelector((state) => state.authReducer);
-  const {trackerStatus = {}} = useSelector((state) => state.moduleOne);
-  const {week, day} = currentActiveCard.length ? currentActiveCard[0] : {};
+  const { currentActiveCard = [] } = useSelector((state) => state.moduleOne);
+  const { isLoading } = useSelector((state) => state.common);
+  const { loginData = [] } = useSelector((state) => state.authReducer);
+  const { trackerStatus = {} } = useSelector((state) => state.moduleOne);
+  const { week, day } = currentActiveCard.length ? currentActiveCard[0] : {};
 
   const lengthToArray = (len = 0) => {
     let temp = [];
@@ -47,8 +48,8 @@ const Dashboard = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  useEffect(() => {}, [trackerStatus]);
-  const TrackersUI = ({title, src, onClick, isComplete}) => {
+  useEffect(() => { }, [trackerStatus]);
+  const TrackersUI = ({ title, src, onClick, isComplete }) => {
     return (
       <div
         style={styles().trackerWrap}
@@ -64,11 +65,11 @@ const Dashboard = () => {
         </div>
         <div
           className="tracker-arrow"
-          style={isComplete ? {width: '30px', height: '30px'} : {}}>
+          style={isComplete ? { width: '30px', height: '30px' } : {}}>
           {isComplete ? (
-            <img style={{width: '100%', height: '100%'}} src={successTick} />
+            <img style={{ width: '100%', height: '100%' }} src={successTick} />
           ) : (
-            <img src={rightArrow} style={{width: '100%', height: '100%'}} />
+            <img src={rightArrow} style={{ width: '100%', height: '100%' }} />
           )}
         </div>
       </div>
@@ -102,7 +103,7 @@ const Dashboard = () => {
             setTimeout(() => {
               navigatorPush({
                 screenName: 'DailyLearningModule',
-                passProps: {weeksCount: item},
+                passProps: { weeksCount: item },
               });
             }, 1000);
           } else {
@@ -119,7 +120,7 @@ const Dashboard = () => {
       customAlert(
         'Please upgrade your plan to Premium to access content',
         'error',
-        {showCloseButton: true},
+        { showCloseButton: true },
       );
     }
   };
@@ -145,17 +146,18 @@ const Dashboard = () => {
     });
     navigatorPush({
       screenName: 'DailyLearningModule',
-      passProps: {isFromDashboard: true},
+      passProps: { isFromDashboard: true },
     });
   };
   return (
-    <div className="main-dashboard">
+    <div className="main-dashboard safeHeight">
+
       <PopUp />
       <div className="site-logo">
         <img src={logoWhite} alt="" />
       </div>
       <ProfileHeader
-        onProfileClick={() => navigatorPush({screenName: 'Profile'})}
+        onProfileClick={() => navigatorPush({ screenName: 'Profile' })}
         showProfileBtn={true}
         showEditIcon={false}
       />
@@ -210,7 +212,7 @@ const Dashboard = () => {
               src={sleep}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({screenName: 'SleepTracker'});
+                navigatorPush({ screenName: 'SleepTracker' });
               }}
               isComplete={trackerStatus.sleepChecked}
             />
@@ -218,7 +220,7 @@ const Dashboard = () => {
               title="What activities have you done?"
               src={activity}
               onClick={() => {
-                navigatorPush({screenName: 'ActivityTracker'});
+                navigatorPush({ screenName: 'ActivityTracker' });
               }}
               isComplete={trackerStatus.activityChecked}
             />
@@ -227,7 +229,7 @@ const Dashboard = () => {
               src={face}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({screenName: 'MoodTracker'});
+                navigatorPush({ screenName: 'MoodTracker' });
               }}
               isComplete={trackerStatus.moodChecked}
             />
@@ -237,7 +239,7 @@ const Dashboard = () => {
               src={report}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({screenName: 'Report'});
+                navigatorPush({ screenName: 'Report' });
               }}
             />
             <TrackersUI
@@ -245,7 +247,7 @@ const Dashboard = () => {
               src={past_module}
               onClick={() => {
                 dispatch(AppActions.dashboardModalAction(false));
-                navigatorPush({screenName: 'PastModule'});
+                navigatorPush({ screenName: 'PastModule' });
                 window.sessionStorage.removeItem('value');
                 window.sessionStorage.removeItem('day');
                 window.sessionStorage.removeItem('week');
@@ -337,6 +339,7 @@ const Dashboard = () => {
 
       <Footer />
     </div>
+
   );
 };
 export default Dashboard;
@@ -351,7 +354,7 @@ export const styles = () => {
       fontWeight: '700',
       cursor: 'pointer',
     },
-    weekTitle: {paddingTop: 10, fontSize: 15, fontWeight: '700'},
+    weekTitle: { paddingTop: 10, fontSize: 15, fontWeight: '700' },
     trackerWrap: {
       display: 'flex',
       borderRadius: 10,

@@ -1,11 +1,10 @@
-import GLOBALS from '@constants';
-import RestClient from '@helpers/RestClient';
-import { customAlert } from '@helpers/commonAlerts.web';
-import { sessionExpire } from '@actions/tracker';
+import GLOBALS from '../../constants';
+import RestClient from '../../helpers/RestClient';
 import { loadingAction } from '../common';
 const { ACTION_TYPE, URL, STRINGS } = GLOBALS;
 const { TRY_AGAIN, CHECK_NETWORK } = STRINGS;
-
+import { customAlert } from '../../helpers/commonAlerts.web';
+import { sessionExpire } from '../../actions/tracker';
 //******************************Login******************* */
 
 export function changeLanguage(param) {

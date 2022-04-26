@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,35 +7,35 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import brand from '@assets/images/brand.svg';
-import {screenHeight, screenWidth} from '@utils/dimension';
-import graphic01 from '@assets/images/graphic01.svg';
+import brand from '../../assets/images/brand.svg';
+import { screenHeight, screenWidth } from '../../utils/dimension';
+import graphic01 from '../../assets/images/graphic01.svg';
 import {
   navigatorPush,
   navigatorPop,
   navigatortoStart,
-} from '@config/navigationOptions.web';
-import rightCover from '@assets/images/candle.png';
-import Input from '@components/Input';
-import Button from '@components/common/button';
-import history from '@helpers/history';
-import Loader from '@components/Loader';
-import GLOBALS from '@constants';
-import {Dimensions} from 'react-native-web';
-const {COLORS, FONTS} = GLOBALS;
-const {IMAGE_BASE_URL} = GLOBALS;
-const {HEADING_BLACK, LOGIN_BG, DARK_GREEN, WHITE} = COLORS;
+} from '../../config/navigationOptions.web';
+import rightCover from '../../assets/images/candle.png';
+import Input from '../../components/Input';
+import Button from '../../components/common/button';
+import history from '../../helpers/history';
+import Loader from '../../components/Loader';
+import GLOBALS from '../../constants';
+import { Dimensions } from 'react-native-web';
+const { COLORS, FONTS } = GLOBALS;
+const { IMAGE_BASE_URL } = GLOBALS;
+const { HEADING_BLACK, LOGIN_BG, DARK_GREEN, WHITE } = COLORS;
 const DEVICE_WIDTH = Dimensions.get('window').width;
-import * as AppActions from '@actions';
-import {useDispatch, useSelector} from 'react-redux';
+import * as AppActions from '../../actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const VerifyUserOTP = () => {
   const [registerCode, setRegisterCode] = useState('');
   const [codeError, setCodeError] = useState('');
   const [code, setCode] = useState('');
-  const {quotes = {}} = useSelector((state) => state.moduleOne);
-  const {loginData = []} = useSelector((state) => state.authReducer);
-  const {isLoading} = useSelector((state) => state.common);
+  const { quotes = {} } = useSelector((state) => state.moduleOne);
+  const { loginData = [] } = useSelector((state) => state.authReducer);
+  const { isLoading } = useSelector((state) => state.common);
   const [finishStatus, setfinishStatus] = useState(false);
   const dispatch = useDispatch();
   const onBackButtonEvent = (e) => {
@@ -113,7 +113,7 @@ const VerifyUserOTP = () => {
             paddingHorizontal: DEVICE_WIDTH > 1000 ? '60px' : '30px',
             maxWidth: DEVICE_WIDTH > 1000 ? '90%' : '100%',
           }}>
-          <View style={{flex: 1, paddingTop: '10vw'}}>
+          <View style={{ flex: 1, paddingTop: '10vw' }}>
             <Text style={styles.heading}>Verify Yourself</Text>
             <View style={styles.verifyForm}>
               <Input
@@ -134,11 +134,11 @@ const VerifyUserOTP = () => {
               title="Verify"
               bgColor={DARK_GREEN}
               textColor={'white'}
-              textStyle={{fontSize: 20}}
+              textStyle={{ fontSize: 20 }}
             />
 
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <TouchableOpacity onPress={() => resend()}>
                 <Text style={styles.noAccount}>Resend Code</Text>
               </TouchableOpacity>

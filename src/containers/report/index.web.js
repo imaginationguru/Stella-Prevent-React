@@ -12,20 +12,20 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
-import MasterLayout from '@components/MasterLayout';
-import BackBtn from '@components/common/backbtn';
+import MasterLayout from '../../components/MasterLayout';
+import BackBtn from '../../components/common/backbtn';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import GLOBALS from '@constants';
-import * as AppActions from '@actions';
+import GLOBALS from '../../constants';
+import * as AppActions from '../../actions';
 import momentZone from 'moment-timezone';
-import BackToDashboard from '@components/common/backToDashboard';
+import BackToDashboard from '../../components/common/backToDashboard';
 import { Line } from 'react-chartjs-2';
 const { STRINGS, FONTS, COLORS, MOODS_ARRAY, IMAGE_BASE_URL } = GLOBALS;
 
 const { LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN } = COLORS;
 
-import { getItem } from '@utils/AsyncUtils';
+import { getItem } from '../../utils/AsyncUtils';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 let currentTimeZone = momentZone.tz.guess();

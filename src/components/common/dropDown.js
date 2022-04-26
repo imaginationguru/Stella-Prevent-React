@@ -1,12 +1,13 @@
-import {useState} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
-import GLOBALS from '@constants';
-import {screenHeight, screenWidth} from '@utils/dimension';
-const {COLORS, FONTS} = GLOBALS;
-const {BLUR, WHITE, HEADING_BLACK, BLACK} = COLORS;
+import { useState } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import GLOBALS from '../../constants';
+import { screenHeight, screenWidth } from '../../utils/dimension';
+const { COLORS, FONTS } = GLOBALS;
+const { BLUR, WHITE, HEADING_BLACK, BLACK } = COLORS;
+
 
 const DropDown = (props) => {
-  let {title, data, textColor, onItemSelection} = props;
+  let { title, data, textColor, onItemSelection } = props;
   const [selectedItem, setSelectedData] = useState('');
   const onItemSelected = (item) => {
     setSelectedData(item.name);
@@ -16,13 +17,13 @@ const DropDown = (props) => {
     <View style={styles.outerContainer}>
       <View style={styles.innerContainer}>
         <Text style={styles.titleText}>{title}</Text>
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <FlatList
             data={data}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item) => `${item.code}`}
-            renderItem={({item, index}) => (
+            renderItem={({ item, index }) => (
               <TouchableOpacity
                 onPress={() => onItemSelected(item)}
                 style={styles.itemContainer}>

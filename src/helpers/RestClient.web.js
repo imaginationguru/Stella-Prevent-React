@@ -1,16 +1,16 @@
 'use strict';
 
-import {create} from 'apisauce';
-import GLOBALS from '@constants';
+import { create } from 'apisauce';
+import GLOBALS from '../constants';
 import {
   accessToken,
   isInternet,
   encryptRequest,
   decryptRequest,
-} from '@helpers/common';
-import {getItem} from '../utils/AsyncUtils';
-const {BASE_URL} = GLOBALS;
-import store, {storeObj} from '@store/setup.web';
+} from '../helpers/common';
+import { getItem } from '../utils/AsyncUtils';
+const { BASE_URL } = GLOBALS;
+import store, { storeObj } from '../store/setup.web';
 
 
 //let Token = getItem('token');

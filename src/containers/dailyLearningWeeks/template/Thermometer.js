@@ -1,12 +1,12 @@
 import React from 'react';
-import GLOBALS from '@constants';
-import emptyMeter from '@assets/images/emptyMeter.png';
-import greenbottm from '@assets/images/greenbottom.png';
-import {TouchableOpacity} from 'react-native';
+import GLOBALS from '../../../constants';
+import emptyMeter from '../../../assets/images/emptyMeter.png';
+import greenbottm from '../../../assets/images/greenbottom.png';
+import { TouchableOpacity } from 'react-native';
 
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const {COLORS} = GLOBALS;
+const { COLORS } = GLOBALS;
 const styles = {
   mainWrapper: {
     flexDirection: 'row',
@@ -14,7 +14,7 @@ const styles = {
     marginTop: '20px',
     position: 'relative',
   },
-  greenBottom: {width: '30px', position: 'absolute', bottom: 13, left: 14},
+  greenBottom: { width: '30px', position: 'absolute', bottom: 13, left: 14 },
   shades: {
     width: '12px',
     height: '18px',
@@ -108,7 +108,7 @@ const activeDynamicColor = (val) => {
   }
 };
 
-const Thermometer = ({current, plusHandler, minusHandler}) => {
+const Thermometer = ({ current, plusHandler, minusHandler }) => {
   const generateBoxes = thermometerBox.map((item, i) => {
     return (
       <div

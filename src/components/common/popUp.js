@@ -1,13 +1,13 @@
-import {useEffect} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import GLOBALS from '@constants';
-import cross from '@assets/images/cross.svg';
-const {COLORS, FONTS} = GLOBALS;
-const {DARK_GREEN, WHITE} = COLORS;
-import * as AppActions from '@actions';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Pressable, StyleSheet, TouchableOpacity } from 'react-native';
+import GLOBALS from '../../constants';
+import cross from '../../assets/images/cross.svg';
+const { COLORS, FONTS } = GLOBALS;
+const { DARK_GREEN, WHITE } = COLORS;
+import * as AppActions from '../../actions';
+import { useDispatch, useSelector } from 'react-redux';
 const PopUp = (props) => {
-  let {title, bgColor, textColor, onVerifyPress, btnStyle, textStyle} = props;
+  let { title, bgColor, textColor, onVerifyPress, btnStyle, textStyle } = props;
   const dispatch = useDispatch();
   const {
     isLoading,
@@ -45,15 +45,15 @@ const PopUp = (props) => {
       )}
       {isError && (
         <View style={styles.mainContainer}>
-          <View style={[styles.innerView, {borderColor: 'red'}]}>
+          <View style={[styles.innerView, { borderColor: 'red' }]}>
             <TouchableOpacity
               onPress={() => {
                 dispatch(AppActions.clearErrorAction());
               }}
-              style={[styles.crossContainer, {backgroundColor: 'red'}]}>
+              style={[styles.crossContainer, { backgroundColor: 'red' }]}>
               <img src={cross} />
             </TouchableOpacity>
-            <Text style={[styles.text, {color: 'red'}]}>{errorMessage}</Text>
+            <Text style={[styles.text, { color: 'red' }]}>{errorMessage}</Text>
           </View>
         </View>
       )}

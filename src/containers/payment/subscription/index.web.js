@@ -1,24 +1,24 @@
-import {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import GLOBALS from '@constants';
-import {navigatorPush} from '@config/navigationOptions.web';
-import Footer from '@components/Footer';
-import checkBlack from '@assets/images/subscription/check_b.png';
-import checkWhite from '@assets/images/subscription/check_w.png';
-import Button from '@components/common/button';
-import BackBtn from '@components/common/backbtn';
-import ProfileHeader from '@components/common/profileHeader';
-const {COLORS, FONTS} = GLOBALS;
-const {LIGHT_BLACK, WHITE, DARK_GREEN} = COLORS;
-import {useSelector, useDispatch} from 'react-redux';
-import * as AppActions from '@actions';
-import {Dimensions} from 'react-native-web';
+import { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import GLOBALS from '../../../constants';
+import { navigatorPush } from '../../../config/navigationOptions.web';
+import Footer from '../../../components/Footer';
+import checkBlack from '../../../assets/images/subscription/check_b.png';
+import checkWhite from '../../../assets/images/subscription/check_w.png';
+import Button from '../../../components/common/button';
+import BackBtn from '../../../components/common/backbtn';
+import ProfileHeader from '../../../components/common/profileHeader';
+const { COLORS, FONTS } = GLOBALS;
+const { LIGHT_BLACK, WHITE, DARK_GREEN } = COLORS;
+import { useSelector, useDispatch } from 'react-redux';
+import * as AppActions from '../../../actions';
+import { Dimensions } from 'react-native-web';
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const {IMAGE_BASE_URL} = GLOBALS;
+const { IMAGE_BASE_URL } = GLOBALS;
 const Subscription = (props) => {
   const [current_numericPrice, setPrice] = useState(0);
   const dispatch = useDispatch();
-  const {plansData = []} = useSelector((state) => state.moduleOne);
+  const { plansData = [] } = useSelector((state) => state.moduleOne);
 
   const backButtonTitle = props.location.state?.fromScreenDailyLearing
     ? 'Back to Card'
@@ -69,15 +69,16 @@ const Subscription = (props) => {
   };
 
   return (
-    <>
+    <div className="safeHeight">
+
       <View style={styles.container}>
         <ProfileHeader
-          onProfileClick={() => navigatorPush({screenName: 'Profile'})}
+          onProfileClick={() => navigatorPush({ screenName: 'Profile' })}
           showProfileBtn={true}
           showEditIcon={false}
         />
         <BackBtn title={backButtonTitle} />
-        <View style={{alignItems: 'center'}}>
+        <View style={{ alignItems: 'center' }}>
           <View style={styles.middleContainer}>
             {plansData.length != 0 &&
               plansData.map((item, index) => {
@@ -90,20 +91,20 @@ const Subscription = (props) => {
                         backgroundColor: getPlanbg(index),
                       },
                     ]}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                       <Image
                         source={`${IMAGE_BASE_URL}${item.image}`}
-                        style={{width: 30, height: 30}}
+                        style={{ width: 30, height: 30 }}
                       />
                       <Text
-                        style={[styles.planText, {color: getTextColor(index)}]}>
+                        style={[styles.planText, { color: getTextColor(index) }]}>
                         {item.title}
                       </Text>
                     </View>
                     <Text
                       style={[
                         styles.getText,
-                        {color: getSubTitleColor(index)},
+                        { color: getSubTitleColor(index) },
                       ]}>
                       {item.subtitle}
                     </Text>
@@ -112,12 +113,12 @@ const Subscription = (props) => {
                         <View style={styles.listView}>
                           <Image
                             source={getCheckboxImage(index)}
-                            style={{width: 18, height: 18}}
+                            style={{ width: 18, height: 18 }}
                           />
                           <Text
                             style={[
                               styles.itemText,
-                              {color: getTextColor(index)},
+                              { color: getTextColor(index) },
                             ]}>
                             {content.content}
                           </Text>
@@ -129,8 +130,8 @@ const Subscription = (props) => {
                       <Text
                         style={[
                           styles.planText,
-                          {marginLeft: 0, marginTop: '30px', fontSize: '28px'},
-                          {color: getTextColor(index)},
+                          { marginLeft: 0, marginTop: '30px', fontSize: '28px' },
+                          { color: getTextColor(index) },
                         ]}>
                         ${item.price}{' '}
                         <Text style={styles.planInnerText}>
@@ -160,7 +161,7 @@ const Subscription = (props) => {
                           title="Choose"
                           bgColor={getBtnColor(index)}
                           textColor={getPlanbg(index)}
-                          textStyle={{fontSize: 20}}
+                          textStyle={{ fontSize: 20 }}
                         />
                       )}
                     </View>
@@ -171,7 +172,7 @@ const Subscription = (props) => {
         </View>
       </View>
       <Footer />
-    </>
+    </div>
   );
 };
 
@@ -256,7 +257,7 @@ const styles = StyleSheet.create({
     marginRight: DEVICE_WIDTH > 1000 ? '0.5vw' : '0',
 
     shadowColor: COLORS.PLAN_GRAY,
-    shadowOffset: {width: -2, height: 4},
+    shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.5,
     shadowRadius: '3vw',
     maxWidth: DEVICE_WIDTH > 1000 ? '47%' : '100%',

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import TemplateOne from './template/templateOne';
 import TemplateTwo from './template/templateTwo';
 import TemplateThree from './template/templateThree';
@@ -45,9 +45,9 @@ import Template44 from './template/fourfour';
 import FourFive from './template/fourFive';
 import FourSix from './template/fourSix';
 import FourSeven from './template/fourSeven';
-import {useDispatch} from 'react-redux';
-import * as AppActions from '@actions';
-const GenerateUI = ({status, data = {}}) => {
+import { useDispatch } from 'react-redux';
+import * as AppActions from '../../actions';
+const GenerateUI = ({ status, data = {} }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {

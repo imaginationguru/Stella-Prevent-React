@@ -5,22 +5,22 @@ import {
   StyleSheet,
   Switch,
 } from 'react-native';
-import GLOBALS from '@constants';
-const {COLORS, FONTS} = GLOBALS;
-const {SOFT_GRAY} = COLORS;
+import GLOBALS from '../../constants';
+const { COLORS, FONTS } = GLOBALS;
+const { SOFT_GRAY } = COLORS;
 
 const Toggle = (props) => {
-  let {title, enabled, onPress, item} = props;
+  let { title, enabled, onPress, item } = props;
   return (
     <TouchableOpacity onPress={() => onPress(item)} style={styles.container}>
       <Text style={[styles.radioText, {}]}>{title}</Text>
       <Switch
-        trackColor={{false: '#767577', true: '#49A694'}}
+        trackColor={{ false: '#767577', true: '#49A694' }}
         thumbColor={'#f4f3f4'}
         ios_backgroundColor="#3e3e3e"
-        onValueChange={() => {}}
+        onValueChange={() => { }}
         value={enabled}
-        style={{transform: [{scaleX: 0.7}, {scaleY: 1}]}}
+        style={{ transform: [{ scaleX: 0.7 }, { scaleY: 1 }] }}
       />
     </TouchableOpacity>
   );

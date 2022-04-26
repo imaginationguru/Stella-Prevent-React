@@ -1,14 +1,52 @@
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import {customAlert} from '@helpers/commonAlerts.web';
+
+import { useState, useEffect } from 'react';
+import FacebookLoginApp from 'react-facebook-login/dist/facebook-login-render-props';
+import { customAlert } from '../../helpers/commonAlerts.web';
+import { FacebookLogin } from "@capacitor-community/facebook-login";
+import { Capacitor } from '@capacitor/core';
 const FacebookLogIn = (props) => {
-  let {onSocialLogin = () => {}} = props;
+  let { onSocialLogin = () => { } } = props;
+
   const fbAppId = '416468470173904';
+  const FACEBOOK_PERMISSIONS = ['email', 'name', 'user_photos', 'user_gender'];
+
   const resFblogin = (res) => {
     if (res.status == 'unknown') {
       customAlert('Facebook login cancelled.', 'error');
     } else {
       verifyUser(res);
     }
+  };
+
+  const resFbloginViaApp = () => {
+    FacebookLogin.initialize({ appId: fbAppId }).then(res => {
+      if (res) {
+        FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS }).then(data => {
+          console.log(data, "data....");
+          if (data) {
+            FacebookLogin.getProfile({ fields: ['email', 'name', 'first_name'] }).then(res => {
+              verifyUser({
+                name: res.first_name,
+                email: res.email,
+                id: res.id,
+                accessToken: data.accessToken?.token
+              });
+            }, err => {
+              console.log("errr", err);
+              customAlert('Facebook login error.', 'error');
+            });
+          } else {
+            customAlert('Facebook login error.', 'error');
+          }
+        }, err => {
+          customAlert('Facebook login error.', 'error');
+        })
+      }
+      else {
+        customAlert('Error initializing facebook', 'error');
+      }
+
+    })
   };
 
   const verifyUser = (profile_data) => {
@@ -31,25 +69,32 @@ const FacebookLogIn = (props) => {
       ? (params['image_path'] = profile_data.picture.data.url)
       : null;
     onSocialLogin(params);
-    window.FB.logout();
+    Capacitor.isNativePlatform() ? FacebookLogin.logout() : window.FB.logout();
   };
 
   return (
     <>
-      <FacebookLogin
-        appId={fbAppId}
-        render={(renderProps) => (
-          <div
-            onClick={renderProps.onClick}
-            disabled={renderProps.disabled}
-            className="btn-fb">
-            <span className="btn-fb-title">Log In with Facebook</span>
-          </div>
-        )}
-        autoLoad={false}
-        fields="name,email,picture"
-        callback={resFblogin}
-      />
+      {Capacitor.isNativePlatform() ?
+        <div
+          onClick={resFbloginViaApp}>
+          <p>hdfdf44i</p>
+        </div>
+        :
+        <FacebookLoginApp
+          appId={fbAppId}
+          render={(renderProps) => (
+            <div
+              onClick={renderProps.onClick}
+              disabled={renderProps.disabled}
+              className="btn-fb">
+              <span className="btn-fb-title">Log In with Facebook</span>
+            </div>
+          )}
+          autoLoad={false}
+          fields="name,email,picture"
+          callback={resFblogin}
+        />
+      }
     </>
   );
 };

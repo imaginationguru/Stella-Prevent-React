@@ -1,24 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactHtmlParser from 'react-html-parser';
-import GLOBALS from '@constants';
-import ExerciseBox from '@components/ExerciseBox';
-import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
-import {useSelector, useDispatch} from 'react-redux';
-import * as AppActions from '@actions';
-import {getItem} from '@utils/AsyncUtils';
-import {translate as ts} from '@i18n/translate';
+import GLOBALS from '../../../constants';
+import ExerciseBox from '../../../components/ExerciseBox';
+import commonStyles from '../../../containers/dailyLearningWeeks/commonStyles';
+import { useSelector, useDispatch } from 'react-redux';
+import * as AppActions from '../../../actions';
+import { getItem } from '../../../utils/AsyncUtils';
+import { translate as ts } from '../../../i18n/translate';
 import {
   CardQuote,
   CardTitle,
   CardTime,
   CardDescription,
   CardContent,
-} from '@components/Cards';
-import {Dimensions} from 'react-native';
-import {customAlert} from '@helpers/commonAlerts.web';
+} from '../../../components/Cards';
+import { Dimensions } from 'react-native';
+import { customAlert } from '../../../helpers/commonAlerts.web';
 import moment from 'moment';
-const {COLORS, ACTION_TYPE} = GLOBALS;
-const {LIGHT_GRAY, GREEN_TEXT, BUTTON_ORANGE, YELLOW, CIRCLE_GRAY} = COLORS;
+const { COLORS, ACTION_TYPE } = GLOBALS;
+const { LIGHT_GRAY, GREEN_TEXT, BUTTON_ORANGE, YELLOW, CIRCLE_GRAY } = COLORS;
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const extractSelectQ = (x = []) => {
@@ -53,15 +53,15 @@ const TwentySeven = (props) => {
     choosenAssessment,
     _id,
   } = props.card;
-  const {submit_messages} = props;
+  const { submit_messages } = props;
   const [assessmentQues, setAssessmentQues] = useState([]);
   const [resultText, setResultText] = useState('');
   const [globalAPICall, setGlobalAPICall] = useState(true);
   const dispatch = useDispatch();
-  const {userQuestion = [], getScreenStartTime = ''} = useSelector(
+  const { userQuestion = [], getScreenStartTime = '' } = useSelector(
     (state) => state.moduleOne,
   );
-  const {loginData = {}} = useSelector((state) => state.authReducer);
+  const { loginData = {} } = useSelector((state) => state.authReducer);
   const [totalQ, setTotalQ] = useState(0);
   const [selectQ, setSelectQ] = useState(0);
   const [textValue, setTextValue] = useState('');
@@ -95,8 +95,8 @@ const TwentySeven = (props) => {
               let conditionOne =
                 submit_messages && submit_messages.length
                   ? submit_messages.filter(
-                      (ele) => ele.condition === firstCondition,
-                    )
+                    (ele) => ele.condition === firstCondition,
+                  )
                   : [];
               let messageOne = conditionOne.length && conditionOne[0].message;
               setResultText(messageOne);
@@ -107,8 +107,8 @@ const TwentySeven = (props) => {
               let conditionSecond =
                 submit_messages && submit_messages.length
                   ? submit_messages.filter(
-                      (ele) => ele.condition === secondCondition,
-                    )
+                    (ele) => ele.condition === secondCondition,
+                  )
                   : [];
               let messageSecond =
                 conditionSecond.length && conditionSecond[0].message;
@@ -120,8 +120,8 @@ const TwentySeven = (props) => {
               let conditionThird =
                 submit_messages && submit_messages.length
                   ? submit_messages.filter(
-                      (ele) => ele.condition === thirdCondition,
-                    )
+                    (ele) => ele.condition === thirdCondition,
+                  )
                   : [];
               let messageThird =
                 conditionThird.length && conditionThird[0].message;
@@ -130,8 +130,8 @@ const TwentySeven = (props) => {
               let conditionFour =
                 submit_messages && submit_messages.length
                   ? submit_messages.filter(
-                      (ele) => ele.condition === fourthCondition,
-                    )
+                    (ele) => ele.condition === fourthCondition,
+                  )
                   : [];
               let messageFour =
                 conditionFour.length && conditionFour[0].message;
@@ -150,14 +150,14 @@ const TwentySeven = (props) => {
           typeOfAssessment: item.typeOfAssessment,
           options: item.options.length
             ? item.options.map((val) => {
-                let obj2 = {...val};
-                if (val.status) {
-                  obj2.status = val.status;
-                } else {
-                  obj2.status = false;
-                }
-                return obj2;
-              })
+              let obj2 = { ...val };
+              if (val.status) {
+                obj2.status = val.status;
+              } else {
+                obj2.status = false;
+              }
+              return obj2;
+            })
             : [],
         };
       });
@@ -177,9 +177,9 @@ const TwentySeven = (props) => {
               ...item,
               options: item.options.map((val) => {
                 if (val._id === optionId) {
-                  return {...val, status: true, selected: true};
+                  return { ...val, status: true, selected: true };
                 }
-                return {...val, status: false, selected: false};
+                return { ...val, status: false, selected: false };
               }),
             };
           } else {
@@ -203,12 +203,12 @@ const TwentySeven = (props) => {
               options: item.options.map((val) => {
                 if (val._id === optionId) {
                   if (val.selected && val.status) {
-                    return {...val, status: false, selected: false};
+                    return { ...val, status: false, selected: false };
                   } else {
-                    return {...val, status: true, selected: true};
+                    return { ...val, status: true, selected: true };
                   }
                 } else {
-                  return {...val};
+                  return { ...val };
                 }
               }),
             };
@@ -232,9 +232,9 @@ const TwentySeven = (props) => {
               textAns: e.target.value,
               options: item.options.map((val) => {
                 if (val._id === optionId) {
-                  return {...val, status: true, selected: true};
+                  return { ...val, status: true, selected: true };
                 }
-                return {...val, status: false, selected: false};
+                return { ...val, status: false, selected: false };
               }),
             };
           }
@@ -254,7 +254,7 @@ const TwentySeven = (props) => {
         return {
           ...item,
           options: item.options.map((val) => {
-            return {...val, status: true, selected: true};
+            return { ...val, status: true, selected: true };
           }),
         };
       } else {
@@ -273,14 +273,14 @@ const TwentySeven = (props) => {
 
     let modifyData = dataArray.length
       ? dataArray.map((item) => {
-          return {
-            ...item,
-            card_id: _id,
-            options: item.options.length
-              ? item.options.filter((val) => val.status === true)
-              : [],
-          };
-        })
+        return {
+          ...item,
+          card_id: _id,
+          options: item.options.length
+            ? item.options.filter((val) => val.status === true)
+            : [],
+        };
+      })
       : [];
 
     let last_answer = dataArray[dataArray.length - 1].options.filter(
@@ -325,8 +325,8 @@ const TwentySeven = (props) => {
           let conditionOne =
             submit_messages && submit_messages.length
               ? submit_messages.filter(
-                  (ele) => ele.condition === firstCondition,
-                )
+                (ele) => ele.condition === firstCondition,
+              )
               : [];
           let messageOne = conditionOne.length && conditionOne[0].message;
           dispatch(
@@ -341,8 +341,8 @@ const TwentySeven = (props) => {
           let conditionSecond =
             submit_messages && submit_messages.length
               ? submit_messages.filter(
-                  (ele) => ele.condition === secondCondition,
-                )
+                (ele) => ele.condition === secondCondition,
+              )
               : [];
           let messageSecond =
             conditionSecond.length && conditionSecond[0].message;
@@ -358,8 +358,8 @@ const TwentySeven = (props) => {
           let conditionThird =
             submit_messages && submit_messages.length
               ? submit_messages.filter(
-                  (ele) => ele.condition === thirdCondition,
-                )
+                (ele) => ele.condition === thirdCondition,
+              )
               : [];
           let messageThird = conditionThird.length && conditionThird[0].message;
           setResultText(messageThird);
@@ -374,8 +374,8 @@ const TwentySeven = (props) => {
           let conditionFour =
             submit_messages && submit_messages.length
               ? submit_messages.filter(
-                  (ele) => ele.condition === fourthCondition,
-                )
+                (ele) => ele.condition === fourthCondition,
+              )
               : [];
           let messageFour = conditionFour.length && conditionFour[0].message;
           setResultText(messageFour);
@@ -404,15 +404,15 @@ const TwentySeven = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -424,113 +424,51 @@ const TwentySeven = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
       {assessmentQues.length
         ? assessmentQues.map((item, index) => {
-            console.log('data==>', item);
-            return (
-              <div key={index} style={{marginBottom: '20px'}}>
-                <p style={styles.ques}>{item.question}</p>
-                {item.assessmentType === 'radio' ? (
-                  item.typeOfAssessment == 'Screening' ? (
-                    <div style={styles.quesOption}>
-                      {item.options.length
-                        ? item.options
-                            .sort(
-                              (a, b) =>
-                                (a.optionPoint < b.optionPoint && 1) || -1,
-                            )
-                            .map((val, index) => {
-                              console.log('here i am ===>');
-                              const isSelected = val.status === true;
-                              return (
-                                <p
-                                  onClick={() => {
-                                    onSaveHandler(item.question_id, val._id);
-                                  }}
-                                  key={index}
-                                  style={{
-                                    ...styles.optionStyle,
-                                    backgroundColor: isSelected
-                                      ? alternateColor[index % 4]
-                                      : '#fff',
-                                    border: `1px solid ${
-                                      alternateColor[index % 4]
-                                    }`,
-                                  }}
-                                  className="v-option-item">
-                                  {val.optionValue}
-                                </p>
-                              );
-                            })
-                        : null}
-                    </div>
-                  ) : (
-                    <div style={styles.quesOption}>
-                      {item.options.length
-                        ? item.options.map((val, index) => {
-                            const isSelected = val.status === true;
-                            return (
-                              <p
-                                onClick={() => {
-                                  onSaveHandler(item.question_id, val._id);
-                                }}
-                                key={index}
-                                style={{
-                                  ...styles.optionStyle,
-                                  backgroundColor: isSelected
-                                    ? alternateColor[index % 4]
-                                    : '#fff',
-                                  border: `1px solid ${
-                                    alternateColor[index % 4]
-                                  }`,
-                                }}
-                                className="v-option-item">
-                                {val.optionValue}
-                              </p>
-                            );
-                          })
-                        : null}
-                    </div>
-                  )
-                ) : item.assessmentType === 'text' ? (
-                  <div>
+          console.log('data==>', item);
+          return (
+            <div key={index} style={{ marginBottom: '20px' }}>
+              <p style={styles.ques}>{item.question}</p>
+              {item.assessmentType === 'radio' ? (
+                item.typeOfAssessment == 'Screening' ? (
+                  <div style={styles.quesOption}>
                     {item.options.length
-                      ? item.options.map((val, index) => {
+                      ? item.options
+                        .sort(
+                          (a, b) =>
+                            (a.optionPoint < b.optionPoint && 1) || -1,
+                        )
+                        .map((val, index) => {
+                          console.log('here i am ===>');
+                          const isSelected = val.status === true;
                           return (
-                            <form noValidate style={{marginTop: '50px'}}>
-                              <div className="formRow">
-                                <div className="w100">
-                                  <div className="formField has-icon">
-                                    <textarea
-                                      type="textarea"
-                                      className="f-field"
-                                      value={item.textAns}
-                                      name="text"
-                                      onChange={(e) =>
-                                        onHandleChange(
-                                          item.question_id,
-                                          val._id,
-                                          e,
-                                        )
-                                      }
-                                      required
-                                      placeholder={val.optionValue}
-                                      style={commonStyles.inputFieldStyle}
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </form>
+                            <p
+                              onClick={() => {
+                                onSaveHandler(item.question_id, val._id);
+                              }}
+                              key={index}
+                              style={{
+                                ...styles.optionStyle,
+                                backgroundColor: isSelected
+                                  ? alternateColor[index % 4]
+                                  : '#fff',
+                                border: `1px solid ${alternateColor[index % 4]
+                                  }`,
+                              }}
+                              className="v-option-item">
+                              {val.optionValue}
+                            </p>
                           );
                         })
                       : null}
@@ -539,32 +477,91 @@ const TwentySeven = (props) => {
                   <div style={styles.quesOption}>
                     {item.options.length
                       ? item.options.map((val, index) => {
-                          const isSelected = val.status === true;
-                          return (
-                            <p
-                              onClick={() => {
-                                onCheckHandler(item.question_id, val._id);
-                              }}
-                              key={index}
-                              style={{
-                                ...styles.optionStyle,
-                                backgroundColor: isSelected
-                                  ? alternateColor[index % 4]
-                                  : '#fff',
-                                border: `1px solid ${
-                                  alternateColor[index % 4]
+                        const isSelected = val.status === true;
+                        return (
+                          <p
+                            onClick={() => {
+                              onSaveHandler(item.question_id, val._id);
+                            }}
+                            key={index}
+                            style={{
+                              ...styles.optionStyle,
+                              backgroundColor: isSelected
+                                ? alternateColor[index % 4]
+                                : '#fff',
+                              border: `1px solid ${alternateColor[index % 4]
                                 }`,
-                              }}>
-                              {val.optionValue}
-                            </p>
-                          );
-                        })
+                            }}
+                            className="v-option-item">
+                            {val.optionValue}
+                          </p>
+                        );
+                      })
                       : null}
                   </div>
-                )}
-              </div>
-            );
-          })
+                )
+              ) : item.assessmentType === 'text' ? (
+                <div>
+                  {item.options.length
+                    ? item.options.map((val, index) => {
+                      return (
+                        <form noValidate style={{ marginTop: '50px' }}>
+                          <div className="formRow">
+                            <div className="w100">
+                              <div className="formField has-icon">
+                                <textarea
+                                  type="textarea"
+                                  className="f-field"
+                                  value={item.textAns}
+                                  name="text"
+                                  onChange={(e) =>
+                                    onHandleChange(
+                                      item.question_id,
+                                      val._id,
+                                      e,
+                                    )
+                                  }
+                                  required
+                                  placeholder={val.optionValue}
+                                  style={commonStyles.inputFieldStyle}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      );
+                    })
+                    : null}
+                </div>
+              ) : (
+                <div style={styles.quesOption}>
+                  {item.options.length
+                    ? item.options.map((val, index) => {
+                      const isSelected = val.status === true;
+                      return (
+                        <p
+                          onClick={() => {
+                            onCheckHandler(item.question_id, val._id);
+                          }}
+                          key={index}
+                          style={{
+                            ...styles.optionStyle,
+                            backgroundColor: isSelected
+                              ? alternateColor[index % 4]
+                              : '#fff',
+                            border: `1px solid ${alternateColor[index % 4]
+                              }`,
+                          }}>
+                          {val.optionValue}
+                        </p>
+                      );
+                    })
+                    : null}
+                </div>
+              )}
+            </div>
+          );
+        })
         : null}
       {assessmentQues.length ? (
         <div style={commonStyles.buttonWrapper}>
@@ -598,14 +595,14 @@ const styles = {
     display: 'flex',
     marginBottom: '30px',
   },
-  imageTag: {width: '100%', height: '100%'},
+  imageTag: { width: '100%', height: '100%' },
   audioDiv: {
     marginBottom: '40px',
     alignSelf: 'center',
     justifyContent: 'center',
     display: 'flex',
   },
-  button: {width: '20%', marginBottom: '50px'},
+  button: { width: '20%', marginBottom: '50px' },
   optionStyle: {
     textAlign: 'center',
     width: '18%',

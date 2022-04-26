@@ -1,14 +1,14 @@
-import React, {useState, useEffect} from 'react';
-import right from '@assets/images/right.svg';
-import cross from '@assets/images/cross.svg';
-import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
-import GLOBALS from '@constants';
+import React, { useState, useEffect } from 'react';
+import right from '../../../assets/images/right.svg';
+import cross from '../../../assets/images/cross.svg';
+import commonStyles from '../../../containers/dailyLearningWeeks/commonStyles';
+import GLOBALS from '../../../constants';
 import ReactHtmlParser from 'react-html-parser';
-import {useDispatch, useSelector} from 'react-redux';
-import * as AppActions from '@actions';
-import {getItem} from '@utils/AsyncUtils';
-import {translate as ts} from '@i18n/translate';
-import ExerciseBox from '@components/ExerciseBox';
+import { useDispatch, useSelector } from 'react-redux';
+import * as AppActions from '../../../actions';
+import { getItem } from '../../../utils/AsyncUtils';
+import { translate as ts } from '../../../i18n/translate';
+import ExerciseBox from '../../../components/ExerciseBox';
 import {
   CardQuote,
   CardTitle,
@@ -17,10 +17,9 @@ import {
   CardContent,
   CardAudio,
   CustomImage,
-} from '@components/Cards';
-import {customAlert} from '@helpers/commonAlerts.web';
-import {inputClasses} from '@mui/material';
-const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
+} from '../../../components/Cards';
+import { customAlert } from '../../../helpers/commonAlerts.web';
+const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
 const {
   BOX_GRAY,
   GRAY2,
@@ -57,7 +56,7 @@ const ThirtyTwo = (props) => {
     assessmentData2 = {},
     userAssessmentData = [],
   } = useSelector((state) => state.moduleOne);
-  const {headers} = assessmentData;
+  const { headers } = assessmentData;
   const dispatch = useDispatch();
   let userId = getItem('userId');
 
@@ -85,7 +84,7 @@ const ThirtyTwo = (props) => {
       });
     }
     let selectedFormat = assessmentCards.map((item) => {
-      return {_id: item.assessment_header_id, content: item.content};
+      return { _id: item.assessment_header_id, content: item.content };
     });
     let selectUserInputs = assessmentCards.map((item) => {
       return {
@@ -96,8 +95,8 @@ const ThirtyTwo = (props) => {
         is_added: true,
         assessment_id: item.assessment_header.length
           ? item.assessment_header.map((val) => {
-              return val.assessment_id;
-            })
+            return val.assessment_id;
+          })
           : null,
       };
     });
@@ -164,7 +163,7 @@ const ThirtyTwo = (props) => {
         ...val,
         is_added:
           val.assessment_header_id === innnerItem.assessment_header_id &&
-          val.order === innnerItem.order
+            val.order === innnerItem.order
             ? true
             : val.is_added,
       };
@@ -184,29 +183,29 @@ const ThirtyTwo = (props) => {
     let indexArray = [];
     let contexIndex;
     inputs.map((item, i) => {
-      indexArray.push({index: i, id: item?._id});
+      indexArray.push({ index: i, id: item?._id });
     });
     let modifyData = userInputs.length
       ? userInputs
-          .filter((m) => m.content != '' && m.is_added == true)
-          .map((item) => {
-            indexArray.map((data, index) => {
-              if (data.id == item.assessment_header_id) {
-                contexIndex = index;
-              }
-            });
-            return {
-              assessment_header_id: item.assessment_header_id,
-              content: [
-                {
-                  content: item.content,
-                  order: item.order,
-                  contentIndex: contexIndex + 1,
-                  type: 'supportNeeds',
-                },
-              ],
-            };
-          })
+        .filter((m) => m.content != '' && m.is_added == true)
+        .map((item) => {
+          indexArray.map((data, index) => {
+            if (data.id == item.assessment_header_id) {
+              contexIndex = index;
+            }
+          });
+          return {
+            assessment_header_id: item.assessment_header_id,
+            content: [
+              {
+                content: item.content,
+                order: item.order,
+                contentIndex: contexIndex + 1,
+                type: 'supportNeeds',
+              },
+            ],
+          };
+        })
       : [];
 
     return modifyData;
@@ -269,7 +268,7 @@ const ThirtyTwo = (props) => {
       .map((item) => {
         return {
           assessment_header_id: item._id,
-          content: [{content: item.content}],
+          content: [{ content: item.content }],
         };
       });
     if (
@@ -334,15 +333,15 @@ const ThirtyTwo = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -354,188 +353,188 @@ const ThirtyTwo = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
+        : []}
+      {/***************************ASSESSMENTS DESCRIPTION ONE ************* */}
+      <div style={{ ...commonStyles.assessmentWrapper, marginBottom: '50px' }}>
+        {images && images.length
+          ? images
+            .filter((img) => img.image_type === 'first')
+            .map((item, i) => {
               return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
+                <CustomImage
+                  key={i}
+                  src={`${IMAGE_BASE_URL}${item.image}`}
+                  style={{
+                    ...commonStyles.assessImage,
+                    display: item.image !== '' ? 'flex' : 'none',
+                  }}
                 />
               );
             })
-        : []}
-      {/***************************ASSESSMENTS DESCRIPTION ONE ************* */}
-      <div style={{...commonStyles.assessmentWrapper, marginBottom: '50px'}}>
-        {images && images.length
-          ? images
-              .filter((img) => img.image_type === 'first')
-              .map((item, i) => {
-                return (
-                  <CustomImage
-                    key={i}
-                    src={`${IMAGE_BASE_URL}${item.image}`}
-                    style={{
-                      ...commonStyles.assessImage,
-                      display: item.image !== '' ? 'flex' : 'none',
-                    }}
-                  />
-                );
-              })
           : []}
 
         {props.assessments && props.assessments.length
           ? props.assessments.map((item, i) => {
-              return (
-                <CardDescription
-                  key={i}
-                  style={commonStyles.assessDesc}
-                  description={ReactHtmlParser(item.description)}
-                />
-              );
-            })
+            return (
+              <CardDescription
+                key={i}
+                style={commonStyles.assessDesc}
+                description={ReactHtmlParser(item.description)}
+              />
+            );
+          })
           : []}
       </div>
       {/******************************************************************* */}
 
       {inputs.length
         ? inputs.map((item, index) => {
-            return (
-              <div style={{marginBottom: 15}}>
-                <div
-                  style={{backgroundColor: generateDynamicColor(item.order)}}>
-                  <p style={{padding: '15px', color: WHITE}}>
-                    {ReactHtmlParser(item.name)}
-                  </p>
-                </div>
-                {userInputs && userInputs.length
-                  ? userInputs
-                      .sort((a, b) => (a.order > b.order && 1) || -1)
-                      .filter((ele) => {
-                        return ele.assessment_header_id === item._id;
-                      })
-                      .map((val, i) => {
-                        const showPlus =
-                          i ==
-                          userInputs
-                            .sort((a, b) => (a.order > b.order && 1) || -1)
-                            .filter((ele) => {
-                              return ele.assessment_header_id === item._id;
-                            }).length -
-                            1;
-                        const isDelete =
-                          i <
-                          userInputs
-                            .sort((a, b) => (a.order > b.order && 1) || -1)
-                            .filter((ele) => {
-                              return ele.assessment_header_id === item._id;
-                            }).length -
-                            1;
-                        const isDisabled =
-                          i <
-                          userInputs
-                            .sort((a, b) => (a.order > b.order && 1) || -1)
-                            .filter((ele) => {
-                              return ele.assessment_header_id === item._id;
-                            }).length -
-                            1;
-                        return (
-                          <div
-                            style={styles.crossIconWrapper}
-                            className={'mr20'}>
-                            <input
-                              disabled={isDisabled ? true : false}
-                              type="text"
-                              className="f-field"
-                              name={name}
-                              onChange={(e) => {
-                                onHandleChange(e, item, val);
-                              }}
-                              style={styles.selectedText}
-                              value={val.content}
-                            />
-                            {isDelete ? (
-                              <div
-                                style={styles.circleCrossDiv}
-                                onClick={() => {
-                                  let filter_data = userInputs
-                                    .filter(
-                                      (ele) =>
-                                        ele.assessment_header_id ==
-                                          val.assessment_header_id &&
-                                        val.order != ele.order,
-                                    )
-                                    .sort(
-                                      (a, b) => (a.order > b.order && 1) || -1,
-                                    );
-
-                                  let other_header = userInputs
-                                    .filter(
-                                      (ele) =>
-                                        ele.assessment_header_id !=
-                                        val.assessment_header_id,
-                                    )
-                                    .sort(
-                                      (a, b) => (a.order > b.order && 1) || -1,
-                                    );
-
-                                  filter_data = filter_data.map(
-                                    (item, index) => {
-                                      return {
-                                        ...item,
-                                        order: index + 1,
-                                      };
-                                    },
-                                  );
-                                  console.log([
-                                    ...other_header,
-                                    ...filter_data,
-                                  ]);
-                                  setUserInputs([
-                                    ...other_header,
-                                    ...filter_data,
-                                  ]);
-                                  if (val.content_id) {
-                                    dispatch(
-                                      AppActions.deleteUserAssessmentData(
-                                        val.content_id,
-                                        props._id,
-                                        assessment_id,
-                                      ),
-                                    );
-                                  }
-                                }}>
-                                <span
-                                  style={{
-                                    ...styles.plusIcon,
-                                    fontSize: '15px',
-                                  }}>
-                                  x
-                                </span>
-                              </div>
-                            ) : null}
-                            {showPlus ? (
-                              <div
-                                style={{
-                                  ...styles.circleDiv,
-                                  backgroundColor: val.content.length
-                                    ? GREEN_TEXT
-                                    : GRAY,
-                                }}
-                                onClick={() => {
-                                  if (val.content != '') {
-                                    addHandler(item, val);
-                                  }
-                                }}>
-                                <span style={styles.plusIcon}>+</span>
-                              </div>
-                            ) : null}
-                          </div>
-                        );
-                      })
-                  : null}
+          return (
+            <div style={{ marginBottom: 15 }}>
+              <div
+                style={{ backgroundColor: generateDynamicColor(item.order) }}>
+                <p style={{ padding: '15px', color: WHITE }}>
+                  {ReactHtmlParser(item.name)}
+                </p>
               </div>
-            );
-          })
+              {userInputs && userInputs.length
+                ? userInputs
+                  .sort((a, b) => (a.order > b.order && 1) || -1)
+                  .filter((ele) => {
+                    return ele.assessment_header_id === item._id;
+                  })
+                  .map((val, i) => {
+                    const showPlus =
+                      i ==
+                      userInputs
+                        .sort((a, b) => (a.order > b.order && 1) || -1)
+                        .filter((ele) => {
+                          return ele.assessment_header_id === item._id;
+                        }).length -
+                      1;
+                    const isDelete =
+                      i <
+                      userInputs
+                        .sort((a, b) => (a.order > b.order && 1) || -1)
+                        .filter((ele) => {
+                          return ele.assessment_header_id === item._id;
+                        }).length -
+                      1;
+                    const isDisabled =
+                      i <
+                      userInputs
+                        .sort((a, b) => (a.order > b.order && 1) || -1)
+                        .filter((ele) => {
+                          return ele.assessment_header_id === item._id;
+                        }).length -
+                      1;
+                    return (
+                      <div
+                        style={styles.crossIconWrapper}
+                        className={'mr20'}>
+                        <input
+                          disabled={isDisabled ? true : false}
+                          type="text"
+                          className="f-field"
+                          name={name}
+                          onChange={(e) => {
+                            onHandleChange(e, item, val);
+                          }}
+                          style={styles.selectedText}
+                          value={val.content}
+                        />
+                        {isDelete ? (
+                          <div
+                            style={styles.circleCrossDiv}
+                            onClick={() => {
+                              let filter_data = userInputs
+                                .filter(
+                                  (ele) =>
+                                    ele.assessment_header_id ==
+                                    val.assessment_header_id &&
+                                    val.order != ele.order,
+                                )
+                                .sort(
+                                  (a, b) => (a.order > b.order && 1) || -1,
+                                );
+
+                              let other_header = userInputs
+                                .filter(
+                                  (ele) =>
+                                    ele.assessment_header_id !=
+                                    val.assessment_header_id,
+                                )
+                                .sort(
+                                  (a, b) => (a.order > b.order && 1) || -1,
+                                );
+
+                              filter_data = filter_data.map(
+                                (item, index) => {
+                                  return {
+                                    ...item,
+                                    order: index + 1,
+                                  };
+                                },
+                              );
+                              console.log([
+                                ...other_header,
+                                ...filter_data,
+                              ]);
+                              setUserInputs([
+                                ...other_header,
+                                ...filter_data,
+                              ]);
+                              if (val.content_id) {
+                                dispatch(
+                                  AppActions.deleteUserAssessmentData(
+                                    val.content_id,
+                                    props._id,
+                                    assessment_id,
+                                  ),
+                                );
+                              }
+                            }}>
+                            <span
+                              style={{
+                                ...styles.plusIcon,
+                                fontSize: '15px',
+                              }}>
+                              x
+                            </span>
+                          </div>
+                        ) : null}
+                        {showPlus ? (
+                          <div
+                            style={{
+                              ...styles.circleDiv,
+                              backgroundColor: val.content.length
+                                ? GREEN_TEXT
+                                : GRAY,
+                            }}
+                            onClick={() => {
+                              if (val.content != '') {
+                                addHandler(item, val);
+                              }
+                            }}>
+                            <span style={styles.plusIcon}>+</span>
+                          </div>
+                        ) : null}
+                      </div>
+                    );
+                  })
+                : null}
+            </div>
+          );
+        })
         : null}
       {/* <div style={commonStyles.buttonWrapper}>
         <button
@@ -546,84 +545,84 @@ const ThirtyTwo = (props) => {
       </div> */}
 
       {/***************************ASSESSMENTS DESCRIPTION SECOND************* */}
-      <div style={{...commonStyles.assessmentWrapper, marginBottom: '70px'}}>
+      <div style={{ ...commonStyles.assessmentWrapper, marginBottom: '70px' }}>
         {images && images.length
           ? images
-              .filter((img) => img.image_type === 'second')
-              .map((item, i) => {
-                return (
-                  <CustomImage
-                    key={i}
-                    src={`${IMAGE_BASE_URL}${item.image}`}
-                    style={{
-                      ...commonStyles.assessImage,
-                      display: item.image !== '' ? 'flex' : 'none',
-                    }}
-                  />
-                );
-              })
-          : []}
-        {assessmentData2.assessment && assessmentData2.assessment.length
-          ? assessmentData2.assessment.map((item, i) => {
+            .filter((img) => img.image_type === 'second')
+            .map((item, i) => {
               return (
-                <CardDescription
+                <CustomImage
                   key={i}
-                  style={commonStyles.assessDesc}
-                  description={ReactHtmlParser(item.description)}
+                  src={`${IMAGE_BASE_URL}${item.image}`}
+                  style={{
+                    ...commonStyles.assessImage,
+                    display: item.image !== '' ? 'flex' : 'none',
+                  }}
                 />
               );
             })
+          : []}
+        {assessmentData2.assessment && assessmentData2.assessment.length
+          ? assessmentData2.assessment.map((item, i) => {
+            return (
+              <CardDescription
+                key={i}
+                style={commonStyles.assessDesc}
+                description={ReactHtmlParser(item.description)}
+              />
+            );
+          })
           : []}
       </div>
       {/***************************ASSESSMENTS second HEADERS************* */}
       {assessmentData2.headers && assessmentData2.headers.length
         ? assessmentData2.headers
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, i) => {
-              const isYES =
-                selected && selected.length
-                  ? selected.find((val) => {
-                      return val._id === item._id && val.content === 'YES';
-                    })
-                    ? true
-                    : false
-                  : false;
-              const isNO =
-                selected && selected.length
-                  ? selected.find(
-                      (val) => val._id === item._id && val.content === 'NO',
-                    )
-                    ? true
-                    : false
-                  : false;
-              return (
-                <div key={i} style={commonStyles.question}>
-                  <p>{ReactHtmlParser(item.header)}</p>
-                  <div style={styles.optionWrapper}>
-                    <div
-                      onClick={() => {
-                        updateYESNO({_id: item._id, content: 'YES'}, selected);
-                      }}
-                      style={{
-                        ...styles.rightBox,
-                        backgroundColor: isYES ? BUTTON_ORANGE : GRAY2,
-                      }}>
-                      <img src={right} />
-                    </div>
-                    <div
-                      onClick={() => {
-                        updateYESNO({_id: item._id, content: 'NO'}, selected);
-                      }}
-                      style={{
-                        ...styles.crossBox,
-                        backgroundColor: isNO ? BUTTON_ORANGE : GRAY2,
-                      }}>
-                      <img src={cross} />
-                    </div>
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, i) => {
+            const isYES =
+              selected && selected.length
+                ? selected.find((val) => {
+                  return val._id === item._id && val.content === 'YES';
+                })
+                  ? true
+                  : false
+                : false;
+            const isNO =
+              selected && selected.length
+                ? selected.find(
+                  (val) => val._id === item._id && val.content === 'NO',
+                )
+                  ? true
+                  : false
+                : false;
+            return (
+              <div key={i} style={commonStyles.question}>
+                <p>{ReactHtmlParser(item.header)}</p>
+                <div style={styles.optionWrapper}>
+                  <div
+                    onClick={() => {
+                      updateYESNO({ _id: item._id, content: 'YES' }, selected);
+                    }}
+                    style={{
+                      ...styles.rightBox,
+                      backgroundColor: isYES ? BUTTON_ORANGE : GRAY2,
+                    }}>
+                    <img src={right} />
+                  </div>
+                  <div
+                    onClick={() => {
+                      updateYESNO({ _id: item._id, content: 'NO' }, selected);
+                    }}
+                    style={{
+                      ...styles.crossBox,
+                      backgroundColor: isNO ? BUTTON_ORANGE : GRAY2,
+                    }}>
+                    <img src={cross} />
                   </div>
                 </div>
-              );
-            })
+              </div>
+            );
+          })
         : []}
       <div style={commonStyles.buttonWrapper}>
         <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
@@ -635,12 +634,12 @@ const ThirtyTwo = (props) => {
 
       {content && content.length
         ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, i) => {
-              return (
-                <CardContent key={i} content={ReactHtmlParser(item.content)} />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, i) => {
+            return (
+              <CardContent key={i} content={ReactHtmlParser(item.content)} />
+            );
+          })
         : []}
 
       {showExercises && <ExerciseBox week={week} />}
@@ -689,8 +688,8 @@ const styles = {
     justifyContent: 'center',
     marginLeft: '25px',
   },
-  button: {width: '20%', marginTop: '30px'},
-  image: {width: '100%', height: '100%'},
+  button: { width: '20%', marginTop: '30px' },
+  image: { width: '100%', height: '100%' },
   imageWrapper: {
     width: '120px',
     height: '100px',

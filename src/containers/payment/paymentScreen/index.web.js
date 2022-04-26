@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -12,27 +12,27 @@ import {
   Image,
   Linking,
 } from 'react-native';
-import GLOBALS from '@constants';
-import Header from '@components/Header';
-import Loader from '@components/Loader';
-import Button from '@components/common/button';
-import DropDown from '@components/common/dropDown';
-import {countryData} from '@utils/CountryCode';
+import GLOBALS from '../../../constants';
+import Header from '../../../components/Header';
+import Loader from '../../../components/Loader';
+import Button from '../../../components/common/button';
+import DropDown from '../../../components/common/dropDown';
+import { countryData } from '../../../utils/CountryCode';
 
-import ProfileHeader from '@components/common/profileHeader';
-import back from '@assets/images/subscription/back.png';
-import logo from '@assets/images/subscription/logoTm.png';
-import book from '@assets/images/subscription/book.png';
-import paypal from '@assets/images/subscription/paypal.png';
-import apple from '@assets/images/subscription/apple.png';
-import Input from '@components/Input';
-import {navigatorPush, navigatorPop} from '@config/navigationOptions.web';
+import ProfileHeader from '../../../components/common/profileHeader';
+import back from '../../../assets/images/subscription/back.png';
+import logo from '../../../assets/images/subscription/logoTm.png';
+import book from '../../../assets/images/subscription/book.png';
+import paypal from '../../../assets/images/subscription/paypal.png';
+import apple from '../../../assets/images/subscription/apple.png';
+import Input from '../../../components/Input';
+import { navigatorPush, navigatorPop } from '../../../config/navigationOptions.web';
 import {
   SquarePaymentsForm,
   CreditCardInput,
 } from 'react-square-web-payments-sdk';
-import {getItem} from '@utils/AsyncUtils';
-const {COLORS, FONTS, IMAGE_BASE_URL, squareAppId, LOCATION_ID} = GLOBALS;
+import { getItem } from '../../../utils/AsyncUtils';
+const { COLORS, FONTS, IMAGE_BASE_URL, squareAppId, LOCATION_ID } = GLOBALS;
 const {
   BLUR,
   WHITE,
@@ -43,13 +43,13 @@ const {
   DARK_GREEN,
 } = COLORS;
 
-import BackBtn from '@components/common/backbtn';
-import {useSelector, useDispatch} from 'react-redux';
-import * as AppActions from '@actions';
-import {validateEmail, validateIsEmpty} from '@utils/validations';
+import BackBtn from '../../../components/common/backbtn';
+import { useSelector, useDispatch } from 'react-redux';
+import * as AppActions from '../../../actions';
+import { validateEmail, validateIsEmpty } from '../../../utils/validations';
 const Payment = (props) => {
   console.log(props.location.state, 'bbbbb');
-  const {loginData = {}} = useSelector((state) => state.authReducer);
+  const { loginData = {} } = useSelector((state) => state.authReducer);
   let premiumPrice = props.location.state.price;
   const [price, setPrice] = useState(premiumPrice);
   const [email, setEmail] = useState(loginData?.user?.email);
@@ -72,7 +72,7 @@ const Payment = (props) => {
   const [zipError, setZipError] = useState('');
 
   const dispatch = useDispatch();
-  const {isLoading} = useSelector((state) => state.common);
+  const { isLoading } = useSelector((state) => state.common);
   useEffect(() => {
     setName(loginData?.user?.firstName + ' ' + loginData?.user?.lastName);
     setEmail(loginData?.user?.email);
@@ -130,155 +130,156 @@ const Payment = (props) => {
         break;
     }
   };
-
   return (
-    <View style={styles.container}>
-      <ProfileHeader
-        onProfileClick={() => navigatorPush({screenName: 'Profile'})}
-        showProfileBtn={true}
-        showEditIcon={false}
-      />
-      {isLoading ? <Loader /> : null}
-      <BackBtn title={'Back'} btnStyle={{paddingLeft: '20px'}} />
-      <View style={styles.innerContainer}>
-        <View style={styles.innerLeft}>
-          <View style={{marginTop: '20px', marginHorizontal: '80px'}}>
-            <View
-              style={{
-                alignItems: 'center',
-              }}>
-              <Text
+    <div className="safeHeight">
+      <View style={styles.container}>
+        <ProfileHeader
+          onProfileClick={() => navigatorPush({ screenName: 'Profile' })}
+          showProfileBtn={true}
+          showEditIcon={false}
+        />
+        {isLoading ? <Loader /> : null}
+        <BackBtn title={'Back'} btnStyle={{ paddingLeft: '20px' }} />
+        <View style={styles.innerContainer}>
+          <View style={styles.innerLeft}>
+            <View style={{ marginTop: '20px', marginHorizontal: '80px' }}>
+              <View
                 style={{
-                  fontFamily: FONTS.SEMI_BOLD,
-                  fontSize: '22px',
-                  fontStyle: 'normal',
-                  fontWeight: '500',
-                  color: '#697386',
+                  alignItems: 'center',
                 }}>
-                Premium
-              </Text>
-              <Text
+                <Text
+                  style={{
+                    fontFamily: FONTS.SEMI_BOLD,
+                    fontSize: '22px',
+                    fontStyle: 'normal',
+                    fontWeight: '500',
+                    color: '#697386',
+                  }}>
+                  Premium
+                </Text>
+                <Text
+                  style={{
+                    marginTop: '1vw',
+                    fontFamily: FONTS.SEMI_BOLD,
+                    fontSize: '20px',
+                    fontStyle: 'normal',
+                    fontWeight: '600',
+                    color: '#1A1F36',
+                  }}>
+                  ${price}
+                </Text>
+              </View>
+              <View
                 style={{
-                  marginTop: '1vw',
-                  fontFamily: FONTS.SEMI_BOLD,
-                  fontSize: '20px',
-                  fontStyle: 'normal',
-                  fontWeight: '600',
-                  color: '#1A1F36',
+                  marginTop: '3vw',
+                  alignItems: 'center',
                 }}>
-                ${price}
-              </Text>
-            </View>
-            <View
-              style={{
-                marginTop: '3vw',
-                alignItems: 'center',
-              }}>
-              <Image source={book} style={{height: '100px', width: '100px'}} />
-              <View style={{flexDirection: 'row', marginTop: '30px'}}>
-                <View style={styles.verticalLine} />
+                <Image source={book} style={{ height: '100px', width: '100px' }} />
+                <View style={{ flexDirection: 'row', marginTop: '30px' }}>
+                  <View style={styles.verticalLine} />
 
-                <TouchableOpacity
-                  onPress={() =>
-                    window.open(
-                      `${IMAGE_BASE_URL}upload/MamaLift_Terms_of_Use.pdf`,
-                      '_blank',
-                    )
-                  }
-                  style={{marginHorizontal: '10px'}}>
-                  <Text style={styles.terms}>Terms</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() =>
-                    window.open(
-                      `${IMAGE_BASE_URL}upload/PRIVACY_POLICY0203.pdf`,
-                      '_blank',
-                    )
-                  }>
-                  <Text style={styles.terms}>Privacy</Text>
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      window.open(
+                        `${IMAGE_BASE_URL}upload/MamaLift_Terms_of_Use.pdf`,
+                        '_blank',
+                      )
+                    }
+                    style={{ marginHorizontal: '10px' }}>
+                    <Text style={styles.terms}>Terms</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      window.open(
+                        `${IMAGE_BASE_URL}upload/PRIVACY_POLICY0203.pdf`,
+                        '_blank',
+                      )
+                    }>
+                    <Text style={styles.terms}>Privacy</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-        <View style={styles.innerRight}>
-          <Input
-            type="email"
-            labelStyle={{
-              color: COLORS.text_Gray,
-              fontSize: '12px',
-              paddingBottom: '5px',
-            }}
-            inputStyle={{padding: 10, height: 40}}
-            setCode={(text) => setEmail(text)}
-            value={email}
-            error={emailError}
-            label="Email"
-            placeholder=""></Input>
-          <Input
-            labelStyle={{
-              color: COLORS.text_Gray,
-              fontSize: '12px',
-              paddingBottom: '5px',
-            }}
-            type=""
-            maxLength={30}
-            inputStyle={{padding: 10, height: 40}}
-            setCode={(text) => setName(text)}
-            value={name}
-            error={nameError}
-            label="Name on card"
-            placeholder=""></Input>
-          <SquarePaymentsForm
-            /**
-             * Identifies the calling form with a verified application ID
-             * generated from the Square Application Dashboard.
-             */
-            // applicationId="sandbox-sq0idb-WPw6oJXhJty7VgI9HN3Edw"
-            applicationId={squareAppId}
-            /**
-             * Invoked when payment form receives the result of a tokenize generation request.
-             * The result will be a valid credit card or wallet token, or an error.
-             */
-            cardTokenizeResponseReceived={(token, buyer) => {
-              console.info({token, buyer});
-              purchasePlan(token, buyer);
-            }}
-            /**
-             * This function enable the Strong Customer Authentication (SCA) flow
-             *
-             * We strongly recommend use this function to verify the buyer and
-             * reduce the chance of fraudulent transactions.
-             */
-            createVerificationDetails={() => ({
-              // amount: '40.00',
-              amount: price.toString(),
-              /* collected from the buyer */
-              billingContact: {
-                // addressLines: ['123 Main Street', 'Apartment 1'],
-                familyName: name,
-                givenName: name,
-                // countryCode: 'GB',
-                // city: 'London',
-              },
-              currencyCode: 'USD',
-              intent: 'CHARGE',
-            })}
-            /**
-             * Identifies the location of the merchant that is taking the payment.
-             * Obtained from the Square Application Dashboard - Locations tab.
-             */
-            locationId={LOCATION_ID}
+          <View style={styles.innerRight}>
+            <Input
+              type="email"
+              labelStyle={{
+                color: COLORS.text_Gray,
+                fontSize: '12px',
+                paddingBottom: '5px',
+              }}
+              inputStyle={{ padding: 10, height: 40 }}
+              setCode={(text) => setEmail(text)}
+              value={email}
+              error={emailError}
+              label="Email"
+              placeholder=""></Input>
+            <Input
+              labelStyle={{
+                color: COLORS.text_Gray,
+                fontSize: '12px',
+                paddingBottom: '5px',
+              }}
+              type=""
+              maxLength={30}
+              inputStyle={{ padding: 10, height: 40 }}
+              setCode={(text) => setName(text)}
+              value={name}
+              error={nameError}
+              label="Name on card"
+              placeholder=""></Input>
+            <SquarePaymentsForm
+              /**
+               * Identifies the calling form with a verified application ID
+               * generated from the Square Application Dashboard.
+               */
+              // applicationId="sandbox-sq0idb-WPw6oJXhJty7VgI9HN3Edw"
+              applicationId={squareAppId}
+              /**
+               * Invoked when payment form receives the result of a tokenize generation request.
+               * The result will be a valid credit card or wallet token, or an error.
+               */
+              cardTokenizeResponseReceived={(token, buyer) => {
+                console.info({ token, buyer });
+                purchasePlan(token, buyer);
+              }}
+              /**
+               * This function enable the Strong Customer Authentication (SCA) flow
+               *
+               * We strongly recommend use this function to verify the buyer and
+               * reduce the chance of fraudulent transactions.
+               */
+              createVerificationDetails={() => ({
+                // amount: '40.00',
+                amount: price.toString(),
+                /* collected from the buyer */
+                billingContact: {
+                  // addressLines: ['123 Main Street', 'Apartment 1'],
+                  familyName: name,
+                  givenName: name,
+                  // countryCode: 'GB',
+                  // city: 'London',
+                },
+                currencyCode: 'USD',
+                intent: 'CHARGE',
+              })}
+              /**
+               * Identifies the location of the merchant that is taking the payment.
+               * Obtained from the Square Application Dashboard - Locations tab.
+               */
+              locationId={LOCATION_ID}
 
-          // overrides={({
-          //   scriptSrc: "https://web.squarecdn.com/v1/square.js"
-          // })}
-          >
-            <CreditCardInput />
-          </SquarePaymentsForm>
+            // overrides={({
+            //   scriptSrc: "https://web.squarecdn.com/v1/square.js"
+            // })}
+            >
+              <CreditCardInput />
+            </SquarePaymentsForm>
+          </View>
         </View>
       </View>
-    </View>
+    </div >
   );
 };
 

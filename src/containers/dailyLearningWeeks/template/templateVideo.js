@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
-import GLOBALS from '@constants';
-import ExerciseBox from '@components/ExerciseBox';
+import GLOBALS from '../../../constants';
+import ExerciseBox from '../../../components/ExerciseBox';
 import {
   CardQuote,
   CardTitle,
@@ -9,8 +9,8 @@ import {
   CardDescription,
   CardContent,
   CardVideo,
-} from '@components/Cards';
-const {IMAGE_BASE_URL} = GLOBALS;
+} from '../../../components/Cards';
+const { IMAGE_BASE_URL } = GLOBALS;
 const TemplateVideo = (props) => {
   const {
     card_title,
@@ -27,15 +27,15 @@ const TemplateVideo = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -47,45 +47,45 @@ const TemplateVideo = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
 
       {videos && videos.length
         ? videos
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, i) => {
-              return (
-                <CardVideo
-                  key={i}
-                  src={`${IMAGE_BASE_URL}${item.video}`}
-                  style={{
-                    display: item.video !== '' ? 'block' : 'none',
-                  }}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, i) => {
+            return (
+              <CardVideo
+                key={i}
+                src={`${IMAGE_BASE_URL}${item.video}`}
+                style={{
+                  display: item.video !== '' ? 'block' : 'none',
+                }}
+              />
+            );
+          })
         : []}
 
       {/**********************content************** */}
       {content && content.length
         ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardContent
-                  key={index}
-                  content={ReactHtmlParser(item.content)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardContent
+                key={index}
+                content={ReactHtmlParser(item.content)}
+              />
+            );
+          })
         : []}
       {showExercises && <ExerciseBox week={week} />}
     </>

@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -15,29 +15,29 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import moment from 'moment';
-import {getItem} from '@utils/AsyncUtils';
-import * as AppActions from '@actions';
-import GLOBALS from '@constants';
-import Strings from '@constants/Strings';
-import {navigatorPush, navigatorPop} from '@config/navigationOptions.web';
-import Footer from '@components/Footer';
-import Button from '@components/common/button';
-import Toggle from '@components/common/toggle';
-import PopUp from '@components/common/popUp';
-import BackBtn from '@components/common/backbtn';
-import Loader from '@components/Loader';
-import ProfileHeader from '@components/common/profileHeader';
+import { getItem } from '../../utils/AsyncUtils';
+import * as AppActions from '../../actions';
+import GLOBALS from '../../constants';
+import Strings from '../../constants/Strings';
+import { navigatorPush, navigatorPop } from '../../config/navigationOptions.web';
+import Footer from '../../components/Footer';
+import Button from '../../components/common/button';
+import Toggle from '../../components/common/toggle';
+import PopUp from '../../components/common/popUp';
+import BackBtn from '../../components/common/backbtn';
+import Loader from '../../components/Loader';
+import ProfileHeader from '../../components/common/profileHeader';
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const {COLORS, FONTS} = GLOBALS;
-const {LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN} = COLORS;
-import Header from '@components/Header';
+const { COLORS, FONTS } = GLOBALS;
+const { LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN } = COLORS;
+import Header from '../../components/Header';
 
-import {useSelector, useDispatch} from 'react-redux';
-import journal from '@assets/images/subscription/journal.png';
-import back from '@assets/images/subscription/back.png';
-import Input1 from '@components/TextInput';
-import RadioButton1 from '@components/RadioButton1';
-import {customAlert} from '@helpers/commonAlerts.web';
+import { useSelector, useDispatch } from 'react-redux';
+import journal from '../../assets/images/subscription/journal.png';
+import back from '../../assets/images/subscription/back.png';
+import Input1 from '../../components/TextInput';
+import RadioButton1 from '../../components/RadioButton1';
+import { customAlert } from '../../helpers/commonAlerts.web';
 import {
   validateIsEmpty,
   validatePassword,
@@ -46,15 +46,15 @@ import {
   validateANZipcode,
   validatePhoneWithSpecialSymbol,
   validateName,
-} from '@utils/validations';
-import {normalize} from '@utils/Helper';
+} from '../../utils/validations';
+import { normalize } from '../../utils/Helper';
 
-const {IMAGE_BASE_URL} = GLOBALS;
+const { IMAGE_BASE_URL } = GLOBALS;
 
 function ProfileDetails(props) {
   const layout = useWindowDimensions();
-  const {loginData = {}} = useSelector((state) => state.authReducer);
-  const {isLoading} = useSelector((state) => state.common);
+  const { loginData = {} } = useSelector((state) => state.authReducer);
+  const { isLoading } = useSelector((state) => state.common);
 
   /**Account Info */
   const [name, setName] = useState('');
@@ -82,13 +82,13 @@ function ProfileDetails(props) {
 
   /**Change Language  */
   const [language, setLanguage] = useState([
-    {id: 1, value: 'en', name: 'English', isSelected: false},
-    {id: 2, value: 'sp', name: 'Spanish', isSelected: true},
+    { id: 1, value: 'en', name: 'English', isSelected: false },
+    { id: 2, value: 'sp', name: 'Spanish', isSelected: true },
   ]);
   /**Change Notification  */
   const [notification, setNotification] = useState([
-    {id: 1, value: 'email', name: 'Email Notification', isSelected: false},
-    {id: 2, value: 'sms', name: 'SMS Notification', isSelected: true},
+    { id: 1, value: 'email', name: 'Email Notification', isSelected: false },
+    { id: 2, value: 'sms', name: 'SMS Notification', isSelected: true },
   ]);
 
   const dispatch = useDispatch();
@@ -105,15 +105,15 @@ function ProfileDetails(props) {
       setAge(loginData.user.ageYear ? loginData.user.ageYear + 'Y' : '');
       let temp_language = language.map((el) =>
         el.value === loginData.user.language
-          ? {...el, isSelected: true}
-          : {...el, isSelected: false},
+          ? { ...el, isSelected: true }
+          : { ...el, isSelected: false },
       );
       setLanguage(temp_language);
 
       let temp_notification = notification.map((el, index) =>
         index == 0
-          ? {...el, isSelected: loginData.user.email_notification}
-          : {...el, isSelected: loginData.user.sms_notification},
+          ? { ...el, isSelected: loginData.user.email_notification }
+          : { ...el, isSelected: loginData.user.sms_notification },
       );
       setNotification(temp_notification);
     }
@@ -121,7 +121,7 @@ function ProfileDetails(props) {
   }, [loginData]);
 
   useEffect(() => {
-    dispatch(AppActions.updateUserData({user_id: getItem('userId')}));
+    dispatch(AppActions.updateUserData({ user_id: getItem('userId') }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -170,7 +170,7 @@ function ProfileDetails(props) {
         break;
       case 'toggle_notify':
         let temp_array = notification.map((el) =>
-          el.id === item.id ? {...el, isSelected: !el.isSelected} : {...el},
+          el.id === item.id ? { ...el, isSelected: !el.isSelected } : { ...el },
         );
         setNotification(temp_array);
         let notify_param = {
@@ -206,7 +206,7 @@ function ProfileDetails(props) {
   /**Hanlde Language chnage */
   const itemClick = (item) => {
     let temp_language = language.map((el) =>
-      el.id === item ? {...el, isSelected: true} : {...el, isSelected: false},
+      el.id === item ? { ...el, isSelected: true } : { ...el, isSelected: false },
     );
     setLanguage(temp_language);
   };
@@ -231,222 +231,223 @@ function ProfileDetails(props) {
   };
 
   return (
-    <View style={styles.container}>
-      <ProfileHeader
-        {...props}
-        showProfileBtn={false}
-        showEditIcon={true}
-        onEditClick={(file) => selectImage(file)}
-        onDeleteClick={() => {
-          let param = {
-            image_path: '',
-            user_id: getItem('userId'),
-          };
-          dispatch(AppActions.updateUserDetails(param));
-        }}
-      />
-      <PopUp />
-      {isLoading && <Loader />}
-      {/* */}
-      <BackBtn></BackBtn>
-      <View style={styles.backBtn}></View>
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginHorizontal: '10vw',
-          flexWrap: 'wrap',
-        }}>
-        {/* 1st colum */}
-        <View style={{flex: DEVICE_WIDTH > 767 ? '0.3' : '100%'}}>
-          <View>
-            <Text style={styles.heading}>Plan</Text>
-            <View style={{flexDirection: 'row', marginTop: '16px'}}>
-              <Image
-                resizeMode={'contain'}
-                source={`${IMAGE_BASE_URL}${loginData?.planInfo?.image}`}
-                style={{width: 25, height: 25}}
-              />
-              <Text
-                style={{
-                  /// fontFamily: 'Inter',
-                  fontSize: '24px',
-                  color: '#0B0914',
-                  marginLeft: '16px',
+    <div className="safeHeight">
+      <View style={styles.container}>
+        <ProfileHeader
+          {...props}
+          showProfileBtn={false}
+          showEditIcon={true}
+          onEditClick={(file) => selectImage(file)}
+          onDeleteClick={() => {
+            let param = {
+              image_path: '',
+              user_id: getItem('userId'),
+            };
+            dispatch(AppActions.updateUserDetails(param));
+          }}
+        />
+        <PopUp />
+        {isLoading && <Loader />}
+        {/* */}
+        <BackBtn></BackBtn>
+        <View style={styles.backBtn}></View>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginHorizontal: '10vw',
+            flexWrap: 'wrap',
+          }}>
+          {/* 1st colum */}
+          <View style={{ flex: DEVICE_WIDTH > 767 ? '0.3' : '100%' }}>
+            <View>
+              <Text style={styles.heading}>Plan</Text>
+              <View style={{ flexDirection: 'row', marginTop: '16px' }}>
+                <Image
+                  resizeMode={'contain'}
+                  source={`${IMAGE_BASE_URL}${loginData?.planInfo?.image}`}
+                  style={{ width: 25, height: 25 }}
+                />
+                <Text
+                  style={{
+                    /// fontFamily: 'Inter',
+                    fontSize: '24px',
+                    color: '#0B0914',
+                    marginLeft: '16px',
 
-                  fontFamily: FONTS.SEMI_BOLD,
-                }}>
-                {loginData?.planInfo?.title}
-              </Text>
+                    fontFamily: FONTS.SEMI_BOLD,
+                  }}>
+                  {loginData?.planInfo?.title}
+                </Text>
+              </View>
+              <Button
+                btnStyle={{
+                  height: 35,
+                  width: '100%',
+                  marginTop: '1.1vw',
+                  marginBottom: '2.1vw',
+                }}
+                onVerifyPress={() =>
+                  navigatorPush({
+                    screenName: 'Subscription',
+                    passProps: { currentPlan: loginData?.planInfo },
+                  })
+                }
+                textStyle={{
+                  fontSize: '16px',
+                }}
+                title={loginData?.planInfo?.price == 0 ? 'Upgrade' : 'View Plans'}
+                bgColor={DARK_GREEN}
+                textColor={WHITE}></Button>
+              <View style={styles.hrLine} />
+
+              <Text style={styles.heading}>Change Password</Text>
+              <Input1
+                secureTextEntry={true}
+                inputStyle={{ padding: 10, height: 40 }}
+                setCode={(text) => {
+                  setPassword(text);
+                  setPswdError('');
+                }}
+                value={password}
+                error={pswdError}
+                label="Current Password"></Input1>
+              <Input1
+                secureTextEntry={true}
+                error={newpswdError}
+                inputStyle={{ padding: 10, height: 40 }}
+                setCode={(text) => {
+                  setNewPassword(text);
+                  setNewPswdError('');
+                }}
+                value={Newpassword}
+                label="New Password"
+                placeholder=""></Input1>
+              <Input1
+                secureTextEntry={true}
+                error={cnpswdError}
+                inputStyle={{ padding: 10, height: 40 }}
+                setCode={(text) => {
+                  setConfPassword(text);
+                  setConfirmPswdError('');
+                }}
+                value={Confpassword}
+                label="Confirm New Password"></Input1>
+              <Button
+                onVerifyPress={() => validateField()}
+                textStyle={{ fontSize: '16px' }}
+                btnStyle={{
+                  height: 40,
+                  width: '100%',
+                  marginTop: '1.1vw',
+                  marginBottom: '2.1vw',
+                }}
+                title="Change Password"
+                bgColor={DARK_GREEN}
+                textColor={WHITE}></Button>
             </View>
+          </View>
+          {/* 2nd column */}
+          <View style={{ flex: DEVICE_WIDTH > 767 ? '0.3' : '100%' }}>
+            <Text style={styles.heading}>Account Info</Text>
+            <Input1
+              editable={false}
+              inputStyle={{ padding: 10, height: 40 }}
+              setCode={(text) => setName(text)}
+              value={name}
+              label="First Name"
+              placeholder=""></Input1>
+            <Input1
+              editable={false}
+              inputStyle={{ padding: 10, height: 40 }}
+              setCode={(text) => setName(text)}
+              value={lname}
+              label="Last Name"
+              placeholder=""></Input1>
+            <Input1
+              editable={false}
+              inputStyle={{
+                padding: 10,
+                height: 40,
+                paddingHorizontal: 5,
+                flexWrap: 'wrap',
+                overflow: 'hidden',
+                backgroundColor: 'red',
+              }}
+              setCode={(text) => setName(text)}
+              value={email}
+              label="Email"
+              placeholder=""></Input1>
+
+            <Input1
+              editable={false}
+              inputStyle={{ padding: 10, height: 40 }}
+              setCode={(text) => setAge(text)}
+              value={age}
+              label="Age at Registration as on Signup Screen"
+              placeholder=""></Input1>
+            <Input1
+              type=""
+              inputStyle={{ padding: 10, height: 40 }}
+              setCode={(text) => {
+                setPhone(text);
+                setPhoneError('');
+              }}
+              maxLength={'15'}
+              value={phone}
+              error={phoneError}
+              label="Phone"
+              placeholder=""></Input1>
+            <Input1
+              editable={true}
+              inputStyle={{ padding: 10, height: 40 }}
+              setCode={(text) => {
+                setCity(text);
+                setCityError('');
+              }}
+              value={city}
+              error={cityError}
+              maxLength={'25'}
+              label="City"
+              placeholder=""></Input1>
+            <Input1
+              type=""
+              maxLength={10}
+              inputStyle={{ padding: 10, height: 40 }}
+              setCode={(text) => {
+                setZipcode(text);
+                setZipcodeError('');
+              }}
+              value={zipcode}
+              error={zipcodeError}
+              label="Zip Code"
+              placeholder=""></Input1>
+            <Input1
+              editable={false}
+              inputStyle={{ padding: 10, height: 40 }}
+              setCode={(text) => setCountry(text)}
+              value={country}
+              label="Country"
+              placeholder=""></Input1>
+
             <Button
               btnStyle={{
                 height: 35,
                 width: '100%',
-                marginTop: '1.1vw',
-                marginBottom: '2.1vw',
+                marginVertical: '2.1vw',
               }}
-              onVerifyPress={() =>
-                navigatorPush({
-                  screenName: 'Subscription',
-                  passProps: {currentPlan: loginData?.planInfo},
-                })
-              }
-              textStyle={{
-                fontSize: '16px',
-              }}
-              title={loginData?.planInfo?.price == 0 ? 'Upgrade' : 'View Plans'}
-              bgColor={DARK_GREEN}
-              textColor={WHITE}></Button>
-            <View style={styles.hrLine} />
-
-            <Text style={styles.heading}>Change Password</Text>
-            <Input1
-              secureTextEntry={true}
-              inputStyle={{padding: 10, height: 40}}
-              setCode={(text) => {
-                setPassword(text);
-                setPswdError('');
-              }}
-              value={password}
-              error={pswdError}
-              label="Current Password"></Input1>
-            <Input1
-              secureTextEntry={true}
-              error={newpswdError}
-              inputStyle={{padding: 10, height: 40}}
-              setCode={(text) => {
-                setNewPassword(text);
-                setNewPswdError('');
-              }}
-              value={Newpassword}
-              label="New Password"
-              placeholder=""></Input1>
-            <Input1
-              secureTextEntry={true}
-              error={cnpswdError}
-              inputStyle={{padding: 10, height: 40}}
-              setCode={(text) => {
-                setConfPassword(text);
-                setConfirmPswdError('');
-              }}
-              value={Confpassword}
-              label="Confirm New Password"></Input1>
-            <Button
-              onVerifyPress={() => validateField()}
-              textStyle={{fontSize: '16px'}}
-              btnStyle={{
-                height: 40,
-                width: '100%',
-                marginTop: '1.1vw',
-                marginBottom: '2.1vw',
-              }}
-              title="Change Password"
+              onVerifyPress={() => navigator('profile')}
+              textStyle={{ fontSize: '16px' }}
+              title="Update Profile"
               bgColor={DARK_GREEN}
               textColor={WHITE}></Button>
           </View>
-        </View>
-        {/* 2nd column */}
-        <View style={{flex: DEVICE_WIDTH > 767 ? '0.3' : '100%'}}>
-          <Text style={styles.heading}>Account Info</Text>
-          <Input1
-            editable={false}
-            inputStyle={{padding: 10, height: 40}}
-            setCode={(text) => setName(text)}
-            value={name}
-            label="First Name"
-            placeholder=""></Input1>
-          <Input1
-            editable={false}
-            inputStyle={{padding: 10, height: 40}}
-            setCode={(text) => setName(text)}
-            value={lname}
-            label="Last Name"
-            placeholder=""></Input1>
-          <Input1
-            editable={false}
-            inputStyle={{
-              padding: 10,
-              height: 40,
-              paddingHorizontal: 5,
-              flexWrap: 'wrap',
-              overflow: 'hidden',
-              backgroundColor: 'red',
-            }}
-            setCode={(text) => setName(text)}
-            value={email}
-            label="Email"
-            placeholder=""></Input1>
 
-          <Input1
-            editable={false}
-            inputStyle={{padding: 10, height: 40}}
-            setCode={(text) => setAge(text)}
-            value={age}
-            label="Age at Registration as on Signup Screen"
-            placeholder=""></Input1>
-          <Input1
-            type=""
-            inputStyle={{padding: 10, height: 40}}
-            setCode={(text) => {
-              setPhone(text);
-              setPhoneError('');
-            }}
-            maxLength={'15'}
-            value={phone}
-            error={phoneError}
-            label="Phone"
-            placeholder=""></Input1>
-          <Input1
-            editable={true}
-            inputStyle={{padding: 10, height: 40}}
-            setCode={(text) => {
-              setCity(text);
-              setCityError('');
-            }}
-            value={city}
-            error={cityError}
-            maxLength={'25'}
-            label="City"
-            placeholder=""></Input1>
-          <Input1
-            type=""
-            maxLength={10}
-            inputStyle={{padding: 10, height: 40}}
-            setCode={(text) => {
-              setZipcode(text);
-              setZipcodeError('');
-            }}
-            value={zipcode}
-            error={zipcodeError}
-            label="Zip Code"
-            placeholder=""></Input1>
-          <Input1
-            editable={false}
-            inputStyle={{padding: 10, height: 40}}
-            setCode={(text) => setCountry(text)}
-            value={country}
-            label="Country"
-            placeholder=""></Input1>
+          {/* 3rd column */}
 
-          <Button
-            btnStyle={{
-              height: 35,
-              width: '100%',
-              marginVertical: '2.1vw',
-            }}
-            onVerifyPress={() => navigator('profile')}
-            textStyle={{fontSize: '16px'}}
-            title="Update Profile"
-            bgColor={DARK_GREEN}
-            textColor={WHITE}></Button>
-        </View>
-
-        {/* 3rd column */}
-
-        <View style={{flex: DEVICE_WIDTH > 767 ? '0.3' : '100%'}}>
-          {/* <Text style={styles.heading}>Language</Text>
+          <View style={{ flex: DEVICE_WIDTH > 767 ? '0.3' : '100%' }}>
+            {/* <Text style={styles.heading}>Language</Text>
 
 
         {language.map((item, index) => {
@@ -478,22 +479,23 @@ function ProfileDetails(props) {
             bgColor={DARK_GREEN}
             textColor={WHITE}></Button>  */}
 
-          {/* <View style={styles.hrLine} /> */}
-          <Text style={styles.heading}>Notifications</Text>
-          {notification.map((item) => {
-            return (
-              <Toggle
-                onPress={(selected_value) => navigator('toggle_notify', item)}
-                item={item}
-                title={item.name}
-                enabled={item.isSelected}
-              />
-            );
-          })}
+            {/* <View style={styles.hrLine} /> */}
+            <Text style={styles.heading}>Notifications</Text>
+            {notification.map((item) => {
+              return (
+                <Toggle
+                  onPress={(selected_value) => navigator('toggle_notify', item)}
+                  item={item}
+                  title={item.name}
+                  enabled={item.isSelected}
+                />
+              );
+            })}
+          </View>
         </View>
+        <Footer />
       </View>
-      <Footer />
-    </View>
+    </div>
   );
 }
 export default ProfileDetails = React.memo(ProfileDetails);
@@ -502,6 +504,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+
   },
   borderLine: {
     height: 1,

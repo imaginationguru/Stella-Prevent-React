@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
-import GLOBALS from '@constants';
-import ExerciseBox from '@components/ExerciseBox';
-import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
+import GLOBALS from '../../../constants';
+import ExerciseBox from '../../../components/ExerciseBox';
+import commonStyles from '../../../containers/dailyLearningWeeks/commonStyles';
 import {
   CardQuote,
   CardTitle,
@@ -11,9 +11,9 @@ import {
   CardContent,
   CardAudio,
   CustomImage,
-} from '@components/Cards';
+} from '../../../components/Cards';
 
-const {IMAGE_BASE_URL} = GLOBALS;
+const { IMAGE_BASE_URL } = GLOBALS;
 const TemplateOne = (props) => {
   const {
     card_title,
@@ -31,15 +31,15 @@ const TemplateOne = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
 
@@ -52,92 +52,92 @@ const TemplateOne = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                  isVisible={true}
-                  animationIn={'fadeInUp'}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+                isVisible={true}
+                animationIn={'fadeInUp'}
+              />
+            );
+          })
         : []}
       {/**************audio******************** */}
 
       {videos && videos.length
         ? videos
-            .filter((item) => {
-              return item.video_type === 'audio' && item.order === 0;
-            })
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, i) => {
-              return (
-                <CardAudio
-                  src={`${IMAGE_BASE_URL}${item.video}`}
-                  style={{
-                    display: item.video !== '' ? 'block' : 'none',
-                    textAlign: 'center',
-                  }}
-                />
-              );
-            })
+          .filter((item) => {
+            return item.video_type === 'audio' && item.order === 0;
+          })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, i) => {
+            return (
+              <CardAudio
+                src={`${IMAGE_BASE_URL}${item.video}`}
+                style={{
+                  display: item.video !== '' ? 'block' : 'none',
+                  textAlign: 'center',
+                }}
+              />
+            );
+          })
         : []}
 
       {/**********************Images************** */}
 
       {images && images.length
         ? images.map((item) => {
-            return (
-              <CustomImage
-                imageSize={item.imageSize}
-                src={`${IMAGE_BASE_URL}${item.image}`}
-                style={{
-                  display: item.image !== '' ? 'flex' : 'none',
-                }}
-                isVisible={true}
-                animationIn={'fadeInUp'}
-              />
-            );
-          })
+          return (
+            <CustomImage
+              imageSize={item.imageSize}
+              src={`${IMAGE_BASE_URL}${item.image}`}
+              style={{
+                display: item.image !== '' ? 'flex' : 'none',
+              }}
+              isVisible={true}
+              animationIn={'fadeInUp'}
+            />
+          );
+        })
         : null}
 
       {/**********************content************** */}
       <div style={commonStyles.contentLeftBorder}>
         {content && content.length
           ? content
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, index) => {
-                return (
-                  <CardContent
-                    key={index}
-                    content={ReactHtmlParser(item.content)}
-                    isVisible={true}
-                    animationIn={'fadeInUp'}
-                  />
-                );
-              })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardContent
+                  key={index}
+                  content={ReactHtmlParser(item.content)}
+                  isVisible={true}
+                  animationIn={'fadeInUp'}
+                />
+              );
+            })
           : []}
       </div>
       {/**************audio******************** */}
       {videos && videos.length
         ? videos
-            .filter((item) => {
-              return item.video_type === 'audio' && item.order === 1;
-            })
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, i) => {
-              return (
-                <CardAudio
-                  src={`${IMAGE_BASE_URL}${item.video}`}
-                  style={{
-                    display: item.video !== '' ? 'block' : 'none',
-                    textAlign: 'center',
-                  }}
-                />
-              );
-            })
+          .filter((item) => {
+            return item.video_type === 'audio' && item.order === 1;
+          })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, i) => {
+            return (
+              <CardAudio
+                src={`${IMAGE_BASE_URL}${item.video}`}
+                style={{
+                  display: item.video !== '' ? 'block' : 'none',
+                  textAlign: 'center',
+                }}
+              />
+            );
+          })
         : []}
       {showExercises && <ExerciseBox week={week} />}
     </>

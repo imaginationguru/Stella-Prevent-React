@@ -1,15 +1,15 @@
-import React, {useState, useEffect} from 'react';
-import right from '@assets/images/right.svg';
-import cross from '@assets/images/cross.svg';
-import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
-import GLOBALS from '@constants';
+import React, { useState, useEffect } from 'react';
+import right from '../../../assets/images/right.svg';
+import cross from '../../../assets/images/cross.svg';
+import commonStyles from '../../../containers/dailyLearningWeeks/commonStyles';
+import GLOBALS from '../../../constants';
 import ReactHtmlParser from 'react-html-parser';
-import {useDispatch, useSelector} from 'react-redux';
-import * as AppActions from '@actions';
-import {getItem} from '@utils/AsyncUtils';
-import {translate as ts} from '@i18n/translate';
-import ExerciseBox from '@components/ExerciseBox';
-import {customAlert} from '@helpers/commonAlerts.web';
+import { useDispatch, useSelector } from 'react-redux';
+import * as AppActions from '../../../actions';
+import { getItem } from '../../../utils/AsyncUtils';
+import { translate as ts } from '../../../i18n/translate';
+import ExerciseBox from '../../../components/ExerciseBox';
+import { customAlert } from '../../../helpers/commonAlerts.web';
 import {
   CardQuote,
   CardTitle,
@@ -18,9 +18,9 @@ import {
   CardContent,
   CardAudio,
   CustomImage,
-} from '@components/Cards';
-const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
-const {BOX_GRAY, YELLOW, GREEN_TEXT, CIRCLE_GRAY, WHITE, GRAY, RED} = COLORS;
+} from '../../../components/Cards';
+const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
+const { BOX_GRAY, YELLOW, GREEN_TEXT, CIRCLE_GRAY, WHITE, GRAY, RED } = COLORS;
 
 const ThirtyThree = (props) => {
   const {
@@ -39,11 +39,11 @@ const ThirtyThree = (props) => {
   const [userInputs, setUserInputs] = useState([]);
   const [inputs, setInputs] = useState([]);
 
-  const {assessmentData = {}, userAssessmentData = []} = useSelector(
+  const { assessmentData = {}, userAssessmentData = [] } = useSelector(
     (state) => state.moduleOne,
   );
 
-  const {headers} = assessmentData;
+  const { headers } = assessmentData;
 
   const dispatch = useDispatch();
   let userId = getItem('userId');
@@ -57,7 +57,7 @@ const ThirtyThree = (props) => {
       });
     }
     let selectedFormat = assessmentCards.map((item) => {
-      return {_id: item.assessment_header_id, content: item.content};
+      return { _id: item.assessment_header_id, content: item.content };
     });
     let selectUserInputs = assessmentCards.map((item) => {
       return {
@@ -68,8 +68,8 @@ const ThirtyThree = (props) => {
         is_added: true,
         assessment_id: item.assessment_header.length
           ? item.assessment_header.map((val) => {
-              return val.assessment_id;
-            })
+            return val.assessment_id;
+          })
           : null,
       };
     });
@@ -127,7 +127,7 @@ const ThirtyThree = (props) => {
     let indexArray = [];
     let contexIndex;
     inputs.map((item, i) => {
-      indexArray.push({index: i, id: item?._id});
+      indexArray.push({ index: i, id: item?._id });
     });
     console.log(userInputs, 'userInputs..');
     let filter_item = userInputs.filter(
@@ -135,25 +135,25 @@ const ThirtyThree = (props) => {
     );
     let modifyData = userInputs.length
       ? userInputs
-          .filter((m) => m.content != '' && m.is_added == true)
-          .map((item) => {
-            indexArray.map((data, index) => {
-              if (data.id == item.assessment_header_id) {
-                contexIndex = index;
-              }
-            });
-            return {
-              assessment_header_id: item.assessment_header_id,
-              content: [
-                {
-                  content: item.content,
-                  order: item.order,
-                  contentIndex: contexIndex + 1,
-                  type: 'supportNetwork',
-                },
-              ],
-            };
-          })
+        .filter((m) => m.content != '' && m.is_added == true)
+        .map((item) => {
+          indexArray.map((data, index) => {
+            if (data.id == item.assessment_header_id) {
+              contexIndex = index;
+            }
+          });
+          return {
+            assessment_header_id: item.assessment_header_id,
+            content: [
+              {
+                content: item.content,
+                order: item.order,
+                contentIndex: contexIndex + 1,
+                type: 'supportNetwork',
+              },
+            ],
+          };
+        })
       : [];
     let firstParams = {
       user_id: userId,
@@ -191,7 +191,7 @@ const ThirtyThree = (props) => {
         ...val,
         is_added:
           val.assessment_header_id === innnerItem.assessment_header_id &&
-          val.order === innnerItem.order
+            val.order === innnerItem.order
             ? true
             : val.is_added,
       };
@@ -210,15 +210,15 @@ const ThirtyThree = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -230,19 +230,37 @@ const ThirtyThree = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
       {images && images.length
         ? images
-            .filter((img) => img.image_type === 'first')
+          .filter((img) => img.image_type === 'first')
+          .map((item, i) => {
+            return (
+              <CustomImage
+                key={i}
+                src={`${IMAGE_BASE_URL}${item.image}`}
+                style={{
+                  ...commonStyles.assessImage,
+                  display: item.image !== '' ? 'flex' : 'none',
+                }}
+              />
+            );
+          })
+        : []}
+      {/***************************ASSESSMENTS DESCRIPTION ONE ************* */}
+      <div style={{ ...commonStyles.assessmentWrapper, marginBottom: '50px' }}>
+        {images && images.length
+          ? images
+            .filter((img) => img.image_type === 'second')
             .map((item, i) => {
               return (
                 <CustomImage
@@ -255,183 +273,165 @@ const ThirtyThree = (props) => {
                 />
               );
             })
-        : []}
-      {/***************************ASSESSMENTS DESCRIPTION ONE ************* */}
-      <div style={{...commonStyles.assessmentWrapper, marginBottom: '50px'}}>
-        {images && images.length
-          ? images
-              .filter((img) => img.image_type === 'second')
-              .map((item, i) => {
-                return (
-                  <CustomImage
-                    key={i}
-                    src={`${IMAGE_BASE_URL}${item.image}`}
-                    style={{
-                      ...commonStyles.assessImage,
-                      display: item.image !== '' ? 'flex' : 'none',
-                    }}
-                  />
-                );
-              })
           : []}
 
         {props.assessments && props.assessments.length
           ? props.assessments.map((item, i) => {
-              return (
-                <CardDescription
-                  key={i}
-                  style={commonStyles.assessDesc}
-                  description={ReactHtmlParser(item.description)}
-                />
-              );
-            })
+            return (
+              <CardDescription
+                key={i}
+                style={commonStyles.assessDesc}
+                description={ReactHtmlParser(item.description)}
+              />
+            );
+          })
           : []}
       </div>
       {/******************************************************************* */}
 
       {inputs.length
         ? inputs.map((item) => {
-            return (
-              <div>
-                <div
+          return (
+            <div>
+              <div
+                style={{
+                  backgroundColor: generateDynamicColor(item.order),
+                }}>
+                <p
                   style={{
-                    backgroundColor: generateDynamicColor(item.order),
+                    color: WHITE,
+                    padding: '10px',
+                    textAlign: 'center',
                   }}>
-                  <p
-                    style={{
-                      color: WHITE,
-                      padding: '10px',
-                      textAlign: 'center',
-                    }}>
-                    {ReactHtmlParser(item.name)}
-                  </p>
-                </div>
-                {userInputs && userInputs.length
-                  ? userInputs
-                      .sort((a, b) => (a.order > b.order && 1) || -1)
-                      .filter((ele) => {
-                        return ele.assessment_header_id === item._id;
-                      })
-                      .map((val, i) => {
-                        const showPlus =
-                          i ==
-                          userInputs
-                            .sort((a, b) => (a.order > b.order && 1) || -1)
-                            .filter((ele) => {
-                              return ele.assessment_header_id === item._id;
-                            }).length -
-                            1;
-                        const isDelete =
-                          i <
-                          userInputs
-                            .sort((a, b) => (a.order > b.order && 1) || -1)
-                            .filter((ele) => {
-                              return ele.assessment_header_id === item._id;
-                            }).length -
-                            1;
-                        const isDisabled =
-                          i <
-                          userInputs
-                            .sort((a, b) => (a.order > b.order && 1) || -1)
-                            .filter((ele) => {
-                              return ele.assessment_header_id === item._id;
-                            }).length -
-                            1;
-                        return (
-                          <div
-                            style={styles.crossIconWrapper}
-                            className={'mr20'}>
-                            <input
-                              disabled={isDisabled ? true : false}
-                              type="text"
-                              className="f-field"
-                              name={name}
-                              style={styles.selectedText}
-                              value={val.content}
-                              onChange={(e) => {
-                                onHandleChange(e, item, val);
-                              }}
-                            />
-                            {isDelete ? (
-                              <div
-                                style={styles.circleCrossDiv}
-                                onClick={() => {
-                                  let filter_data = userInputs
-                                    .filter(
-                                      (ele) =>
-                                        ele.assessment_header_id ==
-                                          val.assessment_header_id &&
-                                        val.order != ele.order,
-                                    )
-                                    .sort(
-                                      (a, b) => (a.order > b.order && 1) || -1,
-                                    );
-
-                                  let other_header = userInputs
-                                    .filter(
-                                      (ele) =>
-                                        ele.assessment_header_id !=
-                                        val.assessment_header_id,
-                                    )
-                                    .sort(
-                                      (a, b) => (a.order > b.order && 1) || -1,
-                                    );
-
-                                  filter_data = filter_data.map(
-                                    (item, index) => {
-                                      return {
-                                        ...item,
-                                        order: index + 1,
-                                      };
-                                    },
-                                  );
-
-                                  setUserInputs([
-                                    ...other_header,
-                                    ...filter_data,
-                                  ]);
-                                  if (val.content_id) {
-                                    dispatch(
-                                      AppActions.deleteUserAssessmentData(
-                                        val.content_id,
-                                        props._id,
-                                        assessment_id,
-                                      ),
-                                    );
-                                  }
-                                }}>
-                                <span
-                                  style={{
-                                    ...styles.plusIcon,
-                                    fontSize: '15px',
-                                  }}>
-                                  x
-                                </span>
-                              </div>
-                            ) : null}
-                            {showPlus ? (
-                              <div
-                                style={{
-                                  ...styles.circleDiv,
-                                  backgroundColor: val.content.length
-                                    ? GREEN_TEXT
-                                    : GRAY,
-                                }}
-                                onClick={() => {
-                                  if (val.content != '') {
-                                    addHandler(item, val);
-                                  }
-                                }}>
-                                <span style={styles.plusIcon}>+</span>
-                              </div>
-                            ) : null}
-                          </div>
-                        );
-                      })
-                  : null}
+                  {ReactHtmlParser(item.name)}
+                </p>
               </div>
-            );
-          })
+              {userInputs && userInputs.length
+                ? userInputs
+                  .sort((a, b) => (a.order > b.order && 1) || -1)
+                  .filter((ele) => {
+                    return ele.assessment_header_id === item._id;
+                  })
+                  .map((val, i) => {
+                    const showPlus =
+                      i ==
+                      userInputs
+                        .sort((a, b) => (a.order > b.order && 1) || -1)
+                        .filter((ele) => {
+                          return ele.assessment_header_id === item._id;
+                        }).length -
+                      1;
+                    const isDelete =
+                      i <
+                      userInputs
+                        .sort((a, b) => (a.order > b.order && 1) || -1)
+                        .filter((ele) => {
+                          return ele.assessment_header_id === item._id;
+                        }).length -
+                      1;
+                    const isDisabled =
+                      i <
+                      userInputs
+                        .sort((a, b) => (a.order > b.order && 1) || -1)
+                        .filter((ele) => {
+                          return ele.assessment_header_id === item._id;
+                        }).length -
+                      1;
+                    return (
+                      <div
+                        style={styles.crossIconWrapper}
+                        className={'mr20'}>
+                        <input
+                          disabled={isDisabled ? true : false}
+                          type="text"
+                          className="f-field"
+                          name={name}
+                          style={styles.selectedText}
+                          value={val.content}
+                          onChange={(e) => {
+                            onHandleChange(e, item, val);
+                          }}
+                        />
+                        {isDelete ? (
+                          <div
+                            style={styles.circleCrossDiv}
+                            onClick={() => {
+                              let filter_data = userInputs
+                                .filter(
+                                  (ele) =>
+                                    ele.assessment_header_id ==
+                                    val.assessment_header_id &&
+                                    val.order != ele.order,
+                                )
+                                .sort(
+                                  (a, b) => (a.order > b.order && 1) || -1,
+                                );
+
+                              let other_header = userInputs
+                                .filter(
+                                  (ele) =>
+                                    ele.assessment_header_id !=
+                                    val.assessment_header_id,
+                                )
+                                .sort(
+                                  (a, b) => (a.order > b.order && 1) || -1,
+                                );
+
+                              filter_data = filter_data.map(
+                                (item, index) => {
+                                  return {
+                                    ...item,
+                                    order: index + 1,
+                                  };
+                                },
+                              );
+
+                              setUserInputs([
+                                ...other_header,
+                                ...filter_data,
+                              ]);
+                              if (val.content_id) {
+                                dispatch(
+                                  AppActions.deleteUserAssessmentData(
+                                    val.content_id,
+                                    props._id,
+                                    assessment_id,
+                                  ),
+                                );
+                              }
+                            }}>
+                            <span
+                              style={{
+                                ...styles.plusIcon,
+                                fontSize: '15px',
+                              }}>
+                              x
+                            </span>
+                          </div>
+                        ) : null}
+                        {showPlus ? (
+                          <div
+                            style={{
+                              ...styles.circleDiv,
+                              backgroundColor: val.content.length
+                                ? GREEN_TEXT
+                                : GRAY,
+                            }}
+                            onClick={() => {
+                              if (val.content != '') {
+                                addHandler(item, val);
+                              }
+                            }}>
+                            <span style={styles.plusIcon}>+</span>
+                          </div>
+                        ) : null}
+                      </div>
+                    );
+                  })
+                : null}
+            </div>
+          );
+        })
         : null}
       <div style={commonStyles.buttonWrapper}>
         <button
@@ -445,12 +445,12 @@ const ThirtyThree = (props) => {
 
       {content && content.length
         ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, i) => {
-              return (
-                <CardContent key={i} content={ReactHtmlParser(item.content)} />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, i) => {
+            return (
+              <CardContent key={i} content={ReactHtmlParser(item.content)} />
+            );
+          })
         : []}
 
       {showExercises && <ExerciseBox week={week} />}
@@ -499,8 +499,8 @@ const styles = {
     justifyContent: 'center',
     marginLeft: '25px',
   },
-  button: {width: '20%', marginTop: '30px'},
-  image: {width: '100%', height: '100%'},
+  button: { width: '20%', marginTop: '30px' },
+  image: { width: '100%', height: '100%' },
   imageWrapper: {
     width: '120px',
     height: '100px',

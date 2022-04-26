@@ -1,13 +1,13 @@
 import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
-import GLOBALS from '@constants';
-import check from '@assets/images/screener/check.png';
-import uncheck from '@assets/images/screener/uncheck.png';
-const {COLORS, FONTS} = GLOBALS;
-const {DARK_GREEN} = COLORS;
+import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
+import GLOBALS from '../constants';
+import check from '../assets/images/screener/check.png';
+import uncheck from '../assets/images/screener/uncheck.png';
+const { COLORS, FONTS } = GLOBALS;
+const { DARK_GREEN } = COLORS;
 export default class RadioButton extends React.Component {
   render() {
-    const {selectedOption, outerStyle, innerStyle, label, onPress} = this.props;
+    const { selectedOption, outerStyle, innerStyle, label, onPress } = this.props;
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={() => onPress(label)}>

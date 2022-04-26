@@ -1,8 +1,8 @@
-import store from '@store/setup';
+import store from '../store/setup';
 import CryptoJS from 'crypto-js';
-import {useDispatch, useSelector} from 'react-redux';
-import GLOBALS from '@constants';
-const {STRINGS} = GLOBALS;
+import { useDispatch, useSelector } from 'react-redux';
+import GLOBALS from '../constants';
+const { STRINGS } = GLOBALS;
 
 const isInternet = () => window.navigator.onLine;
 let accessToken = () => store.getState().authReducer.loginToken;
@@ -12,7 +12,7 @@ const checkIfWeekCanAccess = (week = 1, planInfo = {}) => {
   else if (planInfo.price > 0) return true;
   else return false;
 };
-const getSelectedWeekDayCards = (curr_week, curr_day, data) => {};
+const getSelectedWeekDayCards = (curr_week, curr_day, data) => { };
 
 const canProceedNextDay = (curr_week, curr_day, total_week, total_day) => {
   console.log(

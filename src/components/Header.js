@@ -1,20 +1,23 @@
-import dashboardHeader from '@assets/images/dashboardHeader/dashboardHeader.png';
-import GLOBALS from '@constants';
-import profile from '@assets/images/profile.png';
-import {getItem} from '@utils/AsyncUtils';
-import {useDispatch, useSelector} from 'react-redux';
-import * as AppActions from '@actions';
-import {navigatorPush} from '@config/navigationOptions.web';
 
-const {COLORS} = GLOBALS;
-const {DARK_GREEN, WHITE} = COLORS;
+import dashboardHeader from '../assets/images/dashboardHeader/dashboardHeader.png';
+import GLOBALS from '../constants';
+
+import profile from '../assets/images/profile.png';
+import { getItem } from '../utils/AsyncUtils';
+import { useDispatch, useSelector } from 'react-redux';
+import * as AppActions from '../actions';
+import { navigatorPush } from '../config/navigationOptions.web';
+
+const { COLORS } = GLOBALS;
+const { DARK_GREEN, WHITE } = COLORS;
+
 const Header = () => {
   let firstName = getItem('firstName');
   let lastName = getItem('lastName');
   const dispatch = useDispatch();
   return (
-    <div style={{width: '100%', height: '15vw'}}>
-      <img src={dashboardHeader} style={{width: '100%', height: '100%'}} />
+    <div style={{ width: '100%', height: '15vw' }}>
+      <img src={dashboardHeader} style={{ width: '100%', height: '100%' }} />
       <div style={styles.profileWrapper}>
         <div className="row">
           <div className="col-md-5 col-sm-5 col-6">

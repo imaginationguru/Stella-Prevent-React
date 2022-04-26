@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import { useDispatch, useSelector } from 'react-redux';
-import GLOBALS from '@constants';
-import * as AppActions from '@actions';
-import { getItem } from '@utils/AsyncUtils';
-import ExerciseBox from '@components/ExerciseBox';
+import GLOBALS from '../../../constants';
+import * as AppActions from '../../../actions';
+import { getItem } from '../../../utils/AsyncUtils';
+import ExerciseBox from '../../../components/ExerciseBox';
 import {
   CardQuote,
   CardTitle,
@@ -12,8 +12,8 @@ import {
   CardDescription,
   CardContent,
   CustomImage,
-} from '@components/Cards';
-import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
+} from '../../../components/Cards';
+import commonStyles from '../../../containers/dailyLearningWeeks/commonStyles';
 import { Dimensions } from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;

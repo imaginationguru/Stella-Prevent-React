@@ -8,24 +8,24 @@
 
 import { useState, useEffect } from 'react';
 
-import logoWhite from '@assets/images/logoWhite.png';
-import rightCover from '@assets/images/candle.png';
-import icon01 from '@assets/images/icon01.svg';
-import icon02 from '@assets/images/icon02.svg';
+import logoWhite from '../../../assets/images/logoWhite.png';
+import rightCover from '../../../assets/images/candle.png';
+import icon01 from '../../../assets/images/icon01.svg';
+import icon02 from '../../../assets/images/icon02.svg';
 import { Link, useLocation } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-import * as AppActions from '@actions';
-import MasterLayout from '@components/MasterLayout';
-import GoogleLoginComponent from '@components/SocialLogin/GoogleLogIn';
-import FacebookLoginComponent from '@components/SocialLogin/FacebookLogin';
-import AppleLoginComponent from '@components/SocialLogin/AppleLogin';
-import { translate as ts } from '@i18n/translate';
-import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
-import { emailRegex } from '@utils/RegexUtils';
-import GLOBALS from '@constants';
-import Footer from '@components/Footer';
-
+import * as AppActions from '../../../actions';
+import MasterLayout from '../../../components/MasterLayout';
+import GoogleLoginComponent from '../../../components/SocialLogin/GoogleLogIn';
+import FacebookLoginComponent from '../../../components/SocialLogin/FacebookLogin';
+import AppleLoginComponent from '../../../components/SocialLogin/AppleLogin';
+import { translate as ts } from '../../../i18n/translate';
+import commonStyles from '../../../containers/dailyLearningWeeks/commonStyles';
+import { emailRegex } from '../../../utils/RegexUtils';
+import GLOBALS from '../../../constants';
+import Footer from '../../../components/Footer';
+import { Capacitor } from '@capacitor/core';
 const { IMAGE_BASE_URL } = GLOBALS;
 
 const SignIn = (componentId) => {
@@ -42,6 +42,7 @@ const SignIn = (componentId) => {
 
   const onHandleChange = (e) => {
     const { name, value } = e.target;
+    console.log(Capacitor.isNativePlatform(), "navigator..")
     if (name === 'email') {
       setEmail(value);
       setEmailError('');

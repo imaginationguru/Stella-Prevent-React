@@ -1,10 +1,10 @@
 import AppleLogin from 'react-apple-login';
-import {customAlert} from '@helpers/commonAlerts.web';
+import { customAlert } from '../../helpers/commonAlerts.web';
 import jwt_decode from 'jwt-decode';
-import GLOBALS from '@constants';
-const {WEB_BASE_URL} = GLOBALS;
+import GLOBALS from '../../constants';
+const { WEB_BASE_URL } = GLOBALS;
 const AppleLogIn = (props) => {
-  let {onSocialLogin = () => {}} = props;
+  let { onSocialLogin = () => { } } = props;
   const appleId = 'com.stellaPreventWeb';
   console.log(`${WEB_BASE_URL}Dashboard`, 'apple');
   const handleResponse = (res) => {
@@ -18,7 +18,7 @@ const AppleLogIn = (props) => {
         var decoded = jwt_decode(res.authorization.id_token);
         var email_id = decoded.email;
         verifyUser(res, email_id);
-      } catch (err) {}
+      } catch (err) { }
     }
   };
 

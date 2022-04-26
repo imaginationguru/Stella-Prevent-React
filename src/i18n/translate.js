@@ -1,15 +1,15 @@
 import i18n from 'i18next';
-import {initReactI18next} from 'react-i18next';
-import {LOCALES} from '@i18n/constants';
-import languageResources from '@i18n/messages';
+import { initReactI18next } from 'react-i18next';
+import { LOCALES } from '../i18n/constants';
+import languageResources from '../i18n/messages';
 const defaultLang = languageResources;
 const defaultLocales = LOCALES;
 const languageDetector = {
   type: 'languageDetector',
   async: true,
   detect: (cb) => cb(LOCALES.ENGLISH),
-  init: () => {},
-  cacheUserLanguage: () => {},
+  init: () => { },
+  cacheUserLanguage: () => { },
 };
 
 i18n
@@ -18,7 +18,7 @@ i18n
   .init({
     lng: defaultLocales.ENGLISH,
     fallbackLng: defaultLocales.ENGLISH,
-    resources: {...defaultLang},
+    resources: { ...defaultLang },
     debug: false,
   });
 

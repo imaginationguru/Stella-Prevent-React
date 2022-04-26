@@ -1,15 +1,15 @@
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {navigatorPop, goToPastModule} from '@config/navigationOptions.web';
-import back from '@assets/images/subscription/back.png';
-import GLOBALS from '@constants';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { navigatorPop, goToPastModule } from '../../config/navigationOptions.web';
+import back from '../../assets/images/subscription/back.png';
+import GLOBALS from '../../constants';
 
-const {COLORS, FONTS} = GLOBALS;
+const { COLORS, FONTS } = GLOBALS;
 const BackBtn = (props) => {
-  let {title = 'Back to Dashboard', btnStyle, goBack = true} = props;
+  let { title = 'Back to Dashboard', btnStyle, goBack = true } = props;
   return (
     <View style={[styles.backBtn, btnStyle]}>
       <TouchableOpacity
-        style={{flexDirection: 'row', alignItems: 'center'}}
+        style={{ flexDirection: 'row', alignItems: 'center' }}
         onPress={() => {
           goBack ? navigatorPop() : goToPastModule();
         }}>

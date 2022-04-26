@@ -1,18 +1,21 @@
 /* eslint-disable prettier/prettier */
 
-import GLOBALS from '@constants';
-import RestClient from '@helpers/RestClient';
+
+import GLOBALS from '../../constants';
+import RestClient from '../../helpers/RestClient';
 import { loadingAction } from '../common';
-import { sessionExpire } from '@actions/tracker';
-import { getItem, generateUrlParams } from '@utils/AsyncUtils';
-import { navigatorPush } from '@config/navigationOptions.web';
+import { sessionExpire } from '../tracker';
+import { getItem, generateUrlParams } from '../../utils/AsyncUtils';
+import { navigatorPush } from '../../config/navigationOptions.web';
 import { epdsModalAction } from '..';
-import { customAlert } from '@helpers/commonAlerts.web';
+import { customAlert } from '../../helpers/commonAlerts.web';
 import { getUser } from '../auth';
-import { store } from '@store/setup.web';
+import { store } from '../../store/setup.web';
 const { ACTION_TYPE, URL, STRINGS } = GLOBALS;
 const { TRY_AGAIN, CHECK_NETWORK } = STRINGS;
 var h2p = require('html2plaintext');
+
+
 
 /********************GET CURRENT ACTIVE CARD Data************** */
 export function getCurrentActiveCard(isLoading = true, cb) {

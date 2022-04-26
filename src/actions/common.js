@@ -1,5 +1,5 @@
-import GLOBALS from '@constants';
-const {ACTION_TYPE} = GLOBALS;
+import GLOBALS from '../constants';
+const { ACTION_TYPE } = GLOBALS;
 
 export const loadingAction = (payload) => (dispatch) =>
   dispatch({

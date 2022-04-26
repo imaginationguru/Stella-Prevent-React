@@ -1141,6 +1141,13 @@
   "resolved" "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   "version" "0.2.3"
 
+"@capacitor-community/facebook-login@^3.3.0":
+  "integrity" "sha512-gkh5rOyyLD3baQ7J6Sq1YkoDeM+X7Uj9mL4oWl92qaVQq/FZc/yoe6qsvedFIG1YmzvLB2rZrBqUoVle74q7HA=="
+  "resolved" "https://registry.npmjs.org/@capacitor-community/facebook-login/-/facebook-login-3.3.0.tgz"
+  "version" "3.3.0"
+  dependencies:
+    "@capacitor/core" "^3.0.0"
+
 "@capacitor/android@3.5.0":
   "integrity" "sha512-1SiTMMdd+urvDRrSLDmrFUU9Ldm8B2mUzVNvx8u1zgagZVPNQLoMY4WX8EkpPjt4+D6YIoBjdqb72LID9Iip6A=="
   "resolved" "https://registry.npmjs.org/@capacitor/android/-/android-3.5.0.tgz"
@@ -1168,7 +1175,7 @@
     "tslib" "^2.1.0"
     "xml2js" "^0.4.23"
 
-"@capacitor/core@^3.5.0":
+"@capacitor/core@^3.0.0", "@capacitor/core@^3.5.0":
   "integrity" "sha512-+CFSG+CztpFIir9gGqNEtAYuf6OWryQ8dojXoeozAkoz3mKvyFfcEfvLVPo/pw/B4zHIlNnJLHne6vbjAFbDKQ=="
   "resolved" "https://registry.npmjs.org/@capacitor/core/-/core-3.5.0.tgz"
   "version" "3.5.0"
@@ -2074,9 +2081,9 @@
     "@square/web-payments-sdk-types" "^1.1.1"
 
 "@stitches/react@^1.2.7":
-  "integrity" "sha512-9g9dWI4gsSVe8bNLlb+lMkBYsnIKCZTmvqvDG+Avnn69XfmHZKiaMrx7cgTaddq7aTPPmXiTsbFcUy0xgI4+wA=="
-  "resolved" "https://registry.npmjs.org/@stitches/react/-/react-1.2.8.tgz"
-  "version" "1.2.8"
+  "integrity" "sha512-6AxpUag7OW55ANzRnuy7R15FEyQeZ66fytVo3BBilFIU0mfo3t49CAMcEAL/A1SbhSj/FCdWkn/XrbjGBTJTzg=="
+  "resolved" "https://registry.npmjs.org/@stitches/react/-/react-1.2.7.tgz"
+  "version" "1.2.7"
 
 "@surma/rollup-plugin-off-main-thread@^1.1.1":
   "integrity" "sha512-yBMPqmd1yEJo/280PAMkychuaALyQ9Lkb5q1ck3mjJrFuEobIfhnQ4J3mbvBoISmR3SWMWV+cGB/I0lCQee79A=="
@@ -6979,7 +6986,6 @@
     "jsonfile" "^4.0.0"
     "universalify" "^0.1.0"
 
-<<<<<<< HEAD
 "fs-extra@^9.0.0":
   "integrity" "sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ=="
   "resolved" "https://registry.npmjs.org/fs-extra/-/fs-extra-9.1.0.tgz"
@@ -6990,8 +6996,6 @@
     "jsonfile" "^6.0.1"
     "universalify" "^2.0.0"
 
-=======
->>>>>>> 144632b429668feacfc5dde92059b3786285ab48
 "fs-extra@^9.0.1":
   "integrity" "sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ=="
   "resolved" "https://registry.npmjs.org/fs-extra/-/fs-extra-9.1.0.tgz"
@@ -9030,14 +9034,11 @@
   "resolved" "https://registry.npmjs.org/kleur/-/kleur-3.0.3.tgz"
   "version" "3.0.3"
 
-<<<<<<< HEAD
 "kleur@^4.1.1":
   "integrity" "sha512-8QADVssbrFjivHWQU7KkMgptGTl6WAcSdlbBPY4uNF+mWr6DGcKrvY2w4FQJoXch7+fKMjj0dRrL75vk3k23OA=="
   "resolved" "https://registry.npmjs.org/kleur/-/kleur-4.1.4.tgz"
   "version" "4.1.4"
 
-=======
->>>>>>> 144632b429668feacfc5dde92059b3786285ab48
 "klona@^2.0.4":
   "integrity" "sha512-pJiBpiXMbt7dkzXe8Ghj/u4FfXOOa98fPW+bihOJ4SjnoijweJrNThJfd3ifXpXhREjpoF2mZVH1GfS9LV3kHQ=="
   "resolved" "https://registry.npmjs.org/klona/-/klona-2.0.5.tgz"
@@ -14353,11 +14354,7 @@
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
   "version" "1.14.1"
 
-<<<<<<< HEAD
 "tslib@^2.0.1", "tslib@^2.0.3", "tslib@^2.1.0", "tslib@^2.2.0", "tslib@^2.3.1":
-=======
-"tslib@^2.0.1", "tslib@^2.0.3", "tslib@^2.2.0":
->>>>>>> 144632b429668feacfc5dde92059b3786285ab48
   "integrity" "sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw=="
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.3.1.tgz"
   "version" "2.3.1"

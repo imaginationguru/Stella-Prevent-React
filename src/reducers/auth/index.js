@@ -1,4 +1,4 @@
-import GLOBALS from '@constants';
+import GLOBALS from '../../constants';
 
 const INITIAL_STATE = {
   isLoggedIn: false,
@@ -14,11 +14,11 @@ const INITIAL_STATE = {
   profileImg: '',
 };
 
-const {ACTION_TYPE} = GLOBALS;
+const { ACTION_TYPE } = GLOBALS;
 function authReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case ACTION_TYPE.LOGIN_REQUEST:
-      return {...state, isLoading: true};
+      return { ...state, isLoading: true };
     case ACTION_TYPE.LOGIN_RESET /* RESET LOGIN */:
       return {
         ...state,
@@ -54,7 +54,7 @@ function authReducer(state = INITIAL_STATE, action) {
         profileImg: null,
       };
     case ACTION_TYPE.GET_PROGRAM_REQUEST:
-      return {...state, isLoading: true};
+      return { ...state, isLoading: true };
     case ACTION_TYPE.GET_PROGRAM_SUCCESS:
       return {
         ...state,
@@ -62,21 +62,21 @@ function authReducer(state = INITIAL_STATE, action) {
         programData: action.payload,
       };
     case ACTION_TYPE.GET_PROGRAM_FAIL:
-      return {...state, isLoading: false, programData: null};
+      return { ...state, isLoading: false, programData: null };
     case ACTION_TYPE.USER_EMAIL_EXISTS_REQUEST:
-      return {...state, isLoading: true};
+      return { ...state, isLoading: true };
     case ACTION_TYPE.USER_EMAIL_EXISTS_SUCCESS:
-      return {...state, isLoading: false, userData: action.payload};
+      return { ...state, isLoading: false, userData: action.payload };
     case ACTION_TYPE.USER_EMAIL_EXISTS_CLEAR:
-      return {...state, isLoading: false, userData: []};
+      return { ...state, isLoading: false, userData: [] };
     case ACTION_TYPE.USER_EMAIL_EXISTS_FAIL:
-      return {...state, isLoading: false, userData: null};
+      return { ...state, isLoading: false, userData: null };
     case ACTION_TYPE.CHANGE_PASSWORD_REQUEST:
-      return {...state, isLoading: true};
+      return { ...state, isLoading: true };
     case ACTION_TYPE.CHANGE_PASSWORD_SUCCESS:
-      return {...state, isLoading: false, resetData: action.payload};
+      return { ...state, isLoading: false, resetData: action.payload };
     case ACTION_TYPE.CHANGE_PASSWORD_CLEAR:
-      return {...state, isLoading: false, resetData: {}};
+      return { ...state, isLoading: false, resetData: {} };
     case ACTION_TYPE.CHANGE_PASSWORD_FAIL:
       return {
         ...state,
@@ -84,7 +84,7 @@ function authReducer(state = INITIAL_STATE, action) {
         resetData: null,
       };
     case ACTION_TYPE.GET_QUOTE_DATA_REQUEST:
-      return {...state, isLoading: true};
+      return { ...state, isLoading: true };
 
     case ACTION_TYPE.GET_QUOTE_DATA_SUCCESS:
       return {
@@ -105,7 +105,7 @@ function authReducer(state = INITIAL_STATE, action) {
         loginToken: null,
       };
     case ACTION_TYPE.VERIFY_USER_DATA_REQUEST:
-      return {...state, isLoading: true};
+      return { ...state, isLoading: true };
 
     case ACTION_TYPE.VERIFY_USER_DATA_SUCCESS:
       return {
