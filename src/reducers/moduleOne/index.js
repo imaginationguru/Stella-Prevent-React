@@ -32,6 +32,7 @@ const INITIAL_STATE = {
   },
   saveMultiAssessmentData: {},
   multiAssessmentData: [],
+  getScreenStartTime: null,
 };
 
 const {ACTION_TYPE} = GLOBALS;
@@ -179,6 +180,12 @@ function moduleOne(state = INITIAL_STATE, action) {
           activityChecked: false,
         },
       };
+    case ACTION_TYPE.GET_SCREEN_START_TIME:
+      return {
+        ...state,
+        getScreenStartTime: action.payload,
+      };
+
     default:
       return state;
   }

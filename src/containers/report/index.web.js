@@ -2,9 +2,10 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
+
 import React, { useState, useEffect } from 'react';
+
 import {
-  TouchableOpacity,
   View,
   Text,
   FlatList,
@@ -20,14 +21,17 @@ import GLOBALS from '@constants';
 import * as AppActions from '@actions';
 import momentZone from 'moment-timezone';
 import BackToDashboard from '@components/common/backToDashboard';
-import { Line } from 'react-chartjs-2';
-const { STRINGS, FONTS, COLORS, MOODS_ARRAY, IMAGE_BASE_URL } = GLOBALS;
 
-const { LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN } = COLORS;
+import {Line} from 'react-chartjs-2';
+const {FONTS, COLORS, MOODS_ARRAY} = GLOBALS;
 
-import { getItem } from '@utils/AsyncUtils';
+const {DARK_GREEN} = COLORS;
+
+import {getItem} from '@utils/AsyncUtils';
+import {navigatorPop} from '@config/navigationOptions.web';
+
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
+
 let currentTimeZone = momentZone.tz.guess();
 
 const LineGraphUI = ({ xAxis, yAxis, lable }) => {
@@ -134,7 +138,10 @@ const LineGraphUI = ({ xAxis, yAxis, lable }) => {
 };
 const Report = ({ location }) => {
   let isFromCard = location?.state?.isFromCard;
-  const { getWeeklySummaryReportData } = useSelector((state) => state.tracker);
+
+  const {getWeeklySummaryReportData} = useSelector((state) => state.tracker);
+  const {getScreenStartTime = ''} = useSelector((state) => state.moduleOne);
+
   const dispatch = useDispatch();
   useEffect(() => {
     let postData = {
@@ -348,12 +355,35 @@ const Report = ({ location }) => {
           };
         })
       : null;
-
+  useEffect(() => {
+    dispatch(AppActions.getScreenStartTime(moment().format()));
+  }, [dispatch]);
+  const addTimeTrackerAPICall = () => {
+    let postData = {
+      userId: getItem('userId'),
+      group: 'Engagement',
+      screen: 'Report',
+      startTime: getScreenStartTime,
+      endTime: moment().format(),
+      date: moment().format(),
+    };
+    dispatch(AppActions.addTimeTracker(postData));
+  };
   return (
     <View>
       <MasterLayout>
         {/* <BackBtn title = {isFromCard ? 'Back to Card' : 'Back to Dashboard'} /> */}
-        {isFromCard ? <BackBtn title="Back to Card" /> : <BackToDashboard />}
+        {isFromCard ? (
+          <BackBtn
+            title="Back to Card"
+            onPress={() => {
+              addTimeTrackerAPICall();
+              navigatorPop();
+            }}
+          />
+        ) : (
+          <BackToDashboard onBack={() => addTimeTrackerAPICall()} />
+        )}
         <View
           style={{
             width: DEVICE_WIDTH < 500 ? '80%' : '60%',

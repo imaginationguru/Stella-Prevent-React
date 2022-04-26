@@ -9,7 +9,9 @@ import {
 import MasterLayout from '@components/MasterLayout';
 import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '@actions';
-import { navigatorPush } from '@config/navigationOptions.web';
+
+import {navigatorPush, navigatorPop} from '@config/navigationOptions.web';
+
 import GLOBALS from '@constants';
 const { STRINGS, COLORS, ACTION_TYPE } = GLOBALS;
 const { GREEN_TEXT } = COLORS;
@@ -147,6 +149,7 @@ const ActivityTracker = ({ location }) => {
   const [dailyActivityArray, setDailyActivityArray] = useState([]);
   const [addNewActivity, setNewActivity] = useState([]);
   const [selectedActivityName, setSelectedActivity] = useState('');
+  const {getScreenStartTime = ''} = useSelector((state) => state.moduleOne);
   let hospitalId = getItem('hospitalId');
   let userId = getItem('userId');
   const tabsType = [
@@ -159,7 +162,20 @@ const ActivityTracker = ({ location }) => {
       id: 1,
     },
   ];
-
+  useEffect(() => {
+    dispatch(AppActions.getScreenStartTime(moment().format()));
+  }, [dispatch]);
+  const addTimeTrackerAPICall = () => {
+    let postData = {
+      userId: getItem('userId'),
+      group: 'Patient reported outcomes',
+      screen: 'ActivityTracker',
+      startTime: getScreenStartTime,
+      endTime: moment().format(),
+      date: moment().format(),
+    };
+    dispatch(AppActions.addTimeTracker(postData));
+  };
   useEffect(() => {
     let postData = {
       hospital_id: hospitalId,
@@ -298,7 +314,15 @@ const ActivityTracker = ({ location }) => {
         patientactivity: patientActivity,
         _id: id,
       };
-      dispatch(AppActions.saveActivityTracker(postData));
+      let timePostData = {
+        userId: getItem('userId'),
+        group: 'Patient reported outcomes',
+        screen: 'ActivityTracker',
+        startTime: getScreenStartTime,
+        endTime: moment().format(),
+        date: moment().format(),
+      };
+      dispatch(AppActions.saveActivityTracker(postData, timePostData));
     } else {
       customAlert('Please perform your exercise', 'error');
     }
@@ -306,7 +330,17 @@ const ActivityTracker = ({ location }) => {
 
   return (
     <MasterLayout>
-      {isFromCard ? <BackBtn title="Back to Card " /> : <BackToDashboard />}
+      {isFromCard ? (
+        <BackBtn
+          title="Back to Card "
+          onPress={() => {
+            addTimeTrackerAPICall();
+            navigatorPop();
+          }}
+        />
+      ) : (
+        <BackToDashboard onBack={() => addTimeTrackerAPICall()} />
+      )}
       <div style={styles.wrapper}>
         <ActivityTab
           tabList={tabsType}
