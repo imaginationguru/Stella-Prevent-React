@@ -1,5 +1,5 @@
 {
-  "appId": "com.mamalift",
+  "appId": "prod.mamalift",
   "appName": "Mamalift",
   "bundledWebRuntime": false,
   "npmClient": "npm",
