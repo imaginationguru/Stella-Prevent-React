@@ -17,18 +17,47 @@ const FacebookLogIn = (props) => {
     }
   };
 
+  const getUserInfo = async (userId, token) => {
+    fetch(
+      `https://graph.facebook.com/${userId}?fields=id,name,email,first_name&type=large&access_token=${token}`,
+    )
+      .then(async (response) => {
+        const user = await response.json();
+        verifyUser({
+          name: user.first_name,
+          email: user.email,
+          id: userId,
+          accessToken: token,
+        });
+      })
+      .catch((err) => {
+        customAlert('Facebook login fail.', 'error');
+      });
+  };
+
   const resFbloginViaApp = async () => {
+    Plugins.FacebookLogin.logout()
+      .then(() => {
+        console.log('logout success');
+      })
+      .catch((error) => {
+        console.log('logout Error', error);
+      });
     const FACEBOOK_PERMISSIONS = ['public_profile', 'email'];
-    const result = await Plugins.FacebookLogin.login({
+    Plugins.FacebookLogin.login({
       permissions: FACEBOOK_PERMISSIONS,
-    });
-    if (result && result.accessToken) {
-      console.log('result==>', result);
-      // history.push({
-      //   pathname: '/home',
-      //   state: { token: result.accessToken.token, userId: result.accessToken.userId }
-      // });
-    }
+    })
+      .then((result) => {
+        getUserInfo(result.accessToken.userId, result.accessToken.token);
+      })
+      .catch((err) => {
+        customAlert('Facebook login fail.', 'error');
+      });
+    // if (result && result.accessToken) {
+    //   console.log('result==>', result);
+    //   getUserInfo(result.accessToken.userId, result.accessToken.token);
+
+    // }
     // FacebookLogin.initialize({appId: fbAppId}).then((res) => {
     //   console.log('error', res);
     //   if (res) {
