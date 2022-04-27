@@ -60,9 +60,9 @@ const AppleLogIn = (props) => {
         let params = {
           firstName: '',
           email: result.email,
-          social_media_id: result.authorization.code,
+          social_media_id: result.response.identityToken,
           platform: 'apple',
-          session_token: result.authorization.id_token,
+          session_token: result.response.authorizationCode,
         };
         onSocialLogin(params);
       })
