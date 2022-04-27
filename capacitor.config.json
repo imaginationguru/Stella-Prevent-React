@@ -5,7 +5,13 @@
   "npmClient": "npm",
   "webDir": "build",
   "cordova": {},
-  "ios": {
-    "scheme": "App"
+  "plugins": {
+    "GoogleAuth": {
+      "scopes": [
+        "profile",
+        "email"
+      ],
+      "serverClientId": "785528185928-3pvalm2auoqd01cq3fb08jikfdb7hv5p.apps.googleusercontent.com"
+    }
   }
 }

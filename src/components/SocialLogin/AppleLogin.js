@@ -2,7 +2,15 @@ import AppleLogin from 'react-apple-login';
 import {customAlert} from '../../helpers/commonAlerts.web';
 import jwt_decode from 'jwt-decode';
 import GLOBALS from '../../constants';
-import {Capacitor} from '@capacitor/core';
+import '@capacitor-community/apple-sign-in';
+import {
+  SignInWithApple,
+  SignInWithAppleResponse,
+  SignInWithAppleOptions,
+} from '@capacitor-community/apple-sign-in';
+import React from 'react';
+
+import {Capacitor, Plugins} from '@capacitor/core';
 
 const {WEB_BASE_URL} = GLOBALS;
 const AppleLogIn = (props) => {
@@ -34,11 +42,39 @@ const AppleLogIn = (props) => {
     };
     onSocialLogin(params);
   };
+  const signIn = async () => {
+    let options = {
+      clientId:
+        '785528185928-3pvalm2auoqd01cq3fb08jikfdb7hv5p.apps.googleusercontent.com',
+      redirectURI: 'https://www.yourfrontend.com/login',
+      scopes: 'email name',
+      state: '12345',
+      nonce: 'nonce',
+    };
+
+    SignInWithApple.authorize(options)
+      .then((result) => {
+        console.log('apple data', result);
+        // Handle user information
+        // Validate token with server and create new session
+        let params = {
+          firstName: '',
+          email: result.email,
+          social_media_id: result.authorization.code,
+          platform: 'apple',
+          session_token: result.authorization.id_token,
+        };
+        onSocialLogin(params);
+      })
+      .catch((error) => {
+        customAlert('Apple login fail.', 'error');
+      });
+  };
 
   return (
     <>
       {Capacitor.isNativePlatform() ? (
-        <div className="btn-apple" onClick={() => alert('apple login')}>
+        <div className="btn-apple" onClick={signIn}>
           <span className="btn-apple-title">Log In with Apple</span>
         </div>
       ) : (
