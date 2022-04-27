@@ -10,6 +10,7 @@ import ProfileHeader from '@components/common/profileHeader';
 import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import {emailRegex} from '@utils/RegexUtils';
 import * as AppActions from '@actions';
+import {navigatorPop} from '@config/navigationOptions.web';
 function Contact(props) {
   const {loginData} = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
@@ -140,6 +141,7 @@ function Contact(props) {
             <div className="bk-btn-wrap">
               <BackToDashboard
                 isLoginPage={loginData?.user?._id ? false : true}
+                onBack={() => navigatorPop()}
               />
             </div>
             <div className="contactus-wrapper">
