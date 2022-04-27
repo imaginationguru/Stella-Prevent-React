@@ -5,6 +5,8 @@ import * as AppActions from '../../actions';
 import {Linking, Platform} from 'react-native';
 import {customAlert} from '../../helpers/commonAlerts.web';
 import {Capacitor} from '@capacitor/core';
+import '@codetrix-studio/capacitor-google-auth';
+import {Plugins} from '@capacitor/core';
 
 const GoogleLogIn = (props) => {
   let {onSocialLogin = () => {}} = props;
@@ -42,10 +44,29 @@ const GoogleLogIn = (props) => {
     onSocialLogin(params);
   };
 
+  const signIn = async () => {
+    await Plugins.GoogleAuth.signOut();
+    Plugins.GoogleAuth.signIn()
+      .then((result) => {
+        let params = {
+          firstName: result.givenName,
+          email: result.email,
+          image_path: result.imageUrl,
+          social_media_id: result.id,
+          platform: 'google',
+          session_token: result.authentication.accessToken,
+        };
+        onSocialLogin(params);
+      })
+      .catch((err) => {
+        customAlert('Google login fail.', 'error');
+      });
+  };
+
   return (
     <>
       {Capacitor.isNativePlatform() ? (
-        <div onClick={() => alert('Google login')} className="btn-google">
+        <div onClick={() => signIn()} className="btn-google">
           <span className="btn-google-title">Log In with Google</span>
         </div>
       ) : (

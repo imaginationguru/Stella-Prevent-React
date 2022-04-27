@@ -2,7 +2,7 @@ import AppleLogin from 'react-apple-login';
 import {customAlert} from '../../helpers/commonAlerts.web';
 import jwt_decode from 'jwt-decode';
 import GLOBALS from '../../constants';
-import {Capacitor} from '@capacitor/core';
+import {Capacitor, Plugins} from '@capacitor/core';
 
 const {WEB_BASE_URL} = GLOBALS;
 const AppleLogIn = (props) => {
@@ -34,11 +34,23 @@ const AppleLogIn = (props) => {
     };
     onSocialLogin(params);
   };
+  const signIn = async () => {
+    const {SignInWithApple} = Plugins;
+    SignInWithApple.Authorize()
+      .then(async (res) => {
+        if (res.response && res.response.identityToken) {
+        } else {
+        }
+      })
+      .catch((response) => {
+        this.presentAlert();
+      });
+  };
 
   return (
     <>
       {Capacitor.isNativePlatform() ? (
-        <div className="btn-apple" onClick={() => alert('apple login')}>
+        <div className="btn-apple" onClick={signIn}>
           <span className="btn-apple-title">Log In with Apple</span>
         </div>
       ) : (

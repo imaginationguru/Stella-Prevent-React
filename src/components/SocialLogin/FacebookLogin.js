@@ -53,46 +53,6 @@ const FacebookLogIn = (props) => {
       .catch((err) => {
         customAlert('Facebook login fail.', 'error');
       });
-    // if (result && result.accessToken) {
-    //   console.log('result==>', result);
-    //   getUserInfo(result.accessToken.userId, result.accessToken.token);
-
-    // }
-    // FacebookLogin.initialize({appId: fbAppId}).then((res) => {
-    //   console.log('error', res);
-    //   if (res) {
-    //     FacebookLogin.login({permissions: FACEBOOK_PERMISSIONS}).then(
-    //       (data) => {
-    //         console.log(data, 'data....');
-    //         if (data) {
-    //           FacebookLogin.getProfile({
-    //             fields: ['email', 'name', 'first_name'],
-    //           }).then(
-    //             (res) => {
-    //               verifyUser({
-    //                 name: res.first_name,
-    //                 email: res.email,
-    //                 id: res.id,
-    //                 accessToken: data.accessToken?.token,
-    //               });
-    //             },
-    //             (err) => {
-    //               console.log('errr', err);
-    //               customAlert('Facebook login error.', 'error');
-    //             },
-    //           );
-    //         } else {
-    //           customAlert('Facebook login error.', 'error');
-    //         }
-    //       },
-    //       (err) => {
-    //         customAlert('Facebook login error.', 'error');
-    //       },
-    //     );
-    //   } else {
-    //     customAlert('Error initializing facebook', 'error');
-    //   }
-    // });
   };
 
   const verifyUser = (profile_data) => {
