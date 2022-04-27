@@ -8,7 +8,7 @@
   "plugins": {
     "GoogleAuth": {
     "scopes": ["profile","email"],
-    "serverClientId": "785528185928-ges1dukvk4h92g98rhpli4r9f55cdv37.apps.googleusercontent.com"
+    "serverClientId": "785528185928-3pvalm2auoqd01cq3fb08jikfdb7hv5p.apps.googleusercontent.com"
     }
     }
 }
