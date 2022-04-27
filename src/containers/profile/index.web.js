@@ -213,11 +213,12 @@ function ProfileDetails(props) {
 
   /**Select Image for Uploading*/
   const selectImage = (file) => {
+    console.log(file, "file......")
     if (!file) return;
 
     if (file.type.includes('image')) {
-      if (file.size > 10240000) {
-        customAlert('The file is too large, max size:10mb', 'error');
+      if (file.size > 1024000) {
+        customAlert('The file is too large, max size:1mb', 'error');
         return;
       }
       let formdata = new FormData();

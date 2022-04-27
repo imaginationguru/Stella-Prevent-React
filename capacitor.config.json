@@ -1,8 +1,11 @@
 {
   "appId": "prod.mamalift",
-  "appName": "Mamalift",
+  "appName": "App",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
-  "cordova": {}
+  "cordova": {},
+  "ios": {
+    "scheme": "App"
+  }
 }
