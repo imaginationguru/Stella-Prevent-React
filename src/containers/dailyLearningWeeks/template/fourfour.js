@@ -92,6 +92,7 @@ const Template44 = (props) => {
         tempOne.push({_id: val});
       });
     }
+    console.log('unique heading id', uniqueHeadingId, ' temp one', tempOne, x);
     let tempTwo = [];
     if (tempOne.length) {
       tempTwo = tempOne.map((ele) => {
@@ -112,6 +113,7 @@ const Template44 = (props) => {
         };
       });
     }
+
     let tempThree = tempTwo.length
       ? tempTwo.map((item) => {
           return {
@@ -131,15 +133,20 @@ const Template44 = (props) => {
           };
         })
       : [];
+
     if (cardsData.length) {
       setInputs(tempFour);
     }
-  }, [userAssessmentData, inputs]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userAssessmentData]);
 
   const onHandleChange = (e, id, idx) => {
+    console.log('input fisrthhh', id);
     setInputs(
       inputs.length
         ? inputs.map((val) => {
+            //  val._id === id && val.name === e.target.name;
             if (val._id === id && val.name === e.target.name) {
               return {
                 ...val,
@@ -416,6 +423,11 @@ const Template44 = (props) => {
 
                     {item.content.length
                       ? item.content.map((val, idx, arr) => {
+                          console.log(
+                            'item.content',
+                            item.content.length,
+                            item,
+                          );
                           const showPlus = i === 2 && idx === arr.length - 1;
                           const isDelete = i === 2 && idx < arr.length - 1;
                           return (
@@ -434,6 +446,7 @@ const Template44 = (props) => {
                                   placeholder={item.placeholder}
                                   style={styles.selectedText}
                                   value={val.content}
+                                  //value={item.content}
                                   onChange={(e) =>
                                     onHandleChange(e, item._id, idx)
                                   }
@@ -441,7 +454,10 @@ const Template44 = (props) => {
                                 {showPlus ? (
                                   <div
                                     onClick={() => {
-                                      addHandler();
+                                      if (val.content.length !== 0) {
+                                        addHandler();
+                                      }
+                                      // addHandler();
                                     }}
                                     style={{
                                       ...styles.circleDiv,
