@@ -13,7 +13,8 @@
     "web-local-build": "serve -s build",
     "ionic-android": "ionic capacitor add android",
     "ionic-ios": "ionic capacitor add ios",
-    "run-ios": "ionic capacitor run ios -l --external"
+    "run-ios": "ionic capacitor run ios -l --external",
+    "build-ios": "react-scripts build && npx cap copy"
   },
   "dependencies": {
     "@babel/preset-react": "^7.12.13",
