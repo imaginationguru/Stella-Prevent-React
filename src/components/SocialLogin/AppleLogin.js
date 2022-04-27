@@ -55,11 +55,13 @@ const AppleLogIn = (props) => {
     SignInWithApple.authorize(options)
       .then((result) => {
         console.log('apple data', result);
+        var decoded = jwt_decode(result.response.identityToken);
+        var email_id = decoded.email;
         // Handle user information
         // Validate token with server and create new session
         let params = {
           firstName: '',
-          email: result.email,
+          email: email_id,
           social_media_id: result.response.identityToken,
           platform: 'apple',
           session_token: result.response.authorizationCode,
