@@ -77,18 +77,21 @@ const ThirtyThree = (props) => {
       ? selectUserInputs.filter((ele) => ele.assessment_id[0] === assessment_id)
       : [];
     setSelected(selectedFormat);
-    let dummyInput = assessmentData.headers.map((header) => {
-      let arrayToSearchIn = firstAssessmentContent
-        .filter((e) => e.assessment_header_id === header._id)
-        .sort((a, b) => (a.order > b.order ? 1 : -1));
-      let maxOrder = Math.max(...arrayToSearchIn.map((o) => o.order), 0);
-      return {
-        assessment_header_id: header._id,
-        content: '',
-        order: maxOrder + 1,
-        is_added: false,
-      };
-    });
+    let dummyInput =
+      assessmentData &&
+      assessmentData.headers &&
+      assessmentData.headers.map((header) => {
+        let arrayToSearchIn = firstAssessmentContent
+          .filter((e) => e.assessment_header_id === header._id)
+          .sort((a, b) => (a.order > b.order ? 1 : -1));
+        let maxOrder = Math.max(...arrayToSearchIn.map((o) => o.order), 0);
+        return {
+          assessment_header_id: header._id,
+          content: '',
+          order: maxOrder + 1,
+          is_added: false,
+        };
+      });
     setUserInputs([...firstAssessmentContent, ...dummyInput]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
