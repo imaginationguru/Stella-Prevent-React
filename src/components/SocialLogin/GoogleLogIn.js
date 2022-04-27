@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { GoogleLogin, useGoogleLogout, GoogleLogout } from 'react-google-login';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useState} from 'react';
+import {GoogleLogin, useGoogleLogout, GoogleLogout} from 'react-google-login';
+import {useDispatch, useSelector} from 'react-redux';
 import * as AppActions from '../../actions';
-import { Linking, Platform } from 'react-native';
-import { customAlert } from '../../helpers/commonAlerts.web';
+import {Linking, Platform} from 'react-native';
+import {customAlert} from '../../helpers/commonAlerts.web';
+import {Capacitor} from '@capacitor/core';
+
 const GoogleLogIn = (props) => {
-  let { onSocialLogin = () => { } } = props;
+  let {onSocialLogin = () => {}} = props;
 
   const googleCLientId =
     '868302960918-car2574j9cd95m72sehkfipp24hmrdku.apps.googleusercontent.com';
@@ -19,7 +21,7 @@ const GoogleLogIn = (props) => {
   const onFailure = (res) => {
     console.log('Google login fail res', res);
   };
-  const { signOut } = useGoogleLogout({
+  const {signOut} = useGoogleLogout({
     clientId: googleCLientId,
     onFailure: onFailure,
     onLogoutSuccess: onLogoutSuccess,
@@ -42,24 +44,30 @@ const GoogleLogIn = (props) => {
 
   return (
     <>
-      <GoogleLogin
-        clientId={googleCLientId}
-        render={(renderProps) => (
-          <div
-            onClick={renderProps.onClick}
-            disabled={renderProps.disabled}
-            className="btn-google">
-            <span className="btn-google-title">Log In with Google</span>
-          </div>
-        )}
-        onSuccess={responseGoogle}
-        approvalPrompt="force"
-        onFailure={onFailure}
-        cookiePolicy={'single_host_origin'}
-        isSignedIn={false}
-        autoLoad={false}
-        uxMode={'popup'}
-      />
+      {Capacitor.isNativePlatform() ? (
+        <div onClick={() => alert('Google login')} className="btn-google">
+          <span className="btn-google-title">Log In with Google</span>
+        </div>
+      ) : (
+        <GoogleLogin
+          clientId={googleCLientId}
+          render={(renderProps) => (
+            <div
+              onClick={renderProps.onClick}
+              disabled={renderProps.disabled}
+              className="btn-google">
+              <span className="btn-google-title">Log In with Google</span>
+            </div>
+          )}
+          onSuccess={responseGoogle}
+          approvalPrompt="force"
+          onFailure={onFailure}
+          cookiePolicy={'single_host_origin'}
+          isSignedIn={false}
+          autoLoad={false}
+          uxMode={'popup'}
+        />
+      )}
     </>
   );
 };

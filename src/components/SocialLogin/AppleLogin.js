@@ -1,10 +1,12 @@
 import AppleLogin from 'react-apple-login';
-import { customAlert } from '../../helpers/commonAlerts.web';
+import {customAlert} from '../../helpers/commonAlerts.web';
 import jwt_decode from 'jwt-decode';
 import GLOBALS from '../../constants';
-const { WEB_BASE_URL } = GLOBALS;
+import {Capacitor} from '@capacitor/core';
+
+const {WEB_BASE_URL} = GLOBALS;
 const AppleLogIn = (props) => {
-  let { onSocialLogin = () => { } } = props;
+  let {onSocialLogin = () => {}} = props;
   const appleId = 'com.stellaPreventWeb';
   console.log(`${WEB_BASE_URL}Dashboard`, 'apple');
   const handleResponse = (res) => {
@@ -18,7 +20,7 @@ const AppleLogIn = (props) => {
         var decoded = jwt_decode(res.authorization.id_token);
         var email_id = decoded.email;
         verifyUser(res, email_id);
-      } catch (err) { }
+      } catch (err) {}
     }
   };
 
@@ -35,24 +37,30 @@ const AppleLogIn = (props) => {
 
   return (
     <>
-      <AppleLogin
-        clientId={appleId}
-        callback={handleResponse}
-        usePopup={true}
-        autoLoad={false}
-        scope={'name email'}
-        responseType={'code id_token'}
-        responseMode={'form_post'}
-        redirectURI={`${WEB_BASE_URL}Dashboard`}
-        render={(renderProps) => (
-          <div
-            onClick={renderProps.onClick}
-            disabled={renderProps.disabled}
-            className="btn-apple">
-            <span className="btn-apple-title">Log In with Apple</span>
-          </div>
-        )}
-      />
+      {Capacitor.isNativePlatform() ? (
+        <div className="btn-apple" onClick={() => alert('apple login')}>
+          <span className="btn-apple-title">Log In with Apple</span>
+        </div>
+      ) : (
+        <AppleLogin
+          clientId={appleId}
+          callback={handleResponse}
+          usePopup={true}
+          autoLoad={false}
+          scope={'name email'}
+          responseType={'code id_token'}
+          responseMode={'form_post'}
+          redirectURI={`${WEB_BASE_URL}Dashboard`}
+          render={(renderProps) => (
+            <div
+              onClick={renderProps.onClick}
+              disabled={renderProps.disabled}
+              className="btn-apple">
+              <span className="btn-apple-title">Log In with Apple</span>
+            </div>
+          )}
+        />
+      )}
     </>
   );
 };

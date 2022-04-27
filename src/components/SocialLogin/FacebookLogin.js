@@ -1,11 +1,10 @@
-
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import FacebookLoginApp from 'react-facebook-login/dist/facebook-login-render-props';
-import { customAlert } from '../../helpers/commonAlerts.web';
-import { FacebookLogin } from "@capacitor-community/facebook-login";
-import { Capacitor } from '@capacitor/core';
+import {customAlert} from '../../helpers/commonAlerts.web';
+import {FacebookLogin} from '@capacitor-community/facebook-login';
+import {Capacitor, Plugins} from '@capacitor/core';
 const FacebookLogIn = (props) => {
-  let { onSocialLogin = () => { } } = props;
+  let {onSocialLogin = () => {}} = props;
 
   const fbAppId = '416468470173904';
   const FACEBOOK_PERMISSIONS = ['email', 'name', 'user_photos', 'user_gender'];
@@ -18,35 +17,53 @@ const FacebookLogIn = (props) => {
     }
   };
 
-  const resFbloginViaApp = () => {
-    FacebookLogin.initialize({ appId: fbAppId }).then(res => {
-      if (res) {
-        FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS }).then(data => {
-          console.log(data, "data....");
-          if (data) {
-            FacebookLogin.getProfile({ fields: ['email', 'name', 'first_name'] }).then(res => {
-              verifyUser({
-                name: res.first_name,
-                email: res.email,
-                id: res.id,
-                accessToken: data.accessToken?.token
-              });
-            }, err => {
-              console.log("errr", err);
-              customAlert('Facebook login error.', 'error');
-            });
-          } else {
-            customAlert('Facebook login error.', 'error');
-          }
-        }, err => {
-          customAlert('Facebook login error.', 'error');
-        })
-      }
-      else {
-        customAlert('Error initializing facebook', 'error');
-      }
-
-    })
+  const resFbloginViaApp = async () => {
+    const FACEBOOK_PERMISSIONS = ['public_profile', 'email'];
+    const result = await Plugins.FacebookLogin.login({
+      permissions: FACEBOOK_PERMISSIONS,
+    });
+    if (result && result.accessToken) {
+      console.log('result==>', result);
+      // history.push({
+      //   pathname: '/home',
+      //   state: { token: result.accessToken.token, userId: result.accessToken.userId }
+      // });
+    }
+    // FacebookLogin.initialize({appId: fbAppId}).then((res) => {
+    //   console.log('error', res);
+    //   if (res) {
+    //     FacebookLogin.login({permissions: FACEBOOK_PERMISSIONS}).then(
+    //       (data) => {
+    //         console.log(data, 'data....');
+    //         if (data) {
+    //           FacebookLogin.getProfile({
+    //             fields: ['email', 'name', 'first_name'],
+    //           }).then(
+    //             (res) => {
+    //               verifyUser({
+    //                 name: res.first_name,
+    //                 email: res.email,
+    //                 id: res.id,
+    //                 accessToken: data.accessToken?.token,
+    //               });
+    //             },
+    //             (err) => {
+    //               console.log('errr', err);
+    //               customAlert('Facebook login error.', 'error');
+    //             },
+    //           );
+    //         } else {
+    //           customAlert('Facebook login error.', 'error');
+    //         }
+    //       },
+    //       (err) => {
+    //         customAlert('Facebook login error.', 'error');
+    //       },
+    //     );
+    //   } else {
+    //     customAlert('Error initializing facebook', 'error');
+    //   }
+    // });
   };
 
   const verifyUser = (profile_data) => {
@@ -74,12 +91,11 @@ const FacebookLogIn = (props) => {
 
   return (
     <>
-      {Capacitor.isNativePlatform() ?
-        <div
-          onClick={resFbloginViaApp}>
-          <p>hdfdf44i</p>
+      {Capacitor.isNativePlatform() ? (
+        <div class="btn-fb" onClick={resFbloginViaApp}>
+          <span class="btn-fb-title">Log In with Facebook</span>
         </div>
-        :
+      ) : (
         <FacebookLoginApp
           appId={fbAppId}
           render={(renderProps) => (
@@ -94,7 +110,7 @@ const FacebookLogIn = (props) => {
           fields="name,email,picture"
           callback={resFblogin}
         />
-      }
+      )}
     </>
   );
 };
