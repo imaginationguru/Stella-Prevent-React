@@ -178,8 +178,8 @@ const ActivityTracker = ({location}) => {
   const addTimeTrackerAPICall = () => {
     let postData = {
       userId: getItem('userId'),
-      group: 'Patient reported outcomes',
-      screen: 'ActivityTracker',
+      group: STRINGS.PATIENT_REPORTED_OUTCOMES,
+      screen: STRINGS.ACTIVITY_TRACKER,
       startTime: getScreenStartTime,
       endTime: moment().format(),
       date: moment().format(),

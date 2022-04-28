@@ -276,8 +276,8 @@ const SleepTracker = ({location}) => {
       };
       let timePostData = {
         userId: getItem('userId'),
-        group: 'Patient reported outcomes',
-        screen: 'SleepTracker',
+        group: STRINGS.PATIENT_REPORTED_OUTCOMES,
+        screen: STRINGS.SLEEP_TRACKER,
         startTime: getScreenStartTime,
         endTime: moment().format(),
         date: moment().format(),
@@ -358,8 +358,8 @@ const SleepTracker = ({location}) => {
   const addTimeTrackerAPICall = () => {
     let postData = {
       userId: getItem('userId'),
-      group: 'Patient reported outcomes',
-      screen: 'SleepTracker',
+      group: STRINGS.PATIENT_REPORTED_OUTCOMES,
+      screen: STRINGS.SLEEP_TRACKER,
       startTime: getScreenStartTime,
       endTime: moment().format(),
       date: moment().format(),

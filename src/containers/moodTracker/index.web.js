@@ -132,8 +132,8 @@ const MoodTracker = ({location}) => {
   const addTimeTrackerAPICall = () => {
     let postData = {
       userId: getItem('userId'),
-      group: 'Patient reported outcomes',
-      screen: 'MoodTracker',
+      group: STRINGS.PATIENT_REPORTED_OUTCOMES,
+      screen: STRINGS.MOOD_TRACKER,
       startTime: getScreenStartTime,
       endTime: moment().format(),
       date: moment().format(),

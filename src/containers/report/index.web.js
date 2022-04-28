@@ -23,12 +23,13 @@ import momentZone from 'moment-timezone';
 import BackToDashboard from '@components/common/backToDashboard';
 
 import {Line} from 'react-chartjs-2';
-const {FONTS, COLORS, MOODS_ARRAY} = GLOBALS;
+const {FONTS, COLORS, MOODS_ARRAY, STRINGS} = GLOBALS;
 
 const {DARK_GREEN} = COLORS;
 
 import {getItem} from '@utils/AsyncUtils';
 import {navigatorPop} from '@config/navigationOptions.web';
+import Strings from '../../constants/Strings';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
@@ -371,8 +372,8 @@ const Report = ({location}) => {
   const addTimeTrackerAPICall = () => {
     let postData = {
       userId: getItem('userId'),
-      group: 'Engagement',
-      screen: 'Report',
+      group: STRINGS.ENGAGEMENT,
+      screen: STRINGS.REPORT,
       startTime: getScreenStartTime,
       endTime: moment().format(),
       date: moment().format(),

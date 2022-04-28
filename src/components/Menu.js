@@ -13,7 +13,7 @@ import logout from '@assets/images/logout.png';
 import logoWhite from '@assets/images/logoWhite.png';
 import moment from 'moment';
 import {getItem} from '../utils/AsyncUtils';
-const {COLORS} = GLOBALS;
+const {COLORS, STRINGS} = GLOBALS;
 const {GRAY, PLAN_GRAY, WHITE, GreenForSlider, DARK_RED} = COLORS;
 const Menu = (props) => {
   const {modalVisible, menuStyle} = props;
@@ -95,20 +95,20 @@ const Menu = (props) => {
       date: moment().format(),
     };
     if (current_screen === '/DailyLearningModule') {
-      postData['group'] = 'Daily Learning';
+      postData['group'] = STRINGS.DAILY_LEARNING;
     } else if (
       current_screen === '/Report' ||
       current_screen === '/PastModules'
     ) {
-      postData['group'] = 'Engagement';
+      postData['group'] = STRINGS.ENGAGEMENT;
     } else {
-      postData['group'] = 'Patient reported outcomes';
+      postData['group'] = STRINGS.PATIENT_REPORTED_OUTCOMES;
     }
 
     dispatch(AppActions.addTimeTracker(postData));
   };
   console.log('screen name', current_screen.substring(1));
-  console.log('currentActiveCard', currentActiveCard)
+  console.log('currentActiveCard', currentActiveCard);
   return (
     <div
       style={{...styles.container, ...menuStyle}}

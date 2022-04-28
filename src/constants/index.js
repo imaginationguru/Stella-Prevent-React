@@ -116,7 +116,7 @@ export default {
     VERIFY_RESERVE_WORDS: 'verifyReserveWordsAndSendNudges',
     ADD_TIME_TRACKER: 'addtimetraker',
 
-    UPDATE_LAST_SEEN_API: "update-user-lastseen",
+    UPDATE_LAST_SEEN_API: 'update-user-lastseen',
   },
   /*************************FONTS************************** */
   FONTS: {
@@ -144,8 +144,16 @@ export default {
     ACTIVITY: 'Pleasant Activities',
     DAILY_ACTIVITY: 'Daily Activities',
     HIPPA_KEY: 'ThWmZq4t7w!z%C*F)J@NcRfUjXn2r5u8CURIO',
-    DAILY_LEARNING:'DailyLearning',
-    CARDS:'cards'
+    DAILY_LEARNING: 'Daily Learning',
+    CARDS: 'cards',
+    DAILY_LEARNING_MODULE: 'DailyLearningModule',
+    ENGAGEMENT: 'Engagement',
+    PAST_MODULES: 'PastModules',
+    PATIENT_REPORTED_OUTCOMES: 'Patient reported outcomes',
+    MOOD_TRACKER: 'MoodTracker',
+    REPORT: 'Report',
+    SLEEP_TRACKER: 'SleepTracker',
+    ACTIVITY_TRACKER: 'ActivityTracker',
   },
 
   MOODS_ARRAY: [
@@ -360,9 +368,9 @@ export default {
 
     GET_SCREEN_START_TIME: 'GET_SCREEN_START_TIME',
     CLEAR_SCREEN_START_TIME: 'CLEAR_SCREEN_START_TIME',
-    UPDATE_LAST_SEEN_REQUEST: "UPDATE_LAST_SEEN_REQUEST",
-    UPDATE_LAST_SEEN_SUCCESS: "UPDATE_LAST_SEEN_SUCCESS",
-    UPDATE_LAST_SEEN_FAIL: "UPDATE_LAST_SEEN_FAIL",
+    UPDATE_LAST_SEEN_REQUEST: 'UPDATE_LAST_SEEN_REQUEST',
+    UPDATE_LAST_SEEN_SUCCESS: 'UPDATE_LAST_SEEN_SUCCESS',
+    UPDATE_LAST_SEEN_FAIL: 'UPDATE_LAST_SEEN_FAIL',
   },
 
   /***************************COLORS*************************** */
