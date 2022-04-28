@@ -335,6 +335,9 @@ const ActivityTracker = ({location}) => {
         date: moment().format(),
       };
       dispatch(AppActions.saveActivityTracker(postData, timePostData));
+      dispatch(AppActions.saveActivityTracker(postData));
+      //users last seen api
+      dispatch(AppActions.updateUserLastSeen());
     } else {
       customAlert('Please perform your exercise', 'error');
     }

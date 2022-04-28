@@ -185,7 +185,13 @@ function moduleOne(state = INITIAL_STATE, action) {
         ...state,
         getScreenStartTime: action.payload,
       };
-
+      
+      case ACTION_TYPE.CLEAR_SCREEN_START_TIME:
+        return {
+          ...state,
+          getScreenStartTime: null,
+        };
+      
     default:
       return state;
   }

@@ -100,7 +100,6 @@ export const SubHeader = ({
             };
           })
       : [];
-
   return (
     <div style={styles.cardDiv} className="btn-nav-wrapper">
       {newData.length
@@ -120,7 +119,7 @@ export const SubHeader = ({
                   marginRight: '3%',
                 }}
                 onClick={() => {
-                  onCardChange(val._id);
+                  onCardChange(val._id,val,index + 1);
                 }}>
                 {`${index + 1}`}
               </button>

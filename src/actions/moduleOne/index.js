@@ -7,9 +7,10 @@ import {sessionExpire} from '../../actions/tracker';
 import {getItem, generateUrlParams} from '../../utils/AsyncUtils';
 import {navigatorPush} from '../../config/navigationOptions.web';
 import {epdsModalAction} from '..';
-import {customAlert} from '../../helpers/commonAlerts.web';
-import {getUser} from '../../actions/auth';
-import {store} from '../../store/setup.web';
+import {customAlert} from '@helpers/commonAlerts.web';
+import {getUser} from '@actions/auth';
+import {updateUserLastSeen} from '@actions/tracker';
+import {store} from '@store/setup.web';
 const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
 const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
 var h2p = require('html2plaintext');
@@ -219,6 +220,8 @@ export function markCompleteCard(params, week, nextDay) {
           payload: json.data,
         });
         dispatch(getTemplateData(week));
+        //API call update user last seen
+        dispatch(updateUserLastSeen());
         if (!nextDay) {
           dispatch(getCurrentActiveCard());
         }
@@ -1455,6 +1458,15 @@ export function getScreenStartTime(data) {
     dispatch({
       type: ACTION_TYPE.GET_SCREEN_START_TIME,
       payload: data,
+    });
+  };
+}
+
+export function clearScreenStartTime() {
+  return async (dispatch) => {
+    dispatch({
+      type: ACTION_TYPE.CLEAR_SCREEN_START_TIME,
+      payload: null,
     });
   };
 }

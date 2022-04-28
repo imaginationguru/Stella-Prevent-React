@@ -428,3 +428,51 @@ export function getWeeklySummaryReport(params) {
     }
   };
 }
+
+/********************USER LAST SEEN UPDATE ************** */
+export function updateUserLastSeen() {
+  return async (dispatch) => {
+    let userId = getItem('userId');
+    let postData = {
+      user_id: userId,
+    };
+    dispatch({ type: ACTION_TYPE.UPDATE_LAST_SEEN_REQUEST });
+    try {
+      // dispatch(loadingAction(true));
+      let json = await RestClient.postCall(URL.UPDATE_LAST_SEEN_API, postData);
+      if (json.code === 200) {
+        dispatch({
+          type: ACTION_TYPE.UPDATE_LAST_SEEN_SUCCESS,
+          payload: json.message,
+        });
+        // dispatch(loadingAction(false));
+      } else {
+        if (json.code === 400) {
+          dispatch({
+            type: ACTION_TYPE.ERROR,
+            payload: json.message,
+          });
+        }
+        if (json.code === 417) {
+          dispatch(sessionExpire(json.message));
+
+          dispatch(loadingAction(false));
+        } else {
+          dispatch({
+            type: ACTION_TYPE.UPDATE_LAST_SEEN_FAIL,
+          });
+        }
+        dispatch(loadingAction(false));
+      }
+    } catch (error) {
+      dispatch({
+        type: ACTION_TYPE.ERROR,
+        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+      });
+      dispatch({
+        type: ACTION_TYPE.UPDATE_LAST_SEEN_FAIL,
+        payload: error,
+      });
+    }
+  };
+}
