@@ -108,6 +108,7 @@ const Menu = (props) => {
     dispatch(AppActions.addTimeTracker(postData));
   };
   console.log('screen name', current_screen.substring(1));
+  console.log('currentActiveCard', currentActiveCard)
   return (
     <div
       style={{...styles.container, ...menuStyle}}

@@ -268,6 +268,10 @@ const SleepTracker = ({location, props}) => {
       dispatch(
         AppActions.saveSleepTracker(postData, postDataGetAPI, timePostData),
       );
+      dispatch(AppActions.saveSleepTracker(postData, postDataGetAPI));
+
+      //users last seen api
+      dispatch(AppActions.updateUserLastSeen());
     }
   };
 
