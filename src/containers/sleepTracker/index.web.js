@@ -3,7 +3,14 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
-import {TouchableOpacity, View, Text, FlatList, Dimensions, AppState} from 'react-native';
+import {
+  TouchableOpacity,
+  View,
+  Text,
+  FlatList,
+  Dimensions,
+  AppState,
+} from 'react-native';
 import MasterLayout from '@components/MasterLayout';
 import BackBtn from '@components/common/backbtn';
 import {useDispatch, useSelector} from 'react-redux';
@@ -267,7 +274,14 @@ const SleepTracker = ({location}) => {
         patientDate: moment().format(STRINGS.DATE_FORMATE),
         timeZone: currentTimeZone,
       };
-
+      let timePostData = {
+        userId: getItem('userId'),
+        group: 'Patient reported outcomes',
+        screen: 'SleepTracker',
+        startTime: getScreenStartTime,
+        endTime: moment().format(),
+        date: moment().format(),
+      };
       dispatch(
         AppActions.saveSleepTracker(postData, postDataGetAPI, timePostData),
       );
