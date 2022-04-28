@@ -54,6 +54,16 @@ const DailyLearningWeeks = (props) => {
   useEffect(() => {
     dispatch(AppActions.getScreenStartTime(moment().format()));
   }, [dispatch]);
+  useEffect(() => {
+    document.addEventListener('visibilitychange', () => {
+      console.log('document visible', document.visibilityState);
+      if (document.visibilityState === 'hidden') {
+        addTimeTrackerAPICall();
+      } else {
+        dispatch(AppActions.getScreenStartTime(moment().format()));
+      }
+    });
+  });
   const addTimeTrackerAPICall = () => {
     let postData = {
       userId: getItem('userId'),

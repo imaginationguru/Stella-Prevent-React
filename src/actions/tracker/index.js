@@ -1,10 +1,10 @@
-import GLOBALS from '@constants';
-import RestClient from '@helpers/RestClient';
-import {loadingAction, clearSessionExpiredAction} from '@actions/common';
-import {getItem} from '@utils/AsyncUtils';
-import {navigatorPop, navigatortoStart} from '@config/navigationOptions';
+import GLOBALS from '../../constants';
+import RestClient from '../../helpers/RestClient';
+import {loadingAction, clearSessionExpiredAction} from '../../actions/common';
+import {getItem} from '../../utils/AsyncUtils';
+import {navigatorPop, navigatortoStart} from '../../config/navigationOptions';
 import moment from 'moment';
-import {customAlert} from '@helpers/commonAlerts.web';
+import {customAlert} from '../../helpers/commonAlerts.web';
 import {addTimeTracker} from '../moduleOne';
 
 const {ACTION_TYPE, URL, STRINGS} = GLOBALS;

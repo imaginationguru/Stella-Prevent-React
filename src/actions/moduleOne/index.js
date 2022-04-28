@@ -1,15 +1,15 @@
 /* eslint-disable prettier/prettier */
 
-import GLOBALS from '@constants';
-import RestClient from '@helpers/RestClient';
-import {loadingAction} from '@actions/common';
-import {sessionExpire} from '@actions/tracker';
-import {getItem, generateUrlParams} from '@utils/AsyncUtils';
-import {navigatorPush} from '@config/navigationOptions.web';
+import GLOBALS from '../../constants';
+import RestClient from '../../helpers/RestClient';
+import {loadingAction} from '../../actions/common';
+import {sessionExpire} from '../../actions/tracker';
+import {getItem, generateUrlParams} from '../../utils/AsyncUtils';
+import {navigatorPush} from '../../config/navigationOptions.web';
 import {epdsModalAction} from '..';
-import {customAlert} from '@helpers/commonAlerts.web';
-import {getUser} from '@actions/auth';
-import {store} from '@store/setup.web';
+import {customAlert} from '../../helpers/commonAlerts.web';
+import {getUser} from '../../actions/auth';
+import {store} from '../../store/setup.web';
 const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
 const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
 var h2p = require('html2plaintext');

@@ -118,6 +118,17 @@ const MoodTracker = ({location}) => {
   useEffect(() => {
     dispatch(AppActions.getScreenStartTime(moment().format()));
   }, [dispatch]);
+  useEffect(() => {
+    document.addEventListener('visibilitychange', () => {
+      console.log('document visible', document.visibilityState);
+      if (document.visibilityState === 'hidden') {
+        addTimeTrackerAPICall();
+      } else {
+        dispatch(AppActions.getScreenStartTime(moment().format()));
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const addTimeTrackerAPICall = () => {
     let postData = {
       userId: getItem('userId'),

@@ -3,7 +3,14 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
-import {TouchableOpacity, View, Text, FlatList, Dimensions} from 'react-native';
+import {
+  TouchableOpacity,
+  View,
+  Text,
+  FlatList,
+  Dimensions,
+  AppState,
+} from 'react-native';
 import MasterLayout from '@components/MasterLayout';
 import BackBtn from '@components/common/backbtn';
 import {useDispatch, useSelector} from 'react-redux';
@@ -15,12 +22,12 @@ import minutesJson from './MinutesJson';
 import momentZone from 'moment-timezone';
 import BackToDashboard from '@components/common/backToDashboard';
 import {Line} from 'react-chartjs-2';
-const {STRINGS, COLORS} = GLOBALS;
-import ReactSlider from 'react-slider';
 import {getItem} from '../../utils/AsyncUtils';
 import {navigatorPop} from '../../config/navigationOptions.web';
+const {STRINGS, COLORS} = GLOBALS;
+import ReactSlider from 'react-slider';
 const DEVICE_WIDTH = Dimensions.get('window').width;
-
+const DEVICE_HEIGHT = Dimensions.get('window').height;
 const LineGraphUI = ({xAxis, yAxis, lable}) => {
   const graphOptions = {
     scales: {
@@ -75,9 +82,8 @@ const SliderUI = ({setScale, getScale, isEditUI}) => {
   );
 };
 
-const SleepTracker = ({location, props}) => {
+const SleepTracker = ({location}) => {
   let isFromCard = location?.state?.isFromCard;
-  console.log('location????', location);
 
   const dispatch = useDispatch();
   const {getSleepTrackerData} = useSelector((state) => state.tracker);
@@ -97,11 +103,23 @@ const SleepTracker = ({location, props}) => {
   const [sleepScale, setSleepScale] = useState();
   const [energeticScale, setEnergeticScale] = useState();
   const [isEditUI, setIsEditUI] = useState(false);
+  const [appState, setAppState] = useState(AppState.currentState);
   let currentTimeZone = momentZone.tz.guess();
   const {getScreenStartTime = ''} = useSelector((state) => state.moduleOne);
-  var dateArrayList = [];
-  console.log('getscreen start time', getScreenStartTime);
+  useEffect(() => {
+    document.addEventListener('visibilitychange', () => {
+      console.log('document visible', document.visibilityState);
+      if (document.visibilityState === 'hidden') {
+        addTimeTrackerAPICall();
+      } else {
+        dispatch(AppActions.getScreenStartTime(moment().format()));
+      }
+    });
 
+    // AppState.addEventListener('change', _handleAppStateChange);
+  });
+
+  var dateArrayList = [];
   useEffect(() => {
     for (var i = 6; i >= 0; i--) {
       dateArrayList.push({
@@ -134,8 +152,9 @@ const SleepTracker = ({location, props}) => {
     }, 500);
   }, []);
 
+  useEffect(() => {}, []);
+
   useEffect(() => {
-    console.log('sleep tracker');
     if (getSleepTrackerData && getSleepTrackerData.sleepData) {
       let data = getSleepTrackerData.sleepData;
       if (data.hours !== undefined) {
@@ -255,18 +274,8 @@ const SleepTracker = ({location, props}) => {
         patientDate: moment().format(STRINGS.DATE_FORMATE),
         timeZone: currentTimeZone,
       };
-      let timePostData = {
-        userId: getItem('userId'),
-        group: 'Patient reported outcomes',
-        screen: 'SleepTracker',
-        startTime: getScreenStartTime,
-        endTime: moment().format(),
-        date: moment().format(),
-      };
 
-      dispatch(
-        AppActions.saveSleepTracker(postData, postDataGetAPI, timePostData),
-      );
+      dispatch(AppActions.saveSleepTracker(postData, postDataGetAPI));
     }
   };
 
@@ -331,7 +340,8 @@ const SleepTracker = ({location, props}) => {
   };
   useEffect(() => {
     dispatch(AppActions.getScreenStartTime(moment().format()));
-  }, []);
+  }, [dispatch]);
+
   const addTimeTrackerAPICall = () => {
     let postData = {
       userId: getItem('userId'),
@@ -347,6 +357,7 @@ const SleepTracker = ({location, props}) => {
     <View>
       <MasterLayout>
         {/* <BackBtn title = {isFromCard ? 'Back to Card' : 'Back to Dashboard'} /> */}
+
         {isFromCard ? (
           <BackBtn
             title="Back to Card"

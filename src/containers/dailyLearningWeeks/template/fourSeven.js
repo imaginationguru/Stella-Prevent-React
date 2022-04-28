@@ -133,9 +133,9 @@ const FourSeven = (props) => {
 
       {images && images.length ? (
         <CustomImage
-          src={`${IMAGE_BASE_URL}${
-            images.filter((item) => item.image_type == 'footer')[0].image
-          }`}
+          src={`${IMAGE_BASE_URL}${images
+            .filter((item) => item.image_type == 'footer')
+            .map((val) => val.image)}`}
           style={{
             display: image[0].image !== '' ? 'flex' : 'none',
             height: '100px',

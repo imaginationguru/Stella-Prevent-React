@@ -1,17 +1,17 @@
-import GLOBALS from '@constants';
-import RestClient from '@helpers/RestClient';
-import {navigatorPush, navigatortoStart} from '@config/navigationOptions';
-import {storeItem, getItem} from '@utils/AsyncUtils';
-import {loadingAction} from '@actions/common';
+import GLOBALS from '../../constants';
+import RestClient from '../../helpers/RestClient';
+import {navigatorPush, navigatortoStart} from '../../config/navigationOptions';
+import {storeItem, getItem} from '../../utils/AsyncUtils';
+import {loadingAction} from '../common';
 import {Linking, Platform} from 'react-native';
-import {getWeek} from '@actions/moduleOne';
+import {getWeek} from '../moduleOne';
 import Swal from 'sweetalert2';
 import {Dimensions} from 'react-native-web';
 import moment from 'moment';
-import {sessionExpire} from '@actions/tracker';
-import packageJson from '@package';
-import {detectBrowser} from '@helpers/common.web';
-import {customAlert} from '@helpers/commonAlerts.web';
+import {sessionExpire} from '../tracker';
+import packageJson from '../../../package.json';
+import {detectBrowser} from '../../helpers/common.web';
+import {customAlert} from '../../helpers/commonAlerts.web';
 const {COLORS, IMAGE_BASE_URL, ACTION_TYPE, URL, STRINGS} = GLOBALS;
 const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
 //******************************Login******************* */
