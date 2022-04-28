@@ -106,6 +106,7 @@ const SleepTracker = ({location}) => {
   const [appState, setAppState] = useState(AppState.currentState);
   let currentTimeZone = momentZone.tz.guess();
   const {getScreenStartTime = ''} = useSelector((state) => state.moduleOne);
+  console.log('get screen start time sleep', getScreenStartTime);
   useEffect(() => {
     document.addEventListener('visibilitychange', () => {
       console.log('document visible', document.visibilityState);
@@ -115,9 +116,8 @@ const SleepTracker = ({location}) => {
         dispatch(AppActions.getScreenStartTime(moment().format()));
       }
     });
-
-    // AppState.addEventListener('change', _handleAppStateChange);
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   var dateArrayList = [];
   useEffect(() => {

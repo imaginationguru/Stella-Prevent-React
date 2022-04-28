@@ -174,7 +174,8 @@ const ActivityTracker = ({location}) => {
         dispatch(AppActions.getScreenStartTime(moment().format()));
       }
     });
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const addTimeTrackerAPICall = () => {
     let postData = {
       userId: getItem('userId'),

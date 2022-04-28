@@ -371,6 +371,7 @@ export default {
     UPDATE_LAST_SEEN_REQUEST: 'UPDATE_LAST_SEEN_REQUEST',
     UPDATE_LAST_SEEN_SUCCESS: 'UPDATE_LAST_SEEN_SUCCESS',
     UPDATE_LAST_SEEN_FAIL: 'UPDATE_LAST_SEEN_FAIL',
+    SET_CURRENT_DATA: 'SET_CURRENT_DATA',
   },
 
   /***************************COLORS*************************** */

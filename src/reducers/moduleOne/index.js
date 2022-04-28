@@ -33,6 +33,7 @@ const INITIAL_STATE = {
   saveMultiAssessmentData: {},
   multiAssessmentData: [],
   getScreenStartTime: null,
+  setCurrentData: null,
 };
 
 const {ACTION_TYPE} = GLOBALS;
@@ -185,13 +186,18 @@ function moduleOne(state = INITIAL_STATE, action) {
         ...state,
         getScreenStartTime: action.payload,
       };
-      
-      case ACTION_TYPE.CLEAR_SCREEN_START_TIME:
-        return {
-          ...state,
-          getScreenStartTime: null,
-        };
-      
+    case ACTION_TYPE.SET_CURRENT_DATA:
+      return {
+        ...state,
+        setCurrentData: action.payload,
+      };
+
+    case ACTION_TYPE.CLEAR_SCREEN_START_TIME:
+      return {
+        ...state,
+        getScreenStartTime: null,
+      };
+
     default:
       return state;
   }

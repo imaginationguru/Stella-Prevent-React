@@ -23,9 +23,11 @@ const Menu = (props) => {
     selectedWeek = 1,
     selectedCardId = '',
     getScreenStartTime = '',
+    setCurrentData = '',
   } = useSelector((state) => state.moduleOne);
   const dispatch = useDispatch();
   const current_screen = history.location.pathname;
+  console.log('setCuren', setCurrentData);
   const TabUI = ({
     src,
     title,
@@ -107,6 +109,22 @@ const Menu = (props) => {
 
     dispatch(AppActions.addTimeTracker(postData));
   };
+
+  const cardTimeTrackAPICall = () => {
+    let cardTimeTrackingData = {
+      userId: setCurrentData.user_id,
+      group: STRINGS.DAILY_LEARNING,
+      screen: STRINGS.CARDS,
+      startTime: getScreenStartTime,
+      endTime: moment().format(),
+      date: moment().format(),
+      week: setCurrentData.week,
+      day: setCurrentData.day,
+      card_number: setCurrentData.card_number,
+    };
+    // dispatch(AppActions.getScreenStartTime(moment().format()));
+    dispatch(AppActions.addTimeTracker(cardTimeTrackingData));
+  };
   console.log('screen name', current_screen.substring(1));
   console.log('currentActiveCard', currentActiveCard);
   return (
@@ -147,6 +165,7 @@ const Menu = (props) => {
               onClick={(e) => {
                 e.stopPropagation();
                 addTimeTrackerAPICall();
+                cardTimeTrackAPICall();
                 if (!checkMenuDisable('sleep')) {
                   dispatch(AppActions.dashboardModalAction(false));
                   navigatorPush({screenName: 'SleepTracker'});
@@ -160,6 +179,7 @@ const Menu = (props) => {
               imgWrap={{backgroundColor: GreenForSlider}}
               onClick={() => {
                 addTimeTrackerAPICall();
+                cardTimeTrackAPICall();
                 if (!checkMenuDisable('module')) {
                   dispatch(AppActions.dashboardModalAction(false));
                   dispatch(
@@ -198,6 +218,7 @@ const Menu = (props) => {
               img={{marginLeft: '45%'}}
               onClick={() => {
                 addTimeTrackerAPICall();
+                cardTimeTrackAPICall();
                 if (!checkMenuDisable('mood')) {
                   dispatch(AppActions.dashboardModalAction(false));
                   navigatorPush({screenName: 'MoodTracker'});
@@ -213,6 +234,7 @@ const Menu = (props) => {
               img={{marginLeft: '59%'}}
               onClick={() => {
                 addTimeTrackerAPICall();
+                cardTimeTrackAPICall();
                 if (!checkMenuDisable('activity')) {
                   dispatch(AppActions.dashboardModalAction(false));
                   navigatorPush({screenName: 'ActivityTracker'});
@@ -228,6 +250,7 @@ const Menu = (props) => {
               img={{marginLeft: '59%'}}
               onClick={() => {
                 addTimeTrackerAPICall();
+                cardTimeTrackAPICall();
                 if (!checkMenuDisable('dashboard')) {
                   dispatch(AppActions.dashboardModalAction(false));
                   navigatorPush({screenName: 'Dashboard'});

@@ -1424,7 +1424,7 @@ export function addTimeTracker(params) {
         if (json.code === 400) {
           dispatch({
             type: ACTION_TYPE.ERROR,
-            payload: json.message,
+            //  payload: json.message,
           });
         }
         if (json.code === 417) {
@@ -1462,6 +1462,14 @@ export function getScreenStartTime(data) {
   };
 }
 
+export function setCurrentData(data) {
+  return async (dispatch) => {
+    dispatch({
+      type: ACTION_TYPE.SET_CURRENT_DATA,
+      payload: data,
+    });
+  };
+}
 export function clearScreenStartTime() {
   return async (dispatch) => {
     dispatch({

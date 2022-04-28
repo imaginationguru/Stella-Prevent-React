@@ -56,6 +56,10 @@ const DailyLearningWeeks = (props) => {
     dispatch(AppActions.getScreenStartTime(moment().format()));
   }, [dispatch]);
   useEffect(() => {
+    dispatch(AppActions.setCurrentData(currentData));
+  }, [dispatch, currentData]);
+  console.log('get screen start time daily learning', getScreenStartTime);
+  useEffect(() => {
     document.addEventListener('visibilitychange', () => {
       console.log('document visible', document.visibilityState);
       if (document.visibilityState === 'hidden') {
@@ -64,7 +68,8 @@ const DailyLearningWeeks = (props) => {
         dispatch(AppActions.getScreenStartTime(moment().format()));
       }
     });
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const addTimeTrackerAPICall = () => {
     let postData = {
       userId: getItem('userId'),
