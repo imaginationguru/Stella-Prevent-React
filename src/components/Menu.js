@@ -23,11 +23,11 @@ const Menu = (props) => {
     selectedWeek = 1,
     selectedCardId = '',
     getScreenStartTime = '',
-    setCurrentData = '',
+    currentCardData = '',
   } = useSelector((state) => state.moduleOne);
   const dispatch = useDispatch();
   const current_screen = history.location.pathname;
-  console.log('setCuren', setCurrentData);
+  console.log('setCuren', currentCardData);
   const TabUI = ({
     src,
     title,
@@ -112,15 +112,15 @@ const Menu = (props) => {
 
   const cardTimeTrackAPICall = () => {
     let cardTimeTrackingData = {
-      userId: setCurrentData.user_id,
+      userId: currentCardData.user_id,
       group: STRINGS.DAILY_LEARNING,
       screen: STRINGS.CARDS,
       startTime: getScreenStartTime,
       endTime: moment().format(),
       date: moment().format(),
-      week: setCurrentData.week,
-      day: setCurrentData.day,
-      card_number: setCurrentData.card_number,
+      week: currentCardData.week,
+      day: currentCardData.day,
+      card_number: currentCardData.card_number,
     };
     // dispatch(AppActions.getScreenStartTime(moment().format()));
     dispatch(AppActions.addTimeTracker(cardTimeTrackingData));

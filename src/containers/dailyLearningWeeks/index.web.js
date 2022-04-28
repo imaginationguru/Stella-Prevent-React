@@ -36,6 +36,7 @@ const DailyLearningWeeks = (props) => {
     selectedDay,
     selectedWeek,
     getScreenStartTime = '',
+    currentCardData = '',
   } = useSelector((state) => state.moduleOne);
   let [weeksCount, setWeeksCount] = useState(
     props.location?.state?.isFromDashboard
@@ -51,6 +52,7 @@ const DailyLearningWeeks = (props) => {
   const [nextData, setNextData] = useState({});
   const [prevData, setPrevData] = useState({});
   const [prevCardDataArray, setPrevDataArray] = useState([]);
+  const [selectedCardData, setSelectedCardData] = useState([]);
   useEffect(() => {
     dispatch(AppActions.getScreenStartTime(moment().format()));
   }, [dispatch]);
@@ -58,11 +60,13 @@ const DailyLearningWeeks = (props) => {
     dispatch(AppActions.setCurrentData(currentData));
   }, [dispatch, currentData]);
   console.log('get screen start time daily learning', getScreenStartTime);
+
   useEffect(() => {
     document.addEventListener('visibilitychange', () => {
       console.log('document visible', document.visibilityState);
       if (document.visibilityState === 'hidden') {
         addTimeTrackerAPICall();
+        addCardTimeTrackerAPICall();
       } else {
         dispatch(AppActions.getScreenStartTime(moment().format()));
       }
@@ -80,6 +84,20 @@ const DailyLearningWeeks = (props) => {
     };
     dispatch(AppActions.addTimeTracker(postData));
   };
+  const addCardTimeTrackerAPICall = () => {
+    let postData = {
+      userId: getItem('userId'),
+      group: STRINGS.DAILY_LEARNING,
+      screen: STRINGS.CARDS,
+      startTime: getScreenStartTime,
+      endTime: moment().format(),
+      date: moment().format(),
+      week: currentData.week,
+      day: currentData.day,
+      card_number: currentData.card_number,
+      };
+      dispatch(AppActions.addTimeTracker(postData));
+  }
   const addTimeTrackerAPICallOnPast = () => {
     let postData = {
       userId: getItem('userId'),
@@ -448,7 +466,8 @@ const DailyLearningWeeks = (props) => {
                         const isClickable = id
                           ? applicableCards(id, cardIndex)
                           : false;
-
+                          //set current data here
+                          setSelectedCardData(cardData)
                         if (isClickable) {
                           dispatch({
                             type: GLOBALS.ACTION_TYPE
