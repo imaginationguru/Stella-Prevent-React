@@ -3,7 +3,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
-import {TouchableOpacity, View, Text, FlatList, Dimensions} from 'react-native';
+import {TouchableOpacity, View, Text, FlatList, Dimensions, AppState} from 'react-native';
 import MasterLayout from '@components/MasterLayout';
 import BackBtn from '@components/common/backbtn';
 import {useDispatch, useSelector} from 'react-redux';
@@ -97,6 +97,7 @@ const SleepTracker = ({location, props}) => {
   const [sleepScale, setSleepScale] = useState();
   const [energeticScale, setEnergeticScale] = useState();
   const [isEditUI, setIsEditUI] = useState(false);
+  const [appState, setAppState] = useState(AppState.currentState);
   let currentTimeZone = momentZone.tz.guess();
   const {getScreenStartTime = ''} = useSelector((state) => state.moduleOne);
   var dateArrayList = [];
@@ -267,6 +268,10 @@ const SleepTracker = ({location, props}) => {
       dispatch(
         AppActions.saveSleepTracker(postData, postDataGetAPI, timePostData),
       );
+      dispatch(AppActions.saveSleepTracker(postData, postDataGetAPI));
+
+      //users last seen api
+      dispatch(AppActions.updateUserLastSeen());
     }
   };
 

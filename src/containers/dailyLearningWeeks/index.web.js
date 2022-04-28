@@ -14,7 +14,7 @@ import BackBtn from '@components/common/backbtn';
 import moment from 'moment';
 import {getItem} from '../../utils/AsyncUtils';
 import {goToPastModule} from '../../config/navigationOptions.web';
-const {COLORS} = GLOBALS;
+const {COLORS,STRINGS} = GLOBALS;
 const DailyLearningWeeks = (props) => {
   let isFromDashboard = props.location?.state?.isFromDashboard;
   let backTitle = props.location?.state?.backTitle;
@@ -50,6 +50,7 @@ const DailyLearningWeeks = (props) => {
   const [isScrollerLoad, setScrollerLoad] = useState(false);
   const [nextData, setNextData] = useState({});
   const [prevData, setPrevData] = useState({});
+  const [selectedCardIndex, setCardIndex] = useState({});
 
   useEffect(() => {
     dispatch(AppActions.getScreenStartTime(moment().format()));
@@ -260,8 +261,9 @@ const DailyLearningWeeks = (props) => {
     return temp;
   };
 
-  const applicableCards = (id = '') => {
+  const applicableCards = (id = '', cardIndex) => {
     let temp = cardsColorDisable();
+    setCardIndex(cardIndex)
     var selectedObject = temp.filter((el) => {
       return el.card === id;
     });
@@ -278,9 +280,22 @@ const DailyLearningWeeks = (props) => {
         week: currentData.week,
         day: currentData.day,
       };
-
-      dispatch(
-        AppActions.markCompleteCard(completeParams, selectedWeek, nextday),
+      
+      // card tracking on next click
+      let cardTimeTrackingData = {
+        userId: currentData.user_id,
+        group: STRINGS.DAILY_LEARNING,
+        screen: STRINGS.CARDS,
+        startTime: getScreenStartTime,
+        endTime: moment().format(),
+        date: moment().format(),
+        week:currentData.week,
+        day:currentData.day,
+        card_number:currentData.card_number
+      }
+      dispatch(AppActions.getScreenStartTime(moment().format()));
+      dispatch(AppActions.addTimeTracker(cardTimeTrackingData));
+      dispatch(AppActions.markCompleteCard(completeParams, selectedWeek, nextday),
       );
     }
   };
@@ -341,7 +356,6 @@ const DailyLearningWeeks = (props) => {
       }),
     );
   };
-  console.log('current dta', currentData);
   return (
     <div className="m-main">
       <MasterLayout>
@@ -350,11 +364,42 @@ const DailyLearningWeeks = (props) => {
             title={backTitle}
             onPress={() => {
               addTimeTrackerAPICallOnPast();
+              //Cards time tracking api calling on back click
+              let cardTimeTrackingData = {
+                userId: currentData.user_id,
+                group: STRINGS.DAILY_LEARNING,
+                screen: STRINGS.CARDS,
+                startTime: getScreenStartTime,
+                endTime: moment().format(),
+                date: moment().format(),
+                week: currentData.week,
+                day: currentData.day,
+                card_number: currentData.card_number
+              }
+              // dispatch(AppActions.getScreenStartTime(moment().format()));
+              dispatch(AppActions.addTimeTracker(cardTimeTrackingData));
               goToPastModule();
             }}
           />
         ) : (
-          <BackToDashboard onBack={() => addTimeTrackerAPICall()} />
+          <BackToDashboard onBack={() => {
+              //Cards time tracking api calling on back click
+              let cardTimeTrackingData = {
+                userId: currentData.user_id,
+                group: STRINGS.DAILY_LEARNING,
+                screen: STRINGS.CARDS,
+                startTime: getScreenStartTime,
+                endTime: moment().format(),
+                date: moment().format(),
+                week: currentData.week,
+                day: currentData.day,
+                card_number: currentData.card_number
+              }
+              // dispatch(AppActions.getScreenStartTime(moment().format()));
+              dispatch(AppActions.addTimeTracker(cardTimeTrackingData));
+            addTimeTrackerAPICall()
+          }
+           } />
         )}
 
         <div className="dashboard-body">
@@ -383,8 +428,8 @@ const DailyLearningWeeks = (props) => {
                         (item) => item.day === selectedDay,
                       )}
                       isDisabled={cardsColorDisable()}
-                      onCardChange={(id, i) => {
-                        const isClickable = id ? applicableCards(id) : false;
+                      onCardChange={(id, cardData, cardIndex) => {
+                        const isClickable = id ? applicableCards(id, cardIndex) : false;
 
                         if (isClickable) {
                           dispatch({
@@ -392,11 +437,34 @@ const DailyLearningWeeks = (props) => {
                               .GET_USER_ASSESSMENT_SUCCESS,
                             payload: [],
                           });
-                          console.log('is clickable??????');
                           dispatch({
                             type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                             payload: id,
                           });
+                          console.log('cardDataPRIYANKA', cardData)
+                          console.log('topClickItemPrv', prevData)
+                          //set card number
+                          // let cardNumber;
+                          // if(Object.keys(prevData).length === 0 && prevData.constructor === Object){
+                          //   cardNumber = 1;
+                          // }else{
+                          //   cardNumber = prevData.card_number + 1;
+                          // }
+                          //Cards time tracking api calling on click on top cards
+                          let cardTimeTrackingData = {
+                            userId: cardData.user_id,
+                            group: STRINGS.DAILY_LEARNING,
+                            screen: STRINGS.CARDS,
+                            startTime: getScreenStartTime,
+                            endTime: moment().format(),
+                            date: moment().format(),
+                            week: cardData.week,
+                            day: cardData.day,
+                            card_number: cardData.card_number
+                          }
+                          // dispatch(AppActions.clearScreenStartTime());
+                          dispatch(AppActions.getScreenStartTime(moment().format()));
+                          dispatch(AppActions.addTimeTracker(cardTimeTrackingData));
                         } else if (
                           currentData.is_disabled == false &&
                           currentData.is_read == true &&
@@ -448,6 +516,24 @@ const DailyLearningWeeks = (props) => {
                       <div className="footer-nav-left">
                         <div
                           onClick={() => {
+                            console.log('OnPrvClick', currentData)
+                            //Cards time tracking api call in click on Previous
+                            let cardTimeTrackingData = {
+                              userId: currentData.user_id,
+                              group: STRINGS.DAILY_LEARNING,
+                              screen: STRINGS.CARDS,
+                              startTime: getScreenStartTime,
+                              endTime: moment().format(),
+                              date: moment().format(),
+                              week:currentData.week,
+                              day:currentData.day,
+                              card_number:currentData.card_number
+                            }
+                            
+                            // dispatch(AppActions.clearScreenStartTime());
+                            dispatch(AppActions.getScreenStartTime(moment().format()));
+
+                            dispatch(AppActions.addTimeTracker(cardTimeTrackingData));
                             if (
                               currentData.card?.template_data[0]
                                 ?.template_number == 27
