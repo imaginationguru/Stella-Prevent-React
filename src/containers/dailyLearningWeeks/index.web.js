@@ -43,15 +43,14 @@ const DailyLearningWeeks = (props) => {
       : props.location?.state?.weeksCount
       ? props.location?.state?.weeksCount
       : 1,
-  );
+  )
   const {loginData = []} = useSelector((state) => state.authReducer);
   const {week, day} = currentActiveCard.length ? currentActiveCard[0] : {};
   const [currentData, setCurrentData] = useState({});
   const [isScrollerLoad, setScrollerLoad] = useState(false);
   const [nextData, setNextData] = useState({});
   const [prevData, setPrevData] = useState({});
-  const [selectedCardIndex, setCardIndex] = useState({});
-
+  const [prevCardDataArray, setPrevDataArray] = useState([]);
   useEffect(() => {
     dispatch(AppActions.getScreenStartTime(moment().format()));
   }, [dispatch]);
@@ -198,7 +197,8 @@ const DailyLearningWeeks = (props) => {
     }
 
     setCurrentData(data);
-
+    setPrevDataArray(data)
+    
     if (cIds.length) {
       const currentIndex = cIds.findIndex((item) => item === data._id);
       let nextId = '';
@@ -278,7 +278,6 @@ const DailyLearningWeeks = (props) => {
 
   const applicableCards = (id = '', cardIndex) => {
     let temp = cardsColorDisable();
-    setCardIndex(cardIndex);
     var selectedObject = temp.filter((el) => {
       return el.card === id;
     });
@@ -457,18 +456,9 @@ const DailyLearningWeeks = (props) => {
                             payload: [],
                           });
                           dispatch({
-                            type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
+                            type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID, 
                             payload: id,
-                          });
-                          console.log('cardDataPRIYANKA', cardData);
-                          console.log('topClickItemPrv', prevData);
-                          //set card number
-                          // let cardNumber;
-                          // if(Object.keys(prevData).length === 0 && prevData.constructor === Object){
-                          //   cardNumber = 1;
-                          // }else{
-                          //   cardNumber = prevData.card_number + 1;
-                          // }
+                          });                         
                           //Cards time tracking api calling on click on top cards
                           let cardTimeTrackingData = {
                             userId: cardData.user_id,
@@ -479,7 +469,7 @@ const DailyLearningWeeks = (props) => {
                             date: moment().format(),
                             week: cardData.week,
                             day: cardData.day,
-                            card_number: cardData.card_number,
+                            card_number: prevCardDataArray.card_number,
                           };
                           // dispatch(AppActions.clearScreenStartTime());
                           dispatch(
