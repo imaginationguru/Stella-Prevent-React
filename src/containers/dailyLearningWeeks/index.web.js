@@ -97,6 +97,7 @@ const DailyLearningWeeks = (props) => {
     dispatch(AppActions.addTimeTracker(postData));
   };
   const addCardTimeTrackerAPICall = () => {
+    console.log('PRIYANKA_currentData', currentData)
     let postData = {
       userId: getItem('userId'),
       group: STRINGS.DAILY_LEARNING,
