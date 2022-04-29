@@ -1,11 +1,34 @@
 import React from 'react';
-import { translate as ts } from '../i18n/translate';
-import { Link } from 'react-router-dom';
-import { navigatorPush } from '../config/navigationOptions.web';
+import {translate as ts} from '../i18n/translate';
+import {Link} from 'react-router-dom';
+import {navigatorPush} from '../config/navigationOptions.web';
 import footerlogo from '../assets/images/footerlogo.svg';
 import GLOBALS from '../constants';
-const { IMAGE_BASE_URL } = GLOBALS;
+import {useSelector, useDispatch} from 'react-redux';
+import * as AppActions from '../actions';
+import moment from 'moment';
+const {IMAGE_BASE_URL, STRINGS} = GLOBALS;
+
 const Footer = () => {
+  const {currentCardData = '', getScreenStartTime = ''} = useSelector(
+    (state) => state.moduleOne,
+  );
+  const dispatch = useDispatch();
+  console.log('contact>>>>>', currentCardData);
+  const cardTimeTrackAPICall = () => {
+    let cardTimeTrackingData = {
+      userId: currentCardData.user_id,
+      group: STRINGS.DAILY_LEARNING,
+      screen: STRINGS.CARDS,
+      startTime: getScreenStartTime,
+      endTime: moment().format(),
+      date: moment().format(),
+      week: currentCardData.week,
+      day: currentCardData.day,
+      card_number: currentCardData.card_number,
+    };
+    dispatch(AppActions.addTimeTracker(cardTimeTrackingData));
+  };
   return (
     <footer className="dashboard-footer">
       <div className="footer-container">
@@ -15,21 +38,27 @@ const Footer = () => {
           </div>
           <div className="f-col f-col-auto">
             <div className="footer-links">
-              <div className="footer-link-item">
+              <div
+                className="footer-link-item"
+                onClick={() => cardTimeTrackAPICall()}>
                 <a
                   target="_blank"
                   href={`${IMAGE_BASE_URL}upload/MamaLift_Terms_of_Use.pdf`}>
                   Terms of Use
                 </a>
               </div>
-              <div className="footer-link-item">
+              <div
+                className="footer-link-item"
+                onClick={() => cardTimeTrackAPICall()}>
                 <a
                   target="_blank"
                   href={`${IMAGE_BASE_URL}upload/PRIVACY_POLICY0203.pdf`}>
                   Privacy Policy
                 </a>
               </div>
-              <div className="footer-link-item">
+              <div
+                className="footer-link-item"
+                onClick={() => cardTimeTrackAPICall()}>
                 <Link to="/Contact">Contact Us</Link>
               </div>
               {/* <div className="footer-link-item">
@@ -56,7 +85,7 @@ const Footer = () => {
               <b>
                 Contact us at{' '}
                 <a
-                  style={{ color: 'white' }}
+                  style={{color: 'white'}}
                   href="mailto:contact@mymamalift.com">
                   <b>contact@mymamalift.com</b>
                 </a>
