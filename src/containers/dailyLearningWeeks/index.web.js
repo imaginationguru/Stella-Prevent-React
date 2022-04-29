@@ -64,6 +64,10 @@ const DailyLearningWeeks = (props) => {
   console.log('get screen start time daily learning', getScreenStartTime);
 
   useEffect(() => {
+    history.pushState(null, null, location.href);
+    window.onpopstate = function(event) {
+      history.go(1);
+    };
     AppState.addEventListener('change', _handleAppStateChange);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   });
