@@ -108,17 +108,34 @@ const SleepTracker = ({location}) => {
   const {getScreenStartTime = ''} = useSelector((state) => state.moduleOne);
   console.log('get screen start time sleep', getScreenStartTime);
   useEffect(() => {
-    document.addEventListener('visibilitychange', () => {
-      console.log('document visible', document.visibilityState);
-      if (document.visibilityState === 'hidden') {
-        addTimeTrackerAPICall();
-      } else {
-        dispatch(AppActions.getScreenStartTime(moment().format()));
-      }
-    });
+    // document.addEventListener('visibilitychange', () => {
+    //   console.log('document visible', document.visibilityState);
+    //   if (document.visibilityState === 'hidden') {
+    //     addTimeTrackerAPICall();
+    //   } else {
+    //     dispatch(AppActions.getScreenStartTime(moment().format()));
+    //   }
+    // });
+    AppState.addEventListener('change', _handleAppStateChange);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
+  useEffect(() => {
+    return () => {
+      AppState.removeEventListener('change', _handleAppStateChange);
+    };
+  });
 
+  const _handleAppStateChange = (nextAppState) => {
+    console.log('_handleAppStateChange_fun');
+    if (appState.match(/inactive|background/) && nextAppState === 'active') {
+      console.log('PRIYANKA_NEXT_APP_STATE_IF=>', nextAppState);
+      dispatch(AppActions.getScreenStartTime(moment().format()));
+    } else {
+      console.log('PRIYANKA_NEXT_APP_STATE_ELSE=>', nextAppState);
+      addTimeTrackerAPICall();
+    }
+    setAppState(nextAppState);
+  };
   var dateArrayList = [];
   useEffect(() => {
     for (var i = 6; i >= 0; i--) {

@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {AppState} from 'react-native';
 import MasterLayout from '@components/MasterLayout';
 import Footer from '@components/Footer';
 import GLOBALS from '@constants';
@@ -44,7 +45,7 @@ const DailyLearningWeeks = (props) => {
       : props.location?.state?.weeksCount
       ? props.location?.state?.weeksCount
       : 1,
-  )
+  );
   const {loginData = []} = useSelector((state) => state.authReducer);
   const {week, day} = currentActiveCard.length ? currentActiveCard[0] : {};
   const [currentData, setCurrentData] = useState({});
@@ -53,6 +54,7 @@ const DailyLearningWeeks = (props) => {
   const [prevData, setPrevData] = useState({});
   const [prevCardDataArray, setPrevDataArray] = useState([]);
   const [selectedCardData, setSelectedCardData] = useState([]);
+  const [appState, setAppState] = useState(AppState.currentState);
   useEffect(() => {
     dispatch(AppActions.getScreenStartTime(moment().format()));
   }, [dispatch]);
@@ -62,17 +64,27 @@ const DailyLearningWeeks = (props) => {
   console.log('get screen start time daily learning', getScreenStartTime);
 
   useEffect(() => {
-    document.addEventListener('visibilitychange', () => {
-      console.log('document visible', document.visibilityState);
-      if (document.visibilityState === 'hidden') {
-        addTimeTrackerAPICall();
-        addCardTimeTrackerAPICall();
-      } else {
-        dispatch(AppActions.getScreenStartTime(moment().format()));
-      }
-    });
+    AppState.addEventListener('change', _handleAppStateChange);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
+  useEffect(() => {
+    return () => {
+      AppState.removeEventListener('change', _handleAppStateChange);
+    };
+  });
+
+  const _handleAppStateChange = (nextAppState) => {
+    console.log('_handleAppStateChange_fun');
+    if (appState.match(/inactive|background/) && nextAppState === 'active') {
+      console.log('PRIYANKA_NEXT_APP_STATE_IF=>', nextAppState);
+      dispatch(AppActions.getScreenStartTime(moment().format()));
+    } else {
+      console.log('PRIYANKA_NEXT_APP_STATE_ELSE=>', nextAppState);
+      addTimeTrackerAPICall();
+      addCardTimeTrackerAPICall();
+    }
+    setAppState(nextAppState);
+  };
   const addTimeTrackerAPICall = () => {
     let postData = {
       userId: getItem('userId'),
@@ -95,9 +107,9 @@ const DailyLearningWeeks = (props) => {
       week: currentData.week,
       day: currentData.day,
       card_number: currentData.card_number,
-      };
-      dispatch(AppActions.addTimeTracker(postData));
-  }
+    };
+    dispatch(AppActions.addTimeTracker(postData));
+  };
   const addTimeTrackerAPICallOnPast = () => {
     let postData = {
       userId: getItem('userId'),
@@ -215,8 +227,8 @@ const DailyLearningWeeks = (props) => {
     }
 
     setCurrentData(data);
-    setPrevDataArray(data)
-    
+    setPrevDataArray(data);
+
     if (cIds.length) {
       const currentIndex = cIds.findIndex((item) => item === data._id);
       let nextId = '';
@@ -466,8 +478,8 @@ const DailyLearningWeeks = (props) => {
                         const isClickable = id
                           ? applicableCards(id, cardIndex)
                           : false;
-                          //set current data here
-                          setSelectedCardData(cardData)
+                        //set current data here
+                        setSelectedCardData(cardData);
                         if (isClickable) {
                           dispatch({
                             type: GLOBALS.ACTION_TYPE
@@ -475,9 +487,9 @@ const DailyLearningWeeks = (props) => {
                             payload: [],
                           });
                           dispatch({
-                            type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID, 
+                            type: GLOBALS.ACTION_TYPE.GET_SELECTED_CARD_ID,
                             payload: id,
-                          });                         
+                          });
                           //Cards time tracking api calling on click on top cards
                           let cardTimeTrackingData = {
                             userId: cardData.user_id,

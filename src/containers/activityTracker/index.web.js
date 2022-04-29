@@ -5,6 +5,7 @@ import {
   FlatList,
   Alert,
   Dimensions,
+  AppState,
 } from 'react-native';
 import MasterLayout from '@components/MasterLayout';
 import {useDispatch, useSelector} from 'react-redux';
@@ -150,6 +151,8 @@ const ActivityTracker = ({location}) => {
   const [addNewActivity, setNewActivity] = useState([]);
   const [selectedActivityName, setSelectedActivity] = useState('');
   const {getScreenStartTime = ''} = useSelector((state) => state.moduleOne);
+  const [appState, setAppState] = useState(AppState.currentState);
+
   let hospitalId = getItem('hospitalId');
   let userId = getItem('userId');
   const tabsType = [
@@ -166,16 +169,34 @@ const ActivityTracker = ({location}) => {
     dispatch(AppActions.getScreenStartTime(moment().format()));
   }, [dispatch]);
   useEffect(() => {
-    document.addEventListener('visibilitychange', () => {
-      console.log('document visible', document.visibilityState);
-      if (document.visibilityState === 'hidden') {
-        addTimeTrackerAPICall();
-      } else {
-        dispatch(AppActions.getScreenStartTime(moment().format()));
-      }
-    });
+    // document.addEventListener('visibilitychange', () => {
+    //   console.log('document visible', document.visibilityState);
+    //   if (document.visibilityState === 'hidden') {
+    //     addTimeTrackerAPICall();
+    //   } else {
+    //     dispatch(AppActions.getScreenStartTime(moment().format()));
+    //   }
+    // });
+    AppState.addEventListener('change', _handleAppStateChange);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
+  useEffect(() => {
+    return () => {
+      AppState.removeEventListener('change', _handleAppStateChange);
+    };
+  });
+
+  const _handleAppStateChange = (nextAppState) => {
+    console.log('_handleAppStateChange_fun');
+    if (appState.match(/inactive|background/) && nextAppState === 'active') {
+      console.log('PRIYANKA_NEXT_APP_STATE_IF=>', nextAppState);
+      dispatch(AppActions.getScreenStartTime(moment().format()));
+    } else {
+      console.log('PRIYANKA_NEXT_APP_STATE_ELSE=>', nextAppState);
+      addTimeTrackerAPICall();
+    }
+    setAppState(nextAppState);
+  };
   const addTimeTrackerAPICall = () => {
     let postData = {
       userId: getItem('userId'),

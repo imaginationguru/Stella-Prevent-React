@@ -12,6 +12,7 @@ import {
   Dimensions,
   Image,
   StyleSheet,
+  AppState,
 } from 'react-native';
 import MasterLayout from '@components/MasterLayout';
 import BackBtn from '@components/common/backbtn';
@@ -139,7 +140,7 @@ const LineGraphUI = ({xAxis, yAxis, lable}) => {
 };
 const Report = ({location}) => {
   let isFromCard = location?.state?.isFromCard;
-
+  const [appState, setAppState] = useState(AppState.currentState);
   const {getWeeklySummaryReportData} = useSelector((state) => state.tracker);
   const {getScreenStartTime = ''} = useSelector((state) => state.moduleOne);
 
@@ -359,17 +360,28 @@ const Report = ({location}) => {
   useEffect(() => {
     dispatch(AppActions.getScreenStartTime(moment().format()));
   }, [dispatch]);
+
   useEffect(() => {
-    document.addEventListener('visibilitychange', () => {
-      console.log('document visible', document.visibilityState);
-      if (document.visibilityState === 'hidden') {
-        addTimeTrackerAPICall();
-      } else {
-        dispatch(AppActions.getScreenStartTime(moment().format()));
-      }
-    });
+    AppState.addEventListener('change', _handleAppStateChange);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
+  useEffect(() => {
+    return () => {
+      AppState.removeEventListener('change', _handleAppStateChange);
+    };
+  });
+
+  const _handleAppStateChange = (nextAppState) => {
+    console.log('_handleAppStateChange_fun');
+    if (appState.match(/inactive|background/) && nextAppState === 'active') {
+      console.log('PRIYANKA_NEXT_APP_STATE_IF=>', nextAppState);
+      dispatch(AppActions.getScreenStartTime(moment().format()));
+    } else {
+      console.log('PRIYANKA_NEXT_APP_STATE_ELSE=>', nextAppState);
+      addTimeTrackerAPICall();
+    }
+    setAppState(nextAppState);
+  };
   const addTimeTrackerAPICall = () => {
     let postData = {
       userId: getItem('userId'),
