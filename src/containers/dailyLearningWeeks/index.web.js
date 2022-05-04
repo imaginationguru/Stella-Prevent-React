@@ -13,9 +13,10 @@ import {customAlert} from '@helpers/commonAlerts.web';
 import {navigatorPush} from '@config/navigationOptions.web';
 import BackBtn from '@components/common/backbtn';
 import moment from 'moment';
-import {getItem} from '../../utils/AsyncUtils';
+import {storeItem, getItem} from '../../utils/AsyncUtils';
 import {goToPastModule} from '../../config/navigationOptions.web';
 const {COLORS, STRINGS} = GLOBALS;
+
 const DailyLearningWeeks = (props) => {
   let isFromDashboard = props.location?.state?.isFromDashboard;
   let backTitle = props.location?.state?.backTitle;
@@ -64,6 +65,10 @@ const DailyLearningWeeks = (props) => {
   console.log('get screen start time daily learning', getScreenStartTime);
 
   useEffect(() => {
+    history.pushState(null, null, location.href);
+    window.onpopstate = function(event) {
+      history.go(1);
+    };
     AppState.addEventListener('change', _handleAppStateChange);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   });
@@ -228,6 +233,7 @@ const DailyLearningWeeks = (props) => {
     }
 
     setCurrentData(data);
+    storeItem('PRIYANKA', data);
     setPrevDataArray(data);
 
     if (cIds.length) {
