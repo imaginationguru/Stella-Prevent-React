@@ -12,7 +12,7 @@ import face from '@assets/images/sleep/face.png';
 import logout from '@assets/images/logout.png';
 import logoWhite from '@assets/images/logoWhite.png';
 import moment from 'moment';
-import {getItem} from '../utils/AsyncUtils';
+import {getItem, removeItem} from '../utils/AsyncUtils';
 const {COLORS, STRINGS} = GLOBALS;
 const {GRAY, PLAN_GRAY, WHITE, GreenForSlider, DARK_RED} = COLORS;
 const Menu = (props) => {
@@ -87,6 +87,11 @@ const Menu = (props) => {
   // useEffect(() => {
   //   dispatch(AppActions.getScreenStartTime(moment().format()));
   // }, [dispatch]);
+  const removeAsyncItem = () =>{
+    removeItem(STRINGS.CARD_DATA)
+    removeItem(STRINGS.SCREEN_START_TIME)
+  }
+
   const addTimeTrackerAPICall = () => {
     let postData = {
       userId: getItem('userId'),
@@ -165,6 +170,7 @@ const Menu = (props) => {
               onClick={(e) => {
                 e.stopPropagation();
                 addTimeTrackerAPICall();
+                removeAsyncItem();
                 cardTimeTrackAPICall();
                 if (!checkMenuDisable('sleep')) {
                   dispatch(AppActions.dashboardModalAction(false));
@@ -179,6 +185,7 @@ const Menu = (props) => {
               imgWrap={{backgroundColor: GreenForSlider}}
               onClick={() => {
                 addTimeTrackerAPICall();
+                removeAsyncItem();
                 cardTimeTrackAPICall();
                 if (!checkMenuDisable('module')) {
                   dispatch(AppActions.dashboardModalAction(false));
@@ -218,6 +225,7 @@ const Menu = (props) => {
               img={{marginLeft: '45%'}}
               onClick={() => {
                 addTimeTrackerAPICall();
+                removeAsyncItem();
                 cardTimeTrackAPICall();
                 if (!checkMenuDisable('mood')) {
                   dispatch(AppActions.dashboardModalAction(false));
@@ -234,6 +242,7 @@ const Menu = (props) => {
               img={{marginLeft: '59%'}}
               onClick={() => {
                 addTimeTrackerAPICall();
+                removeAsyncItem();
                 cardTimeTrackAPICall();
                 if (!checkMenuDisable('activity')) {
                   dispatch(AppActions.dashboardModalAction(false));
@@ -250,6 +259,7 @@ const Menu = (props) => {
               img={{marginLeft: '59%'}}
               onClick={() => {
                 addTimeTrackerAPICall();
+                removeAsyncItem();
                 cardTimeTrackAPICall();
                 if (!checkMenuDisable('dashboard')) {
                   dispatch(AppActions.dashboardModalAction(false));

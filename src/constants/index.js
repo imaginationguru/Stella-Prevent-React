@@ -154,6 +154,8 @@ export default {
     REPORT: 'Report',
     SLEEP_TRACKER: 'SleepTracker',
     ACTIVITY_TRACKER: 'ActivityTracker',
+    CARD_DATA : 'CARD_DATA',
+    SCREEN_START_TIME: 'SCREEN_START_TIME'
   },
 
   MOODS_ARRAY: [

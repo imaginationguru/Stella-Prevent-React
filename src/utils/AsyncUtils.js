@@ -9,6 +9,11 @@ export const getItem = (key) => {
   return item;
 };
 
+export const removeItem = (key) => {
+  const removedItem = localStorage.removeItem(key);
+  return removedItem;
+};
+
 export const generateUrlParams = (arr = []) => {
   if (arr.length) {
     let after_one = arr.filter((item, index) => index > 0);
