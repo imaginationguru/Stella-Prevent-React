@@ -13,6 +13,10 @@ const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
 export const sessionExpire = (message) => {
   return async (dispatch) => {
     customAlert(message, 'success', {}, null, (onPress) => {
+
+      let cardData = getItem('PRIYANKA');
+      console.log('SessionExpired_cardData', cardData)
+
       dispatch(clearSessionExpiredAction());
       // localStorage.clear();
       // history.push('/');
