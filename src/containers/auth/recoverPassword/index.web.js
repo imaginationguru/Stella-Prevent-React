@@ -89,7 +89,14 @@ const RecoverPassword = () => {
         <div className="login">
           <div className="login-left">
             <div className="b-name">
-              <img src={logoWhite} />
+              <img
+                src={logoWhite}
+                style={{
+                  //  border: '1px solid red',
+                  width: '250px',
+                  // height: '300px',
+                }}
+              />
             </div>
             <div className="graphics">
               <img src={graphic01} />

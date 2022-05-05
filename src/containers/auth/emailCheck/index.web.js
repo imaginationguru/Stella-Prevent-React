@@ -14,6 +14,7 @@ import icon01 from '@assets/images/icon01.svg';
 import successTick from '@assets/images/successTick.svg';
 import MasterLayout from '@components/MasterLayout';
 import logoWhite from '@assets/images/logoWhite.svg';
+import logoWhite1 from '@assets/images/logoWhite.png';
 import {translate as ts} from '@i18n/translate';
 import {emailRegex} from '@utils/RegexUtils';
 import {useDispatch, useSelector} from 'react-redux';
@@ -55,8 +56,16 @@ const EmailCheck = () => {
         <div className="login">
           <div className="login-left">
             <div className="b-name">
-              <img src={logoWhite} />
+              <img
+                src={logoWhite}
+                style={{
+                  //  border: '1px solid red',
+                  width: '250px',
+                  // height: '300px',
+                }}
+              />
             </div>
+
             <div className="graphics">
               <img src={graphic01} />
             </div>
