@@ -7,6 +7,7 @@ import GLOBALS from '../constants';
 import {useSelector, useDispatch} from 'react-redux';
 import * as AppActions from '../actions';
 import moment from 'moment';
+import {getItem, removeItem} from '../utils/AsyncUtils';
 const {IMAGE_BASE_URL, STRINGS} = GLOBALS;
 
 const Footer = () => {
@@ -15,20 +16,29 @@ const Footer = () => {
   );
   const dispatch = useDispatch();
   console.log('contact>>>>>', currentCardData);
+ 
   const cardTimeTrackAPICall = () => {
-    let cardTimeTrackingData = {
-      userId: currentCardData.user_id,
-      group: STRINGS.DAILY_LEARNING,
-      screen: STRINGS.CARDS,
-      startTime: getScreenStartTime,
-      endTime: moment().format(),
-      date: moment().format(),
-      week: currentCardData.week,
-      day: currentCardData.day,
-      card_number: currentCardData.card_number,
-    };
-    dispatch(AppActions.addTimeTracker(cardTimeTrackingData));
+    if(currentCardData != null){
+      let cardTimeTrackingData = {
+        userId: currentCardData.user_id,
+        group: STRINGS.DAILY_LEARNING,
+        screen: STRINGS.CARDS,
+        startTime: getScreenStartTime,
+        endTime: moment().format(),
+        date: moment().format(),
+        week: currentCardData.week,
+        day: currentCardData.day,
+        card_number: currentCardData.card_number,
+      };
+      dispatch(AppActions.addTimeTracker(cardTimeTrackingData));
+    }
   };
+
+  const removeAsyncItem = () =>{
+    removeItem(STRINGS.CARD_DATA)
+    removeItem(STRINGS.SCREEN_START_TIME)
+  }
+
   return (
     <footer className="dashboard-footer">
       <div className="footer-container">
@@ -40,7 +50,10 @@ const Footer = () => {
             <div className="footer-links">
               <div
                 className="footer-link-item"
-                onClick={() => cardTimeTrackAPICall()}>
+                onClick={() => 
+                 { cardTimeTrackAPICall()
+                  removeAsyncItem()}
+                  }>
                 <a
                   target="_blank"
                   href={`${IMAGE_BASE_URL}upload/MamaLift_Terms_of_Use.pdf`}>
@@ -49,7 +62,11 @@ const Footer = () => {
               </div>
               <div
                 className="footer-link-item"
-                onClick={() => cardTimeTrackAPICall()}>
+                onClick={() =>
+                  { cardTimeTrackAPICall()
+                    removeAsyncItem()
+                  }
+                }>
                 <a
                   target="_blank"
                   href={`${IMAGE_BASE_URL}upload/PRIVACY_POLICY0203.pdf`}>
@@ -58,7 +75,9 @@ const Footer = () => {
               </div>
               <div
                 className="footer-link-item"
-                onClick={() => cardTimeTrackAPICall()}>
+                onClick={() =>{ 
+                  cardTimeTrackAPICall()
+                  removeAsyncItem()}}>
                 <Link to="/Contact">Contact Us</Link>
               </div>
               {/* <div className="footer-link-item">
