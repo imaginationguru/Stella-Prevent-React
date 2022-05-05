@@ -47,8 +47,7 @@ import BackBtn from '@components/common/backbtn';
 import {useSelector, useDispatch} from 'react-redux';
 import * as AppActions from '@actions';
 import {validateEmail, validateIsEmpty} from '@utils/validations';
-const Payment = (props) => {
-  console.log(props.location.state, 'bbbbb');
+const Payment = (props, componentId) => {
   const {loginData = {}} = useSelector((state) => state.authReducer);
   let premiumPrice = props.location.state.price;
   const [price, setPrice] = useState(premiumPrice);
@@ -143,7 +142,7 @@ const Payment = (props) => {
         title={'Back'}
         btnStyle={{paddingLeft: '20px'}}
         onPress={() => {
-          navigatorPop();
+          navigatorPush({componentId, screenName: 'Subscription'});
         }}
       />
       <View style={styles.innerContainer}>

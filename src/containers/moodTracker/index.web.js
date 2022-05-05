@@ -24,7 +24,8 @@ import SadActive from '@assets/images/sadActive/sadActive@3x.png';
 import Angry from '@assets/images/angry/angry@3x.png';
 import AngryActive from '@assets/images/angryActive/angryActive@3x.png';
 import {getItem} from '../../utils/AsyncUtils';
-import {navigatorPop} from '../../config/navigationOptions.web';
+import {navigatorPop, navigatorPush} from '../../config/navigationOptions.web';
+import history from '../../helpers/history';
 
 let currentTimeZone = momentZone.tz.guess();
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -160,6 +161,7 @@ const MoodTracker = ({location}) => {
     };
     dispatch(AppActions.addTimeTracker(postData));
   };
+  console.log('mood tracker', isFromCard);
   return (
     <MasterLayout>
       {/* <BackBtn title = {isFromCard ? 'Back to Card' : 'Back to Dashboard'} /> */}
@@ -168,7 +170,7 @@ const MoodTracker = ({location}) => {
           title="Back to Card"
           onPress={() => {
             addTimeTrackerAPICall();
-            navigatorPop();
+            navigatorPush({screenName: 'DailyLearningModule'});
           }}
         />
       ) : (

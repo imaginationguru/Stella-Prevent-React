@@ -23,7 +23,7 @@ import momentZone from 'moment-timezone';
 import BackToDashboard from '@components/common/backToDashboard';
 import {Line} from 'react-chartjs-2';
 import {getItem} from '../../utils/AsyncUtils';
-import {navigatorPop} from '../../config/navigationOptions.web';
+import {navigatorPop,navigatorPush} from '../../config/navigationOptions.web';
 const {STRINGS, COLORS} = GLOBALS;
 import ReactSlider from 'react-slider';
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -393,7 +393,7 @@ const SleepTracker = ({location}) => {
             title="Back to Card"
             onPress={() => {
               addTimeTrackerAPICall();
-              navigatorPop();
+              navigatorPush({screenName: 'DailyLearningModule'});
             }}
           />
         ) : (

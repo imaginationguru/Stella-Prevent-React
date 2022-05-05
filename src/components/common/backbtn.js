@@ -1,7 +1,11 @@
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {navigatorPop, goToPastModule} from '@config/navigationOptions.web';
-import back from '@assets/images/subscription/back.png';
-import GLOBALS from '@constants';
+import {
+  navigatorPop,
+  goToPastModule,
+  navigatorPush,
+} from '../../config/navigationOptions.web';
+import back from '../../assets/images/subscription/back.png';
+import GLOBALS from '../../constants';
 
 const {COLORS, FONTS} = GLOBALS;
 const BackBtn = (props) => {
@@ -11,16 +15,11 @@ const BackBtn = (props) => {
       <TouchableOpacity
         style={{flexDirection: 'row', alignItems: 'center'}}
         // onPress={() => {
-        //   goBack ? navigatorPop() : goToPastModule();
+        //   goBack
+        //     ? navigatorPush({screenName: 'DailyLearningModule'})
+        //     : goToPastModule();
         // }}
-        // onPress={() => {
-        //   if (goBack) {
-        //     alert('ello');
-        //     navigatorPop();
-        //   } else {
-        //     goToPastModule();
-        //   }
-        // }}
+
         onPress={onPress}>
         <Image
           resizeMode={'contain'}

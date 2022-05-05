@@ -51,7 +51,7 @@ import {normalize} from '@utils/Helper';
 
 const {IMAGE_BASE_URL} = GLOBALS;
 
-function ProfileDetails(props) {
+function ProfileDetails({props, componentId}) {
   const layout = useWindowDimensions();
   const {loginData = {}} = useSelector((state) => state.authReducer);
   const {isLoading} = useSelector((state) => state.common);
@@ -249,9 +249,7 @@ function ProfileDetails(props) {
       {isLoading && <Loader />}
       {/* */}
       <BackBtn
-        onPress={() => {
-          navigatorPop();
-        }}
+        onPress={() => navigatorPush({componentId, screenName: 'Dashboard'})}
       />
       <View style={styles.backBtn}></View>
       <View

@@ -372,7 +372,7 @@ const ActivityTracker = ({location}) => {
           title="Back to Card "
           onPress={() => {
             addTimeTrackerAPICall();
-            navigatorPop();
+            navigatorPush({screenName: 'DailyLearningModule'});
           }}
         />
       ) : (

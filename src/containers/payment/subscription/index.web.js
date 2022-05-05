@@ -16,7 +16,7 @@ import {Dimensions} from 'react-native-web';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const {IMAGE_BASE_URL} = GLOBALS;
-const Subscription = (props) => {
+const Subscription = (props, componentId) => {
   const [current_numericPrice, setPrice] = useState(0);
   const dispatch = useDispatch();
   const {plansData = []} = useSelector((state) => state.moduleOne);
@@ -80,7 +80,8 @@ const Subscription = (props) => {
         <BackBtn
           title={backButtonTitle}
           onPress={() => {
-            navigatorPop();
+            console.log('back to profile');
+            navigatorPush({componentId, screenName: 'Dashboard'});
           }}
         />
         <View style={{alignItems: 'center'}}>
