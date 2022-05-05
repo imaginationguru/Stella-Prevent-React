@@ -12,7 +12,6 @@ import {getItem} from '../utils/AsyncUtils';
 const {BASE_URL} = GLOBALS;
 import store, {storeObj} from '@store/setup.web';
 
-
 //let Token = getItem('token');
 
 const api = create({
@@ -41,6 +40,7 @@ class RestClient {
           if (response.status === 200) {
             console.log(
               'get call',
+              'decrypt',
               decryptRequest(response.data),
               response.data,
             );
@@ -69,8 +69,9 @@ class RestClient {
       if (isInternet()) {
         api.post(BASE_URL + url, encryptRequest(params)).then((response) => {
           console.log(
-            'API call for ' + BASE_URL + url,
+            'API call for post ' + BASE_URL + url,
             encryptRequest(params),
+            'json strigify',
             JSON.stringify(params),
             response,
           );
@@ -79,7 +80,7 @@ class RestClient {
             //fulfill(response.data);
             console.log('response data post call', response.data);
             console.log(
-              'response data post call1',
+              'response data post call1 in decrypt',
               decryptRequest(response.data),
             );
             fulfill(decryptRequest(response.data));
@@ -119,9 +120,6 @@ class RestClient {
       }
     });
   }
-
-
-
 }
 
 export default RestClient;
