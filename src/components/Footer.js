@@ -7,7 +7,7 @@ import GLOBALS from '../constants';
 import {useSelector, useDispatch} from 'react-redux';
 import * as AppActions from '../actions';
 import moment from 'moment';
-import {removeItem} from '../utils/AsyncUtils';
+import {getItem, removeItem} from '../utils/AsyncUtils';
 const {IMAGE_BASE_URL, STRINGS} = GLOBALS;
 
 const Footer = () => {
@@ -16,19 +16,22 @@ const Footer = () => {
   );
   const dispatch = useDispatch();
   console.log('contact>>>>>', currentCardData);
+ 
   const cardTimeTrackAPICall = () => {
-    let cardTimeTrackingData = {
-      userId: currentCardData.user_id,
-      group: STRINGS.DAILY_LEARNING,
-      screen: STRINGS.CARDS,
-      startTime: getScreenStartTime,
-      endTime: moment().format(),
-      date: moment().format(),
-      week: currentCardData.week,
-      day: currentCardData.day,
-      card_number: currentCardData.card_number,
-    };
-    dispatch(AppActions.addTimeTracker(cardTimeTrackingData));
+    if(currentCardData != null){
+      let cardTimeTrackingData = {
+        userId: currentCardData.user_id,
+        group: STRINGS.DAILY_LEARNING,
+        screen: STRINGS.CARDS,
+        startTime: getScreenStartTime,
+        endTime: moment().format(),
+        date: moment().format(),
+        week: currentCardData.week,
+        day: currentCardData.day,
+        card_number: currentCardData.card_number,
+      };
+      dispatch(AppActions.addTimeTracker(cardTimeTrackingData));
+    }
   };
 
   const removeAsyncItem = () =>{
@@ -72,7 +75,8 @@ const Footer = () => {
               </div>
               <div
                 className="footer-link-item"
-                onClick={() =>{ cardTimeTrackAPICall()
+                onClick={() =>{ 
+                  cardTimeTrackAPICall()
                   removeAsyncItem()}}>
                 <Link to="/Contact">Contact Us</Link>
               </div>
