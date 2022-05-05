@@ -8,7 +8,7 @@
 
 import {useState, useEffect} from 'react';
 
-import logoWhite from '@assets/images/logoWhite.png';
+import logoWhite from '@assets/images/logoWhite.svg';
 import rightCover from '@assets/images/candle.png';
 import icon01 from '@assets/images/icon01.svg';
 import icon02 from '@assets/images/icon02.svg';

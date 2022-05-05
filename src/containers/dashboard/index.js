@@ -7,7 +7,7 @@ import stellaGirlGif from '@assets/images/stellaGirlGif.gif';
 import successTick from '@assets/images/successTick.svg';
 import past_module from '@assets/images/dashboardHeader/past_module.png';
 import report from '@assets/images/dashboardHeader/report.png';
-import logoWhite from '@assets/images/logoWhite.png';
+import logoWhite from '@assets/images/logoWhite.svg';
 import GLOBALS from '@constants';
 import PopUp from '@components/common/popUp';
 import ProfileHeader from '@components/common/profileHeader';

@@ -10,7 +10,7 @@ import activity from '@assets/images/sleep/activity.png';
 import daily from '@assets/images/sleep/daily.png';
 import face from '@assets/images/sleep/face.png';
 import logout from '@assets/images/logout.png';
-import logoWhite from '@assets/images/logoWhite.png';
+import logoWhite from '@assets/images/logoWhite.svg';
 import moment from 'moment';
 import {getItem} from '../utils/AsyncUtils';
 const {COLORS, STRINGS} = GLOBALS;

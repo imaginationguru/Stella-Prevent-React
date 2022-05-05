@@ -12,7 +12,7 @@ import {useParams} from 'react-router-dom';
 import graphic01 from '@assets/images/graphic01.svg';
 import icon02 from '@assets/images/icon02.svg';
 import successTick from '@assets/images/successTick.svg';
-import logoWhite from '@assets/images/logoWhite.png';
+import logoWhite from '@assets/images/logoWhite.svg';
 import MasterLayout from '@components/MasterLayout';
 import {translate as ts} from '@i18n/translate';
 import {passwordRegex} from '@utils/RegexUtils';
