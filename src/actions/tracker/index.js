@@ -1,7 +1,7 @@
 import GLOBALS from '../../constants';
 import RestClient from '../../helpers/RestClient';
 import {loadingAction, clearSessionExpiredAction} from '../../actions/common';
-import {getItem} from '../../utils/AsyncUtils';
+import {getItem, removeItem} from '../../utils/AsyncUtils';
 import {navigatorPop, navigatortoStart} from '../../config/navigationOptions';
 import moment from 'moment';
 import {customAlert} from '../../helpers/commonAlerts.web';
@@ -13,11 +13,27 @@ const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
 export const sessionExpire = (message) => {
   return async (dispatch) => {
     customAlert(message, 'success', {}, null, (onPress) => {
-
-      let cardData = getItem('PRIYANKA');
-      console.log('SessionExpired_cardData', cardData)
-
+      let currentData = getItem(STRINGS.CARD_DATA);
+      console.log('SessionExpired_cardData', currentData)
+      let startTime = getItem(STRINGS.SCREEN_START_TIME);
+      console.log('SessionExpired_startTime', startTime)
+      if(currentData !== null){
+        let cardTimeTrackingData = {
+          userId: currentData.user_id,
+          group: STRINGS.DAILY_LEARNING,
+          screen: STRINGS.CARDS,
+          startTime: startTime,
+          endTime: moment().format(),
+          date: moment().format(),
+          week: currentData.week,
+          day: currentData.day,
+          card_number: currentData.card_number,
+        };
+        dispatch(addTimeTracker(cardTimeTrackingData));
+      }
       dispatch(clearSessionExpiredAction());
+      removeItem(STRINGS.CARD_DATA)
+      removeItem(STRINGS.SCREEN_START_TIME)
       // localStorage.clear();
       // history.push('/');
       setTimeout(() => {
@@ -39,6 +55,10 @@ export function getMoodData(date) {
   let userId = getItem('userId');
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.GET_MOOD_REQUEST});
+    let currentData = getItem(STRINGS.CARD_DATA);
+    console.log('SessionExpired_cardData', currentData)
+    let startTime = getItem(STRINGS.SCREEN_START_TIME);
+    console.log('SessionExpired_startTime', startTime)
     try {
       dispatch(loadingAction(true));
       let params = {
