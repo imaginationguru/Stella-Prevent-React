@@ -67,7 +67,7 @@ const DailyLearningWeeks = (props) => {
 
   useEffect(() => {
     history.pushState(null, null, location.href);
-    window.onpopstate = function(event) {
+    window.onpopstate = function (event) {
       history.go(1);
     };
     AppState.addEventListener('change', _handleAppStateChange);
@@ -104,7 +104,7 @@ const DailyLearningWeeks = (props) => {
     dispatch(AppActions.addTimeTracker(postData));
   };
   const addCardTimeTrackerAPICall = () => {
-    console.log('PRIYANKA_currentData', currentData)
+    console.log('PRIYANKA_currentData', currentData);
     let postData = {
       userId: getItem('userId'),
       group: STRINGS.DAILY_LEARNING,
@@ -433,8 +433,8 @@ const DailyLearningWeeks = (props) => {
               };
               // dispatch(AppActions.getScreenStartTime(moment().format()));
               dispatch(AppActions.addTimeTracker(cardTimeTrackingData));
-              removeItem(STRINGS.CARD_DATA)
-              removeItem(STRINGS.SCREEN_START_TIME)
+              removeItem(STRINGS.CARD_DATA);
+              removeItem(STRINGS.SCREEN_START_TIME);
               goToPastModule();
             }}
           />
@@ -454,8 +454,8 @@ const DailyLearningWeeks = (props) => {
                 card_number: currentData.card_number,
               };
               // dispatch(AppActions.getScreenStartTime(moment().format()));
-              removeItem(STRINGS.CARD_DATA)
-              removeItem(STRINGS.SCREEN_START_TIME)
+              removeItem(STRINGS.CARD_DATA);
+              removeItem(STRINGS.SCREEN_START_TIME);
               dispatch(AppActions.addTimeTracker(cardTimeTrackingData));
               addTimeTrackerAPICall();
             }}
@@ -517,7 +517,10 @@ const DailyLearningWeeks = (props) => {
                             card_number: prevCardDataArray.card_number,
                           };
                           // dispatch(AppActions.clearScreenStartTime());
-                          storeItem(STRINGS.SCREEN_START_TIME, moment().format());
+                          storeItem(
+                            STRINGS.SCREEN_START_TIME,
+                            moment().format(),
+                          );
                           dispatch(
                             AppActions.getScreenStartTime(moment().format()),
                           );
@@ -590,7 +593,10 @@ const DailyLearningWeeks = (props) => {
                             };
 
                             // dispatch(AppActions.clearScreenStartTime());
-                            storeItem(STRINGS.SCREEN_START_TIME, moment().format());
+                            storeItem(
+                              STRINGS.SCREEN_START_TIME,
+                              moment().format(),
+                            );
                             dispatch(
                               AppActions.getScreenStartTime(moment().format()),
                             );
@@ -745,6 +751,8 @@ const DailyLearningWeeks = (props) => {
                               ?.template_number == 35 ||
                             currentData.card?.template_data[0]
                               ?.template_number == 41 ||
+                            currentData.card?.template_data[0]
+                              ?.template_number == 42 ||
                             currentData.card?.template_data[0]
                               ?.template_number == 44 ||
                             currentData.card?.template_data[0]
