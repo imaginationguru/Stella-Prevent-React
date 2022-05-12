@@ -436,7 +436,7 @@ const TwentySeven = (props) => {
         : []}
       {assessmentQues.length
         ? assessmentQues.map((item, index) => {
-            console.log('data==>', item);
+            //  console.log('data==>', item);
             return (
               <div key={index} style={{marginBottom: '20px'}}>
                 <p style={styles.ques}>{item.question}</p>
@@ -450,7 +450,7 @@ const TwentySeven = (props) => {
                                 (a.optionPoint < b.optionPoint && 1) || -1,
                             )
                             .map((val, index) => {
-                              console.log('here i am ===>');
+                              // console.log('here i am ===>');
                               const isSelected = val.status === true;
                               return (
                                 <p
