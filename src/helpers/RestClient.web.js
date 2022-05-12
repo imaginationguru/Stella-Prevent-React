@@ -59,25 +59,38 @@ class RestClient {
   }
 
   static postCall(url, params) {
-    // console.log(
-    //   'url post URL>>>>>>>>>>rest client>>>>>>',
-    //   BASE_URL + url,
-    //   encryptRequest(params),
-    // );
     setToken();
     return new Promise(function (fulfill, reject) {
       if (isInternet()) {
         api.post(BASE_URL + url, encryptRequest(params)).then((response) => {
-          console.log(
-            'API call for post ' + BASE_URL + url,
-            encryptRequest(params),
-            'json strigify',
-            JSON.stringify(params),
-            response,
-          );
-
           if (response.status === 200) {
-            //fulfill(response.data);
+            fulfill(decryptRequest(response.data));
+          }
+          reject(response);
+        });
+      } else {
+        fulfill({
+          message:
+            'The server is not reachable right now, sorry for inconvenience.',
+        });
+      }
+    });
+  }
+
+  static imagePostCall(url, params) {
+    console.log(
+      'url post URL>>>>>>>>>>rest client>>>>>>',
+      BASE_URL + url,
+      'params>>>',
+      params,
+      encryptRequest(params),
+    );
+    setToken();
+    return new Promise(function (fulfill, reject) {
+      if (isInternet()) {
+        api.post(BASE_URL + url, params).then((response) => {
+          if (response.status === 200) {
+            //  fulfill(response.data);
             console.log('response data post call', response.data);
             console.log(
               'response data post call1 in decrypt',
