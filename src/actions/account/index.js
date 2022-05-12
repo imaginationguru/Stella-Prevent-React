@@ -121,10 +121,11 @@ export function updatePassword(param) {
 }
 
 export function uploadProfile(param) {
+  console.log('params>?', param);
   return async (dispatch) => {
     try {
       dispatch(loadingAction(true));
-      let json = await RestClient.postCall(URL.UPDATE_PROFILE, param);
+      let json = await RestClient.imagePostCall(URL.UPDATE_PROFILE, param);
       if (json.code === 200) {
         dispatch({
           type: ACTION_TYPE.GET_USER_SUCCESS,
