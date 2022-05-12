@@ -1292,10 +1292,11 @@ export function Addpayment(params, componentId) {
         navigatorPush({componentId, screenName: 'Dashboard'});
       } else {
         if (json.code === 400) {
-          dispatch({
-            type: ACTION_TYPE.ERROR,
-            payload: json.message,
-          });
+          customAlert(json.message, 'error');
+          // dispatch({
+          //   type: ACTION_TYPE.ERROR,
+          //   payload: json.message,
+          // });
         }
         if (json.code === 417) {
           dispatch(sessionExpire(json.message));
