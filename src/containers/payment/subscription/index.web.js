@@ -27,7 +27,10 @@ const Subscription = (props, componentId) => {
   useEffect(() => {
     dispatch(AppActions.getPlans());
     if (props.location && props.location.state) {
-      setPrice(props.location.state.currentPlan.price);
+      setPrice(
+        props.location.state.currentPlan &&
+          props.location.state.currentPlan.price,
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -80,8 +83,10 @@ const Subscription = (props, componentId) => {
         <BackBtn
           title={backButtonTitle}
           onPress={() => {
-            console.log('back to profile');
-            navigatorPush({componentId, screenName: 'Dashboard'});
+            // console.log('back to profile');
+            props.location.state?.fromScreenDailyLearing
+              ? navigatorPush({componentId, screenName: 'DailyLearningModule'})
+              : navigatorPush({componentId, screenName: 'Profile'});
           }}
         />
         <View style={{alignItems: 'center'}}>
