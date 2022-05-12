@@ -1,21 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {
-  Modal,
-  TouchableOpacity,
-  FlatList,
-  Alert,
-  Dimensions,
-  AppState,
-} from 'react-native';
+import {useState, useEffect} from 'react';
+import {TouchableOpacity, FlatList, Dimensions, AppState} from 'react-native';
 import MasterLayout from '@components/MasterLayout';
 import {useDispatch, useSelector} from 'react-redux';
 import * as AppActions from '@actions';
-
-import {navigatorPush, navigatorPop} from '@config/navigationOptions.web';
-
+import {navigatorPush} from '@config/navigationOptions.web';
 import GLOBALS from '@constants';
-const {STRINGS, COLORS, ACTION_TYPE} = GLOBALS;
-const {GREEN_TEXT} = COLORS;
 import ActivityTab from './tab';
 import {getItem} from '@utils/AsyncUtils';
 import plusIcon from '@assets/images/plusIcon.png';
@@ -25,9 +14,10 @@ import BackBtn from '@components/common/backbtn';
 import moment from 'moment';
 import momentZone from 'moment-timezone';
 import {customAlert} from '@helpers/commonAlerts.web';
+const {STRINGS, COLORS} = GLOBALS;
+const {GREEN_TEXT} = COLORS;
 let currentTimeZone = momentZone.tz.guess();
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 const ActivityView = ({
   item,
@@ -356,8 +346,11 @@ const ActivityTracker = ({location}) => {
         endTime: moment().format(),
         date: moment().format(),
       };
-      dispatch(AppActions.saveActivityTracker(postData, timePostData));
-      dispatch(AppActions.saveActivityTracker(postData));
+      let fromCard = isFromCard ? true : false;
+      dispatch(
+        AppActions.saveActivityTracker(postData, timePostData, fromCard),
+      );
+      //  dispatch(AppActions.saveActivityTracker(postData));
       //users last seen api
       dispatch(AppActions.updateUserLastSeen());
     } else {

@@ -23,9 +23,10 @@ import momentZone from 'moment-timezone';
 import BackToDashboard from '@components/common/backToDashboard';
 import {Line} from 'react-chartjs-2';
 import {getItem} from '../../utils/AsyncUtils';
-import {navigatorPop,navigatorPush} from '../../config/navigationOptions.web';
+import {navigatorPop, navigatorPush} from '../../config/navigationOptions.web';
 const {STRINGS, COLORS} = GLOBALS;
 import ReactSlider from 'react-slider';
+import {customAlert} from '../../helpers/commonAlerts.web';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const LineGraphUI = ({xAxis, yAxis, lable}) => {
@@ -274,7 +275,8 @@ const SleepTracker = ({location}) => {
   const onSaveSleepTracker = () => {
     if (hoursValue === 0) {
       // eslint-disable-next-line no-alert
-      alert('Sleep hours should be more than 1');
+      customAlert('Sleep hours should be more than 1', 'error');
+      // alert('Sleep hours should be more than 1');
     } else {
       let postData = {
         hours: hoursValue,
@@ -299,10 +301,16 @@ const SleepTracker = ({location}) => {
         endTime: moment().format(),
         date: moment().format(),
       };
+      let fromCard = isFromCard ? true : false;
       dispatch(
-        AppActions.saveSleepTracker(postData, postDataGetAPI, timePostData),
+        AppActions.saveSleepTracker(
+          postData,
+          postDataGetAPI,
+          timePostData,
+          fromCard,
+        ),
       );
-      dispatch(AppActions.saveSleepTracker(postData, postDataGetAPI));
+      // dispatch(AppActions.saveSleepTracker(postData, postDataGetAPI));
 
       //users last seen api
       dispatch(AppActions.updateUserLastSeen());

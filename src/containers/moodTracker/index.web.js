@@ -26,6 +26,7 @@ import AngryActive from '@assets/images/angryActive/angryActive@3x.png';
 import {getItem} from '../../utils/AsyncUtils';
 import {navigatorPop, navigatorPush} from '../../config/navigationOptions.web';
 import history from '../../helpers/history';
+import {customAlert} from '../../helpers/commonAlerts.web';
 
 let currentTimeZone = momentZone.tz.guess();
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -223,16 +224,21 @@ const MoodTracker = ({location}) => {
                   endTime: moment().format(),
                   date: moment().format(),
                 };
-                dispatch(AppActions.saveUserMood(postData, timePostData));
-                dispatch(AppActions.saveUserMood(postData));
+                let fromCard = isFromCard ? true : false;
+                dispatch(
+                  AppActions.saveUserMood(postData, timePostData, fromCard),
+                );
+                //  dispatch(AppActions.saveUserMood(postData));
 
                 //users last seen api
                 dispatch(AppActions.updateUserLastSeen());
               } else {
-                dispatch({
-                  type: ACTION_TYPE.ERROR,
-                  payload: 'Please select your mood',
-                });
+                // dispatch({
+                //   type: ACTION_TYPE.ERROR,
+                //   payload: 'Please select your mood',
+                // });
+
+                customAlert('Please perform your exercise', 'error');
               }
             }}>
             {ts('SAVE')}
