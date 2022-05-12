@@ -6,6 +6,7 @@ import {navigatorPop, navigatortoStart} from '../../config/navigationOptions';
 import moment from 'moment';
 import {customAlert} from '../../helpers/commonAlerts.web';
 import {addTimeTracker} from '../moduleOne';
+import {navigatorPush} from '../../config/navigationOptions.web';
 
 const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
 const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
@@ -14,10 +15,10 @@ export const sessionExpire = (message) => {
   return async (dispatch) => {
     customAlert(message, 'success', {}, null, (onPress) => {
       let currentData = getItem(STRINGS.CARD_DATA);
-      console.log('SessionExpired_cardData', currentData)
+      console.log('SessionExpired_cardData', currentData);
       let startTime = getItem(STRINGS.SCREEN_START_TIME);
-      console.log('SessionExpired_startTime', startTime)
-      if(currentData !== null){
+      console.log('SessionExpired_startTime', startTime);
+      if (currentData !== null) {
         let cardTimeTrackingData = {
           userId: currentData.user_id,
           group: STRINGS.DAILY_LEARNING,
@@ -32,8 +33,8 @@ export const sessionExpire = (message) => {
         dispatch(addTimeTracker(cardTimeTrackingData));
       }
       dispatch(clearSessionExpiredAction());
-      removeItem(STRINGS.CARD_DATA)
-      removeItem(STRINGS.SCREEN_START_TIME)
+      removeItem(STRINGS.CARD_DATA);
+      removeItem(STRINGS.SCREEN_START_TIME);
       // localStorage.clear();
       // history.push('/');
       setTimeout(() => {
@@ -56,9 +57,9 @@ export function getMoodData(date) {
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.GET_MOOD_REQUEST});
     let currentData = getItem(STRINGS.CARD_DATA);
-    console.log('SessionExpired_cardData', currentData)
+    console.log('SessionExpired_cardData', currentData);
     let startTime = getItem(STRINGS.SCREEN_START_TIME);
-    console.log('SessionExpired_startTime', startTime)
+    console.log('SessionExpired_startTime', startTime);
     try {
       dispatch(loadingAction(true));
       let params = {
@@ -105,7 +106,7 @@ export function getMoodData(date) {
 }
 
 /********************SAVE MOOD DATA ************** */
-export function saveUserMood(params, timePostData) {
+export function saveUserMood(params, timePostData, fromCard) {
   return async (dispatch) => {
     let userId = getItem('userId');
     let postData = {
@@ -119,7 +120,12 @@ export function saveUserMood(params, timePostData) {
       if (json.code === 200) {
         customAlert(json.message, 'success', {}, null, (onPress) => {
           dispatch(addTimeTracker(timePostData));
-          navigatorPop();
+          if (fromCard) {
+            navigatorPush({screenName: 'DailyLearningModule'});
+          } else {
+            navigatorPush({screenName: 'Dashboard'});
+          }
+          // navigatorPop();
         });
         dispatch({
           type: ACTION_TYPE.SAVE_MOOD_SUCCESS,
@@ -252,7 +258,7 @@ export function getSelectedActivityTracker(params) {
 }
 
 /********************SAVE ACTIVITY DATA************** */
-export function saveActivityTracker(params, timePostData) {
+export function saveActivityTracker(params, timePostData, fromCard) {
   let postData = {
     hospital_id: params.hospital_id,
     patient_id: params.patient_id,
@@ -271,7 +277,12 @@ export function saveActivityTracker(params, timePostData) {
         });
         customAlert(json.message, 'success', {}, null, (onPress) => {
           dispatch(addTimeTracker(timePostData));
-          navigatorPop();
+          if (fromCard) {
+            navigatorPush({screenName: 'DailyLearningModule'});
+          } else {
+            navigatorPush({screenName: 'Dashboard'});
+          }
+          //  navigatorPop();
         });
 
         dispatch(loadingAction(false));
@@ -306,7 +317,12 @@ export function saveActivityTracker(params, timePostData) {
 }
 
 /********************SAVE Sleep Tracker ************** */
-export function saveSleepTracker(params, postDataGetAPI, timePostData) {
+export function saveSleepTracker(
+  params,
+  postDataGetAPI,
+  timePostData,
+  fromCard,
+) {
   return async (dispatch) => {
     let userId = getItem('userId');
     let postData = {
@@ -327,7 +343,12 @@ export function saveSleepTracker(params, postDataGetAPI, timePostData) {
         dispatch(loadingAction(false));
         customAlert(json.message, 'success', {}, null, (onPress) => {
           dispatch(addTimeTracker(timePostData));
-          navigatorPop();
+          if (fromCard) {
+            navigatorPush({screenName: 'DailyLearningModule'});
+          } else {
+            navigatorPush({screenName: 'Dashboard'});
+          }
+          //navigatorPop();
         });
       } else {
         if (json.code === 400) {
@@ -460,7 +481,7 @@ export function updateUserLastSeen() {
     let postData = {
       user_id: userId,
     };
-    dispatch({ type: ACTION_TYPE.UPDATE_LAST_SEEN_REQUEST });
+    dispatch({type: ACTION_TYPE.UPDATE_LAST_SEEN_REQUEST});
     try {
       // dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.UPDATE_LAST_SEEN_API, postData);
