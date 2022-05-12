@@ -2,12 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import {
   View,
   Text,
-  Animated,
-  Pressable,
   StyleSheet,
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
   Image,
   Switch,
   Dimensions,
