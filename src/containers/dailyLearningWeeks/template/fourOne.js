@@ -19,6 +19,7 @@ import {
   CardContent,
   CustomImage,
 } from '@components/Cards';
+import {customAlert} from '../../../helpers/commonAlerts.web';
 const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 const {GRAY2, BUTTON_ORANGE} = COLORS;
 
@@ -226,10 +227,11 @@ const FourOne = (props) => {
         }
       }
     } else {
-      dispatch({
-        type: ACTION_TYPE.ERROR,
-        payload: 'Please perform your exercise',
-      });
+      // dispatch({
+      //   type: ACTION_TYPE.ERROR,
+      //   payload: 'Please perform your exercise',
+      // });
+      customAlert('Please perform your exercise', 'error');
     }
   };
 
