@@ -1412,7 +1412,7 @@ export function addTimeTracker(params) {
   return async (dispatch) => {
     dispatch({type: ACTION_TYPE.ADD_TIME_TRACKER_REQUEST});
     try {
-      dispatch(loadingAction(true));
+      // dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.ADD_TIME_TRACKER, params);
       if (json.code === 200) {
         dispatch({
