@@ -748,6 +748,8 @@ const DailyLearningWeeks = (props) => {
                             currentData.card?.template_data[0]
                               ?.template_number == 33 ||
                             currentData.card?.template_data[0]
+                              ?.template_number == 34 ||
+                            currentData.card?.template_data[0]
                               ?.template_number == 35 ||
                             currentData.card?.template_data[0]
                               ?.template_number == 41 ||
