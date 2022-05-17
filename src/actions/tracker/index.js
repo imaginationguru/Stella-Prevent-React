@@ -120,6 +120,7 @@ export function saveUserMood(params, timePostData, fromCard) {
       if (json.code === 200) {
         customAlert(json.message, 'success', {}, null, (onPress) => {
           dispatch(addTimeTracker(timePostData));
+          dispatch(updateUserLastSeen());
           if (fromCard) {
             navigatorPush({screenName: 'DailyLearningModule'});
           } else {
@@ -275,6 +276,7 @@ export function saveActivityTracker(params, timePostData, fromCard) {
           type: ACTION_TYPE.SAVE_OTHER_ACTIVITY_SUCCESS,
           payload: json.data,
         });
+        dispatch(updateUserLastSeen());
         customAlert(json.message, 'success', {}, null, (onPress) => {
           dispatch(addTimeTracker(timePostData));
           if (fromCard) {
@@ -338,7 +340,7 @@ export function saveSleepTracker(
           type: ACTION_TYPE.SAVE_SLEEP_TRACKER_SUCCESS,
           payload: json.message,
         });
-
+        dispatch(updateUserLastSeen());
         dispatch(getSleepData(postDataGetAPI));
         dispatch(loadingAction(false));
         customAlert(json.message, 'success', {}, null, (onPress) => {

@@ -352,7 +352,7 @@ const ActivityTracker = ({location}) => {
       );
       //  dispatch(AppActions.saveActivityTracker(postData));
       //users last seen api
-      dispatch(AppActions.updateUserLastSeen());
+      // dispatch(AppActions.updateUserLastSeen());
     } else {
       customAlert('Please perform your exercise', 'error');
     }

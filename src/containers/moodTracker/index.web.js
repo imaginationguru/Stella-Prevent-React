@@ -231,7 +231,7 @@ const MoodTracker = ({location}) => {
                 //  dispatch(AppActions.saveUserMood(postData));
 
                 //users last seen api
-                dispatch(AppActions.updateUserLastSeen());
+                //   dispatch(AppActions.updateUserLastSeen());
               } else {
                 // dispatch({
                 //   type: ACTION_TYPE.ERROR,
