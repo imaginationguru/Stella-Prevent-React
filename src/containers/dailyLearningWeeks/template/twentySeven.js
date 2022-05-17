@@ -17,10 +17,10 @@ import {
 import {Dimensions} from 'react-native';
 import {customAlert} from '@helpers/commonAlerts.web';
 import moment from 'moment';
-const {COLORS, ACTION_TYPE} = GLOBALS;
+const {COLORS} = GLOBALS;
 const {LIGHT_GRAY, GREEN_TEXT, BUTTON_ORANGE, YELLOW, CIRCLE_GRAY} = COLORS;
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
+
 const extractSelectQ = (x = []) => {
   const selectedQuesArr = [];
   if (x.length) {
@@ -304,11 +304,25 @@ const TwentySeven = (props) => {
         sum = sum + item;
       });
     }
-
+    let quesTypeText = modifyData.filter(
+      (item) => item.assessmentType === 'text',
+    );
+    let temp = [];
+    let isValid = '';
+    if (quesTypeText.length) {
+      quesTypeText.forEach((item) => {
+        temp.push(item.textAns);
+      });
+    }
+    if (temp.length) {
+      isValid = temp.find((item) => item !== '') ? true : false;
+    }
+    console.log('quesType Text', quesTypeText, isValid);
     if (modifyData && modifyData.length) {
       console.log(modifyData, 'modifyData........');
+
       const isAPICall = totalQ === answer;
-      if (isAPICall) {
+      if (isAPICall && isValid) {
         setGlobalAPICall(false);
         if (last_answer && last_answer.optionPoint > 1) {
           let message =
