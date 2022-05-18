@@ -122,7 +122,7 @@ const Thirty = (props, componentId) => {
     multiAssessmentData = [],
   } = useSelector((state) => state.moduleOne);
   const {loginData = {}} = useSelector((state) => state.authReducer);
-
+  console.log('multiassessment Data', multiAssessmentData);
   const dataMapperAss = (arr = []) => {
     let contentLength = multiAssessmentData && multiAssessmentData.length;
     let temp = [];
@@ -189,7 +189,10 @@ const Thirty = (props, componentId) => {
         cardsInputs.push(
           item.data.map((val) => {
             return {
-              name: val.assessment_header && val.assessment_header[0].header,
+              name:
+                val.assessment_header &&
+                val.assessment_header.length &&
+                val.assessment_header[0].header,
               placeholder: val.description ? val.description : '',
               order: val.order,
               value: val.content,
@@ -216,7 +219,10 @@ const Thirty = (props, componentId) => {
             .filter((item) => item.assessment_id === assessment_id)
             .map((val) => {
               return {
-                name: val.assessment_header && val.assessment_header[0].header,
+                name:
+                  val.assessment_header &&
+                  val.assessment_header.length &&
+                  val.assessment_header[0].header,
                 placeholder: val.description ? val.description : '',
                 order: val.order,
                 value: val.content,
@@ -236,7 +242,10 @@ const Thirty = (props, componentId) => {
           item.cards.map((val) => {
             if (val.assessment_id === assessment_id) {
               return {
-                name: val.assessment_header && val.assessment_header[0].header,
+                name:
+                  val.assessment_header &&
+                  val.assessment_header.length &&
+                  val.assessment_header[0].header,
                 placeholder: val.description ? val.description : '',
                 order: val.order,
                 value: val.content,
@@ -761,7 +770,7 @@ const Thirty = (props, componentId) => {
       return GREEN_TEXT;
     }
   };
-
+  console.log('thirty inpts', JSON.stringify(inputs));
   const onHandleChangeData = (e, ele, itemIndex, eleIndex) => {
     let x =
       getCardsInputs &&
