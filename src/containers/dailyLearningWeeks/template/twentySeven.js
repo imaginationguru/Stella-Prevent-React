@@ -148,6 +148,7 @@ const TwentySeven = (props) => {
           question_id: item._id,
           textAns: item.textAns,
           typeOfAssessment: item.typeOfAssessment,
+          patient_assessment_id: item.patient_assessment_id,
           options: item.options.length
             ? item.options.map((val) => {
                 let obj2 = {...val};
@@ -162,12 +163,13 @@ const TwentySeven = (props) => {
         };
       });
       setTotalQ(x.length);
+
       setAssessmentQues(x);
       setSelectQ(extractSelectQ(x));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userQuestion]);
-
+  console.log('assessmentQues?????', assessmentQues);
   const onSaveHandler = (quesId, optionId) => {
     if (assessmentQues.length) {
       let y = assessmentQues.map((item) => {
@@ -282,7 +284,7 @@ const TwentySeven = (props) => {
           };
         })
       : [];
-
+    console.log(JSON.stringify(modifyData), 'modifyData........1');
     let last_answer = dataArray[dataArray.length - 1].options.filter(
       (val) => val.status === true,
     )[0];
@@ -319,10 +321,10 @@ const TwentySeven = (props) => {
     }
     console.log('quesType Text', quesTypeText, isValid);
     if (modifyData && modifyData.length) {
-      console.log(modifyData, 'modifyData........');
+      console.log(JSON.stringify(modifyData), 'modifyData........');
 
       const isAPICall = totalQ === answer;
-      if (isAPICall && isValid) {
+      if (isAPICall && (isValid || quesTypeText.length === 0)) {
         setGlobalAPICall(false);
         if (last_answer && last_answer.optionPoint > 1) {
           let message =
