@@ -22,6 +22,7 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 const {YELLOW, WHITE, CIRCLE_GRAY, LIGHT_GRAY, GREEN_TEXT} = COLORS;
 let userId = getItem('userId');
+
 const dataMapperAss = (arr = []) => {
   let temp = [];
   if (arr.length) {
@@ -209,13 +210,13 @@ const Seventeen = (props) => {
     let z = [...x, ...y];
 
     let params = {
-      user_id: userId,
+      user_id: getItem('userId'),
       user_card_id: props._id,
       assessment_id: assessment_id,
       assessment: z,
       // assessment: dataMapperAss(inputs),
     };
-    console.log('params', params);
+    console.log('params seventeed', JSON.stringify(params));
     if (userAssessmentData && userAssessmentData.length) {
       console.log('if block');
       //dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
