@@ -1,8 +1,17 @@
 {
-	"appId": "com.mamalift",
-	"appName": "Mamalift",
+	"appId": "prod.mamalift",
+	"appName": "App",
 	"bundledWebRuntime": false,
 	"npmClient": "npm",
 	"webDir": "build",
-	"cordova": {}
+	"cordova": {},
+	"plugins": {
+		"GoogleAuth": {
+			"scopes": [
+				"profile",
+				"email"
+			],
+			"serverClientId": "785528185928-3pvalm2auoqd01cq3fb08jikfdb7hv5p.apps.googleusercontent.com"
+		}
+	}
 }

@@ -1141,6 +1141,14 @@
   "resolved" "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   "version" "0.2.3"
 
+"@capacitor-community/apple-sign-in@^1.0.1":
+  "integrity" "sha512-Kqdzn3aC4C0SvvP2Zu8oFZPN0NCxU0xUBe7xWxZpDvL22WpQuwxvACoJwy7uxG1aKJGS3HWCTCEIUvaRI59MOg=="
+  "resolved" "https://registry.npmjs.org/@capacitor-community/apple-sign-in/-/apple-sign-in-1.0.1.tgz"
+  "version" "1.0.1"
+  dependencies:
+    "@types/scriptjs" "0.0.2"
+    "scriptjs" "^2.5.9"
+
 "@capacitor-community/facebook-login@^3.3.0":
   "integrity" "sha512-gkh5rOyyLD3baQ7J6Sq1YkoDeM+X7Uj9mL4oWl92qaVQq/FZc/yoe6qsvedFIG1YmzvLB2rZrBqUoVle74q7HA=="
   "resolved" "https://registry.npmjs.org/@capacitor-community/facebook-login/-/facebook-login-3.3.0.tgz"
@@ -1175,7 +1183,7 @@
     "tslib" "^2.1.0"
     "xml2js" "^0.4.23"
 
-"@capacitor/core@^3.0.0", "@capacitor/core@^3.5.0":
+"@capacitor/core@^3", "@capacitor/core@^3.0.0", "@capacitor/core@^3.5.0":
   "integrity" "sha512-+CFSG+CztpFIir9gGqNEtAYuf6OWryQ8dojXoeozAkoz3mKvyFfcEfvLVPo/pw/B4zHIlNnJLHne6vbjAFbDKQ=="
   "resolved" "https://registry.npmjs.org/@capacitor/core/-/core-3.5.0.tgz"
   "version" "3.5.0"
@@ -1194,6 +1202,11 @@
   dependencies:
     "exec-sh" "^0.3.2"
     "minimist" "^1.2.0"
+
+"@codetrix-studio/capacitor-google-auth@^3.1.3":
+  "integrity" "sha512-COJK2ixPvC7J1Sgu4ECy5OwExKII6JBBEc8NEW0Ovg1fLtFoYcni9kn1+123yIfl2vsFE1CnDS1qFYw9mTLJHA=="
+  "resolved" "https://registry.npmjs.org/@codetrix-studio/capacitor-google-auth/-/capacitor-google-auth-3.1.3.tgz"
+  "version" "3.1.3"
 
 "@csstools/convert-colors@^1.4.0":
   "integrity" "sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw=="
@@ -2420,6 +2433,11 @@
   "integrity" "sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew=="
   "resolved" "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.2.tgz"
   "version" "0.16.2"
+
+"@types/scriptjs@0.0.2":
+  "integrity" "sha1-CaIociGno0H8a5WwBeS/sqVANTg="
+  "resolved" "https://registry.npmjs.org/@types/scriptjs/-/scriptjs-0.0.2.tgz"
+  "version" "0.0.2"
 
 "@types/source-list-map@*":
   "integrity" "sha512-K5K+yml8LTo9bWJI/rECfIPrGgxdpeNbj+d53lwN4QjW1MCwlkhUms+gtdzigTeUyBr09+u8BwOIY3MXvHdcsA=="
@@ -13147,6 +13165,11 @@
     "@types/json-schema" "^7.0.8"
     "ajv" "^6.12.5"
     "ajv-keywords" "^3.5.2"
+
+"scriptjs@^2.5.9":
+  "integrity" "sha512-qGVDoreyYiP1pkQnbnFAUIS5AjenNwwQBdl7zeos9etl+hYKWahjRTfzAZZYBv5xNHx7vNKCmaLDQZ6Fr2AEXg=="
+  "resolved" "https://registry.npmjs.org/scriptjs/-/scriptjs-2.5.9.tgz"
+  "version" "2.5.9"
 
 "select-hose@^2.0.0":
   "integrity" "sha1-Yl2GWPhlr0Psliv8N2o3NZpJlMo="
