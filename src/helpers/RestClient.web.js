@@ -1,6 +1,6 @@
 'use strict';
 
-import {create} from 'apisauce';
+import { create } from 'apisauce';
 import GLOBALS from '@constants';
 import {
   accessToken,
@@ -8,9 +8,9 @@ import {
   encryptRequest,
   decryptRequest,
 } from '@helpers/common';
-import {getItem} from '../utils/AsyncUtils';
-const {BASE_URL} = GLOBALS;
-import store, {storeObj} from '@store/setup.web';
+import { getItem } from '../utils/AsyncUtils';
+const { BASE_URL } = GLOBALS;
+import store, { storeObj } from '@store/setup.web';
 
 //let Token = getItem('token');
 
@@ -20,6 +20,8 @@ const api = create({
     'Content-Type': 'application/json',
     Accept: 'application/json',
     'Cache-Control': 'no-cache',
+    'X-Frame-Options': 'DENY',
+    'Content-Security-Policy': "frame-ancestors 'none'"
   },
 });
 const setToken = () => {
