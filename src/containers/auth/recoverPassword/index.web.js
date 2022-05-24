@@ -6,33 +6,37 @@
  * @flow strict-local
  */
 
-import {useState} from 'react';
-import {useParams} from 'react-router-dom';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import graphic01 from '@assets/images/graphic01.svg';
 import icon02 from '@assets/images/icon02.svg';
 import successTick from '@assets/images/successTick.svg';
 import logoWhite from '@assets/images/logoWhite.svg';
 import MasterLayout from '@components/MasterLayout';
-import {translate as ts} from '@i18n/translate';
-import {passwordRegex} from '@utils/RegexUtils';
-import {useDispatch, useSelector} from 'react-redux';
+import { translate as ts } from '@i18n/translate';
+import { passwordRegex } from '@utils/RegexUtils';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '@actions';
 import history from '@helpers/history';
 
 const RecoverPassword = () => {
+  const [resetToken, setResetToken] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [resetTokenError, setresetTokenError] = useState('');
+
+
   const dispatch = useDispatch();
-  const {resetData = {}} = useSelector((state) => state.authReducer);
+  const { resetData = {} } = useSelector((state) => state.authReducer);
 
   /** Function for password and confirm password value set*********  */
 
   const onHandleChange = (e) => {
     e.preventDefault();
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     if (name === 'password') {
       setPassword(value);
       setPasswordError('');
@@ -41,12 +45,16 @@ const RecoverPassword = () => {
       setConfirmPassword(value);
       setConfirmPasswordError('');
     }
+    if (name === 'resetToken') {
+      setResetToken(value);
+      setresetTokenError('');
+    }
   };
   /****Function for copy paste handler*********** */
   const copyPasteHandler = (e) => {
     e.preventDefault();
     e.nativeEvent.stopImmediatePropagation();
-    const {name} = e.target;
+    const { name } = e.target;
     if (name === 'password') {
       setPassword('');
       setPasswordError('');
@@ -54,6 +62,10 @@ const RecoverPassword = () => {
     if (name === 'confirmPassword') {
       setConfirmPassword('');
       setConfirmPasswordError('');
+    }
+    if (name === 'resetToken') {
+      setResetToken('');
+      setresetTokenError('');
     }
   };
 
@@ -63,7 +75,12 @@ const RecoverPassword = () => {
   const _id = useParams();
   const onRecoverPassword = (e) => {
     e.preventDefault();
-    if (password.length === 0) {
+
+    console.log(Buffer.from('NjFlZmRlZmYzMGI3YzkyMmMwZjkzNmIw', 'base64').toString('ascii'));
+    if (resetToken.length === 0) {
+      setresetTokenError('Please enter code sent on email');
+    }
+    else if (password.length === 0) {
       setPasswordError('Please enter a new password');
     } else if (password.length && !passwordRegex.test(password)) {
       setPasswordError(
@@ -77,9 +94,11 @@ const RecoverPassword = () => {
       _id.id &&
       password.length !== 0 &&
       password === confirmPassword &&
-      _id.resetToken
+      resetToken
     ) {
-      dispatch(AppActions.changePassword(_id.id, password, _id.resetToken));
+      console.log(Buffer.from(_id.id, 'base64').toString('ascii'));
+      // dispatch(AppActions.changePassword(_id.id, password, resetToken));
+      dispatch(AppActions.changePassword(_id.id, password, resetToken));
     }
   };
 
@@ -130,7 +149,32 @@ const RecoverPassword = () => {
                   {/**Changed Password Screen on this screen there are two fields 
                       one for password and second one is confirm password*** */}
                   <form noValidate onSubmit={(e) => onRecoverPassword(e)}>
-                    <div className="formRow">
+                    <div className="formRow" style={{ 'margin-bottom': '10px' }}>
+                      <div className="w100">
+                        <label className="formLabel">
+                          {'Verification Code'}
+                        </label>
+                        <div className="formField has-icon">
+                          <input
+                            type="password"
+                            name="resetToken"
+                            className="f-field"
+                            value={resetToken}
+                            onChange={onHandleChange}
+                            required
+                            maxLength={6}
+                            onPaste={copyPasteHandler}
+                            onCopy={copyPasteHandler}
+                            onCut={copyPasteHandler}
+                          />
+                          <span className="f-icon">
+                            <img src={icon02} />
+                          </span>
+                        </div>
+                        <span style={styles.error}>{resetTokenError}</span>
+                      </div>
+                    </div>
+                    <div className="formRow" style={{ 'margin-bottom': '10px' }}>
                       <div className="w100">
                         <label className="formLabel">
                           {ts('NEW_PASSWORD')}
@@ -207,5 +251,5 @@ const RecoverPassword = () => {
 export default RecoverPassword;
 
 const styles = {
-  error: {color: 'red', paddingLeft: '5px'},
+  error: { color: 'red', paddingLeft: '5px', },
 };

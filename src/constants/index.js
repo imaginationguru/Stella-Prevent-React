@@ -9,7 +9,7 @@ import SadActive from '@assets/images/sadActive/sadActive.png';
 import Angry from '@assets/images/angry/angry.png';
 import AngryActive from '@assets/images/angryActive/angryActive.png';
 
-import {ENV} from './env';
+import { ENV } from './env';
 const isLive = true;
 const getEnvBasedUrl = () => {
   console.log('ENV>>>>', ENV);
@@ -44,11 +44,12 @@ const getEnvBasedUrl = () => {
     squareAppId = 'sandbox-sq0idb-WPw6oJXhJty7VgI9HN3Edw';
     LOCATION_ID = 'L726CAXF29YB8';
   }
-  return {BASE_URL, IMAGE_BASE_URL, WEB_BASE_URL, squareAppId, LOCATION_ID};
+  return { BASE_URL, IMAGE_BASE_URL, WEB_BASE_URL, squareAppId, LOCATION_ID };
 };
 console.log('get BASE URL', getEnvBasedUrl());
 export default {
-  BASE_URL: getEnvBasedUrl().BASE_URL,
+  BASE_URL: "http://172.24.0.157:4001/api/",
+  //BASE_URL: getEnvBasedUrl().BASE_URL,
   IMAGE_BASE_URL: getEnvBasedUrl().IMAGE_BASE_URL,
   WEB_BASE_URL: getEnvBasedUrl().WEB_BASE_URL,
   squareAppId: getEnvBasedUrl().squareAppId,
@@ -154,7 +155,7 @@ export default {
     REPORT: 'Report',
     SLEEP_TRACKER: 'SleepTracker',
     ACTIVITY_TRACKER: 'ActivityTracker',
-    CARD_DATA : 'CARD_DATA',
+    CARD_DATA: 'CARD_DATA',
     SCREEN_START_TIME: 'SCREEN_START_TIME'
   },
 

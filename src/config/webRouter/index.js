@@ -1,4 +1,4 @@
-import {Router, Switch} from 'react-router-dom';
+import { Router, Switch } from 'react-router-dom';
 import PublicRoute from '@config/webRouter/PublicRoute';
 import PrivateRoute from '@config/webRouter/PrivateRoute';
 import history from '@helpers/history';
@@ -48,7 +48,8 @@ const WebRouter = () => {
         <PublicRoute
           restricted={true}
           component={RecoverPassword}
-          path="/RecoverPassword/:id/:resetToken"
+          // path="/RecoverPassword/:id/:resetToken"
+          path="/RecoverPassword/:id"
           exact
         />
 

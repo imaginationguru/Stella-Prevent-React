@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useReducer} from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import {
   View,
   Text,
@@ -13,22 +13,22 @@ import GLOBALS from '@constants';
 import profile from '@assets/images/profile.png';
 import cancel from '@assets/images/cancel.png';
 import edit from '@assets/images/edit.png';
-const {COLORS, FONTS, IMAGE_BASE_URL} = GLOBALS;
-const {DARK_GREEN, WHITE, GreenForSlider} = COLORS;
-import {getItem} from '@utils/AsyncUtils';
-import {useDispatch, useSelector} from 'react-redux';
+const { COLORS, FONTS, IMAGE_BASE_URL } = GLOBALS;
+const { DARK_GREEN, WHITE, GreenForSlider } = COLORS;
+import { getItem } from '@utils/AsyncUtils';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '@actions';
 import Dropzone from 'react-dropzone';
-import {normalize} from '@utils/Helper';
+import { normalize } from '@utils/Helper';
 import Slider from '@mui/material/Slider';
-import {styled} from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
 const ProfileHeader = (props) => {
-  const {loginData = {}, profileImg = ''} = useSelector(
+  const { loginData = {}, profileImg = '' } = useSelector(
     (state) => state.authReducer,
   );
   const moduleOne = useSelector((state) => state.moduleOne);
-  const {currentActiveCard = {}} = useSelector((state) => state.moduleOne);
+  const { currentActiveCard = {} } = useSelector((state) => state.moduleOne);
   const [profileImage, setProfilePhoto] = useState('');
   const [selectedWeek, setSelectedWeek] = useState(1);
   const [DEVICE_WIDTH, setDimensionsW] = useState(
@@ -58,12 +58,12 @@ const ProfileHeader = (props) => {
     }
   }, [profileImg, moduleOne?.currentActiveCard?.current_week]);
   useEffect(() => {
-    Dimensions.addEventListener('change', ({window, screen}) => {
+    Dimensions.addEventListener('change', ({ window, screen }) => {
       setDimensionsW(window.width);
       setDimensionsH(window.height);
     });
     return () => {
-      Dimensions.removeEventListener('change', () => {});
+      Dimensions.removeEventListener('change', () => { });
     };
   }, []);
   const marks = [
@@ -111,7 +111,7 @@ const ProfileHeader = (props) => {
                       onDrop={(acceptedFiles) => {
                         onEditClick(acceptedFiles[0]);
                       }}>
-                      {({getRootProps, getInputProps}) => (
+                      {({ getRootProps, getInputProps }) => (
                         <section>
                           <div
                             style={{
@@ -156,7 +156,7 @@ const ProfileHeader = (props) => {
                     </Text>
                   </TouchableOpacity>
                 )}
-                <View style={{flexDirection: 'column'}}>
+                <View style={{ flexDirection: 'column' }}>
                   <TouchableOpacity
                     style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).btn}
                     onPress={() => {

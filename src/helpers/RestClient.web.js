@@ -25,10 +25,13 @@ const api = create({
   },
 });
 const setToken = () => {
+
   let Token = getItem('token');
   if (Token) {
-    console.log(Token, 'Token......');
-    api.setHeader('Authorization', Token);
+    //  console.log(Buffer.from(Token).toString('base64'), "base 64.......", Token);
+    //console.log(Token, 'Token......');
+    // api.setHeader('Authorization', Token);
+    api.setHeader('Authorization', Buffer.from(Token).toString('base64'));
   }
 };
 class RestClient {
@@ -63,10 +66,14 @@ class RestClient {
   static postCall(url, params) {
     setToken();
     return new Promise(function (fulfill, reject) {
+
       if (isInternet()) {
+        console.log(params, "params decrypted")
         api.post(BASE_URL + url, encryptRequest(params)).then((response) => {
+
           if (response.status === 200) {
             fulfill(decryptRequest(response.data));
+            console.log(decryptRequest(response.data), "response decrypted")
           }
           reject(response);
         });

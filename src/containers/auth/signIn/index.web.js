@@ -6,27 +6,27 @@
  * @flow strict-local
  */
 
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 
 import logoWhite from '@assets/images/logoWhite.svg';
 import rightCover from '@assets/images/candle.png';
 import icon01 from '@assets/images/icon01.svg';
 import icon02 from '@assets/images/icon02.svg';
-import {Link, useLocation} from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '@actions';
 import MasterLayout from '@components/MasterLayout';
 import GoogleLoginComponent from '@components/SocialLogin/GoogleLogIn';
 import FacebookLoginComponent from '@components/SocialLogin/FacebookLogin';
 import AppleLoginComponent from '@components/SocialLogin/AppleLogin';
-import {translate as ts} from '@i18n/translate';
+import { translate as ts } from '@i18n/translate';
 import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
-import {emailRegex} from '@utils/RegexUtils';
+import { emailRegex } from '@utils/RegexUtils';
 import GLOBALS from '@constants';
 import Footer from '@components/Footer';
 
-const {IMAGE_BASE_URL} = GLOBALS;
+const { IMAGE_BASE_URL } = GLOBALS;
 
 const SignIn = (componentId) => {
   const [email, setEmail] = useState('');
@@ -38,10 +38,10 @@ const SignIn = (componentId) => {
   const [quoteImg, setQuoteImage] = useState('');
   const [getId, setGetId] = useState('');
   const dispatch = useDispatch();
-  const {quotes = {}} = useSelector((state) => state.moduleOne);
+  const { quotes = {} } = useSelector((state) => state.moduleOne);
 
   const onHandleChange = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     if (name === 'email') {
       setEmail(value);
       setEmailError('');
@@ -55,7 +55,7 @@ const SignIn = (componentId) => {
   const copyPasteHandler = (e) => {
     e.preventDefault();
     e.nativeEvent.stopImmediatePropagation();
-    const {name} = e.target;
+    const { name } = e.target;
     if (name === 'email') {
       setEmail('');
       setEmailError('');
@@ -92,25 +92,25 @@ const SignIn = (componentId) => {
     );
   };
 
-  function useQuery() {
-    return new URLSearchParams(useLocation().search);
-  }
-  let query = useQuery();
-  useEffect(() => {
-    getUserData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getId]);
-  const getUserData = () => {
-    let id = query.get('id');
-    setGetId(id);
-    if (getId) {
-      const params = {
-        user_id: getId,
-      };
-      dispatch(AppActions.getUser(params));
-    } else {
-    }
-  };
+  // function useQuery() {
+  //   return new URLSearchParams(useLocation().search);
+  // }
+  // let query = useQuery();
+  // useEffect(() => {
+  //   getUserData();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [getId]);
+  // const getUserData = () => {
+  //   let id = query.get('id');
+  //   setGetId(id);
+  //   if (getId) {
+  //     const params = {
+  //       user_id: getId,
+  //     };
+  //     dispatch(AppActions.getUser(params));
+  //   } else {
+  //   }
+  // };
   return (
     <>
       <MasterLayout>
@@ -208,11 +208,11 @@ const SignIn = (componentId) => {
                     <div className="w100">
                       <div
                         className="formField text-right"
-                        style={{paddingTop: '10px'}}>
+                        style={{ paddingTop: '10px' }}>
                         <Link
                           to="/EmailCheck"
                           className="link"
-                          style={{textDecorationLine: 'underline'}}>
+                          style={{ textDecorationLine: 'underline' }}>
                           {ts('FORGOT_PASSWORD')}
                         </Link>
                       </div>
@@ -229,7 +229,7 @@ const SignIn = (componentId) => {
                       </div>
                     </div>
                   </div>
-                  <div style={{marginTop: 15}}>
+                  <div style={{ marginTop: 15 }}>
                     {/* <div className="signup-text-view">
                       <span className="signup-text">Don’t have an account? </span>
                       <Link

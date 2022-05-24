@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -10,11 +10,11 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import moment from 'moment';
-import {getItem} from '@utils/AsyncUtils';
+import { getItem } from '@utils/AsyncUtils';
 import * as AppActions from '@actions';
 import GLOBALS from '@constants';
 import Strings from '@constants/Strings';
-import {navigatorPush, navigatorPop} from '@config/navigationOptions.web';
+import { navigatorPush, navigatorPop } from '@config/navigationOptions.web';
 import Footer from '@components/Footer';
 import Button from '@components/common/button';
 import Toggle from '@components/common/toggle';
@@ -23,16 +23,16 @@ import BackBtn from '@components/common/backbtn';
 import Loader from '@components/Loader';
 import ProfileHeader from '@components/common/profileHeader';
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const {COLORS, FONTS} = GLOBALS;
-const {LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN} = COLORS;
+const { COLORS, FONTS } = GLOBALS;
+const { LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN } = COLORS;
 import Header from '@components/Header';
 
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import journal from '@assets/images/subscription/journal.png';
 import back from '@assets/images/subscription/back.png';
 import Input1 from '@components/TextInput';
 import RadioButton1 from '@components/RadioButton1';
-import {customAlert} from '@helpers/commonAlerts.web';
+import { customAlert } from '@helpers/commonAlerts.web';
 import {
   validateIsEmpty,
   validatePassword,
@@ -42,14 +42,14 @@ import {
   validatePhoneWithSpecialSymbol,
   validateName,
 } from '@utils/validations';
-import {normalize} from '@utils/Helper';
+import { normalize } from '@utils/Helper';
 
-const {IMAGE_BASE_URL} = GLOBALS;
+const { IMAGE_BASE_URL } = GLOBALS;
 
-function ProfileDetails({props, componentId}) {
+function ProfileDetails({ props, componentId }) {
   const layout = useWindowDimensions();
-  const {loginData = {}} = useSelector((state) => state.authReducer);
-  const {isLoading} = useSelector((state) => state.common);
+  const { loginData = {} } = useSelector((state) => state.authReducer);
+  const { isLoading } = useSelector((state) => state.common);
 
   /**Account Info */
   const [name, setName] = useState('');
@@ -77,13 +77,13 @@ function ProfileDetails({props, componentId}) {
 
   /**Change Language  */
   const [language, setLanguage] = useState([
-    {id: 1, value: 'en', name: 'English', isSelected: false},
-    {id: 2, value: 'sp', name: 'Spanish', isSelected: true},
+    { id: 1, value: 'en', name: 'English', isSelected: false },
+    { id: 2, value: 'sp', name: 'Spanish', isSelected: true },
   ]);
   /**Change Notification  */
   const [notification, setNotification] = useState([
-    {id: 1, value: 'email', name: 'Email Notification', isSelected: false},
-    {id: 2, value: 'sms', name: 'SMS Notification', isSelected: true},
+    { id: 1, value: 'email', name: 'Email Notification', isSelected: false },
+    { id: 2, value: 'sms', name: 'SMS Notification', isSelected: true },
   ]);
 
   const dispatch = useDispatch();
@@ -100,15 +100,15 @@ function ProfileDetails({props, componentId}) {
       setAge(loginData.user.ageYear ? loginData.user.ageYear + 'Y' : '');
       let temp_language = language.map((el) =>
         el.value === loginData.user.language
-          ? {...el, isSelected: true}
-          : {...el, isSelected: false},
+          ? { ...el, isSelected: true }
+          : { ...el, isSelected: false },
       );
       setLanguage(temp_language);
 
       let temp_notification = notification.map((el, index) =>
         index == 0
-          ? {...el, isSelected: loginData.user.email_notification}
-          : {...el, isSelected: loginData.user.sms_notification},
+          ? { ...el, isSelected: loginData.user.email_notification }
+          : { ...el, isSelected: loginData.user.sms_notification },
       );
       setNotification(temp_notification);
     }
@@ -116,7 +116,7 @@ function ProfileDetails({props, componentId}) {
   }, [loginData]);
 
   useEffect(() => {
-    dispatch(AppActions.updateUserData({user_id: getItem('userId')}));
+    dispatch(AppActions.updateUserData({ user_id: getItem('userId') }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -165,7 +165,7 @@ function ProfileDetails({props, componentId}) {
         break;
       case 'toggle_notify':
         let temp_array = notification.map((el) =>
-          el.id === item.id ? {...el, isSelected: !el.isSelected} : {...el},
+          el.id === item.id ? { ...el, isSelected: !el.isSelected } : { ...el },
         );
         setNotification(temp_array);
         let notify_param = {
@@ -201,7 +201,7 @@ function ProfileDetails({props, componentId}) {
   /**Hanlde Language chnage */
   const itemClick = (item) => {
     let temp_language = language.map((el) =>
-      el.id === item ? {...el, isSelected: true} : {...el, isSelected: false},
+      el.id === item ? { ...el, isSelected: true } : { ...el, isSelected: false },
     );
     setLanguage(temp_language);
   };
@@ -221,7 +221,7 @@ function ProfileDetails({props, componentId}) {
 
       dispatch(AppActions.uploadProfile(formdata));
     } else {
-      customAlert('Please select only images', 'error');
+      customAlert('Incorrect file type! Accepted file types are : jpg, jpeg, png', 'error');
     }
   };
 
@@ -244,7 +244,7 @@ function ProfileDetails({props, componentId}) {
       {isLoading && <Loader />}
       {/* */}
       <BackBtn
-        onPress={() => navigatorPush({componentId, screenName: 'Dashboard'})}
+        onPress={() => navigatorPush({ componentId, screenName: 'Dashboard' })}
       />
       <View style={styles.backBtn}></View>
       <View
@@ -256,14 +256,14 @@ function ProfileDetails({props, componentId}) {
           flexWrap: 'wrap',
         }}>
         {/* 1st colum */}
-        <View style={{flex: DEVICE_WIDTH > 767 ? '0.3' : '100%'}}>
+        <View style={{ flex: DEVICE_WIDTH > 767 ? '0.3' : '100%' }}>
           <View>
             <Text style={styles.heading}>Plan</Text>
-            <View style={{flexDirection: 'row', marginTop: '16px'}}>
+            <View style={{ flexDirection: 'row', marginTop: '16px' }}>
               <Image
                 resizeMode={'contain'}
                 source={`${IMAGE_BASE_URL}${loginData?.planInfo?.image}`}
-                style={{width: 25, height: 25}}
+                style={{ width: 25, height: 25 }}
               />
               <Text
                 style={{
@@ -287,7 +287,7 @@ function ProfileDetails({props, componentId}) {
               onVerifyPress={() =>
                 navigatorPush({
                   screenName: 'Subscription',
-                  passProps: {currentPlan: loginData?.planInfo},
+                  passProps: { currentPlan: loginData?.planInfo },
                 })
               }
               textStyle={{
@@ -301,7 +301,7 @@ function ProfileDetails({props, componentId}) {
             <Text style={styles.heading}>Change Password</Text>
             <Input1
               secureTextEntry={true}
-              inputStyle={{padding: 10, height: 40}}
+              inputStyle={{ padding: 10, height: 40 }}
               setCode={(text) => {
                 setPassword(text);
                 setPswdError('');
@@ -312,7 +312,7 @@ function ProfileDetails({props, componentId}) {
             <Input1
               secureTextEntry={true}
               error={newpswdError}
-              inputStyle={{padding: 10, height: 40}}
+              inputStyle={{ padding: 10, height: 40 }}
               setCode={(text) => {
                 setNewPassword(text);
                 setNewPswdError('');
@@ -323,7 +323,7 @@ function ProfileDetails({props, componentId}) {
             <Input1
               secureTextEntry={true}
               error={cnpswdError}
-              inputStyle={{padding: 10, height: 40}}
+              inputStyle={{ padding: 10, height: 40 }}
               setCode={(text) => {
                 setConfPassword(text);
                 setConfirmPswdError('');
@@ -332,7 +332,7 @@ function ProfileDetails({props, componentId}) {
               label="Confirm New Password"></Input1>
             <Button
               onVerifyPress={() => validateField()}
-              textStyle={{fontSize: '16px'}}
+              textStyle={{ fontSize: '16px' }}
               btnStyle={{
                 height: 40,
                 width: '100%',
@@ -345,18 +345,18 @@ function ProfileDetails({props, componentId}) {
           </View>
         </View>
         {/* 2nd column */}
-        <View style={{flex: DEVICE_WIDTH > 767 ? '0.3' : '100%'}}>
+        <View style={{ flex: DEVICE_WIDTH > 767 ? '0.3' : '100%' }}>
           <Text style={styles.heading}>Account Info</Text>
           <Input1
             editable={false}
-            inputStyle={{padding: 10, height: 40}}
+            inputStyle={{ padding: 10, height: 40 }}
             setCode={(text) => setName(text)}
             value={name}
             label="First Name"
             placeholder=""></Input1>
           <Input1
             editable={false}
-            inputStyle={{padding: 10, height: 40}}
+            inputStyle={{ padding: 10, height: 40 }}
             setCode={(text) => setName(text)}
             value={lname}
             label="Last Name"
@@ -378,14 +378,14 @@ function ProfileDetails({props, componentId}) {
 
           <Input1
             editable={false}
-            inputStyle={{padding: 10, height: 40}}
+            inputStyle={{ padding: 10, height: 40 }}
             setCode={(text) => setAge(text)}
             value={age}
             label="Age at Registration as on Signup Screen"
             placeholder=""></Input1>
           <Input1
             type=""
-            inputStyle={{padding: 10, height: 40}}
+            inputStyle={{ padding: 10, height: 40 }}
             setCode={(text) => {
               setPhone(text);
               setPhoneError('');
@@ -397,7 +397,7 @@ function ProfileDetails({props, componentId}) {
             placeholder=""></Input1>
           <Input1
             editable={true}
-            inputStyle={{padding: 10, height: 40}}
+            inputStyle={{ padding: 10, height: 40 }}
             setCode={(text) => {
               setCity(text);
               setCityError('');
@@ -410,7 +410,7 @@ function ProfileDetails({props, componentId}) {
           <Input1
             type=""
             maxLength={10}
-            inputStyle={{padding: 10, height: 40}}
+            inputStyle={{ padding: 10, height: 40 }}
             setCode={(text) => {
               setZipcode(text);
               setZipcodeError('');
@@ -421,7 +421,7 @@ function ProfileDetails({props, componentId}) {
             placeholder=""></Input1>
           <Input1
             editable={false}
-            inputStyle={{padding: 10, height: 40}}
+            inputStyle={{ padding: 10, height: 40 }}
             setCode={(text) => setCountry(text)}
             value={country}
             label="Country"
@@ -434,7 +434,7 @@ function ProfileDetails({props, componentId}) {
               marginVertical: '2.1vw',
             }}
             onVerifyPress={() => navigator('profile')}
-            textStyle={{fontSize: '16px'}}
+            textStyle={{ fontSize: '16px' }}
             title="Update Profile"
             bgColor={DARK_GREEN}
             textColor={WHITE}></Button>
@@ -442,7 +442,7 @@ function ProfileDetails({props, componentId}) {
 
         {/* 3rd column */}
 
-        <View style={{flex: DEVICE_WIDTH > 767 ? '0.3' : '100%'}}>
+        <View style={{ flex: DEVICE_WIDTH > 767 ? '0.3' : '100%' }}>
           {/* <Text style={styles.heading}>Language</Text>
 
 
