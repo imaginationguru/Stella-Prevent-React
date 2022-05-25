@@ -1,22 +1,20 @@
 import React from 'react';
-import {translate as ts} from '../i18n/translate';
-import {Link} from 'react-router-dom';
-import {navigatorPush} from '../config/navigationOptions.web';
+import { translate as ts } from '../i18n/translate';
+import { Link } from 'react-router-dom';
+import { navigatorPush } from '../config/navigationOptions.web';
 import footerlogo from '../assets/images/footerlogo.svg';
 import GLOBALS from '../constants';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as AppActions from '../actions';
 import moment from 'moment';
-import {getItem, removeItem} from '../utils/AsyncUtils';
-const {IMAGE_BASE_URL, STRINGS} = GLOBALS;
+import { getItem, removeItem } from '../utils/AsyncUtils';
+const { IMAGE_BASE_URL, STRINGS } = GLOBALS;
 
 const Footer = () => {
-  const {currentCardData = '', getScreenStartTime = ''} = useSelector(
+  const { currentCardData = '', getScreenStartTime = '' } = useSelector(
     (state) => state.moduleOne,
   );
   const dispatch = useDispatch();
-  console.log('contact>>>>>', currentCardData);
-
   const cardTimeTrackAPICall = () => {
     if (currentCardData != null) {
       let cardTimeTrackingData = {
@@ -104,7 +102,7 @@ const Footer = () => {
               <b>
                 Contact us at{' '}
                 <a
-                  style={{color: 'white'}}
+                  style={{ color: 'white' }}
                   href="mailto:contact@mymamalift.com">
                   <b>contact@mymamalift.com</b>
                 </a>
