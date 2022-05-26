@@ -12,8 +12,9 @@ import AngryActive from '@assets/images/angryActive/angryActive.png';
 import { ENV } from './env';
 const isLive = true;
 const getEnvBasedUrl = () => {
-  console.log('ENV>>>>', ENV);
+  // console.log('ENV>>>>', ENV);
   let BASE_URL = '';
+  // let BASE_URL = '';
   let IMAGE_BASE_URL = '';
   let WEB_BASE_URL = '';
   let squareAppId = '';
@@ -46,10 +47,9 @@ const getEnvBasedUrl = () => {
   }
   return { BASE_URL, IMAGE_BASE_URL, WEB_BASE_URL, squareAppId, LOCATION_ID };
 };
-console.log('get BASE URL', getEnvBasedUrl());
 export default {
   BASE_URL: "http://172.24.0.157:4001/api/",
-  //BASE_URL: getEnvBasedUrl().BASE_URL,
+  //  BASE_URL: getEnvBasedUrl().BASE_URL,
   IMAGE_BASE_URL: getEnvBasedUrl().IMAGE_BASE_URL,
   WEB_BASE_URL: getEnvBasedUrl().WEB_BASE_URL,
   squareAppId: getEnvBasedUrl().squareAppId,

@@ -479,16 +479,18 @@ export function verifySocialUser(params, componentId, cb) {
         // cb(json.data);
       } else {
         if (json.code === 400) {
-          dispatch({
-            type: ACTION_TYPE.ERROR,
-            payload: json.message,
-          });
+          customAlert(json.message, 'error');
+          // dispatch({
+          //   type: ACTION_TYPE.ERROR,
+          //   payload: json.message,
+          // });
         }
         if (json.code === 417) {
-          dispatch({
-            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
-            payload: json.message,
-          });
+          customAlert(json.message, 'error');
+          // dispatch({
+          //   type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+          //   payload: json.message,
+          // });
           dispatch(loadingAction(false));
         } else {
           dispatch({
