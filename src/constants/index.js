@@ -48,8 +48,8 @@ const getEnvBasedUrl = () => {
   return { BASE_URL, IMAGE_BASE_URL, WEB_BASE_URL, squareAppId, LOCATION_ID };
 };
 export default {
-  BASE_URL: "http://172.24.0.157:4001/api/",
-  //  BASE_URL: getEnvBasedUrl().BASE_URL,
+  // BASE_URL: "http://172.24.0.157:4001/api/",
+  BASE_URL: getEnvBasedUrl().BASE_URL,
   IMAGE_BASE_URL: getEnvBasedUrl().IMAGE_BASE_URL,
   WEB_BASE_URL: getEnvBasedUrl().WEB_BASE_URL,
   squareAppId: getEnvBasedUrl().squareAppId,

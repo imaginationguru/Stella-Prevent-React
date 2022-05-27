@@ -30,8 +30,8 @@ const setToken = () => {
   if (Token) {
     //  console.log(Buffer.from(Token).toString('base64'), "base 64.......", Token);
     //console.log(Token, 'Token......');
-    api.setHeader('Authorization', Token);
-    //api.setHeader('Authorization', Buffer.from(Token).toString('base64'));
+    //api.setHeader('Authorization', Token);
+    api.setHeader('Authorization', Buffer.from(Token).toString('base64'));
   }
 };
 class RestClient {
