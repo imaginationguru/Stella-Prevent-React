@@ -11,7 +11,6 @@ import {
 import { getItem } from '../utils/AsyncUtils';
 const { BASE_URL } = GLOBALS;
 import store, { storeObj } from '@store/setup.web';
-
 //let Token = getItem('token');
 
 const api = create({
