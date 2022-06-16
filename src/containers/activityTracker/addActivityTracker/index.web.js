@@ -101,7 +101,7 @@ const AddActivityTracker = (props) => {
     });
     let postData = {
       hospital_id: hospitalId,
-      patient_id: userId,
+      user_id: userId,
       patientactivity: patientActivityArray,
       _id: updatedId,
     };

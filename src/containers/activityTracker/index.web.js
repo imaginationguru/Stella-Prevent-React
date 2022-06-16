@@ -334,7 +334,7 @@ const ActivityTracker = ({location}) => {
         patientDate: moment().format(STRINGS.DATE_FORMATE),
         timeZone: currentTimeZone,
         hospital_id: hospitalId,
-        patient_id: userId,
+        user_id: userId,
         patientactivity: patientActivity,
         _id: id,
       };
