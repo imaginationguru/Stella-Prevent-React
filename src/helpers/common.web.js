@@ -65,20 +65,20 @@ const checkNextDayUnlocked = (curr_week, curr_day, total_week, total_day) => {
   }
 };
 const encryptRequest = (data) => {
-  // return data
-  return {
-    data: CryptoJS.AES.encrypt(
-      JSON.stringify(data),
-      STRINGS.HIPPA_KEY,
-    ).toString(),
-  };
+  return data
+  // return {
+  //   data: CryptoJS.AES.encrypt(
+  //     JSON.stringify(data),
+  //     STRINGS.HIPPA_KEY,
+  //   ).toString(),
+  // };
 };
 
 const decryptRequest = (data) => {
-  // return data
-  let bytes = CryptoJS.AES.decrypt(data, STRINGS.HIPPA_KEY);
-  let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-  return decryptedData;
+  return data
+  // let bytes = CryptoJS.AES.decrypt(data, STRINGS.HIPPA_KEY);
+  // let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+  // return decryptedData;
 };
 const detectBrowser = () => {
   let userAgent = navigator?.userAgent;
