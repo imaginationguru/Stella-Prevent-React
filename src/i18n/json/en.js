@@ -1,7 +1,17 @@
-import {LOCALES} from '../constants';
+import { LOCALES } from '../constants';
 export default {
   [LOCALES.ENGLISH]: {
     translation: {
+      "TODAY_LEARNING": "Today’s Daily Learning",
+      "COMPLETE_LEARNING": "Click here to complete today’s learnings",
+      "HOW_SLEEP": " How did you sleep last night?",
+      "HOW_ACTIVITIES": "What activities have you done?",
+      "HOW_MOOD": " What is your mood today?",
+      "REPORTS": " Reports",
+      "PAST_MODULES": " Past Modules",
+
+
+
       LANGUAGE_SELECT: 'Language Select',
       SIGNUP: 'Sign up',
       LOGIN: 'Log in',

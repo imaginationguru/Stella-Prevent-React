@@ -27,8 +27,8 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = createStore(persistedReducer, {}, compose(...middleware));
 
 export default function setup() {
-  console.log = () => { };
-  console.error = () => { };
+  // console.log = () => { };
+  // console.error = () => { };
 
   persistStore(store, null, () => {
     console.log('PERSIST STORE', store.getState());

@@ -20,11 +20,12 @@ import MasterLayout from '@components/MasterLayout';
 import GoogleLoginComponent from '@components/SocialLogin/GoogleLogIn';
 import FacebookLoginComponent from '@components/SocialLogin/FacebookLogin';
 import AppleLoginComponent from '@components/SocialLogin/AppleLogin';
-import { translate as ts } from '@i18n/translate';
+//import { translate as ts } from '@i18n/translate';
 import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import { emailRegex } from '@utils/RegexUtils';
 import GLOBALS from '@constants';
 import Footer from '@components/Footer';
+import { translate as ts } from '@i18n/translate';
 
 const { IMAGE_BASE_URL } = GLOBALS;
 
@@ -38,6 +39,7 @@ const SignIn = (componentId) => {
   const [quoteImg, setQuoteImage] = useState('');
   const [getId, setGetId] = useState('');
   const dispatch = useDispatch();
+  console.log("tshjhkhk", ts)
   const { quotes = {} } = useSelector((state) => state.moduleOne);
 
   const onHandleChange = (e) => {
