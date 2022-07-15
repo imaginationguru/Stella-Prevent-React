@@ -54,6 +54,21 @@ export default {
       "BACK_TO_DASHBOARD": "Back to Dashboard",
 
 
+      "REPORT_DATE": "Report Date:",
+      "DAILY_SLEEP": "Daily Sleep Tracker: hours/day",
+      "DAILY_MOOD": "Average Daily Mood Report",
+      "WEEKLY_MOOD": "Weekly Mood Report",
+      "ACTIVITY_REPORT": "Average Activity Report: Number of Activities",
+      "WEEKLY_ACTIVITY" : "Weekly Activity Quality Report",
+      "WEEKLY_ACTIVITY_REPORT": "Weekly Activity Report",
+      "NO_RECORD": "No record for this Week",
+      "TOTAL_POINTS": "Your total Points for the week",
+
+
+
+      "PLAN": "Plan",
+      "ACCOUNT_INFO": "Account Info",
+
 
       LANGUAGE_SELECT: 'Language Select',
       SIGNUP: 'Sign up',

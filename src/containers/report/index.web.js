@@ -31,6 +31,7 @@ const {DARK_GREEN} = COLORS;
 import {getItem} from '@utils/AsyncUtils';
 import {navigatorPop} from '@config/navigationOptions.web';
 import Strings from '../../constants/Strings';
+import {translate as ts} from '@i18n/translate';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
@@ -123,7 +124,7 @@ const LineGraphUI = ({xAxis, yAxis, lable}) => {
         ],
       }}
       options={
-        lable == 'Average Daily Mood Report'
+        lable == ts('DAILY_MOOD')
           ? graphOptionsForMood
           : graphOptions
       }
@@ -415,10 +416,8 @@ const Report = ({location}) => {
             marginRight: 'auto',
             height: '40%',
           }}>
-          <Text style={styles.headerStyle}>
-            Report Date: {moment().format('MM/DD/YYYY')}
-          </Text>
-          <Text style={styles.labelText}>Daily Sleep Tracker: hours/day</Text>
+          <Text style={styles.headerStyle}>{ts('REPORT_DATE')} {moment().format('MM/DD/YYYY')}</Text>
+          <Text style={styles.labelText}>{ts('DAILY_SLEEP')}</Text>
           {sleepXAxis &&
           sleepXAxis.length &&
           sleepHoursArray &&
@@ -426,26 +425,26 @@ const Report = ({location}) => {
             <LineGraphUI
               xAxis={sleepXAxis.reverse()}
               yAxis={sleepHoursArray.reverse()}
-              lable={'Daily Sleep Tracker: hours/day'}
+              lable={ts('DAILY_SLEEP')}
             />
           ) : (
-            <LineGraphUI lable={'Daily Sleep Tracker: hours/day'} />
+            <LineGraphUI lable={ts('DAILY_SLEEP')} />
           )}
-          <Text style={styles.labelText}>Average Daily Mood Report</Text>
+          <Text style={styles.labelText}>{ts('DAILY_MOOD')}</Text>
           {moodXAxis && moodXAxis.length && moodYAxis && moodYAxis.length ? (
             <LineGraphUI
               xAxis={moodXAxis.reverse()}
               yAxis={moodYAxis.reverse()}
-              lable={'Average Daily Mood Report'}
+              lable={ts('DAILY_MOOD')}
             />
           ) : (
             <LineGraphUI
               yAxis={[0, 1, 2, 3, 4, 5]}
-              lable={'Average Daily Mood Report'}
+              lable={ts('DAILY_MOOD')}
             />
           )}
 
-          <Text style={styles.labelText}>Weekly Mood Report</Text>
+          <Text style={styles.labelText}>{ts('WEEKLY_MOOD')}</Text>
           {getWeeklySummaryReportData !== undefined &&
           getWeeklySummaryReportData.newMooddataavg &&
           getWeeklySummaryReportData.newMooddataavg.length ? (
@@ -492,7 +491,7 @@ const Report = ({location}) => {
             <Text>No Record Found</Text>
           )}
           <Text style={styles.labelText}>
-            Average Activity Report: Number of Activities
+            {ts('ACTIVITY_REPORT')}
           </Text>
 
           {activityXAxis &&
@@ -502,12 +501,12 @@ const Report = ({location}) => {
             <LineGraphUI
               xAxis={activityXAxis.reverse()}
               yAxis={activityYAxis.reverse()}
-              lable={'Average Activity Report: Number of Activities'}
+              lable={ts('ACTIVITY_REPORT')}
             />
           ) : (
-            <LineGraphUI lable={'Weekly Activity Quality Report'} />
+            <LineGraphUI lable={ts('WEEKLY_ACTIVITY')} />
           )}
-          <Text style={styles.labelText}>Weekly Activity Report</Text>
+          <Text style={styles.labelText}>{ts('WEEKLY_ACTIVITY_REPORT')}</Text>
           <FlatList
             contentContainerStyle={{
               flexGrow: 1,
@@ -522,7 +521,7 @@ const Report = ({location}) => {
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item) => `${item._id}`}
-            ListEmptyComponent={<Text>No record for this Week</Text>}
+            ListEmptyComponent={<Text>{ts('NO_RECORD')}</Text>}
             numColumns={4}
             renderItem={({item, index}) => {
               return (
@@ -547,7 +546,7 @@ const Report = ({location}) => {
               );
             }}
           />
-          <Text style={styles.labelText}>Your total Points for the week</Text>
+          <Text style={styles.labelText}>{ts('TOTAL_POINTS')}</Text>
           {pointsXAxis &&
           pointsXAxis.length &&
           pointsYAxis &&
@@ -555,10 +554,10 @@ const Report = ({location}) => {
             <LineGraphUI
               xAxis={pointsXAxis.reverse()}
               yAxis={pointsYAxis.reverse()}
-              lable={'Your total Points for the week'}
+              lable={ts('TOTAL_POINTS')}
             />
           ) : (
-            <LineGraphUI lable={'Your total Points for the week'} />
+            <LineGraphUI lable={ts('TOTAL_POINTS')} />
           )}
         </View>
       </MasterLayout>

@@ -43,6 +43,7 @@ import {
   validateName,
 } from '@utils/validations';
 import { normalize } from '@utils/Helper';
+import {translate as ts} from '@i18n/translate';
 
 const { IMAGE_BASE_URL } = GLOBALS;
 
@@ -258,7 +259,7 @@ function ProfileDetails({ props, componentId }) {
         {/* 1st colum */}
         <View style={{ flex: DEVICE_WIDTH > 767 ? '0.3' : '100%' }}>
           <View>
-            <Text style={styles.heading}>Plan</Text>
+            <Text style={styles.heading}>{ts('PLAN')}</Text>
             <View style={{ flexDirection: 'row', marginTop: '16px' }}>
               <Image
                 resizeMode={'contain'}
@@ -346,7 +347,7 @@ function ProfileDetails({ props, componentId }) {
         </View>
         {/* 2nd column */}
         <View style={{ flex: DEVICE_WIDTH > 767 ? '0.3' : '100%' }}>
-          <Text style={styles.heading}>Account Info</Text>
+          <Text style={styles.heading}>{ts('ACCOUNT_INFO')}</Text>
           <Input1
             editable={false}
             inputStyle={{ padding: 10, height: 40 }}
