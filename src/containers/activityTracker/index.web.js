@@ -85,7 +85,7 @@ const ActivityView = ({
           <img src={plusIcon} style={{width: '70px'}} />
         </div>
 
-        <p style={styles.activityTitle}>{'Add Activity'}</p>
+        <p style={styles.activityTitle}>{ts('ADD_ACTIVITY')}</p>
       </TouchableOpacity>
     );
   }
@@ -147,11 +147,11 @@ const ActivityTracker = ({location}) => {
   let userId = getItem('userId');
   const tabsType = [
     {
-      title: STRINGS.ACTIVITY,
+      title: ts('ACTIVITY'),
       id: 0,
     },
     {
-      title: STRINGS.DAILY_ACTIVITY,
+      title: ts('DAILY_ACTIVITY'),
       id: 1,
     },
   ];
@@ -362,7 +362,7 @@ const ActivityTracker = ({location}) => {
     <MasterLayout>
       {isFromCard ? (
         <BackBtn
-          title="Back to Card "
+          title={ts('BACK_TO_CARD')}
           onPress={() => {
             addTimeTrackerAPICall();
             navigatorPush({screenName: 'DailyLearningModule'});
@@ -381,7 +381,7 @@ const ActivityTracker = ({location}) => {
         <div>
           {activeTab == STRINGS.ACTIVITY ? (
             <div>
-              <p style={styles.ques}>{'What have you been up to?'}</p>
+              <p style={styles.ques}>{ts('WHAT_HAVE')}</p>
               <FlatList
                 data={[...plasentActivityArray, {plusImage: true}]}
                 contentContainerStyle={styles.contentContainerStyle}

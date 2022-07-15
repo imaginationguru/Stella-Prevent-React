@@ -126,11 +126,11 @@ const AddActivityTracker = (props) => {
       />
       <div className="container">
         <div style={styles.wrapper}>
-          <p style={styles.ques}>Search Pleasant Activity</p>
+          <p style={styles.ques}>{ts('SEARCH_PLEASANT_ACTIVITY')}</p>
           <TextInput
             style={styles.searchedTextInput}
             placeholder={
-              !isSearchList ? 'Search activity by name (ex: Sport)' : null
+              !isSearchList ? ts('SEARCH_ACTIVITY') : null
             }
             placeholderTextColor={'greay'}
             underlineColorAndroid="transparent"

@@ -49,35 +49,35 @@ const MoodTracker = ({location}) => {
       image: VeryHappy,
       activeImage: VeryHappyActive,
       isClickTrue: false,
-      name: 'Awesome',
+      name: ts('AWESOME'),
     },
     {
       id: 4,
       image: Happy,
       activeImage: HappyActive,
       isClickTrue: false,
-      name: 'Good',
+      name: ts('GOOD'),
     },
     {
       id: 3,
       image: Confused,
       activeImage: ConfusedActive,
       isClickTrue: false,
-      name: 'Ok',
+      name: ts('OK'),
     },
     {
       id: 2,
       image: Sad,
       activeImage: SadActive,
       isClickTrue: false,
-      name: 'Bad',
+      name: ts('BAD'),
     },
     {
       id: 1,
       image: Angry,
       activeImage: AngryActive,
       isClickTrue: false,
-      name: 'Terrible',
+      name: ts('TERRIBLE'),
     },
   ];
   const [moodList, setMoodList] = useState(moodListArray);
@@ -168,7 +168,7 @@ const MoodTracker = ({location}) => {
       {/* <BackBtn title = {isFromCard ? 'Back to Card' : 'Back to Dashboard'} /> */}
       {isFromCard ? (
         <BackBtn
-          title="Back to Card"
+          title={ts('BACK_TO_CARD')}
           onPress={() => {
             addTimeTrackerAPICall();
             navigatorPush({screenName: 'DailyLearningModule'});
@@ -179,7 +179,7 @@ const MoodTracker = ({location}) => {
       )}
       <div style={styles.wrapper}>
         <p style={styles.ques} className="res-100">
-          <strong>How is your mood today?</strong>
+          <strong>{ts('HOW_MOOD_TODAY')}</strong>
         </p>
         {moodList.map((item, index) => {
           return (
@@ -238,7 +238,7 @@ const MoodTracker = ({location}) => {
                 //   payload: 'Please select your mood',
                 // });
 
-                customAlert('Please perform your exercise', 'error');
+                customAlert(ts('PERFORM_EXERCISE'), 'error');
               }
             }}>
             {ts('SAVE')}

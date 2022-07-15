@@ -3,11 +3,12 @@ import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {navigatortoStart} from '@config/navigationOptions.web';
 import back from '@assets/images/subscription/back.png';
 import GLOBALS from '@constants';
+import {translate as ts} from '@i18n/translate';
 
 const {COLORS, FONTS} = GLOBALS;
 const BackToDashboard = (props) => {
   let {
-    title = 'Back to Dashboard',
+    title = ts('BACK_TO_DASHBOARD'),
     bgColor,
     textColor,
     onVerifyPress,

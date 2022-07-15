@@ -27,6 +27,7 @@ import { navigatorPop, navigatorPush } from '../../config/navigationOptions.web'
 const { STRINGS, COLORS } = GLOBALS;
 import ReactSlider from 'react-slider';
 import { customAlert } from '../../helpers/commonAlerts.web';
+import {translate as ts} from '@i18n/translate';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const LineGraphUI = ({ xAxis, yAxis, lable }) => {
@@ -275,7 +276,7 @@ const SleepTracker = ({ location }) => {
   const onSaveSleepTracker = () => {
     if (hoursValue === 0) {
       // eslint-disable-next-line no-alert
-      customAlert('Sleep hours should be more than 1', 'error');
+      customAlert(ts('SLEEP_ERROR'), 'error');
       // alert('Sleep hours should be more than 1');
     } else {
       let postData = {
@@ -398,7 +399,7 @@ const SleepTracker = ({ location }) => {
 
         {isFromCard ? (
           <BackBtn
-            title="Back to Card"
+            title= {ts('BACK_TO_CARD')}
             onPress={() => {
               addTimeTrackerAPICall();
               navigatorPush({ screenName: 'DailyLearningModule' });
@@ -418,7 +419,7 @@ const SleepTracker = ({ location }) => {
               width: '100%',
             }}>
             <View style={{ padding: '10px' }}>
-              <h2 className="dashboard-heading">{'Sleep Tracker'}</h2>
+              <h2 className="dashboard-heading">{ts('SLEEP_TRACKER')}</h2>
             </View>
             {/* Date strip UI */}
             <View
@@ -461,7 +462,7 @@ const SleepTracker = ({ location }) => {
               {/* sleep hours UI */}
               <View style={styles.innerBox}>
                 <Text style={styles.boxText}>
-                  How many hours did you sleep today including naps?
+                {ts('HOW_MANY_HRS')}
                 </Text>
 
                 <View style={styles.sleepHoursOuterView}>
@@ -574,7 +575,7 @@ const SleepTracker = ({ location }) => {
               {/* sleep Scale UI */}
               <View style={styles.innerBox}>
                 <Text style={styles.boxText}>
-                  How well did you sleep on a scale of 1-10?
+                {ts('HOW_WELL_SLEEP')}
                 </Text>
                 <View style={{ marginTop: 40, maxWidth: '350px', width: '100%' }}>
                   <SliderUI
@@ -588,7 +589,7 @@ const SleepTracker = ({ location }) => {
               {/* energy Scale UI */}
               <View style={styles.innerBox}>
                 <Text style={styles.boxText}>
-                  How energetic do you feel on a scale of 1-10?
+                 {ts('HOW_ENERGETIC_FEEL')}
                 </Text>
                 <View style={{ marginTop: 40, maxWidth: '350px', width: '100%' }}>
                   <SliderUI
@@ -609,14 +610,14 @@ const SleepTracker = ({ location }) => {
                 <TouchableOpacity
                   onPress={() => onSaveSleepTracker()}
                   style={styles.btnStyle}>
-                  <Text style={{ color: 'white' }}>ADD TRACKING</Text>
+                  <Text style={{ color: 'white' }}>{ts('ADD_TRACKING')}</Text>
                 </TouchableOpacity>
               ) : null}
             </View>
 
             {/* Graph UI */}
             <Text style={{ marginTop: 20, marginBottom: 10 }}>
-              Last 7 days history
+              {ts('HISTORY')}
             </Text>
             <View style={[styles.outerBox, { marginBottom: 40, padding: 0 }]}>
               <View style={styles.graphOuterView}>
@@ -624,21 +625,21 @@ const SleepTracker = ({ location }) => {
                   <LineGraphUI
                     xAxis={sleepHoursXaxis}
                     yAxis={sleepHoursYaxis}
-                    lable={'Daily Sleep Tracker: Hours/Day'}
+                    lable={ts('DAILY_SLEEP_TRACKER')}
                   />
                 </View>
                 <View style={styles.lineGraphWrapper}>
                   <LineGraphUI
                     xAxis={sleepHoursXaxis}
                     yAxis={sleeQualityYaxis}
-                    lable={'Weekly Sleep Quality Report'}
+                    lable={ts('WEEKLY_SLEEP_REPORT')}
                   />
                 </View>
                 <View style={styles.lineGraphWrapper}>
                   <LineGraphUI
                     xAxis={sleepHoursXaxis}
                     yAxis={sleepEnergyYaxis}
-                    lable={'Weekly Energy Report'}
+                    lable={ts('WEEKLY_ENERGY_REPORT')}
                   />
                 </View>
               </View>
