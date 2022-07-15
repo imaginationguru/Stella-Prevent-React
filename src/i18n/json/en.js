@@ -9,40 +9,47 @@ export default {
       "HOW_MOOD": " What is your mood today?",
       "REPORTS": " Reports",
       "PAST_MODULES": " Past Modules",
+      "PROFILE": "Profile",
+      "LOG_OUT": "Logout",
+      "DELETE_IMG": "Delete Image",
+      "MODULE": "Module",
+      "PROCEED": "Proceed",
+      "DAY": "Day",
+      "BACK_DASHBOARD": "Back to Dashboard",
+      "BACK_LOGIN": "Back to Login",
 
-
-     "ACTIVITY": "Pleasant Activities",
-     "DAILY_ACTIVITY": "Daily Activities",
-     "WHAT_HAVE": "What have you been up to?",
-     "ADD_ACTIVITY": "Add Activity",
-     "SEARCH_PLEASANT_ACTIVITY": "Search Pleasant Activity",
-     "SEARCH_ACTIVITY": "Search activity by name (ex: Sport)",
-
-
-
-     "SLEEP_TRACKER": "Sleep Tracker",
-     "HOW_MANY_HRS": "How many hours did you sleep today including naps?",
-     "HOW_WELL_SLEEP": "How well did you sleep on a scale of 1-10",
-     "HOW_ENERGETIC_FEEL": "How energetic do you feel on a scale of 1-10?",
-     "ADD_TRACKING": "ADD TRACKING",
-     "HISTORY": "Last 7 days history",
-     "DAILY_SLEEP_TRACKER": "Daily Sleep Tracker: Hours/Day",
-     "WEEKLY_SLEEP_REPORT": "Weekly Sleep Quality Report",
-     "WEEKLY_ENERGY_REPORT": "Weekly Energy Report",
-     "SLEEP_ERROR": "Sleep hours should be more than 1",
+      "ACTIVITY": "Pleasant Activities",
+      "DAILY_ACTIVITY": "Daily Activities",
+      "WHAT_HAVE": "What have you been up to?",
+      "ADD_ACTIVITY": "Add Activity",
+      "SEARCH_PLEASANT_ACTIVITY": "Search Pleasant Activity",
+      "SEARCH_ACTIVITY": "Search activity by name (ex: Sport)",
 
 
 
-     "HOW_MOOD_TODAY": "How is your mood today?",
-     "AWESOME": "Awesome",
-     "GOOD": "Good",
-     "OK": "Ok",
-     "BAD": "Bad",
-     "TERRIBLE": "Terrible",
-     "PERFORM_EXERCISE": "Please perform your exercise",
+      "SLEEP_TRACKER": "Sleep Tracker",
+      "HOW_MANY_HRS": "How many hours did you sleep today including naps?",
+      "HOW_WELL_SLEEP": "How well did you sleep on a scale of 1-10",
+      "HOW_ENERGETIC_FEEL": "How energetic do you feel on a scale of 1-10?",
+      "ADD_TRACKING": "ADD TRACKING",
+      "HISTORY": "Last 7 days history",
+      "DAILY_SLEEP_TRACKER": "Daily Sleep Tracker: Hours/Day",
+      "WEEKLY_SLEEP_REPORT": "Weekly Sleep Quality Report",
+      "WEEKLY_ENERGY_REPORT": "Weekly Energy Report",
+      "SLEEP_ERROR": "Sleep hours should be more than 1",
 
 
-     
+
+      "HOW_MOOD_TODAY": "How is your mood today?",
+      "AWESOME": "Awesome",
+      "GOOD": "Good",
+      "OK": "Ok",
+      "BAD": "Bad",
+      "TERRIBLE": "Terrible",
+      "PERFORM_EXERCISE": "Please perform your exercise",
+
+
+
       "BACK_TO_CARD": "Back to Card",
       "BACK_TO_DASHBOARD": "Back to Dashboard",
 

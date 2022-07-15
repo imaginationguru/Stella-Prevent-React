@@ -1,14 +1,13 @@
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
-import {navigatortoStart} from '@config/navigationOptions.web';
+import { navigatortoStart } from '@config/navigationOptions.web';
 import back from '@assets/images/subscription/back.png';
 import GLOBALS from '@constants';
-import {translate as ts} from '@i18n/translate';
-
-const {COLORS, FONTS} = GLOBALS;
+import { translate as ts } from '@i18n/translate';
+const { COLORS, FONTS } = GLOBALS;
 const BackToDashboard = (props) => {
   let {
-    title = ts('BACK_TO_DASHBOARD'),
+    title = ts('BACK_DASHBOARD'),
     bgColor,
     textColor,
     onVerifyPress,
@@ -21,15 +20,15 @@ const BackToDashboard = (props) => {
   return (
     <View style={[styles.backBtn, btnStyle]}>
       <TouchableOpacity
-        style={{flexDirection: 'row', alignItems: 'center'}}
+        style={{ flexDirection: 'row', alignItems: 'center' }}
         onPress={() => {
           onBack();
           navigatortoStart();
         }}
-        // onPress={() => {
-        //   alert('hello');
-        //   console.log('hello');
-        // }}
+      // onPress={() => {
+      //   alert('hello');
+      //   console.log('hello');
+      // }}
       >
         <Image
           resizeMode={'contain'}
@@ -50,7 +49,7 @@ const BackToDashboard = (props) => {
             alignItems: 'center',
             textAlignVertical: 'center',
           }}>
-          {isLoginPage ? 'Back to Login ' : title}
+          {isLoginPage ? ts("BACK_LOGIN") : title}
         </Text>
       </TouchableOpacity>
     </View>

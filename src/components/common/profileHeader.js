@@ -22,7 +22,7 @@ import Dropzone from 'react-dropzone';
 import { normalize } from '@utils/Helper';
 import Slider from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
-
+import { translate as ts } from '@i18n/translate';
 const ProfileHeader = (props) => {
   const { loginData = {}, profileImg = '' } = useSelector(
     (state) => state.authReducer,
@@ -152,7 +152,7 @@ const ProfileHeader = (props) => {
                     onPress={() => onProfileClick()}
                     style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).btn}>
                     <Text style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).btnTxt}>
-                      Profile
+                      {ts('PROFILE')}
                     </Text>
                   </TouchableOpacity>
                 )}
@@ -166,7 +166,7 @@ const ProfileHeader = (props) => {
                       style={[
                         styles(DEVICE_WIDTH, DEVICE_HEIGHT).btnTxtLogout,
                       ]}>
-                      Logout
+                      {ts('LOG_OUT')}
                     </Text>
                   </TouchableOpacity>
 
@@ -187,7 +187,7 @@ const ProfileHeader = (props) => {
                         style={[
                           styles(DEVICE_WIDTH, DEVICE_HEIGHT).btnTxtLogout,
                         ]}>
-                        Delete Image
+                        {ts('DELETE_IMG')}
                       </Text>
                     </TouchableOpacity>
                   )}
@@ -197,7 +197,7 @@ const ProfileHeader = (props) => {
             <View style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).profileWrapRight}>
               <View>
                 <Text style={styles(DEVICE_WIDTH, DEVICE_HEIGHT).username}>
-                  Module {moduleOne?.currentActiveCard?.current_week}
+                  {ts('MODULE')} {moduleOne?.currentActiveCard?.current_week}
                 </Text>
               </View>
 

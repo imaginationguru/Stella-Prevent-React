@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -11,26 +11,27 @@ import {
 import ScheduleTab from '@components/common/tabs';
 import * as AppActions from '@actions';
 import GLOBALS from '@constants';
-import {navigatorPush} from '@config/navigationOptions.web';
+import { navigatorPush } from '@config/navigationOptions.web';
 import Footer from '@components/Footer';
 import Button from '@components/common/button';
 
 import BackToDashboard from '@components/common/backToDashboard';
 import ProfileHeader from '@components/common/profileHeader';
-const {COLORS, FONTS} = GLOBALS;
-const {WHITE, DARK_GREEN} = COLORS;
-import {useSelector, useDispatch} from 'react-redux';
+const { COLORS, FONTS } = GLOBALS;
+const { WHITE, DARK_GREEN } = COLORS;
+import { useSelector, useDispatch } from 'react-redux';
 import stellaWave from '@assets/images/stellaNurse/stellaWave.png';
+import { translate as ts } from '@i18n/translate';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
 let dayData = [
-  {index: '1'},
-  {index: '2'},
-  {index: '3'},
-  {index: '4'},
-  {index: '5'},
+  { index: '1' },
+  { index: '2' },
+  { index: '3' },
+  { index: '4' },
+  { index: '5' },
 ];
-const tabsLearingType = [{title: 'By Date', id: 1}];
+const tabsLearingType = [{ title: 'By Date', id: 1 }];
 
 const DayView = ({
   item,
@@ -49,13 +50,13 @@ const DayView = ({
       <View
         style={[
           styles.dayTouchable,
-          {backgroundColor: COLORS.LIGHT_SHADOW_GREEN},
+          { backgroundColor: COLORS.LIGHT_SHADOW_GREEN },
         ]}>
-        <Text style={[styles.dayText, {color: COLORS.DARK_GREEN}]}>Day</Text>
+        <Text style={[styles.dayText, { color: COLORS.DARK_GREEN }]}>{ts('DAY')}</Text>
         <View
           style={[
             styles.dayViewStyle,
-            {backgroundColor: COLORS.LIGHT_SHADOW_GREEN},
+            { backgroundColor: COLORS.LIGHT_SHADOW_GREEN },
           ]}>
           <Text style={styles.dayText}>{item}</Text>
         </View>
@@ -66,13 +67,13 @@ const DayView = ({
       <View
         style={[
           styles.dayTouchable,
-          {backgroundColor: COLORS.LIGHT_SHADOW_GREEN},
+          { backgroundColor: COLORS.LIGHT_SHADOW_GREEN },
         ]}>
-        <Text style={[styles.dayText, {color: COLORS.DARK_GREEN}]}>Day</Text>
+        <Text style={[styles.dayText, { color: COLORS.DARK_GREEN }]}>{ts('DAY')}</Text>
         <View
           style={[
             styles.dayViewStyle,
-            {backgroundColor: COLORS.LIGHT_SHADOW_GREEN},
+            { backgroundColor: COLORS.LIGHT_SHADOW_GREEN },
           ]}>
           <Text style={styles.dayText}>{item}</Text>
         </View>
@@ -83,13 +84,13 @@ const DayView = ({
       <TouchableOpacity
         style={[
           styles.dayTouchable,
-          {backgroundColor: selectedDay == item ? COLORS.DARK_GREEN : 'white'},
+          { backgroundColor: selectedDay == item ? COLORS.DARK_GREEN : 'white' },
         ]}
         onPress={() => onClick(item)}>
         <Text
           style={[
             styles.dayText,
-            {color: selectedDay == item ? 'white' : COLORS.DARK_GREEN},
+            { color: selectedDay == item ? 'white' : COLORS.DARK_GREEN },
           ]}>
           Day
         </Text>
@@ -129,7 +130,7 @@ const useSessionStorage = (keyName, defaultValue) => {
   const setValue = (newValue) => {
     try {
       window.sessionStorage.setItem(keyName, JSON.stringify(newValue));
-    } catch (err) {}
+    } catch (err) { }
     setStoredValue(newValue);
   };
 
@@ -138,7 +139,7 @@ const useSessionStorage = (keyName, defaultValue) => {
 
 function SelectWeek(props) {
   const dispatch = useDispatch();
-  const {currentActiveCard = {}} = useSelector((state) => state.moduleOne);
+  const { currentActiveCard = {} } = useSelector((state) => state.moduleOne);
   const [value, setValue] = useSessionStorage(
     'value',
     `Module ${currentActiveCard.current_week}`,
@@ -171,7 +172,7 @@ function SelectWeek(props) {
     for (var i = 1; i <= 5; i++) {
       weekDataDynamic.push({
         value: 'Module' + ' ' + i,
-        label: 'Module' + ' ' + i,
+        label: ts('MODULE') + ' ' + i,
       });
       setweekDataDynamic([...weekDataDynamic]);
     }
@@ -229,16 +230,16 @@ function SelectWeek(props) {
         <div className="v-container m-tb-30 sl-week">
           <div className="blob-container">
             {/* <BackBtn btnStyle={{padding: 0}} /> */}
-            <BackToDashboard btnStyle={{padding: 0}} onBack={() => {}} />
+            <BackToDashboard btnStyle={{ padding: 0 }} onBack={() => { }} />
             <View style={styles.backBtn} />
-            <View style={{marginTop: 10}}>
+            <View style={{ marginTop: 10 }}>
               <ScheduleTab
                 customStyle={{
                   marginTop: 10,
                 }}
                 tabList={tabsLearingType}
                 activeTab={'By Date'}
-                tabTitleStyle={{fontSize: 16}}
+                tabTitleStyle={{ fontSize: 16 }}
               />
             </View>
             <View
@@ -304,7 +305,7 @@ function SelectWeek(props) {
                     marginTop: '1.1vw',
                   }}
                   onVerifyPress={_onProceedClick}
-                  textStyle={{fontSize: 12}}
+                  textStyle={{ fontSize: 12 }}
                   title={'Proceed'}
                   bgColor={DARK_GREEN}
                   textColor={WHITE}
@@ -380,7 +381,7 @@ const styles = StyleSheet.create({
   dropDownStyleNew: {
     backgroundColor: COLORS.WHITE,
     shadowColor: COLORS.DARK_GREEN,
-    shadowOffset: {width: 0.5, height: 5},
+    shadowOffset: { width: 0.5, height: 5 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
     padding: 5,

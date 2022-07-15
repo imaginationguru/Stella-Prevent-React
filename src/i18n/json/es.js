@@ -1,7 +1,15 @@
-import {LOCALES} from '../constants';
+import { LOCALES } from '../constants';
 export default {
   [LOCALES.SPANISH]: {
     translation: {
+      "TODAY_LEARNING": "Aprendizaje diario de hoy",
+      "COMPLETE_LEARNING": "Haga clic aquí para completar los aprendizajes de hoy",
+      "HOW_SLEEP": " ¿Cómo durmió anoche?",
+      "HOW_ACTIVITIES": "¿Qué actividades ha realizado?",
+      "HOW_MOOD": " ¿Cuál es su estado de ánimo hoy?",
+      "REPORTS": " Informes",
+      "PAST_MODULES": " Módulos anteriores",
+
       SIGNUP: 'Inscribirse',
       LOGIN: 'Acceso',
       MALE: 'Masculina ',
