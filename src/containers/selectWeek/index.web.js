@@ -31,7 +31,7 @@ let dayData = [
   { index: '4' },
   { index: '5' },
 ];
-const tabsLearingType = [{ title: 'By Date', id: 1 }];
+const tabsLearingType = [{ title: ts('By_DATE'), id: 1 }];
 
 const DayView = ({
   item,
@@ -92,7 +92,7 @@ const DayView = ({
             styles.dayText,
             { color: selectedDay == item ? 'white' : COLORS.DARK_GREEN },
           ]}>
-          Day
+          {ts('DAY')}
         </Text>
         <View
           style={[
@@ -238,7 +238,7 @@ function SelectWeek(props) {
                   marginTop: 10,
                 }}
                 tabList={tabsLearingType}
-                activeTab={'By Date'}
+                activeTab={ts('By_DATE')}
                 tabTitleStyle={{ fontSize: 16 }}
               />
             </View>
@@ -306,7 +306,7 @@ function SelectWeek(props) {
                   }}
                   onVerifyPress={_onProceedClick}
                   textStyle={{ fontSize: 12 }}
-                  title={'Proceed'}
+                  title={ts('PROCEED')}
                   bgColor={DARK_GREEN}
                   textColor={WHITE}
                   isDisabled={

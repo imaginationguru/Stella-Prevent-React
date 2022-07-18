@@ -13,10 +13,11 @@ export default {
       "LOG_OUT": "Logout",
       "DELETE_IMG": "Delete Image",
       "MODULE": "Module",
-      "PROCEED": "Proceed",
       "DAY": "Day",
       "BACK_DASHBOARD": "Back to Dashboard",
       "BACK_LOGIN": "Back to Login",
+      "PROCEED": "Proceed",
+      "By_DATE": "By Date",
 
       "ACTIVITY": "Pleasant Activities",
       "DAILY_ACTIVITY": "Daily Activities",
