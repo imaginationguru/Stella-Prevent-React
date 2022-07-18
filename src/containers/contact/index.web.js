@@ -1,18 +1,20 @@
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
 
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import BackToDashboard from '@components/common/backToDashboard';
 import Footer from '@components/Footer';
 
 import ProfileHeader from '@components/common/profileHeader';
 import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
-import {emailRegex} from '@utils/RegexUtils';
+import { emailRegex } from '@utils/RegexUtils';
 import * as AppActions from '@actions';
-import {navigatorPop} from '@config/navigationOptions.web';
+import { navigatorPop } from '@config/navigationOptions.web';
+
+import { translate as ts } from '@i18n/translate';
 function Contact(props) {
-  const {loginData} = useSelector((state) => state.authReducer);
+  const { loginData } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -68,7 +70,7 @@ function Contact(props) {
   };
 
   const handleChange = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     if (name === 'firstName') {
       setFirstName(value);
       setFirstNameError('');
@@ -133,7 +135,7 @@ function Contact(props) {
             {...props}
             showProfileBtn={false}
             showEditIcon={true}
-            // onEditClick={(file) => selectImage(file)}
+          // onEditClick={(file) => selectImage(file)}
           />
         ) : null}
         <div className="v-container m-tb-30">
@@ -145,13 +147,13 @@ function Contact(props) {
               />
             </div>
             <div className="contactus-wrapper">
-              <h4 className="t-heading">Let us know how we can help!</h4>
+              <h4 className="t-heading">{ts('HOW_HELP')}</h4>
               <div className="contactform">
                 <form noValidate onSubmit={(e) => onSend(e)}>
                   {loginData?.user?._id ? null : (
                     <div className="cell-row">
                       <div className="cell-33">
-                        <label className="cell-label">First Name</label>
+                        <label className="cell-label">{ts('FIRST_NAME')}</label>
                         <div className="cell-field has-icon">
                           <input
                             type="text"
@@ -165,7 +167,7 @@ function Contact(props) {
                         </div>
                       </div>
                       <div className="cell-33">
-                        <label className="cell-label">Last Name</label>
+                        <label className="cell-label">{ts('LAST_NAME')}</label>
                         <div className="cell-field has-icon">
                           <input
                             type="text"
@@ -179,7 +181,7 @@ function Contact(props) {
                         </div>
                       </div>
                       <div className="cell-33">
-                        <label className="cell-label">Email</label>
+                        <label className="cell-label">{ts('EMAIL')}</label>
                         <div className="cell-field has-icon">
                           <input
                             type="text"
@@ -192,7 +194,7 @@ function Contact(props) {
                       </div>
                     </div>
                   )}
-                  <label className="cell-label">Subject</label>
+                  <label className="cell-label">{ts('SUBJECT')}</label>
                   <div
                     className="c-dropdown"
                     style={{
@@ -227,7 +229,7 @@ function Contact(props) {
                   </div>
                   <div className="cell-row">
                     <div className="cell-100">
-                      <label className="cell-label">Message</label>
+                      <label className="cell-label">{ts('MESSAGE')}</label>
                       <div className="cell-field">
                         <textarea
                           name="Message"
@@ -238,7 +240,7 @@ function Contact(props) {
                     </div>
                   </div>
                   <div className="c-form-footer text-right">
-                    <button className="btn-green">Send</button>
+                    <button className="btn-green">{ts('SEND')}</button>
                   </div>
                 </form>
               </div>

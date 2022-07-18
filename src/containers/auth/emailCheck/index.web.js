@@ -75,12 +75,12 @@ const EmailCheck = () => {
               {/*****************************************************************************  */}
               {userData === 200 ? (
                 <div className="recoverPasswordSuccess">
-                  <h2 className="heading">{ts('RECOVER_PASSWORD')}</h2>
+                  <h2 className="heading">Recover Password</h2>
                   <div className="text-center success-img">
                     <img src={successTick} />
                   </div>
                   <p className="success-desc">
-                    {ts('CHECK_EMAIL_TO_RESET_PASSWORD')}
+                    Please check your email to reset the password
                   </p>
                   <p
                     className="link"
@@ -88,21 +88,21 @@ const EmailCheck = () => {
                       dispatch(AppActions.userDataClear());
                       history.push('/');
                     }}>
-                    {ts('LOGIN_TO_YOUR_ACCOUNT')}
+                    Login to your account
                   </p>
                 </div>
               ) : (
                 <div>
-                  <h2 className="heading">{ts('RECOVER_PASSWORD')}</h2>
+                  <h2 className="heading">Recover Password</h2>
                   {/***On this screen user enter valid email id which used when user joined 
                        if email id exists user will navigate to changed password screen */}
                   <div className="login-form">
-                    <p className="form-help-text">{ts('RECOVERY_MESSAGE')}</p>
+                    <p className="form-help-text">Enter the email  you used when you joined, we will send you password recovery instruction</p>
                     <form noValidate onSubmit={(e) => onEmailCheck(e)}>
                       {/*******************EMAIL INPUT FIELD************* */}
                       <div className="formRow">
                         <div className="w100">
-                          <label className="formLabel">{ts('EMAIL')}</label>
+                          <label className="formLabel">Email</label>
                           <div className="formField has-icon">
                             <input
                               type="email"
@@ -127,7 +127,7 @@ const EmailCheck = () => {
                             <input
                               type="submit"
                               className="btn-solid"
-                              value={ts('SEND')}
+                              value={"Send"}
                             />
                           </div>
                         </div>
@@ -136,9 +136,9 @@ const EmailCheck = () => {
                     </form>
                   </div>
                   <p className="additional-link">
-                    {ts('REMEMBER_PASSWORD')}&nbsp;
+                    Remember Password&nbsp;
                     <Link to="/" className="link">
-                      {ts('LOGIN')}
+                      Log in
                     </Link>
                   </p>
                 </div>

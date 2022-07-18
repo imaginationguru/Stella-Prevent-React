@@ -124,12 +124,12 @@ const RecoverPassword = () => {
           <div className="login-right">
             {resetData === 200 ? (
               <div className="recoverPasswordSuccess">
-                <h2 className="heading">{ts('RECOVER_PASSWORD')}</h2>
+                <h2 className="heading">Recover Password</h2>
                 <div className="text-center success-img">
                   <img src={successTick} />
                 </div>
                 <h3 className="success-text">
-                  {ts('PASSWORD_RESET_SUCCESSFULLY')}
+                  Password reset successfully
                 </h3>
 
                 <p
@@ -138,12 +138,12 @@ const RecoverPassword = () => {
                     dispatch(AppActions.resetPasswordDataClear());
                     history.push('/');
                   }}>
-                  {ts('LOGIN_TO_YOUR_ACCOUNT')}
+                  Login to your account
                 </p>
               </div>
             ) : (
               <div className="login-content">
-                <h2 className="heading">{ts('RECOVER_PASSWORD')}</h2>
+                <h2 className="heading">Recover Password</h2>
                 {/*****************************************************************************  */}
                 <div className="login-form">
                   {/**Changed Password Screen on this screen there are two fields 
@@ -177,7 +177,7 @@ const RecoverPassword = () => {
                     <div className="formRow" style={{ 'margin-bottom': '10px' }}>
                       <div className="w100">
                         <label className="formLabel">
-                          {ts('NEW_PASSWORD')}
+                          New Password
                         </label>
                         <div className="formField has-icon">
                           <input
@@ -202,7 +202,7 @@ const RecoverPassword = () => {
                     <div className="formRow">
                       <div className="w100">
                         <label className="formLabel">
-                          {ts('CONFIRM_PASSWORD')}
+                          Confirm Password
                         </label>
                         <div className="formField has-icon">
                           <input
@@ -231,7 +231,7 @@ const RecoverPassword = () => {
                           <input
                             type="submit"
                             className="btn-solid"
-                            value={ts('SAVE')}
+                            value={'SAVE'}
                           />
                         </div>
                       </div>

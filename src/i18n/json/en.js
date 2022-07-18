@@ -13,10 +13,11 @@ export default {
       "LOG_OUT": "Logout",
       "DELETE_IMG": "Delete Image",
       "MODULE": "Module",
-      "PROCEED": "Proceed",
       "DAY": "Day",
       "BACK_DASHBOARD": "Back to Dashboard",
       "BACK_LOGIN": "Back to Login",
+      "PROCEED": "Proceed",
+      "By_DATE": "By Date",
 
       "ACTIVITY": "Pleasant Activities",
       "DAILY_ACTIVITY": "Daily Activities",
@@ -115,6 +116,13 @@ export default {
       "FBLoginFail": "Facebook Login fails! Unable to access user's email",
       "GoogleRegistered": "This user is currently not registered with Mamalift. Please register at",
       "AppleLoginCancel": "Apple login cancelled.",
+
+      "SEND": "Send",
+      "SUBJECT": "Subject",
+      "MESSAGE": "Message",
+      "HOW_HELP": "Let us know how we can help!",
+
+
       LANGUAGE_SELECT: 'Language Select',
       SIGNUP: 'Sign up',
       LOGIN: 'Log in',
@@ -137,7 +145,7 @@ export default {
         'Please check your email to reset the password',
       LOGIN_TO_YOUR_ACCOUNT: ' Login to your account',
       REMEMBER_PASSWORD: 'Remember Password',
-      SEND: 'Send',
+
       SELECT: 'Select',
       ENGLISH: 'English',
       SPANISH: 'Spanish',
