@@ -15,6 +15,8 @@ import {
 } from '@components/Cards';
 import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import { Dimensions } from 'react-native';
+import { translate as ts } from '@i18n/translate';
+
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
@@ -189,7 +191,7 @@ const ComparisonTemplate = (props) => {
     } else {
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: 'Please perform your exercise',
+        payload: ts('PERFORM_EXERCISE'),
       });
     }
   };

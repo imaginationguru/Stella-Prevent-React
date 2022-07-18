@@ -335,7 +335,7 @@ const ThirtyFour = (props) => {
     } else {
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: 'Please perform your exercise',
+        payload: ts('PERFORM_EXERCISE'),
       });
     }
   };

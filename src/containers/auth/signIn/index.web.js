@@ -72,13 +72,13 @@ const SignIn = (componentId) => {
     e.preventDefault();
 
     if (email.length === 0) {
-      setEmailError('Please enter email');
+      setEmailError(ts('EmailEmptyError'));
     } else if (email.length && !emailRegex.test(email)) {
-      setEmailError('Please enter a valid email id');
+      setEmailError(ts('EmailError'));
     } else if (password.length === 0) {
-      setPasswordError('Please enter password');
+      setPasswordError(ts('PasswordemptyError'));
     } else if (password.length > 16) {
-      setPasswordError('Password should not more than 16');
+      setPasswordError(ts('PasswordError'));
     }
     if (email && password) {
       dispatch(AppActions.login(email, password));

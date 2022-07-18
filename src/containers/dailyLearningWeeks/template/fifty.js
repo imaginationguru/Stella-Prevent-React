@@ -1,11 +1,11 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import GLOBALS from '@constants';
 import ReactHtmlParser from 'react-html-parser';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as AppActions from '@actions';
-import {getItem} from '@utils/AsyncUtils';
+import { getItem } from '@utils/AsyncUtils';
 import ExerciseBox from '@components/ExerciseBox';
-import {translate as ts} from '@i18n/translate';
+import { translate as ts } from '@i18n/translate';
 import right from '@assets/images/right.svg';
 import cross from '@assets/images/cross.svg';
 import {
@@ -18,11 +18,11 @@ import {
 } from '@components/Cards';
 import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
-const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
+const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
 const {
   YELLOW,
   WHITE,
@@ -39,7 +39,7 @@ const dataMapperAss = (arr = []) => {
     temp = arr.map((item) => {
       return {
         assessment_header_id: item._id,
-        content: [{content: item.value, order: item.order}],
+        content: [{ content: item.value, order: item.order }],
       };
     });
   }
@@ -47,7 +47,7 @@ const dataMapperAss = (arr = []) => {
 };
 
 const InputBoxWithContent = (props) => {
-  const {title, placeholder, value, onChange, style, name} = props;
+  const { title, placeholder, value, onChange, style, name } = props;
   return (
     <div style={styles.inputBoxWrapper}>
       <div style={style}>
@@ -93,7 +93,7 @@ const Fifty = (props) => {
   } = props.card;
   const dispatch = useDispatch();
   const {
-    assessmentData = {heading: []},
+    assessmentData = { heading: [] },
     assessmentData2 = {},
     userAssessmentData = [],
   } = useSelector((state) => state.moduleOne);
@@ -128,7 +128,7 @@ const Fifty = (props) => {
       });
     }
     let selectedFormat = assessmentCards.map((item) => {
-      return {_id: item.assessment_header_id, content: item.content};
+      return { _id: item.assessment_header_id, content: item.content };
     });
     setSelected(selectedFormat);
   }, [userAssessmentData]);
@@ -145,19 +145,19 @@ const Fifty = (props) => {
         arr.forEach((item, i) => {
           const onlyOneCard = item.cards.length
             ? item.cards.sort(
-                (a, b) => (a.createdAt < b.createdAt && 1) || -1,
-              )[0]
+              (a, b) => (a.createdAt < b.createdAt && 1) || -1,
+            )[0]
             : [];
           return pTemp.push(onlyOneCard);
         });
         temp = pTemp.length
           ? pTemp.map((item) => {
-              return {
-                placeholder: item.content ? item.content : 'enter value',
-                value: item.content,
-                _id: item.assessment_header_id,
-              };
-            })
+            return {
+              placeholder: item.content ? item.content : 'enter value',
+              value: item.content,
+              _id: item.assessment_header_id,
+            };
+          })
           : [];
       }
 
@@ -175,7 +175,7 @@ const Fifty = (props) => {
                 val = data.value;
               }
             }
-            return {...item, value: val};
+            return { ...item, value: val };
           }),
         );
       }
@@ -237,7 +237,7 @@ const Fifty = (props) => {
       } else {
         dispatch({
           type: ACTION_TYPE.ERROR,
-          payload: 'Please perform your exercise',
+          payload: ts('PERFORM_EXERCISE'),
         });
       }
     }
@@ -247,7 +247,7 @@ const Fifty = (props) => {
     let userAssessment = selected.map((item) => {
       return {
         assessment_header_id: item._id,
-        content: [{content: item.content}],
+        content: [{ content: item.content }],
       };
     });
     e.preventDefault();
@@ -266,7 +266,7 @@ const Fifty = (props) => {
     } else {
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: 'Please perform your exercise',
+        payload: ts('PERFORM_EXERCISE'),
       });
     }
   };
@@ -274,11 +274,11 @@ const Fifty = (props) => {
   const onHandleChange = (e, item) => {
     const updateInputs = inputs.length
       ? inputs.map((val) => {
-          return {
-            ...val,
-            value: val.name === e.target.name ? e.target.value : val.value,
-          };
-        })
+        return {
+          ...val,
+          value: val.name === e.target.name ? e.target.value : val.value,
+        };
+      })
       : [];
     setInputs(updateInputs);
   };
@@ -328,14 +328,14 @@ const Fifty = (props) => {
   };
   const headingOne =
     assessmentData.heading &&
-    assessmentData.heading.length &&
-    assessmentData.heading[0]
+      assessmentData.heading.length &&
+      assessmentData.heading[0]
       ? assessmentData.heading[0].heading
       : null;
   const headingSecond =
     assessmentData.heading &&
-    assessmentData.heading.length &&
-    assessmentData.heading[1]
+      assessmentData.heading.length &&
+      assessmentData.heading[1]
       ? assessmentData.heading[1].heading
       : null;
 
@@ -344,15 +344,15 @@ const Fifty = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -370,71 +370,71 @@ const Fifty = (props) => {
         }}>
         {images && images.length
           ? images
-              .filter((item) => item.image_type === 'first')
-              .map((item, i) => {
-                return (
-                  <CustomImage
-                    key={i}
-                    src={`${IMAGE_BASE_URL}${item.image}`}
-                    style={{
-                      display: item.image !== '' ? 'flex' : 'none',
-                    }}
-                  />
-                );
-              })
+            .filter((item) => item.image_type === 'first')
+            .map((item, i) => {
+              return (
+                <CustomImage
+                  key={i}
+                  src={`${IMAGE_BASE_URL}${item.image}`}
+                  style={{
+                    display: item.image !== '' ? 'flex' : 'none',
+                  }}
+                />
+              );
+            })
           : null}
       </div>
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                  isVisible={true}
-                  animationIn={'fadeInUp'}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+                isVisible={true}
+                animationIn={'fadeInUp'}
+              />
+            );
+          })
         : []}
       {/*******************************ASSESSMENT DESCRIPTION*********************** */}
       {props.assessments &&
-      props.assessments.length &&
-      props.assessments[0].description !== '' ? (
+        props.assessments.length &&
+        props.assessments[0].description !== '' ? (
         <div style={commonStyles.assessmentWrapper}>
           {images && images.length
             ? images
-                .filter((item) => item.image_type === 'second')
-                .map((item, i) => {
-                  return (
-                    <CustomImage
-                      key={i}
-                      src={
-                        item.image !== ''
-                          ? `${IMAGE_BASE_URL}${item.image}`
-                          : null
-                      }
-                      style={{
-                        ...commonStyles.assessImage,
-                        display: item.image !== '' ? 'flex' : 'none',
-                      }}
-                    />
-                  );
-                })
+              .filter((item) => item.image_type === 'second')
+              .map((item, i) => {
+                return (
+                  <CustomImage
+                    key={i}
+                    src={
+                      item.image !== ''
+                        ? `${IMAGE_BASE_URL}${item.image}`
+                        : null
+                    }
+                    style={{
+                      ...commonStyles.assessImage,
+                      display: item.image !== '' ? 'flex' : 'none',
+                    }}
+                  />
+                );
+              })
             : []}
 
           {props.assessments && props.assessments.length
             ? props.assessments.map((item, index) => {
-                return (
-                  <CardDescription
-                    key={index}
-                    style={commonStyles.assessDesc}
-                    description={ReactHtmlParser(item.description)}
-                  />
-                );
-              })
+              return (
+                <CardDescription
+                  key={index}
+                  style={commonStyles.assessDesc}
+                  description={ReactHtmlParser(item.description)}
+                />
+              );
+            })
             : []}
         </div>
       ) : null}
@@ -466,26 +466,26 @@ const Fifty = (props) => {
 
       {inputs.length
         ? inputs
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, idx) => {
-              return (
-                <InputBoxWithContent
-                  key={idx}
-                  title={ReactHtmlParser(item.name)}
-                  name={item.name}
-                  placeholder={item.placeholder}
-                  value={item.value}
-                  onChange={(e) => onHandleChange(e, item)}
-                  style={{
-                    backgroundColor:
-                      assessmentData.heading && assessmentData.heading.length
-                        ? headerColor(item.order)
-                        : YELLOW,
-                    width: '20%',
-                  }}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, idx) => {
+            return (
+              <InputBoxWithContent
+                key={idx}
+                title={ReactHtmlParser(item.name)}
+                name={item.name}
+                placeholder={item.placeholder}
+                value={item.value}
+                onChange={(e) => onHandleChange(e, item)}
+                style={{
+                  backgroundColor:
+                    assessmentData.heading && assessmentData.heading.length
+                      ? headerColor(item.order)
+                      : YELLOW,
+                  width: '20%',
+                }}
+              />
+            );
+          })
         : null}
       {inputs.length ? (
         <div style={commonStyles.buttonWrapper}>
@@ -495,84 +495,84 @@ const Fifty = (props) => {
         </div>
       ) : null}
       {/***************************ASSESSMENTS DESCRIPTION SECOND************* */}
-      <div style={{...commonStyles.assessmentWrapper, marginBottom: '70px'}}>
+      <div style={{ ...commonStyles.assessmentWrapper, marginBottom: '70px' }}>
         {images && images.length
           ? images
-              .filter((img) => img.image_type === 'second')
-              .map((item, i) => {
-                return (
-                  <CustomImage
-                    key={i}
-                    src={`${IMAGE_BASE_URL}${item.image}`}
-                    style={{
-                      ...commonStyles.assessImage,
-                      display: item.image !== '' ? 'flex' : 'none',
-                    }}
-                  />
-                );
-              })
-          : []}
-        {assessmentData2.assessment && assessmentData2.assessment.length
-          ? assessmentData2.assessment.map((item, i) => {
+            .filter((img) => img.image_type === 'second')
+            .map((item, i) => {
               return (
-                <CardDescription
+                <CustomImage
                   key={i}
-                  style={commonStyles.assessDesc}
-                  description={ReactHtmlParser(item.description)}
+                  src={`${IMAGE_BASE_URL}${item.image}`}
+                  style={{
+                    ...commonStyles.assessImage,
+                    display: item.image !== '' ? 'flex' : 'none',
+                  }}
                 />
               );
             })
+          : []}
+        {assessmentData2.assessment && assessmentData2.assessment.length
+          ? assessmentData2.assessment.map((item, i) => {
+            return (
+              <CardDescription
+                key={i}
+                style={commonStyles.assessDesc}
+                description={ReactHtmlParser(item.description)}
+              />
+            );
+          })
           : []}
       </div>
       {/***************************ASSESSMENTS second HEADERS************* */}
       {assessmentData2.headers && assessmentData2.headers.length
         ? assessmentData2.headers
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, i) => {
-              const isYES =
-                selected && selected.length
-                  ? selected.find((val) => {
-                      return val._id === item._id && val.content === 'YES';
-                    })
-                    ? true
-                    : false
-                  : false;
-              const isNO =
-                selected && selected.length
-                  ? selected.find(
-                      (val) => val._id === item._id && val.content === 'NO',
-                    )
-                    ? true
-                    : false
-                  : false;
-              return (
-                <div key={i} style={commonStyles.question}>
-                  <p>{ReactHtmlParser(item.header)}</p>
-                  <div style={styles.optionWrapper}>
-                    <div
-                      onClick={() => {
-                        updateYESNO({_id: item._id, content: 'YES'}, selected);
-                      }}
-                      style={{
-                        ...styles.rightBox,
-                        backgroundColor: isYES ? BUTTON_ORANGE : GRAY2,
-                      }}>
-                      <img src={right} />
-                    </div>
-                    <div
-                      onClick={() => {
-                        updateYESNO({_id: item._id, content: 'NO'}, selected);
-                      }}
-                      style={{
-                        ...styles.crossBox,
-                        backgroundColor: isNO ? BUTTON_ORANGE : GRAY2,
-                      }}>
-                      <img src={cross} />
-                    </div>
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, i) => {
+            const isYES =
+              selected && selected.length
+                ? selected.find((val) => {
+                  return val._id === item._id && val.content === 'YES';
+                })
+                  ? true
+                  : false
+                : false;
+            const isNO =
+              selected && selected.length
+                ? selected.find(
+                  (val) => val._id === item._id && val.content === 'NO',
+                )
+                  ? true
+                  : false
+                : false;
+            return (
+              <div key={i} style={commonStyles.question}>
+                <p>{ReactHtmlParser(item.header)}</p>
+                <div style={styles.optionWrapper}>
+                  <div
+                    onClick={() => {
+                      updateYESNO({ _id: item._id, content: 'YES' }, selected);
+                    }}
+                    style={{
+                      ...styles.rightBox,
+                      backgroundColor: isYES ? BUTTON_ORANGE : GRAY2,
+                    }}>
+                    <img src={right} />
+                  </div>
+                  <div
+                    onClick={() => {
+                      updateYESNO({ _id: item._id, content: 'NO' }, selected);
+                    }}
+                    style={{
+                      ...styles.crossBox,
+                      backgroundColor: isNO ? BUTTON_ORANGE : GRAY2,
+                    }}>
+                    <img src={cross} />
                   </div>
                 </div>
-              );
-            })
+              </div>
+            );
+          })
         : []}
       <div style={commonStyles.buttonWrapper}>
         <button
@@ -584,17 +584,17 @@ const Fifty = (props) => {
 
       {content && content.length
         ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardContent
-                  key={index}
-                  content={ReactHtmlParser(item.content)}
-                  isVisible={true}
-                  animationIn={'fadeInUp'}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardContent
+                key={index}
+                content={ReactHtmlParser(item.content)}
+                isVisible={true}
+                animationIn={'fadeInUp'}
+              />
+            );
+          })
         : []}
       {showExercises && <ExerciseBox week={week} />}
     </div>
@@ -617,7 +617,7 @@ const styles = {
     color: COLORS.WHITE,
     paddingTop: '30px',
   },
-  inputBox: {width: '78%'},
+  inputBox: { width: '78%' },
   inputStyle: {
     backgroundColor: COLORS.LIGHT_GRAY,
     fontStyle: 'italic',

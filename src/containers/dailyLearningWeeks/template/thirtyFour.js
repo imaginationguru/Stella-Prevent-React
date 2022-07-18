@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import ReactHtmlParser from 'react-html-parser';
 import GLOBALS from '@constants';
-import {useDispatch, useSelector} from 'react-redux';
-import {getItem} from '@utils/AsyncUtils';
+import { useDispatch, useSelector } from 'react-redux';
+import { getItem } from '@utils/AsyncUtils';
 import * as AppActions from '@actions';
-import {translate as ts} from '@i18n/translate';
+import { translate as ts } from '@i18n/translate';
 import ExerciseBox from '@components/ExerciseBox';
 import {
   CardQuote,
@@ -18,16 +18,16 @@ import {
   CustomImage,
 } from '@components/Cards';
 import moment from 'moment';
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const {IMAGE_BASE_URL, ACTION_TYPE, COLORS} = GLOBALS;
-const {YELLOW, WHITE, CIRCLE_GRAY, RED, GREEN_TEXT, GRAY} = COLORS;
+const { IMAGE_BASE_URL, ACTION_TYPE, COLORS } = GLOBALS;
+const { YELLOW, WHITE, CIRCLE_GRAY, RED, GREEN_TEXT, GRAY } = COLORS;
 const userId = getItem('userId');
 const saveDateValidator = (arr = []) => {
   let temp = [];
   if (arr.length) {
     temp = arr.map((item) => {
-      const {content = []} = item;
+      const { content = [] } = item;
       let orderArr = [];
       let modContent = [];
       if (content.length) {
@@ -48,7 +48,7 @@ const saveDateValidator = (arr = []) => {
         });
       }
 
-      return {...item, content: modContent};
+      return { ...item, content: modContent };
     });
   }
   return temp;
@@ -64,18 +64,18 @@ const userAssMapper = (arr = []) => {
     });
     temp = onlyCardsData.length
       ? onlyCardsData.map((item) => {
-          return {
-            assessment_content_id: item.assessment_content_id,
-            assessment_heading_id: item.assessment_heading_id,
-            content: item.content,
-            order: item.order,
-            type: item.type,
-            createdAt: item.createdAt
-              ? new Date(item.createdAt).getTime()
-              : Date.now(),
-            inputId: item._id,
-          };
-        })
+        return {
+          assessment_content_id: item.assessment_content_id,
+          assessment_heading_id: item.assessment_heading_id,
+          content: item.content,
+          order: item.order,
+          type: item.type,
+          createdAt: item.createdAt
+            ? new Date(item.createdAt).getTime()
+            : Date.now(),
+          inputId: item._id,
+        };
+      })
       : [];
   }
   return temp;
@@ -96,7 +96,7 @@ const emptyTextInputMapper = (hId, cId, order = 0) => {
 };
 
 const ThirtyFour = (props) => {
-  const {assessmentData: {heading = []} = {}, userAssessmentData = []} =
+  const { assessmentData: { heading = [] } = {}, userAssessmentData = [] } =
     useSelector((state) => state.moduleOne);
   const [inputs, setInputs] = useState([]);
   const dispatch = useDispatch();
@@ -112,20 +112,20 @@ const ThirtyFour = (props) => {
     showExercises,
     week,
   } = props.card;
-  const {assessments} = props;
+  const { assessments } = props;
 
   const initialHeadingSetup = useCallback(() => {
     heading.length &&
       setInputs(
         heading.map((item) => {
-          const {sub_heading = []} = item;
+          const { sub_heading = [] } = item;
           const finalSubHeading = sub_heading.length
             ? sub_heading.map((ele) => {
-                return {
-                  ...ele,
-                  textInput: [],
-                };
-              })
+              return {
+                ...ele,
+                textInput: [],
+              };
+            })
             : [];
           return {
             ...item,
@@ -146,30 +146,30 @@ const ThirtyFour = (props) => {
     /**Add selected data in array */
     const headerData = inputs.length
       ? inputs.map((item) => {
-          return {
-            ...item,
-            sub_heading: item.sub_heading.length
-              ? item.sub_heading.map((val) => {
-                  const inputsArr = data.length
-                    ? data
-                        .filter((e) => e.assessment_content_id === val._id)
-                        .sort((a, b) => (a.order > b.order ? 1 : -1))
-                    : [];
-                  const finalInput = inputsArr.length ? [...inputsArr] : [];
-                  return {
-                    ...val,
-                    textInput: data.length
-                      ? finalInput.length
-                        ? finalInput.sort(
-                            (a, b) => (a.order > b.order && 1) || -1,
-                          )
-                        : [] // TODO : Existing ( Add NEW OBJECT FOR END)
-                      : [], // TODO : NEW USER
-                  };
-                })
-              : [],
-          };
-        })
+        return {
+          ...item,
+          sub_heading: item.sub_heading.length
+            ? item.sub_heading.map((val) => {
+              const inputsArr = data.length
+                ? data
+                  .filter((e) => e.assessment_content_id === val._id)
+                  .sort((a, b) => (a.order > b.order ? 1 : -1))
+                : [];
+              const finalInput = inputsArr.length ? [...inputsArr] : [];
+              return {
+                ...val,
+                textInput: data.length
+                  ? finalInput.length
+                    ? finalInput.sort(
+                      (a, b) => (a.order > b.order && 1) || -1,
+                    )
+                    : [] // TODO : Existing ( Add NEW OBJECT FOR END)
+                  : [], // TODO : NEW USER
+              };
+            })
+            : [],
+        };
+      })
       : [];
     /**Add empty rows with comparison */
     const addEmtpyRow = headerData.map((item, index) => {
@@ -305,13 +305,13 @@ const ThirtyFour = (props) => {
             ...details,
             sub_heading: details.sub_heading.length
               ? details.sub_heading.map((e) => {
-                  return {
-                    ...e,
-                    textInput: e.textInput.length
-                      ? e.textInput.filter((_e, idx) => idx !== i)
-                      : [],
-                  };
-                })
+                return {
+                  ...e,
+                  textInput: e.textInput.length
+                    ? e.textInput.filter((_e, idx) => idx !== i)
+                    : [],
+                };
+              })
               : [],
           };
         } else {
@@ -358,30 +358,30 @@ const ThirtyFour = (props) => {
   const onSave = () => {
     const modifiedAssessment = inputs.length
       ? inputs.map((item) => {
-          const temp = {assessment_heading_id: item._id, content: []};
-          let x = [];
-          if (item.sub_heading.length) {
-            item.sub_heading.forEach((ele) => {
-              if (ele.textInput.length) {
-                x.push(...ele.textInput);
-              }
-            });
-          }
-          let y = x.length
-            ? x.map((val) => {
-                return {
-                  ...val,
-                  content: val.content,
-                };
-              })
-            : [];
-          temp.content.push(...y);
-          return temp;
-        })
+        const temp = { assessment_heading_id: item._id, content: [] };
+        let x = [];
+        if (item.sub_heading.length) {
+          item.sub_heading.forEach((ele) => {
+            if (ele.textInput.length) {
+              x.push(...ele.textInput);
+            }
+          });
+        }
+        let y = x.length
+          ? x.map((val) => {
+            return {
+              ...val,
+              content: val.content,
+            };
+          })
+          : [];
+        temp.content.push(...y);
+        return temp;
+      })
       : [];
 
     let final = saveDateValidator(modifiedAssessment);
-    final.map((m, ind) => {});
+    final.map((m, ind) => { });
     let params = {
       user_id: getItem('userId'),
       user_card_id: props._id,
@@ -409,7 +409,7 @@ const ThirtyFour = (props) => {
     } else {
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: 'Please perform your exercise',
+        payload: ts('PERFORM_EXERCISE'),
       });
     }
   };
@@ -419,15 +419,15 @@ const ThirtyFour = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -439,191 +439,191 @@ const ThirtyFour = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
       {/*****************assessment description***************** */}
       <div style={commonStyles.assessmentWrapper}>
         {images && images.length
           ? images.map((item, i) => {
-              return (
-                <CustomImage
-                  key={i}
-                  src={`${IMAGE_BASE_URL}${item.image}`}
-                  style={{
-                    ...commonStyles.assessImage,
-                    display: item.image !== '' ? 'flex' : 'none',
-                  }}
-                />
-              );
-            })
+            return (
+              <CustomImage
+                key={i}
+                src={`${IMAGE_BASE_URL}${item.image}`}
+                style={{
+                  ...commonStyles.assessImage,
+                  display: item.image !== '' ? 'flex' : 'none',
+                }}
+              />
+            );
+          })
           : []}
         {assessments && assessments.length
           ? assessments.map((item, i) => {
-              return (
-                <CardDescription
-                  key={i}
-                  style={commonStyles.assessDesc}
-                  description={ReactHtmlParser(item.description)}
-                />
-              );
-            })
+            return (
+              <CardDescription
+                key={i}
+                style={commonStyles.assessDesc}
+                description={ReactHtmlParser(item.description)}
+              />
+            );
+          })
           : []}
       </div>
       <div>
         {inputs.length
           ? inputs
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, index) => {
-                return (
-                  <div>
-                    <CardContent
-                      key={index}
-                      content={ReactHtmlParser(item.heading)}
-                      style={{
-                        ...styles.contentHeading,
-                      }}
-                    />
-                    <div
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        flexWrap: 'wrap',
-                      }}>
-                      {item.sub_heading.length
-                        ? item.sub_heading.map((ele, idx) => {
-                            return (
-                              <div
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <div>
+                  <CardContent
+                    key={index}
+                    content={ReactHtmlParser(item.heading)}
+                    style={{
+                      ...styles.contentHeading,
+                    }}
+                  />
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      flexWrap: 'wrap',
+                    }}>
+                    {item.sub_heading.length
+                      ? item.sub_heading.map((ele, idx) => {
+                        return (
+                          <div
+                            style={{
+                              width:
+                                ele.order === 1
+                                  ? DEVICE_WIDTH > 767
+                                    ? '30%'
+                                    : '100%'
+                                  : DEVICE_WIDTH > 767
+                                    ? '70%'
+                                    : '100%',
+                              paddingLeft:
+                                ele.order === 1
+                                  ? DEVICE_WIDTH > 767
+                                    ? '0'
+                                    : '0'
+                                  : DEVICE_WIDTH > 767
+                                    ? '15px'
+                                    : '0',
+                            }}>
+                            <div
+                              style={{
+                                backgroundColor: YELLOW,
+                                borderRadius: '5px',
+                                border: `1px solid ${YELLOW}`,
+                                paddingTop: '10px',
+                                marginBottom: '30px',
+                              }}>
+                              <p
                                 style={{
-                                  width:
-                                    ele.order === 1
-                                      ? DEVICE_WIDTH > 767
-                                        ? '30%'
-                                        : '100%'
-                                      : DEVICE_WIDTH > 767
-                                      ? '70%'
-                                      : '100%',
-                                  paddingLeft:
-                                    ele.order === 1
-                                      ? DEVICE_WIDTH > 767
-                                        ? '0'
-                                        : '0'
-                                      : DEVICE_WIDTH > 767
-                                      ? '15px'
-                                      : '0',
+                                  color: WHITE,
+                                  textAlign: 'center',
                                 }}>
-                                <div
-                                  style={{
-                                    backgroundColor: YELLOW,
-                                    borderRadius: '5px',
-                                    border: `1px solid ${YELLOW}`,
-                                    paddingTop: '10px',
-                                    marginBottom: '30px',
-                                  }}>
-                                  <p
-                                    style={{
-                                      color: WHITE,
-                                      textAlign: 'center',
-                                    }}>
-                                    {ReactHtmlParser(ele.name)}
-                                  </p>
-                                </div>
-                                {ele.textInput.length
-                                  ? ele.textInput.map((val, i, arr) => {
-                                      const showPlus =
-                                        idx === 1 && i === arr.length - 1;
-                                      const isDelete =
-                                        idx === 1 && i < arr.length - 1;
-                                      const isDisabled = i < arr.length - 1;
-                                      return (
-                                        <div
-                                          style={styles.plusIconWrapper}
-                                          className={
-                                            ele.order === 1 ? 'mr0' : 'mr20'
-                                          }>
-                                          <input
-                                            disabled={isDisabled ? true : false}
-                                            type="text"
-                                            className="f-field"
-                                            name={ele.name}
-                                            style={styles.selectedText}
-                                            value={val.content}
-                                            onChange={(e) =>
-                                              onChangeHandler(
-                                                item._id,
-                                                ele._id,
-                                                i,
-                                                e,
-                                              )
-                                            }
-                                          />
+                                {ReactHtmlParser(ele.name)}
+                              </p>
+                            </div>
+                            {ele.textInput.length
+                              ? ele.textInput.map((val, i, arr) => {
+                                const showPlus =
+                                  idx === 1 && i === arr.length - 1;
+                                const isDelete =
+                                  idx === 1 && i < arr.length - 1;
+                                const isDisabled = i < arr.length - 1;
+                                return (
+                                  <div
+                                    style={styles.plusIconWrapper}
+                                    className={
+                                      ele.order === 1 ? 'mr0' : 'mr20'
+                                    }>
+                                    <input
+                                      disabled={isDisabled ? true : false}
+                                      type="text"
+                                      className="f-field"
+                                      name={ele.name}
+                                      style={styles.selectedText}
+                                      value={val.content}
+                                      onChange={(e) =>
+                                        onChangeHandler(
+                                          item._id,
+                                          ele._id,
+                                          i,
+                                          e,
+                                        )
+                                      }
+                                    />
 
-                                          {showPlus ? (
-                                            <div
-                                              style={{
-                                                ...styles.circleDiv,
-                                                backgroundColor: val.content
-                                                  .length
-                                                  ? GREEN_TEXT
-                                                  : GRAY,
-                                              }}
-                                              onClick={() => {
-                                                if (val.content) {
-                                                  addHandler(
-                                                    item._id,
-                                                    ele._id,
-                                                    val.order,
-                                                    val.type,
-                                                  );
-                                                }
-                                              }}>
-                                              <span style={styles.plusIcon}>
-                                                +
-                                              </span>
-                                            </div>
-                                          ) : null}
-                                          {isDelete ? (
-                                            <div
-                                              style={{
-                                                ...styles.circleCrossDiv,
-                                              }}
-                                              onClick={() => {
-                                                deleteHandler(
-                                                  item._id,
-                                                  i,
-                                                  item,
-                                                  val,
-                                                  val.inputId !== '', // TODO : if "" = local delete,
-                                                );
-                                              }}>
-                                              <span
-                                                style={{
-                                                  ...styles.plusIcon,
-                                                  fontSize: '20px',
-                                                }}>
-                                                x
-                                              </span>
-                                            </div>
-                                          ) : null}
-                                        </div>
-                                      );
-                                    })
-                                  : null}
-                              </div>
-                            );
-                          })
-                        : null}
-                    </div>
+                                    {showPlus ? (
+                                      <div
+                                        style={{
+                                          ...styles.circleDiv,
+                                          backgroundColor: val.content
+                                            .length
+                                            ? GREEN_TEXT
+                                            : GRAY,
+                                        }}
+                                        onClick={() => {
+                                          if (val.content) {
+                                            addHandler(
+                                              item._id,
+                                              ele._id,
+                                              val.order,
+                                              val.type,
+                                            );
+                                          }
+                                        }}>
+                                        <span style={styles.plusIcon}>
+                                          +
+                                        </span>
+                                      </div>
+                                    ) : null}
+                                    {isDelete ? (
+                                      <div
+                                        style={{
+                                          ...styles.circleCrossDiv,
+                                        }}
+                                        onClick={() => {
+                                          deleteHandler(
+                                            item._id,
+                                            i,
+                                            item,
+                                            val,
+                                            val.inputId !== '', // TODO : if "" = local delete,
+                                          );
+                                        }}>
+                                        <span
+                                          style={{
+                                            ...styles.plusIcon,
+                                            fontSize: '20px',
+                                          }}>
+                                          x
+                                        </span>
+                                      </div>
+                                    ) : null}
+                                  </div>
+                                );
+                              })
+                              : null}
+                          </div>
+                        );
+                      })
+                      : null}
                   </div>
-                );
-              })
+                </div>
+              );
+            })
           : null}
         <div style={commonStyles.buttonWrapper}>
           <button className="btn-orange" onClick={() => onSave()}>
@@ -632,18 +632,18 @@ const ThirtyFour = (props) => {
         </div>
       </div>
       {/*************Content************ */}
-      <div style={{...commonStyles.contentLeftBorder, marginBottom: '20px'}}>
+      <div style={{ ...commonStyles.contentLeftBorder, marginBottom: '20px' }}>
         {content && content.length
           ? content
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, i) => {
-                return (
-                  <CardContent
-                    key={i}
-                    content={ReactHtmlParser(item.content)}
-                  />
-                );
-              })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, i) => {
+              return (
+                <CardContent
+                  key={i}
+                  content={ReactHtmlParser(item.content)}
+                />
+              );
+            })
           : []}
       </div>
       {showExercises && <ExerciseBox week={week} />}
@@ -674,7 +674,7 @@ const styles = {
     display: 'flex',
     position: 'relative',
   },
-  wrapper: {marginTop: '40px'},
+  wrapper: { marginTop: '40px' },
   circleCrossDiv: {
     backgroundColor: RED,
     width: '25px',

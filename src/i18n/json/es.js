@@ -35,7 +35,7 @@ export default {
       "DAILY_SLEEP_TRACKER": " ¿Cómo durmió anoche?5",
       "WEEKLY_SLEEP_REPORT": " ¿Cómo durmió anoche?6",
       "WEEKLY_ENERGY_REPORT": " ¿Cómo durmió anoche?7",
-      "SLEEP_ERROR": "Sleep hours should be more than 1",
+      "SLEEP_ERROR": "Las horas de sueño deben ser más de 1",
       "HOW_MOOD_TODAY": " ¿Cómo durmió anoche?8",
       "AWESOME": " ¿Cómo durmió anoche?9",
       "GOOD": "¿Qué actividades ha realizado?0",
@@ -93,6 +93,23 @@ export default {
       "TERMS": "Términos",
       "BACK": "Volver",
 
+
+      "SOMETHING_WENT_WRONG": "Algo salió mal",
+      "CHECK_NETWORK": "Verifique su conexión a Internet",
+      "TRY_AGAIN": "Algo salió mal. Inténtalo de nuevo !",
+      "EmailEmptyError": "Ingrese el correo electrónico",
+      "PasswordemptyError": "Ingrese la contraseña",
+      "EmailError": "Ingrese una identificación de correo electrónico válida",
+      "PasswordError": "La contraseña no debe tener más de 16",
+      "freeContentLimit": "Has alcanzado tu límite de contenido gratuito. Actualice su plan.",
+      "ContentUnlock": "El contenido se desbloqueará mañana",
+      "CompletePreviousCard": "Complete la tarjeta anterior",
+      "ReadePreviousCard": "Lea la tarjeta anterior",
+      "PerformExercise": "Realice su ejercicio",
+      "FacebookLoginCancel": "Inicio de sesión de Facebook cancelado.",
+      "FBLoginFail": "¡El inicio de sesión de Facebook falla! No se puede acceder al correo electrónico del usuario",
+      "GoogleRegistered": "Este usuario actualmente no está registrado en Mamalift. Por favor regístrese en",
+      "AppleLoginCancel": "Inicio de sesión de Apple cancelado."
     },
   },
 };

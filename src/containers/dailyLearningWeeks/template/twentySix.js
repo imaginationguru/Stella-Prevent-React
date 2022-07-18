@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import GLOBALS from '@constants';
 import ReactHtmlParser from 'react-html-parser';
 import ExerciseBox from '@components/ExerciseBox';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import right from '@assets/images/right.svg';
-import {getItem} from '@utils/AsyncUtils';
+import { getItem } from '@utils/AsyncUtils';
 import * as AppActions from '@actions';
-import {translate as ts} from '@i18n/translate';
+import { translate as ts } from '@i18n/translate';
 import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import {
   CardQuote,
@@ -16,10 +16,10 @@ import {
   CardContent,
   CustomImage,
 } from '@components/Cards';
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
-const {GREEN_TEXT, YELLOW, CIRCLE_GRAY, BUTTON_ORANGE} = COLORS;
+const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
+const { GREEN_TEXT, YELLOW, CIRCLE_GRAY, BUTTON_ORANGE } = COLORS;
 const generateDynamicColor = (order) => {
   if (order === 1) {
     return GREEN_TEXT;
@@ -53,7 +53,7 @@ const TwentySix = (props) => {
   const [negativeMessage, setNegativeMessage] = useState([]);
   const [differenceMessage, setDifferenceMessage] = useState([]);
   const [slugData, setSlugData] = useState([]);
-  const {assessmentData = {}, userAssessmentData = []} = useSelector(
+  const { assessmentData = {}, userAssessmentData = [] } = useSelector(
     (state) => state.moduleOne,
   );
   const dispatch = useDispatch();
@@ -373,7 +373,7 @@ const TwentySix = (props) => {
       } else {
         dispatch({
           type: ACTION_TYPE.ERROR,
-          payload: 'Please perform your exercise',
+          payload: ts('PERFORM_EXERCISE'),
         });
       }
     }
@@ -446,15 +446,15 @@ const TwentySix = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -466,42 +466,42 @@ const TwentySix = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
       {/*******************************ASSESSMENT DESCRIPTION*********************** */}
       <div style={commonStyles.assessmentWrapper}>
         {images && images.length
           ? images.map((item, i) => {
-              return (
-                <CustomImage
-                  key={i}
-                  src={`${IMAGE_BASE_URL}${item.image}`}
-                  style={{
-                    ...commonStyles.assessImage,
-                    display: item.image !== '' ? 'flex' : 'none',
-                  }}
-                />
-              );
-            })
+            return (
+              <CustomImage
+                key={i}
+                src={`${IMAGE_BASE_URL}${item.image}`}
+                style={{
+                  ...commonStyles.assessImage,
+                  display: item.image !== '' ? 'flex' : 'none',
+                }}
+              />
+            );
+          })
           : []}
         {props.assessments && props.assessments.length
           ? props.assessments.map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  style={commonStyles.assessDesc}
-                  description={ReactHtmlParser(item.description)}
-                />
-              );
-            })
+            return (
+              <CardDescription
+                key={index}
+                style={commonStyles.assessDesc}
+                description={ReactHtmlParser(item.description)}
+              />
+            );
+          })
           : []}
       </div>
       <div className="container">
@@ -511,25 +511,25 @@ const TwentySix = (props) => {
             <div className="row">
               {optionsData.length
                 ? optionsData
-                    .sort((a, b) => (a.order > b.order && 1) || -1)
-                    .map((item, index) => {
-                      return (
+                  .sort((a, b) => (a.order > b.order && 1) || -1)
+                  .map((item, index) => {
+                    return (
+                      <div
+                        className="col-md-3 sm-3 col-6"
+                        style={{ marginBottom: '15px', display: 'flex' }}>
                         <div
-                          className="col-md-3 sm-3 col-6"
-                          style={{marginBottom: '15px', display: 'flex'}}>
-                          <div
-                            style={{
-                              ...styles.optionContent,
-                              backgroundColor: generateDynamicColor(item.order),
-                              flex: '1 1 100%',
-                            }}>
-                            <p style={styles.content}>
-                              {ReactHtmlParser(item.content)}
-                            </p>
-                          </div>
+                          style={{
+                            ...styles.optionContent,
+                            backgroundColor: generateDynamicColor(item.order),
+                            flex: '1 1 100%',
+                          }}>
+                          <p style={styles.content}>
+                            {ReactHtmlParser(item.content)}
+                          </p>
                         </div>
-                      );
-                    })
+                      </div>
+                    );
+                  })
                 : null}
             </div>
           </div>
@@ -538,86 +538,86 @@ const TwentySix = (props) => {
 
       {headersData.length
         ? headersData
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item) => {
-              return (
-                <div className="container">
-                  <div className="row" style={styles.wrapper}>
-                    <div className="col-md-7 sm-7 col-12" style={styles.header}>
-                      {ReactHtmlParser(item.header)}
-                    </div>
-                    <div
-                      className="col-md-5 sm-5 col-12"
-                      style={{display: 'flex', marginBottom: '20px'}}>
-                      <div className="row" style={{flex: '1 1 100%'}}>
-                        {optionsData.length
-                          ? optionsData
-                              .sort((a, b) => (a.order > b.order && 1) || -1)
-                              .map((val) => {
-                                let prevContent = '';
-                                let currentContent = val.content;
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item) => {
+            return (
+              <div className="container">
+                <div className="row" style={styles.wrapper}>
+                  <div className="col-md-7 sm-7 col-12" style={styles.header}>
+                    {ReactHtmlParser(item.header)}
+                  </div>
+                  <div
+                    className="col-md-5 sm-5 col-12"
+                    style={{ display: 'flex', marginBottom: '20px' }}>
+                    <div className="row" style={{ flex: '1 1 100%' }}>
+                      {optionsData.length
+                        ? optionsData
+                          .sort((a, b) => (a.order > b.order && 1) || -1)
+                          .map((val) => {
+                            let prevContent = '';
+                            let currentContent = val.content;
 
-                                if (assessment.length) {
-                                  const headerId = assessment.find((ele) => {
-                                    return (
-                                      ele.assessment_header_id === item._id
-                                    );
-                                  });
-                                  if (
-                                    headerId &&
-                                    headerId.assessment_header_id
-                                  ) {
-                                    prevContent = headerId.content[0].content;
-                                  }
-                                }
-
-                                const isSelected =
-                                  prevContent === currentContent;
+                            if (assessment.length) {
+                              const headerId = assessment.find((ele) => {
                                 return (
-                                  <div
-                                    className="col-md-3 sm-3 col-3"
-                                    style={{
-                                      flex: '1 1 100%',
-                                      display: 'flex',
-                                    }}>
-                                    <div
-                                      style={{
-                                        ...styles.selectedDiv,
-                                        borderColor: generateDynamicColor(
-                                          val.order,
-                                        ),
-                                        backgroundColor: isSelected
-                                          ? generateDynamicColor(val.order)
-                                          : '#0000',
-                                        flex: '1 1 100%',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        height:
-                                          DEVICE_WIDTH > 767 ? '80px' : '45px',
-                                      }}
-                                      onClick={() => onSelect(val, item)}>
-                                      <p style={styles.selectedWrapper}>
-                                        {isSelected ? (
-                                          <img
-                                            src={right}
-                                            style={styles.selectedBox}
-                                          />
-                                        ) : (
-                                          ''
-                                        )}
-                                      </p>
-                                    </div>
-                                  </div>
+                                  ele.assessment_header_id === item._id
                                 );
-                              })
-                          : null}
-                      </div>
+                              });
+                              if (
+                                headerId &&
+                                headerId.assessment_header_id
+                              ) {
+                                prevContent = headerId.content[0].content;
+                              }
+                            }
+
+                            const isSelected =
+                              prevContent === currentContent;
+                            return (
+                              <div
+                                className="col-md-3 sm-3 col-3"
+                                style={{
+                                  flex: '1 1 100%',
+                                  display: 'flex',
+                                }}>
+                                <div
+                                  style={{
+                                    ...styles.selectedDiv,
+                                    borderColor: generateDynamicColor(
+                                      val.order,
+                                    ),
+                                    backgroundColor: isSelected
+                                      ? generateDynamicColor(val.order)
+                                      : '#0000',
+                                    flex: '1 1 100%',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    height:
+                                      DEVICE_WIDTH > 767 ? '80px' : '45px',
+                                  }}
+                                  onClick={() => onSelect(val, item)}>
+                                  <p style={styles.selectedWrapper}>
+                                    {isSelected ? (
+                                      <img
+                                        src={right}
+                                        style={styles.selectedBox}
+                                      />
+                                    ) : (
+                                      ''
+                                    )}
+                                  </p>
+                                </div>
+                              </div>
+                            );
+                          })
+                        : null}
                     </div>
                   </div>
                 </div>
-              );
-            })
+              </div>
+            );
+          })
         : null}
       {headersData.length ? (
         <div style={commonStyles.buttonWrapper}>
@@ -627,18 +627,18 @@ const TwentySix = (props) => {
         </div>
       ) : null}
       {/*************Content************ */}
-      <div style={{marginTop: '55px'}}>
+      <div style={{ marginTop: '55px' }}>
         {content && content.length
           ? content
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, i) => {
-                return (
-                  <CardContent
-                    key={i}
-                    content={ReactHtmlParser(item.content)}
-                  />
-                );
-              })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, i) => {
+              return (
+                <CardContent
+                  key={i}
+                  content={ReactHtmlParser(item.content)}
+                />
+              );
+            })
           : []}
       </div>
 
