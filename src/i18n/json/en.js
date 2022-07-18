@@ -24,6 +24,7 @@ export default {
       "ADD_ACTIVITY": "Add Activity",
       "SEARCH_PLEASANT_ACTIVITY": "Search Pleasant Activity",
       "SEARCH_ACTIVITY": "Search activity by name (ex: Sport)",
+      "SAVE": "Save",
 
       "SLEEP_TRACKER": "Sleep Tracker",
       "HOW_MANY_HRS": "How many hours did you sleep today including naps?",
@@ -45,7 +46,6 @@ export default {
       "PERFORM_EXERCISE": "Please perform your exercise",
 
       "BACK_TO_CARD": "Back to Card",
-      "BACK_TO_DASHBOARD": "Back to Dashboard",
       "BACK_TO_PROFILE": "Back to Profile",
       "BACK_TO_PAST": "Back to Past Modules",
 
@@ -85,6 +85,8 @@ export default {
       "FIRST_NAME": "First Name",
       "LAST_NAME": "Last Name",
       "ZIP_CODE": "Zip Code",
+      "EMAIL_NOTIFY": "Email Notification",
+      "SMS_NOTIFY": "SMS Notification",
 
       "PREMIUM": "Premium",
       "EMAIL": "Email",
@@ -134,7 +136,6 @@ export default {
       MIDDLE_NAME: 'Middle Name',
 
       LOGOUT: 'LOGOUT',
-      SAVE: 'SAVE',
       EMOTION_VERY: 'I felt this emotion very intensely',
       EMOTION_MODERATE: 'I felt this emotion with moderate intensity',
       EMOTION_LITTLE: ' I felt this emotion with little intensity',

@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import {
   navigatorPop,
   goToPastModule,
@@ -6,14 +6,14 @@ import {
 } from '../../config/navigationOptions.web';
 import back from '../../assets/images/subscription/back.png';
 import GLOBALS from '../../constants';
-
-const {COLORS, FONTS} = GLOBALS;
+import { translate as ts } from '@i18n/translate';
+const { COLORS, FONTS } = GLOBALS;
 const BackBtn = (props) => {
-  let {title = 'Back to Dashboard', btnStyle, goBack = true, onPress} = props;
+  let { title = ts('BACK_DASHBOARD'), btnStyle, goBack = true, onPress } = props;
   return (
     <View style={[styles.backBtn, btnStyle]}>
       <TouchableOpacity
-        style={{flexDirection: 'row', alignItems: 'center'}}
+        style={{ flexDirection: 'row', alignItems: 'center' }}
         // onPress={() => {
         //   goBack
         //     ? navigatorPush({screenName: 'DailyLearningModule'})

@@ -43,7 +43,7 @@ import {
   validateName,
 } from '@utils/validations';
 import { normalize } from '@utils/Helper';
-import {translate as ts} from '@i18n/translate';
+import { translate as ts } from '@i18n/translate';
 
 const { IMAGE_BASE_URL } = GLOBALS;
 
@@ -83,8 +83,8 @@ function ProfileDetails({ props, componentId }) {
   ]);
   /**Change Notification  */
   const [notification, setNotification] = useState([
-    { id: 1, value: 'email', name: 'Email Notification', isSelected: false },
-    { id: 2, value: 'sms', name: 'SMS Notification', isSelected: true },
+    { id: 1, value: 'email', name: ts('EMAIL_NOTIFY'), isSelected: false },
+    { id: 2, value: 'sms', name: ts('SMS_NOTIFY'), isSelected: true },
   ]);
 
   const dispatch = useDispatch();
