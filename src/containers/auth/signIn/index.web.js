@@ -135,7 +135,7 @@ const SignIn = (componentId) => {
               <div className="logo-view">
                 <img src={logoWhite} className="logo-img" />
               </div>
-              <h2 className="heading">{ts('LOGIN')}</h2>
+              <h2 className="heading">Log in</h2>
               <div className="formRow">
                 <div className="w100">
                   <div className="formSubmit">
@@ -168,7 +168,7 @@ const SignIn = (componentId) => {
                 <form noValidate onSubmit={(e) => loginHandler(e)}>
                   <div className="formRow">
                     <div className="w100">
-                      <label className="formLabel">{ts('EMAIL')}</label>
+                      <label className="formLabel">Email</label>
                       <div className="formField has-icon">
                         <input
                           type="email"
@@ -188,7 +188,7 @@ const SignIn = (componentId) => {
                   </div>
                   <div className="formRow">
                     <div className="w100">
-                      <label className="formLabel">{ts('PASSWORD')}</label>
+                      <label className="formLabel">Password</label>
                       <div className="formField has-icon">
                         <input
                           type="password"
@@ -215,7 +215,7 @@ const SignIn = (componentId) => {
                           to="/EmailCheck"
                           className="link"
                           style={{ textDecorationLine: 'underline' }}>
-                          {ts('FORGOT_PASSWORD')}
+                          Forgot Password?
                         </Link>
                       </div>
                     </div>
@@ -226,7 +226,7 @@ const SignIn = (componentId) => {
                         <input
                           type="submit"
                           className="btn-solid"
-                          value={ts('LOGIN')}
+                          value={'Login'}
                         />
                       </div>
                     </div>

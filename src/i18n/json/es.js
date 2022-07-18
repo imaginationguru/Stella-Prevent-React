@@ -92,11 +92,17 @@ export default {
       "PREMIUM": "Premium",
       "EMAIL": "Correo electrónico",
       "CARD_NAME": "Nombre en la tarjeta",
+      "TERMS": "Términos",
+      "BACK": "Volver",
+
       "HOME": "Casa",
       "PREVIOUS_DAY": "Día anterior",
       "NEXT_DAY": "Día siguiente",
-      "TERMS": "Términos",
-      "BACK": "Volver",
+
+      "SEND": "Enviar",
+      "SUBJECT": "Asunto",
+      "MESSAGE": "Mensaje",
+      "HOW_HELP": "¡Háganos saber cómo podemos ayudar!"
 
     },
   },

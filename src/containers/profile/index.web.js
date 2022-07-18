@@ -444,39 +444,36 @@ function ProfileDetails({ props, componentId }) {
         {/* 3rd column */}
 
         <View style={{ flex: DEVICE_WIDTH > 767 ? '0.3' : '100%' }}>
-          {/* <Text style={styles.heading}>Language</Text>
-
-
-        {language.map((item, index) => {
+          <Text style={styles.heading}>Language</Text>
+          {language.map((item, index) => {
             return (
-                <RadioButton1
-                    item={item}
-                    selectedOption={item.isSelected}
-                    outerStyle={[styles.outerCheckbox, { marginVertical: '0.5vw' }]}
-                    innerStyle={[
-                        styles.outerCheckbox,
-                        { borderWidth: 17, borderRadius: '4vw' },
-                    ]}
-                    label={item.name}
-                    onPress={(item) => itemClick(item)}
-                />
+              <RadioButton1
+                item={item}
+                selectedOption={item.isSelected}
+                outerStyle={[styles.outerCheckbox, { marginVertical: '0.5vw' }]}
+                innerStyle={[
+                  styles.outerCheckbox,
+                  { borderWidth: 17, borderRadius: '4vw' },
+                ]}
+                label={item.name}
+                onPress={(item) => itemClick(item)}
+              />
             );
-        })}
-        <Button
+          })}
+          <Button
             onVerifyPress={() => navigator('change_language')}
             textStyle={{ fontSize: '16px' }}
             btnStyle={{
-
-                height: 30,
-                width: '100%',
-                marginTop: '1.1vw',
+              height: 35,
+              width: '100%',
+              marginVertical: '2.1vw',
             }}
-            title="Change"
-            textStyle={{ fontSize: 12 }}
-            bgColor={DARK_GREEN}
-            textColor={WHITE}></Button>  */}
 
-          {/* <View style={styles.hrLine} /> */}
+            title="Change"
+            bgColor={DARK_GREEN}
+            textColor={WHITE}></Button>
+
+          <View style={styles.hrLine} />
           <Text style={styles.heading}>{ts('NOTIFICATION')}</Text>
           {notification.map((item) => {
             return (

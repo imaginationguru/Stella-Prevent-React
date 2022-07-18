@@ -6,8 +6,8 @@
  * @flow strict-local
  */
 
-import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import brand from '@assets/images/brand.svg';
 import graphic01 from '@assets/images/graphic01.svg';
 import icon01 from '@assets/images/icon01.svg';
@@ -15,9 +15,9 @@ import successTick from '@assets/images/successTick.svg';
 import MasterLayout from '@components/MasterLayout';
 import logoWhite from '@assets/images/logoWhite.svg';
 import logoWhite1 from '@assets/images/logoWhite.png';
-import {translate as ts} from '@i18n/translate';
-import {emailRegex} from '@utils/RegexUtils';
-import {useDispatch, useSelector} from 'react-redux';
+import { translate as ts } from '@i18n/translate';
+import { emailRegex } from '@utils/RegexUtils';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '@actions';
 import history from '@helpers/history';
 
@@ -25,12 +25,12 @@ const EmailCheck = () => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const dispatch = useDispatch();
-  const {userData = []} = useSelector((state) => state.authReducer);
+  const { userData = [] } = useSelector((state) => state.authReducer);
 
   /* FUNCTION FOR EMAIL VALUE SET  */
 
   const onHandleEmailChange = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     if (name === 'email') {
       setEmail(value);
       setEmailError('');
@@ -75,12 +75,12 @@ const EmailCheck = () => {
               {/*****************************************************************************  */}
               {userData === 200 ? (
                 <div className="recoverPasswordSuccess">
-                  <h2 className="heading">{ts('RECOVER_PASSWORD')}</h2>
+                  <h2 className="heading">Recover Password</h2>
                   <div className="text-center success-img">
                     <img src={successTick} />
                   </div>
                   <p className="success-desc">
-                    {ts('CHECK_EMAIL_TO_RESET_PASSWORD')}
+                    Please check your email to reset the password
                   </p>
                   <p
                     className="link"
@@ -88,21 +88,21 @@ const EmailCheck = () => {
                       dispatch(AppActions.userDataClear());
                       history.push('/');
                     }}>
-                    {ts('LOGIN_TO_YOUR_ACCOUNT')}
+                    Login to your account
                   </p>
                 </div>
               ) : (
                 <div>
-                  <h2 className="heading">{ts('RECOVER_PASSWORD')}</h2>
+                  <h2 className="heading">Recover Password</h2>
                   {/***On this screen user enter valid email id which used when user joined 
                        if email id exists user will navigate to changed password screen */}
                   <div className="login-form">
-                    <p className="form-help-text">{ts('RECOVERY_MESSAGE')}</p>
+                    <p className="form-help-text">Enter the email  you used when you joined, we will send you password recovery instruction</p>
                     <form noValidate onSubmit={(e) => onEmailCheck(e)}>
                       {/*******************EMAIL INPUT FIELD************* */}
                       <div className="formRow">
                         <div className="w100">
-                          <label className="formLabel">{ts('EMAIL')}</label>
+                          <label className="formLabel">Email</label>
                           <div className="formField has-icon">
                             <input
                               type="email"
@@ -127,7 +127,7 @@ const EmailCheck = () => {
                             <input
                               type="submit"
                               className="btn-solid"
-                              value={ts('SEND')}
+                              value={"Send"}
                             />
                           </div>
                         </div>
@@ -136,9 +136,9 @@ const EmailCheck = () => {
                     </form>
                   </div>
                   <p className="additional-link">
-                    {ts('REMEMBER_PASSWORD')}&nbsp;
+                    Remember Password&nbsp;
                     <Link to="/" className="link">
-                      {ts('LOGIN')}
+                      Log in
                     </Link>
                   </p>
                 </div>
@@ -154,5 +154,5 @@ const EmailCheck = () => {
 export default EmailCheck;
 
 const styles = {
-  error: {color: 'red', paddingLeft: '5px'},
+  error: { color: 'red', paddingLeft: '5px' },
 };

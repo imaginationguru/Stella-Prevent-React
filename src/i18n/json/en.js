@@ -100,6 +100,11 @@ export default {
       "PREVIOUS_DAY": "Previous Day",
       "NEXT_DAY": "Next Day",
 
+      "SEND": "Send",
+      "SUBJECT": "Subject",
+      "MESSAGE": "Message",
+      "HOW_HELP": "Let us know how we can help!",
+
 
       LANGUAGE_SELECT: 'Language Select',
       SIGNUP: 'Sign up',
@@ -123,7 +128,7 @@ export default {
         'Please check your email to reset the password',
       LOGIN_TO_YOUR_ACCOUNT: ' Login to your account',
       REMEMBER_PASSWORD: 'Remember Password',
-      SEND: 'Send',
+
       SELECT: 'Select',
       ENGLISH: 'English',
       SPANISH: 'Spanish',
