@@ -68,7 +68,19 @@ export default {
 
       "PLAN": "Plan",
       "ACCOUNT_INFO": "Account Info",
-
+      "NOTIFICATION": "Notifications",
+      "FILE_LARGE_ERROR": "The file is too large, max size:10mb",
+      "INCORRECT_FILE_ERROR": "Incorrect file type! Accepted file types are : jpg, jpeg, png",
+      "UPGRADE" : "Upgrade",
+      "VIEW_PLANS" : "View Plans",
+      "CHANGE_PASSWORD" : "Change Password",
+      "CURRENT_PASSWORD" : "Current Password",
+      "CONFIRM_NEW_PASSWORD": "Confirm New Password",
+      "AGE_AT_REGISTRATION" : "Age at Registration as on Signup Screen",
+      "PHONE" : "Phone",
+      "CITY" : "City",
+      "COUNTRY" : "Country",
+      "UPDATE_PROFILE" : "Update Profile",
 
       LANGUAGE_SELECT: 'Language Select',
       SIGNUP: 'Sign up',

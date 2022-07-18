@@ -213,7 +213,7 @@ function ProfileDetails({ props, componentId }) {
 
     if (file.type.includes('image')) {
       if (file.size > 10240000) {
-        customAlert('The file is too large, max size:10mb', 'error');
+        customAlert(ts('FILE_LARGE_ERROR'), 'error');
         return;
       }
       let formdata = new FormData();
@@ -222,7 +222,7 @@ function ProfileDetails({ props, componentId }) {
 
       dispatch(AppActions.uploadProfile(formdata));
     } else {
-      customAlert('Incorrect file type! Accepted file types are : jpg, jpeg, png', 'error');
+      customAlert(ts('INCORRECT_FILE_ERROR'), 'error');
     }
   };
 
@@ -294,12 +294,12 @@ function ProfileDetails({ props, componentId }) {
               textStyle={{
                 fontSize: '16px',
               }}
-              title={loginData?.planInfo?.price == 0 ? 'Upgrade' : 'View Plans'}
+              title={loginData?.planInfo?.price == 0 ? ts('UPGRADE') : ts('VIEW_PLANS')}
               bgColor={DARK_GREEN}
               textColor={WHITE}></Button>
             <View style={styles.hrLine} />
 
-            <Text style={styles.heading}>Change Password</Text>
+            <Text style={styles.heading}>{ts('CHANGE_PASSWORD')}</Text>
             <Input1
               secureTextEntry={true}
               inputStyle={{ padding: 10, height: 40 }}
@@ -309,7 +309,7 @@ function ProfileDetails({ props, componentId }) {
               }}
               value={password}
               error={pswdError}
-              label="Current Password"></Input1>
+              label={ts('CURRENT_PASSWORD')}></Input1>
             <Input1
               secureTextEntry={true}
               error={newpswdError}
@@ -319,7 +319,7 @@ function ProfileDetails({ props, componentId }) {
                 setNewPswdError('');
               }}
               value={Newpassword}
-              label="New Password"
+              label={ts('NEW_PASSWORD')}
               placeholder=""></Input1>
             <Input1
               secureTextEntry={true}
@@ -330,7 +330,7 @@ function ProfileDetails({ props, componentId }) {
                 setConfirmPswdError('');
               }}
               value={Confpassword}
-              label="Confirm New Password"></Input1>
+              label={ts('CONFIRM_NEW_PASSWORD')}></Input1>
             <Button
               onVerifyPress={() => validateField()}
               textStyle={{ fontSize: '16px' }}
@@ -340,7 +340,7 @@ function ProfileDetails({ props, componentId }) {
                 marginTop: '1.1vw',
                 marginBottom: '2.1vw',
               }}
-              title="Change Password"
+              title={ts('CHANGE_PASSWORD')}
               bgColor={DARK_GREEN}
               textColor={WHITE}></Button>
           </View>
@@ -353,14 +353,14 @@ function ProfileDetails({ props, componentId }) {
             inputStyle={{ padding: 10, height: 40 }}
             setCode={(text) => setName(text)}
             value={name}
-            label="First Name"
+            label={ts('FIRST_NAME')}
             placeholder=""></Input1>
           <Input1
             editable={false}
             inputStyle={{ padding: 10, height: 40 }}
             setCode={(text) => setName(text)}
             value={lname}
-            label="Last Name"
+            label={ts('LAST_NAME')}
             placeholder=""></Input1>
           <Input1
             editable={false}
@@ -374,7 +374,7 @@ function ProfileDetails({ props, componentId }) {
             }}
             setCode={(text) => setName(text)}
             value={email}
-            label="Email"
+            label={ts('EMAIL')}
             placeholder=""></Input1>
 
           <Input1
@@ -382,7 +382,7 @@ function ProfileDetails({ props, componentId }) {
             inputStyle={{ padding: 10, height: 40 }}
             setCode={(text) => setAge(text)}
             value={age}
-            label="Age at Registration as on Signup Screen"
+            label={ts('AGE_AT_REGISTRATION')}
             placeholder=""></Input1>
           <Input1
             type=""
@@ -394,7 +394,7 @@ function ProfileDetails({ props, componentId }) {
             maxLength={'15'}
             value={phone}
             error={phoneError}
-            label="Phone"
+            label={ts('PHONE')}
             placeholder=""></Input1>
           <Input1
             editable={true}
@@ -406,7 +406,7 @@ function ProfileDetails({ props, componentId }) {
             value={city}
             error={cityError}
             maxLength={'25'}
-            label="City"
+            label={ts('CITY')}
             placeholder=""></Input1>
           <Input1
             type=""
@@ -418,14 +418,14 @@ function ProfileDetails({ props, componentId }) {
             }}
             value={zipcode}
             error={zipcodeError}
-            label="Zip Code"
+            label={ts('ZIP_CODE')}
             placeholder=""></Input1>
           <Input1
             editable={false}
             inputStyle={{ padding: 10, height: 40 }}
             setCode={(text) => setCountry(text)}
             value={country}
-            label="Country"
+            label={ts('COUNTRY')}
             placeholder=""></Input1>
 
           <Button
@@ -436,7 +436,7 @@ function ProfileDetails({ props, componentId }) {
             }}
             onVerifyPress={() => navigator('profile')}
             textStyle={{ fontSize: '16px' }}
-            title="Update Profile"
+            title={ts('UPDATE_PROFILE')}
             bgColor={DARK_GREEN}
             textColor={WHITE}></Button>
         </View>
@@ -477,7 +477,7 @@ function ProfileDetails({ props, componentId }) {
             textColor={WHITE}></Button>  */}
 
           {/* <View style={styles.hrLine} /> */}
-          <Text style={styles.heading}>Notifications</Text>
+          <Text style={styles.heading}>{ts('NOTIFICATION')}</Text>
           {notification.map((item) => {
             return (
               <Toggle
