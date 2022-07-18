@@ -25,8 +25,6 @@ export default {
       "SEARCH_PLEASANT_ACTIVITY": "Search Pleasant Activity",
       "SEARCH_ACTIVITY": "Search activity by name (ex: Sport)",
 
-
-
       "SLEEP_TRACKER": "Sleep Tracker",
       "HOW_MANY_HRS": "How many hours did you sleep today including naps?",
       "HOW_WELL_SLEEP": "How well did you sleep on a scale of 1-10",
@@ -38,8 +36,6 @@ export default {
       "WEEKLY_ENERGY_REPORT": "Weekly Energy Report",
       "SLEEP_ERROR": "Sleep hours should be more than 1",
 
-
-
       "HOW_MOOD_TODAY": "How is your mood today?",
       "AWESOME": "Awesome",
       "GOOD": "Good",
@@ -48,51 +44,69 @@ export default {
       "TERRIBLE": "Terrible",
       "PERFORM_EXERCISE": "Please perform your exercise",
 
-
-
       "BACK_TO_CARD": "Back to Card",
       "BACK_TO_DASHBOARD": "Back to Dashboard",
-
+      "BACK_TO_PROFILE": "Back to Profile",
+      "BACK_TO_PAST": "Back to Past Modules",
 
       "REPORT_DATE": "Report Date:",
       "DAILY_SLEEP": "Daily Sleep Tracker: hours/day",
       "DAILY_MOOD": "Average Daily Mood Report",
       "WEEKLY_MOOD": "Weekly Mood Report",
       "ACTIVITY_REPORT": "Average Activity Report: Number of Activities",
-      "WEEKLY_ACTIVITY" : "Weekly Activity Quality Report",
+      "WEEKLY_ACTIVITY": "Weekly Activity Quality Report",
       "WEEKLY_ACTIVITY_REPORT": "Weekly Activity Report",
       "NO_RECORD": "No record for this Week",
       "TOTAL_POINTS": "Your total Points for the week",
-
-
 
       "PLAN": "Plan",
       "ACCOUNT_INFO": "Account Info",
       "NOTIFICATION": "Notifications",
       "FILE_LARGE_ERROR": "The file is too large, max size:10mb",
       "INCORRECT_FILE_ERROR": "Incorrect file type! Accepted file types are : jpg, jpeg, png",
-      "UPGRADE" : "Upgrade",
-      "VIEW_PLANS" : "View Plans",
-      "CHANGE_PASSWORD" : "Change Password",
-      "CURRENT_PASSWORD" : "Current Password",
+      "UPGRADE": "Upgrade",
+      "VIEW_PLANS": "View Plans",
+      "CHANGE_PASSWORD": "Change Password",
+      "CURRENT_PASSWORD": "Current Password",
       "CONFIRM_NEW_PASSWORD": "Confirm New Password",
-      "AGE_AT_REGISTRATION" : "Age at Registration as on Signup Screen",
-      "PHONE" : "Phone",
-      "CITY" : "City",
-      "COUNTRY" : "Country",
-      "UPDATE_PROFILE" : "Update Profile",
+      "NEW_PASSWORD": "New Password",
+      "AGE_AT_REGISTRATION": "Age at Registration as on Signup Screen",
+      "PHONE": "Phone",
+      "CITY": "City",
+      "COUNTRY": "Country",
+      "UPDATE_PROFILE": "Update Profile",
+      "TERMS_USE": "Terms of Use",
+      "PRIVACY": "Privacy Policy",
+      "CONTACT": "Contact Us",
+      "CONTACT_AT": "Contact us at",
+      "CONTACT_TEXT": "If you are in a crisis or in danger of harming yourself, please call the National Suicide Prevention Lifeline at 1-800 - 273 - TALK (8255).MamaLift is a medical device available under the FDA General Wellness Policy for Low Risk Devices.MamaLift is intended for use by women, as part of a healthy lifestyle, to help reduce their risk of depression or anxiety during pregnancy or following delivery.MamaLift does not provide medical advice and is not intended to treat any disease or replace treatment by a licensed healthcare professional.",
+      "POWERED": "Powered by",
+      "RIGHTS": "Curio. All rights reserved.",
+      "FIRST_NAME": "First Name",
+      "LAST_NAME": "Last Name",
+      "ZIP_CODE": "Zip Code",
+
+      "PREMIUM": "Premium",
+      "EMAIL": "Email",
+      "CARD_NAME": "Name on card",
+      "TERMS": "Terms",
+      "BACK": "Back",
+
+
+      "HOME": "Home",
+      "PREVIOUS_DAY": "Previous Day",
+      "NEXT_DAY": "Next Day",
+
 
       LANGUAGE_SELECT: 'Language Select',
       SIGNUP: 'Sign up',
       LOGIN: 'Log in',
-      FIRST_NAME: 'First Name',
-      LAST_NAME: 'Last Name',
-      EMAIL: 'Email',
+
       PHONE_NUMBER: 'Phone Number',
       GENDER: 'Gender',
       SELECT_COUNTRY: 'Select Country',
       PASSWORD: 'Password',
-      NEW_PASSWORD: 'New Password',
+
       CONFIRM_PASSWORD: 'Confirm Password',
       ALREADY_ACCOUNT: 'Already have an account?',
       MALE: 'Male',
@@ -111,15 +125,14 @@ export default {
       ENGLISH: 'English',
       SPANISH: 'Spanish',
       PRESENTATION: 'Presentation',
-      TERMS: 'Terms',
+
       OPERATION: 'Operation',
       ABOUT: 'About',
       TEAM: 'Team',
-      CONTACT: 'Contact',
       HELP: 'Help',
       DOB: 'Date of birth',
       MIDDLE_NAME: 'Middle Name',
-      ZIP_CODE: 'Zip Code',
+
       LOGOUT: 'LOGOUT',
       SAVE: 'SAVE',
       EMOTION_VERY: 'I felt this emotion very intensely',

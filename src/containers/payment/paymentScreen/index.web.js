@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -17,7 +17,7 @@ import Header from '@components/Header';
 import Loader from '@components/Loader';
 import Button from '@components/common/button';
 import DropDown from '@components/common/dropDown';
-import {countryData} from '@utils/CountryCode';
+import { countryData } from '@utils/CountryCode';
 
 import ProfileHeader from '@components/common/profileHeader';
 import back from '@assets/images/subscription/back.png';
@@ -26,13 +26,14 @@ import book from '@assets/images/subscription/book.png';
 import paypal from '@assets/images/subscription/paypal.png';
 import apple from '@assets/images/subscription/apple.png';
 import Input from '@components/Input';
-import {navigatorPush, navigatorPop} from '@config/navigationOptions.web';
+import { navigatorPush, navigatorPop } from '@config/navigationOptions.web';
 import {
   SquarePaymentsForm,
   CreditCardInput,
 } from 'react-square-web-payments-sdk';
-import {getItem} from '@utils/AsyncUtils';
-const {COLORS, FONTS, IMAGE_BASE_URL, squareAppId, LOCATION_ID} = GLOBALS;
+import { getItem } from '@utils/AsyncUtils';
+import { translate as ts } from '@i18n/translate';
+const { COLORS, FONTS, IMAGE_BASE_URL, squareAppId, LOCATION_ID } = GLOBALS;
 const {
   BLUR,
   WHITE,
@@ -44,11 +45,11 @@ const {
 } = COLORS;
 
 import BackBtn from '@components/common/backbtn';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as AppActions from '@actions';
-import {validateEmail, validateIsEmpty} from '@utils/validations';
+import { validateEmail, validateIsEmpty } from '@utils/validations';
 const Payment = (props, componentId) => {
-  const {loginData = {}} = useSelector((state) => state.authReducer);
+  const { loginData = {} } = useSelector((state) => state.authReducer);
   let premiumPrice = props.location.state.price;
   const [price, setPrice] = useState(premiumPrice);
   const [email, setEmail] = useState(loginData?.user?.email);
@@ -71,7 +72,7 @@ const Payment = (props, componentId) => {
   const [zipError, setZipError] = useState('');
 
   const dispatch = useDispatch();
-  const {isLoading} = useSelector((state) => state.common);
+  const { isLoading } = useSelector((state) => state.common);
   useEffect(() => {
     setName(loginData?.user?.firstName + ' ' + loginData?.user?.lastName);
     setEmail(loginData?.user?.email);
@@ -133,21 +134,21 @@ const Payment = (props, componentId) => {
   return (
     <View style={styles.container}>
       <ProfileHeader
-        onProfileClick={() => navigatorPush({screenName: 'Profile'})}
+        onProfileClick={() => navigatorPush({ screenName: 'Profile' })}
         showProfileBtn={true}
         showEditIcon={false}
       />
       {isLoading ? <Loader /> : null}
       <BackBtn
-        title={'Back'}
-        btnStyle={{paddingLeft: '20px'}}
+        title={ts('BACK')}
+        btnStyle={{ paddingLeft: '20px' }}
         onPress={() => {
-          navigatorPush({componentId, screenName: 'Subscription'});
+          navigatorPush({ componentId, screenName: 'Subscription' });
         }}
       />
       <View style={styles.innerContainer}>
         <View style={styles.innerLeft}>
-          <View style={{marginTop: '20px', marginHorizontal: '80px'}}>
+          <View style={{ marginTop: '20px', marginHorizontal: '80px' }}>
             <View
               style={{
                 alignItems: 'center',
@@ -160,7 +161,7 @@ const Payment = (props, componentId) => {
                   fontWeight: '500',
                   color: '#697386',
                 }}>
-                Premium
+                {ts('PREMIUM')}
               </Text>
               <Text
                 style={{
@@ -179,8 +180,8 @@ const Payment = (props, componentId) => {
                 marginTop: '3vw',
                 alignItems: 'center',
               }}>
-              <Image source={book} style={{height: '100px', width: '100px'}} />
-              <View style={{flexDirection: 'row', marginTop: '30px'}}>
+              <Image source={book} style={{ height: '100px', width: '100px' }} />
+              <View style={{ flexDirection: 'row', marginTop: '30px' }}>
                 <View style={styles.verticalLine} />
 
                 <TouchableOpacity
@@ -190,7 +191,7 @@ const Payment = (props, componentId) => {
                       '_blank',
                     )
                   }
-                  style={{marginHorizontal: '10px'}}>
+                  style={{ marginHorizontal: '10px' }}>
                   <Text style={styles.terms}>Terms</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -200,7 +201,7 @@ const Payment = (props, componentId) => {
                       '_blank',
                     )
                   }>
-                  <Text style={styles.terms}>Privacy</Text>
+                  <Text style={styles.terms}> {ts('PREMIUM')}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -214,11 +215,11 @@ const Payment = (props, componentId) => {
               fontSize: '12px',
               paddingBottom: '5px',
             }}
-            inputStyle={{padding: 10, height: 40}}
+            inputStyle={{ padding: 10, height: 40 }}
             setCode={(text) => setEmail(text)}
             value={email}
             error={emailError}
-            label="Email"
+            label={ts('EMAIL')}
             placeholder=""></Input>
           <Input
             labelStyle={{
@@ -228,11 +229,11 @@ const Payment = (props, componentId) => {
             }}
             type=""
             maxLength={30}
-            inputStyle={{padding: 10, height: 40}}
+            inputStyle={{ padding: 10, height: 40 }}
             setCode={(text) => setName(text)}
             value={name}
             error={nameError}
-            label="Name on card"
+            label={ts('CARD_NAME')}
             placeholder=""></Input>
           <SquarePaymentsForm
             /**
@@ -246,7 +247,7 @@ const Payment = (props, componentId) => {
              * The result will be a valid credit card or wallet token, or an error.
              */
             cardTokenizeResponseReceived={(token, buyer) => {
-              console.info({token, buyer});
+              console.info({ token, buyer });
               purchasePlan(token, buyer);
             }}
             /**
@@ -275,9 +276,9 @@ const Payment = (props, componentId) => {
              */
             locationId={LOCATION_ID}
 
-            // overrides={({
-            //   scriptSrc: "https://web.squarecdn.com/v1/square.js"
-            // })}
+          // overrides={({
+          //   scriptSrc: "https://web.squarecdn.com/v1/square.js"
+          // })}
           >
             <CreditCardInput />
           </SquarePaymentsForm>

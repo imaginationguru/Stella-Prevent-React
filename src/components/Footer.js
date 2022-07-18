@@ -1,5 +1,4 @@
 import React from 'react';
-import { translate as ts } from '../i18n/translate';
 import { Link } from 'react-router-dom';
 import { navigatorPush } from '../config/navigationOptions.web';
 import footerlogo from '../assets/images/footerlogo.svg';
@@ -9,7 +8,7 @@ import * as AppActions from '../actions';
 import moment from 'moment';
 import { getItem, removeItem } from '../utils/AsyncUtils';
 const { IMAGE_BASE_URL, STRINGS } = GLOBALS;
-
+import { translate as ts } from '@i18n/translate';
 const Footer = () => {
   const { currentCardData = '', getScreenStartTime = '' } = useSelector(
     (state) => state.moduleOne,
@@ -42,7 +41,7 @@ const Footer = () => {
       <div className="footer-container">
         <div className="f-col-row">
           <div className="f-col f-col-fixed">
-            <p className="footer-text">© 2022 Curio. All rights reserved.</p>
+            <p className="footer-text">© 2022 {ts('RIGHTS')}</p>
           </div>
           <div className="f-col f-col-auto">
             <div className="footer-links">
@@ -55,7 +54,7 @@ const Footer = () => {
                 <a
                   target="_blank"
                   href={`${IMAGE_BASE_URL}upload/MamaLift_Terms_of_Use.pdf`}>
-                  Terms of Use
+                  {ts('TERMS_USE')}
                 </a>
               </div>
               <div
@@ -67,7 +66,7 @@ const Footer = () => {
                 <a
                   target="_blank"
                   href={`${IMAGE_BASE_URL}upload/PRIVACY_POLICY0203.pdf`}>
-                  Privacy Policy
+                  {ts('PRIVACY')}
                 </a>
               </div>
               <div
@@ -76,7 +75,7 @@ const Footer = () => {
                   cardTimeTrackAPICall();
                   removeAsyncItem();
                 }}>
-                <Link to="/Contact">Contact Us</Link>
+                <Link to="/Contact">{ts('CONTACT')}</Link>
               </div>
               {/* <div className="footer-link-item">
                 <Link to="#">{ts('TERMS')}</Link>
@@ -100,7 +99,7 @@ const Footer = () => {
             <p className="footer-text text-center">
               {/* <b>Contact us at contact@mymamalift.com</b> */}
               <b>
-                Contact us at{' '}
+                {ts('CONTACT_AT')}{' '}
                 <a
                   style={{ color: 'white' }}
                   href="mailto:contact@mymamalift.com">
@@ -108,7 +107,8 @@ const Footer = () => {
                 </a>
               </b>
               <br />
-              If you are in a crisis or in danger of harming yourself, please
+              {ts('CONTACT_TEXT')}
+              {/* If you are in a crisis or in danger of harming yourself, please
               call the National Suicide Prevention Lifeline at 1-800-273-TALK
               (8255). MamaLift is a medical device available under the FDA
               General Wellness Policy for Low Risk Devices. MamaLift is intended
@@ -116,7 +116,7 @@ const Footer = () => {
               their risk of depression or anxiety during pregnancy or following
               delivery. MamaLift does not provide medical advice and is not
               intended to treat any disease or replace treatment by a licensed
-              healthcare professional.
+              healthcare professional. */}
               {/* If you are in a crisis or in danger of harming yourself, please
               call the National Suicide Prevention Lifeline at 1-800-273-TALK
               (8255). MamaLift is available based on the current FDA Enforcement
@@ -138,7 +138,7 @@ const Footer = () => {
               target="_blank"
               className="poweredby"
               href="https://www.curiodigitaltx.com/">
-              <h4>Powered by</h4>
+              <h4>{ts('POWERED')}</h4>
               <span>
                 <img src={footerlogo} alt="" />
               </span>

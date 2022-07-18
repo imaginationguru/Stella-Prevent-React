@@ -205,7 +205,7 @@ function SelectWeek(props) {
           screenName: 'DailyLearningModule',
           passProps: {
             weeksCount: parseInt(selectedWeek),
-            backTitle: 'Back to Past Modules',
+            backTitle: ts('BACK_TO_PAST'),
           },
         });
       }),
