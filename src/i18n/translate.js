@@ -7,7 +7,7 @@ const defaultLocales = LOCALES;
 const languageDetector = {
   type: 'languageDetector',
   async: true,
-  detect: (cb) => cb(LOCALES.SPANISH),
+  detect: (cb) => cb(LOCALES.ENGLISH),
   init: () => { },
   cacheUserLanguage: () => { },
 };
@@ -16,8 +16,8 @@ i18n
   .use(languageDetector)
   .use(initReactI18next)
   .init({
-    lng: defaultLocales.SPANISH,
-    fallbackLng: defaultLocales.SPANISH,
+    lng: defaultLocales.ENGLISH,
+    fallbackLng: defaultLocales.ENGLISH,
     resources: { ...defaultLang },
     debug: false,
   });

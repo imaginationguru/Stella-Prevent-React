@@ -50,6 +50,7 @@ const { IMAGE_BASE_URL } = GLOBALS;
 function ProfileDetails({ props, componentId }) {
   const layout = useWindowDimensions();
   const { loginData = {} } = useSelector((state) => state.authReducer);
+  const { getLanguages = {} } = useSelector((state) => state.authReducer);
   const { isLoading } = useSelector((state) => state.common);
 
   /**Account Info */
@@ -77,10 +78,7 @@ function ProfileDetails({ props, componentId }) {
   const [cnpswdError, setConfirmPswdError] = useState('');
 
   /**Change Language  */
-  const [language, setLanguage] = useState([
-    { id: 1, value: 'en', name: 'English', isSelected: false },
-    { id: 2, value: 'sp', name: 'Spanish', isSelected: true },
-  ]);
+  const [language, setLanguage] = useState(getLanguages);
   /**Change Notification  */
   const [notification, setNotification] = useState([
     { id: 1, value: 'email', name: ts('EMAIL_NOTIFY'), isSelected: false },
@@ -118,6 +116,7 @@ function ProfileDetails({ props, componentId }) {
 
   useEffect(() => {
     dispatch(AppActions.updateUserData({ user_id: getItem('userId') }));
+    dispatch(AppActions.getLanguages());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -201,6 +200,7 @@ function ProfileDetails({ props, componentId }) {
 
   /**Hanlde Language chnage */
   const itemClick = (item) => {
+    console.log('Priyanka_item', item)
     let temp_language = language.map((el) =>
       el.id === item ? { ...el, isSelected: true } : { ...el, isSelected: false },
     );
@@ -455,7 +455,7 @@ function ProfileDetails({ props, componentId }) {
                   styles.outerCheckbox,
                   { borderWidth: 17, borderRadius: '4vw' },
                 ]}
-                label={item.name}
+                label={item.language_name}
                 onPress={(item) => itemClick(item)}
               />
             );

@@ -101,6 +101,7 @@ export default {
     GET_USER: 'get-user',
     SAVE_PAYMENT: 'squareup-payment',
     /**Profile */
+    GET_LANGUAGES: 'get-languages',
     CHANGE_LANGUAGE: 'change-language',
     UPDATE_NOTIFICATION: 'update-notification',
     UPDATE_PASSWORD: 'update-password',
@@ -375,6 +376,8 @@ export default {
     UPDATE_LAST_SEEN_SUCCESS: 'UPDATE_LAST_SEEN_SUCCESS',
     UPDATE_LAST_SEEN_FAIL: 'UPDATE_LAST_SEEN_FAIL',
     SET_CURRENT_DATA: 'SET_CURRENT_DATA',
+
+    GET_LANGUAGES_SUCCESS: 'GET_LANGUAGES_SUCCESS'
   },
 
   /***************************COLORS*************************** */

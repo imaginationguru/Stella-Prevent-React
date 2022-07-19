@@ -12,6 +12,7 @@ const INITIAL_STATE = {
   quoteData: [],
   verifySocailUserData: [],
   profileImg: '',
+  getLanguages:[]
 };
 
 const {ACTION_TYPE} = GLOBALS;
@@ -138,6 +139,13 @@ function authReducer(state = INITIAL_STATE, action) {
         ...state,
         loginData: action.payload,
       };
+
+    case ACTION_TYPE.GET_LANGUAGES_SUCCESS:
+      return {
+        ...state,
+        getLanguages: action.payload,
+      };
+      
     default:
       return state;
   }

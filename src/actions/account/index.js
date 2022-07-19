@@ -7,6 +7,47 @@ import {customAlert} from '../../helpers/commonAlerts.web';
 import {sessionExpire} from '../../actions/tracker';
 //******************************Login******************* */
 
+//get language
+export function getLanguages(param) {
+  return async (dispatch) => {
+    try {
+      dispatch(loadingAction(true));
+      let json = await RestClient.getCall(URL.GET_LANGUAGES, param);
+      console.log('PRIYANKA_GET_LANGAUAGE',json.data )
+      if (json.code === 200) {
+          dispatch({
+            type: ACTION_TYPE.GET_LANGUAGES_SUCCESS,
+            payload: json.data,
+          });
+      } else {
+        if (json.code === 400) {
+          customAlert(json.message, 'error');
+        }
+        if (json.code === 417) {
+          dispatch(sessionExpire(json.message));
+          dispatch({
+            type: ACTION_TYPE.SESSION_EXPIRED_MESSAGE,
+            payload: json.message,
+          });
+          dispatch(loadingAction(false));
+        }
+      }
+      dispatch(loadingAction(false));
+    } catch (error) {
+      dispatch(loadingAction(false));
+
+      customAlert(
+        error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        'error',
+      );
+      dispatch({
+        type: ACTION_TYPE.LOGIN_FAIL,
+        payload: error,
+      });
+    }
+  };
+}
+
 export function changeLanguage(param) {
   return async (dispatch) => {
     try {
