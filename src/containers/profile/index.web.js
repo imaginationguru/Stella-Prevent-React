@@ -22,6 +22,8 @@ import PopUp from '@components/common/popUp';
 import BackBtn from '@components/common/backbtn';
 import Loader from '@components/Loader';
 import ProfileHeader from '@components/common/profileHeader';
+import i18n from 'i18next';
+
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const { COLORS, FONTS } = GLOBALS;
 const { LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN } = COLORS;
@@ -88,6 +90,7 @@ function ProfileDetails({ props, componentId }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log("lang===>", getLanguages);
     if (loginData) {
       setName(loginData.user.firstName);
       setLName(loginData.user.lastName);
@@ -97,7 +100,7 @@ function ProfileDetails({ props, componentId }) {
       setZipcode(loginData.user.zipcode);
       setCity(loginData.user.city ? loginData.user.city : '');
       setAge(loginData.user.ageYear ? loginData.user.ageYear + 'Y' : '');
-      let temp_language = language.map((el) =>
+      let temp_language = language?.map((el) =>
         el.value === loginData.user.language
           ? { ...el, isSelected: true }
           : { ...el, isSelected: false },
@@ -111,14 +114,17 @@ function ProfileDetails({ props, componentId }) {
       );
       setNotification(temp_notification);
     }
+    setDefaultLanguage()
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loginData]);
+  }, [loginData,]);
 
   useEffect(() => {
     dispatch(AppActions.updateUserData({ user_id: getItem('userId') }));
     dispatch(AppActions.getLanguages());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
   /**CHandle submit click of profile button */
   const navigator = (type, item) => {
@@ -158,10 +164,12 @@ function ProfileDetails({ props, componentId }) {
       case 'change_language':
         let selected_value = language.find((o) => o.isSelected === true);
         let final_param = {
-          language: selected_value.value,
+          language: selected_value.language_code,
           user_id: getItem('userId'),
         };
         dispatch(AppActions.changeLanguage(final_param));
+        i18n.changeLanguage(selected_value.language_code)
+        // window.location.reload(true);
         break;
       case 'toggle_notify':
         let temp_array = notification.map((el) =>
@@ -197,15 +205,21 @@ function ProfileDetails({ props, componentId }) {
       navigator('change_password');
     }
   };
-
   /**Hanlde Language chnage */
-  const itemClick = (item) => {
-    console.log('Priyanka_item', item)
+  const setDefaultLanguage = () => {
     let temp_language = language.map((el) =>
-      el.id === item ? { ...el, isSelected: true } : { ...el, isSelected: false },
+      el.language_code === loginData?.user?.language ? { ...el, isSelected: true } : { ...el, isSelected: false },
     );
     setLanguage(temp_language);
   };
+  /**Hanlde Language chnage */
+  const itemClick = (item) => {
+    let temp_language = language.map((el) =>
+      el._id === item ? { ...el, isSelected: true } : { ...el, isSelected: false },
+    );
+    setLanguage(temp_language);
+  };
+
 
   /**Select Image for Uploading*/
   const selectImage = (file) => {

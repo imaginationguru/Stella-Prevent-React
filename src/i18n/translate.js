@@ -2,8 +2,11 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { LOCALES } from '@i18n/constants';
 import languageResources from '@i18n/json';
+import { useSelector } from 'react-redux';
+
 const defaultLang = languageResources;
 const defaultLocales = LOCALES;
+
 const languageDetector = {
   type: 'languageDetector',
   async: true,
