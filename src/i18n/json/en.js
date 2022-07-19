@@ -26,6 +26,7 @@ export default {
       "SEARCH_PLEASANT_ACTIVITY": "Search Pleasant Activity",
       "SEARCH_ACTIVITY": "Search activity by name (ex: Sport)",
       "SAVE": "Save",
+      "BACK_ACTIVITY": "Back to Activities",
 
       "SLEEP_TRACKER": "Sleep Tracker",
       "HOW_MANY_HRS": "How many hours did you sleep today including naps?",
@@ -88,17 +89,29 @@ export default {
       "ZIP_CODE": "Zip Code",
       "EMAIL_NOTIFY": "Email Notification",
       "SMS_NOTIFY": "SMS Notification",
+      "CHOOSE": "Choose",
 
       "PREMIUM": "Premium",
       "EMAIL": "Email",
       "CARD_NAME": "Name on card",
       "TERMS": "Terms",
       "BACK": "Back",
+      "PRI": "Privacy",
 
 
       "HOME": "Home",
       "PREVIOUS_DAY": "Previous Day",
       "NEXT_DAY": "Next Day",
+      "EPDS_MGS": "Based on your response to Question 10, it is critical that you discuss your situation or feelings with a healthcare professional such as your doctor or mental health provider as soon as possible. They can help you get the care you need.  If you are in crisis and need immediate help, call 911, go to the nearest hospital emergency room, text HOME to 741741 or call the toll-free hotline of the National Suicide Prevention Hotline at 1-800-273-TALK (8255). Find a family member or a friend to stay with you until you get help.",
+      "CLICK_MOOD_TRACKER": "Click here for the Mood Tracker",
+      "CLICK_ACTIVITY_TRACKER": "Click here for the Activity Tracker",
+      "CLICK_SLEEP_TRACKER": "Click here for the Sleep Tracker",
+      "SAVE_GOOD_EXPERIENCE": "Save Good Experience",
+      "COMPLETE_ERROR": "Please complete the exercise!",
+      "CUSTOM_MSG1": "After the birth of your new born, you consider that changes have occurred in ",
+      "CUSTOM_MSG2": " areas of your life and that, in ",
+      "CUSTOM_MSG3": " of these areas, these changes were different from what you initially thought. Many mothers describe differences between what they imagined their life would be like during pregnancy, and the reality of the changes after the baby arrives! In fact, it is normal for the experience of taking care of our baby to be different from what we imagined or expected, even when it is not our first child. Every pregnancy and every baby are different and unique!",
+
 
       "SOMETHING_WENT_WRONG": 'Something went wrong',
       "CHECK_NETWORK": 'Please check your internet connection',
@@ -179,10 +192,8 @@ export default {
       EMOTION_VERY: 'I felt this emotion very intensely',
       EMOTION_MODERATE: 'I felt this emotion with moderate intensity',
       EMOTION_LITTLE: ' I felt this emotion with little intensity',
-      SAVE_GOOD_EXPERIENCE: '  Save Good Experience',
-      CLICK_MOOD_TRACKER: ' Click here for the Mood Tracker',
-      CLICK_ACTIVITY_TRACKER: ' Click here for the Activity Tracker',
-      CLICK_SLEEP_TRACKER: ' Click here for the Sleep Tracker',
+
+
     },
   },
 };

@@ -170,7 +170,7 @@ const Subscription = (props, componentId) => {
                               passProps: item,
                             })
                           }
-                          title="Choose"
+                          title={ts('CHOOSE')}
                           bgColor={getBtnColor(index)}
                           textColor={getPlanbg(index)}
                           textStyle={{ fontSize: 20 }}

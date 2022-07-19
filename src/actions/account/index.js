@@ -15,12 +15,12 @@ export function getLanguages(param) {
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.getCall(URL.GET_LANGUAGES, param);
-      console.log('PRIYANKA_GET_LANGAUAGE',json.data )
+      console.log('PRIYANKA_GET_LANGAUAGE', json.data)
       if (json.code === 200) {
-          dispatch({
-            type: ACTION_TYPE.GET_LANGUAGES_SUCCESS,
-            payload: json.data,
-          });
+        dispatch({
+          type: ACTION_TYPE.GET_LANGUAGES_SUCCESS,
+          payload: json.data,
+        });
       } else {
         if (json.code === 400) {
           customAlert(json.message, 'error');
@@ -39,7 +39,7 @@ export function getLanguages(param) {
       dispatch(loadingAction(false));
 
       customAlert(
-        error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
         'error',
       );
       dispatch({

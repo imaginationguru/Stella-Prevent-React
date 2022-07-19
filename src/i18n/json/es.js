@@ -26,6 +26,7 @@ export default {
       "SEARCH_PLEASANT_ACTIVITY": "Buscar actividad agradable",
       "SEARCH_ACTIVITY": "Buscar actividad por nombre (por ejemplo, deporte)",
       "SAVE": "Ahorrar",
+      "BACK_ACTIVITY": "Volver a Actividades",
 
       "SLEEP_TRACKER": "Rastreador de sueño",
       "HOW_MANY_HRS": "¿Cuántas horas dormiste hoy, incluidas las siestas?",
@@ -88,16 +89,28 @@ export default {
       "ZIP_CODE": "Código postal",
       "EMAIL_NOTIFY": "Notificación por correo electrónico",
       "SMS_NOTIFY": "Notificación por SMS",
+      "CHOOSE": "Elegir",
 
-      "PREMIUM": "Premium",
+      "PREMIUM": "De primera calidad",
       "EMAIL": "Correo electrónico",
       "CARD_NAME": "Nombre en la tarjeta",
       "TERMS": "Términos",
       "BACK": "Volver",
+      "PRI": "Privacidad",
 
       "HOME": "Casa",
       "PREVIOUS_DAY": "Día anterior",
       "NEXT_DAY": "Día siguiente",
+      "EPDS_MGS": "Según su respuesta a la Pregunta 10, es fundamental que discuta su situación o sus sentimientos con un profesional de la salud, como su médico o proveedor de salud mental, lo antes posible. Ellos pueden ayudarlo a obtener la atención que necesita. Si está en crisis y necesita ayuda inmediata, llame al 911, diríjase a la sala de emergencias del hospital más cercano, envíe un mensaje de texto con HOME al 741741 o llame a la línea directa gratuita de la Línea Nacional de Prevención del Suicidio al 1-800-273-TALK (8255). Encuentre a un familiar o amigo para que se quede con usted hasta que obtenga ayuda.",
+      "CLICK_MOOD_TRACKER": "Haga clic aquí para el Rastreador de estado de ánimo",
+      "CLICK_ACTIVITY_TRACKER": "Haga clic aquí para el Rastreador de actividad",
+      "CLICK_SLEEP_TRACKER": "Haga clic aquí para el Rastreador de sueño",
+      "SAVE_GOOD_EXPERIENCE": "Guardar buena experiencia",
+      "COMPLETE_ERROR": "¡Completa el ejercicio!",
+      "CUSTOM_MSG1": "Después del nacimiento de su recién nacido, considera que se han producido cambios en ",
+      "CUSTOM_MSG2": " áreas de tu vida y que, en ",
+      "CUSTOM_MSG3": " de estas áreas, estos cambios fueron diferentes de lo que pensabas inicialmente. ¡Muchas madres describen las diferencias entre lo que imaginaban que sería su vida durante el embarazo y la realidad de los cambios después de la llegada del bebé! De hecho, es normal que la experiencia de cuidar a nuestro bebé sea diferente de lo que imaginábamos o esperábamos, incluso cuando no es nuestro primer hijo. ¡Cada embarazo y cada bebé son diferentes y únicos!",
+
 
       "SEND": "Enviar",
       "SUBJECT": "Asunto",

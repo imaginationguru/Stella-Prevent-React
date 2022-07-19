@@ -1,7 +1,7 @@
-import {useState} from 'react';
-import {TouchableOpacity, FlatList, TextInput} from 'react-native';
+import { useState } from 'react';
+import { TouchableOpacity, FlatList, TextInput } from 'react-native';
 import MasterLayout from '@components/MasterLayout';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '@actions';
 
 import checked from '@assets/images/checkedSquare@3x.png';
@@ -9,14 +9,14 @@ import unChecked from '@assets/images/uncheckedSquare@3x.png';
 
 import GLOBALS from '@constants';
 import BackBtn from '@components/common/backbtn';
-import {getItem} from '@utils/AsyncUtils';
-import {translate as ts} from '@i18n/translate';
-import {navigatorPop} from '../../../config/navigationOptions.web';
-const {STRINGS, COLORS} = GLOBALS;
+import { getItem } from '@utils/AsyncUtils';
+import { translate as ts } from '@i18n/translate';
+import { navigatorPop } from '../../../config/navigationOptions.web';
+const { STRINGS, COLORS } = GLOBALS;
 
 const AddActivityTracker = (props) => {
   const dispatch = useDispatch();
-  const {saveActivityData} = useSelector((state) => state.tracker);
+  const { saveActivityData } = useSelector((state) => state.tracker);
   const [addPlasentActivity, setPlasentActivityArray] = useState(
     props.location.state.AddPlesantActivityArray,
   );
@@ -119,7 +119,7 @@ const AddActivityTracker = (props) => {
   return (
     <MasterLayout>
       <BackBtn
-        title="Back to Activities"
+        title={ts('BACK_ACTIVITY')}
         onPress={() => {
           navigatorPop();
         }}
@@ -147,7 +147,7 @@ const AddActivityTracker = (props) => {
                 showsHorizontalScrollIndicator={false}
                 extraData={refresh}
                 keyExtractor={(item) => item._id}
-                renderItem={({item, index}) => (
+                renderItem={({ item, index }) => (
                   <TouchableOpacity
                     style={styles.activityTitle}
                     onPress={() => _onCheckActivity(item._id)}>
@@ -186,8 +186,8 @@ const styles = {
   wrapper: {
     marginTop: '4%',
   },
-  ques: {fontSize: '18px', fontWeight: 'bold'},
-  saveButton: {maxWidth: '150px', marginTop: '50px', marginBottom: '50px'},
+  ques: { fontSize: '18px', fontWeight: 'bold' },
+  saveButton: { maxWidth: '150px', marginTop: '50px', marginBottom: '50px' },
   searchTitle: {
     fontSize: '16px',
     color: '#747878',

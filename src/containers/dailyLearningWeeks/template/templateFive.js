@@ -225,8 +225,7 @@ const TemplateFive = (props) => {
             : selectedIntemsofHeader[3][0].content.length;
         let X1 = yellowCount + orangeCount + purpleCount;
         let X2 = yellowCount + orangeCount;
-        customMsg = `After the birth of your new born, you consider that changes have occurred in ${X1} areas of your life and that, in ${X2} of these areas, these changes were different from what you initially thought.​  Many mothers describe differences between what they imagined their life would be like during pregnancy, and the reality of the changes after the baby arrives! In fact, it is normal for the experience of taking care of our baby to be different from what we imagined or expected, even when it is not our first child.​
-Every pregnancy and every baby are different and unique!​`;
+        customMsg = `${ts('CUSTOM_MSG1')}${X1}${ts('CUSTOM_MSG2')}${X2} ${ts('CUSTOM_MSG3')}​`;
       }
     }
     /** Check if drag and drop down card is there*/
@@ -372,8 +371,7 @@ Every pregnancy and every baby are different and unique!​`;
             : selectedIntemsofHeader[3][0].content.length;
         let X1 = yellowCount + orangeCount + purpleCount;
         let X2 = yellowCount + orangeCount;
-        customMsg = `After the birth of your new born, you consider that changes have occurred in ${X1} areas of your life and that, in ${X2} of these areas, these changes were different from what you initially thought.​  Many mothers describe differences between what they imagined their life would be like during pregnancy, and the reality of the changes after the baby arrives! In fact, it is normal for the experience of taking care of our baby to be different from what we imagined or expected, even when it is not our first child.​
-Every pregnancy and every baby are different and unique!​`;
+        customMsg = `${ts('CUSTOM_MSG1')} ${X1}${ts('CUSTOM_MSG2')}${X2} ${ts('CUSTOM_MSG3')}​`;
       }
     }
     const params = {

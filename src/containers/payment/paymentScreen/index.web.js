@@ -192,7 +192,7 @@ const Payment = (props, componentId) => {
                     )
                   }
                   style={{ marginHorizontal: '10px' }}>
-                  <Text style={styles.terms}>Terms</Text>
+                  <Text style={styles.terms}>{ts('TERMS')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() =>
@@ -201,7 +201,7 @@ const Payment = (props, componentId) => {
                       '_blank',
                     )
                   }>
-                  <Text style={styles.terms}> {ts('PREMIUM')}</Text>
+                  <Text style={styles.terms}> {ts('PRI')}</Text>
                 </TouchableOpacity>
               </View>
             </View>
