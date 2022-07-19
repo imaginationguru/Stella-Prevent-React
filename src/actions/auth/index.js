@@ -12,8 +12,9 @@ import { sessionExpire } from '../tracker';
 import packageJson from '../../../package.json';
 import { detectBrowser } from '../../helpers/common.web';
 import { customAlert } from '../../helpers/commonAlerts.web';
+import { translate as ts } from '@i18n/translate';
+
 const { COLORS, IMAGE_BASE_URL, ACTION_TYPE, URL, STRINGS } = GLOBALS;
-const { TRY_AGAIN, CHECK_NETWORK } = STRINGS;
 //******************************Login******************* */
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -93,7 +94,7 @@ export function login(email, password, componentId) {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        payload: error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
       });
       dispatch({
         type: ACTION_TYPE.LOGIN_FAIL,
@@ -232,7 +233,7 @@ export function getProgramById(isLoading = true, cb) {
       });
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        payload: error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
       });
     }
   };
@@ -376,7 +377,7 @@ export function logout() {
       });
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        payload: error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
       });
       dispatch({
         type: ACTION_TYPE.LOGOUT_USER_FAIL,
@@ -417,7 +418,7 @@ export function getQuoteData(cb) {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        payload: error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
       });
       dispatch({
         type: ACTION_TYPE.GET_QUOTE_DATA_FAIL,
@@ -436,7 +437,7 @@ export function verifySocialUser(params, componentId, cb) {
         if (!json.data.is_user_exist) {
           if (Platform.OS == 'web') {
             Swal.fire({
-              html: `This user is currently not registered with Mamalift. Please register at <a target="_blank" href=${IMAGE_BASE_URL}>${IMAGE_BASE_URL}</a>`,
+              html: ts("GoogleRegistered") + ` <a target="_blank" href=${IMAGE_BASE_URL}>${IMAGE_BASE_URL}</a>`,
               allowOutsideClick: false,
               allowEscapeKey: false,
               confirmButtonColor: COLORS.DARK_RED,
@@ -553,7 +554,7 @@ export function getUser(params, componentId, isRedirect = true) {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        payload: error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
       });
       dispatch({
         type: ACTION_TYPE.GET_USER_FAIL,
@@ -599,7 +600,7 @@ export function updateUserData(params) {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        payload: error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
       });
       dispatch({
         type: ACTION_TYPE.GET_USER_FAIL,
@@ -629,7 +630,7 @@ export function acceptWelcomeScreen(params, componentId, cb) {
     } catch (error) {
       dispatch(loadingAction(false));
       customAlert(
-        error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
         'error',
       );
     }
@@ -653,7 +654,7 @@ export function resendRegistrationCode(params,) {
     } catch (error) {
       dispatch(loadingAction(false));
       customAlert(
-        error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
         'error',
       );
     }
@@ -680,7 +681,7 @@ export function getSubject(cb) {
       cb([]);
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        payload: error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
       });
     }
   };

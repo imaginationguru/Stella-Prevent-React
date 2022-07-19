@@ -1,11 +1,13 @@
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import {customAlert} from '@helpers/commonAlerts.web';
+import { customAlert } from '@helpers/commonAlerts.web';
+import { translate as ts } from '@i18n/translate';
+
 const FacebookLogIn = (props) => {
-  let {onSocialLogin = () => {}} = props;
+  let { onSocialLogin = () => { } } = props;
   const fbAppId = '416468470173904';
   const resFblogin = (res) => {
     if (res.status == 'unknown') {
-      customAlert('Facebook login cancelled.', 'error');
+      customAlert(ts("FacebookLoginCancel"), 'error');
     } else {
       verifyUser(res);
     }
@@ -15,7 +17,7 @@ const FacebookLogIn = (props) => {
     console.log(profile_data, 'profile_data.......');
     if (profile_data.email == '' || profile_data.email == undefined) {
       customAlert(
-        "Facebook Login fails! Unable to access user's email",
+        ts("FBLoginFail"),
         'error',
       );
       return;

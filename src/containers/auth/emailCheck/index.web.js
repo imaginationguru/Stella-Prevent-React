@@ -42,9 +42,9 @@ const EmailCheck = () => {
   const onEmailCheck = (e) => {
     e.preventDefault();
     if (email.length === 0) {
-      setEmailError('Please enter an email');
+      setEmailError(ts("EmailEmptyError"));
     } else if (email.length && !emailRegex.test(email)) {
-      setEmailError('Please enter a valid email');
+      setEmailError(ts("EmailError"));
     } else if (email) {
       dispatch(AppActions.emailExists(email));
     }

@@ -370,7 +370,7 @@ const DailyLearningWeeks = (props) => {
     completeCardAPI(true);
     if (loginData?.planInfo?.price == 0 && currentData.day === 2 && lastDay) {
       customAlert(
-        "You've reached your free content limit. Please upgrade your plan.",
+        ts("freeContentLimit"),
         'error',
         { showCloseButton: true },
         'Upgrade',
@@ -407,7 +407,7 @@ const DailyLearningWeeks = (props) => {
           setScrollerLoad(true);
           cardDataHandler(mData[current_Index + 1]);
         } else {
-          customAlert('Content will unlock tomorrow', 'error');
+          customAlert(ts("ContentUnlock"), 'error');
         }
       }),
     );
@@ -536,12 +536,12 @@ const DailyLearningWeeks = (props) => {
                         ) {
                           console.log('else please complete previous caed');
                           customAlert(
-                            'Please complete the previous card',
+                            ts("CompletePreviousCard"),
                             'error',
                           );
                         } else {
                           console.log('else??????');
-                          customAlert('Please read previous card', 'error');
+                          customAlert(ts("ReadePreviousCard"), 'error');
                         }
                       }}
                       cardNumber={currentData.card_number || ''}
@@ -680,7 +680,7 @@ const DailyLearningWeeks = (props) => {
                               //debugger;
 
                               customAlert(
-                                'Please perform your exercise',
+                                ts("PerformExercise"),
                                 'error',
                               );
                               return;
@@ -711,7 +711,7 @@ const DailyLearningWeeks = (props) => {
                             if (userRatingData.length === 0) {
                               //debugger;
                               customAlert(
-                                'Please perform your exercise',
+                                ts("PerformExercise"),
                                 'error',
                               );
                               return;
@@ -766,7 +766,7 @@ const DailyLearningWeeks = (props) => {
                             if (userAssessmentData.length == 0) {
                               // debugger;
                               customAlert(
-                                'Please perform your exercise',
+                                ts("PerformExercise"),
                                 'error',
                               );
 

@@ -125,17 +125,17 @@ function ProfileDetails({ props, componentId }) {
     switch (type) {
       case 'profile':
         if (validateIsEmpty(phone?.trim()))
-          setPhoneError('Please enter phone number');
+          setPhoneError(ts("EnterPhone"));
         else if (!validatePhoneWithSpecialSymbol(phone) || phone.length < 10)
-          setPhoneError('Please enter a valid phone number');
+          setPhoneError(ts("ValidPhone"));
         else if (validateIsEmpty(city?.trim()))
-          setCityError('Please enter a city');
+          setCityError(ts("EnterCity"));
         else if (!validateName(city?.trim()))
-          setCityError('Please enter valid city');
+          setCityError(ts("ValidCity"));
         else if (validateIsEmpty(zipcode?.trim()))
-          setZipcodeError('Please enter zipcode');
+          setZipcodeError(ts("EnterZip"));
         else if (!validateANZipcode(zipcode))
-          setZipcodeError('Please enter a valid zipcode');
+          setZipcodeError(ts("ValidZip"));
         else {
           let param = {
             phoneNumber: phone,
@@ -182,17 +182,17 @@ function ProfileDetails({ props, componentId }) {
   /**Change Password validation check */
   const validateField = () => {
     if (validateIsEmpty(password.trim())) {
-      setPswdError(Strings.validation.CURRENT_PWD_REQ);
+      setPswdError(ts("CURRENT_PWD_REQ"));
     } else if (validateIsEmpty(Newpassword.trim())) {
-      setNewPswdError(Strings.validation.NEW_PWD_REQ);
+      setNewPswdError(ts("NEW_PWD_REQ"));
     } else if (!validatePassword(Newpassword)) {
-      setNewPswdError(Strings.validation.PASSWORD_ERROR);
+      setNewPswdError(ts("PASSWORD_ERROR"));
     } else if (password === Newpassword) {
-      setNewPswdError(Strings.validation.PWD_ERR);
+      setNewPswdError(ts("PWD_ERR"));
     } else if (validateIsEmpty(Confpassword.trim())) {
-      setConfirmPswdError(Strings.validation.C_PWD_REQ);
+      setConfirmPswdError(ts("C_PWD_REQ"));
     } else if (Confpassword != Newpassword) {
-      setConfirmPswdError(Strings.validation.PASSWORD_NOT_MATCH);
+      setConfirmPswdError(ts("PASSWORD_NOT_MATCH"));
     } else {
       navigator('change_password');
     }

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import balance0 from '@assets/images/balance/balance0.svg';
 import balanceR1 from '@assets/images/balance/balanceR1.svg';
 import balanceR2 from '@assets/images/balance/balanceR2.svg';
@@ -16,10 +16,10 @@ import balanceL6 from '@assets/images/balance/balanceL6.svg';
 import balanceL7 from '@assets/images/balance/balanceL7.svg';
 import ReactHtmlParser from 'react-html-parser';
 import GLOBALS from '@constants';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '@actions';
-import {getItem} from '@utils/AsyncUtils';
-import {translate as ts} from '@i18n/translate';
+import { getItem } from '@utils/AsyncUtils';
+import { translate as ts } from '@i18n/translate';
 import ExerciseBox from '@components/ExerciseBox';
 import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import {
@@ -31,11 +31,11 @@ import {
   CustomImage,
 } from '@components/Cards';
 
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
-const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
+const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
 const TemplateSix = (props) => {
   const [initial, setDefault] = useState(1);
   const [isLeftBalance, setIsLeftBalance] = useState(false);
@@ -54,29 +54,29 @@ const TemplateSix = (props) => {
   } = props.card;
   const [leftInputChanges, setLeftInputChanges] = useState('');
   const [rightInputChanges, setRightInputChanges] = useState('');
-  const {assessmentData = {}, userAssessmentData = []} = useSelector(
+  const { assessmentData = {}, userAssessmentData = [] } = useSelector(
     (state) => state.moduleOne,
   );
 
-  const {headers} = assessmentData;
+  const { headers } = assessmentData;
   const userId = getItem('userId');
 
   const dispatch = useDispatch();
   useEffect(() => {
     const leftLength = changes.length
       ? changes.filter(
-          (item) =>
-            item.assessment_header_id ===
-            (headers && headers.length && headers[0]._id),
-        ).length
+        (item) =>
+          item.assessment_header_id ===
+          (headers && headers.length && headers[0]._id),
+      ).length
       : 0;
 
     const rightLength = changes.length
       ? changes.filter(
-          (item) =>
-            item.assessment_header_id ===
-            (headers && headers.length && headers[1]._id),
-        ).length
+        (item) =>
+          item.assessment_header_id ===
+          (headers && headers.length && headers[1]._id),
+      ).length
       : 0;
 
     if (leftLength === rightLength) {
@@ -193,7 +193,7 @@ const TemplateSix = (props) => {
       } else {
         dispatch({
           type: ACTION_TYPE.ERROR,
-          payload: 'Please perform your exercise',
+          payload: ts('PERFORM_EXERCISE'),
         });
       }
     }
@@ -202,18 +202,18 @@ const TemplateSix = (props) => {
   const leftContentOrder =
     changes && changes.length && headers && headers.length
       ? changes.filter(
-          (item) =>
-            item.assessment_header_id ===
-            (headers && headers.length && headers[0]._id),
-        ).length
+        (item) =>
+          item.assessment_header_id ===
+          (headers && headers.length && headers[0]._id),
+      ).length
       : 0;
   const rightContentOrder =
     changes && changes.length && headers && headers.length
       ? changes.filter(
-          (item) =>
-            item.assessment_header_id ===
-            (headers && headers.length && headers[1]._id),
-        ).length
+        (item) =>
+          item.assessment_header_id ===
+          (headers && headers.length && headers[1]._id),
+      ).length
       : 0;
 
   return (
@@ -221,15 +221,15 @@ const TemplateSix = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -241,44 +241,44 @@ const TemplateSix = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
       {/*******************************ASSESSMENT DESCRIPTION*********************** */}
       <div
-        style={{...commonStyles.assessmentWrapper, justifyContent: 'center'}}
+        style={{ ...commonStyles.assessmentWrapper, justifyContent: 'center' }}
         className="wrap-2line">
         {images && images.length
           ? images.map((item, i) => {
-              return (
-                <CustomImage
-                  src={`${IMAGE_BASE_URL}${item.image}`}
-                  style={{
-                    display: item.image !== '' ? 'flex' : 'none',
-                    width: '120px',
-                    flex: '0 0 auto',
-                  }}
-                />
-              );
-            })
+            return (
+              <CustomImage
+                src={`${IMAGE_BASE_URL}${item.image}`}
+                style={{
+                  display: item.image !== '' ? 'flex' : 'none',
+                  width: '120px',
+                  flex: '0 0 auto',
+                }}
+              />
+            );
+          })
           : []}
         {props.assessments && props.assessments.length
           ? props.assessments.map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  style={commonStyles.assessDesc}
-                  description={ReactHtmlParser(item.description)}
-                />
-              );
-            })
+            return (
+              <CardDescription
+                key={index}
+                style={commonStyles.assessDesc}
+                description={ReactHtmlParser(item.description)}
+              />
+            );
+          })
           : []}
       </div>
       {/*****************  ANSWER/QUERY PUSHED****************** */}
@@ -295,7 +295,7 @@ const TemplateSix = (props) => {
               .sort((a, b) => (a.order > b.order && 1) || -1)
               .map((item, i) => {
                 return (
-                  <div style={{position: 'relative'}} key={i}>
+                  <div style={{ position: 'relative' }} key={i}>
                     <textarea
                       type="text"
                       className="f-field height-auto"
@@ -328,7 +328,7 @@ const TemplateSix = (props) => {
               .sort((a, b) => (a.order > b.order && 1) || -1)
               .map((item, i) => {
                 return (
-                  <div key={i} style={{position: 'relative'}}>
+                  <div key={i} style={{ position: 'relative' }}>
                     <textarea
                       type="text"
                       className="f-field height-auto"
@@ -448,18 +448,18 @@ const TemplateSix = (props) => {
         </button>
       </div>
       {/*************Content************ */}
-      <div style={{...commonStyles.contentLeftBorder, marginTop: '50px'}}>
+      <div style={{ ...commonStyles.contentLeftBorder, marginTop: '50px' }}>
         {content && content.length
           ? content
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, i) => {
-                return (
-                  <CardContent
-                    key={i}
-                    content={ReactHtmlParser(item.content)}
-                  />
-                );
-              })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, i) => {
+              return (
+                <CardContent
+                  key={i}
+                  content={ReactHtmlParser(item.content)}
+                />
+              );
+            })
           : []}
       </div>
       {showExercises && <ExerciseBox week={week} />}
@@ -477,7 +477,7 @@ const styles = {
     display: 'flex',
     padding: '20px',
   },
-  image: {width: '100%', height: '100%'},
+  image: { width: '100%', height: '100%' },
   assessmentDescription: {
     paddingLeft: DEVICE_WIDTH > 767 ? '40px' : '0',
     fontSize: 14,

@@ -1,15 +1,17 @@
 import GLOBALS from '../../constants';
 import RestClient from '../../helpers/RestClient';
-import {loadingAction, clearSessionExpiredAction} from '../../actions/common';
-import {getItem, removeItem} from '../../utils/AsyncUtils';
-import {navigatorPop, navigatortoStart} from '../../config/navigationOptions';
+import { loadingAction, clearSessionExpiredAction } from '../../actions/common';
+import { getItem, removeItem } from '../../utils/AsyncUtils';
+import { navigatorPop, navigatortoStart } from '../../config/navigationOptions';
 import moment from 'moment';
-import {customAlert} from '../../helpers/commonAlerts.web';
-import {addTimeTracker} from '../moduleOne';
-import {navigatorPush} from '../../config/navigationOptions.web';
+import { customAlert } from '../../helpers/commonAlerts.web';
+import { addTimeTracker } from '../moduleOne';
+import { navigatorPush } from '../../config/navigationOptions.web';
+import { translate as ts } from '@i18n/translate';
 
-const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
-const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
+
+const { ACTION_TYPE, URL, STRINGS } = GLOBALS;
+const { CHECK_NETWORK } = STRINGS;
 
 export const sessionExpire = (message) => {
   return async (dispatch) => {
@@ -55,7 +57,7 @@ export const sessionExpire = (message) => {
 export function getMoodData(date) {
   let userId = getItem('userId');
   return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.GET_MOOD_REQUEST});
+    dispatch({ type: ACTION_TYPE.GET_MOOD_REQUEST });
     let currentData = getItem(STRINGS.CARD_DATA);
     console.log('SessionExpired_cardData', currentData);
     let startTime = getItem(STRINGS.SCREEN_START_TIME);
@@ -95,7 +97,7 @@ export function getMoodData(date) {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        payload: error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
       });
       dispatch({
         type: ACTION_TYPE.GET_MOOD_FAIL,
@@ -113,7 +115,7 @@ export function saveUserMood(params, timePostData, fromCard) {
       ...params,
       user_id: userId,
     };
-    dispatch({type: ACTION_TYPE.SAVE_MOOD_REQUEST});
+    dispatch({ type: ACTION_TYPE.SAVE_MOOD_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.SAVE_MOOD_API, postData);
@@ -122,9 +124,9 @@ export function saveUserMood(params, timePostData, fromCard) {
           dispatch(addTimeTracker(timePostData));
           dispatch(updateUserLastSeen());
           if (fromCard) {
-            navigatorPush({screenName: 'DailyLearningModule'});
+            navigatorPush({ screenName: 'DailyLearningModule' });
           } else {
-            navigatorPush({screenName: 'Dashboard'});
+            navigatorPush({ screenName: 'Dashboard' });
           }
           // navigatorPop();
         });
@@ -154,7 +156,7 @@ export function saveUserMood(params, timePostData, fromCard) {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        payload: error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
       });
       dispatch({
         type: ACTION_TYPE.SAVE_MOOD_FAIL,
@@ -168,7 +170,7 @@ export function saveUserMood(params, timePostData, fromCard) {
 export function getActivityTracker(params) {
   let userId = getItem('userId');
   return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.GET_ACTIVITY_TRACKER_REQUEST});
+    dispatch({ type: ACTION_TYPE.GET_ACTIVITY_TRACKER_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(
@@ -201,7 +203,7 @@ export function getActivityTracker(params) {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        payload: error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
       });
       dispatch({
         type: ACTION_TYPE.GET_ACTIVITY_TRACKER_FAIL,
@@ -215,7 +217,7 @@ export function getActivityTracker(params) {
 export function getSelectedActivityTracker(params) {
   let userId = getItem('userId');
   return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.GET_SELECTED_ACTIVITY_TRACKER_REQUEST});
+    dispatch({ type: ACTION_TYPE.GET_SELECTED_ACTIVITY_TRACKER_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(
@@ -248,7 +250,7 @@ export function getSelectedActivityTracker(params) {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        payload: error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
       });
       dispatch({
         type: ACTION_TYPE.GET_SELECTED_ACTIVITY_TRACKER_FAIL,
@@ -267,7 +269,7 @@ export function saveActivityTracker(params, timePostData, fromCard) {
     patientDate: moment().format(STRINGS.DATE_FORMATE),
   };
   return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.SAVE_OTHER_ACTIVITY_REQUEST});
+    dispatch({ type: ACTION_TYPE.SAVE_OTHER_ACTIVITY_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.SAVE_ACTIVITY_API, params);
@@ -280,9 +282,9 @@ export function saveActivityTracker(params, timePostData, fromCard) {
         customAlert(json.message, 'success', {}, null, (onPress) => {
           dispatch(addTimeTracker(timePostData));
           if (fromCard) {
-            navigatorPush({screenName: 'DailyLearningModule'});
+            navigatorPush({ screenName: 'DailyLearningModule' });
           } else {
-            navigatorPush({screenName: 'Dashboard'});
+            navigatorPush({ screenName: 'Dashboard' });
           }
           //  navigatorPop();
         });
@@ -308,7 +310,7 @@ export function saveActivityTracker(params, timePostData, fromCard) {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        payload: error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
       });
       dispatch({
         type: ACTION_TYPE.SAVE_OTHER_ACTIVITY_FAIL,
@@ -331,7 +333,7 @@ export function saveSleepTracker(
       ...params,
       user_id: userId,
     };
-    dispatch({type: ACTION_TYPE.SAVE_SLEEP_TRACKER_REQUEST});
+    dispatch({ type: ACTION_TYPE.SAVE_SLEEP_TRACKER_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.SAVE_SLEEP_API, postData);
@@ -346,9 +348,9 @@ export function saveSleepTracker(
         customAlert(json.message, 'success', {}, null, (onPress) => {
           dispatch(addTimeTracker(timePostData));
           if (fromCard) {
-            navigatorPush({screenName: 'DailyLearningModule'});
+            navigatorPush({ screenName: 'DailyLearningModule' });
           } else {
-            navigatorPush({screenName: 'Dashboard'});
+            navigatorPush({ screenName: 'Dashboard' });
           }
           //navigatorPop();
         });
@@ -373,7 +375,7 @@ export function saveSleepTracker(
     } catch (error) {
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        payload: error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
       });
       dispatch({
         type: ACTION_TYPE.SAVE_SLEEP_TRACKER_FAIL,
@@ -391,7 +393,7 @@ export function getSleepData(params) {
     user_id: userId,
   };
   return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.GET_SLEEP_TRACKER_REQUEST});
+    dispatch({ type: ACTION_TYPE.GET_SLEEP_TRACKER_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.GET_SLEEP_TRACKER_API, postData);
@@ -422,7 +424,7 @@ export function getSleepData(params) {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        payload: error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
       });
       dispatch({
         type: ACTION_TYPE.GET_SLEEP_TRACKER_FAIL,
@@ -436,7 +438,7 @@ export function getSleepData(params) {
 
 export function getWeeklySummaryReport(params) {
   return async (dispatch) => {
-    dispatch({type: ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_REQUEST});
+    dispatch({ type: ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_REQUEST });
     try {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.GET_WEEKLY_SUMMARY_API, params);
@@ -466,7 +468,7 @@ export function getWeeklySummaryReport(params) {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        payload: error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
       });
       dispatch({
         type: ACTION_TYPE.GET_WEEKLY_SUMMARY_REPORT_FAIL,
@@ -483,7 +485,7 @@ export function updateUserLastSeen() {
     let postData = {
       user_id: userId,
     };
-    dispatch({type: ACTION_TYPE.UPDATE_LAST_SEEN_REQUEST});
+    dispatch({ type: ACTION_TYPE.UPDATE_LAST_SEEN_REQUEST });
     try {
       // dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.UPDATE_LAST_SEEN_API, postData);
@@ -514,7 +516,7 @@ export function updateUserLastSeen() {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        payload: error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
       });
       dispatch({
         type: ACTION_TYPE.UPDATE_LAST_SEEN_FAIL,

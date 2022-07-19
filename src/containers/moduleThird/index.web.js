@@ -6,8 +6,8 @@
  * @flow strict-local
  */
 
-import React, {useState} from 'react';
-import {Modal, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { Modal, TouchableOpacity } from 'react-native';
 import MasterLayout from '../../components/MasterLayout';
 import header from '../../assets/images/header.png';
 import Footer from '../../components/Footer';
@@ -16,15 +16,17 @@ import TemplateOne from '../moduleSecond/templateOne';
 import dummyData from './dummyData';
 import menu from '../../assets/images/menu.svg';
 import GLOBALS from '../../constants';
-import {navigatorPush} from '../../config/navigationOptions.web';
+import { navigatorPush } from '../../config/navigationOptions.web';
 import Menu from '../../components/Menu';
 import ModuleFourTemplate from './moduleFourTemplate';
 import TemplateNineteen from '../moduleSecond/templateNineteen';
- import TemplateTen from '../dailyLearningWeeks/template/templateTen';
+import TemplateTen from '../dailyLearningWeeks/template/templateTen';
 import MSevenTemplate from './mSevenTemplate';
- import TemplateNine from '../dailyLearningWeeks/template/templateEight';
+import TemplateNine from '../dailyLearningWeeks/template/templateEight';
 import TemplateEleven from './template11';
-const {COLORS} = GLOBALS;
+import { translate as ts } from '@i18n/translate';
+
+const { COLORS } = GLOBALS;
 const ModuleSecond = (componentId) => {
   const [active, setActive] = useState(10);
   const [modalVisible, setModalVisible] = useState(false);
@@ -35,11 +37,11 @@ const ModuleSecond = (componentId) => {
     switch (status) {
       case 0:
         return <TemplateOne data={uiProps} />;
-       case 2:
+      case 2:
         return <TemplateNineteen data={uiProps} />;
       case 3:
         return <ModuleFourTemplate data={uiProps} />;
-       case 5:
+      case 5:
         return (
           <TemplateTen
             data={uiProps}
@@ -72,7 +74,7 @@ const ModuleSecond = (componentId) => {
     <>
       <MasterLayout>
         <div className="wrapper">
-          
+
           <div className="dashboard-body">
             <div className="container">
               <div className="dashboard-body-inner">
@@ -113,7 +115,7 @@ const ModuleSecond = (componentId) => {
 
                 <div className="dashboard-footer-nav">
                   <div className="footer-nav-inner">
-                    <div style={{alignItems: 'flex-end'}}>
+                    <div style={{ alignItems: 'flex-end' }}>
                       {active > 0 && (
                         <div
                           className="footer-nav-left"
@@ -160,16 +162,17 @@ const ModuleSecond = (componentId) => {
             transparent={true}
             visible={modalVisible}
             onRequestClose={() => {
-              alert('Modal has been closed.');
+              ts("ModalClosed")
+              // alert('Modal has been closed.');
               setModalVisible(!modalVisible);
             }}>
             <Menu
               modalVisible={() => setModalVisible(false)}
               onNavigateModuleOne={() =>
-                navigatorPush({componentId, screenName: 'DailyLearningWeeks'})
+                navigatorPush({ componentId, screenName: 'DailyLearningWeeks' })
               }
               onNavigateModuleSecond={() =>
-                navigatorPush({componentId, screenName: 'ModuleSecond'})
+                navigatorPush({ componentId, screenName: 'ModuleSecond' })
               }
               onNavigateModuleThird={() => setModalVisible(false)}
             />

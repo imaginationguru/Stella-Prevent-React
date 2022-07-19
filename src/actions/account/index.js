@@ -1,10 +1,12 @@
 import GLOBALS from '../../constants';
 import RestClient from '../../helpers/RestClient';
-import {loadingAction} from '../common';
-const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
-const {TRY_AGAIN, CHECK_NETWORK} = STRINGS;
-import {customAlert} from '../../helpers/commonAlerts.web';
-import {sessionExpire} from '../../actions/tracker';
+import { loadingAction } from '../common';
+import { translate as ts } from '@i18n/translate';
+
+const { ACTION_TYPE, URL, STRINGS } = GLOBALS;
+const { CHECK_NETWORK } = STRINGS;
+import { customAlert } from '../../helpers/commonAlerts.web';
+import { sessionExpire } from '../../actions/tracker';
 //******************************Login******************* */
 
 //get language
@@ -73,7 +75,7 @@ export function changeLanguage(param) {
       dispatch(loadingAction(false));
 
       customAlert(
-        error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
         'error',
       );
       dispatch({
@@ -108,7 +110,7 @@ export function toggleNotification(param) {
     } catch (error) {
       dispatch(loadingAction(false));
       customAlert(
-        error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
         'error',
       );
 
@@ -150,7 +152,7 @@ export function updatePassword(param) {
       dispatch(loadingAction(false));
 
       customAlert(
-        error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
         'error',
       );
       dispatch({
@@ -197,7 +199,7 @@ export function uploadProfile(param) {
       dispatch(loadingAction(false));
 
       customAlert(
-        error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
         'error',
       );
       dispatch({
@@ -237,7 +239,7 @@ export function updateUserDetails(param) {
       dispatch(loadingAction(false));
 
       customAlert(
-        error.problem === 'NETWORK_ERROR' ? CHECK_NETWORK : TRY_AGAIN,
+        error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
         'error',
       );
       dispatch({

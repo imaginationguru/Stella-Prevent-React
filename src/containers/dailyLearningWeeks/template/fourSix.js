@@ -1,16 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import {useState, useEffect} from 'react';
-import {View, Text, FlatList, Dimensions} from 'react-native';
+import { useState, useEffect } from 'react';
+import { View, Text, FlatList, Dimensions } from 'react-native';
 import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import GLOBALS from '@constants';
 import ReactHtmlParser from 'react-html-parser';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '@actions';
-import {getItem} from '@utils/AsyncUtils';
-import {translate as ts} from '@i18n/translate';
+import { getItem } from '@utils/AsyncUtils';
+import { translate as ts } from '@i18n/translate';
 import ExerciseBox from '@components/ExerciseBox';
-import {customAlert} from '@helpers/commonAlerts.web';
+import { customAlert } from '@helpers/commonAlerts.web';
 import {
   CardQuote,
   CardTitle,
@@ -22,8 +22,8 @@ import {
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
-const {COLORS, IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
-const {BOX_GRAY, GREEN_TEXT, CIRCLE_GRAY, WHITE, GRAY, RED} = COLORS;
+const { COLORS, IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
+const { BOX_GRAY, GREEN_TEXT, CIRCLE_GRAY, WHITE, GRAY, RED } = COLORS;
 
 const FourSix = (props) => {
   const {
@@ -42,10 +42,10 @@ const FourSix = (props) => {
   const [userInputs, setUserInputs] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
-  const {assessmentData = {}, userAssessmentData = []} = useSelector(
+  const { assessmentData = {}, userAssessmentData = [] } = useSelector(
     (state) => state.moduleOne,
   );
-  const {headers} = assessmentData;
+  const { headers } = assessmentData;
   const dispatch = useDispatch();
   let userId = getItem('userId');
 
@@ -62,7 +62,7 @@ const FourSix = (props) => {
       });
     }
     let selectedFormat = assessmentCards.map((item) => {
-      return {_id: item.assessment_header_id, content: item.content};
+      return { _id: item.assessment_header_id, content: item.content };
     });
     let selectUserInputs = assessmentCards.map((item) => {
       return {
@@ -72,8 +72,8 @@ const FourSix = (props) => {
         order: item.order,
         assessment_id: item.assessment_header.length
           ? item.assessment_header.map((val) => {
-              return val.assessment_id;
-            })
+            return val.assessment_id;
+          })
           : null,
       };
     });
@@ -81,11 +81,11 @@ const FourSix = (props) => {
     selectUserInputs.map((element) => {
       headers && headers.length
         ? headers.map((item) => {
-            if (element.assessment_header_id === item._id) {
-              element.placeholder = item.description;
-              element.name = item.header;
-            }
-          })
+          if (element.assessment_header_id === item._id) {
+            element.placeholder = item.description;
+            element.name = item.header;
+          }
+        })
         : null;
     });
     let sortedOrderArray = selectUserInputs.sort((a, b) =>
@@ -103,10 +103,10 @@ const FourSix = (props) => {
     let firstAssessmentContent =
       sortedOrderArray && sortedOrderArray.length
         ? sortedOrderArray.filter(
-            (ele) =>
-              ele.assessment_id.length &&
-              ele.assessment_id[0] === assessment_id,
-          )
+          (ele) =>
+            ele.assessment_id.length &&
+            ele.assessment_id[0] === assessment_id,
+        )
         : [];
     setSelected(selectedFormat);
     if (firstAssessmentContent.length == 0) {
@@ -140,7 +140,7 @@ const FourSix = (props) => {
 
     /**If any of the row is empty */
     if (emptyRowCount == 1) {
-      customAlert('Please perform your exercise', 'error');
+      customAlert(ts('PERFORM_EXERCISE'), 'error');
       return;
     }
     let contentArray = [];
@@ -172,7 +172,7 @@ const FourSix = (props) => {
     } else {
       dispatch({
         type: ACTION_TYPE.ERROR,
-        payload: 'Please perform your exercise',
+        payload: ts('PERFORM_EXERCISE'),
       });
     }
   };
@@ -180,10 +180,10 @@ const FourSix = (props) => {
   const onTextChange = (text, item) => {
     userInputs.length
       ? userInputs.map((val) => {
-          if (val.order === item.order) {
-            val.content = text;
-          }
-        })
+        if (val.order === item.order) {
+          val.content = text;
+        }
+      })
       : [];
   };
 
@@ -220,7 +220,8 @@ const FourSix = (props) => {
       setUserInputs(oldArray);
       setRefresh(!refresh);
     } else {
-      alert('Please add content.');
+      ts("AddContent")
+      // alert('Please add content.');
     }
   };
 
@@ -266,15 +267,15 @@ const FourSix = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
@@ -285,19 +286,37 @@ const FourSix = (props) => {
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
       {images && images.length
         ? images
-            .filter((img) => img.image_type === 'first')
+          .filter((img) => img.image_type === 'first')
+          .map((item, i) => {
+            return (
+              <CustomImage
+                key={i}
+                src={`${IMAGE_BASE_URL}${item.image}`}
+                style={{
+                  ...commonStyles.assessImage,
+                  display: item.image !== '' ? 'flex' : 'none',
+                }}
+              />
+            );
+          })
+        : []}
+      {/***************************ASSESSMENTS DESCRIPTION ONE ************* */}
+      <div style={{ ...commonStyles.assessmentWrapper, marginBottom: '50px' }}>
+        {images && images.length
+          ? images
+            .filter((img) => img.image_type === 'second')
             .map((item, i) => {
               return (
                 <CustomImage
@@ -310,48 +329,30 @@ const FourSix = (props) => {
                 />
               );
             })
-        : []}
-      {/***************************ASSESSMENTS DESCRIPTION ONE ************* */}
-      <div style={{...commonStyles.assessmentWrapper, marginBottom: '50px'}}>
-        {images && images.length
-          ? images
-              .filter((img) => img.image_type === 'second')
-              .map((item, i) => {
-                return (
-                  <CustomImage
-                    key={i}
-                    src={`${IMAGE_BASE_URL}${item.image}`}
-                    style={{
-                      ...commonStyles.assessImage,
-                      display: item.image !== '' ? 'flex' : 'none',
-                    }}
-                  />
-                );
-              })
           : []}
 
         {props.assessments && props.assessments.length
           ? props.assessments.map((item, i) => {
-              return (
-                <CardDescription
-                  key={i}
-                  style={commonStyles.assessDesc}
-                  description={ReactHtmlParser(item.description)}
-                />
-              );
-            })
+            return (
+              <CardDescription
+                key={i}
+                style={commonStyles.assessDesc}
+                description={ReactHtmlParser(item.description)}
+              />
+            );
+          })
           : []}
       </div>
       {/******************************************************************* */}
       {userInputs && userInputs.length ? (
         <FlatList
           data={userInputs}
-          contentContainerStyle={{padding: '4%'}}
+          contentContainerStyle={{ padding: '4%' }}
           extraData={refresh}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item.id}
-          renderItem={({item, index}) => (
+          renderItem={({ item, index }) => (
             <View
               style={{
                 flex: 1,
@@ -367,13 +368,13 @@ const FourSix = (props) => {
                   justifyContent: 'center',
                 }}>
                 <Text
-                  style={{padding: '15px', color: WHITE, textAlign: 'center'}}>
+                  style={{ padding: '15px', color: WHITE, textAlign: 'center' }}>
                   {' '}
                   {ReactHtmlParser(item.name)}
                 </Text>
               </View>
               <View style={styles.crossIconWrapper}>
-                <View style={{height: '150px'}}>
+                <View style={{ height: '150px' }}>
                   {item.content !== '' ? (
                     <input
                       type="text"
@@ -399,7 +400,7 @@ const FourSix = (props) => {
                       onClick={() => {
                         onCrossBtnClick(item);
                       }}>
-                      <span style={{...styles.plusIcon, fontSize: '15px'}}>
+                      <span style={{ ...styles.plusIcon, fontSize: '15px' }}>
                         x
                       </span>
                     </div>
@@ -479,12 +480,12 @@ const FourSix = (props) => {
       {/*************Content************ */}
       {content && content.length
         ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, i) => {
-              return (
-                <CardContent key={i} content={ReactHtmlParser(item.content)} />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, i) => {
+            return (
+              <CardContent key={i} content={ReactHtmlParser(item.content)} />
+            );
+          })
         : []}
       {showExercises && <ExerciseBox week={week} />}
     </>
@@ -532,8 +533,8 @@ const styles = {
     justifyContent: 'center',
     marginLeft: '25px',
   },
-  button: {width: '20%', marginTop: '30px'},
-  image: {width: '100%', height: '100%'},
+  button: { width: '20%', marginTop: '30px' },
+  image: { width: '100%', height: '100%' },
   imageWrapper: {
     width: '120px',
     height: '100px',
