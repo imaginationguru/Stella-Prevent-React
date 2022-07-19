@@ -65,6 +65,7 @@ export function login(email, password, componentId) {
         storeItem('hospitalId', json.data.user.hospital_id);
         storeItem('epdsAssesment', json.data.epds_assesment);
         storeItem('version', packageJson.version);
+        storeItem('language', json.data.user.language);
         dispatch({
           type: ACTION_TYPE.SET_PROFILE_IMAGE,
           payload: json.data.user.image_path,

@@ -14,12 +14,15 @@ import { Provider } from 'react-redux';
 import * as AppActions from '../src/actions';
 import setup from './store/setup.web';
 import packageJson from "../package.json"
+import i18n from 'i18next';
 
 const store = setup();
 
 
 const caching = () => {
   let version = localStorage.getItem('version') ? localStorage.getItem('version') : '';
+  // let lanhuage = localStorage.getItem('language') ? localStorage.getItem('language') : 'en'
+  // i18n.changeLanguage(lanhuage)
   let package_version = packageJson.version;
   if (!version.includes(package_version)) {
     console.log("no match....")

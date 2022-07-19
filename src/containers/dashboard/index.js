@@ -49,6 +49,8 @@ const Dashboard = () => {
     if (getItem('userId') != null) {
       dispatch(AppActions.getProgramById(false));
       dispatch(AppActions.getCurrentActiveCard(false));
+      dispatch(AppActions.getLanguages());
+
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

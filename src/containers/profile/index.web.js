@@ -259,7 +259,11 @@ function ProfileDetails({ props, componentId }) {
       {isLoading && <Loader />}
       {/* */}
       <BackBtn
-        onPress={() => navigatorPush({ componentId, screenName: 'Dashboard' })}
+        onPress={() => {
+          i18n.changeLanguage(loginData?.user?.language)
+          global.userLanguage = loginData?.user?.language
+          navigatorPush({ componentId, screenName: 'Dashboard' })
+        }}
       />
       <View style={styles.backBtn}></View>
       <View
