@@ -220,7 +220,8 @@ const FourSix = (props) => {
       setUserInputs(oldArray);
       setRefresh(!refresh);
     } else {
-      alert('Please add content.');
+      ts("AddContent")
+      // alert('Please add content.');
     }
   };
 

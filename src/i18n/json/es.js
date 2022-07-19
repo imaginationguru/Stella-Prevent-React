@@ -133,7 +133,9 @@ export default {
       "EnterCity": "Ingrese una ciudad",
       "ValidCity": "Ingrese una ciudad válida",
       "EnterZip": "Ingrese el código postal",
-      "ValidZip": "Ingrese un código postal válido"
+      "ValidZip": "Ingrese un código postal válido",
+      "AddContent": "Por favor agregue contenido.",
+      "ModalClosed": "Modal ha sido cerrado.",
     },
   },
 };

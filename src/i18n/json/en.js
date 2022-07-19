@@ -129,6 +129,8 @@ export default {
       "ValidCity": "Please enter valid city",
       "EnterZip": "Please enter zipcode",
       "ValidZip": "Please enter a valid zipcode",
+      "AddContent": "Please add content.",
+      "ModalClosed": "Modal has been closed.",
 
 
 
