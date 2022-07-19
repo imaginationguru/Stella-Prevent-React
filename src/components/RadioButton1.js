@@ -1,18 +1,18 @@
 import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 import GLOBALS from '@constants';
-const {COLORS, FONTS} = GLOBALS;
-const {BLUR, WHITE, HEADING_BLACK, SOFT_GRAY, BLACK, DARK_GREEN} = COLORS;
+const { COLORS, FONTS } = GLOBALS;
+const { BLUR, WHITE, HEADING_BLACK, SOFT_GRAY, BLACK, DARK_GREEN } = COLORS;
 
 import check from '@assets/images/screener/check.png';
 import uncheck from '@assets/images/screener/uncheck.png';
 export default class RadioButton1 extends React.Component {
   render() {
-    const {selectedOption, outerStyle, innerStyle, label, onPress, item} =
+    const { selectedOption, outerStyle, innerStyle, label, onPress, item } =
       this.props;
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={() => onPress(item.id)}>
+        <TouchableOpacity onPress={() => onPress(item._id)}>
           <View style={[styles.outerStyle, outerStyle]}>
             <Text style={styles.radioText}>{label}</Text>
             <Image
