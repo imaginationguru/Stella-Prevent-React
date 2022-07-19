@@ -200,7 +200,7 @@ const ComparisonTemplate = (props) => {
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
         time={
-          card_time === '1' ? `${card_time} Minute` : `${card_time} Minutes`
+          card_time === '1' ? `${card_time} ${ts('MIN')}` : `${card_time} ${ts('MINS')}`
         }
       />
       {/**********************quotes************** */}
@@ -276,7 +276,7 @@ const ComparisonTemplate = (props) => {
                     ...styles.indicationColor,
                     background: DARK_GREEN,
                   }}></div>
-                <p style={styles.compareTitle}> During the Pregnancy</p>
+                <p style={styles.compareTitle}> {ts('DURING_PREG')}</p>
               </div>
               <div style={{ display: 'flex' }}>
                 <div
@@ -284,7 +284,7 @@ const ComparisonTemplate = (props) => {
                     ...styles.indicationColor,
                     background: YELLOW,
                   }}></div>
-                <p style={styles.compareTitle}> After Birth</p>
+                <p style={styles.compareTitle}> {ts('AFTER_BIRTH')}</p>
               </div>
               <div style={{ display: 'flex' }}>
                 <div
@@ -292,7 +292,7 @@ const ComparisonTemplate = (props) => {
                     ...styles.indicationColor,
                     background: `linear-gradient(${DARK_GREEN}, ${YELLOW})`,
                   }}></div>
-                <p style={styles.compareTitle}> Both</p>
+                <p style={styles.compareTitle}> {ts('BOTH')}</p>
               </div>
             </div>
 
@@ -426,10 +426,10 @@ const ComparisonTemplate = (props) => {
                   : setActiveState(activeState + 1);
             }}>
             {activeState === 3
-              ? 'SAVE'
+              ? ts('SAVE')
               : activeState === 1
-                ? 'Next Step'
-                : 'Compare'}
+                ? ts('NEXT_STEP')
+                : ts('COMPARE')}
           </button>
         </div>
         {activeState === 3 ? (
@@ -439,7 +439,7 @@ const ComparisonTemplate = (props) => {
               setActiveState(1);
               duplicatesHandler([], true);
             }}>
-            DO AGAIN
+            {ts('AGAIN')}
           </p>
         ) : null}
       </div>

@@ -111,6 +111,22 @@ export default {
       "CUSTOM_MSG1": "After the birth of your new born, you consider that changes have occurred in ",
       "CUSTOM_MSG2": " areas of your life and that, in ",
       "CUSTOM_MSG3": " of these areas, these changes were different from what you initially thought. Many mothers describe differences between what they imagined their life would be like during pregnancy, and the reality of the changes after the baby arrives! In fact, it is normal for the experience of taking care of our baby to be different from what we imagined or expected, even when it is not our first child. Every pregnancy and every baby are different and unique!",
+      "DURING_PREG": "During the Pregnancy",
+      "AFTER_BIRTH": "After Birth",
+      "BOTH": "Both",
+      "NEXT_STEP": "Next Step",
+      "COMPARE": "Compare",
+      "AGAIN": "DO AGAIN",
+      "MIN": "Minute",
+      "MINS": "Minutes",
+      "EMOTION_VERY": "I felt this emotion very intensely",
+      "EMOTION_MODERATE": "I felt this emotion with moderate intensity",
+      "EMOTION_LITTLE": "I felt this emotion with little intensity",
+      "EXERCISE_READ": "Exercises & Reading",
+      "EXERCISE_READ1": "Here you can find the activities of week",
+      "EXERCISE_READ2": ", the audio exercises and additional information.",
+
+
 
 
       "SOMETHING_WENT_WRONG": 'Something went wrong',
@@ -189,9 +205,7 @@ export default {
       MIDDLE_NAME: 'Middle Name',
 
       LOGOUT: 'LOGOUT',
-      EMOTION_VERY: 'I felt this emotion very intensely',
-      EMOTION_MODERATE: 'I felt this emotion with moderate intensity',
-      EMOTION_LITTLE: ' I felt this emotion with little intensity',
+
 
 
     },

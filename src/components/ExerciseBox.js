@@ -1,14 +1,14 @@
 import GLOBALS from '@constants';
-const {COLORS} = GLOBALS;
-const {BUTTON_ORANGE, WHITE} = COLORS;
+import { translate as ts } from '@i18n/translate';
+const { COLORS } = GLOBALS;
+const { BUTTON_ORANGE, WHITE } = COLORS;
 const ExerciseBox = (props) => {
-  const {week} = props;
+  const { week } = props;
   return (
     <div style={styles.wrapper}>
-      <p style={styles.title}>Exercises & Reading</p>
+      <p style={styles.title}>{ts('EXERCISE_READ')}</p>
       <p style={styles.subTitle}>
-        Here you can find the activities of week {week}, the audio exercises and
-        additional information.
+        {ts('EXERCISE_READ1')} {week}{ts('EXERCISE_READ2')}
       </p>
     </div>
   );

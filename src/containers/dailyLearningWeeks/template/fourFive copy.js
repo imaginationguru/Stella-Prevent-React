@@ -8,7 +8,7 @@ import ReactHtmlParser from 'react-html-parser';
 import { useDispatch, useSelector } from 'react-redux';
 import * as AppActions from '../../../actions';
 import { getItem } from '../../../utils/AsyncUtils';
-import { translate as ts } from '../../../i18n/translate';
+import { translate as ts } from '@i18n/translate';
 import ExerciseBox from '../../../components/ExerciseBox';
 import {
   CardQuote,
@@ -362,7 +362,7 @@ const FourFive = (props) => {
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
         time={
-          card_time === '1' ? `${card_time} Minute` : `${card_time} Minutes`
+          card_time === '1' ? `${card_time} ${ts('MIN')}` : `${card_time} ${ts('MINS')}`
         }
       />
 
