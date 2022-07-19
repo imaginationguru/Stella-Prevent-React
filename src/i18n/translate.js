@@ -4,6 +4,7 @@ import { LOCALES } from '@i18n/constants';
 import languageResources from '@i18n/json';
 import { useSelector } from 'react-redux';
 
+
 const defaultLang = languageResources;
 const defaultLocales = LOCALES;
 

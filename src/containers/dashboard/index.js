@@ -20,6 +20,8 @@ import { navigatorPush } from '@config/navigationOptions.web';
 import { checkIfWeekCanAccess } from '@helpers/common.web';
 import { customAlert } from '@helpers/commonAlerts.web';
 import { translate as ts } from '@i18n/translate';
+import i18n from 'i18next';
+
 import moment from 'moment';
 const { COLORS, ACTION_TYPE, FONTS } = GLOBALS;
 const { DARK_GREEN } = COLORS;
@@ -43,6 +45,7 @@ const Dashboard = () => {
     return temp;
   };
   useEffect(() => {
+    i18n.changeLanguage(loginData?.user?.language)
     if (getItem('userId') != null) {
       dispatch(AppActions.getProgramById(false));
       dispatch(AppActions.getCurrentActiveCard(false));
