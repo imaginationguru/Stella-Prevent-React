@@ -10,13 +10,13 @@ import {
   CardContent,
   CustomImage,
 } from '@components/Cards';
-import {Animated} from 'react-animated-css';
-import {Dimensions} from 'react-native';
-
+import { Animated } from 'react-animated-css';
+import { Dimensions } from 'react-native';
+import { translate as ts } from '@i18n/translate';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
-const {COLORS, IMAGE_BASE_URL} = GLOBALS;
+const { COLORS, IMAGE_BASE_URL } = GLOBALS;
 const TemplateEight = (props) => {
   const {
     card_time,
@@ -34,78 +34,78 @@ const TemplateEight = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
         time={
-          card_time === '1' ? `${card_time} Minute` : `${card_time} Minutes`
+          card_time === '1' ? `${card_time} ${ts('MIN')}` : `${card_time} ${ts('MINS')}`
         }
       />
 
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                  isVisible={true}
-                  animationIn={'fadeInUp'}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+                isVisible={true}
+                animationIn={'fadeInUp'}
+              />
+            );
+          })
         : []}
 
       {/**********************Images********************** */}
       <div style={styles.imageView}>
         {images && images.length
           ? images.map((item, index) => {
-              return (
-                <CustomImage
-                  key={index}
-                  src={`${IMAGE_BASE_URL}${item.image}`}
-                  style={{
-                    display: item.image !== '' ? 'flex' : 'none',
-                  }}
-                  isVisible={true}
-                  animationIn={'fadeInLeft'}
-                />
-              );
-            })
+            return (
+              <CustomImage
+                key={index}
+                src={`${IMAGE_BASE_URL}${item.image}`}
+                style={{
+                  display: item.image !== '' ? 'flex' : 'none',
+                }}
+                isVisible={true}
+                animationIn={'fadeInLeft'}
+              />
+            );
+          })
           : []}
 
         {/********************************content******************* */}
 
         {content && content.length
           ? content
-              .filter((item) => item.type === 'first')
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, i) => {
-                return (
-                  <Animated
-                    style={styles.descView}
-                    isVisible={true}
-                    animationIn={'fadeInRight'}>
-                    <div>
-                      <CardContent
-                        key={i}
-                        content={ReactHtmlParser(item.content)}
-                      />
-                    </div>
-                  </Animated>
-                );
-              })
+            .filter((item) => item.type === 'first')
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, i) => {
+              return (
+                <Animated
+                  style={styles.descView}
+                  isVisible={true}
+                  animationIn={'fadeInRight'}>
+                  <div>
+                    <CardContent
+                      key={i}
+                      content={ReactHtmlParser(item.content)}
+                    />
+                  </div>
+                </Animated>
+              );
+            })
           : []}
       </div>
       {/********************************content ******************* */}
@@ -113,16 +113,16 @@ const TemplateEight = (props) => {
         <div style={styles.contentView}>
           {content && content.length
             ? content
-                .filter((item) => item.type === 'second')
-                .sort((a, b) => (a.order > b.order && 1) || -1)
-                .map((item, i) => {
-                  return (
-                    <CardContent
-                      key={i}
-                      content={ReactHtmlParser(item.content)}
-                    />
-                  );
-                })
+              .filter((item) => item.type === 'second')
+              .sort((a, b) => (a.order > b.order && 1) || -1)
+              .map((item, i) => {
+                return (
+                  <CardContent
+                    key={i}
+                    content={ReactHtmlParser(item.content)}
+                  />
+                );
+              })
             : []}
         </div>
       </Animated>

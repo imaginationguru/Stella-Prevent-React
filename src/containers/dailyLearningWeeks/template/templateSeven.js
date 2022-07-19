@@ -12,7 +12,8 @@ import {
   CustomImage,
 } from '@components/Cards';
 
-const {IMAGE_BASE_URL} = GLOBALS;
+import { translate as ts } from '@i18n/translate';
+const { IMAGE_BASE_URL } = GLOBALS;
 const TemplateSeven = (props) => {
   const {
     card_title,
@@ -30,36 +31,36 @@ const TemplateSeven = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
         time={
-          card_time === '1' ? `${card_time} Minute` : `${card_time} Minutes`
+          card_time === '1' ? `${card_time} ${ts('MIN')}` : `${card_time} ${ts('MINS')}`
         }
       />
 
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                  animationIn="fadeInUp"
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+                animationIn="fadeInUp"
+              />
+            );
+          })
         : []}
       {/*************************Comparison content******************* */}
       <div style={styles.compareContainer}>
@@ -68,59 +69,14 @@ const TemplateSeven = (props) => {
           <div className="dash-icon" style={styles.leftImage}>
             {images && images.length
               ? images
-                  .filter((item) => {
-                    return item.image_type === 'first';
-                  })
-                  .map((img, index) => {
-                    return (
-                      <>
-                        <CustomImage
-                          animationIn="fadeInLeft"
-                          key={index}
-                          src={`${IMAGE_BASE_URL}${img.image}`}
-                          style={{
-                            width: '140px',
-                            height: '140px',
-                            margin: '0',
-                            display: img.image !== '' ? 'flex' : 'none',
-                          }}
-                        />
-                      </>
-                    );
-                  })
-              : null}
-          </div>
-          {/**************************left side content******************* */}
-          {content && content.length
-            ? content
                 .filter((item) => {
-                  return item.type === 'first';
+                  return item.image_type === 'first';
                 })
-                .map((item, index) => {
+                .map((img, index) => {
                   return (
-                    <CardContent
-                      key={index}
-                      content={ReactHtmlParser(item.content)}
-                      style={week == 5 && day == 2 ? {} : {textAlign: 'right'}}
-                      animationIn="fadeInLeft"
-                    />
-                  );
-                })
-            : []}
-        </div>
-        {/**************************Right Side content******** */}
-        <div style={commonStyles.imageContent}>
-          {/**************************right side image******************* */}
-          <div className="dash-icon" style={styles.rightImage}>
-            {images && images.length
-              ? images
-                  .filter((item) => {
-                    return item.image_type === 'second';
-                  })
-                  .map((img, index) => {
-                    return (
+                    <>
                       <CustomImage
-                        animationIn="fadeInRight"
+                        animationIn="fadeInLeft"
                         key={index}
                         src={`${IMAGE_BASE_URL}${img.image}`}
                         style={{
@@ -130,26 +86,71 @@ const TemplateSeven = (props) => {
                           display: img.image !== '' ? 'flex' : 'none',
                         }}
                       />
-                    );
-                  })
+                    </>
+                  );
+                })
+              : null}
+          </div>
+          {/**************************left side content******************* */}
+          {content && content.length
+            ? content
+              .filter((item) => {
+                return item.type === 'first';
+              })
+              .map((item, index) => {
+                return (
+                  <CardContent
+                    key={index}
+                    content={ReactHtmlParser(item.content)}
+                    style={week == 5 && day == 2 ? {} : { textAlign: 'right' }}
+                    animationIn="fadeInLeft"
+                  />
+                );
+              })
+            : []}
+        </div>
+        {/**************************Right Side content******** */}
+        <div style={commonStyles.imageContent}>
+          {/**************************right side image******************* */}
+          <div className="dash-icon" style={styles.rightImage}>
+            {images && images.length
+              ? images
+                .filter((item) => {
+                  return item.image_type === 'second';
+                })
+                .map((img, index) => {
+                  return (
+                    <CustomImage
+                      animationIn="fadeInRight"
+                      key={index}
+                      src={`${IMAGE_BASE_URL}${img.image}`}
+                      style={{
+                        width: '140px',
+                        height: '140px',
+                        margin: '0',
+                        display: img.image !== '' ? 'flex' : 'none',
+                      }}
+                    />
+                  );
+                })
               : null}
           </div>
           {/**************************right side content******************* */}
           {content && content.length
             ? content
-                .filter((item) => {
-                  return item.type === 'second';
-                })
-                .sort((a, b) => (a.order > b.order && 1) || -1)
-                .map((item, index) => {
-                  return (
-                    <CardContent
-                      key={index}
-                      content={ReactHtmlParser(item.content)}
-                      animationIn="fadeInRight"
-                    />
-                  );
-                })
+              .filter((item) => {
+                return item.type === 'second';
+              })
+              .sort((a, b) => (a.order > b.order && 1) || -1)
+              .map((item, index) => {
+                return (
+                  <CardContent
+                    key={index}
+                    content={ReactHtmlParser(item.content)}
+                    animationIn="fadeInRight"
+                  />
+                );
+              })
             : []}
         </div>
       </div>
@@ -158,19 +159,19 @@ const TemplateSeven = (props) => {
       <div style={commonStyles.contentLeftBorder}>
         {content && content.length
           ? content
-              .filter((item) => {
-                return item.type === 'third';
-              })
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, i) => {
-                return (
-                  <CardContent
-                    key={i}
-                    animationIn="fadeInUp"
-                    content={ReactHtmlParser(item.content)}
-                  />
-                );
-              })
+            .filter((item) => {
+              return item.type === 'third';
+            })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, i) => {
+              return (
+                <CardContent
+                  key={i}
+                  animationIn="fadeInUp"
+                  content={ReactHtmlParser(item.content)}
+                />
+              );
+            })
           : []}
       </div>
       {/**********************content************** */}
@@ -191,5 +192,5 @@ const styles = {
     justifyContent: 'flex-end',
     display: 'flex',
   },
-  rightImage: {alignContent: 'end', display: 'flex'},
+  rightImage: { alignContent: 'end', display: 'flex' },
 };
