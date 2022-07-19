@@ -13,7 +13,7 @@ import { sessionExpire } from '../../actions/tracker';
 export function getLanguages(param) {
   return async (dispatch) => {
     try {
-      dispatch(loadingAction(true));
+      // dispatch(loadingAction(true));
       let json = await RestClient.getCall(URL.GET_LANGUAGES, param);
       console.log('PRIYANKA_GET_LANGAUAGE', json.data)
       if (json.code === 200) {

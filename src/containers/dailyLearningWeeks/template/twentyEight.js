@@ -11,7 +11,8 @@ import {
   CardContent,
   CustomImage,
 } from '@components/Cards';
-const {IMAGE_BASE_URL} = GLOBALS;
+import { translate as ts } from '@i18n/translate';
+const { IMAGE_BASE_URL } = GLOBALS;
 const TwentyEight = (props) => {
   const {
     card_title,
@@ -29,42 +30,83 @@ const TwentyEight = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
         time={
-          card_time === '1' ? `${card_time} Minute` : `${card_time} Minutes`
+          card_time === '1' ? `${card_time} ${ts('MIN')}` : `${card_time} ${ts('MINS')}`
         }
       />
 
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+              />
+            );
+          })
         : []}
 
       {/**********************first type content************ */}
       {content && content.length
         ? content
+          .filter((item) => {
+            return item.type === 'first';
+          })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardContent
+                key={index}
+                content={ReactHtmlParser(item.content)}
+              />
+            );
+          })
+        : []}
+      {/**********************Top Image************ */}
+      <div className="row" style={styles.bottomImages}>
+        {images && images.length
+          ? images
             .filter((item) => {
-              return item.type === 'first';
+              return item.image_type === 'first';
+            })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((imgItem) => {
+              return (
+                <div className="col-md-4">
+                  <CustomImage
+                    src={`${IMAGE_BASE_URL}${imgItem.image}`}
+                    title={imgItem.description}
+                    style={{
+                      display: imgItem.image !== '' ? 'flex' : 'none',
+                    }}
+                  />
+                </div>
+              );
+            })
+          : []}
+      </div>
+
+      {/**********************second type content************ */}
+      <div style={styles.middleContent}>
+        {content && content.length
+          ? content
+            .filter((item) => {
+              return item.type === 'second';
             })
             .sort((a, b) => (a.order > b.order && 1) || -1)
             .map((item, index) => {
@@ -75,47 +117,6 @@ const TwentyEight = (props) => {
                 />
               );
             })
-        : []}
-      {/**********************Top Image************ */}
-      <div className="row" style={styles.bottomImages}>
-        {images && images.length
-          ? images
-              .filter((item) => {
-                return item.image_type === 'first';
-              })
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((imgItem) => {
-                return (
-                  <div className="col-md-4">
-                    <CustomImage
-                      src={`${IMAGE_BASE_URL}${imgItem.image}`}
-                      title={imgItem.description}
-                      style={{
-                        display: imgItem.image !== '' ? 'flex' : 'none',
-                      }}
-                    />
-                  </div>
-                );
-              })
-          : []}
-      </div>
-
-      {/**********************second type content************ */}
-      <div style={styles.middleContent}>
-        {content && content.length
-          ? content
-              .filter((item) => {
-                return item.type === 'second';
-              })
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, index) => {
-                return (
-                  <CardContent
-                    key={index}
-                    content={ReactHtmlParser(item.content)}
-                  />
-                );
-              })
           : []}
       </div>
       {/**********************Bottom image type content************ */}
@@ -128,38 +129,38 @@ const TwentyEight = (props) => {
         }}>
         {images && images.length
           ? images
-              .filter((item) => {
-                return item.image_type === 'second';
-              })
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((imgItem) => {
-                return (
-                  <CustomImage
-                    src={`${IMAGE_BASE_URL}${imgItem.image}`}
-                    title={imgItem.description}
-                    style={{
-                      display: imgItem.image !== '' ? 'flex' : 'none',
-                    }}
-                  />
-                );
-              })
+            .filter((item) => {
+              return item.image_type === 'second';
+            })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((imgItem) => {
+              return (
+                <CustomImage
+                  src={`${IMAGE_BASE_URL}${imgItem.image}`}
+                  title={imgItem.description}
+                  style={{
+                    display: imgItem.image !== '' ? 'flex' : 'none',
+                  }}
+                />
+              );
+            })
           : []}
       </div>
       {/**********************third type content************ */}
       {content && content.length
         ? content
-            .filter((item) => {
-              return item.type === 'third';
-            })
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardContent
-                  key={index}
-                  content={ReactHtmlParser(item.content)}
-                />
-              );
-            })
+          .filter((item) => {
+            return item.type === 'third';
+          })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardContent
+                key={index}
+                content={ReactHtmlParser(item.content)}
+              />
+            );
+          })
         : []}
 
       {showExercises && <ExerciseBox week={week} />}
@@ -170,7 +171,7 @@ const TwentyEight = (props) => {
 export default TwentyEight;
 
 const styles = {
-  middleContent: {marginTop: '4%'},
+  middleContent: { marginTop: '4%' },
   bottomImages: {
     marginTop: '30px',
   },

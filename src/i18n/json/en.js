@@ -90,6 +90,7 @@ export default {
       "EMAIL_NOTIFY": "Email Notification",
       "SMS_NOTIFY": "SMS Notification",
       "CHOOSE": "Choose",
+      "CHANGE": "Change",
 
       "PREMIUM": "Premium",
       "EMAIL": "Email",

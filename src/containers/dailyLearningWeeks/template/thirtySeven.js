@@ -11,8 +11,10 @@ import {
   CustomImage,
   OldCustomImage,
 } from '@components/Cards';
-import {Animated} from 'react-animated-css';
-const {IMAGE_BASE_URL} = GLOBALS;
+import { Animated } from 'react-animated-css';
+
+import { translate as ts } from '@i18n/translate';
+const { IMAGE_BASE_URL } = GLOBALS;
 const ThirtySeven = (props) => {
   const {
     card_title,
@@ -29,78 +31,78 @@ const ThirtySeven = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+              />
+            );
+          })
         : []}
       <CardTitle title={ReactHtmlParser(card_title)} />
       <CardTime
         time={
-          card_time === '1' ? `${card_time} Minute` : `${card_time} Minutes`
+          card_time === '1' ? `${card_time} ${ts('MIN')}` : `${card_time} ${ts('MINS')}`
         }
       />
 
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardDescription
-                  key={index}
-                  description={ReactHtmlParser(item.desc)}
-                  isVisible={true}
-                  animationIn={'fadeInUp'}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardDescription
+                key={index}
+                description={ReactHtmlParser(item.desc)}
+                isVisible={true}
+                animationIn={'fadeInUp'}
+              />
+            );
+          })
         : []}
 
       {images && images.length
         ? images
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, i) => {
-              return (
-                <Animated isVisible={true} animationIn={'fadeInUp'}>
-                  <div style={styles.wrapper} key={i}>
-                    <OldCustomImage
-                      src={`${IMAGE_BASE_URL}${item.image}`}
-                      style={{
-                        ...styles.customImageStyle,
-                        display: item.image !== '' ? 'flex' : 'none',
-                      }}
-                    />
-                    <CardDescription
-                      style={styles.descStyle}
-                      description={ReactHtmlParser(item.description)}
-                    />
-                  </div>
-                </Animated>
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, i) => {
+            return (
+              <Animated isVisible={true} animationIn={'fadeInUp'}>
+                <div style={styles.wrapper} key={i}>
+                  <OldCustomImage
+                    src={`${IMAGE_BASE_URL}${item.image}`}
+                    style={{
+                      ...styles.customImageStyle,
+                      display: item.image !== '' ? 'flex' : 'none',
+                    }}
+                  />
+                  <CardDescription
+                    style={styles.descStyle}
+                    description={ReactHtmlParser(item.description)}
+                  />
+                </div>
+              </Animated>
+            );
+          })
         : null}
 
       {/**********************content************** */}
 
       {content && content.length
         ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardContent
-                  key={index}
-                  content={ReactHtmlParser(item.content)}
-                  isVisible={true}
-                  animationIn={'fadeInUp'}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardContent
+                key={index}
+                content={ReactHtmlParser(item.content)}
+                isVisible={true}
+                animationIn={'fadeInUp'}
+              />
+            );
+          })
         : []}
       {showExercises && <ExerciseBox week={week} />}
     </>

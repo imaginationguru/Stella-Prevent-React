@@ -487,7 +487,7 @@ function ProfileDetails({ props, componentId }) {
               marginVertical: '2.1vw',
             }}
 
-            title="Change"
+            title={ts('CHANGE')}
             bgColor={DARK_GREEN}
             textColor={WHITE}></Button>
 
