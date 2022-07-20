@@ -1,13 +1,17 @@
 import GLOBALS from '../../constants';
 import RestClient from '../../helpers/RestClient';
-import { loadingAction } from '../common';
-import { translate as ts } from '@i18n/translate';
-import { navigatorPush, navigatorPop, navigatortoStart } from '@config/navigationOptions.web';
-import { storeItem } from '@utils/AsyncUtils';
-const { ACTION_TYPE, URL, STRINGS } = GLOBALS;
-const { CHECK_NETWORK } = STRINGS;
-import { customAlert } from '../../helpers/commonAlerts.web';
-import { sessionExpire } from '../../actions/tracker';
+import {loadingAction} from '../common';
+import {translate as ts} from '@i18n/translate';
+import {
+  navigatorPush,
+  navigatorPop,
+  navigatortoStart,
+} from '@config/navigationOptions.web';
+import {storeItem} from '@utils/AsyncUtils';
+const {ACTION_TYPE, URL, STRINGS} = GLOBALS;
+const {CHECK_NETWORK} = STRINGS;
+import {customAlert} from '../../helpers/commonAlerts.web';
+import {sessionExpire} from '../../actions/tracker';
 //******************************Login******************* */
 
 //get language
@@ -16,7 +20,7 @@ export function getLanguages(param) {
     try {
       // dispatch(loadingAction(true));
       let json = await RestClient.getCall(URL.GET_LANGUAGES, param);
-      console.log('PRIYANKA_GET_LANGAUAGE', json.data)
+      console.log('PRIYANKA_GET_LANGAUAGE', json.data);
       if (json.code === 200) {
         dispatch({
           type: ACTION_TYPE.GET_LANGUAGES_SUCCESS,
@@ -40,7 +44,9 @@ export function getLanguages(param) {
       dispatch(loadingAction(false));
 
       customAlert(
-        error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
+        error.problem === 'NETWORK_ERROR'
+          ? ts('CHECK_NETWORK')
+          : ts('TRY_AGAIN'),
         'error',
       );
       dispatch({
@@ -58,10 +64,10 @@ export function changeLanguage(param) {
       let json = await RestClient.postCall(URL.CHANGE_LANGUAGE, param);
       if (json.code === 200) {
         customAlert(json.message, 'success', {}, null, () => {
-          console.log("custom......");
+          console.log('custom......');
           storeItem('language', param.language);
-          navigatortoStart();
           window.location.reload(true);
+          //  navigatortoStart();
         });
       } else {
         if (json.code === 400) {
@@ -81,7 +87,9 @@ export function changeLanguage(param) {
       dispatch(loadingAction(false));
 
       customAlert(
-        error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
+        error.problem === 'NETWORK_ERROR'
+          ? ts('CHECK_NETWORK')
+          : ts('TRY_AGAIN'),
         'error',
       );
       dispatch({
@@ -116,7 +124,9 @@ export function toggleNotification(param) {
     } catch (error) {
       dispatch(loadingAction(false));
       customAlert(
-        error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
+        error.problem === 'NETWORK_ERROR'
+          ? ts('CHECK_NETWORK')
+          : ts('TRY_AGAIN'),
         'error',
       );
 
@@ -158,7 +168,9 @@ export function updatePassword(param) {
       dispatch(loadingAction(false));
 
       customAlert(
-        error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
+        error.problem === 'NETWORK_ERROR'
+          ? ts('CHECK_NETWORK')
+          : ts('TRY_AGAIN'),
         'error',
       );
       dispatch({
@@ -205,7 +217,9 @@ export function uploadProfile(param) {
       dispatch(loadingAction(false));
 
       customAlert(
-        error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
+        error.problem === 'NETWORK_ERROR'
+          ? ts('CHECK_NETWORK')
+          : ts('TRY_AGAIN'),
         'error',
       );
       dispatch({
@@ -245,7 +259,9 @@ export function updateUserDetails(param) {
       dispatch(loadingAction(false));
 
       customAlert(
-        error.problem === 'NETWORK_ERROR' ? ts('CHECK_NETWORK') : ts('TRY_AGAIN'),
+        error.problem === 'NETWORK_ERROR'
+          ? ts('CHECK_NETWORK')
+          : ts('TRY_AGAIN'),
         'error',
       );
       dispatch({
