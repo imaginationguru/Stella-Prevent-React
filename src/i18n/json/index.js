@@ -1,4 +1,4 @@
 import en from './en';
 import es from './es';
-import arab from './arab';
-export default {...en, ...es, ...arab};
+import ar from './ar';
+export default {...en, ...es, ...ar};

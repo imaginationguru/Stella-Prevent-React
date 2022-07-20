@@ -1,7 +1,7 @@
 export const LOCALES = {
   ENGLISH: 'en',
   SPANISH: 'es',
-  ARABIC: 'arab',
+  ARABIC: 'ar',
 };
 
 export const LANGUAGELIST = [
@@ -10,5 +10,9 @@ export const LANGUAGELIST = [
   {
     title: 'Spanish',
     locale: LOCALES.SPANISH,
+  },
+  {
+    title: 'Arabic',
+    locale: LOCALES.ARABIC,
   },
 ];
