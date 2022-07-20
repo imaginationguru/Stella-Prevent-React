@@ -1,16 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import shelja from '@assets/images/shelja.svg';
 import GLOBALS from '@constants';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as AppActions from '@actions';
 import ExerciseBox from '@components/ExerciseBox';
-const {COLORS} = GLOBALS;
-const {LIGHT_GRAY} = COLORS;
+import { translate as ts } from '@i18n/translate';
+const { COLORS } = GLOBALS;
+const { LIGHT_GRAY } = COLORS;
 const TemplateTen = (props) => {
   const [description, setDescription] = useState('');
   const dispatch = useDispatch();
-  const {templateData = []} = useSelector((state) => state.moduleOne);
-  useEffect(() => {}, []);
+  const { templateData = [] } = useSelector((state) => state.moduleOne);
+  useEffect(() => { }, []);
   /* 
   onSave function API call for save the data of input field
   */
@@ -43,7 +44,7 @@ const TemplateTen = (props) => {
           {props.data.template_description_two}
         </p>
       </div>
-      <form noValidate style={{marginTop: '70px'}}>
+      <form noValidate style={{ marginTop: '70px' }}>
         <div className="formRow">
           <div className="w100">
             <div className="formField has-icon">
@@ -68,9 +69,9 @@ const TemplateTen = (props) => {
         </div>
       </form>
 
-      <div style={{width: '20%', marginTop: '30px'}}>
+      <div style={{ width: '20%', marginTop: '30px' }}>
         <button className="btn-orange" onClick={(e) => onSave(e)}>
-          Save
+          {ts("SAVE")}
         </button>
       </div>
     </div>

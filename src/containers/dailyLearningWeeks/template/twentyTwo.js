@@ -211,7 +211,7 @@ const TwentyTwo = (props) => {
           ) : (
             <img src={whiteHeart} style={styles.iconSize} />
           )}
-          <p style={styles.socialTitle}>Like</p>
+          <p style={styles.socialTitle}>{ts("LIKE")}</p>
         </div>
 
         <div
@@ -221,7 +221,7 @@ const TwentyTwo = (props) => {
             setCommentModal(true);
           }}>
           <img src={commentImg} style={styles.iconSize} />
-          <p style={styles.socialTitle}>Comment</p>
+          <p style={styles.socialTitle}>{ts("COMMENT")}</p>
         </div>
         <div className="g-star" style={styles.iconWithText}>
           <p style={styles.socialTitle}>

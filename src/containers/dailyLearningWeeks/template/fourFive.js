@@ -533,7 +533,7 @@ const FourFive = (props) => {
             className="btn-orange"
             onClick={(e) => onSaveFirstAssessment(e)}
             disable={false}>
-            {ts('SAVE CONTACTS')}
+            {ts('SAVECONTACTS')}
           </button>
         </div>
       ) : null}

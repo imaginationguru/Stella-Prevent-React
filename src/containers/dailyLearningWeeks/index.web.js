@@ -633,8 +633,8 @@ const DailyLearningWeeks = (props) => {
                               <h3>{prevData.card.card_title}</h3>
                               <h6>
                                 {prevData.card.card_time === '1'
-                                  ? `${prevData.card.card_time} Minute`
-                                  : `${prevData.card.card_time} Minutes`}
+                                  ? `${prevData.card.card_time} ` + ts("MIN")
+                                  : `${prevData.card.card_time} ` + ts("MINS")}
                               </h6>
                             </div>
                           </div>
@@ -793,8 +793,8 @@ const DailyLearningWeeks = (props) => {
                               textAlign: 'right',
                             }}>
                             {nextData.card.card_time === '1'
-                              ? `${nextData.card.card_time} Minute`
-                              : `${nextData.card.card_time} Minutes`}
+                              ? `${nextData.card.card_time} ` + ts("MIN")
+                              : `${nextData.card.card_time} ` + ts("MIN")}
                           </h6>
                         </div>
                       </div>
@@ -847,7 +847,7 @@ const DailyLearningWeeks = (props) => {
                           completeCardAPI();
                         }}
                         className="f-nav-link">
-                        <h3>Next Module</h3>
+                        <h3>{ts("NextModule")}</h3>
                       </div>
                     </div>
                   )}

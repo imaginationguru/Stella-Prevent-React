@@ -264,7 +264,7 @@ const TemplateNine = (props) => {
       {false ? (
         <div style={styles.boxWrapper}>
           <div style={{ width: DEVICE_WIDTH > 767 ? '20%' : '30%' }}>
-            <p style={styles.leftDate}>Date</p>
+            <p style={styles.leftDate}>{ts("DATE")}</p>
             {dateJSX}
           </div>
 
@@ -275,7 +275,7 @@ const TemplateNine = (props) => {
                 backgroundColor: YELLOW,
                 textAlign: 'center',
               }}>
-              Good Experience
+              {ts("GOODEXP")}
             </p>
             {goodExperienceText}
           </div>

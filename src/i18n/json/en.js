@@ -169,6 +169,14 @@ export default {
       "MESSAGE": "Message",
       "HOW_HELP": "Let us know how we can help!",
 
+      "GOODEXP": "Good Experience",
+      "DATE": "Date",
+      "SELECT": "select",
+      "LIKE": "Like",
+      "COMMENT": "Comment",
+      "NextModule": "Next Module",
+      "SAVECONTACTS": "SAVE CONTACTS",
+
 
       LANGUAGE_SELECT: 'Language Select',
       SIGNUP: 'Sign up',
@@ -193,7 +201,6 @@ export default {
       LOGIN_TO_YOUR_ACCOUNT: ' Login to your account',
       REMEMBER_PASSWORD: 'Remember Password',
 
-      SELECT: 'Select',
       ENGLISH: 'English',
       SPANISH: 'Spanish',
       PRESENTATION: 'Presentation',
