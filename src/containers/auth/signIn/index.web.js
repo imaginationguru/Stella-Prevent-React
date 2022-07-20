@@ -39,7 +39,6 @@ const SignIn = (componentId) => {
   const [quoteImg, setQuoteImage] = useState('');
   const [getId, setGetId] = useState('');
   const dispatch = useDispatch();
-  console.log("tshjhkhk", ts)
   const { quotes = {} } = useSelector((state) => state.moduleOne);
 
   const onHandleChange = (e) => {
@@ -72,13 +71,13 @@ const SignIn = (componentId) => {
     e.preventDefault();
 
     if (email.length === 0) {
-      setEmailError(ts('EmailEmptyError'));
+      setEmailError("Please enter email");
     } else if (email.length && !emailRegex.test(email)) {
-      setEmailError(ts('EmailError'));
+      setEmailError("Please enter a valid email id");
     } else if (password.length === 0) {
-      setPasswordError(ts('PasswordemptyError'));
+      setPasswordError("Please enter password");
     } else if (password.length > 16) {
-      setPasswordError(ts('PasswordError'));
+      setPasswordError("Password should not more be than 16 characters");
     }
     if (email && password) {
       dispatch(AppActions.login(email, password));

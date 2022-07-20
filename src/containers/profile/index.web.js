@@ -14,7 +14,7 @@ import { getItem } from '@utils/AsyncUtils';
 import * as AppActions from '@actions';
 import GLOBALS from '@constants';
 import Strings from '@constants/Strings';
-import { navigatorPush, navigatorPop } from '@config/navigationOptions.web';
+import { navigatorPush, navigatorPop, navigatortoStart } from '@config/navigationOptions.web';
 import Footer from '@components/Footer';
 import Button from '@components/common/button';
 import Toggle from '@components/common/toggle';
@@ -28,7 +28,7 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const { COLORS, FONTS } = GLOBALS;
 const { LIGHT_BLACK, WHITE, HEADING_BLACK, BLACK, DARK_GREEN } = COLORS;
 import Header from '@components/Header';
-
+import { storeItem } from '@utils/AsyncUtils';
 import { useSelector, useDispatch } from 'react-redux';
 import journal from '@assets/images/subscription/journal.png';
 import back from '@assets/images/subscription/back.png';
@@ -45,7 +45,7 @@ import {
   validateName,
 } from '@utils/validations';
 import { normalize } from '@utils/Helper';
-import { translate as ts } from '@i18n/translate';
+import { translate as ts, changeLanguage } from '@i18n/translate';
 
 const { IMAGE_BASE_URL } = GLOBALS;
 
@@ -168,8 +168,18 @@ function ProfileDetails({ props, componentId }) {
           user_id: getItem('userId'),
         };
         dispatch(AppActions.changeLanguage(final_param));
-        i18n.changeLanguage(selected_value.language_code)
-        // window.location.reload(true);
+        //  storeItem('language', "en");
+        //  navigatortoStart();
+        //  window.location.reload(true);
+        // i18n.changeLanguage(selected_value.language_code);
+        // changeLanguage("en");
+        // //   global.userLanguage = loginData?.user?.language;
+        // global.userLanguage = "en"
+        // setTimeout(() => {
+        //   navigatortoStart()
+        //   //    window.location.reload(true);
+        // }, 5000);
+        //  navigatorPop();
         break;
       case 'toggle_notify':
         let temp_array = notification.map((el) =>
@@ -260,9 +270,10 @@ function ProfileDetails({ props, componentId }) {
       {/* */}
       <BackBtn
         onPress={() => {
-          i18n.changeLanguage(loginData?.user?.language)
-          global.userLanguage = loginData?.user?.language
-          navigatorPush({ componentId, screenName: 'Dashboard' })
+          // i18n.changeLanguage(loginData?.user?.language)
+          //  global.userLanguage = loginData?.user?.language
+          //  navigatorPush({ componentId, screenName: 'Dashboard' })
+          navigatorPop()
         }}
       />
       <View style={styles.backBtn}></View>

@@ -2,7 +2,8 @@ import GLOBALS from '../../constants';
 import RestClient from '../../helpers/RestClient';
 import { loadingAction } from '../common';
 import { translate as ts } from '@i18n/translate';
-
+import { navigatorPush, navigatorPop, navigatortoStart } from '@config/navigationOptions.web';
+import { storeItem } from '@utils/AsyncUtils';
 const { ACTION_TYPE, URL, STRINGS } = GLOBALS;
 const { CHECK_NETWORK } = STRINGS;
 import { customAlert } from '../../helpers/commonAlerts.web';
@@ -56,7 +57,12 @@ export function changeLanguage(param) {
       dispatch(loadingAction(true));
       let json = await RestClient.postCall(URL.CHANGE_LANGUAGE, param);
       if (json.code === 200) {
-        customAlert(json.message, 'success');
+        customAlert(json.message, 'success', {}, null, () => {
+          console.log("custom......");
+          storeItem('language', param.language);
+          navigatortoStart();
+          window.location.reload(true);
+        });
       } else {
         if (json.code === 400) {
           customAlert(json.message, 'error');
