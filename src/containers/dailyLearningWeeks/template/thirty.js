@@ -1349,7 +1349,7 @@ const Thirty = (props, componentId) => {
               setSelectedDate('');
             }}>
             <img src={leftArrow} style={styles.backButton} />
-            Back
+            {ts("BACK")}
           </div>
           <div
             style={{

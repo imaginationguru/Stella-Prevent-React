@@ -408,7 +408,7 @@ const TwentySeven = (props) => {
           );
         }
       } else {
-        customAlert('Please answer all questions.', 'error');
+        customAlert(ts('ANSWER_ALL'), 'error');
       }
     } else {
       customAlert(ts('PERFORM_EXERCISE'), 'error');

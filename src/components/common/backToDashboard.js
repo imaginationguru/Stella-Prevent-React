@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
-import { navigatortoStart } from '@config/navigationOptions.web';
+import { navigatortoStart, navigatorPop } from '@config/navigationOptions.web';
 import back from '@assets/images/subscription/back.png';
 import GLOBALS from '@constants';
 import { translate as ts } from '@i18n/translate';
@@ -22,8 +22,15 @@ const BackToDashboard = (props) => {
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center' }}
         onPress={() => {
-          onBack();
           navigatortoStart();
+          // if (onBack) {
+          //   console.log(("on backkkk"))
+          //   onBack();
+          // } else {
+          //   navigatortoStart();
+          // }
+
+
         }}
       // onPress={() => {
       //   alert('hello');

@@ -3,7 +3,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   View,
@@ -16,28 +16,28 @@ import {
 } from 'react-native';
 import MasterLayout from '@components/MasterLayout';
 import BackBtn from '@components/common/backbtn';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import GLOBALS from '@constants';
 import * as AppActions from '@actions';
 import momentZone from 'moment-timezone';
 import BackToDashboard from '@components/common/backToDashboard';
 
-import {Line} from 'react-chartjs-2';
-const {FONTS, COLORS, MOODS_ARRAY, STRINGS} = GLOBALS;
+import { Line } from 'react-chartjs-2';
+const { FONTS, COLORS, MOODS_ARRAY, STRINGS } = GLOBALS;
 
-const {DARK_GREEN} = COLORS;
+const { DARK_GREEN } = COLORS;
 
-import {getItem} from '@utils/AsyncUtils';
-import {navigatorPop} from '@config/navigationOptions.web';
+import { getItem } from '@utils/AsyncUtils';
+import { navigatorPop } from '@config/navigationOptions.web';
 import Strings from '../../constants/Strings';
-import {translate as ts} from '@i18n/translate';
+import { translate as ts } from '@i18n/translate';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
 let currentTimeZone = momentZone.tz.guess();
 
-const LineGraphUI = ({xAxis, yAxis, lable}) => {
+const LineGraphUI = ({ xAxis, yAxis, lable }) => {
   console.log('here====>' + lable, xAxis);
   console.log('hereYY====>' + lable, yAxis);
   const graphOptions = {
@@ -139,11 +139,11 @@ const LineGraphUI = ({xAxis, yAxis, lable}) => {
     />
   );
 };
-const Report = ({location}) => {
+const Report = ({ location }) => {
   let isFromCard = location?.state?.isFromCard;
   const [appState, setAppState] = useState(AppState.currentState);
-  const {getWeeklySummaryReportData} = useSelector((state) => state.tracker);
-  const {getScreenStartTime = ''} = useSelector((state) => state.moduleOne);
+  const { getWeeklySummaryReportData } = useSelector((state) => state.tracker);
+  const { getScreenStartTime = '' } = useSelector((state) => state.moduleOne);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -268,29 +268,29 @@ const Report = ({location}) => {
   //sleep
   let sleepData =
     getWeeklySummaryReportData !== undefined &&
-    getWeeklySummaryReportData?.newSleepTrackerData &&
-    getWeeklySummaryReportData?.newSleepTrackerData?.length
+      getWeeklySummaryReportData?.newSleepTrackerData &&
+      getWeeklySummaryReportData?.newSleepTrackerData?.length
       ? daysCheckWithSleep(getWeeklySummaryReportData?.newSleepTrackerData)
       : [];
 
   let sleepHoursArray = sleepData?.length
     ? sleepData?.map((item) => {
-        return (
-          parseFloat(item.total_hours) + parseFloat(item.total_minutes) / 60
-        );
-      })
+      return (
+        parseFloat(item.total_hours) + parseFloat(item.total_minutes) / 60
+      );
+    })
     : [];
   let sleepXAxis = sleepData?.length
     ? sleepData?.map((item) => {
-        return moment(item.date).format('MM/DD');
-      })
+      return moment(item.date).format('MM/DD');
+    })
     : [];
 
   if (getWeeklySummaryReportData !== undefined) {
     //mood count
     let newArrayList = [];
     moodData.forEach((element, i) => {
-      newArrayList.push({...element});
+      newArrayList.push({ ...element });
     });
     getWeeklySummaryReportData?.moodcount?.forEach((element, index) => {
       newArrayList.forEach((e, i) => {
@@ -308,7 +308,7 @@ const Report = ({location}) => {
     //mood graph
     let res =
       getWeeklySummaryReportData?.newMooddataavg &&
-      getWeeklySummaryReportData?.newMooddataavg.length
+        getWeeklySummaryReportData?.newMooddataavg.length
         ? daysCheckWithMood(getWeeklySummaryReportData?.newMooddataavg)
         : [];
 
@@ -320,10 +320,10 @@ const Report = ({location}) => {
     //activity
     let activityData =
       getWeeklySummaryReportData?.newactivitytackercount &&
-      getWeeklySummaryReportData?.newactivitytackercount.length
+        getWeeklySummaryReportData?.newactivitytackercount.length
         ? daysCheckWithActivity(
-            getWeeklySummaryReportData?.newactivitytackercount,
-          )
+          getWeeklySummaryReportData?.newactivitytackercount,
+        )
         : [];
 
     activityData.forEach((element) => {
@@ -336,7 +336,7 @@ const Report = ({location}) => {
 
     let pointsData =
       getWeeklySummaryReportData?.newPointsdata &&
-      getWeeklySummaryReportData?.newPointsdata.length
+        getWeeklySummaryReportData?.newPointsdata.length
         ? daysCheckWithPoints(getWeeklySummaryReportData.newPointsdata)
         : [];
     pointsData.forEach((element) => {
@@ -346,17 +346,17 @@ const Report = ({location}) => {
   }
   let activityData =
     getWeeklySummaryReportData !== undefined &&
-    getWeeklySummaryReportData.newGetactvityresponselistdata &&
-    getWeeklySummaryReportData.newGetactvityresponselistdata.length
+      getWeeklySummaryReportData.newGetactvityresponselistdata &&
+      getWeeklySummaryReportData.newGetactvityresponselistdata.length
       ? getWeeklySummaryReportData.newGetactvityresponselistdata
-          .filter((item) => item.activityName && item.image && item.totalcount)
-          .map((item) => {
-            return {
-              activityName: item.activityName || '',
-              image: item.image,
-              totalcount: item.totalcount,
-            };
-          })
+        .filter((item) => item.activityName && item.image && item.totalcount)
+        .map((item) => {
+          return {
+            activityName: item.activityName || '',
+            image: item.image,
+            totalcount: item.totalcount,
+          };
+        })
       : null;
   useEffect(() => {
     dispatch(AppActions.getScreenStartTime(moment().format()));
@@ -407,7 +407,10 @@ const Report = ({location}) => {
             }}
           />
         ) : (
-          <BackToDashboard onBack={() => addTimeTrackerAPICall()} />
+          <BackToDashboard onBack={() => {
+            addTimeTrackerAPICall()
+            //navigatorPop();
+          }} />
         )}
         <View
           style={{
@@ -419,9 +422,9 @@ const Report = ({location}) => {
           <Text style={styles.headerStyle}>{ts('REPORT_DATE')} {moment().format('MM/DD/YYYY')}</Text>
           <Text style={styles.labelText}>{ts('DAILY_SLEEP')}</Text>
           {sleepXAxis &&
-          sleepXAxis.length &&
-          sleepHoursArray &&
-          sleepHoursArray.length ? (
+            sleepXAxis.length &&
+            sleepHoursArray &&
+            sleepHoursArray.length ? (
             <LineGraphUI
               xAxis={sleepXAxis.reverse()}
               yAxis={sleepHoursArray.reverse()}
@@ -446,8 +449,8 @@ const Report = ({location}) => {
 
           <Text style={styles.labelText}>{ts('WEEKLY_MOOD')}</Text>
           {getWeeklySummaryReportData !== undefined &&
-          getWeeklySummaryReportData.newMooddataavg &&
-          getWeeklySummaryReportData.newMooddataavg.length ? (
+            getWeeklySummaryReportData.newMooddataavg &&
+            getWeeklySummaryReportData.newMooddataavg.length ? (
             <FlatList
               contentContainerStyle={{
                 alignItems: 'flex-start',
@@ -460,7 +463,7 @@ const Report = ({location}) => {
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
               keyExtractor={(item) => `${item._id}`}
-              renderItem={({item, index}) => {
+              renderItem={({ item, index }) => {
                 return (
                   <View
                     key={index}
@@ -468,7 +471,7 @@ const Report = ({location}) => {
                       paddingBottom: 10,
                     }}>
                     {item.moodCountValue ? (
-                      <div style={{display: 'flex', marginVertical: 10}}>
+                      <div style={{ display: 'flex', marginVertical: 10 }}>
                         <img
                           style={{
                             height: 40,
@@ -495,9 +498,9 @@ const Report = ({location}) => {
           </Text>
 
           {activityXAxis &&
-          activityXAxis.length &&
-          activityYAxis &&
-          activityYAxis.length ? (
+            activityXAxis.length &&
+            activityYAxis &&
+            activityYAxis.length ? (
             <LineGraphUI
               xAxis={activityXAxis.reverse()}
               yAxis={activityYAxis.reverse()}
@@ -523,14 +526,14 @@ const Report = ({location}) => {
             keyExtractor={(item) => `${item._id}`}
             ListEmptyComponent={<Text>{ts('NO_RECORD')}</Text>}
             numColumns={4}
-            renderItem={({item, index}) => {
+            renderItem={({ item, index }) => {
               return (
                 <View
                   style={{
                     paddingHorizontal: 5,
                   }}
                   key={index}>
-                  <div style={{display: 'flex'}}>
+                  <div style={{ display: 'flex' }}>
                     <Image
                       style={[styles.imageContainer]}
                       source={`${item.image}`}
@@ -548,9 +551,9 @@ const Report = ({location}) => {
           />
           <Text style={styles.labelText}>{ts('TOTAL_POINTS')}</Text>
           {pointsXAxis &&
-          pointsXAxis.length &&
-          pointsYAxis &&
-          pointsYAxis.length ? (
+            pointsXAxis.length &&
+            pointsYAxis &&
+            pointsYAxis.length ? (
             <LineGraphUI
               xAxis={pointsXAxis.reverse()}
               yAxis={pointsYAxis.reverse()}

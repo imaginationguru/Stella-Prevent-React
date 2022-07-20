@@ -31,6 +31,7 @@ i18n
   });
 
 export const translate = (_key, _values = {}) => {
+  console.log("hi111", getItem('language'))
   return i18n.t(_key, _values);
 };
 

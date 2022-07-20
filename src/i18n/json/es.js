@@ -125,7 +125,9 @@ export default {
       "EXERCISE_READ": "Ejercicios & Lectura",
       "EXERCISE_READ1": "Aquí puedes encontrar las actividades de la semana",
       "EXERCISE_READ2": ", los ejercicios en audio e información adicional.",
-
+      "ANSWER_ALL": "Por favor responda todas las preguntas.",
+      "ENTER_COMMENT": "Ingresar comentario",
+      "ADD_COMMENT": "Por favor agregue un comentario",
 
       "SEND": "Enviar",
       "SUBJECT": "Asunto",

@@ -144,7 +144,7 @@ const TwentyTwo = (props) => {
 
         if (mode === 'COMMENT') {
           if (comment.length === 0) {
-            setCommentError('Please add comment');
+            setCommentError(ts('ADD_COMMENT'));
           } else if (comment !== '') {
             dispatch(AppActions.addUserRating(params, week));
           }
@@ -271,10 +271,10 @@ const TwentyTwo = (props) => {
             </TouchableOpacity>
           </div>
           <div
-            style={{ width: '80%', marginLeft: 'auto', marginRight: 'auto' }}
+            style={{ width: '80%', marginLeft: 'auto', marginRight: 'auto', cursor: 'pointer', }}
             onClick={() => setCommentModal(false)}>
             <img src={leftArrow} style={styles.backButton} />
-            Back
+            {ts('BACK')}
           </div>
           <div
             style={{
@@ -307,7 +307,7 @@ const TwentyTwo = (props) => {
                         onChange={(e) => onHandleChange(e)}
                         required
                         maxLength={5000}
-                        placeholder={'enter comment'}
+                        placeholder={ts('ENTER_COMMENT')}
                         style={styles.commentInputBox}
                       />
                     </div>
@@ -390,6 +390,7 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    cursor: 'pointer',
   },
   iconSize: { width: '40px', height: '40px' },
   socialTitle: {

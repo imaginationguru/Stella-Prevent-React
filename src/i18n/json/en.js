@@ -126,8 +126,9 @@ export default {
       "EXERCISE_READ": "Exercises & Reading",
       "EXERCISE_READ1": "Here you can find the activities of week",
       "EXERCISE_READ2": ", the audio exercises and additional information.",
-
-
+      "ANSWER_ALL": "Please answer all questions.",
+      "ENTER_COMMENT": "Enter comment",
+      "ADD_COMMENT": "Please add comment",
 
 
       "SOMETHING_WENT_WRONG": 'Something went wrong',

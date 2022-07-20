@@ -272,8 +272,8 @@ function ProfileDetails({ props, componentId }) {
         onPress={() => {
           // i18n.changeLanguage(loginData?.user?.language)
           //  global.userLanguage = loginData?.user?.language
-          //  navigatorPush({ componentId, screenName: 'Dashboard' })
-          navigatorPop()
+          navigatorPush({ componentId, screenName: 'Dashboard' })
+          //  navigatorPop()
         }}
       />
       <View style={styles.backBtn}></View>

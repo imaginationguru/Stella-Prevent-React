@@ -11,7 +11,7 @@ import {
 import ScheduleTab from '@components/common/tabs';
 import * as AppActions from '@actions';
 import GLOBALS from '@constants';
-import { navigatorPush } from '@config/navigationOptions.web';
+import { navigatorPush, navigatorPop } from '@config/navigationOptions.web';
 import Footer from '@components/Footer';
 import Button from '@components/common/button';
 
@@ -137,7 +137,7 @@ const useSessionStorage = (keyName, defaultValue) => {
   return [storedValue, setValue];
 };
 
-function SelectWeek(props) {
+function SelectWeek(props, componentId) {
   const dispatch = useDispatch();
   const { currentActiveCard = {} } = useSelector((state) => state.moduleOne);
   const [value, setValue] = useSessionStorage(
@@ -230,7 +230,11 @@ function SelectWeek(props) {
         <div className="v-container m-tb-30 sl-week">
           <div className="blob-container">
             {/* <BackBtn btnStyle={{padding: 0}} /> */}
-            <BackToDashboard btnStyle={{ padding: 0 }} onBack={() => { }} />
+            <BackToDashboard btnStyle={{ padding: 0 }}
+              onBack={() => {
+                //  navigatorPop();
+                //navigatorPush({ componentId, screenName: 'Dashboard' });
+              }} />
             <View style={styles.backBtn} />
             <View style={{ marginTop: 10 }}>
               <ScheduleTab
