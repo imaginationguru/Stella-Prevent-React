@@ -62,6 +62,8 @@ import FourSeven from './template/fourSeven';
 import FourEight from './template/fourEight';
 import FourNine from './template/fourNine';
 import Fifty from './template/fifty';
+import { translate as ts } from '@i18n/translate';
+
 const { COLORS } = GLOBALS;
 const DailyLearningWeeks = (props) => {
   const dispatch = useDispatch();
@@ -451,7 +453,7 @@ const DailyLearningWeeks = (props) => {
                           <div
                             className="f-nav-link"
                             onClick={() => previousDayOnNextClickHandler()}>
-                            <h3> Previous Day</h3>
+                            <h3>{ts("PREVIOUS_DAY")}</h3>
                           </div>
                         )
                       ) : (
@@ -478,7 +480,7 @@ const DailyLearningWeeks = (props) => {
                         <div
                           className="f-nav-link"
                           onClick={() => nextDayOnNextClickHandler()}>
-                          <h3> Next Day</h3>
+                          <h3> {ts("NEXT_DAY")}</h3>
                         </div>
                       ) : null
                     ) : (

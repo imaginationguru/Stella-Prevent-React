@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import GLOBALS from '../../constants';
 import styles from './styles';
 import compass1 from '../../assets/images/compass1.svg';
-
+import { translate as ts } from '@i18n/translate';
 import { Dimensions } from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -129,7 +129,7 @@ const TemplateEleven = (props) => {
 
           <div style={{ width: '20%', marginTop: '30px' }}>
             <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
-              Save
+              {ts("SAVE")}
             </button>
           </div>
         </div>

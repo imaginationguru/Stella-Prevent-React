@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import star from '../../assets/images/star.svg';
 import right from '../../assets/images/right.svg';
 import cross from '../../assets/images/cross.svg';
 import commonStyles from '../dailyLearningWeeks/commonStyles';
 import GLOBALS from '../../constants';
-const {COLORS} = GLOBALS;
-const {CIRCLE_GRAY, BOX_GRAY, GRAY2, BUTTON_ORANGE} = COLORS;
+import { translate as ts } from '@i18n/translate';
+const { COLORS } = GLOBALS;
+const { CIRCLE_GRAY, BOX_GRAY, GRAY2, BUTTON_ORANGE } = COLORS;
 const data = [
   {
     id: 1,
@@ -65,7 +66,7 @@ const ThirtyTwo = (props) => {
         <h2 className="dashboard-heading">{props.data.template_title}</h2>
         <h6 className="dash-time m-b-30">{props.data.template_time}</h6>
         <div>
-          <p className="dash-text-color" style={{textAlign: 'right'}}>
+          <p className="dash-text-color" style={{ textAlign: 'right' }}>
             {props.data.template_description_one}
           </p>
 
@@ -93,16 +94,16 @@ const ThirtyTwo = (props) => {
               const isYES =
                 selected && selected.length
                   ? selected.find((val) => {
-                      return val.id === item.id && val.value === 'YES';
-                    })
+                    return val.id === item.id && val.value === 'YES';
+                  })
                     ? true
                     : false
                   : false;
               const isNO =
                 selected && selected.length
                   ? selected.find(
-                      (val) => val.id === item.id && val.value === 'NO',
-                    )
+                    (val) => val.id === item.id && val.value === 'NO',
+                  )
                     ? true
                     : false
                   : false;
@@ -117,7 +118,7 @@ const ThirtyTwo = (props) => {
                     }}>
                     <div
                       onClick={() => {
-                        updateYESNO({id: item.id, value: 'YES'}, selected);
+                        updateYESNO({ id: item.id, value: 'YES' }, selected);
                       }}
                       style={{
                         backgroundColor: isYES ? BUTTON_ORANGE : GRAY2,
@@ -135,7 +136,7 @@ const ThirtyTwo = (props) => {
                     </div>
                     <div
                       onClick={() => {
-                        updateYESNO({id: item.id, value: 'NO'}, selected);
+                        updateYESNO({ id: item.id, value: 'NO' }, selected);
                       }}
                       style={{
                         backgroundColor: isNO ? BUTTON_ORANGE : GRAY2,
@@ -156,9 +157,9 @@ const ThirtyTwo = (props) => {
                 </div>
               );
             })}
-          <div style={{width: '20%'}}>
+          <div style={{ width: '20%' }}>
             <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
-              Save
+              {ts("SAVE")}
             </button>
           </div>
         </div>

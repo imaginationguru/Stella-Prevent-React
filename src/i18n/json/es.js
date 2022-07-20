@@ -164,6 +164,14 @@ export default {
       "ValidZip": "Ingrese un código postal válido",
       "AddContent": "Por favor agregue contenido.",
       "ModalClosed": "Modal ha sido cerrado.",
+
+      "GOODEXP": "Buena experiencia",
+      "DATE": "Fecha",
+      "SELECT": "Seleccione",
+      "LIKE": "Me gusta",
+      "COMMENT": "Comentario",
+      "NextModule": "Módulo siguiente",
+      "SAVECONTACTS": "GUARDAR CONTACTOS",
     },
   },
 };

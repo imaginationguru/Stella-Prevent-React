@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import GLOBALS from '../../constants';
 import styles from './styles';
 import squareCheckCircle from '../../assets/images/squareCheckCircle.svg';
+import { translate as ts } from '@i18n/translate';
 const { COLORS } = GLOBALS;
 import right from '../../assets/images/right.svg';
 const quesData = [
@@ -199,7 +200,7 @@ const TemplateTwelve = (props) => {
             })}
           <div style={{ width: '20%' }}>
             <button className="btn-orange" onClick={(e) => onSubmit()}>
-              Save
+              {ts("SAVE")}
             </button>
           </div>
         </div>

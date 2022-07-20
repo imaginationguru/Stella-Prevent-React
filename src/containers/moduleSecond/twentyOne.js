@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import bookmark from '../../assets/images/bookmark.svg';
 import GLOBALS from '../../constants';
-
+import { translate as ts } from '@i18n/translate';
 import { Dimensions } from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -192,7 +192,7 @@ const TwentyOne = (props) => {
 
           <div style={{ width: '20%', marginTop: '30px' }}>
             <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
-              Save
+              {ts("SAVE")}
             </button>
           </div>
         </div>

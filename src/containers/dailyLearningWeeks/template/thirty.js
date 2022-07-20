@@ -1142,7 +1142,7 @@ const Thirty = (props, componentId) => {
                       }
                       onChange={(e) => onChangeDropDown(e, item._id, item)}
                       onSelect={(e) => onChangeDropDown(e, item._id, item)}>
-                      <option>select</option>
+                      <option>{ts("SELECT")}</option>
                       {item.content &&
                         item.content.length &&
                         item.content.map((option, idx) => {
@@ -1645,7 +1645,7 @@ const Thirty = (props, componentId) => {
                                               item,
                                             )
                                           }>
-                                          <option>select</option>
+                                          <option>{ts("SELECT")}</option>
                                           {item.content &&
                                             item.content.length &&
                                             item.content.map(

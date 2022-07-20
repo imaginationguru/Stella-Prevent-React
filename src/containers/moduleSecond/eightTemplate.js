@@ -5,7 +5,7 @@ import circleWithPen from '../../assets/images/circleWithPen.svg';
 import right from '../../assets/images/right.svg';
 import cross from '../../assets/images/cross.svg';
 import styles from './styles';
-
+import { translate as ts } from '@i18n/translate';
 import { Dimensions } from 'react-native';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -275,7 +275,7 @@ const EightTemplate = (props) => {
             })}
           <div style={{ width: '20%' }}>
             <button className="btn-orange" onClick={(e) => onSaveMyths(e)}>
-              Save
+              {ts("SAVE")}
             </button>
           </div>
         </div>
