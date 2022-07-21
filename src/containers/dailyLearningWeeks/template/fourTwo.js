@@ -838,8 +838,8 @@ const FourTwo = (props) => {
                     <span>+</span>
                   </button>
                   <ul className="colored-options-list">
-                    {assessmentData2.headers.length &&
-                      assessmentData2.headers.map((val) => {
+                    {assessmentData2.headers?.length &&
+                      assessmentData2.headers?.map((val) => {
                         return (
                           <>
                             <li
