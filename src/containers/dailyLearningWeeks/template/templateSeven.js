@@ -13,6 +13,8 @@ import {
 } from '@components/Cards';
 
 import { translate as ts } from '@i18n/translate';
+import { getItem } from '@utils/AsyncUtils';
+
 const { IMAGE_BASE_URL } = GLOBALS;
 const TemplateSeven = (props) => {
   const {
@@ -33,15 +35,16 @@ const TemplateSeven = (props) => {
         ? quotes
           .sort((a, b) => (a.order > b.order && 1) || -1)
           .map((item, index) => {
+
             return (
               <CardQuote
                 key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                quote={item.quote ? ReactHtmlParser(item.quote[getItem('language')]) : []}
               />
             );
           })
         : []}
-      <CardTitle title={ReactHtmlParser(card_title)} />
+      <CardTitle title={ReactHtmlParser(card_title[getItem('language')])} />
       <CardTime
         time={
           card_time === '1' ? `${card_time} ${ts('MIN')}` : `${card_time} ${ts('MINS')}`
@@ -56,7 +59,7 @@ const TemplateSeven = (props) => {
             return (
               <CardDescription
                 key={index}
-                description={ReactHtmlParser(item.desc)}
+                description={ReactHtmlParser(item.desc[getItem('language')])}
                 animationIn="fadeInUp"
               />
             );
@@ -98,10 +101,11 @@ const TemplateSeven = (props) => {
                 return item.type === 'first';
               })
               .map((item, index) => {
+                console.log("Content==>", item);
                 return (
                   <CardContent
                     key={index}
-                    content={ReactHtmlParser(item.content)}
+                    content={ReactHtmlParser(item.content[getItem('language')])}
                     style={week == 5 && day == 2 ? {} : { textAlign: 'right' }}
                     animationIn="fadeInLeft"
                   />
@@ -146,7 +150,7 @@ const TemplateSeven = (props) => {
                 return (
                   <CardContent
                     key={index}
-                    content={ReactHtmlParser(item.content)}
+                    content={ReactHtmlParser(item.content[getItem('language')])}
                     animationIn="fadeInRight"
                   />
                 );
@@ -168,7 +172,7 @@ const TemplateSeven = (props) => {
                 <CardContent
                   key={i}
                   animationIn="fadeInUp"
-                  content={ReactHtmlParser(item.content)}
+                  content={ReactHtmlParser(item.content[getItem('language')])}
                 />
               );
             })

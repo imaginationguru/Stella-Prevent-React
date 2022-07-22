@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as AppActions from '@actions';
 import ExerciseBox from '@components/ExerciseBox';
 import { translate as ts } from '@i18n/translate';
+import { getItem } from '@utils/AsyncUtils';
+
 const { COLORS } = GLOBALS;
 const { LIGHT_GRAY } = COLORS;
 const TemplateTen = (props) => {

@@ -226,7 +226,7 @@ const TemplateSix = (props) => {
             return (
               <CardQuote
                 key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                quote={item.quote ? ReactHtmlParser(item.quote) : []}
               />
             );
           })
@@ -275,7 +275,7 @@ const TemplateSix = (props) => {
               <CardDescription
                 key={index}
                 style={commonStyles.assessDesc}
-                description={ReactHtmlParser(item.description)}
+                description={ReactHtmlParser(item.description[getItem('language')])}
               />
             );
           })
@@ -386,7 +386,7 @@ const TemplateSix = (props) => {
           <textarea
             className="f-field height-auto"
             name="leftInput"
-            placeholder={headers && headers.length ? headers[0].header : ''}
+            placeholder={headers && headers.length ? headers[0].header[getItem('language')] : ''}
             style={{
               backgroundColor: '#F1F3FA',
               width: '100%',
@@ -427,7 +427,7 @@ const TemplateSix = (props) => {
           </div>
           <textarea
             className="f-field height-auto"
-            placeholder={headers && headers.length ? headers[1].header : ''}
+            placeholder={headers && headers.length ? headers[1].header[getItem('language')] : ''}
             style={{
               backgroundColor: '#F1F3FA',
               width: '100%',

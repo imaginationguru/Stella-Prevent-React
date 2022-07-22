@@ -18,6 +18,7 @@ import {
 import moment from 'moment';
 import { Dimensions } from 'react-native';
 
+
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
@@ -97,7 +98,7 @@ const TemplateNine = (props) => {
     };
 
     if (experience !== '' && experience !== null) {
-      dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+      dispatch(AppActions.saveUserAssessment(params, onSubmitMessage[getItem('language')]));
     } else {
       setExperienceError(ts('COMPLETE_ERROR'));
     }
@@ -137,12 +138,12 @@ const TemplateNine = (props) => {
             return (
               <CardQuote
                 key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                quote={item.quote ? ReactHtmlParser(item.quote[getItem('language')]) : []}
               />
             );
           })
         : []}
-      <CardTitle title={ReactHtmlParser(card_title)} />
+      <CardTitle title={ReactHtmlParser(card_title[getItem('language')])} />
       <CardTime
         time={
           card_time === '1' ? `${card_time} ${ts('MIN')}` : `${card_time} ${ts('MINS')}`
@@ -157,7 +158,7 @@ const TemplateNine = (props) => {
             return (
               <CardDescription
                 key={index}
-                description={ReactHtmlParser(item.desc)}
+                description={ReactHtmlParser(item.desc[getItem('language')])}
               />
             );
           })
@@ -191,7 +192,7 @@ const TemplateNine = (props) => {
               <CardDescription
                 key={i}
                 style={commonStyles.assessDesc}
-                description={ReactHtmlParser(item.description)}
+                description={ReactHtmlParser(item.description[getItem('language')])}
               />
             );
           })
@@ -239,7 +240,7 @@ const TemplateNine = (props) => {
                           name="experience"
                           onChange={(e) => onHandleChange(e, item)}
                           required
-                          placeholder={item.placeholder}
+                          placeholder={item.placeholder[getItem('language')]}
                           style={commonStyles.inputFieldStyle}
                         />
                       </div>
@@ -288,7 +289,7 @@ const TemplateNine = (props) => {
           .sort((a, b) => (a.order > b.order && 1) || -1)
           .map((item, i) => {
             return (
-              <CardContent key={i} content={ReactHtmlParser(item.content)} />
+              <CardContent key={i} content={ReactHtmlParser(item.content[getItem('language')])} />
             );
           })
         : []}
