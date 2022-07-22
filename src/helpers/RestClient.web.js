@@ -40,7 +40,7 @@ class RestClient {
     return new Promise(function (fulfill, reject) {
       if (isInternet()) {
         api.get(BASE_URL + url, params).then((response) => {
-          console.log('response GET API Rest Client>>>>>>>', response);
+          console.log(decryptRequest(response.data), "response decrypted")
           if (response.status === 200) {
             console.log(
               'get call',
@@ -65,11 +65,9 @@ class RestClient {
   static postCall(url, params) {
     setToken();
     return new Promise(function (fulfill, reject) {
-
       if (isInternet()) {
         console.log(params, "params decrypted")
         api.post(BASE_URL + url, encryptRequest(params)).then((response) => {
-
           if (response.status === 200) {
             fulfill(decryptRequest(response.data));
             console.log(decryptRequest(response.data), "response decrypted")

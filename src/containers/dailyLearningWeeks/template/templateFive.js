@@ -7,6 +7,7 @@ import { getItem } from '@utils/AsyncUtils';
 import * as AppActions from '@actions';
 import { translate as ts } from '@i18n/translate';
 import ExerciseBox from '@components/ExerciseBox';
+import { customAlert } from '@helpers/commonAlerts.web';
 import {
   CardQuote,
   CardTitle,
@@ -85,6 +86,7 @@ const TemplateFive = (props) => {
         : [];
     setOptionDataContent(optionData);
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData]);
 
@@ -141,6 +143,7 @@ const TemplateFive = (props) => {
         setOptionDataContent(data1);
       }
     }
+    console.log(optionDataContent, "optionDataContent...")
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
 
@@ -170,34 +173,54 @@ const TemplateFive = (props) => {
     let x = headerParams.map((item) => {
       return {
         ...item,
-        content: item.content.filter((val) => val.content !== id),
+        content: item.content.filter((val) => val.content[getItem('language')] !== id),
       };
     });
     let y = [
       ...x,
       {
         assessment_header_id: header_id,
-        content: [{ assessment_header_id: header_id, content: id }],
+        content: [{ assessment_header_id: header_id, content: { [getItem('language')]: id } }],
       },
     ];
     setHeaderParams(onlySingleId(y));
     let tasks = optionDataContent.filter((task) => {
-      if (task.content === id) {
+      console.log(task.content, id)
+      if (task.content[getItem('language')] === id) {
         return (task.assessment_header_id = header_id);
       }
       return task;
     });
-    setOptionDataContent([...optionDataContent, tasks]);
+    console.log([...optionDataContent, tasks], "mmmm", optionDataContent)
+    //setOptionDataContent([...optionDataContent, tasks]);
+    // setOptionDataContent([...optionDataContent, tasks]);
+    setOptionDataContent([...optionDataContent]);
   };
   let customMsg = '';
 
   const onSave = (e) => {
     e.preventDefault();
+    console.log(headerParams, "lllll")
+    let updatedHeader = headerParams.map(m => {
+      return {
+        ...m,
+        content: m.content.map(i => {
+          return {
+            ...i,
+            prefilled_content: i.content
+
+          }
+        })
+      }
+    })
+    updatedHeader = updatedHeader.filter(item => item.content.length > 0)
+    console.log(updatedHeader, "updatedHeader.....")
     const params = {
       user_id: getItem('userId'),
       user_card_id: props._id,
       assessment_id: assessment_id,
-      assessment: headerParams,
+      //  assessment: headerParams,
+      assessment: updatedHeader,
     };
     if (props.card.week == 1 && props.card.day == 2) {
       let selectedIntemsofHeader = [];
@@ -231,6 +254,7 @@ const TemplateFive = (props) => {
     /** Check if drag and drop down card is there*/
 
     if (headerParams && headerParams.length) {
+      console.log(params, "params...")
       if (userAssessmentData && userAssessmentData.length) {
         dispatch(
           AppActions.rearrangeAssessments(params, onSubmitMessage, customMsg),
@@ -327,75 +351,81 @@ const TemplateFive = (props) => {
   };
 
   const onSaveMobileView = (e) => {
-    e.preventDefault();
-    let assessment =
-      optionDataContent &&
-      optionDataContent.length &&
-      optionDataContent
-        .filter((val) => val.assessment_header_id !== null)
-        .map((item) => {
-          return {
-            assessment_header_id: item.assessment_header_id,
-            content: [
-              {
-                assessment_header_id: item.assessment_header_id,
-                content: item.content,
-              },
-            ],
-          };
-        });
-    let y = onlySingleId(assessment);
-    if (props.card.week == 1 && props.card.day == 2) {
-      let selectedIntemsofHeader = [];
-      if (y.length > 0 && assessmentData.headers.length == 4) {
-        assessmentData.headers.map((head, index) => {
-          selectedIntemsofHeader[index] = y.filter(
-            (e) => e.assessment_header_id === head._id,
-          );
-        });
-        let greenCount =
-          selectedIntemsofHeader[0] && selectedIntemsofHeader[0].length == 0
-            ? 0
-            : selectedIntemsofHeader[0][0].content.length;
-        let yellowCount =
-          selectedIntemsofHeader[1] && selectedIntemsofHeader[1].length == 0
-            ? 0
-            : selectedIntemsofHeader[1][0].content.length;
-        let orangeCount =
-          selectedIntemsofHeader[2] && selectedIntemsofHeader[2].length == 0
-            ? 0
-            : selectedIntemsofHeader[2][0].content.length;
-        let purpleCount =
-          selectedIntemsofHeader[3] && selectedIntemsofHeader[3].length == 0
-            ? 0
-            : selectedIntemsofHeader[3][0].content.length;
-        let X1 = yellowCount + orangeCount + purpleCount;
-        let X2 = yellowCount + orangeCount;
-        customMsg = `${ts('CUSTOM_MSG1')} ${X1}${ts('CUSTOM_MSG2')}${X2} ${ts('CUSTOM_MSG3')}​`;
-      }
-    }
-    const params = {
-      user_id: getItem('userId'),
-      user_card_id: props._id,
-      assessment_id: assessment_id,
-      assessment: y,
-    };
-
-    if (y.length) {
-      if (userAssessmentData && userAssessmentData.length) {
-        dispatch(
-          AppActions.rearrangeAssessments(params, onSubmitMessage, customMsg),
-        );
-      } else {
-        dispatch(
-          AppActions.saveUserAssessment(params, onSubmitMessage, customMsg),
-        );
-      }
+    console.log(assessmentData, "assessmentData....", optionDataContent);
+    if (optionDataContent.every((val) => val.assessment_header_id == null)) {
+      // setExperienceError(ts('COMPLETE_ERROR'));
+      customAlert(ts('COMPLETE_ERROR'), 'error');
     } else {
-      dispatch({
-        type: ACTION_TYPE.ERROR,
-        payload: ts('PERFORM_EXERCISE'),
-      });
+      e.preventDefault();
+      let assessment =
+        optionDataContent &&
+        optionDataContent.length &&
+        optionDataContent
+          .filter((val) => val.assessment_header_id !== null)
+          .map((item) => {
+            return {
+              assessment_header_id: item.assessment_header_id,
+              content: [
+                {
+                  assessment_header_id: item.assessment_header_id,
+                  content: item.content,
+                },
+              ],
+            };
+          });
+      let y = onlySingleId(assessment);
+      if (props.card.week == 1 && props.card.day == 2) {
+        let selectedIntemsofHeader = [];
+        if (y.length > 0 && assessmentData.headers.length == 4) {
+          assessmentData.headers.map((head, index) => {
+            selectedIntemsofHeader[index] = y.filter(
+              (e) => e.assessment_header_id === head._id,
+            );
+          });
+          let greenCount =
+            selectedIntemsofHeader[0] && selectedIntemsofHeader[0].length == 0
+              ? 0
+              : selectedIntemsofHeader[0][0].content.length;
+          let yellowCount =
+            selectedIntemsofHeader[1] && selectedIntemsofHeader[1].length == 0
+              ? 0
+              : selectedIntemsofHeader[1][0].content.length;
+          let orangeCount =
+            selectedIntemsofHeader[2] && selectedIntemsofHeader[2].length == 0
+              ? 0
+              : selectedIntemsofHeader[2][0].content.length;
+          let purpleCount =
+            selectedIntemsofHeader[3] && selectedIntemsofHeader[3].length == 0
+              ? 0
+              : selectedIntemsofHeader[3][0].content.length;
+          let X1 = yellowCount + orangeCount + purpleCount;
+          let X2 = yellowCount + orangeCount;
+          customMsg = `${ts('CUSTOM_MSG1')} ${X1}${ts('CUSTOM_MSG2')}${X2} ${ts('CUSTOM_MSG3')}​`;
+        }
+      }
+      const params = {
+        user_id: getItem('userId'),
+        user_card_id: props._id,
+        assessment_id: assessment_id,
+        assessment: y,
+      };
+
+      if (y.length) {
+        if (userAssessmentData && userAssessmentData.length) {
+          dispatch(
+            AppActions.rearrangeAssessments(params, onSubmitMessage, customMsg),
+          );
+        } else {
+          dispatch(
+            AppActions.saveUserAssessment(params, onSubmitMessage, customMsg),
+          );
+        }
+      } else {
+        dispatch({
+          type: ACTION_TYPE.ERROR,
+          payload: ts('PERFORM_EXERCISE'),
+        });
+      }
     }
   };
   return (
@@ -413,12 +443,13 @@ const TemplateFive = (props) => {
             );
           })
         : []}
-      <CardTitle title={ReactHtmlParser(card_title)} />
+      <CardTitle title={ReactHtmlParser(card_title[getItem('language')])} />
       <CardTime
         time={
           card_time === '1' ? `${card_time} ${ts('MIN')}` : `${card_time} ${ts('MINS')}`
         }
       />
+
 
       {/**********************description************** */}
       {descriptions && descriptions.length
@@ -428,7 +459,7 @@ const TemplateFive = (props) => {
             return (
               <CardDescription
                 key={index}
-                description={ReactHtmlParser(item.desc)}
+                description={ReactHtmlParser(item.desc[getItem('language')])}
               />
             );
           })
@@ -455,7 +486,7 @@ const TemplateFive = (props) => {
               <CardDescription
                 key={i}
                 style={commonStyles.assessDesc}
-                description={ReactHtmlParser(item.description)}
+                description={ReactHtmlParser(item.description[getItem('language')])}
               />
             );
           })
@@ -488,7 +519,7 @@ const TemplateFive = (props) => {
                         ...commonStyles.dropTitle,
                         backgroundColor: boxBackgroundColor(item.order),
                       }}>
-                      {ReactHtmlParser(item.header)}
+                      {ReactHtmlParser(item.header[getItem('language')])}
                     </p>
                     {optionDataContent && optionDataContent.length
                       ? optionDataContent
@@ -503,11 +534,11 @@ const TemplateFive = (props) => {
                                 borderColor: boxBackgroundColor(order),
                               }}
                               onDragStart={(e) =>
-                                onDragStart(e, item.content)
+                                onDragStart(e, item.content[getItem('language')])
                               }
                               draggable
                               className="draggable p-draggable">
-                              {item.content}
+                              {item.content[getItem('language')]}
                             </p>
                           );
                         })
@@ -524,7 +555,7 @@ const TemplateFive = (props) => {
               ? optionDataContent
                 .filter((item, i) => {
                   const exist = dragCardDataContent.find(
-                    (val) => val === item.content,
+                    (val) => val === item.content[getItem('language')],
                   )
                     ? true
                     : false;
@@ -534,11 +565,14 @@ const TemplateFive = (props) => {
                   return (
                     <div
                       key={index}
-                      onDragStart={(e) => onDragStart(e, item.content)}
+                      onDragStart={(e) => {
+                        onDragStart(e, item.content[getItem('language')])
+                      }
+                      }
                       draggable
                       className="draggable"
                       style={styles.draggableContent}>
-                      {item.content}
+                      {item.content[getItem('language')]}
                     </div>
                   );
                 })
@@ -561,7 +595,7 @@ const TemplateFive = (props) => {
                 return (
                   <CardContent
                     key={i}
-                    content={ReactHtmlParser(item.content)}
+                    content={ReactHtmlParser(item.content[getItem('language')])}
                   />
                 );
               })
@@ -581,7 +615,7 @@ const TemplateFive = (props) => {
                   style={{
                     backgroundColor: boxBackgroundColor(item.order),
                   }}>
-                  <h5>{ReactHtmlParser(item.header)}</h5>
+                  <h5>{ReactHtmlParser(item.header[getItem('language')])}</h5>
                 </div>
               );
             })}
@@ -601,7 +635,7 @@ const TemplateFive = (props) => {
                   onClick={() => {
                     onSetActiveMenu(index);
                   }}>
-                  <p>{ReactHtmlParser(item.content)}</p>
+                  <p>{ReactHtmlParser(item.content[getItem('language')])}</p>
                   <button className="btn-select">
                     <span>+</span>
                   </button>
@@ -624,7 +658,7 @@ const TemplateFive = (props) => {
                                 id={val._id}
                                 checked={
                                   item.assessment_header_id === val._id
-                                    ? item.content
+                                    ? item.content[getItem('language')]
                                     : ''
                                 }
                               />
@@ -658,7 +692,7 @@ const TemplateFive = (props) => {
                 return (
                   <CardContent
                     key={i}
-                    content={ReactHtmlParser(item.content)}
+                    content={ReactHtmlParser(item.content[getItem('language')])}
                   />
                 );
               })

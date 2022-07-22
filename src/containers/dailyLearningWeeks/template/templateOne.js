@@ -13,6 +13,7 @@ import {
   CustomImage,
 } from '@components/Cards';
 import { translate as ts } from '@i18n/translate';
+import { storeItem, getItem } from '@utils/AsyncUtils';
 const { IMAGE_BASE_URL } = GLOBALS;
 const TemplateOne = (props) => {
   const {
@@ -36,12 +37,12 @@ const TemplateOne = (props) => {
             return (
               <CardQuote
                 key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                quote={item.quote ? ReactHtmlParser(item.quote[getItem('language')]) : []}
               />
             );
           })
         : []}
-      <CardTitle title={ReactHtmlParser(card_title)} />
+      <CardTitle title={ReactHtmlParser(card_title[getItem('language')])} />
 
       <CardTime
         time={
@@ -57,7 +58,7 @@ const TemplateOne = (props) => {
             return (
               <CardDescription
                 key={index}
-                description={ReactHtmlParser(item.desc)}
+                description={ReactHtmlParser(item.desc[getItem('language')])}
                 isVisible={true}
                 animationIn={'fadeInUp'}
               />
@@ -112,7 +113,7 @@ const TemplateOne = (props) => {
               return (
                 <CardContent
                   key={index}
-                  content={ReactHtmlParser(item.content)}
+                  content={ReactHtmlParser(item.content[getItem('language')])}
                   isVisible={true}
                   animationIn={'fadeInUp'}
                 />

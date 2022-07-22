@@ -11,6 +11,7 @@ import {
   CardContent,
   CustomImage,
 } from '@components/Cards';
+import { getItem } from '@utils/AsyncUtils';
 import { translate as ts } from '@i18n/translate';
 const { IMAGE_BASE_URL } = GLOBALS;
 const TemplateFour = (props) => {
@@ -39,7 +40,7 @@ const TemplateFour = (props) => {
             );
           })
         : []}
-      <CardTitle title={ReactHtmlParser(card_title)} />
+      <CardTitle title={ReactHtmlParser(card_title[getItem('language')])} />
       <CardTime
         time={
           card_time === '1' ? `${card_time} ${ts('MIN')}` : `${card_time} ${ts('MINS')}`
@@ -55,7 +56,7 @@ const TemplateFour = (props) => {
               return (
                 <CardDescription
                   key={index}
-                  description={ReactHtmlParser(item.desc)}
+                  description={ReactHtmlParser(item.desc[getItem('language')])}
                   isVisible={true}
                   animationIn={'fadeInUp'}
                 />
@@ -94,7 +95,7 @@ const TemplateFour = (props) => {
               return (
                 <CardContent
                   key={index}
-                  content={ReactHtmlParser(item.content)}
+                  content={ReactHtmlParser(item.content[getItem('language')])}
                   isVisible={true}
                   animationIn={'fadeInUp'}
                 />

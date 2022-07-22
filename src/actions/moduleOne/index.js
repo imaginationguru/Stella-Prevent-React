@@ -751,7 +751,7 @@ export function rearrangeAssessments(
   customMsg = '',
   card_number,
 ) {
-  // console.log('rearrange params', params);
+  console.log('rearrange params', onSubmitMessage);
   // let assessmentInputs = params.assessment;
   // console.log('assessment Inputs', assessmentInputs);
   // let temp1 = [];

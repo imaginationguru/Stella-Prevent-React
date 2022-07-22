@@ -630,7 +630,7 @@ const DailyLearningWeeks = (props) => {
                           className="f-nav-link">
                           <div>
                             <div>
-                              <h3>{prevData.card.card_title}</h3>
+                              <h3>{prevData.card.card_title[getItem('language')]}</h3>
                               <h6>
                                 {prevData.card.card_time === '1'
                                   ? `${prevData.card.card_time} ` + ts("MIN")
@@ -786,7 +786,7 @@ const DailyLearningWeeks = (props) => {
                             style={{
                               textAlign: 'right',
                             }}>
-                            {nextData.card.card_title}
+                            {nextData.card.card_title[getItem('language')]}
                           </h3>
                           <h6
                             style={{

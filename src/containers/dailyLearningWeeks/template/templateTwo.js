@@ -129,7 +129,7 @@ const TemplateTwo = (props) => {
           })
         : []}
       {/********************************Card Tilte and time************ */}
-      <CardTitle title={ReactHtmlParser(card_title)} />
+      <CardTitle title={ReactHtmlParser(card_title[getItem('language')])} />
       <CardTime
         time={
           card_time === '1' ? `${card_time} ${ts('MIN')}` : `${card_time} ${ts('MINS')}`
@@ -143,7 +143,7 @@ const TemplateTwo = (props) => {
             return (
               <CardDescription
                 key={index}
-                description={ReactHtmlParser(item.desc)}
+                description={ReactHtmlParser(item.desc[getItem('language')])}
                 isVisible={true}
                 animationIn={'fadeInUp'}
               />
@@ -188,7 +188,7 @@ const TemplateTwo = (props) => {
               return (
                 <CardContent
                   key={index}
-                  content={ReactHtmlParser(item.content)}
+                  content={ReactHtmlParser(item.content[getItem('language')])}
                   isVisible={true}
                   animationIn={'fadeInUp'}
                 />
@@ -248,7 +248,7 @@ const TemplateTwo = (props) => {
                           name="experience"
                           onChange={(e) => onHandleChange(e, item)}
                           required
-                          placeholder={item.placeholder}
+                          placeholder={item.placeholder[getItem('language')]}
                           style={commonStyles.inputFieldStyle}
                         />
                       </div>

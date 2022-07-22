@@ -186,10 +186,10 @@ const TemplateSix = (props) => {
     };
 
     if (userAssessmentData && userAssessmentData.length) {
-      dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
+      dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage[getItem('language')]));
     } else {
       if (contentDataLeft.length || contentDataRight.length) {
-        dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
+        dispatch(AppActions.saveUserAssessment(params, onSubmitMessage[getItem('language')]));
       } else {
         dispatch({
           type: ACTION_TYPE.ERROR,
@@ -231,7 +231,7 @@ const TemplateSix = (props) => {
             );
           })
         : []}
-      <CardTitle title={ReactHtmlParser(card_title)} />
+      <CardTitle title={ReactHtmlParser(card_title[getItem('language')])} />
       <CardTime
         time={
           card_time === '1' ? `${card_time} ${ts('MIN')}` : `${card_time} ${ts('MINS')}`
@@ -246,7 +246,7 @@ const TemplateSix = (props) => {
             return (
               <CardDescription
                 key={index}
-                description={ReactHtmlParser(item.desc)}
+                description={ReactHtmlParser(item.desc[getItem('language')])}
               />
             );
           })
@@ -456,7 +456,7 @@ const TemplateSix = (props) => {
               return (
                 <CardContent
                   key={i}
-                  content={ReactHtmlParser(item.content)}
+                  content={ReactHtmlParser(item.content[getItem('language')])}
                 />
               );
             })
