@@ -11,6 +11,7 @@ import {
   CustomImage,
 } from '@components/Cards';
 
+import { getItem } from '@utils/AsyncUtils';
 import { translate as ts } from '@i18n/translate';
 const { IMAGE_BASE_URL } = GLOBALS;
 const TemplateTwelve = (props) => {
@@ -34,12 +35,12 @@ const TemplateTwelve = (props) => {
             return (
               <CardQuote
                 key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                quote={item.quote ? ReactHtmlParser(item.quote[getItem('language')]) : []}
               />
             );
           })
         : []}
-      <CardTitle title={ReactHtmlParser(card_title)} />
+      <CardTitle title={ReactHtmlParser(card_title[getItem('language')])} />
       <CardTime
         time={
           card_time === '1' ? `${card_time} ${ts('MIN')}` : `${card_time} ${ts('MINS')}`
@@ -54,7 +55,7 @@ const TemplateTwelve = (props) => {
             return (
               <CardDescription
                 key={index}
-                description={ReactHtmlParser(item.desc)}
+                description={ReactHtmlParser(item.desc[getItem('language')])}
                 isVisible={true}
                 animationIn={'fadeInUp'}
               />
@@ -89,7 +90,7 @@ const TemplateTwelve = (props) => {
               .map((item) => {
                 return (
                   <CardContent
-                    content={ReactHtmlParser(item.content)}
+                    content={ReactHtmlParser(item.content[getItem('language')])}
                     isVisible={true}
                     animationIn={'fadeInRight'}
                   />
@@ -107,7 +108,7 @@ const TemplateTwelve = (props) => {
           .map((item) => {
             return (
               <CardContent
-                content={ReactHtmlParser(item.content)}
+                content={ReactHtmlParser(item.content[getItem('language')])}
                 isVisible={true}
                 animationIn={'fadeInUp'}
               />

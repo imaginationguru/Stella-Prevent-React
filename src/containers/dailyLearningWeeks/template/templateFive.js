@@ -21,7 +21,11 @@ const { IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
 
 const unique = (arr, keyProps) => {
   const kvArray = arr.map((entry) => {
-    const key = keyProps.map((k) => entry[k]).join('|');
+    const key = keyProps.map((k) => {
+      console.log(k, "kkkkkk.....", entry, entry[k])
+      return k == "content" ? entry[k]["en"] : entry[k]
+
+    }).join('|');
     return [key, entry];
   });
   const map = new Map(kvArray);
@@ -29,6 +33,7 @@ const unique = (arr, keyProps) => {
 };
 const onlySingleId = (arr = []) => {
   let temp = [];
+  console.log(arr, "errrrrrrrrr")
   if (arr.length) {
     const assIds = [...new Set(arr.map((item) => item.assessment_header_id))];
     assIds.forEach((item) => {
@@ -84,9 +89,9 @@ const TemplateFive = (props) => {
             return { ...item, content: item.data };
           })
         : [];
+
     setOptionDataContent(optionData);
     dispatch(AppActions.getUserAssessment(props._id, assessment_id));
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentData]);
 
@@ -102,13 +107,13 @@ const TemplateFive = (props) => {
             content: [
               {
                 assessment_header_id: item.assessment_header_id,
-                content: item.content,
+                //content: item.content,
+                content: item.content ? item.content : item.prefilled_content,
               },
             ],
           };
         });
         tempHeaderParams.push(...zz);
-
         setHeaderParams(
           onlySingleId(
             tempHeaderParams.filter(
@@ -119,31 +124,41 @@ const TemplateFive = (props) => {
         return;
       });
       setDragCardData(temp);
+
+      temp = temp.map(item => {
+        return {
+          ...item, content: item.content ? item.content : item.prefilled_content,
+        }
+      })
       let x = [...optionDataContent, ...temp];
+
       // /************ UNIQUE FILTERATION FOR ARRAY ************* */
       const uniqueOptionDataContent = x.length
-        ? unique(x, ['content', 'assessment_header_id' !== null])
+        ? unique(x, ["content", "assessment_header_id" != null])
         : [];
+      // console.log(uniqueOptionDataContent, "uniqueOptionDataContent1////dd");
 
       if (uniqueOptionDataContent.length) {
         const data = uniqueOptionDataContent.map((item, i) => {
           if (item.assessment_header_id !== null) {
             return {
               ...item,
+              content: item.content ? item.content : item.prefilled_content,
               headerOrder:
                 item.assessment_header &&
                 item.assessment_header.length &&
-                item.assessment_header[0].order,
+                item.assessment_header[0].order
             };
           } else {
             return { ...item };
           }
         });
-        const data1 = data.filter((item) => item.content !== null);
+        const data1 = data.filter((item) => (item.content !== null));
+        console.log(data1, "data1111q", data)
         setOptionDataContent(data1);
+        // console.log(data1, "cc.....", optionDataContent);
       }
     }
-    console.log(optionDataContent, "optionDataContent...")
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAssessmentData]);
 
@@ -208,7 +223,6 @@ const TemplateFive = (props) => {
           return {
             ...i,
             prefilled_content: i.content
-
           }
         })
       }
@@ -257,11 +271,11 @@ const TemplateFive = (props) => {
       console.log(params, "params...")
       if (userAssessmentData && userAssessmentData.length) {
         dispatch(
-          AppActions.rearrangeAssessments(params, onSubmitMessage, customMsg),
+          AppActions.rearrangeAssessments(params, onSubmitMessage[getItem('language')], customMsg),
         );
       } else {
         dispatch(
-          AppActions.saveUserAssessment(params, onSubmitMessage, customMsg),
+          AppActions.saveUserAssessment(params, onSubmitMessage[getItem('language')], customMsg),
         );
       }
     } else {
@@ -338,6 +352,7 @@ const TemplateFive = (props) => {
     contentId = '',
     headerOrder = null,
   ) => {
+    console.log("overridue")
     if (optionDataContent.length) {
       const data = optionDataContent.map((item, i) => {
         if (item._id === contentId) {
@@ -403,21 +418,32 @@ const TemplateFive = (props) => {
           customMsg = `${ts('CUSTOM_MSG1')} ${X1}${ts('CUSTOM_MSG2')}${X2} ${ts('CUSTOM_MSG3')}​`;
         }
       }
+      let updated_arr = y.map(m => {
+        return {
+          ...m,
+          content: m.content.map(i => {
+            return {
+              ...i,
+              prefilled_content: i.content
+            }
+          })
+        }
+      })
       const params = {
         user_id: getItem('userId'),
         user_card_id: props._id,
         assessment_id: assessment_id,
-        assessment: y,
+        assessment: updated_arr,
       };
-
+      console.log(params)
       if (y.length) {
         if (userAssessmentData && userAssessmentData.length) {
           dispatch(
-            AppActions.rearrangeAssessments(params, onSubmitMessage, customMsg),
+            AppActions.rearrangeAssessments(params, onSubmitMessage[getItem('language')], customMsg),
           );
         } else {
           dispatch(
-            AppActions.saveUserAssessment(params, onSubmitMessage, customMsg),
+            AppActions.saveUserAssessment(params, onSubmitMessage[getItem('language')], customMsg),
           );
         }
       } else {

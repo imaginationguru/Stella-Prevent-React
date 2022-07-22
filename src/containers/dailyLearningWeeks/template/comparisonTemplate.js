@@ -139,15 +139,16 @@ const ComparisonTemplate = (props) => {
   };
 
   const selectDuringPregnancy = (val) => {
+    console.log(val, "val....", duringPregnancy);
     if (duringPregnancy.length) {
       const isAlready = duringPregnancy.find((item) => {
-        return item.data === val.data;
+        return item.data[getItem('language')] === val.data[getItem('language')];
       })
         ? true
         : false;
       if (isAlready) {
         setDuringPregnancy(
-          duringPregnancy.filter((item) => item.data !== val.data),
+          duringPregnancy.filter((item) => item.data[getItem('language')] !== val.data[getItem('language')]),
         );
       } else {
         setDuringPregnancy([...duringPregnancy, val]);
@@ -159,12 +160,12 @@ const ComparisonTemplate = (props) => {
 
   const selectAfterPregnancy = (val) => {
     if (afterPregnancy.length) {
-      const isAlready = afterPregnancy.find((item) => item.data === val.data)
+      const isAlready = afterPregnancy.find((item) => item.data[getItem('language')] === val.data[getItem('language')])
         ? true
         : false;
       if (isAlready) {
         setAfterPregnancy(
-          afterPregnancy.filter((item) => item.data !== val.data),
+          afterPregnancy.filter((item) => item.data[getItem('language')] !== val.data[getItem('language')]),
         );
       } else {
         setAfterPregnancy([...afterPregnancy, val]);
@@ -181,23 +182,23 @@ const ComparisonTemplate = (props) => {
       assessment_id: assessment_id,
       assessment: onlySingleId(paramsAssessment),
     };
-
-    if (onlySingleId(paramsAssessment) !== undefined) {
-      if (userAssessmentData && userAssessmentData.length) {
-        dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage));
-      } else {
-        dispatch(AppActions.saveUserAssessment(params, onSubmitMessage));
-      }
-    } else {
-      dispatch({
-        type: ACTION_TYPE.ERROR,
-        payload: ts('PERFORM_EXERCISE'),
-      });
-    }
+    console.log(params, "params...")
+    // if (onlySingleId(paramsAssessment) !== undefined) {
+    //   if (userAssessmentData && userAssessmentData.length) {
+    //     dispatch(AppActions.rearrangeAssessments(params, onSubmitMessage[getItem('language')]));
+    //   } else {
+    //     dispatch(AppActions.saveUserAssessment(params, onSubmitMessage[getItem('language')]));
+    //   }
+    // } else {
+    //   dispatch({
+    //     type: ACTION_TYPE.ERROR,
+    //     payload: ts('PERFORM_EXERCISE'),
+    //   });
+    // }
   };
   return (
     <>
-      <CardTitle title={ReactHtmlParser(card_title)} />
+      <CardTitle title={ReactHtmlParser(card_title[getItem('language')])} />
       <CardTime
         time={
           card_time === '1' ? `${card_time} ${ts('MIN')}` : `${card_time} ${ts('MINS')}`
@@ -211,7 +212,7 @@ const ComparisonTemplate = (props) => {
             return (
               <CardQuote
                 key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                quote={item.quote ? ReactHtmlParser(item.quote[getItem('language')]) : []}
               />
             );
           })
@@ -224,7 +225,7 @@ const ComparisonTemplate = (props) => {
             return (
               <CardDescription
                 key={index}
-                description={ReactHtmlParser(item.desc)}
+                description={ReactHtmlParser(item.desc[getItem('language')])}
               />
             );
           })
@@ -258,7 +259,7 @@ const ComparisonTemplate = (props) => {
                 <CardDescription
                   key={i}
                   style={commonStyles.assessDesc}
-                  description={ReactHtmlParser(item.description)}
+                  description={ReactHtmlParser(item.description[getItem('language')])}
                 />
               );
             })
@@ -302,30 +303,39 @@ const ComparisonTemplate = (props) => {
                   const isBoth =
                     isDuplicates &&
                     isDuplicates.length &&
-                    isDuplicates.find((val) => val === item.data);
+                    isDuplicates.find((val) => val[getItem('language')] === item.data[getItem('language')]);
 
                   const isDuringP =
                     duringPregnancy.length &&
                     duringPregnancy
-                      .map((val) => val.data)
-                      .find((val) => val === item.data);
+                      .map((val) => val)
+                      .find((val) => val.data[getItem('language')] === item.data[getItem('language')]);
 
                   const isAfterP =
                     afterPregnancy.length &&
                     afterPregnancy
-                      .map((val) => val.data)
-                      .find((val) => val === item.data);
+                      .map((val) => val)
+                      .find((val) => val.data[getItem('language')] === item.data[getItem('language')]);
                   let bgColor = WHITE;
+                  console.log(isBoth, "isBoth111111...")
+                  if (isBoth != undefined) {
+                    if (isBoth[getItem('language')] === item.data[getItem('language')]) {
+                      bgColor = `linear-gradient(${DARK_GREEN}, ${YELLOW})`;
+                    }
+                  }
 
-                  if (isBoth === item.data) {
-                    bgColor = `linear-gradient(${DARK_GREEN}, ${YELLOW})`;
-                  } else {
-                    if (isDuringP === item.data) {
-                      bgColor = DARK_GREEN;
+                  else {
+                    if (isDuringP != undefined) {
+                      if (isDuringP.data[getItem('language')] === item.data[getItem('language')]) {
+                        bgColor = DARK_GREEN;
+                      }
                     }
-                    if (isAfterP === item.data) {
-                      bgColor = YELLOW;
+                    if (isAfterP != undefined) {
+                      if (isAfterP.data[getItem('language')] === item.data[getItem('language')]) {
+                        bgColor = YELLOW;
+                      }
                     }
+
                   }
                   return (
                     <div
@@ -333,7 +343,7 @@ const ComparisonTemplate = (props) => {
                         ...styles.contentTitle,
                         background: bgColor,
                       }}>
-                      <p style={styles.titleText}>{item.data}</p>
+                      <p style={styles.titleText}>{item.data[getItem('language')]}</p>
                     </div>
                   );
                 })}
@@ -342,7 +352,7 @@ const ComparisonTemplate = (props) => {
         ) : activeState === 1 ? (
           <>
             <p>
-              {ReactHtmlParser(headers && headers.length && headers[0].header)}
+              {ReactHtmlParser(headers && headers.length && headers[0].header[getItem('language')])}
             </p>
             <div style={styles.contentDiv}>
               {content.length &&
@@ -351,7 +361,7 @@ const ComparisonTemplate = (props) => {
                     duringPregnancy &&
                     duringPregnancy.length &&
                     duringPregnancy.find((val) => {
-                      return val.data === item.data;
+                      return val.data[getItem('language')] === item.data[getItem('language')];
                     });
 
                   return (
@@ -366,11 +376,11 @@ const ComparisonTemplate = (props) => {
                         ...styles.contentTitle,
                         background:
                           isDuringSelected &&
-                            isDuringSelected.data === item.data
+                            isDuringSelected.data[getItem('language')] === item.data[getItem('language')]
                             ? DARK_GREEN
                             : WHITE,
                       }}>
-                      <p style={styles.titleText}>{item.data}</p>
+                      <p style={styles.titleText}>{item.data[getItem('language')]}</p>
                     </div>
                   );
                 })}
@@ -382,7 +392,7 @@ const ComparisonTemplate = (props) => {
               {headers &&
                 headers.length &&
                 headers[1] &&
-                ReactHtmlParser(headers[1].header)}
+                ReactHtmlParser(headers[1].header[getItem('language')])}
             </p>
             <div style={styles.contentDiv}>
               {content.length &&
@@ -390,7 +400,7 @@ const ComparisonTemplate = (props) => {
                   const isAfterSelected =
                     afterPregnancy && afterPregnancy.length
                       ? afterPregnancy.find((val) => {
-                        return val.data === item.data;
+                        return val.data[getItem('language')] === item.data[getItem('language')];
                       })
                       : null;
                   return (
@@ -404,11 +414,11 @@ const ComparisonTemplate = (props) => {
                       style={{
                         ...styles.contentTitle,
                         background:
-                          isAfterSelected && isAfterSelected.data === item.data
+                          isAfterSelected && isAfterSelected.data[getItem('language')] === item.data[getItem('language')]
                             ? YELLOW
                             : WHITE,
                       }}>
-                      <p style={styles.titleText}>{item.data}</p>
+                      <p style={styles.titleText}>{item.data[getItem('language')]}</p>
                     </div>
                   );
                 })}
@@ -455,7 +465,7 @@ const ComparisonTemplate = (props) => {
               return (
                 <CardContent
                   key={i}
-                  content={ReactHtmlParser(item.content)}
+                  content={ReactHtmlParser(item.content[getItem('language')])}
                 />
               );
             })

@@ -90,11 +90,11 @@ const TemplateEleven = (props) => {
     if (props.submit_messages.length) {
       let positive = props.submit_messages
         .filter((item) => item.condition === 'Atleast 1  is Yes')
-        .map((ele) => ele.message);
+        .map((ele) => ele.message[getItem('language')]);
       setPositiveMessage(positive);
       let negative = props.submit_messages
         .filter((item) => item.condition === 'All are No')
-        .map((ele) => ele.message);
+        .map((ele) => ele.message[getItem('language')]);
       setNegativeMessage(negative);
     }
   }, [props.submit_messages]);
@@ -157,12 +157,12 @@ const TemplateEleven = (props) => {
             return (
               <CardQuote
                 key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                quote={item.quote ? ReactHtmlParser(item.quote[getItem('language')]) : []}
               />
             );
           })
         : []}
-      <CardTitle title={ReactHtmlParser(card_title)} />
+      <CardTitle title={ReactHtmlParser(card_title[getItem('language')])} />
       <CardTime
         time={
           card_time === '1' ? `${card_time} ${ts('MIN')}` : `${card_time} ${ts('MINS')}`
@@ -177,7 +177,7 @@ const TemplateEleven = (props) => {
             return (
               <CardDescription
                 key={index}
-                description={ReactHtmlParser(item.desc)}
+                description={ReactHtmlParser(item.desc[getItem('language')])}
               />
             );
           })
@@ -205,7 +205,7 @@ const TemplateEleven = (props) => {
               <CardDescription
                 key={i}
                 style={commonStyles.assessDesc}
-                description={ReactHtmlParser(item.description)}
+                description={ReactHtmlParser(item.description[getItem('language')])}
               />
             );
           })
@@ -234,7 +234,7 @@ const TemplateEleven = (props) => {
                 : false;
             return (
               <div key={i} style={commonStyles.question}>
-                <p>{ReactHtmlParser(item.header)}</p>
+                <p>{ReactHtmlParser(item.header[getItem('language')])}</p>
                 <div style={styles.optionWrapper}>
                   <div
                     onClick={() => {
@@ -278,7 +278,7 @@ const TemplateEleven = (props) => {
               return (
                 <CardContent
                   key={i}
-                  content={ReactHtmlParser(item.content)}
+                  content={ReactHtmlParser(item.content[getItem('language')])}
                 />
               );
             })
