@@ -13,6 +13,8 @@ import {
 import { Animated } from 'react-animated-css';
 import { Dimensions } from 'react-native';
 import { translate as ts } from '@i18n/translate';
+import { getItem } from '@utils/AsyncUtils';
+
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
@@ -39,12 +41,12 @@ const TemplateEight = (props) => {
             return (
               <CardQuote
                 key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                quote={item.quote ? ReactHtmlParser(item.quote[getItem('language')]) : []}
               />
             );
           })
         : []}
-      <CardTitle title={ReactHtmlParser(card_title)} />
+      <CardTitle title={ReactHtmlParser(card_title[getItem('language')])} />
       <CardTime
         time={
           card_time === '1' ? `${card_time} ${ts('MIN')}` : `${card_time} ${ts('MINS')}`
@@ -59,7 +61,7 @@ const TemplateEight = (props) => {
             return (
               <CardDescription
                 key={index}
-                description={ReactHtmlParser(item.desc)}
+                description={ReactHtmlParser(item.desc[getItem('language')])}
                 isVisible={true}
                 animationIn={'fadeInUp'}
               />
@@ -100,7 +102,7 @@ const TemplateEight = (props) => {
                   <div>
                     <CardContent
                       key={i}
-                      content={ReactHtmlParser(item.content)}
+                      content={ReactHtmlParser(item.content[getItem('language')])}
                     />
                   </div>
                 </Animated>
@@ -119,7 +121,7 @@ const TemplateEight = (props) => {
                 return (
                   <CardContent
                     key={i}
-                    content={ReactHtmlParser(item.content)}
+                    content={ReactHtmlParser(item.content[getItem('language')])}
                   />
                 );
               })

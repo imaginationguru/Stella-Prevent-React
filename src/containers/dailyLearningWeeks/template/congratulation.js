@@ -8,53 +8,55 @@ import {
   CardContent,
   CustomImage,
 } from '@components/Cards';
-import {Dimensions} from 'react-native';
-const {COLORS, IMAGE_BASE_URL} = GLOBALS;
-const {BUTTON_ORANGE} = COLORS;
+import { Dimensions } from 'react-native';
+import { getItem } from '@utils/AsyncUtils';
+
+const { COLORS, IMAGE_BASE_URL } = GLOBALS;
+const { BUTTON_ORANGE } = COLORS;
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const Congratulation = (props) => {
-  const {card_title, images, quotes, descriptions, content} = props.card;
+  const { card_title, images, quotes, descriptions, content } = props.card;
   return (
     <>
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, index) => {
-              return (
-                <CardQuote
-                  key={index}
-                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-                />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, index) => {
+            return (
+              <CardQuote
+                key={index}
+                quote={item.quote ? ReactHtmlParser(item.quote[getItem('language')]) : []}
+              />
+            );
+          })
         : []}
 
       {/*************************first type image************** */}
 
       {images && images.length
         ? images
-            .filter((item) => {
-              return item.image_type === 'first';
-            })
-            .map((item, index) => {
-              return (
-                <CustomImage
-                  key={index}
-                  src={`${IMAGE_BASE_URL}${item.image}`}
-                  style={{
-                    display: item.image !== '' ? 'flex' : 'none',
-                  }}
-                  title={ReactHtmlParser(item.description)}
-                />
-              );
-            })
+          .filter((item) => {
+            return item.image_type === 'first';
+          })
+          .map((item, index) => {
+            return (
+              <CustomImage
+                key={index}
+                src={`${IMAGE_BASE_URL}${item.image}`}
+                style={{
+                  display: item.image !== '' ? 'flex' : 'none',
+                }}
+                title={ReactHtmlParser(item.description[getItem('language')])}
+              />
+            );
+          })
         : []}
 
       <CardTitle
-        title={ReactHtmlParser(card_title)}
-        style={{textAlign: 'center'}}
+        title={ReactHtmlParser(card_title[getItem('language')])}
+        style={{ textAlign: 'center' }}
       />
 
       <div
@@ -64,16 +66,16 @@ const Congratulation = (props) => {
         }}>
         {descriptions && descriptions.length
           ? descriptions
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, index) => {
-                return (
-                  <CardDescription
-                    key={index}
-                    style={styles.textStyle}
-                    description={ReactHtmlParser(item.desc)}
-                  />
-                );
-              })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardDescription
+                  key={index}
+                  style={styles.textStyle}
+                  description={ReactHtmlParser(item.desc[getItem('language')])}
+                />
+              );
+            })
           : []}
       </div>
 
@@ -81,32 +83,32 @@ const Congratulation = (props) => {
 
       {images && images.length
         ? images
-            .filter((item) => {
-              return item.image_type === 'second';
-            })
-            .map((item, index) => {
-              return (
-                <CustomImage
-                  imageSize={item.imageSize}
-                  key={index}
-                  src={`${IMAGE_BASE_URL}${item.image}`}
-                  style={{
-                    display: item.image !== '' ? 'flex' : 'none',
-                  }}
-                  title={ReactHtmlParser(item.description)}
-                />
-              );
-            })
+          .filter((item) => {
+            return item.image_type === 'second';
+          })
+          .map((item, index) => {
+            return (
+              <CustomImage
+                imageSize={item.imageSize}
+                key={index}
+                src={`${IMAGE_BASE_URL}${item.image}`}
+                style={{
+                  display: item.image !== '' ? 'flex' : 'none',
+                }}
+                title={ReactHtmlParser(item.description)}
+              />
+            );
+          })
         : []}
 
       {content && content.length
         ? content
-            .sort((a, b) => (a.order > b.order && 1) || -1)
-            .map((item, i) => {
-              return (
-                <CardContent key={i} content={ReactHtmlParser(item.content)} />
-              );
-            })
+          .sort((a, b) => (a.order > b.order && 1) || -1)
+          .map((item, i) => {
+            return (
+              <CardContent key={i} content={ReactHtmlParser(item.content[getItem('language')])} />
+            );
+          })
         : []}
     </>
   );

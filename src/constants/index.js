@@ -20,10 +20,10 @@ const getEnvBasedUrl = () => {
   let squareAppId = '';
   let LOCATION_ID = '';
   if (ENV === 'DEV') {
-    BASE_URL = 'http://172.24.0.157:4001/api/';
-    IMAGE_BASE_URL = 'http://172.24.0.157:4001/';
-    // BASE_URL = 'http://52.170.117.197/api/';
-    // IMAGE_BASE_URL = 'http://52.170.117.197/';
+    // BASE_URL = 'http://172.24.0.157:4001/api/';
+    // IMAGE_BASE_URL = 'http://172.24.0.157:4001/';
+    BASE_URL = 'http://52.170.117.197/api/';
+    IMAGE_BASE_URL = 'http://52.170.117.197/';
     squareAppId = 'sandbox-sq0idb-WPw6oJXhJty7VgI9HN3Edw';
     LOCATION_ID = 'L726CAXF29YB8';
   }
