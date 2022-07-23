@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import commonStyles from '@containers/dailyLearningWeeks/commonStyles';
 import ReactHtmlParser from 'react-html-parser';
 import GLOBALS from '@constants';
-import { useDispatch, useSelector } from 'react-redux';
-import { getItem } from '@utils/AsyncUtils';
+import {useDispatch, useSelector} from 'react-redux';
+import {getItem} from '@utils/AsyncUtils';
 import * as AppActions from '@actions';
-import { translate as ts } from '@i18n/translate';
+import {translate as ts} from '@i18n/translate';
 import ExerciseBox from '@components/ExerciseBox';
-import { customAlert } from '@helpers/commonAlerts.web';
+import {customAlert} from '@helpers/commonAlerts.web';
 import {
   CardQuote,
   CardTitle,
@@ -17,15 +17,16 @@ import {
   CustomImage,
 } from '@components/Cards';
 import tickWhite from '@assets/images/right.svg';
-const { IMAGE_BASE_URL, ACTION_TYPE } = GLOBALS;
+const {IMAGE_BASE_URL, ACTION_TYPE} = GLOBALS;
 
 const unique = (arr, keyProps) => {
   const kvArray = arr.map((entry) => {
-    const key = keyProps.map((k) => {
-      console.log(k, "kkkkkk.....", entry, entry[k])
-      return k == "content" ? entry[k]["en"] : entry[k]
-
-    }).join('|');
+    const key = keyProps
+      .map((k) => {
+        console.log(k, 'kkkkkk.....', entry, entry[k]);
+        return k == 'content' ? entry[k][getItem('language')] : entry[k];
+      })
+      .join('|');
     return [key, entry];
   });
   const map = new Map(kvArray);
@@ -33,7 +34,7 @@ const unique = (arr, keyProps) => {
 };
 const onlySingleId = (arr = []) => {
   let temp = [];
-  console.log(arr, "errrrrrrrrr")
+  console.log(arr, 'errrrrrrrrr');
   if (arr.length) {
     const assIds = [...new Set(arr.map((item) => item.assessment_header_id))];
     assIds.forEach((item) => {
@@ -48,7 +49,7 @@ const onlySingleId = (arr = []) => {
           q.push(...cn);
         });
       }
-      temp.push({ assessment_header_id: item, content: q });
+      temp.push({assessment_header_id: item, content: q});
     });
     return temp;
   }
@@ -56,7 +57,7 @@ const onlySingleId = (arr = []) => {
 const TemplateFive = (props) => {
   const [optionDataContent, setOptionDataContent] = useState([]);
   const [headerParams, setHeaderParams] = useState([]);
-  const { assessmentData = {}, userAssessmentData = [] } = useSelector(
+  const {assessmentData = {}, userAssessmentData = []} = useSelector(
     (state) => state.moduleOne,
   );
   const [dragCardData, setDragCardData] = useState([]);
@@ -75,19 +76,19 @@ const TemplateFive = (props) => {
     showExercises,
     week,
   } = props.card;
-  const { assessments } = props;
-  const { headers } = assessmentData;
+  const {assessments} = props;
+  const {headers} = assessmentData;
 
   useEffect(() => {
     let optionData =
       assessmentData && assessmentData.content && assessmentData.content.length
         ? assessmentData.content
-          .filter((item) => {
-            return item.assessment_header_id === null;
-          })
-          .map((item) => {
-            return { ...item, content: item.data };
-          })
+            .filter((item) => {
+              return item.assessment_header_id === null;
+            })
+            .map((item) => {
+              return {...item, content: item.data};
+            })
         : [];
 
     setOptionDataContent(optionData);
@@ -125,16 +126,17 @@ const TemplateFive = (props) => {
       });
       setDragCardData(temp);
 
-      temp = temp.map(item => {
+      temp = temp.map((item) => {
         return {
-          ...item, content: item.content ? item.content : item.prefilled_content,
-        }
-      })
+          ...item,
+          content: item.content ? item.content : item.prefilled_content,
+        };
+      });
       let x = [...optionDataContent, ...temp];
 
       // /************ UNIQUE FILTERATION FOR ARRAY ************* */
       const uniqueOptionDataContent = x.length
-        ? unique(x, ["content", "assessment_header_id" != null])
+        ? unique(x, ['content', 'assessment_header_id' != null])
         : [];
       // console.log(uniqueOptionDataContent, "uniqueOptionDataContent1////dd");
 
@@ -147,14 +149,14 @@ const TemplateFive = (props) => {
               headerOrder:
                 item.assessment_header &&
                 item.assessment_header.length &&
-                item.assessment_header[0].order
+                item.assessment_header[0].order,
             };
           } else {
-            return { ...item };
+            return {...item};
           }
         });
-        const data1 = data.filter((item) => (item.content !== null));
-        console.log(data1, "data1111q", data)
+        const data1 = data.filter((item) => item.content !== null);
+        console.log(data1, 'data1111q', data);
         setOptionDataContent(data1);
         // console.log(data1, "cc.....", optionDataContent);
       }
@@ -188,25 +190,32 @@ const TemplateFive = (props) => {
     let x = headerParams.map((item) => {
       return {
         ...item,
-        content: item.content.filter((val) => val.content[getItem('language')] !== id),
+        content: item.content.filter(
+          (val) => val.content[getItem('language')] !== id,
+        ),
       };
     });
     let y = [
       ...x,
       {
         assessment_header_id: header_id,
-        content: [{ assessment_header_id: header_id, content: { [getItem('language')]: id } }],
+        content: [
+          {
+            assessment_header_id: header_id,
+            content: {[getItem('language')]: id},
+          },
+        ],
       },
     ];
     setHeaderParams(onlySingleId(y));
     let tasks = optionDataContent.filter((task) => {
-      console.log(task.content, id)
+      console.log(task.content, id);
       if (task.content[getItem('language')] === id) {
         return (task.assessment_header_id = header_id);
       }
       return task;
     });
-    console.log([...optionDataContent, tasks], "mmmm", optionDataContent)
+    console.log([...optionDataContent, tasks], 'mmmm', optionDataContent);
     //setOptionDataContent([...optionDataContent, tasks]);
     // setOptionDataContent([...optionDataContent, tasks]);
     setOptionDataContent([...optionDataContent]);
@@ -215,20 +224,20 @@ const TemplateFive = (props) => {
 
   const onSave = (e) => {
     e.preventDefault();
-    console.log(headerParams, "lllll")
-    let updatedHeader = headerParams.map(m => {
+    console.log(headerParams, 'lllll');
+    let updatedHeader = headerParams.map((m) => {
       return {
         ...m,
-        content: m.content.map(i => {
+        content: m.content.map((i) => {
           return {
             ...i,
-            prefilled_content: i.content
-          }
-        })
-      }
-    })
-    updatedHeader = updatedHeader.filter(item => item.content.length > 0)
-    console.log(updatedHeader, "updatedHeader.....")
+            prefilled_content: i.content,
+          };
+        }),
+      };
+    });
+    updatedHeader = updatedHeader.filter((item) => item.content.length > 0);
+    console.log(updatedHeader, 'updatedHeader.....');
     const params = {
       user_id: getItem('userId'),
       user_card_id: props._id,
@@ -262,20 +271,30 @@ const TemplateFive = (props) => {
             : selectedIntemsofHeader[3][0].content.length;
         let X1 = yellowCount + orangeCount + purpleCount;
         let X2 = yellowCount + orangeCount;
-        customMsg = `${ts('CUSTOM_MSG1')}${X1}${ts('CUSTOM_MSG2')}${X2} ${ts('CUSTOM_MSG3')}​`;
+        customMsg = `${ts('CUSTOM_MSG1')}${X1}${ts('CUSTOM_MSG2')}${X2} ${ts(
+          'CUSTOM_MSG3',
+        )}​`;
       }
     }
     /** Check if drag and drop down card is there*/
 
     if (headerParams && headerParams.length) {
-      console.log(params, "params...")
+      console.log(params, 'params...');
       if (userAssessmentData && userAssessmentData.length) {
         dispatch(
-          AppActions.rearrangeAssessments(params, onSubmitMessage[getItem('language')], customMsg),
+          AppActions.rearrangeAssessments(
+            params,
+            onSubmitMessage[getItem('language')],
+            customMsg,
+          ),
         );
       } else {
         dispatch(
-          AppActions.saveUserAssessment(params, onSubmitMessage[getItem('language')], customMsg),
+          AppActions.saveUserAssessment(
+            params,
+            onSubmitMessage[getItem('language')],
+            customMsg,
+          ),
         );
       }
     } else {
@@ -352,13 +371,13 @@ const TemplateFive = (props) => {
     contentId = '',
     headerOrder = null,
   ) => {
-    console.log("overridue")
+    console.log('overridue');
     if (optionDataContent.length) {
       const data = optionDataContent.map((item, i) => {
         if (item._id === contentId) {
-          return { ...item, assessment_header_id: headerId, headerOrder };
+          return {...item, assessment_header_id: headerId, headerOrder};
         } else {
-          return { ...item };
+          return {...item};
         }
       });
       setOptionDataContent(data);
@@ -366,7 +385,7 @@ const TemplateFive = (props) => {
   };
 
   const onSaveMobileView = (e) => {
-    console.log(assessmentData, "assessmentData....", optionDataContent);
+    console.log(assessmentData, 'assessmentData....', optionDataContent);
     if (optionDataContent.every((val) => val.assessment_header_id == null)) {
       // setExperienceError(ts('COMPLETE_ERROR'));
       customAlert(ts('COMPLETE_ERROR'), 'error');
@@ -415,35 +434,45 @@ const TemplateFive = (props) => {
               : selectedIntemsofHeader[3][0].content.length;
           let X1 = yellowCount + orangeCount + purpleCount;
           let X2 = yellowCount + orangeCount;
-          customMsg = `${ts('CUSTOM_MSG1')} ${X1}${ts('CUSTOM_MSG2')}${X2} ${ts('CUSTOM_MSG3')}​`;
+          customMsg = `${ts('CUSTOM_MSG1')} ${X1}${ts('CUSTOM_MSG2')}${X2} ${ts(
+            'CUSTOM_MSG3',
+          )}​`;
         }
       }
-      let updated_arr = y.map(m => {
+      let updated_arr = y.map((m) => {
         return {
           ...m,
-          content: m.content.map(i => {
+          content: m.content.map((i) => {
             return {
               ...i,
-              prefilled_content: i.content
-            }
-          })
-        }
-      })
+              prefilled_content: i.content,
+            };
+          }),
+        };
+      });
       const params = {
         user_id: getItem('userId'),
         user_card_id: props._id,
         assessment_id: assessment_id,
         assessment: updated_arr,
       };
-      console.log(params)
+      console.log(params);
       if (y.length) {
         if (userAssessmentData && userAssessmentData.length) {
           dispatch(
-            AppActions.rearrangeAssessments(params, onSubmitMessage[getItem('language')], customMsg),
+            AppActions.rearrangeAssessments(
+              params,
+              onSubmitMessage[getItem('language')],
+              customMsg,
+            ),
           );
         } else {
           dispatch(
-            AppActions.saveUserAssessment(params, onSubmitMessage[getItem('language')], customMsg),
+            AppActions.saveUserAssessment(
+              params,
+              onSubmitMessage[getItem('language')],
+              customMsg,
+            ),
           );
         }
       } else {
@@ -459,63 +488,66 @@ const TemplateFive = (props) => {
       {/**********************quotes************** */}
       {quotes && quotes.length
         ? quotes
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardQuote
-                key={index}
-                quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardQuote
+                  key={index}
+                  quote={item.quote.length ? ReactHtmlParser(item.quote) : []}
+                />
+              );
+            })
         : []}
       <CardTitle title={ReactHtmlParser(card_title[getItem('language')])} />
       <CardTime
         time={
-          card_time === '1' ? `${card_time} ${ts('MIN')}` : `${card_time} ${ts('MINS')}`
+          card_time === '1'
+            ? `${card_time} ${ts('MIN')}`
+            : `${card_time} ${ts('MINS')}`
         }
       />
-
 
       {/**********************description************** */}
       {descriptions && descriptions.length
         ? descriptions
-          .sort((a, b) => (a.order > b.order && 1) || -1)
-          .map((item, index) => {
-            return (
-              <CardDescription
-                key={index}
-                description={ReactHtmlParser(item.desc[getItem('language')])}
-              />
-            );
-          })
+            .sort((a, b) => (a.order > b.order && 1) || -1)
+            .map((item, index) => {
+              return (
+                <CardDescription
+                  key={index}
+                  description={ReactHtmlParser(item.desc[getItem('language')])}
+                />
+              );
+            })
         : []}
       {/*****************assessment description***************** */}
       <div style={commonStyles.assessmentWrapper}>
         {images && images.length
           ? images.map((item, i) => {
-            return (
-              <CustomImage
-                key={i}
-                src={`${IMAGE_BASE_URL}${item.image}`}
-                style={{
-                  ...commonStyles.assessImage,
-                  display: item.image !== '' ? 'flex' : 'none',
-                }}
-              />
-            );
-          })
+              return (
+                <CustomImage
+                  key={i}
+                  src={`${IMAGE_BASE_URL}${item.image}`}
+                  style={{
+                    ...commonStyles.assessImage,
+                    display: item.image !== '' ? 'flex' : 'none',
+                  }}
+                />
+              );
+            })
           : []}
         {assessments && assessments.length
           ? assessments.map((item, i) => {
-            return (
-              <CardDescription
-                key={i}
-                style={commonStyles.assessDesc}
-                description={ReactHtmlParser(item.description[getItem('language')])}
-              />
-            );
-          })
+              return (
+                <CardDescription
+                  key={i}
+                  style={commonStyles.assessDesc}
+                  description={ReactHtmlParser(
+                    item.description[getItem('language')],
+                  )}
+                />
+              );
+            })
           : []}
       </div>
 
@@ -525,53 +557,56 @@ const TemplateFive = (props) => {
           <div style={styles.fourBoxContainer}>
             {headers && headers.length
               ? headers.map((item, index) => {
-                const header_id = item._id;
-                const order = item.order;
-                return (
-                  <div
-                    key={index}
-                    style={{
-                      ...commonStyles.droppableDivDrag,
-                      display: 'block',
-                    }}
-                    className="wip"
-                    onDragOver={(e) => onDragOver(e, item._id)}
-                    onDrop={(e) => {
-                      onDrop(e, item._id, item.order);
-                    }}>
-                    <p
-                      className="task-header"
+                  const header_id = item._id;
+                  const order = item.order;
+                  return (
+                    <div
+                      key={index}
                       style={{
-                        ...commonStyles.dropTitle,
-                        backgroundColor: boxBackgroundColor(item.order),
+                        ...commonStyles.droppableDivDrag,
+                        display: 'block',
+                      }}
+                      className="wip"
+                      onDragOver={(e) => onDragOver(e, item._id)}
+                      onDrop={(e) => {
+                        onDrop(e, item._id, item.order);
                       }}>
-                      {ReactHtmlParser(item.header[getItem('language')])}
-                    </p>
-                    {optionDataContent && optionDataContent.length
-                      ? optionDataContent
-                        .filter((item) => {
-                          return item.assessment_header_id === header_id;
-                        })
-                        .map((item) => {
-                          return (
-                            <p
-                              style={{
-                                ...commonStyles.dragItem,
-                                borderColor: boxBackgroundColor(order),
-                              }}
-                              onDragStart={(e) =>
-                                onDragStart(e, item.content[getItem('language')])
-                              }
-                              draggable
-                              className="draggable p-draggable">
-                              {item.content[getItem('language')]}
-                            </p>
-                          );
-                        })
-                      : []}
-                  </div>
-                );
-              })
+                      <p
+                        className="task-header"
+                        style={{
+                          ...commonStyles.dropTitle,
+                          backgroundColor: boxBackgroundColor(item.order),
+                        }}>
+                        {ReactHtmlParser(item.header[getItem('language')])}
+                      </p>
+                      {optionDataContent && optionDataContent.length
+                        ? optionDataContent
+                            .filter((item) => {
+                              return item.assessment_header_id === header_id;
+                            })
+                            .map((item) => {
+                              return (
+                                <p
+                                  style={{
+                                    ...commonStyles.dragItem,
+                                    borderColor: boxBackgroundColor(order),
+                                  }}
+                                  onDragStart={(e) =>
+                                    onDragStart(
+                                      e,
+                                      item.content[getItem('language')],
+                                    )
+                                  }
+                                  draggable
+                                  className="draggable p-draggable">
+                                  {item.content[getItem('language')]}
+                                </p>
+                              );
+                            })
+                        : []}
+                    </div>
+                  );
+                })
               : []}
           </div>
           {/****************************OPTIONS CONTAINER with gray box******************** */}
@@ -579,29 +614,28 @@ const TemplateFive = (props) => {
           <div style={styles.optionsDiv}>
             {optionDataContent && optionDataContent.length
               ? optionDataContent
-                .filter((item, i) => {
-                  const exist = dragCardDataContent.find(
-                    (val) => val === item.content[getItem('language')],
-                  )
-                    ? true
-                    : false;
-                  return item.assessment_header_id === null && !exist;
-                })
-                .map((item, index) => {
-                  return (
-                    <div
-                      key={index}
-                      onDragStart={(e) => {
-                        onDragStart(e, item.content[getItem('language')])
-                      }
-                      }
-                      draggable
-                      className="draggable"
-                      style={styles.draggableContent}>
-                      {item.content[getItem('language')]}
-                    </div>
-                  );
-                })
+                  .filter((item, i) => {
+                    const exist = dragCardDataContent.find(
+                      (val) => val === item.content[getItem('language')],
+                    )
+                      ? true
+                      : false;
+                    return item.assessment_header_id === null && !exist;
+                  })
+                  .map((item, index) => {
+                    return (
+                      <div
+                        key={index}
+                        onDragStart={(e) => {
+                          onDragStart(e, item.content[getItem('language')]);
+                        }}
+                        draggable
+                        className="draggable"
+                        style={styles.draggableContent}>
+                        {item.content[getItem('language')]}
+                      </div>
+                    );
+                  })
               : []}
           </div>
         </div>
@@ -613,18 +647,20 @@ const TemplateFive = (props) => {
           </div>
         ) : null}
         {/*************Content************ */}
-        <div style={{ ...commonStyles.contentLeftBorder, marginBottom: '20px' }}>
+        <div style={{...commonStyles.contentLeftBorder, marginBottom: '20px'}}>
           {content && content.length
             ? content
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, i) => {
-                return (
-                  <CardContent
-                    key={i}
-                    content={ReactHtmlParser(item.content[getItem('language')])}
-                  />
-                );
-              })
+                .sort((a, b) => (a.order > b.order && 1) || -1)
+                .map((item, i) => {
+                  return (
+                    <CardContent
+                      key={i}
+                      content={ReactHtmlParser(
+                        item.content[getItem('language')],
+                      )}
+                    />
+                  );
+                })
             : []}
         </div>
         {showExercises && <ExerciseBox week={week} />}
@@ -653,11 +689,13 @@ const TemplateFive = (props) => {
             optionDataContent.map((item, index) => {
               return (
                 <div
-                  className={`colored-question  ${activeId === index ? 'active-menu' : ''
-                    }  ${item.headerOrder !== null && item.headerOrder !== undefined
+                  className={`colored-question  ${
+                    activeId === index ? 'active-menu' : ''
+                  }  ${
+                    item.headerOrder !== null && item.headerOrder !== undefined
                       ? selectedBorderColor(item.headerOrder)
                       : '#ffff'
-                    }`}
+                  }`}
                   onClick={() => {
                     onSetActiveMenu(index);
                   }}>
@@ -692,7 +730,7 @@ const TemplateFive = (props) => {
                               <span>
                                 <img
                                   src={tickWhite}
-                                  style={{ width: '15px', height: '15px' }}
+                                  style={{width: '15px', height: '15px'}}
                                 />
                               </span>
                             </label>
@@ -710,18 +748,20 @@ const TemplateFive = (props) => {
             {ts('SAVE')}
           </button>
         </div>
-        <div style={{ ...commonStyles.contentLeftBorder, marginBottom: '20px' }}>
+        <div style={{...commonStyles.contentLeftBorder, marginBottom: '20px'}}>
           {content && content.length
             ? content
-              .sort((a, b) => (a.order > b.order && 1) || -1)
-              .map((item, i) => {
-                return (
-                  <CardContent
-                    key={i}
-                    content={ReactHtmlParser(item.content[getItem('language')])}
-                  />
-                );
-              })
+                .sort((a, b) => (a.order > b.order && 1) || -1)
+                .map((item, i) => {
+                  return (
+                    <CardContent
+                      key={i}
+                      content={ReactHtmlParser(
+                        item.content[getItem('language')],
+                      )}
+                    />
+                  );
+                })
             : []}
         </div>
         {showExercises && <ExerciseBox week={week} />}
@@ -756,5 +796,5 @@ const styles = {
     backgroundColor: '#F1F3FA',
     paddingLeft: '20px',
   },
-  wrapper: { marginTop: '40px' },
+  wrapper: {marginTop: '40px'},
 };
